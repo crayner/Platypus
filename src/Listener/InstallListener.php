@@ -42,11 +42,12 @@ class InstallListener implements EventSubscriberInterface
      */
     public function installationCheck(GetResponseEvent $event)
     {
+dump($event);
         // Test for db installation.
         $response = null;
 
         // Are the database settings correct?
-        if (! $this->installationManager->testConnected())
+        if (! $this->installationManager->isConnected())
             $response = new RedirectResponse($this->router->generate('install_build'));
 
         if (! is_null($response))

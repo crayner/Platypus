@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 
+use Doctrine\DBAL\ConnectionException;
 use Symfony\Component\Routing\RouterInterface;
 
 class InstallationManager
@@ -58,7 +59,7 @@ class InstallationManager
 
         try {
             $this->connection->connect();
-        } catch (ConnectionExceptio $e) {
+        } catch (ConnectionException $e) {
             $this->sql->error = $e->getMessage();
             $this->sql->setConnected(false);
             $this->exception = $e;
