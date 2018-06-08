@@ -3,4 +3,5 @@ web_profiler:
     intercept_redirects: false
 
 framework:
-    profiler: { only_exceptions: false }
+    profiler:
+        enabled: '%kernel.debug%'

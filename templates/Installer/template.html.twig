@@ -1,0 +1,60 @@
+{% trans_default_domain 'Installer' %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>
+        {{ 'Gibbon Installer'|trans }}
+    </title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="content-language" content="en"/>
+    <meta name="author" content="Ross Parker, International College Hong Kong"/>
+    <meta name="robots" content="none"/>
+
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+    <script type="text/javascript" src="../lib/LiveValidation/livevalidation_standalone.compressed.js"></script>
+    <link rel='stylesheet' type='text/css' href='../themes/Default/css/main.css' />
+    <script type='text/javascript' src='../themes/Default/js/common.js'></script>
+    <script type="text/javascript" src="../lib/jquery/jquery.js"></script>
+    <script type="text/javascript" src="../lib/jquery/jquery-migrate.min.js"></script>
+</head>
+<body>
+<div id="wrapOuter">
+    <div id="wrap">
+        <div id="header">
+            <div id="header-left">
+                <img height='100px' width='400px' class="logo" alt="Logo" src="../themes/Default/img/logo.png"></a>
+            </div>
+            <div id="header-right">
+
+            </div>
+            <div id="header-menu">
+
+            </div>
+        </div>
+        <div id="content-wrap">
+            <div id='content'>
+            </div>
+            <div id="sidebar">
+                <h2><?php echo __('Welcome To Gibbon') ?></h2>
+                <p style='padding-top: 7px'>
+                    <?php echo __('Created by teachers, Gibbon is the school platform which solves real problems faced by educators every day.') ?><br/>
+                    <br/>
+                    <?php echo __('Free, open source and flexible, Gibbon can morph to meet the needs of a huge range of schools.') ?><br/>
+                    <br/>
+                    <?php echo sprintf(__('For support, please visit %1$sgibbonedu.org%2$s.'), "<a target='_blank' href='https://gibbonedu.org/support'>", '</a>') ?>
+                </p>
+            </div>
+            <br style="clear: both">
+        </div>
+        <div id="footer">
+            <?php echo __('Powered by') ?> <a href="https://gibbonedu.org">Gibbon</a> v<?php echo $version ?> &#169; <a href="http://rossparker.org">Ross Parker</a> 2010-<?php echo date('Y') ?><br/>
+            <span style='font-size: 90%; '>
+                        <?php echo __('Created under the') ?> <a href="https://www.gnu.org/licenses/gpl.html">GNU GPL</a> at <a href='http://www.ichk.edu.hk'>ICHK</a>
+                    </span><br/><br/>
+            <img style='z-index: 9999; margin-top: -82px; margin-left: 850px; opacity: 0.8' alt='Logo Small' src='../themes/Default/img/logoFooter.png'/>
+        </div>
+    </div>
+</div>
+</body>
+</html>

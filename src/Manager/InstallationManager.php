@@ -17,6 +17,7 @@ namespace App\Manager;
 
 
 use App\Organism\Database;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\ConnectionException;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -32,6 +33,11 @@ class InstallationManager
      * @var Database
      */
     private $sql;
+
+    /**
+     * @var Connection
+     */
+    private $connection;
 
     /**
      * InstallationManager constructor.
@@ -80,7 +86,7 @@ class InstallationManager
     /**
      * @param bool $useDatabase
      *
-     * @return \Doctrine\DBAL\Connection
+     * @return Connection
      * @throws \Doctrine\DBAL\DBALException
      */
     public function getConnection($useDatabase = true)

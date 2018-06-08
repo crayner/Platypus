@@ -42,16 +42,19 @@ class InstallSubscriber implements EventSubscriberInterface
      */
     public function installationCheck(GetResponseEvent $event)
     {
-        if (!$event->isMasterRequest())
-            return ;
-        dump($event);
+        if (! $event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
+                [
+                    'installer_start',
+                ]
+            )
+        ) return;
 
         // Test for db installation.
         $response = null;
 
         // Are the database settings correct?
         if (! $this->installationManager->isConnected())
-            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('install_start'));
+            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_start'));
 
         if (! is_null($response))
             $event->setResponse($response);
