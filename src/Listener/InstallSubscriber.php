@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class InstallListener implements EventSubscriberInterface
+class InstallSubscriber implements EventSubscriberInterface
 {
     /**
      * getSubscribedEvents
@@ -42,13 +42,16 @@ class InstallListener implements EventSubscriberInterface
      */
     public function installationCheck(GetResponseEvent $event)
     {
-dump($event);
+        if (!$event->isMasterRequest())
+            return ;
+        dump($event);
+
         // Test for db installation.
         $response = null;
 
         // Are the database settings correct?
         if (! $this->installationManager->isConnected())
-            $response = new RedirectResponse($this->router->generate('install_build'));
+            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('install_start'));
 
         if (! is_null($response))
             $event->setResponse($response);
@@ -63,12 +66,20 @@ dump($event);
     private $installationManager;
 
     /**
-     * InstallListener constructor.
+     * InstallSubscriber constructor.
      * @param InstallationManager $installationManager
      */
     public function __construct(InstallationManager $installationManager)
     {
         $this->installationManager = $installationManager;
+    }
+
+    /**
+     * @return InstallationManager
+     */
+    public function getInstallationManager(): InstallationManager
+    {
+        return $this->installationManager;
     }
 
 }

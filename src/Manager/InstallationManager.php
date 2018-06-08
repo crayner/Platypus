@@ -16,8 +16,10 @@
 namespace App\Manager;
 
 
-use Doctrine\DBAL\ConnectionException;
+use App\Organism\Database;
+use Doctrine\DBAL\Exception\ConnectionException;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class InstallationManager
 {
@@ -27,12 +29,18 @@ class InstallationManager
     private $router;
 
     /**
+     * @var Database
+     */
+    private $sql;
+
+    /**
      * InstallationManager constructor.
      * @param RouterInterface $router
      */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
+        $this->sql = new Database();
     }
 
     /**
@@ -52,6 +60,7 @@ class InstallationManager
      */
     public function isConnected()
     {
+        $this->getSQLParameters();
         $this->connection = $this->getConnection(false);
 
         $this->sql->error = 'No Error Detected.';
@@ -92,6 +101,45 @@ class InstallationManager
         $this->connection = \Doctrine\DBAL\DriverManager::getConnection($connectionParams, $config);
 
         return $this->connection;
+
+    }
+
+    /**
+     * Get SQL Parameters
+     *
+     * @return Database
+     */
+    public function getSQLParameters(): Database
+    {
+        $params = file($this->getProjectDir() . '/.env');
+
+        $x = Yaml::parse(file_get_contents($this->getProjectDir() . '/config/packages/doctrine.yaml'));
+        $x = $x['parameters'];
+
+        $params = array_merge($params, $x);
+
+        foreach ($params as $name => $value)
+            if (strpos($name, 'db_') === 0)
+                $params['parameters'][str_replace('db_', '', $name)] = $value;
+
+        $params['parameters'] = array_merge($params['parameters']);
+
+        foreach ($params['parameters'] as $name => $value) {
+            $n = 'set' . ucfirst($name);
+            $this->sql->$n($value);
+        }
+
+        return $this->sql;
+    }
+
+    /**
+     * getProjectDir
+     *
+     * @return string
+     */
+    private function getProjectDir(): string
+    {
+        return realpath(__DIR__ . '/../../');
 
     }
 }
