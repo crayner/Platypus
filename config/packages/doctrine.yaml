@@ -1,32 +1,27 @@
 parameters:
-    # Adds a fallback DATABASE_URL if the env var is not set.
-    # This allows you to run cache:warmup even if your
-    # environment variables are not available yet.
-    # You should not need to change this value.
     env(DATABASE_URL): ''
     db_driver: pdo_mysql
-    db_host: ''
-    db_port: ''
-    db_name: ''
+    db_host: localhost
+    db_port: '3306'
+    db_name: craigray_platypus
     db2_name: ''
-    db_user: ''
-    db_pass: ''
-    db_prefix: platypus_
+    db_user: craigray_core
+    db_pass: fAxNp7hdYsBwJ54y
+    db_prefix: pltys_
     db_server: mysql
-    db_charset: 'utf8mb4'
-
+    db_charset: utf8mb4
 doctrine:
     dbal:
         default_connection: default
         connections:
             default:
-                driver:   '%db_driver%'
-                host:     '%db_host%'
-                port:     '%db_port%'
-                dbname:   '%db_name%'
-                user:     '%db_user%'
+                driver: '%db_driver%'
+                host: '%db_host%'
+                port: '%db_port%'
+                dbname: '%db_name%'
+                user: '%db_user%'
                 password: '%db_pass%'
-                charset:  '%db_charset%'
+                charset: '%db_charset%'
                 default_table_options:
                     charset: utf8mb4
                     collate: utf8mb4_unicode_ci
@@ -42,5 +37,5 @@ doctrine:
                         is_bundle: false
                         type: yml
                         dir: '%kernel.project_dir%/src/Entity'
-                        prefix: 'App\Entity'
+                        prefix: App\Entity
                         alias: App

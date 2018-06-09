@@ -1,6 +1,9 @@
 {% trans_default_domain 'Installer' %}
 
 {% extends 'Default/template.html.twig' %}
+
+{% set fullPage = false %}
+
 {% form_theme form
     "@HillrangeForm/FormTheme/bootstrap.html.twig"
 %}
@@ -9,14 +12,14 @@
 {% block title %}Busybee Installer{% endblock title %}
 {% block headerTitle %}{{ 'installation.step'|trans({'%{step}': (manager.step + 1)}) }}{% endblock headerTitle %}
 {% block sectionMenu %}
-<h2>{{ 'Welcome To Gibbon'|trans }}</h2>
-<p style='padding-top: 7px'>
-    {{ 'Created by teachers, Gibbon is the school platform which solves real problems faced by educators every day.'|trans }}<br/>
+<h4>{{ 'welcome'|trans }}</h4>
+<small class="text-muted">
+    {{ 'welcome.sentence.1'|trans }}<br/>
     <br/>
-    {{ 'Free, open source and flexible, Gibbon can morph to meet the needs of a huge range of schools.'|trans }}<br/>
+    {{ 'welcome.sentence.2'|trans }}<br/>
     <br/>
-    {{ "For support, please visit <a target='_blank' href='https://gibbonedu.org/support'>gibbonedu.org</a>."|trans|raw }}
-</p>
+    {{ "welcome.sentence.3"|trans|raw }}
+</small>
 {% endblock sectionMenu %}
 
 {% block contentContainer %}

@@ -29,13 +29,14 @@
         {% endblock menuContainer %}
     {% endif %}
 
-    {% if not(fullPage is defined and fullPage) %}
+    {% if not(fullPage is defined) %}
         {% set sections = get_section() %}
 
         {% if sections is empty %}
             {% set fullPage = true %}
         {% endif %}
     {% endif %}
+
     <div class="container theme-showcase" role="main"{% if headerOff is defined and headerOff %} style="margin-top: -50px;"{% endif %}>
 
         {% if not(headerOff is defined and headerOff) %}
@@ -50,7 +51,7 @@
         {% endif %}
 
         <div class="row-fluid row">
-            {% if fullPage is defined and fullPage %}
+            {% if fullPage %}
                 <div class="col-12" id="contentContainer">
             {% else %}
                 <main class="col-9" id="contentContainer">

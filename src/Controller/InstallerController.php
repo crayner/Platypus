@@ -15,7 +15,8 @@
  */
 namespace App\Controller;
 
-use App\Form\InstallLanguage;
+use App\Form\InstallLanguageType;
+use App\Form\InstallDatabaseType;
 use App\Manager\InstallationManager;
 use App\Organism\Language;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -37,16 +38,13 @@ class InstallerController extends Controller
 
         $language = new Language();
 
-        $form = $this->createForm(InstallLanguage::class, $language);
+        $form = $this->createForm(InstallLanguageType::class, $language);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
-        {
-            dump($installationManager->saveLanguage($request));
             if ($installationManager->saveLanguage($request))
                 return $this->redirectToRoute('installer_database_settings');
-        }
 
         return $this->render('Installer/step1.html.twig',
             [
@@ -55,12 +53,45 @@ class InstallerController extends Controller
             ]
         );
     }
+
     /**
      * databaseSettings
      * @Route("/installer/database/settings/", name="installer_database_settings")
+     * @param InstallationManager $installationManager
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function databaseSettings(InstallationManager $installationManager, Request $request)
     {
-        return $this->render('Installer/step2.html.twig');
+        $installationManager->setStep(1);
+        $database = $installationManager->getSQLParameters();
+
+        $form = $this->createForm(InstallDatabaseType::class, $database);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            if ($installationManager->saveSQLParameters($database))
+                return $this->redirectToRoute('installer_database_create', ['data' => $database->isDemoData()]);
+        }
+
+        return $this->render('Installer/step2.html.twig',
+            [
+                'form' => $form->createView(),
+                'manager' => $installationManager,
+            ]
+        );
+    }
+
+    /**
+     * createDatabase
+     * @Route("/installer/database/{data}/create/", name="installer_database_create")
+     * @param bool $data
+     */
+    public function createDatabase(bool $data, InstallationManager $installationManager, Request $request)
+    {
+        $installationManager->setStep(2);
+        die('Step 2');
     }
 }

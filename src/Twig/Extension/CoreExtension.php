@@ -15,6 +15,7 @@
  */
 namespace App\Twig\Extension;
 
+use App\Manager\ScriptManager;
 use App\Manager\VersionManager;
 use Twig\Extension\AbstractExtension;
 
@@ -24,6 +25,20 @@ use Twig\Extension\AbstractExtension;
  */
 class CoreExtension extends AbstractExtension
 {
+    /**
+     * @var ScriptManager
+     */
+    private $scriptManager;
+
+    /**
+     * CoreExtension constructor.
+     * @param ScriptManager $scriptManager
+     */
+    public function __construct(ScriptManager $scriptManager)
+    {
+        $this->scriptManager = $scriptManager;
+    }
+
     /**
      * getFunctions
      *
@@ -40,7 +55,9 @@ class CoreExtension extends AbstractExtension
             new \Twig_SimpleFunction('get_CurrentCalendarName', [$this, 'crashBurn']),
             new \Twig_SimpleFunction('getMessageManager', [$this, 'getSection']),
             new \Twig_SimpleFunction('hideSection', [$this, 'hideSection']),
-            new \Twig_SimpleFunction('getScripts', [$this, 'getSection']),
+            new \Twig_SimpleFunction('addScript', array($this->scriptManager, 'addScript')),
+            new \Twig_SimpleFunction('getScripts', array($this->scriptManager, 'getScripts')),
+            new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
         ];
     }
 
@@ -80,5 +97,17 @@ class CoreExtension extends AbstractExtension
     public function hideSection()
     {
         return false;
+    }
+
+    /**
+     * isInstanceof
+     *
+     * @param $var
+     * @param string $instance
+     * @return bool
+     */
+    public function isInstanceof($var, string $instance)
+    {
+        return ($var instanceof $instance);
     }
 }

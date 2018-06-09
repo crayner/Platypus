@@ -102,9 +102,9 @@ class Database
 	 *
 	 * @return Database
 	 */
-	public function setPort(string $port): Database
+	public function setPort(?string $port): Database
 	{
-		$this->port = $port;
+		$this->port = $port ?: '3306';
 
 		return $this;
 	}
@@ -254,6 +254,8 @@ class Database
 	 */
 	public function getPrefix(): ?string
 	{
+	    if (empty($this->prefix))
+            $this->prefix = substr(uniqid('jhgfiujwfgudwefgief'), 0,5);
 		return $this->prefix;
 	}
 
@@ -264,7 +266,7 @@ class Database
 	 */
 	public function setPrefix(string $prefix): Database
 	{
-		$this->prefix = $prefix;
+		$this->prefix = trim($prefix, '_') . '_';
 
 		return $this;
 }
@@ -355,5 +357,36 @@ class Database
 		$this->charset = $charset;
 
 		return $this;
-}
+    }
+
+    /**
+     * Database constructor.
+     */
+    public function __construct()
+    {
+        $this->getPrefix();
+    }
+
+    /**
+     * @var bool
+     */
+    private $demoData;
+
+    /**
+     * @return bool
+     */
+    public function isDemoData(): bool
+    {
+        return $this->demoData ? true : false ;
+    }
+
+    /**
+     * @param bool $demoData
+     * @return Database
+     */
+    public function setDemoData(bool $demoData): Database
+    {
+        $this->demoData = $demoData ? true : false ;
+        return $this;
+    }
 }

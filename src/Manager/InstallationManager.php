@@ -333,4 +333,49 @@ class InstallationManager
 
         return true;
     }
+
+    /**
+     * Save SQL Parameters
+     *
+     * @param $params array
+     *
+     * @return bool
+     */
+    public function saveSQLParameters(Database $sql): bool
+    {
+        try{
+            $params = Yaml::parse(file_get_contents($this->getProjectDir() . '/config/packages/doctrine.yaml'));
+
+            $params['parameters']['db_driver'] = $sql->getDriver();
+            $params['parameters']['db_host'] = $sql->getHost();
+            $params['parameters']['db_port'] = $sql->getPort();
+            $params['parameters']['db_name'] = $sql->getName();
+            $params['parameters']['db_user'] = $sql->getUser();
+            $params['parameters']['db_pass'] = $sql->getPass();
+            $params['parameters']['db_prefix'] = $sql->getPrefix();
+            $params['parameters']['db_server'] = $sql->getServer();
+
+            if (file_put_contents($this->getProjectDir() . '/config/packages/doctrine.yaml', Yaml::dump($params, 8))) {
+                $env = file($this->getProjectDir() . '/.env');
+                foreach ($env as $q => $w) {
+                    if (strpos($w, 'DATABASE_URL=') === 0)
+                        $env[$q] = $sql->getUrl();
+                    $env[$q] = trim($env[$q]);
+                }
+                $env = implode($env, "\r\n");
+                return file_put_contents($this->getProjectDir() . '/.env', $env);
+            }
+        } catch (ParseException $e) {
+            $this->addStatus('danger', 'installer.file.parse.error', ['%{name}' => 'doctrine.yaml']);
+            return false;
+        } catch (DumpException $e) {
+            $this->addStatus('danger', 'installer.file.dump.error', ['%{name}' => 'doctrine.yaml']);
+            return false;
+        } catch (\ErrorException $e) {
+            $this->addStatus('danger', 'installer.file.write.error', ['%{name}' => 'doctrine.yaml / .env']);
+            return false;
+        }
+
+        return true;
+    }
 }
