@@ -11,4 +11,5 @@ return [
     Symfony\Bundle\DebugBundle\DebugBundle::class => ['dev' => true, 'test' => true],
     Hillrange\Form\HillrangeFormBundle::class => ['all' => true],
     PlatypusTemplate\Original\PlatypusTemplateOriginalBundle::class => ['all' => true],
+    Translation\Bundle\TranslationBundle::class => ['all' => true],
 ];

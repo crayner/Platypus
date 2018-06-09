@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "hillrange/symfony-form": "^0.1",
+        "php-translation/symfony-bundle": "^0.7.0",
         "platypus-template/original": "^0.0",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "^4.1",

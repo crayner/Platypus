@@ -1,0 +1,24 @@
+translation:
+    locales:
+        - "en_GB"
+        - "en_US"
+        - "nl_NL"
+        - 'es_ES'
+        - 'fr_FR'
+        - 'it_IT'
+        - 'pt_BR'
+        - 'ro_RO'
+        - 'sq_AL'
+        - 'vi_VN'
+        - 'ar_SA'
+        - 'th_TH'
+        - 'zh_HK'
+    edit_in_place:
+        enabled: false
+        config_name: app
+    configs:
+        app:
+            dirs: ["%kernel.project_dir%/templates", "%kernel.project_dir%/src"]
+            output_dir: "%kernel.project_dir%/translations"
+            excluded_names: ["*TestCase.php", "*Test.php"]
+            excluded_dirs: [cache, data, logs]
