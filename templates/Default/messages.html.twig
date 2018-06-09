@@ -1,0 +1,15 @@
+{% if messages is defined and messages|length > 0 and messages.messages is iterable %}
+    {% if flashClass is defined %}
+        {% set flashClass = " " ~ flashClass %}
+    {% else %}
+        {% set flashClass = "" %}
+    {% endif %}
+    {% set element = element|default('div') %}
+    {% for message in messages.messages %}
+        <{{ element }} class="alert alert-{{ message.level ~ flashClass }} alert-dismissible fade show" id="{{ message.message|replace({' ': '_', '.': '_'}) }}" role="alert" data-dismiss="alert">
+        {% include 'Default/message.html.twig' with {message: message} %}
+            {{ closeButton({additional: {'data-dismiss': "alert", 'aria-label': "Close", 'aria-hidden': "true"}, title: 'Close Message', transDomain: 'home', class: 'close far fa-times-circle'})|raw }}
+        </{{ element }}>
+    {% endfor %}
+    {% set x = messages.clearMessages() %}
+{% endif %}

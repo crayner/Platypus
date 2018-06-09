@@ -1,0 +1,86 @@
+<!-- core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+{%  trans_default_domain 'home' %}
+
+<script src="{{ asset('js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/tether.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('js/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('js/fontawesome-all.min.js') }}"></script>
+
+{#
+{% if app is defined %}
+{% if app.user is defined %}
+    {% include '@HillrangeSecurity/security/scripts.html.twig' %}
+    <script src={{ asset('js/bootstrap-submenu.min.js') }}></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function () {
+
+            var hide = '{{ hideSection(app.request.get('_route')) }}';
+            if (hide) {
+                $('.hideSection').fadeOut(5);
+            }
+
+        });
+        $('[data-submenu]').submenupicker();
+
+        function menuSectionSlide() {
+            var scroll_top = $(window).scrollTop();
+            if (scroll_top >= 247) { // the detection!
+                $('#sectionMenuContainer').addClass('is-sticky');
+            } else {
+                $('#sectionMenuContainer').removeClass('is-sticky');
+            }
+        }
+
+        $(window).scroll(menuSectionSlide);
+
+        $(".alert").alert();
+    </script>
+{% endif %}
+{% endif %}#}
+<!-- fold Menu -->
+<script type="text/javascript" charset="utf-8">
+
+    $('.foldMenu').on('click', function(){
+        var foldMenu = $('.foldMenu');
+        var container = foldMenu.parent();
+        var icon = foldMenu.children('svg');
+        if (icon.hasClass('fa-times-circle')) {
+            $.ajax({
+                url: '{{ path('section_menu_display', {display: 'hide'}) }}',
+                type: 'POST'
+            });
+            console.log(container);
+            container.css('flex', 'auto');
+            container.css('max-width', 'none');
+        } else {
+            $.ajax({
+                url: '{{ path('section_menu_display', {display: 'show'}) }}',
+                type: 'POST'
+            });
+            console.log(container);
+            container.removeAttr('style');
+        }
+        icon.toggleClass('fa-times-circle fa-bars');
+        if (icon.attr('data-prefix') == 'far') {
+            icon.attr('data-prefix', 'fas');
+        } else {
+            icon.attr('data-prefix', 'far');
+        }
+    });
+
+    function iconDoneRendering () {
+        var show = '{{ app.session.get('showSectionMenu')|default(0) }}';
+
+        if (show == 0) {
+            $('.foldMenu').click();
+        }
+    }
+    FontAwesome.dom.i2svg({ callback: iconDoneRendering })
+</script>
+{% for xx in getScripts() %}
+    {% include xx %}
+{% endfor %}
+<!-- core JavaScript end -->

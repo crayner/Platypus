@@ -15,6 +15,7 @@
  */
 namespace App\Controller;
 
+use App\Manager\InstallationManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -24,8 +25,14 @@ class InstallerController extends Controller
      * start
      * @Route("/installer/start/", name="installer_start")
      */
-    public function start()
+    public function start(InstallationManager $installationManager)
     {
-        return $this->render('Installer/template.html.twig');
+        $installationManager->setCanInstall();
+
+        return $this->render('Installer/step1.html.twig',
+            [
+                'manager' => $installationManager,
+            ]
+        );
     }
 }
