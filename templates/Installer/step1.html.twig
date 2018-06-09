@@ -1,10 +1,13 @@
 {% trans_default_domain 'Installer' %}
 
 {% extends 'Default/template.html.twig' %}
+{% form_theme form
+    "@HillrangeForm/FormTheme/bootstrap.html.twig"
+%}
 
 {% block menuContainer %}{% endblock menuContainer %}
 {% block title %}Busybee Installer{% endblock title %}
-
+{% block headerTitle %}{{ 'installation.step'|trans({'%{step}': (manager.step + 1)}) }}{% endblock headerTitle %}
 {% block sectionMenu %}
 <h2>{{ 'Welcome To Gibbon'|trans }}</h2>
 <p style='padding-top: 7px'>
@@ -16,7 +19,32 @@
 </p>
 {% endblock sectionMenu %}
 
-{% block  contentContainer %}
-    <h2>{{ 'Installation - Step %{step}'|trans({'%{step}': (manager.step + 1)}) }}</h2>
+{% block contentContainer %}
+    {% include 'Default/panelStart.html.twig' with {panelStyle: 'default', header: 'system.requirements', transDomain: 'Installer'} %}
     {% include 'Default/messages.html.twig' with {messages: manager.messageManager.addStatusMessages(manager.status, 'Installer')} %}
-{% endblock  contentContainer %}
+
+    {% for result in manager.requirementCheck() %}
+        <div class="row row-striped">
+            <div class="col-5">
+                {{ result.label|trans(result.labelKey) }}<br/><small class="text-muted">{{ result.description|trans(result.descriptionKey) }}</small>
+            </div>
+            <div class="col-5">
+                {{ result.value }}
+            </div>
+            <div class="offset-1 col-1 text-center">
+                {{ onOffButton(result.button)|raw }}
+            </div>
+        </div>
+    {% endfor %}
+    {% include 'Default/panelEnd.html.twig' %}
+    {{ form_start(form) }}
+    {% set h3Content = saveButton() %}
+    {% include 'Default/panelStart.html.twig' with {panelStyle: 'default', header: 'language.setting', transDomain: 'Installer'} %}
+    <div class="row row-striped">
+        <div class="offset-5 col-7">
+            {{ form_row(form.language) }}
+        </div>
+    </div>
+    {% include 'Default/panelEnd.html.twig' %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}

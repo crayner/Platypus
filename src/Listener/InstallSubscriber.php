@@ -16,6 +16,7 @@
 namespace App\Listener;
 
 use App\Manager\InstallationManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
@@ -23,6 +24,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class InstallSubscriber implements EventSubscriberInterface
 {
+    /**
+     * @var bool
+     */
+    private static $installing = false;
+
     /**
      * getSubscribedEvents
      *
@@ -36,18 +42,35 @@ class InstallSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @return bool
+     */
+    public static function isInstalling(): bool
+    {
+        return self::$installing;
+    }
+
+    /**
      * installationCheck
      *
      * @param GetResponseEvent $event
      */
     public function installationCheck(GetResponseEvent $event)
     {
+        self::$installing = false;
         if (! $event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
                 [
                     'installer_start',
+                    'installer_database_settings',
                 ]
             )
-        ) return;
+        ) {
+            self::$installing = true;
+            return;
+        }
+        // Ignore the profiler and wdt
+        if (strpos($event->getRequest()->get('_route'), '_') === 0)
+            return;
+
 
         // Test for db installation.
         $response = null;
@@ -56,9 +79,10 @@ class InstallSubscriber implements EventSubscriberInterface
         if (! $this->installationManager->isConnected())
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_start'));
 
-        if (! is_null($response))
+        if (! is_null($response)) {
+            self::$installing = true;
             $event->setResponse($response);
-
+        }
 
         return ;
     }
@@ -71,6 +95,7 @@ class InstallSubscriber implements EventSubscriberInterface
     /**
      * InstallSubscriber constructor.
      * @param InstallationManager $installationManager
+     * @param ContainerInterface $container
      */
     public function __construct(InstallationManager $installationManager)
     {
@@ -84,5 +109,4 @@ class InstallSubscriber implements EventSubscriberInterface
     {
         return $this->installationManager;
     }
-
 }

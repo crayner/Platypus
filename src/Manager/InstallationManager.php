@@ -19,11 +19,30 @@ namespace App\Manager;
 use App\Organism\Database;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\ConnectionException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Yaml\Exception\DumpException;
+use Symfony\Component\Yaml\Exception\ParseException;
 use Symfony\Component\Yaml\Yaml;
 
 class InstallationManager
 {
+
+    /**
+     * System Requirements
+     */
+    public static $systemRequirements = [
+        'php' 			=> '7.1.0',
+        'mysql' 		=> '5.7',
+        'extensions' 	=> ['gettext', 'mbstring', 'curl', 'zip', 'xml', 'gd'],
+        'settings' 		=> [
+            ['max_input_vars', '>=', 5000],
+            ['max_file_uploads', '>=', 20],
+            ['allow_url_fopen', '==', 1],
+            ['register_globals', '==', 0],
+        ],
+    ];
+
     /**
      * @var RouterInterface
      */
@@ -231,11 +250,11 @@ class InstallationManager
      */
     public function setCanInstall(): InstallationManager
     {
-        if (is_writable($this->getProjectDir() . '/config/packages/doctrine.yaml')) {
-            $this->addStatus('success', 'The directory containing the Gibbon files is writable, so the installation may proceed.');
+        if (is_writable($this->getProjectDir() . '/config/packages/doctrine.yaml') && is_writable($this->getProjectDir() . '/config/packages/platypus.yaml')) {
+            $this->addStatus('success', 'installer.file.permission.success');
             $canInstall = true;
         } else {
-            $this->addStatus('error', 'The directory containing the Gibbon files is not currently writable, or config.php already exists in the root folder and is not empty or is not writable, so the installer cannot proceed.');
+            $this->addStatus('danger', 'installer.file.permission.danger');
             $canInstall = false;
         }
         $this->canInstall = $canInstall ? true : false ;
@@ -248,5 +267,70 @@ class InstallationManager
     public function getMessageManager(): MessageManager
     {
         return $this->messageManager;
+    }
+
+    public function getRequirementCheck(): array
+    {
+        $results = [];
+        $result = new \stdClass();
+        $result->label = 'version.name';
+        $result->labelKey = ['%{name}' => 'PHP'];
+        $result->description = 'version.description';
+        $result->descriptionKey = ['%{name}' => 'PHP', '%{version}' => self::$systemRequirements['php']];
+        $result->value = phpversion();
+        $result->button = ['value' => version_compare(phpversion(), self::$systemRequirements['php'], '>='), 'style' => '', 'on' => ['class' => 'btn btn-success fas fa-check'], 'off' => ['class' => 'btn btn-danger fas fa-times']];
+        $results[] = $result;
+
+        $result = new \stdClass();
+        $result->label = 'mysql.pdo.support';
+        $result->labelKey = [];
+        $result->description = '';
+        $result->descriptionKey = [];
+        $result->value = (extension_loaded('pdo') && extension_loaded('pdo_mysql')) ? 'Installed' : 'Not Installed';
+        $result->button = ['value' => (extension_loaded('pdo') && extension_loaded('pdo_mysql')), 'style' => '', 'on' => ['class' => 'btn btn-success fas fa-check'], 'off' => ['class' => 'btn btn-danger fas fa-times']];
+        $results[] = $result;
+
+
+        foreach (self::$systemRequirements['extensions'] as $name){
+            $result = new \stdClass();
+            $result->label = 'extension.name';
+            $result->labelKey = ['%{name}' => $name];
+            $result->description = '';
+            $result->descriptionKey = [];
+            $result->value = extension_loaded($name) ? 'Installed' : 'Not Installed';
+            $result->button = ['value' => extension_loaded($name), 'style' => '', 'on' => ['class' => 'btn btn-success fas fa-check'], 'off' => ['class' => 'btn btn-danger fas fa-times']];
+            $results[] = $result;
+
+        }
+
+        return $results;
+    }
+
+    /**
+     * saveLanguage
+     *
+     * @param Request $request
+     * @return bool
+     */
+    public function saveLanguage(Request $request): bool
+    {
+        $locale = $request->request->get('install_language');
+        $locale = $locale['language'];
+        try{
+            $contents = Yaml::parse(file_get_contents($this->getProjectDir().'/config/packages/platypus.yaml'));
+            $contents['parameters']['locale'] = $locale;
+            file_put_contents($this->getProjectDir().'/config/packages/platypus.yaml', Yaml::dump($contents, 4));
+        } catch (ParseException $e) {
+            $this->addStatus('danger', 'installer.file.parse.error', ['%{name}' => 'platypus.yaml']);
+            return false;
+        } catch (DumpException $e) {
+            $this->addStatus('danger', 'installer.file.dump.error', ['%{name}' => 'platypus.yaml']);
+            return false;
+        } catch (\ErrorException $e) {
+            $this->addStatus('danger', 'installer.file.write.error', ['%{name}' => 'platypus.yaml']);
+            return false;
+        }
+
+        return true;
     }
 }

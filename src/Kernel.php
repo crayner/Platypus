@@ -42,6 +42,8 @@ class Kernel extends BaseKernel
         // if you are using symfony/dependency-injection 4.0+ as it's the default behavior
         $container->setParameter('container.autowiring.strict_mode', true);
         $container->setParameter('container.dumper.inline_class_loader', true);
+        $container->setParameter('current_year', date('Y'));
+        $container->setParameter('current_month', date('m'));
         $confDir = $this->getProjectDir().'/config';
 
         $loader->load($confDir.'/{packages}/*'.self::CONFIG_EXTS, 'glob');

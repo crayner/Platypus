@@ -22,5 +22,5 @@ class VersionManager
     /**
      * @var string
      */
-    public static $version = '16.0.00';
+    public static $version = '0.0.00';
 }
