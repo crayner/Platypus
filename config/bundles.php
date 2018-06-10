@@ -12,4 +12,7 @@ return [
     Hillrange\Form\HillrangeFormBundle::class => ['all' => true],
     PlatypusTemplate\Original\PlatypusTemplateOriginalBundle::class => ['all' => true],
     Translation\Bundle\TranslationBundle::class => ['all' => true],
+    Symfony\Bundle\SecurityBundle\SecurityBundle::class => ['all' => true],
+    Hillrange\Security\HillrangeSecurityBundle::class => ['all' => true],
+    Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle::class => ['all' => true],
 ];

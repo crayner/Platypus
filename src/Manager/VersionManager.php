@@ -22,5 +22,36 @@ class VersionManager
     /**
      * @var string
      */
-    public static $version = '0.0.00';
+    const VERSION = '0.1.01';
+
+    /**
+     * @param $version
+     *
+     * @return string
+     */
+    public static function incrementVersion($version)
+    {
+        $parts = explode('.', $version);
+        if (count($parts) !== 3)
+        {
+            trigger_error('This process only accepts standard 3 part versions. (0.0.00)');
+            return $version;
+        }
+
+        if ($parts[2] + 1 < 99) {
+            $parts[2]++;
+        } else {
+            $parts[2] = 0;
+            if ($parts[1] + 1 <= 99) {
+                $parts[1]++;
+            } else {
+                $parts[1] = 0;
+                $parts[0]++;
+            }
+        }
+
+        $parts[2] = str_pad($parts[2], 2, '0', STR_PAD_LEFT);
+
+        return implode('.', $parts);
+    }
 }

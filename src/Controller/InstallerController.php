@@ -17,11 +17,18 @@ namespace App\Controller;
 
 use App\Form\InstallLanguageType;
 use App\Form\InstallDatabaseType;
+use App\Form\InstallUserType;
 use App\Manager\InstallationManager;
+use App\Manager\SettingManager;
 use App\Organism\Language;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class InstallerController extends Controller
 {
@@ -86,12 +93,42 @@ class InstallerController extends Controller
 
     /**
      * createDatabase
-     * @Route("/installer/database/{data}/create/", name="installer_database_create")
-     * @param bool $data
+     * @Route("/installer/database/{demo}/create/", name="installer_database_create")
      */
-    public function createDatabase(bool $data, InstallationManager $installationManager, Request $request)
+    public function createDatabase(bool $demo, InstallationManager $installationManager, Request $request, KernelInterface $kernel, EntityManagerInterface $entityManager, SettingManager $settingManager)
     {
         $installationManager->setStep(2);
-        die('Step 2');
+
+        if (! $installationManager->hasDatabase(false)) {
+            $application = new Application($kernel);
+            $application->setAutoExit(false);
+
+            $input = new ArrayInput(array(
+                'command' => 'doctrine:database:create',
+                // (optional) define the value of command arguments
+                '--if-not-exists' => '--if-not-exists',
+                // (optional) pass options to the command
+                '--quiet' => '--quiet',
+            ));
+
+            // You can use NullOutput() if you don't need the output
+            $output = new BufferedOutput();
+            $application->run($input, $output);
+
+            // return the output, don't use if you used NullOutput()
+            $content = $output->fetch();
+        }
+        if ($installationManager->hasDatabase())
+            if ($installationManager->setAction(true)->buildDatabase($entityManager))
+                $settingManager->setAction(true)->buildSystemSettings();
+
+        $form = $this->createForm(InstallUserType::class);
+
+        return $this->render('Installer/step3.html.twig',
+            [
+                'form' => $form->createView(),
+                'manager' => $installationManager,
+            ]
+        );
     }
 }

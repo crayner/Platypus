@@ -1,0 +1,37 @@
+{% trans_default_domain 'Installer' %}
+
+{% extends 'Default/template.html.twig' %}
+
+{% set fullPage = false %}
+
+{% form_theme form
+    "@HillrangeForm/FormTheme/bootstrap.html.twig"
+%}
+
+{% block menuContainer %}{% endblock menuContainer %}
+{% block title %}Busybee Installer{% endblock title %}
+{% block headerTitle %}{{ 'installation.step'|trans({'%{step}': (manager.step + 1)}) }}{% endblock headerTitle %}
+{% block sectionMenu %}
+    <h4>{{ 'welcome'|trans }}</h4>
+    <small class="text-muted">
+        {{ 'welcome.sentence.1'|trans }}<br/>
+        <br/>
+        {{ 'welcome.sentence.2'|trans }}<br/>
+        <br/>
+        {{ "welcome.sentence.3"|trans|raw }}
+    </small>
+{% endblock sectionMenu %}
+
+{% block contentContainer %}
+    {{ form_start(form) }}
+    {% set h3Content = saveButton() %}
+    {% include 'Default/panelStart.html.twig' with {panelStyle: 'default', header: 'user.account', transDomain: 'Installer'} %}
+    {% include 'Default/messages.html.twig' with {messages: manager.messageManager.addStatusMessages(manager.status, 'Installer')} %}
+    {% include 'Default/panelEnd.html.twig' %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include '@HillrangeForm/Toggle/script.html.twig' %}
+{% endblock javascripts %}

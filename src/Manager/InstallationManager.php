@@ -19,6 +19,8 @@ namespace App\Manager;
 use App\Organism\Database;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\ConnectionException;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Yaml\Exception\DumpException;
@@ -63,6 +65,7 @@ class InstallationManager
      */
     private $messageManager;
 
+
     /**
      * InstallationManager constructor.
      * @param RouterInterface $router
@@ -94,17 +97,19 @@ class InstallationManager
         $this->getSQLParameters();
         $this->connection = $this->getConnection(false);
 
-        $this->sql->error = 'No Error Detected.';
         $this->sql->setConnected(true);
 
         try {
             $this->connection->connect();
         } catch (ConnectionException $e) {
-            $this->sql->error = $e->getMessage();
+            $this->addStatus('danger', 'installer.connection.error', ['%{message}' => $e->getMessage()]);
+
             $this->sql->setConnected(false);
             $this->exception = $e;
+            return $this->sql->isConnected();
         }
 
+        $this->addStatus('success', 'installer.connection.success');
         return $this->sql->isConnected();
     }
 
@@ -114,7 +119,7 @@ class InstallationManager
      * @return Connection
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function getConnection($useDatabase = true)
+    public function getConnection($useDatabase = true): Connection
     {
         $config = new \Doctrine\DBAL\Configuration();
 
@@ -377,5 +382,109 @@ class InstallationManager
         }
 
         return true;
+    }
+
+    /**
+     * hasDatabase
+     *
+     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function hasDatabase(bool $throw = true): bool
+    {
+        $this->getSQLParameters();
+        $connection = $this->getConnection();
+        try {
+            $connection->connect();
+        } catch (ConnectionException $e) {
+            if ($throw)
+                $this->addStatus('danger', 'installer.database.create.fail', ['%{name}' => $this->sql->getName()]);
+        }
+        if ($connection->isConnected() && $this->sql->getDriver() === 'pdo_mysql')
+            $connection->executeQuery("ALTER DATABASE `" . $this->sql->getName() . "` CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`");
+
+        return $connection->isConnected();
+    }
+
+    /**
+     * Build Database
+     * @version 30th August 2017
+     * @since   23rd October 2016
+     * @param EntityManagerInterface $entityManager
+     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function buildDatabase(EntityManagerInterface $entityManager): bool
+    {
+        $this->getSQLParameters();
+        $conn = $this->getConnection();
+
+        if ($this->isAction())
+            $conn->exec('SET FOREIGN_KEY_CHECKS = 0');
+
+        $schemaTool = new SchemaTool($entityManager);
+
+        $metaData = $entityManager->getMetadataFactory()->getAllMetadata();
+
+        $xx = $schemaTool->getUpdateSchemaSql($metaData);
+
+        $count = count($xx);
+        if (! $this->isAction())
+        {
+            $this->addStatus('info', 'system.build.database.count', ['%count%' => $count, '%{software}' => VersionManager::VERSION]);
+            return true;
+        }
+        else
+            $this->addStatus('info', 'system.build.database.done', ['%count%' => $count]);
+
+        $ok = true;
+
+        foreach ($xx as $sql) {
+            try
+            {
+                if ($this->isAction())
+                    $conn->executeQuery($sql);
+            } catch (\Exception $e){
+                if ($e->getPrevious() instanceof DriverException && $e->getErrorCode() == '1823')
+                {
+                    $ok = false;
+                    $this->addStatus('danger', 'system.build.database.error', ['%error%' => $e->getMessage()]);
+                }
+            }
+        }
+        if ($this->isAction())
+            $conn->exec('SET FOREIGN_KEY_CHECKS = 1');
+
+        if ($ok)
+            $this->addStatus('success', 'system.build.database.success', ['%count%' => $count]);
+        else
+            $this->addStatus('warning', 'system.build.database.warning', ['%count%' => $count]);
+
+        return $ok;
+    }
+
+    /**
+     * @var bool
+     */
+    private $action = false;
+
+    /**
+     * @return bool
+     */
+    public function isAction(): bool
+    {
+        return $this->action ? true : false;
+    }
+
+    /**
+     * @param bool $action
+     *
+     * @return InstallationManager
+     */
+    public function setAction(bool $action): InstallationManager
+    {
+        $this->action = $action ? true : false;
+
+        return $this;
     }
 }

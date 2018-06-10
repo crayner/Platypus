@@ -68,7 +68,7 @@ class CoreExtension extends AbstractExtension
      */
     public function getVersion(): string
     {
-        return VersionManager::$version;
+        return VersionManager::VERSION;
     }
 
     /**

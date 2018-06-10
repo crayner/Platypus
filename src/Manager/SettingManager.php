@@ -1,7 +1,7 @@
 <?php
 namespace App\Manager;
 
-use App\Core\Organism\SettingCache;
+use App\Organism\SettingCache;
 use App\Core\Validator\Regex;
 use App\Core\Validator\Twig;
 use App\Entity\Setting;
@@ -61,12 +61,11 @@ class SettingManager implements ContainerAwareInterface
      * @param ContainerInterface $container
      * @param MessageManager $messageManager
      */
-//    public function __construct(ContainerInterface $container, MessageManager $messageManager, AuthorizationCheckerInterface $authorisation, TwigManager $twig, ValidatorInterface $validator)
-    public function __construct(ContainerInterface $container, MessageManager $messageManager, TwigManager $twig, ValidatorInterface $validator)
+    public function __construct(ContainerInterface $container, MessageManager $messageManager, AuthorizationCheckerInterface $authorisation, TwigManager $twig, ValidatorInterface $validator)
     {
         $this->setContainer($container);
         $this->messageManager = $messageManager;
-//        $this->authorisation = $authorisation;
+        $this->authorisation = $authorisation;
         $this->twig = $twig;
         $this->validator = $validator;
     }
@@ -892,5 +891,113 @@ class SettingManager implements ContainerAwareInterface
         }
         $result = Yaml::dump($settings, 4);
         return $result;
+    }
+
+    /**
+     * @return bool
+     * @throws \Exception
+     */
+    public function buildSystemSettings(): bool
+    {
+        $current = $this->getSystemVersion();
+
+        $software = VersionManager::VERSION;
+dump([$this, $current, $software]);
+        $this->systemSettingsInstalled = true;
+
+        if (version_compare($current, $software, '>='))
+            return true;
+
+        $this->systemSettingsInstalled = false;
+
+        if (! $this->isAction())
+        {
+            $this->getMessageManager()->add('info', 'update.setting.required', ['%{software}' => $software, '%{current}' => $current]);
+            return false;
+        }
+
+
+        while (version_compare($current, $software, '<'))
+        {
+            $current = VersionManager::incrementVersion($current);
+
+            $class = 'App\\Organism\\Settings_' . str_replace('.', '_', $current);
+
+            if (class_exists($class))
+            {
+                $class = new $class();
+
+                if (!$class instanceof SettingInterface)
+                    trigger_error('The setting class ' . $class->getClassName() . ' is not correctly formatted as a SettingInterface.');
+
+                $data = Yaml::parse($class->getSettings());
+
+                if (isset($data['version']))
+                    unset($data['version']);
+
+                $count = $this->createSettings($data);
+                $this->getMessageManager()->add('success', 'install.system.setting.file', ['transChoice' => $count, '%{class}' => $class->getClassName()]);
+            }
+
+            if (version_compare($current, $software, '='))
+                $this->systemSettingsInstalled = true;
+        }
+
+        $this->updateCurrentVersion($current);
+
+        return false;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSystemVersion(): string
+    {
+        if ($this->has('version'))
+            return $this->get('version', '0.0.00');
+        else
+            return '0.0.00';
+    }
+
+    /**
+     * @var bool
+     */
+    private $action = false;
+
+    /**
+     * @return bool
+     */
+    public function isAction(): bool
+    {
+        return $this->action ? true : false;
+    }
+
+    /**
+     * @param bool $action
+     *
+     * @return SettingManager
+     */
+    public function setAction(bool $action): SettingManager
+    {
+        $this->action = $action ? true : false;
+
+        return $this;
+    }
+
+    /**
+     * @param $current
+     */
+    private function updateCurrentVersion($current)
+    {
+        $version = [];
+        $data = [];
+        $version['type'] = 'system';
+        $version['displayName'] = 'System Version';
+        $version['description'] = 'The version of Busybee currently configured on your system.';
+        $version['role'] = 'ROLE_SYSTEM_ADMIN';
+        $version['value'] = $current;
+        $version['defaultValue'] = '0.0.00';
+        $data['version'] = $version;
+        $this->createSettings($data);
     }
 }
