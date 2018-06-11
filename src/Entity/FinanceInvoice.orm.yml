@@ -1,0 +1,9 @@
+App\Entity\FinanceInvoice:
+    type: entity
+    table: finance_invoice
+    repositoryClass: App\Repository\FinanceInvoiceRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO

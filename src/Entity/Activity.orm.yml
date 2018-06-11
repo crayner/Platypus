@@ -53,8 +53,8 @@ App\Entity\Activity:
             nullable: true
         payment:
             type: decimal
-            precision: 2
-            scale: 8
+            precision: 8
+            scale: 2
             nullable: true
         paymentType:
             length: 16

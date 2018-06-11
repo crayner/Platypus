@@ -187,4 +187,27 @@ class ActivityStudent
         $this->activityBackup = $activityBackup;
         return $this;
     }
+
+    /**
+     * @var FinanceInvoice|null
+     */
+    private $financeInvoice;
+
+    /**
+     * @return FinanceInvoice|null
+     */
+    public function getFinanceInvoice(): ?FinanceInvoice
+    {
+        return $this->financeInvoice;
+    }
+
+    /**
+     * @param FinanceInvoice|null $financeInvoice
+     * @return ActivityStudent
+     */
+    public function setFinanceInvoice(?FinanceInvoice $financeInvoice): ActivityStudent
+    {
+        $this->financeInvoice = $financeInvoice;
+        return $this;
+    }
 }
