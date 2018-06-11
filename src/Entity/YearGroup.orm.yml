@@ -1,0 +1,13 @@
+App\Entity\YearGroup:
+    type: entity
+    table: year_group
+    repositoryClass: App\Repository\YearGroupRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 10
+            nullable: false

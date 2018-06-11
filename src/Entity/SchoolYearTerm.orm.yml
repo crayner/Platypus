@@ -1,0 +1,13 @@
+App\Entity\SchoolYearTerm:
+    type: entity
+    table: school_year_term
+    repositoryClass: App\Repository\SchoolYearTermRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 20
+            nullable: false

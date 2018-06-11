@@ -1,0 +1,32 @@
+App\Entity\ActivityAttendance:
+    type: entity
+    table: activity_attendance
+    repositoryClass: App\Repository\ActivityAttendanceRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        attendance:
+            type: text
+            nullable: false
+        date:
+            type: date
+            nullable: true
+        timestampTaken:
+            type: datetime
+            column: timestamp_taken
+    manyToOne:
+        activity:
+            targetEntity: App\Entity\Activity
+            joinColumn:
+                name: activity_id
+                referencedColumnName: id
+                nullable: false
+        personTaker:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: person_taker_id
+                referencedColumnName: id
+                nullable: false

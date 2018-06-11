@@ -5,7 +5,7 @@ parameters:
     db_port: '3306'
     db_name: craigray_platypus
     db2_name: ''
-    db_user: ''
+    db_user: craigray_core
     db_pass: fAxNp7hdYsBwJ54y
     db_prefix: pltys_
     db_server: mysql

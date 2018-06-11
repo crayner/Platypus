@@ -1,0 +1,9 @@
+App\Entity\Person:
+    type: entity
+    table: person
+    repositoryClass: App\Repository\PersonRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO

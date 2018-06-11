@@ -1,0 +1,98 @@
+App\Entity\Activity:
+    type: entity
+    table: activity
+    repositoryClass: App\Repository\ActivityRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        active:
+            type: boolean
+            options:
+                default: '1'
+        registration:
+            type: boolean
+            options:
+                default: '1'
+                comment: Can a parent/student select this for registration?
+        name:
+            length: 40
+            nullable: false
+        provider:
+            length: 8
+            options:
+                default: 'school'
+        type:
+            length: 255
+            nullable: false
+        listingStart:
+            type: date
+            column: listing_start
+            nullable: true
+        listingEnd:
+            type: date
+            column: listing_end
+            nullable: true
+        programStart:
+            type: date
+            column: program_start
+            nullable: true
+        programEnd:
+            type: date
+            column: program_end
+            nullable: true
+        maxParticipants:
+            type: integer
+            length: 3
+            options:
+                default: '0'
+        description:
+            type: text
+            nullable: true
+        payment:
+            type: decimal
+            precision: 2
+            scale: 8
+            nullable: true
+        paymentType:
+            length: 16
+            nullable: false
+            options:
+                default: 'entire_programme'
+            column: payment_type
+        paymentFirmness:
+            length: 12
+            nullable: false
+            options:
+                default: 'finalised'
+            column: payment_firmness
+    manyToOne:
+        schoolYear:
+            targetEntity: App\Entity\SchoolYear
+            joinColumn:
+                name: school_year_id
+                referencedColumnName: id
+                nullable: false
+    manyToMany:
+        schoolYearTerms:
+            targetEntity: App\Entity\SchoolYearTerm
+            joinTable:
+                name: activity_school_year_term
+                joinColumns:
+                    activity_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    school_year_term_id:
+                        referencedColumnName: id
+        yearGroups:
+            targetEntity: App\Entity\YearGroup
+            joinTable:
+                name: activity_year_group
+                joinColumns:
+                    activity_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    year_group_id:
+                        referencedColumnName: id
