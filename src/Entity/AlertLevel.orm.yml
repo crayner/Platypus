@@ -1,0 +1,30 @@
+App\Entity\AlertLevel:
+    type: entity
+    table: alert_level
+    repositoryClass: App\Repository\AlertLevelRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 50
+            nullable: false
+        nameShort:
+            length: 4
+            nullable: false
+            column: name_short
+        colour:
+            length: 6
+            nullable: true
+        colourBG:
+            length: 6
+            nullable: true
+            column: colour_bg
+        description:
+            type: text
+        sequenceNumber:
+            type: integer
+            column: sequence_number
+            length: 3
