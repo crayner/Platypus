@@ -1,0 +1,28 @@
+App\Entity\ActivityStaff:
+    type: entity
+    table: activity_staff
+    repositoryClass: App\Repository\ActivityStaffRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        role:
+            length: 16
+            nullable: false
+            options:
+                default: 'organiser'
+    manyToOne:
+        activity:
+            targetEntity: App\Entity\Activity
+            joinColumn:
+                name: activity_id
+                referencedColumnName: id
+                nullable: false
+        person:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: person_id
+                referencedColumnName: id
+                nullable: false
