@@ -59,16 +59,27 @@ class InstallSubscriber implements EventSubscriberInterface
         self::$installing = false;
         if (! $event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
                 [
+                    // Route that Install
                     'installer_start',
                     'installer_database_settings',
                     'installer_database_create',
-                    'section_menu_display',
                 ]
             )
         ) {
+            if ($event->getRequest()->hasSession())
+                $event->getRequest()->getSession()->remove('settings');
             self::$installing = true;
             return;
         }
+
+        if (! $event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
+                [
+                    // Ignore these routes
+                    'section_menu_display',
+                ]
+            )
+        ) return;
+
         // Ignore the profiler and wdt
         if (strpos($event->getRequest()->get('_route'), '_') === 0)
             return;
@@ -81,9 +92,11 @@ class InstallSubscriber implements EventSubscriberInterface
         if (! $this->installationManager->isConnected())
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_start'));
         elseif (! $this->installationManager->hasDatabase()) // Can I connect to the database
-            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create', ['demo' => false]));
+            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create', ['demo' => 0]));
 
         if (! is_null($response)) {
+            if ($event->getRequest()->hasSession())
+                $event->getRequest()->getSession()->remove('settings');
             self::$installing = true;
             $event->setResponse($response);
         }

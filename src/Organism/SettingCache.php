@@ -19,7 +19,6 @@ use App\Entity\Setting;
 use App\Repository\SettingRepository;
 use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
-use Hillrange\Form\Validator\AlwaysInValid;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -853,7 +852,6 @@ class SettingCache
         if (! empty($this->getValidator()) && class_exists($this->getValidator())) {
             $w = $this->getValidator();
             $constraints[] = new $w();
-            $constraints[] = new AlwaysInValid();
         }
         if (! empty($constraints)) {
             $errors = $validator->validate($this->getSetting()->getValue(), $constraints);

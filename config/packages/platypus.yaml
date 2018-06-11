@@ -1,3 +1,34 @@
 parameters:
-    locale: en_GB
-    session_name: 'platypus'
+    locale: en
+    session_name: 'platypus_session'
+    encoder.cost: 15
+    security.hierarchy.roles:
+        ROLE_USER: ~
+        ROLE_ALLOWED_TO_SWITCH: ~
+        ROLE_PARENT:
+            - ROLE_USER
+        ROLE_STUDENT:
+            - ROLE_USER
+        ROLE_STAFF:
+            - ROLE_USER
+        ROLE_TEACHER:
+            - ROLE_ALLOWED_TO_SWITCH
+            - ROLE_STUDENT
+            - ROLE_STAFF
+        ROLE_HEAD_TEACHER:
+            - ROLE_TEACHER
+        ROLE_PRINCIPAL:
+            - ROLE_HEAD_TEACHER
+        ROLE_ADMIN:
+            - ROLE_ALLOWED_TO_SWITCH
+        ROLE_REGISTRAR:
+            - ROLE_PRINCIPAL
+            - ROLE_ADMIN
+        ROLE_SYSTEM_ADMIN:
+            - ROLE_REGISTRAR
+            - ROLE_PARENT
+    security.password.settings:
+        min_length: 8
+        specials: false
+        numbers: true
+        mixed_case: true

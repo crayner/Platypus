@@ -119,6 +119,9 @@ class Message
         if ($name === 'resetButton')
             return $this->addButton($name, $element);
 
+        if ($name === 'fixedMessage')
+            return $this->setFixedMessage($element);
+
         $this->options[$name] = $element;
 
 		return $this;
@@ -213,5 +216,28 @@ class Message
         $element['name'] = $name;
         $this->getButtons()->add($element);
         return $this;
+    }
+
+    /**
+     * @var bool
+     */
+    private $fixedMessage = false;
+
+    /**
+     * @return bool
+     */
+    public function isFixedMessage(): bool
+    {
+        return $this->fixedMessage;
+    }
+
+    /**
+     * @param bool $fixedMessage
+     * @return Message
+     */
+    public function setFixedMessage(bool $fixedMessage): Message
+    {
+        $this->fixedMessage = $fixedMessage;
+        return $this->removeOption('fixedMessage');
     }
 }

@@ -2,7 +2,6 @@
 namespace App\Form;
 
 use App\Manager\SettingManager;
-use App\Validator\SettingChoice;
 use App\Validator\GoogleOAuth;
 use Hillrange\Form\Type\TextType;
 use App\Organism\User;
@@ -40,11 +39,13 @@ class InstallUserType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+
 		$builder
 			->add('_email', EmailType::class,
 				[
-					'label'       => 'misc.email.label',
-						'help' => 'misc.email.help',
+					'label'       => 'person.email.label',
+					'help' => 'person.email.help',
+                    'translation_domain' => 'Person',
 					'constraints' => [
 						new NotBlank(),
 						new Email(
@@ -57,25 +58,25 @@ class InstallUserType extends AbstractType
 				]
 			)
 			->add('_username', TextType::class,
-				[
-					'label'       => 'misc.username.label',
-						'help' => 'misc.username.help',
-					'required'    => false,
-					'constraints' => [
-						new NotBlank(),
-					],
-				]
-			)
-			->add('_password', TextType::class,
-				[
-					'label'       => 'misc.password.label',
-						'help' => 'misc.password.help',
-					'constraints' => [
-						new NotBlank(),
-						new Password(),
-					],
-				]
-			)
+                            [
+                                'label'       => 'user.username.label',
+                                'help' => 'user.username.help',
+                                'required'    => false,
+                                'constraints' => [
+                                    new NotBlank(),
+                                ],
+                            ]
+                        )
+            ->add('_password', TextType::class,
+                [
+                    'label'       => 'user.password.label',
+                    'help' => 'user.password.help',
+                    'constraints' => [
+                        new NotBlank(),
+                        new Password(),
+                    ],
+                ]
+            )
             ->add('surname', TextType::class,
                 [
                     'label' => 'person.surname.label',
@@ -97,7 +98,7 @@ class InstallUserType extends AbstractType
             ->add('orgName', TextType::class,
                 [
                     'label' => 'system.org_name.label',
-                    'data' => $this->settingManager->get('org.name.long'),
+                    'data' => $this->settingManager->get('org.name.long', 'Busybee Learning'),
                     'translation_domain' => 'System',
                     'constraints' => [
                         new NotBlank(),
@@ -108,7 +109,7 @@ class InstallUserType extends AbstractType
                 [
                     'label' => 'system.org_code.label',
                     'translation_domain' => 'System',
-                    'data' => $this->settingManager->get('org.name.short'),
+                    'data' => $this->settingManager->get('org.name.short', 'BEE'),
                     'constraints' => [
                         new Length(['max' => 5]),
                         new NotBlank(),
@@ -120,16 +121,15 @@ class InstallUserType extends AbstractType
                     'label' => 'person.honorific.label',
                     'translation_domain' => 'Person',
                     'setting_name' => 'person.title.list',
+                    'placeholder' => 'person.honorific.placeholder',
                     'required' => false,
-                    'constraints' => [
-                        new SettingChoice(['settingName' => 'person.title.list', 'strict' => false, 'useLowerCase' => true])
-                    ],
                 ]
             )
             ->add('currency', CurrencyType::class,
                 [
                     'label' => 'system.currency.label',
                     'help' => 'system.currency.help',
+                    'placeholder' => 'system.placeholder',
                     'data' => $this->settingManager->get('currency'),
                     'translation_domain' => 'System',
                     'constraints' => [
@@ -142,7 +142,8 @@ class InstallUserType extends AbstractType
                 [
                     'label' => 'system.country.label',
                     'help' => 'system.country.help',
-                    'data' => $this->settingManager->getParameter('country'),
+                    'placeholder' => 'system.placeholder',
+                    'data' => $this->settingManager->getParameter('country'. 'AU'),
                     'translation_domain' => 'System',
                     'constraints' => [
                         new NotBlank(),
@@ -154,7 +155,8 @@ class InstallUserType extends AbstractType
                 [
                     'label' => 'system.timezone.label',
                     'help' => 'system.timezone.help',
-                    'data' => $this->settingManager->getParameter('timezone'),
+                    'placeholder' => 'system.placeholder',
+                    'data' => $this->settingManager->getParameter('timezone', 'Australia/Sydney'),
                     'translation_domain' => 'System',
                     'constraints' => [
                         new NotBlank(),
@@ -162,8 +164,6 @@ class InstallUserType extends AbstractType
                 ]
             )
         ;
-
-		InstallGoogleType::buildForm($builder, $options);
 	}
 
 	/**

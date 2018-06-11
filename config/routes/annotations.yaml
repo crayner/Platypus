@@ -2,7 +2,7 @@ controllers:
     resource: ../../src/Controller/
     prefix:   /{_locale}
     requirements:
-        _locale: en
+        _locale: '%locale%'
     defaults: { _locale: en}
     type: annotation
 core:

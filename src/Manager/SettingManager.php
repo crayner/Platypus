@@ -2,8 +2,8 @@
 namespace App\Manager;
 
 use App\Organism\SettingCache;
-use App\Core\Validator\Regex;
-use App\Core\Validator\Twig;
+use App\Validator\Regex;
+use App\Validator\Twig;
 use App\Entity\Setting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -813,7 +813,7 @@ class SettingManager implements ContainerAwareInterface
         $constraint['image'] = [];
         $constraints['file'] = [];
         $constraints['array'] = [
-            new \App\Core\Validator\Yaml(),
+            new \App\Validator\Yaml(),
         ];
         $constraints['twig'] = [
             new Twig(),
@@ -902,7 +902,7 @@ class SettingManager implements ContainerAwareInterface
         $current = $this->getSystemVersion();
 
         $software = VersionManager::VERSION;
-dump([$this, $current, $software]);
+
         $this->systemSettingsInstalled = true;
 
         if (version_compare($current, $software, '>='))

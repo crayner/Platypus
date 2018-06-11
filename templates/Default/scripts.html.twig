@@ -77,6 +77,14 @@
     function iconDoneRendering () {
         var show = '{{ app.session.get('showSectionMenu')|default(0) }}';
 
+        {% if fullpage is defined %}
+            {% if (fullpage) %}
+                {{ 'show = 0;' }}
+            {% else %}
+                {{ 'show = 1;' }}
+            {% endif %}
+        {% endif %}
+
         if (show == 0) {
             $('.foldMenu').click();
         }

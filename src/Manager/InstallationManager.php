@@ -21,6 +21,9 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
+use Hillrange\Security\Entity\User;
+use Hillrange\Security\Util\ParameterInjector;
+use Hillrange\Security\Util\PasswordManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Yaml\Exception\DumpException;
@@ -65,15 +68,21 @@ class InstallationManager
      */
     private $messageManager;
 
+    /**
+     * @var PasswordManager
+     */
+    private $passwordManager;
+
 
     /**
      * InstallationManager constructor.
      * @param RouterInterface $router
      */
-    public function __construct(RouterInterface $router, MessageManager $messageManager)
+    public function __construct(RouterInterface $router, MessageManager $messageManager, PasswordManager $passwordManager)
     {
         $this->router = $router;
         $this->messageManager = $messageManager;
+        $this->passwordManager = $passwordManager;
         $this->sql = new Database();
     }
 
@@ -233,6 +242,17 @@ class InstallationManager
         $status->message        = $message;
         $this->getStatus();
         $this->status[]         = $status;
+        return $this;
+    }
+
+    /**
+     * clearStatus
+     *
+     * @return InstallationManager
+     */
+    public function clearStatus(): InstallationManager
+    {
+        $this->status = [];
         return $this;
     }
 
@@ -486,5 +506,80 @@ class InstallationManager
         $this->action = $action ? true : false;
 
         return $this;
+    }
+
+    /**
+     * @return PasswordManager
+     */
+    public function getPasswordManager(): PasswordManager
+    {
+        return $this->passwordManager;
+    }
+
+    /**
+     * writeSystemUser
+     *
+     * @param array $data
+     * @param EntityManagerInterface $entityManager
+     * @return User
+     */
+    public function writeSystemUser(Request $request, EntityManagerInterface $entityManager, SettingManager $settingManager): User
+    {
+        $user = $entityManager->getRepository(User::class)->find(1);
+        $data = $request->get('install_user');
+        
+        if (! $user instanceof User)
+            $user = new User();
+
+        $user->setInstaller(true);
+        $user->setUsername($data['_username']);
+        $user->setUsernameCanonical($data['_username']);
+        $user->setEmail($data['_email']);
+        $user->setEmailCanonical($data['_email']);
+        $user->setLocale(ParameterInjector::getParameter('locale', 'en'));
+        $user->setExpired(false);
+        $user->setCredentialsExpired(false);
+        $user->setEnabled(true);
+        $user->setDirectroles(['ROLE_SYSTEM_ADMIN']);
+        $password = $this->passwordManager->encodePassword($user, $data['_password']);
+        $user->setPassword($password);
+        $user->setCredentialsExpireAt(null);
+        $user->setCredentialsExpired(false);
+        $user->setSuperAdmin(true);
+
+
+        $entityManager->persist($user);
+        $entityManager->flush();
+/*        
+        $person = new Person();
+        
+        $person->setHonorific($data['title']);
+        $person->setUser($user);
+        $person->setEmail($data['_email']);
+        $person->setSurname($data['surname']);
+        $person->setFirstName($data['firstName']);
+        $person->setPreferredName($data['firstName']);
+        $person->setOfficialName($data['firstName'] . ' ' . $data['surname']);
+        $person->setIdentifier('');
+        $entityManager->persist($person);
+        $entityManager->flush();
+*/
+        $settingManager->setInstallMode(true);
+
+        $settingManager->set('currency', $data['currency']);
+
+        $orgName = [];
+        $orgName['long'] = $data['orgName'];
+        $orgName['short'] = $data['orgCode'];
+        $settingManager->set('org.name', $orgName);
+
+        $params = Yaml::parse(file_get_contents($this->getProjectDir().'/config/packages/platypus.yaml'));
+
+        $params['parameters']['country'] = $data['country'];
+        $params['parameters']['timezone'] = $data['timezone'];
+
+        file_put_contents($this->getProjectDir().'/config/packages/platypus.yaml', Yaml::dump($params));
+
+        return $user;
     }
 }

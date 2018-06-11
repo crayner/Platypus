@@ -1047,7 +1047,7 @@ currency:
     description: 'The currency use by the school.'
     value: AUD
     choice: null
-    validator: Symfony\Component\Validator\Constraints\CurrencyValidator
+    validator: Symfony\Component\Validator\Constraints\Currency
     role: ROLE_SYSTEM_ADMIN
     defaultValue: null
     translateChoice: null

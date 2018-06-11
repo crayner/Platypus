@@ -1,0 +1,13 @@
+{% trans_default_domain 'System' %}
+
+{% include 'Default/panelStart.html.twig' with {panelStyle: 'default', header: 'system.organisation.settings.title', transDomain: 'System'} %}
+<div class="row">
+    <div class="col-8 card">
+        {{ form_row(form.orgName) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.orgCode) }}
+    </div>
+</div>
+
+{% include 'Default/panelEnd.html.twig' %}

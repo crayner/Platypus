@@ -6,9 +6,11 @@
     {% endif %}
     {% set element = element|default('div') %}
     {% for message in messages.messages %}
-        <{{ element }} class="alert alert-{{ message.level ~ flashClass }} alert-dismissible fade show" id="{{ message.message|replace({' ': '_', '.': '_'}) }}" role="alert" data-dismiss="alert">
-        {% include 'Default/message.html.twig' with {message: message} %}
-            {{ closeButton({additional: {'data-dismiss': "alert", 'aria-label': "Close", 'aria-hidden': "true"}, title: 'Close Message', transDomain: 'home', class: 'close far fa-times-circle'})|raw }}
+        <{{ element }} class="alert alert-{{ message.level ~ flashClass }}{% if not message.fixedMessage %} alert-dismissible fade show" data-dismiss="alert"{% endif %}" id="{{ message.message|replace({' ': '_', '.': '_'}) }}" role="alert">
+            {% include 'Default/message.html.twig' with {message: message} %}
+            {% if not message.fixedMessage %}
+                {{ closeButton({additional: {'data-dismiss': "alert", 'aria-label': "Close", 'aria-hidden': "true"}, title: 'Close Message', transDomain: 'home', class: 'close far fa-times-circle'})|raw }}
+            {% endif %}
         </{{ element }}>
     {% endfor %}
     {% set x = messages.clearMessages() %}

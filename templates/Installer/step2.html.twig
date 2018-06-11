@@ -12,14 +12,7 @@
 {% block title %}Busybee Installer{% endblock title %}
 {% block headerTitle %}{{ 'installation.step'|trans({'%{step}': (manager.step + 1)}) }}{% endblock headerTitle %}
 {% block sectionMenu %}
-    <h4>{{ 'welcome'|trans }}</h4>
-    <small class="text-muted">
-        {{ 'welcome.sentence.1'|trans }}<br/>
-        <br/>
-        {{ 'welcome.sentence.2'|trans }}<br/>
-        <br/>
-        {{ "welcome.sentence.3"|trans|raw }}
-    </small>
+    {% include 'Installer/welcome.html.twig' %}
 {% endblock sectionMenu %}
 
 {% block contentContainer %}

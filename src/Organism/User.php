@@ -273,23 +273,23 @@ class User
     /**
      * @var null|string
      */
-    private $orgcode;
+    private $orgCode;
 
     /**
      * @return null|string
      */
-    public function getOrgcode(): ?string
+    public function getOrgCode(): ?string
     {
-        return $this->orgcode;
+        return $this->orgCode;
     }
 
     /**
      * @param null|string $orgcode
      * @return User
      */
-    public function setOrgcode(?string $orgcode): User
+    public function setOrgCode(?string $orgCode): User
     {
-        $this->orgcode = $orgcode;
+        $this->orgCode = $orgCode;
         return $this;
     }
 

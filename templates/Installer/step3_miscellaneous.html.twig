@@ -1,0 +1,16 @@
+{% trans_default_domain 'System' %}
+
+{% include 'Default/panelStart.html.twig' with {panelStyle: 'default', header: 'system.miscellaneous.settings.title', transDomain: 'System'} %}
+<div class="row">
+    <div class="col-4 card">
+        {{ form_row(form.country) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.currency) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.timezone) }}
+    </div>
+</div>
+
+{% include 'Default/panelEnd.html.twig' %}

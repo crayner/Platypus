@@ -12,14 +12,7 @@
 {% block title %}Busybee Installer{% endblock title %}
 {% block headerTitle %}{{ 'installation.step'|trans({'%{step}': (manager.step + 1)}) }}{% endblock headerTitle %}
 {% block sectionMenu %}
-    <h4>{{ 'welcome'|trans }}</h4>
-    <small class="text-muted">
-        {{ 'welcome.sentence.1'|trans }}<br/>
-        <br/>
-        {{ 'welcome.sentence.2'|trans }}<br/>
-        <br/>
-        {{ "welcome.sentence.3"|trans|raw }}
-    </small>
+    {% include 'Installer/welcome.html.twig' %}
 {% endblock sectionMenu %}
 
 {% block contentContainer %}
@@ -27,11 +20,50 @@
     {% set h3Content = saveButton() %}
     {% include 'Default/panelStart.html.twig' with {panelStyle: 'default', header: 'user.account', transDomain: 'Installer'} %}
     {% include 'Default/messages.html.twig' with {messages: manager.messageManager.addStatusMessages(manager.status, 'Installer')} %}
+    <div class="row">
+        <div class="col-4 card">
+            {{ form_row(form.title) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_row(form.surname) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_row(form.firstName) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 card">
+            {{ form_row(form._email) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_row(form._username) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_row(form._password) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="offset-6 col-6 card">
+            <div class="form-group">
+                {{ miscButton({additional: {id: 'generatePassword'}, class: 'fas fa-key btn btn-info', transDomain: 'System', title: 'user.password.generate'})|raw }}<label class="form-control-label required" for="install_user__password">{{ 'user.password.generate'|trans({}, 'System') }}</label>
+                <div class="small text-info"
+                     style="clear: both;">{{ 'user.password.conditions'|trans({'%minLength%': manager.passwordManager.passwordSetting('min_length'), '%numbers%': manager.passwordManager.passwordSetting('numbers'), '%mixedCase%': manager.passwordManager.passwordSetting('mixed_case'), '%specials%': manager.passwordManager.passwordSetting('specials')}, 'System') }}</div>
+            </div>
+        </div>
+    </div>
     {% include 'Default/panelEnd.html.twig' %}
+    {% include 'Installer/step3_organisation.html.twig' %}
+    {% include 'Installer/step3_miscellaneous.html.twig' %}
     {{ form_end(form) }}
 {% endblock contentContainer %}
 
 {% block javascripts %}
     {{ parent() }}
     {% include '@HillrangeForm/Toggle/script.html.twig' %}
+    <script type="text/javascript" language="JavaScript">
+        $("#generatePassword").on('click', function () {
+            $('#install_user__password').val('{{ manager.passwordManager.generatePassword }}');
+        });
+    </script>
+
 {% endblock javascripts %}

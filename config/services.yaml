@@ -40,3 +40,9 @@ services:
             - '%db_prefix%'
         tags:
             - { name: doctrine.event_subscriber }
+    App\Listener\MailerLoggerListener:
+        arguments:
+            - "@logger"
+        tags:
+          - { name: monolog.logger, channel: mailer }
+          - { name: "swiftmailer.default.plugin" }

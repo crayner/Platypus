@@ -21,14 +21,17 @@ use App\Form\InstallUserType;
 use App\Manager\InstallationManager;
 use App\Manager\SettingManager;
 use App\Organism\Language;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class InstallerController extends Controller
 {
@@ -94,8 +97,17 @@ class InstallerController extends Controller
     /**
      * createDatabase
      * @Route("/installer/database/{demo}/create/", name="installer_database_create")
+     * @param bool $demo
+     * @param InstallationManager $installationManager
+     * @param Request $request
+     * @param KernelInterface $kernel
+     * @param EntityManagerInterface $entityManager
+     * @param SettingManager $settingManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\DBAL\DBALException
      */
-    public function createDatabase(bool $demo, InstallationManager $installationManager, Request $request, KernelInterface $kernel, EntityManagerInterface $entityManager, SettingManager $settingManager)
+    public function createDatabase(bool $demo, InstallationManager $installationManager, Request $request, KernelInterface $kernel,
+                                   EntityManagerInterface $entityManager, SettingManager $settingManager)
     {
         $installationManager->setStep(2);
 
@@ -124,6 +136,17 @@ class InstallerController extends Controller
 
         $form = $this->createForm(InstallUserType::class);
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $installationManager->writeSystemUser($request, $entityManager, $settingManager);
+            if ($demo ? true : false)
+                return $this->redirectToRoute('load_dummy_data');
+            else
+                return $this->redirectToRoute('installer_complete');
+        }
+
         return $this->render('Installer/step3.html.twig',
             [
                 'form' => $form->createView(),
@@ -131,4 +154,109 @@ class InstallerController extends Controller
             ]
         );
     }
+
+    /**
+     * loadDummyData
+     * @Route("/load/dummy/{section}/data/", name="load_dummy_data")
+     * @param ObjectManager $objectManager
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function loadDummyData(ObjectManager $objectManager, Request $request, string $section)
+    {
+        $logger = $this->get('monolog.logger.dummy_data');
+        $request->getSession()->invalidate();
+
+        if ($section === 'Start') {
+            $logger->addInfo(sprintf('Section %s started.', $section));
+
+            $load = new TruncateTables();
+            $load->execute($objectManager);
+            $logger->addInfo('The existing data has been deleted.');
+
+            $load = new UserFixtures();
+            $load->load($objectManager, $logger);
+
+            $logger->addInfo(sprintf('Section %s completed.', $section));
+            return $this->redirectToRoute('load_dummy_data', ['section' => 'School']);
+        }
+
+        if ($section === 'School') {
+            $logger->addInfo(sprintf('Section %s started.', $section));
+
+            $load = new SchoolFixtures();
+            $load->load($objectManager, $logger);
+
+            $load = new CalendarFixtures();
+            $load->load($objectManager, $logger);
+
+            $logger->addInfo(sprintf('Section %s completed.', $section));
+            return $this->redirectToRoute('load_dummy_data', ['section' => 'People']);
+        }
+
+        if ($section === 'People') {
+            $logger->addInfo(sprintf('Section %s started.', $section));
+
+            $load = new PeopleFixtures();
+            $load->load($objectManager, $logger);
+
+            $logger->addInfo(sprintf('Section %s completed.', $section));
+            return $this->redirectToRoute('load_dummy_data', ['section' => 'Timetable']);
+        }
+
+        if ($section === 'Timetable') {
+            $logger->addInfo(sprintf('Section %s started.', $section));
+
+            $load = new TimetableFixtures();
+            $load->load($objectManager, $logger);
+
+            $logger->addInfo(sprintf('Section %s completed.', $section));
+            return $this->redirectToRoute('load_dummy_data', ['section' => 'Activity']);
+        }
+
+        if ($section === 'Activity') {
+            $logger->addInfo(sprintf('Section %s started.', $section));
+
+            $load = new ActivityFixtures();
+            $load->load($objectManager, $logger);
+
+            $logger->addInfo(sprintf('Section %s completed.', $section));
+            return $this->redirectToRoute('load_dummy_data', ['section' => 'ActivityStudent']);
+        }
+
+        if ($section === 'ActivityStudent') {
+            $logger->addInfo(sprintf('Section %s started.', $section));
+
+            $load = new ActivityStudentFixtures();
+            $load->load($objectManager, $logger);
+
+            $logger->addInfo(sprintf('Section %s completed.', $section));
+            $logger->addInfo('The Dummy Data Load finished.');
+            return $this->redirectToRoute('installer_complete');
+        }
+
+        die('Data Load Failed.');
+    }
+
+    /**
+     * installComplete
+     *
+     * @Route("/installer/complete/", name="installer_complete")
+     * @param InstallationManager $installationManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function installComplete(InstallationManager $installationManager)
+    {
+        $installationManager
+            ->setStep(3)
+            ->clearStatus()
+            ->addStatus('info', 'installer.complete', ['useRaw' => true, '%home%' => $this->generateUrl('home'), 'fixedMessage' => true]);
+
+        return $this->render('Installer/step4.html.twig',
+            [
+                'manager' => $installationManager,
+            ]
+        );
+    }
+
 }
