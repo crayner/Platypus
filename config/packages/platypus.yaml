@@ -32,3 +32,11 @@ parameters:
         specials: false
         numbers: true
         mixed_case: true
+    security.routes:
+        security_user_edit: user_edit
+        security_user_login: login
+        security_user_check: login
+        security_user_logout: logout
+        security_password_forgot: password_request_reset
+        security_forced_password_change: forced_password_change
+        security_home: home

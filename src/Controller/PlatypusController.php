@@ -28,6 +28,6 @@ class PlatypusController extends Controller
      */
     public function home()
     {
-        return $this->render('base.html.twig');
+        return $this->render('home.html.twig');
     }
 }

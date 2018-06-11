@@ -16,6 +16,7 @@
 namespace App\Twig\Extension;
 
 use App\Manager\ScriptManager;
+use App\Manager\SettingManager;
 use App\Manager\VersionManager;
 use Twig\Extension\AbstractExtension;
 
@@ -48,9 +49,7 @@ class CoreExtension extends AbstractExtension
     {
         return [
             new \Twig_SimpleFunction('getVersion', [$this, 'getVersion']),
-            new \Twig_SimpleFunction('get_setting', [$this, 'getSetting']),
             new \Twig_SimpleFunction('get_section', [$this, 'getSection']),
-            new \Twig_SimpleFunction('get_parameter', [$this, 'crashBurn']),
             new \Twig_SimpleFunction('get_UserSetting', [$this, 'crashBurn']),
             new \Twig_SimpleFunction('get_CurrentCalendarName', [$this, 'crashBurn']),
             new \Twig_SimpleFunction('getMessageManager', [$this, 'getSection']),
@@ -58,6 +57,7 @@ class CoreExtension extends AbstractExtension
             new \Twig_SimpleFunction('addScript', array($this->scriptManager, 'addScript')),
             new \Twig_SimpleFunction('getScripts', array($this->scriptManager, 'getScripts')),
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
+            new \Twig_SimpleFunction('formatUserName', [$this, 'getVersion']),
         ];
     }
 

@@ -1,0 +1,6 @@
+{% trans_default_domain "System" %}
+
+{% set nodes = get_menu() %}
+{% for node in nodes %}
+    {% include 'Menu/dropdown.html.twig' with {'menu': node} %}
+{% endfor %}

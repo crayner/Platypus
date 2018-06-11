@@ -83,7 +83,7 @@ class InstallerController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             if ($installationManager->saveSQLParameters($database))
-                return $this->redirectToRoute('installer_database_create', ['data' => $database->isDemoData()]);
+                return $this->redirectToRoute('installer_database_create', ['demo' => $database->isDemoData() ? '1' : '0']);
         }
 
         return $this->render('Installer/step2.html.twig',

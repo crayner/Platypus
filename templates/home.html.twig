@@ -1,0 +1,14 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% block title %}{{ 'home.heading'|trans({'%{header}': get_setting('org.name.long', 'Busybee Learning')}) }}{% endblock title %}
+{% block headerTitle %}{{ 'home.heading'|trans({'%{header}': get_setting('org.name.long', 'Busybee Learning')}) }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'home.lead'|trans }}.{% endblock headerLead %}
+
+{% block contentContainer %}
+    <p>{{ 'home.para1'|trans }}</p>
+    <p>{{ 'home.para2'|trans }}</p>
+    <p>{{ 'home.para3'|trans }}</p>
+    <p>Craig Rayner</p>
+{% endblock contentContainer %}

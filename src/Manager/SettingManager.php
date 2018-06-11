@@ -6,6 +6,7 @@ use App\Validator\Regex;
 use App\Validator\Twig;
 use App\Entity\Setting;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Validator\Integer;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -57,6 +58,11 @@ class SettingManager implements ContainerAwareInterface
     private $validator;
 
     /**
+     * @var bool
+     */
+    private $databaseFail = false;
+
+    /**
      * SettingManager constructor.
      * @param ContainerInterface $container
      * @param MessageManager $messageManager
@@ -68,6 +74,11 @@ class SettingManager implements ContainerAwareInterface
         $this->authorisation = $authorisation;
         $this->twig = $twig;
         $this->validator = $validator;
+        try {
+            $this->getEntityManager()->getRepository(Setting::class);
+        } catch (ConnectionException $e) {
+            $this->setDatabaseFail(true);
+        }
     }
 
     /**
@@ -94,6 +105,8 @@ class SettingManager implements ContainerAwareInterface
      */
     public function get(string $name, $default = null, array $options = [])
     {
+        if ($this->isDatabaseFail())
+            return $default;
         $name = strtolower($name);
         $this->readSession()->setName($name)->getSetting($name);
 
@@ -912,7 +925,7 @@ class SettingManager implements ContainerAwareInterface
 
         if (! $this->isAction())
         {
-            $this->getMessageManager()->add('info', 'update.setting.required', ['%{software}' => $software, '%{current}' => $current]);
+            $this->getMessageManager()->add('info', 'update.setting.required', ['%{software}' => $software, '%{current}' => $current], 'System');
             return false;
         }
 
@@ -936,7 +949,7 @@ class SettingManager implements ContainerAwareInterface
                     unset($data['version']);
 
                 $count = $this->createSettings($data);
-                $this->getMessageManager()->add('success', 'install.system.setting.file', ['transChoice' => $count, '%{class}' => $class->getClassName()]);
+                $this->getMessageManager()->add('success', 'system.setting.file', ['transChoice' => $count, '%{class}' => $class->getClassName()], 'System');
             }
 
             if (version_compare($current, $software, '='))
@@ -999,5 +1012,23 @@ class SettingManager implements ContainerAwareInterface
         $version['defaultValue'] = '0.0.00';
         $data['version'] = $version;
         $this->createSettings($data);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDatabaseFail(): bool
+    {
+        return $this->databaseFail ? true : false;
+    }
+
+    /**
+     * @param bool $databaseFail
+     * @return SettingManager
+     */
+    public function setDatabaseFail(bool $databaseFail): SettingManager
+    {
+        $this->databaseFail = $databaseFail ? true : false;
+        return $this;
     }
 }

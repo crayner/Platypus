@@ -418,7 +418,7 @@ class InstallationManager
             $connection->connect();
         } catch (ConnectionException $e) {
             if ($throw)
-                $this->addStatus('danger', 'installer.database.create.fail', ['%{name}' => $this->sql->getName()]);
+                $this->addStatus('danger', 'installer.database.create.fail', ['%{name}' => $this->sql->getName()], 'System');
         }
         if ($connection->isConnected() && $this->sql->getDriver() === 'pdo_mysql')
             $connection->executeQuery("ALTER DATABASE `" . $this->sql->getName() . "` CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`");

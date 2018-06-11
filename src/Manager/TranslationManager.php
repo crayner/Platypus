@@ -28,7 +28,7 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
 
     public static $languages = [
         'nl_NL' => 'Dutch - Nederland',
-        'en_GB' => 'English - United Kingdom',
+        'en' => 'English - United Kingdom',
         'en_US' => 'English - United States',
         'es_ES' => 'Español',
         'fr_FR' => 'Français - France',

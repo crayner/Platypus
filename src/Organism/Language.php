@@ -22,7 +22,7 @@ class Language
     /**
      * @var string
      */
-    private $language = 'en_GB';
+    private $language = 'en';
 
     /**
      * @return string

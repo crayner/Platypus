@@ -390,9 +390,9 @@ org.logo:
     description: 'The organisation Logo'
     value: ''
     choice: null
-    validator: App\Core\Validator\Logo
+    validator: App\Validator\Logo
     role: ROLE_ADMIN
-    defaultValue: img/bee.png
+    defaultValue: bundles/platypustemplateoriginal/img/bee.png
     translateChoice: null
 org.transparent.logo:
     type: image
@@ -401,9 +401,9 @@ org.transparent.logo:
     description: 'The organisation Logo in a transparent form.  Recommended to be 80% opacity. Only PNG or GIF image formats support transparency.'
     value: ''
     choice: null
-    validator: App\Core\Validator\Logo
+    validator: App\Validator\Logo
     role: ROLE_ADMIN
-    defaultValue: img/bee-transparent.png
+    defaultValue: bundles/platypustemplateoriginal/img/bee-transparent.png
     translateChoice: null
 background.image:
     type: image
@@ -414,7 +414,7 @@ background.image:
     choice: null
     validator: App\Core\Validator\BackgroundImage
     role: ROLE_ADMIN
-    defaultValue: img/backgroundPage.jpg
+    defaultValue: bundles/platypustemplateoriginal/img/backgroundPage.jpg
     translateChoice: null
 schoolday.open:
     type: time
