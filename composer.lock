@@ -1218,16 +1218,16 @@
         },
         {
             "name": "hillrange/security",
-            "version": "0.0.33",
+            "version": "0.0.34",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/security.git",
-                "reference": "542996c521cfe7c57651fb5064a62b1892c5a2c9"
+                "reference": "3940b205b58147e67929d56edd422aceba9d9f1c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/security/zipball/542996c521cfe7c57651fb5064a62b1892c5a2c9",
-                "reference": "542996c521cfe7c57651fb5064a62b1892c5a2c9",
+                "url": "https://api.github.com/repos/crayner/security/zipball/3940b205b58147e67929d56edd422aceba9d9f1c",
+                "reference": "3940b205b58147e67929d56edd422aceba9d9f1c",
                 "shasum": ""
             },
             "require": {
@@ -1279,7 +1279,7 @@
             "keywords": [
                 "security"
             ],
-            "time": "2018-06-10T05:55:55+00:00"
+            "time": "2018-06-11T05:24:08+00:00"
         },
         {
             "name": "hillrange/symfony-form",
@@ -2114,16 +2114,16 @@
         },
         {
             "name": "platypus-template/original",
-            "version": "0.0.02",
+            "version": "0.0.03",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/platypus-template-original.git",
-                "reference": "52300ebb4ad938162a62cc8c9f2748c82fa836ca"
+                "reference": "35ce81a8a1e43319b9de9d42ceb7d26d9202da29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/platypus-template-original/zipball/52300ebb4ad938162a62cc8c9f2748c82fa836ca",
-                "reference": "52300ebb4ad938162a62cc8c9f2748c82fa836ca",
+                "url": "https://api.github.com/repos/crayner/platypus-template-original/zipball/35ce81a8a1e43319b9de9d42ceb7d26d9202da29",
+                "reference": "35ce81a8a1e43319b9de9d42ceb7d26d9202da29",
                 "shasum": ""
             },
             "require": {
@@ -2161,7 +2161,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2018-06-08T06:17:10+00:00"
+            "time": "2018-06-11T05:22:16+00:00"
         },
         {
             "name": "psr/cache",
