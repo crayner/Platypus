@@ -1,0 +1,47 @@
+App\Entity\ActivityStudent:
+    type: entity
+    table: activity_student
+    repositoryClass: App\Repository\ActivityStudentRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        status:
+            length: 16
+            nullable: false
+            options:
+                default: 'organiser'
+        timestamp:
+            type: datetime
+        invoiceGenerated:
+            type: boolean
+            options:
+                default: '0'
+            column: invoice_generated
+    manyToOne:
+        activity:
+            targetEntity: App\Entity\Activity
+            joinColumn:
+                name: activity_id
+                referencedColumnName: id
+                nullable: false
+        activityBackup:
+            targetEntity: App\Entity\Activity
+            joinColumn:
+                name: activity_backup_id
+                referencedColumnName: id
+                nullable: true
+        person:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: person_id
+                referencedColumnName: id
+                nullable: false
+        financeInvoice:
+            targetEntity: App\Entity\FinanceInvoice
+            joinColumn:
+                name: finance_invoice_id
+                referencedColumnName: id
+                nullable: true
