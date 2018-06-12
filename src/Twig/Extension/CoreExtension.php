@@ -16,8 +16,9 @@
 namespace App\Twig\Extension;
 
 use App\Manager\ScriptManager;
-use App\Manager\SettingManager;
 use App\Manager\VersionManager;
+use App\Util\PersonNameHelper;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Twig\Extension\AbstractExtension;
 
 /**
@@ -35,7 +36,7 @@ class CoreExtension extends AbstractExtension
      * CoreExtension constructor.
      * @param ScriptManager $scriptManager
      */
-    public function __construct(ScriptManager $scriptManager)
+    public function __construct(ScriptManager $scriptManager, PersonNameHelper $personNameHelper)
     {
         $this->scriptManager = $scriptManager;
     }
@@ -49,15 +50,13 @@ class CoreExtension extends AbstractExtension
     {
         return [
             new \Twig_SimpleFunction('getVersion', [$this, 'getVersion']),
-            new \Twig_SimpleFunction('get_section', [$this, 'getSection']),
             new \Twig_SimpleFunction('get_UserSetting', [$this, 'crashBurn']),
             new \Twig_SimpleFunction('get_CurrentCalendarName', [$this, 'crashBurn']),
-            new \Twig_SimpleFunction('getMessageManager', [$this, 'getSection']),
             new \Twig_SimpleFunction('hideSection', [$this, 'hideSection']),
             new \Twig_SimpleFunction('addScript', array($this->scriptManager, 'addScript')),
             new \Twig_SimpleFunction('getScripts', array($this->scriptManager, 'getScripts')),
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
-            new \Twig_SimpleFunction('formatUserName', [$this, 'getVersion']),
+            new \Twig_SimpleFunction('formatUserName', [$this, 'getFullUserName']),
         ];
     }
 
@@ -89,11 +88,6 @@ class CoreExtension extends AbstractExtension
         return $default;
     }
 
-    public function getSection()
-    {
-        return [];
-    }
-
     public function hideSection()
     {
         return false;
@@ -109,5 +103,16 @@ class CoreExtension extends AbstractExtension
     public function isInstanceof($var, string $instance)
     {
         return ($var instanceof $instance);
+    }
+
+    /**
+     * getFullUserName
+     *
+     * @param null|UserInterface $user
+     * @return string
+     */
+    public function getFullUserName(?UserInterface $user): string
+    {
+        return PersonNameHelper::getFullUserName($user);
     }
 }

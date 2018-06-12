@@ -3,6 +3,25 @@ namespace App\Manager;
 
 class MenuManagerConstants
 {
+    CONST NODES = '
+1:
+	name: Admin
+	label: menu.admin.node
+	role: ROLE_USER
+	order: 1
+	menu: 1
+';
+    CONST ITEMS = '
+10:
+    label: menu.admin.school
+    name: School Admin
+    role: ROLE_REGISTRAR
+    node: 1
+    order: 10
+    route: school_year_manage
+';
+    CONST SECTIONS = '';
+    /*
 	CONST NODES = '
 1:
 	name: System
@@ -257,4 +276,5 @@ Activities:
     hidden:
         - external_activity_edit
 ';
+    */
 }

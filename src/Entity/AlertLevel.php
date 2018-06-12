@@ -177,5 +177,4 @@ class AlertLevel
         $this->sequenceNumber = $sequenceNumber;
         return $this;
     }
-
 }

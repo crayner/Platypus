@@ -15,6 +15,8 @@
  */
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\UserInterface;
+
 class Person
 {
     /**
@@ -37,6 +39,29 @@ class Person
     public function setId(?int $id): Person
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @var UserInterface|null
+     */
+    private $user;
+
+    /**
+     * @return null|UserInterface
+     */
+    public function getUser(): ?UserInterface
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param null|UserInterface $user
+     * @return Person
+     */
+    public function setUser(?UserInterface $user): Person
+    {
+        $this->user = $user;
         return $this;
     }
 }

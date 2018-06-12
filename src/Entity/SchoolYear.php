@@ -15,7 +15,12 @@
  */
 namespace App\Entity;
 
-class SchoolYear
+use App\Entity\Extension\SchoolYearExtension;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
+
+class SchoolYear extends SchoolYearExtension
 {
     /**
      * @var integer|null
@@ -60,6 +65,169 @@ class SchoolYear
     public function setName(?string $name): SchoolYear
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $status;
+
+    /**
+     * @var array
+     */
+    public static $statusList = [
+        'past',
+        'current',
+        'upcoming',
+    ];
+
+    /**
+     * @return null|string
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status = in_array($this->status, self::$statusList) ? $this->status : 'upcoming';
+    }
+
+    /**
+     * @param null|string $status
+     * @return SchoolYear
+     */
+    public function setStatus(?string $status): SchoolYear
+    {
+        $this->status = in_array($status, self::$statusList) ? $status : 'upcoming';
+        return $this;
+    }
+
+    /**
+     * @var integer|null
+     */
+    private $sequenceNumber;
+
+    /**
+     * @return int|null
+     */
+    public function getSequenceNumber(): ?int
+    {
+        return $this->sequenceNumber;
+    }
+
+    /**
+     * @param int|null $sequenceNumber
+     * @return SchoolYear
+     */
+    public function setSequenceNumber(?int $sequenceNumber): SchoolYear
+    {
+        $this->sequenceNumber = $sequenceNumber ?: 0;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime
+     */
+    private $firstDay;
+
+    /**
+     * @return \DateTime
+     */
+    public function getFirstDay(): \DateTime
+    {
+        return $this->firstDay;
+    }
+
+    /**
+     * @param \DateTime $firstDay
+     * @return SchoolYear
+     */
+    public function setFirstDay(\DateTime $firstDay): SchoolYear
+    {
+        $this->firstDay = $firstDay;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime
+     */
+    private $lastDay;
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastDay(): \DateTime
+    {
+        return $this->lastDay;
+    }
+
+    /**
+     * @param \DateTime $lastDay
+     * @return SchoolYear
+     */
+    public function setLastDay(\DateTime $lastDay): SchoolYear
+    {
+        $this->lastDay = $lastDay;
+        return $this;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $terms;
+
+    /**
+     * @return Collection
+     */
+    public function getTerms(): Collection
+    {
+        if (empty($this->terms))
+            $this->terms = new ArrayCollection();
+
+        if ($this->terms instanceof PersistentCollection)
+            $this->terms->initialize();
+
+        return $this->terms;
+    }
+
+    /**
+     * @param Collection $terms
+     * @return SchoolYear
+     */
+    public function setTerms(?Collection $terms): SchoolYear
+    {
+        $this->terms = $terms;
+        return $this;
+    }
+
+    /**
+     * addTerm
+     *
+     * @param SchoolYearTerm|null $term
+     * @param bool $add
+     * @return SchoolYear
+     */
+    public function addTerm(?SchoolYearTerm $term, $add = true): SchoolYear
+    {
+        if ($term || $this->getTerms()->contains($term))
+            return $this;
+
+        if ($add)
+            $term->setSchoolYear($this, false);
+
+        $this->terms->add($term);
+
+        return $this;
+    }
+
+    /**
+     * removeTerm
+     *
+     * @param SchoolYearTerm|null $term
+     * @return SchoolYear
+     */
+    public function removeTerm(?SchoolYearTerm $term): SchoolYear
+    {
+        $this->getTerms()->removeElement($term);
+
         return $this;
     }
 }

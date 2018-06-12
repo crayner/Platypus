@@ -7,3 +7,9 @@ App\Entity\Person:
             type: integer
             generator:
                 strategy: AUTO
+    oneToOne:
+        user:
+            targetEntity: Hillrange\Security\Entity\User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id

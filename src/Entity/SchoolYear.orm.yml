@@ -11,3 +11,22 @@ App\Entity\SchoolYear:
         name:
             length: 9
             nullable: false
+        status:
+            length:
+            options:
+                default: 'upcoming'
+            nullable: false
+        sequenceNumber:
+            type: integer
+            length: 3
+            nullable: false
+        firstDay:
+            type: date
+        lastDay:
+            type: date
+    oneToMany:
+        terms:
+            targetEntity: App\Entity\SchoolYearTerm
+            mappedBy: schoolYear
+            cascade: [ 'persist' ]
+            orphanRemoval: true

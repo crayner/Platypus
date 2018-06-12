@@ -11,3 +11,23 @@ App\Entity\SchoolYearTerm:
         name:
             length: 20
             nullable: false
+        nameShort:
+            length: 4
+            nullable: false
+        sequenceNumber:
+            type: integer
+            length: 5
+        firstDay:
+            type: date
+            nullable: false
+        lastDay:
+            type: date
+            nullable: false
+    manyToOne:
+        schoolYear:
+            targetEntity: App\Entity\SchoolYear
+            inversedBy: terms
+            joinColumn:
+                name: school_year_id
+                referencedColumnName: id
+                nullable: false

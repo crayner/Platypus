@@ -363,9 +363,9 @@ class MenuManager extends MenuManagerConstants
 	/**
 	 * @return array
 	 */
-	private function getNodes()
+	private function getNodes(): array
 	{
-		return Yaml::parse(str_replace("\t", "    ", MenuManagerConstants::NODES));
+		return Yaml::parse(str_replace("\t", "    ", MenuManagerConstants::NODES)) ?: [];
 	}
 
 	/**
@@ -381,7 +381,7 @@ class MenuManager extends MenuManagerConstants
 	 */
 	private function getSections()
 	{
-		return Yaml::parse(str_replace("\t", "    ", MenuManagerConstants::SECTIONS));
+		return Yaml::parse(str_replace("\t", "    ", MenuManagerConstants::SECTIONS)) ?: [];
 	}
 
 	/**

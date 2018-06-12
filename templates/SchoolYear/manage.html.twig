@@ -1,0 +1,65 @@
+{% trans_default_domain "SchoolYear" %}
+
+{% extends "/Default/template.html.twig" %}
+
+{% block title %}{{ parent() }}{{ 'school_years.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'school_years.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'school_years.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% set h3Content = addButton({windowOpen: {route: path('school_year_edit', {id: 'Add'})}}) %}
+    {% include 'Default/panelStart.html.twig' with {transDomain: 'SchoolYear', header: 'school_years.list'} %}
+    <div class="container-fluid">
+        {% if school_years|length > 0 %}
+        <div class="row row-header">
+            <div class="col-2">
+                {{ 'school_year.name.header'|trans }}
+            </div>
+            <div class="col-3">
+                {{ 'school_year.firstDay.header'|trans }}
+            </div>
+            <div class="col-3">
+                {{ 'school_year.lastDay.header'|trans }}
+            </div>
+            <div class="col-4 col-4">
+                {{ 'school_year.action.header'|trans }}
+            </div>
+        </div>
+        {% for SchoolYear in school_years %}
+            <div class="row row-striped">
+                <div class="col-2{% if SchoolYear.status == 'current' %} alert-success{% endif %}">
+                    {{ SchoolYear.name }}
+                </div>
+                <div class="col-3 small{% if SchoolYear.status == 'current' %} alert-success{% endif %}">
+                    {{ SchoolYear.firstDay|date(get_setting('date.format.long')) }}
+                </div>
+                <div class="col-3 small{% if SchoolYear.status == 'current' %} alert-success{% endif %}">
+                    {{ SchoolYear.lastDay|date(get_setting('date.format.long')) }}
+                </div>
+                <div class="col-4 col-4">
+                    {{ editButton({'style': '', 'windowOpen': {'route': path('school_year_edit', {'id': SchoolYear.id})}, 'title': 'school_year.edit.title', 'class': 'btn btn-warning fas fa-edit', 'transDomain': 'SchoolYear'})|raw }}
+                    {% set additional = 'onclick="confirmDelete(\'' ~ path('school_year_delete', {'id': SchoolYear.id}) ~ '\')"' %}
+                    {% if not manager.canDelete(SchoolYear) %}{% set additional = additional ~ ' disabled' %}{% endif %}
+                    {{ deleteButton({additional: additional, style: ''})|raw }}
+                    {{ miscButton({title: 'school_year.display.button',  class: 'fas fa-calendar-alt btn btn-info', style: '', transDomain: 'SchoolYear', 'windowOpen': {'route': path('school_year_display', {'id': SchoolYear.id, 'closeWindow': true}), 'target': 'window.school_year', 'params': 'width=1200,height=900'}})|raw }}
+                </div>
+            </div>
+        {% endfor %}
+        {% else %}
+        <p class="alert alert-warning">{{ 'school_years.empty'|trans }}<p>
+            {% endif %}
+    </div>
+    {% include 'Default/panelEnd.html.twig' %}
+{% endblock contentContainer %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        function confirmDelete(delUrl) {
+            if (confirm("{{ 'school_year.delete.confirm'|trans }}")) {
+                document.location = delUrl;
+            }
+        }
+    </script>
+{% endblock javascripts %}

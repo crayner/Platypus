@@ -62,4 +62,123 @@ class SchoolYearTerm
         $this->name = $name;
         return $this;
     }
+
+    /**
+     * @var SchoolYearTerm|null
+     */
+    private $schoolYear;
+
+    /**
+     * @return SchoolYearTerm|null
+     */
+    public function getSchoolYearTerm(): ?SchoolYearTerm
+    {
+        return $this->schoolYear;
+    }
+
+    /**
+     * @param SchoolYearTerm|null $schoolYear
+     * @param bool $add
+     * @return SchoolYearTerm
+     */
+    public function setSchoolYearTerm(?SchoolYearTerm $schoolYear, $add = true): SchoolYearTerm
+    {
+        if ($add && $schoolYear)
+            $schoolYear->addTerm($this, false);
+
+        $this->schoolYear = $schoolYear;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $nameShort;
+
+    /**
+     * @return null|string
+     */
+    public function getNameShort(): ?string
+    {
+        return $this->nameShort;
+    }
+
+    /**
+     * @param null|string $nameShort
+     * @return SchoolYearTerm
+     */
+    public function setNameShort(?string $nameShort): SchoolYearTerm
+    {
+        $this->nameShort = $nameShort;
+        return $this;
+    }
+
+    /**
+     * @var integer|null
+     */
+    private $sequenceNumber;
+
+    /**
+     * @return int|null
+     */
+    public function getSequenceNumber(): ?int
+    {
+        return $this->sequenceNumber;
+    }
+
+    /**
+     * @param int|null $sequenceNumber
+     * @return SchoolYearTerm
+     */
+    public function setSequenceNumber(?int $sequenceNumber): SchoolYearTerm
+    {
+        $this->sequenceNumber = $sequenceNumber;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime
+     */
+    private $firstDay;
+
+    /**
+     * @return \DateTime
+     */
+    public function getFirstDay(): \DateTime
+    {
+        return $this->firstDay;
+    }
+
+    /**
+     * @param \DateTime $firstDay
+     * @return SchoolYearTerm
+     */
+    public function setFirstDay(\DateTime $firstDay): SchoolYearTerm
+    {
+        $this->firstDay = $firstDay;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime
+     */
+    private $lastDay;
+
+    /**
+     * @return \DateTime
+     */
+    public function getLastDay(): \DateTime
+    {
+        return $this->lastDay;
+    }
+
+    /**
+     * @param \DateTime $lastDay
+     * @return SchoolYearTerm
+     */
+    public function setLastDay(\DateTime $lastDay): SchoolYearTerm
+    {
+        $this->lastDay = $lastDay;
+        return $this;
+    }
 }
