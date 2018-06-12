@@ -1,0 +1,41 @@
+App\Entity\SchoolYearSpecialDay:
+    type: entity
+    table: school_year_special_day
+    repositoryClass: App\Repository\SchoolYearSpecialDayRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 20
+            nullable: false
+        type:
+            length: 16
+            nullable: false
+        description:
+            length: 255
+        date:
+            type: date
+            nullable: false
+        schoolOpen:
+            type: time
+            nullable: true
+        schoolStart:
+            type: time
+            nullable: true
+        schoolEnd:
+            type: time
+            nullable: true
+        schoolClose:
+            type: time
+            nullable: true
+    manyToOne:
+        schoolYear:
+            targetEntity: App\Entity\SchoolYear
+            inversedBy: specialDays
+            joinColumn:
+                name: school_year_id
+                referencedColumnName: id
+                nullable: false

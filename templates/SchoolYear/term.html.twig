@@ -1,0 +1,37 @@
+{# src/Busybee/InstituteBundle/Resources/views/Calendar/term.html.twig #}
+
+{% trans_default_domain "SchoolYear" %}
+
+{% block school_year_term_label %}{% endblock %}
+{% block school_year_term_errors %}{% endblock %}
+
+{% block school_year_term_widget %}
+    {% spaceless %}
+        {% if form.name.vars.value is empty %}{% set termTitle = 'term.add.label'|trans %}{% else %}{% set termTitle = form.name.vars.value %}{% endif %}
+        {% set h3Content = '<div class="collection-actions">' %}
+        {% set h3Content = h3Content ~ saveButton({'name': 'terms'}) %}
+        {% set h3Content = h3Content ~ '</div>' %}
+        {% include 'Default/panelStart.html.twig' with {'header': termTitle, 'panelStyle': 'info', transDomain: false} %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3 card">
+                    {{ form_row(form.name) }}
+                </div>
+                <div class="col-3 card">
+                    {{ form_row(form.code) }}
+                </div>
+                <div class="col-6 card">
+                    {{ form_row(form.firstDay) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 offset-6 card">
+                    {{ form_row(form.lastDay) }}
+                    {{ form_row(form.schoolYear, {'value': app.request.get('id')}) }}
+                    {{ form_rest(form) }}
+                </div>
+            </div>
+        </div>
+        {% include 'Default/panelEnd.html.twig' %}
+    {% endspaceless %}
+{% endblock school_year_term_widget %}

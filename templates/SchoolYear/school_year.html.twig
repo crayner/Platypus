@@ -1,0 +1,34 @@
+{% trans_default_domain "SchoolYear" %}
+
+{% set flashClass = 'alert-dismissable show hide' %}
+{% set transDomain = 'SchoolYear' %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    'SchoolYear/term.html.twig'
+    'SchoolYear/special_day.html.twig'
+    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ parent() }}{{ 'school_year.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'school_year.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'school_year.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-disappear show hide") }}
+    {{ form_start(form, {'action': path('school_year_edit', {'id': calendar_id} ) } ) }}
+    {% include '@HillrangeForm/Script/collection_message.html.twig' %}
+    {% include 'Default/tabs.html.twig' with {tabManager: manager} %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ collections_manage(form, ['specialDays','terms'])|raw }}
+    {% include 'SchoolYear/term_script.html.twig' %}
+    {% include "SchoolYear/special_days_cript.html.twig" %}
+    {% include 'SchoolYear/script.html.twig' %}
+    {% include 'Script/formTabSubmitScript.html.twig' with {'route': 'school_year_edit'} %}
+{% endblock javascripts %}

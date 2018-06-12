@@ -30,3 +30,8 @@ App\Entity\SchoolYear:
             mappedBy: schoolYear
             cascade: [ 'persist' ]
             orphanRemoval: true
+        specialDays:
+            targetEntity: App\Entity\SchoolYearSpecialDay
+            mappedBy: schoolYear
+            cascade: [ 'persist' ]
+            orphanRemoval: true

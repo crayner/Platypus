@@ -1,0 +1,6 @@
+{% trans_default_domain "SchoolYear" %}
+
+{% include 'SchoolYear/school_year_menu.html.twig' with {'header': 'school_year.term.title', 'name': form.name.vars.value, 'panelParagraph': 'school_year.term.help'} %}
+	<div id="school_year_terms_target"></div>
+{% include 'Default/panelEnd.html.twig' %}
+{% do form.terms.setRendered %}

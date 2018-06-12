@@ -20,8 +20,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
 
+/**
+ * Class SchoolYear
+ * @package App\Entity
+ */
 class SchoolYear extends SchoolYearExtension
 {
+    /**
+     * SchoolYear constructor.
+     */
+    public function __construct()
+    {
+        $this->setStatus('upcoming');
+    }
+
     /**
      * @var integer|null
      */
@@ -81,6 +93,14 @@ class SchoolYear extends SchoolYearExtension
         'current',
         'upcoming',
     ];
+
+    /**
+     * @return array
+     */
+    public function getStatusList(): array
+    {
+        return self::$statusList;
+    }
 
     /**
      * @return null|string
@@ -227,6 +247,68 @@ class SchoolYear extends SchoolYearExtension
     public function removeTerm(?SchoolYearTerm $term): SchoolYear
     {
         $this->getTerms()->removeElement($term);
+
+        return $this;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $specialDays;
+
+    /**
+     * @return Collection
+     */
+    public function getSpecialDays(): Collection
+    {
+        if (empty($this->specialDays))
+            $this->specialDays = new ArrayCollection();
+
+        if ($this->specialDays instanceof PersistentCollection)
+            $this->specialDays->initialize();
+
+        return $this->specialDays;
+    }
+
+    /**
+     * @param Collection $specialDays
+     * @return SchoolYear
+     */
+    public function setSpecialDays(?Collection $specialDays): SchoolYear
+    {
+        $this->specialDays = $specialDays;
+        return $this;
+    }
+
+    /**
+     * addSpecialDay
+     *
+     * @param SchoolYearSpecialDay|null $specialDay
+     * @param bool $add
+     * @return SchoolYear
+     */
+    public function addSpecialDay(?SchoolYearSpecialDay $specialDay, $add = true): SchoolYear
+    {
+        if ($specialDay || $this->getSpecialDays()->contains($specialDay))
+            return $this;
+
+        if ($add)
+            $specialDay->setSchoolYear($this, false);
+
+        $this->specialDays->add($specialDay);
+
+        return $this;
+    }
+
+    /**
+     * removeSpecialDay
+     *
+     * @param SchoolYearSpecialDay|null $specialDay
+     * @return SchoolYear
+     */
+    public function removeSpecialDay(?SchoolYearSpecialDay $specialDay): SchoolYear
+    {
+        $this->getSpecialDays()->removeElement($specialDay);
 
         return $this;
     }

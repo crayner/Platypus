@@ -15,13 +15,20 @@
  */
 namespace App\Controller;
 
+use App\Entity\SchoolYear;
+use App\Entity\SchoolYearSpecialDay;
+use App\Entity\SchoolYearTerm;
+use App\Form\SchoolYearType;
 use App\Manager\FlashBagManager;
 use App\Manager\MessageManager;
 use App\Manager\SchoolYearManager;
+use App\Manager\SettingManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class SchoolYearController extends Controller
@@ -53,7 +60,7 @@ class SchoolYearController extends Controller
      * @param EntityManagerInterface $em
      * @param MessageManager $messageManager
      * @param FlashBagManager $flashBagManager
-     * @return RedirectResponse|\Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
     public function edit($id, Request $request,
                          SchoolYearManager $schoolYearManager,
@@ -62,34 +69,34 @@ class SchoolYearController extends Controller
     {
         if ($id === 'current')
         {
-            $calendar = $schoolYearManager->getCurrentCalendar();
+            $schoolYear = SchoolYearManager::getCurrentSchoolYear();
 
-            return $this->redirectToRoute('calendar_edit', ['id' => $calendar->getId()]);
+            return $this->redirectToRoute('school_year_edit', ['id' => $schoolYear->getId()]);
         }
 
-        $calendar = $id === 'Add' ? new Calendar() : $schoolYearManager->getCalendarRepository()->find($id);
+        $schoolYear = $id === 'Add' ? new SchoolYear() : $schoolYearManager->getSchoolYearRepository()->find($id);
 
-        $form = $this->createForm(CalendarType::class, $calendar, [ 'calendarGradeManager' => $calendarGradeManager]);
+        $form = $this->createForm(SchoolYearType::class, $schoolYear);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $em->persist($calendar);
+            $em->persist($schoolYear);
             $em->flush();
 
-            $messageManager->add('success', 'calendar.success', [], 'Calendar');
+            $messageManager->add('success', 'calendar.success', [], 'SchoolYear');
 
             $flashBagManager->addMessages($messageManager);
 
             if ($id === 'Add')
-                return new RedirectResponse($this->generateUrl('calendar_edit', array('id' => $calendar->getId())));
+                return new RedirectResponse($this->generateUrl('school_year_edit', array('id' => $schoolYear->getId())));
 
-            $em->refresh($calendar);
+            $em->refresh($schoolYear);
 
-            $form = $this->createForm(CalendarType::class, $calendar, ['calendarGradeManager' => $calendarGradeManager]);
+            $form = $this->createForm(SchoolYearType::class, $schoolYear, ['calendarGradeManager' => $schoolYearGradeManager]);
         } else
-            $em->refresh($calendar);
+            $em->refresh($schoolYear);
 
         /*
             The calendar must be refreshed as the calendar will be written by the page loader from the cache
@@ -97,7 +104,7 @@ class SchoolYearController extends Controller
             impacted by this refresh.
         */
 
-        return $this->render('Calendar/calendar.html.twig',
+        return $this->render('SchoolYear/school_year.html.twig',
             [
                 'form'     => $form->createView(),
                 'fullForm' => $form,
@@ -116,17 +123,15 @@ class SchoolYearController extends Controller
      */
     public function deleteYear($id, SchoolYearManager $schoolYearManager, FlashBagManager $flashBagManager)
     {
-        $this->denyAccessUnlessGranted('ROLE_REGISTRAR', null, null);
+        $schoolYear = $schoolYearManager->find($id);
 
-        $calendar = $schoolYearManager->find($id);
-
-        if ($schoolYearManager->canDelete($calendar)) {
+        if ($schoolYearManager->canDelete($schoolYear)) {
             $em = $schoolYearManager->getEntityManager();
-            $em->remove($calendar);
+            $em->remove($schoolYear);
             $em->flush();
-            $schoolYearManager->getMessageManager()->add('success', 'calendar.removal.success', ['%{name}' => $calendar->getName()]);
+            $schoolYearManager->getMessageManager()->add('success', 'calendar.removal.success', ['%{name}' => $schoolYear->getName()]);
         } else
-            $schoolYearManager->getMessageManager()->add('warning', 'calendar.removal.denied', ['%{name}' => $calendar->getName()]);
+            $schoolYearManager->getMessageManager()->add('warning', 'calendar.removal.denied', ['%{name}' => $schoolYear->getName()]);
 
         $flashBagManager->addMessages($schoolYearManager->getMessageManager());
 
@@ -147,41 +152,206 @@ class SchoolYearController extends Controller
 
         if ($id == 'current' || empty($id))
         {
-            $calendar = SchoolYearManager::getCurrentSchoolYear();
+            $schoolYear = SchoolYearManager::getCurrentSchoolYear();
         }
         else
-            $calendar = $repo->find($id);
+            $schoolYear = $repo->find($id);
 
-        $calendars = $repo->findBy([], ['name' => 'ASC']);
+        $schoolYears = $repo->findBy([], ['name' => 'ASC']);
 
-        $calendar = $repo->find($calendar->getId());
+        $schoolYear = $repo->find($schoolYear->getId());
 
         /**
          * Set model classes for calendar. Arguments:
-         * 1. For the whole calendar (watch $calendar variable). Default: \TFox\CalendarBundle\Service\WidgetService\Calendar
-         * 2. Month. Default: \TFox\CalendarBundle\Service\WidgetService\Month
-         * 3. Week. Default: '\TFox\CalendarBundle\Service\WidgetService\Week
-         * 4. Day. Default: '\TFox\CalendarBundle\Service\WidgetService\Day'
+         * 1. For the whole calendar (watch $schoolYear variable). Default: \TFox\SchoolYearBundle\Service\WidgetService\SchoolYear
+         * 2. Month. Default: \TFox\SchoolYearBundle\Service\WidgetService\Month
+         * 3. Week. Default: '\TFox\SchoolYearBundle\Service\WidgetService\Week
+         * 4. Day. Default: '\TFox\SchoolYearBundle\Service\WidgetService\Day'
          * To set default classes null should be passed as argument
          */
 
-        $calendar->getTerms();
+        $schoolYear->getTerms();
 
-        $year = $schoolYearManager->generate($calendar); //Generate a calendar for specified year
+        $year = $schoolYearManager->generate($schoolYear); //Generate a calendar for specified year
 
-        $schoolYearManager->setCalendarDays($year, $calendar);
+        $schoolYearManager->setSchoolYearDays($year, $schoolYear);
 
         /*
          * Pass calendar to Twig
          */
 
-        return $this->render('Calendar/displayCalendar.html.twig',
+        return $this->render('SchoolYear/displaySchoolYear.html.twig',
             array(
-                'calendar'    => $calendar,
-                'calendars'   => $calendars,
+                'calendar'    => $schoolYear,
+                'calendars'   => $schoolYears,
                 'year'        => $year,
                 'closeWindow' => $closeWindow,
             )
         );
+    }
+
+    /**
+     * @Route("/school/year/{id}/special/day/{cid}/manage/", name="special_day_manage")
+     * @IsGranted("ROLE_REGISTRAR")
+     * @param $id
+     * @param string $cid
+     * @param SchoolYearManager $schoolYearManager
+     * @param \Twig_Environment $twig
+     * @return JsonResponse
+     */
+    public function manageSpecialDay($id, $cid = 'ignore', SchoolYearManager $schoolYearManager, \Twig_Environment $twig)
+    {
+        $schoolYearManager->find($id);
+
+        $schoolYearManager->removeSpecialDay($cid);
+
+        $form = $this->createForm(SchoolYearType::class, $schoolYearManager->getSchoolYear());
+
+        $collection = $form->has('specialDays') ? $form->get('specialDays')->createView() : null;
+
+        if (empty($collection)) {
+            $schoolYearManager->getMessageManager()->add('warning', 'calendar.special_days.not_defined');
+            $schoolYearManager->setStatus('warning');
+        }
+
+        $content = $this->renderView("SchoolYear/school_year_collection.html.twig",
+            [
+                'collection'    => $collection,
+                'route'         => 'special_day_manage',
+                'contentTarget' => 'specialDayCollection',
+            ]
+        );
+
+        return new JsonResponse(
+            [
+                'content' => $content,
+                'message' => $schoolYearManager->getMessageManager()->renderView($twig),
+                'status'  => $schoolYearManager->getStatus(),
+            ],
+            200
+        );
+    }
+
+    /**
+     * @Route("/school/year/{id}/term/{cid}/manage/", name="term_manage")
+     * @IsGranted("ROLE_REGISTRAR")
+     * @param $id
+     * @param string $cid
+     * @param SchoolYearManager $schoolYearManager
+     * @param \Twig_Environment $twig
+     * @return JsonResponse
+     */
+    public function manageTerm($id, $cid = 'ignore', SchoolYearManager $schoolYearManager, \Twig_Environment $twig)
+    {
+        $schoolYearManager->find($id);
+
+        $schoolYearManager->removeTerm($cid);
+
+        $form = $this->createForm(SchoolYearType::class, $schoolYearManager->getSchoolYear());
+
+        $collection = $form->has('terms') ? $form->get('terms')->createView() : null;
+
+        if (empty($collection)) {
+            $schoolYearManager->getMessageManager()->add('warning', 'calendar.terms.not_defined');
+            $schoolYearManager->setStatus('warning');
+        }
+
+        $content = $this->renderView("SchoolYear/school_year_collection.html.twig",
+            [
+                'collection'    => $collection,
+                'route'         => 'calendar_term_manage',
+                'contentTarget' => 'termCollection',
+            ]
+        );
+
+        return new JsonResponse(
+            [
+                'content' => $content,
+                'message' => $schoolYearManager->getMessageManager()->renderView($twig),
+                'status'  => $schoolYearManager->getStatus(),
+            ],
+            200
+        );
+    }
+    /**
+     * @Route("/school/year/term/{id}/delete/", name="term_delete")
+     * @IsGranted("ROLE_REGISTRAR")
+     * @param                        $id
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function delete($id, EntityManagerInterface $entityManager, FlashBagManager $flashBagManager)
+    {
+        $term = $entityManager->getRepository(SchoolYearTerm::class)->find($id);
+
+        $flashBagManager->setDomain('SchoolYear');
+
+        $schoolYear = $term->getSchoolYear();
+
+        if ($term->canDelete())
+        {
+            $entityManager->remove($term);
+            $entityManager->flush();
+            $flashBagManager->add(
+                'success', 'year.term.delete.success',
+                [
+                    '%name%' => $term->getName(),
+                ]
+            );
+        }
+        else
+        {
+            $flashBagManager->add(
+                'warning', 'year.term.delete.warning',
+                [
+                    '%name%' => $term->getName(),
+                ]
+            );
+        }
+
+        $flashBagManager->addMessages();
+
+        return $this->redirectToRoute('school_year_edit', ['id' => $schoolYear->getId(), '_fragment' => 'terms']);
+    }
+    
+    /**
+     * @param $id
+     * @param $year
+     * @Route("/school/year/special/day/{id}/delete/", name="special_day_delete")
+     * @IsGranted("ROLE_REGISTRAR")
+     * @return RedirectResponse
+     */
+    public function deleteAction($id, EntityManagerInterface $entityManager, FlashBagManager $flashBagManager, SettingManager $settingManager)
+    {
+        $sday = $entityManager->getRepository(SchoolYearSpecialDay::class)->find($id);
+
+        $schoolYear = $sday->getSchoolYear();
+        $flashBagManager->setDomain('Calendar');
+
+        if ($sday->canDelete())
+        {
+            $em = $this->get('doctrine')->getManager();
+            $em->remove($sday);
+            $em->flush();
+            $flashBagManager->add(
+                'success', 'calendar.special_day.delete.success',
+                [
+                    '%{name}' => $sday->getDay()->format($settingManager->get('date.format.short')),
+                ]
+            );
+        }
+        else
+        {
+            $flashBagManager->add(
+                'warning', 'calendar.special_day.delete.warning',
+                [
+                    '%name%' => $sday->getDay()->format($settingManager->get('date.format.short')),
+                ]
+            );
+        }
+
+        $flashBagManager->addMessages();
+
+        return $this->redirectToRoute('school_year_edit', ['id' => $schoolYear->getId(), '_fragment' => 'specialDays']);
     }
 }

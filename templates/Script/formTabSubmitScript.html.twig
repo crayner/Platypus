@@ -1,0 +1,24 @@
+<!--  Form Tab Submit Script-->
+{% if options is not defined %}
+    {% set options = {} %}
+{% endif %}
+<script type="text/javascript" language="JavaScript">
+    $(document).ready(function () {
+        if (window.location.hash) {
+            var hash = window.location.hash;
+            hash = 'a[href="' + hash.replace('#', '#') + '"]';
+            $(hash).tab('show');
+        }
+    });
+
+    $('form').submit(function () {
+        var fragment = $('.tab-content > .active').attr('id');
+
+        var path = "{{ path(route, options|merge({'id': app.request.get('id'), '_fragment': '__fragment__'})) }}";
+
+        path = path.replace('__fragment__', fragment);
+
+        $(this).prop('action', path);
+        return true;
+    });
+</script>

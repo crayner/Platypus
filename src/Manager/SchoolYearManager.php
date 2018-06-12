@@ -311,27 +311,29 @@ class SchoolYearManager implements TabManagerInterface
 	public function getTabs(): array
 	{
 		return Yaml::parse("
-calendar:
-    label: calendar.calendar.tab
-    include: SchoolYear/calendarTab.html.twig
+schoolYear:
+    label: school_year.details.tab
+    include: SchoolYear/school_year_tab.html.twig
     message: calendarMessage
     translation: SchoolYear
 terms:
-    label: calendar.terms.tab
+    label: school_year.terms.tab
     include: SchoolYear/terms.html.twig
     message: termMessage
     translation: SchoolYear
 specialDays:
-    label: calendar.specialDays.tab
-    include: SchoolYear/specialDays.html.twig
+    label: school_year.specialDays.tab
+    include: SchoolYear/special_days.html.twig
     message: specialDayMessage
     translation: SchoolYear
-calendarGrades:
-    label: calendar.calendar_grades.tab
+");
+		/*
+		 * calendarGrades:
+    label: schoolDay.calendar_grades.tab
     include: SchoolYear/calendar_grades.html.twig
     message: calendarGradeMessage
     translation: SchoolYear
-");
+		 */
 	}
 
 	/**
@@ -586,7 +588,7 @@ calendarGrades:
         $this->setStatus('warning');
 
         if (empty($this->calendarGrade) || ! $this->calendarGrade instanceof SchoolYearGrade) {
-            $this->messageManager->add('warning', 'calendar.grades.missing.warning', ['%{calendarGrade}' => $cid]);
+            $this->messageManager->add('warning', 'schoolDay.grades.missing.warning', ['%{calendarGrade}' => $cid]);
             return;
         }
 
@@ -598,10 +600,10 @@ calendarGrades:
             $this->getEntityManager()->flush();
 
             $this->setStatus('success');
-            $this->messageManager->add('success', 'calendar.calendar_grade.removed.success', ['%{calendarGrade}' => $this->calendarGrade->getFullName()]);
+            $this->messageManager->add('success', 'schoolDay.calendar_grade.removed.success', ['%{calendarGrade}' => $this->calendarGrade->getFullName()]);
         } else {
             $this->setStatus('info');
-            $this->messageManager->add('info', 'calendar.calendar_grade.removed.info', ['%{calendarGrade}' => $this->calendarGrade->getFullName()]);
+            $this->messageManager->add('info', 'schoolDay.calendar_grade.removed.info', ['%{calendarGrade}' => $this->calendarGrade->getFullName()]);
         }
     }
 
@@ -654,7 +656,7 @@ calendarGrades:
         $this->setStatus('warning');
 
         if (empty($this->term)) {
-            $this->messageManager->add('warning', 'calendar.term.missing.warning', ['%{term}' => $cid]);
+            $this->messageManager->add('warning', 'schoolDay.term.missing.warning', ['%{term}' => $cid]);
             return ;
         }
 
@@ -666,10 +668,10 @@ calendarGrades:
             $this->getEntityManager()->flush();
 
             $this->setStatus('success');
-            $this->messageManager->add('success', 'calendar.term.removed.success', ['%{term}' => $this->term->getFullName()]);
+            $this->messageManager->add('success', 'schoolDay.term.removed.success', ['%{term}' => $this->term->getFullName()]);
         } else {
             $this->setStatus('info');
-            $this->messageManager->add('info', 'calendar.term.removed.info', ['%{term}' => $this->term->getFullName()]);
+            $this->messageManager->add('info', 'schoolDay.term.removed.info', ['%{term}' => $this->term->getFullName()]);
         }
     }
 
@@ -706,7 +708,7 @@ calendarGrades:
         $this->setStatus('warning');
 
         if (empty($this->specialDay)) {
-            $this->messageManager->add('warning', 'calendar.special_day.missing.warning', ['%{specialDay}' => $cid]);
+            $this->messageManager->add('warning', 'schoolDay.special_day.missing.warning', ['%{specialDay}' => $cid]);
             return ;
         }
 
@@ -718,10 +720,10 @@ calendarGrades:
             $this->getEntityManager()->flush();
 
             $this->setStatus('success');
-            $this->messageManager->add('success', 'calendar.special_day.removed.success', ['%{specialDay}' => $this->specialDay->getFullName()]);
+            $this->messageManager->add('success', 'schoolDay.special_day.removed.success', ['%{specialDay}' => $this->specialDay->getFullName()]);
         } else {
             $this->setStatus('info');
-            $this->messageManager->add('info', 'calendar.special_day.removed.info', ['%{specialDay}' => $this->specialDay->getFullName()]);
+            $this->messageManager->add('info', 'schoolDay.special_day.removed.info', ['%{specialDay}' => $this->specialDay->getFullName()]);
         }
     }
 

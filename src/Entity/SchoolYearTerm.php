@@ -64,24 +64,24 @@ class SchoolYearTerm
     }
 
     /**
-     * @var SchoolYearTerm|null
+     * @var SchoolYear|null
      */
     private $schoolYear;
 
     /**
-     * @return SchoolYearTerm|null
+     * @return SchoolYear|null
      */
-    public function getSchoolYearTerm(): ?SchoolYearTerm
+    public function getSchoolYear(): ?SchoolYearTerm
     {
         return $this->schoolYear;
     }
 
     /**
-     * @param SchoolYearTerm|null $schoolYear
+     * @param SchoolYear|null $schoolYear
      * @param bool $add
-     * @return SchoolYearTerm
+     * @return SchoolYear
      */
-    public function setSchoolYearTerm(?SchoolYearTerm $schoolYear, $add = true): SchoolYearTerm
+    public function setSchoolYear(?SchoolYear $schoolYear, $add = true): SchoolYearTerm
     {
         if ($add && $schoolYear)
             $schoolYear->addTerm($this, false);

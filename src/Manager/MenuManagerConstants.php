@@ -135,7 +135,7 @@ School Admin:
         manage_calendar_grades:
             label: menu.calendar.grades
             role: ROLE_REGISTRAR
-            route: calendar_edit
+            route: school_year_edit
             parameters:
                 id: current
                 _fragment: calendarGrades
@@ -194,19 +194,19 @@ School Admin:
         manage_year_special_days:
             label: menu.calendar.special_days
             role: ROLE_REGISTRAR
-            route: calendar_edit
+            route: school_year_edit
             parameters:
                 id: current
                 _fragment: specialDays
         manage_year_terms:
             label: menu.calendar.terms
             role: ROLE_REGISTRAR
-            route: calendar_edit
+            route: school_year_edit
             parameters:
                 id: current
                 _fragment: terms
     hidden:
-        - calendar_edit
+        - school_year_edit
         - edit_grade
         - student_add_to_calendar_group
         - space_edit

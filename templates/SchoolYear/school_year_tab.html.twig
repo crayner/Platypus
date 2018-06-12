@@ -1,0 +1,22 @@
+{% trans_default_domain "SchoolYear" %}
+
+{% include 'SchoolYear/school_year_menu.html.twig' with {'header': 'school.year.title', name: form.name.vars.value} %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 card">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col-6 card">
+            {{ form_row(form.firstDay) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 card">
+            {{ form_row(form.status) }}
+        </div>
+        <div class="col-6 card">
+            {{ form_row(form.lastDay) }}
+        </div>
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}

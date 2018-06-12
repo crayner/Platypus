@@ -1,0 +1,103 @@
+<?php
+namespace App\Form\Subscriber;
+
+use App\Manager\SchoolYearManager;
+use App\Entity\CalendarGroup;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+
+class SchoolYearSubscriber implements EventSubscriberInterface
+{
+	/**
+	 * @var SchoolYearManager
+	 */
+	private $schoolYearManager;
+
+	/**
+	 * YearSubscriber constructor.
+	 *
+	 * @param SchoolYearManager $ym
+	 */
+	public function __construct(SchoolYearManager $ym)
+	{
+		$this->schoolYearManager = $ym;
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function getSubscribedEvents()
+	{
+		return [
+			FormEvents::PRE_SUBMIT => 'preSubmit',
+		];
+	}
+
+	/**
+	 * @param FormEvent $event
+	 */
+	public function preSubmit(FormEvent $event)
+	{
+		$data   = $event->getData();
+		$form   = $event->getForm();
+		$entity = $form->getData();
+
+		$specDays = [];
+		if (isset($data['specialDays']) && !empty($entity->getSpecialDays()) && $entity->getSpecialDays()->count() > 0)
+		{
+			foreach ($entity->getSpecialDays() as $key => $sd)
+			{
+				$delete = true;
+				foreach ($data['specialDays'] as $q => $nsd)
+				{
+					$day = $nsd['day'];
+					if ($sd->getDay()->format('Ymd') == $day['year'] . str_pad($day['month'], 2, '0', STR_PAD_LEFT) . str_pad($day['day'], 2, '0', STR_PAD_LEFT))
+					{
+						$delete         = false;
+						$specDays[$key] = $nsd;
+						unset($data['specialDays'][$q]);
+						break;
+					}
+					if ($delete)
+					{
+						$entity->getSpecialDays()->remove($key);
+						$this->schoolYearManager->getEntityManager()->remove($sd);
+						$this->schoolYearManager->getEntityManager()->flush();
+					}
+				}
+			}
+		}
+		if (!empty($data['specialDays']))
+			$specDays = array_merge($specDays, $data['specialDays']);
+
+		if (!empty($specDays))
+			$data['specialDays'] = $specDays;
+
+/*		if (!empty($entity->getDownloadCache()) && file_exists($entity->getDownloadCache()))
+                    unlink($entity->getDownloadCache());
+
+                if ($data['calendarGrades']) {
+                    $xx = [];
+                    foreach($form->get('calendarGrades')->getData()->toArray() as $current)
+                    {
+                        $g = $current->getGrade();
+
+                        foreach ($data['calendarGrades'] as $q=>$grade)
+                        {
+                            if ($grade['grade'] === $g)
+                            {
+                                $xx[] = $grade;
+                                unset($data['calendarGrades'][$q]);
+                                break ;
+                            }
+                        }
+                    }
+                    $data['calendarGrades'] = array_merge($xx, $data['calendarGrades']);
+                }
+        */
+
+		$event->setData($data);
+		$form->setData($entity);
+	}
+}

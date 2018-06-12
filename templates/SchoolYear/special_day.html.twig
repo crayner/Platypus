@@ -1,0 +1,51 @@
+{% trans_default_domain "Calendar" %}
+
+{% block school_year_special_day_label %}{% endblock %}
+{% block school_year_special_day_errors %}{% endblock %}
+
+{% block school_year_special_day_widget %}
+    {% if form.name.vars.value is empty %}{% set panelTitle = 'school_year.special_day.add'|trans %}{% else %}{% set panelTitle = form.name.vars.value %}{% endif %}
+    {% set h3Content = '<div class="collection-actions">' %}
+    {% set h3Content = h3Content ~ saveButton() %}
+    {% set h3Content = h3Content ~ '</div>' %}
+    {% include 'Default/panelStart.html.twig' with {header: panelTitle, panelStyle: 'info', transDomain: false} %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.day) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.type) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 card">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-8 card">
+                {{ form_row(form.schoolYear, {'value': app.request.get('id')}) }}
+                {{ form_row(form.description) }}
+            </div>
+        </div>
+        {% set displayType = 'none' %}
+        {% if form.type.vars.value == 'alter' %}{% set displayType = 'flex' %}{% endif %}
+        <div class="row alterTime{{ form.vars.name }}" style="display: {{ displayType }}">
+            <div class="col-4 card">
+                {{ form_row(form.schoolOpen) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_row(form.schoolStart) }}
+            </div>
+        </div>
+        <div class="row alterTime{{ form.vars.name }}" style="display: {{ displayType }}">
+            <div class="col-4 offset-4 card">
+                {{ form_row(form.schoolEnd) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_row(form.schoolClose) }}
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    </div>
+    {% include 'Default/panelEnd.html.twig' %}
+{% endblock school_year_special_day_widget %}
