@@ -1,6 +1,7 @@
 <?php
 namespace App\Validator\Constraints;
 
+use App\Entity\SchoolYearTerm;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -34,11 +35,11 @@ class TermDateValidator extends ConstraintValidator
 		if (empty($value))
 			return;
 
-		$firstDay = $constraint->calendar->getFirstDay();
-		$lastDay  = $constraint->calendar->getLastDay();
+		$firstDay = $constraint->schoolYear->getFirstDay();
+		$lastDay  = $constraint->schoolYear->getLastDay();
 
-		$terms = $this->entityManager->getRepository(Term::class);
-		$terms = $terms->findBy(['calendar' => $constraint->calendar->getId()], ['firstDay' => 'ASC']);
+		$terms = $this->entityManager->getRepository(SchoolYearTerm::class);
+		$terms = $terms->findBy(['schoolYear' => $constraint->schoolYear->getId()], ['firstDay' => 'ASC']);
 
 		if (!empty($terms))
 			foreach ($terms as $t)
@@ -55,20 +56,20 @@ class TermDateValidator extends ConstraintValidator
 
 		foreach ($value as $key => $term)
 		{
-			if (empty($term->getName()) || empty($term->getcode()))
+			if (empty($term->getName()) || empty($term->getNameShort()))
 			{
 				$value->remove($key);
-				$constraint->calendar->removeTerm($term);
+				$constraint->schoolYear->removeTerm($term);
 			}
 		}
 
 		$terms = array();
-
 		foreach ($value as $term)
 		{
-			if (!$term->getFirstDay() instanceof DateTime || !$term->getLastDay() instanceof DateTime)
+			if (!($term->getFirstDay() instanceof \DateTime && $term->getLastDay() instanceof \DateTime))
 			{
 				$this->context->buildViolation('year.term.error.invalid')
+                    ->setTranslationDomain('SchoolYear')
 					->addViolation();
 
 				return;
@@ -76,6 +77,7 @@ class TermDateValidator extends ConstraintValidator
 			if ($term->getFirstDay() > $term->getLastDay())
 			{
 				$this->context->buildViolation('year.term.error.order')
+                    ->setTranslationDomain('SchoolYear')
 					->addViolation();
 
 				return;

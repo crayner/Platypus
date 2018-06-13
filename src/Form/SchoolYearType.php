@@ -54,9 +54,6 @@ class SchoolYearType extends AbstractType
 				array(
 					'label'       => 'school_year.lastDay.label',
 					'help' => 'school_year.lastDay.help',
-					'constraints' => array(
-						new SchoolYearDate(['fields' => $options['data']]),
-					),
 				)
 			)
 			->add('status', EnumType::class,
@@ -113,6 +110,12 @@ class SchoolYearType extends AbstractType
 			array(
 				'data_class'         => SchoolYear::class,
 				'translation_domain' => 'SchoolYear',
+                'attr' => [
+                    'novalidate' => null,
+                ],
+                'constraints' => array(
+                    new SchoolYearDate(),
+                ),
 			)
 		);
 	}

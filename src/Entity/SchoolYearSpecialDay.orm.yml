@@ -10,15 +10,13 @@ App\Entity\SchoolYearSpecialDay:
     fields:
         name:
             length: 20
-            nullable: false
         type:
             length: 16
-            nullable: false
         description:
             length: 255
+            nullable: true
         date:
             type: date
-            nullable: false
         schoolOpen:
             type: time
             nullable: true

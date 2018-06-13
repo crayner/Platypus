@@ -26,29 +26,29 @@ class SchoolYearDateValidator extends ConstraintValidator
 		if (empty($value))
 			return;
 
-		$schoolYear  = $constraint->fields;
+		$schoolYear  = $value;
 		$start = $schoolYear->getFirstDay();
 		$end   = $schoolYear->getLastDay();
 		$name  = $schoolYear->getName();
 
 		if (!$start instanceof \DateTime || !$end instanceof \DateTime)
 		{
-			$this->context->buildViolation('calendar.validation.invalid.format')
-                ->setTranslationDomain('Calendar')
+			$this->context->buildViolation('school_year.validation.invalid.format')
+                ->setTranslationDomain('SchoolYear')
 				->addViolation();
 			return;
 		}
 		if ($start > $end)
 		{
-			$this->context->buildViolation('calendar.validation.invalid.order')
-                ->setTranslationDomain('Calendar')
+			$this->context->buildViolation('school_year.validation.invalid.order')
+                ->setTranslationDomain('SchoolYear')
 				->addViolation();
 			return;
 		}
 		if ($start->diff($end)->y > 0)
 		{
 			$this->context->buildViolation($constraint->message)
-                ->setTranslationDomain('Calendar')
+                ->setTranslationDomain('SchoolYear')
 				->addViolation();
 			return;
 		}
@@ -64,15 +64,15 @@ class SchoolYearDateValidator extends ConstraintValidator
 			{
 				if ($schoolYear->getFirstDay() >= $start && $schoolYear->getFirstDay() <= $end)
 				{
-					$this->context->buildViolation('calendar.validation.overlapped', array('%name1%' => $schoolYear->getName(), '%name2%' => $name))
-                        ->setTranslationDomain('Calendar')
+					$this->context->buildViolation('school_year.validation.overlapped', array('%name1%' => $schoolYear->getName(), '%name2%' => $name))
+                        ->setTranslationDomain('SchoolYear')
 						->addViolation();
 					return;
 				}
 				if ($schoolYear->getLastDay() >= $start && $schoolYear->getLastDay() <= $end)
 				{
-					$this->context->buildViolation('calendar.validation.overlapped', array('%name1%' => $schoolYear->getName(), '%name2%' => $name))
-                        ->setTranslationDomain('Calendar')
+					$this->context->buildViolation('school_year.validation.overlapped', array('%name1%' => $schoolYear->getName(), '%name2%' => $name))
+                        ->setTranslationDomain('SchoolYear')
 						->addViolation();
 					return;
 				}

@@ -82,10 +82,14 @@ class SchoolYearController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            foreach($form->get('specialDays')->getData() as $sd) {
+                $schoolYear->addSpecialDay($sd);
+                dump($sd);
+            }
             $em->persist($schoolYear);
             $em->flush();
 
-            $messageManager->add('success', 'calendar.success', [], 'SchoolYear');
+            $messageManager->add('success', 'school_year.success', [], 'SchoolYear');
 
             $flashBagManager->addMessages($messageManager);
 
@@ -94,7 +98,7 @@ class SchoolYearController extends Controller
 
             $em->refresh($schoolYear);
 
-            $form = $this->createForm(SchoolYearType::class, $schoolYear, ['calendarGradeManager' => $schoolYearGradeManager]);
+            $form = $this->createForm(SchoolYearType::class, $schoolYear);
         } else
             $em->refresh($schoolYear);
 

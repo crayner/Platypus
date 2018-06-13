@@ -17,6 +17,7 @@ namespace App\Demonstration;
 
 use App\Entity\Campus;
 use App\Entity\Course;
+use App\Entity\DayOfWeek;
 use App\Entity\Department;
 use App\Entity\Invoice;
 use App\Entity\Scale;
@@ -39,26 +40,30 @@ class SchoolFixtures implements DummyDataInterface
     {
         $this->setLogger($logger);
 
-/*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/day_of_week.yml'));
 
-        $this->setLogger($logger)->buildTable($data, Campus::class, $manager);
+        $this->buildTable($data, DayOfWeek::class, $manager);
 
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/space.yml'));
+        /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
 
-        $this->buildTable($data, Space::class, $manager);
+                $this->setLogger($logger)->buildTable($data, Campus::class, $manager);
 
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department.yml'));
+                $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/space.yml'));
 
-        $this->buildTable($data, Department::class, $manager);
+                $this->buildTable($data, Space::class, $manager);
 
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/course.yml'));
+                $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department.yml'));
 
-        $this->buildTable($data, Course::class, $manager);
+                $this->buildTable($data, Department::class, $manager);
 
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/scale.yml'));
+                $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/course.yml'));
 
-        $this->buildTable($data, Scale::class, $manager);
-*/
+                $this->buildTable($data, Course::class, $manager);
+
+                $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/scale.yml'));
+
+                $this->buildTable($data, Scale::class, $manager);
+        */
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/setting.yml'));
 
         $this->buildTable($data, Setting::class, $manager);

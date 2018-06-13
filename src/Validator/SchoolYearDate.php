@@ -6,9 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 class SchoolYearDate extends Constraint
 {
-	public $message = 'calendar.validation.not_one_year';
-
-	public $fields;
+	public $message = 'school_year.validation.not_one_year';
 
 	/**
 	 * @return string
@@ -18,10 +16,13 @@ class SchoolYearDate extends Constraint
 		return SchoolYearDateValidator::class;
 	}
 
-	public function getRequiredOptions()
+    /**
+     * getTargets
+     *
+     * @return array|string
+     */
+    public function getTargets()
     {
-        return [
-            'fields',
-        ];
+        return Constraint::CLASS_CONSTRAINT;
     }
 }

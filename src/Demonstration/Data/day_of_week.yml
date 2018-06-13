@@ -1,0 +1,66 @@
+%YAML 1.1
+---
+# craigray_gibbon.gibbonDaysOfWeek
+-
+  id: 01
+  name: "Monday"
+  name_short: "Mon"
+  sequence_number: 1
+  school_day: "Y"
+  school_open: "07:45:00"
+  school_start: "08:30:00"
+  school_end: "15:30:00"
+  school_close: "17:00:00"
+-
+  id: 02
+  name: "Tuesday"
+  name_short: "Tue"
+  sequence_number: 2
+  school_day: "Y"
+  school_open: "07:45:00"
+  school_start: "08:30:00"
+  school_end: "15:30:00"
+  school_close: "17:00:00"
+-
+  id: 03
+  name: "Wednesday"
+  name_short: "Wed"
+  sequence_number: 3
+  school_day: "Y"
+  school_open: "07:45:00"
+  school_start: "08:30:00"
+  school_end: "15:30:00"
+  school_close: "17:00:00"
+-
+  id: 04
+  name: "Thursday"
+  name_short: "Thu"
+  sequence_number: 4
+  school_day: "Y"
+  school_open: "07:45:00"
+  school_start: "08:30:00"
+  school_end: "15:30:00"
+  school_close: "17:00:00"
+-
+  id: 05
+  name: "Friday"
+  name_short: "Fri"
+  sequence_number: 5
+  school_day: "Y"
+  school_open: "07:45:00"
+  school_start: "08:30:00"
+  school_end: "15:30:00"
+  school_close: "17:00:00"
+-
+  id: 06
+  name: "Saturday"
+  name_short: "Sat"
+  sequence_number: 6
+  school_day: "N"
+-
+  id: 07
+  name: "Sunday"
+  name_short: "Sun"
+  sequence_number: 7
+  school_day: "N"
+...

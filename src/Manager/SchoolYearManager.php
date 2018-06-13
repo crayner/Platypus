@@ -3,6 +3,8 @@ namespace App\Manager;
 
 use App\Entity\SchoolYearGrade;
 use App\Entity\SchoolYear;
+use App\Entity\SchoolYearSpecialDay;
+use App\Entity\SchoolYearTerm;
 use App\Entity\SpecialDay;
 use App\Entity\Student;
 use App\Entity\Term;
@@ -82,11 +84,6 @@ class SchoolYearManager implements TabManagerInterface
     private $status;
 
     /**
-     * @var SchoolYearGradeManager
-     */
-    private $schoolYearGradeManager;
-
-    /**
      * @var RouterInterface
      */
     private $router;
@@ -96,24 +93,29 @@ class SchoolYearManager implements TabManagerInterface
      */
     private $stack;
 
+    /**
+     * @var SettingManager
+     */
+    private $settingManager;
+
 	/**
 	 * YearManager constructor.
 	 *
 	 * @param ObjectManager $manager
 	 */
-	public function __construct(EntityManagerInterface $manager, TokenStorageInterface $tokenStorage, Year $year, MessageManager $messageManager,
-                                RouterInterface $router, RequestStack $stack)
+	public function __construct(TokenStorageInterface $tokenStorage, Year $year,
+                                RouterInterface $router, RequestStack $stack,
+                                SettingManager $settingManager)
 	{
-		$this->manager = $manager;
+		$this->manager = $settingManager->getEntityManager();
 		self::$tokenStorage = $tokenStorage;
-		self::$schoolYearRepository = $manager->getRepository(SchoolYear::class);
+		self::$schoolYearRepository = $this->getEntityManager()->getRepository(SchoolYear::class);
 		$this->year = $year;
-        $this->messageManager = $messageManager;
+        $this->messageManager = $settingManager->getMessageManager();
         $this->messageManager->setDomain('SchoolYear');
-//       $this->calendarGradeManager = $schoolYearGradeManager;
-  //      $this->calendarGradeManager->setSchoolYearManager($this);
         $this->router = $router;
         $this->stack = $stack;
+        $this->settingManager = $settingManager;
 	}
 
     /**
@@ -163,15 +165,7 @@ class SchoolYearManager implements TabManagerInterface
      */
     public function getSchoolYear(): ?SchoolYear
     {
-        return $this->calendar;
-    }
-
-    /**
-     * @return SchoolYearGrade|null
-     */
-    public function getSchoolYearGrade(): ?SchoolYearGrade
-    {
-        return $this->calendarGrade;
+        return $this->schoolYear;
     }
 
     /**
@@ -209,11 +203,21 @@ class SchoolYearManager implements TabManagerInterface
     }
 
     /**
-     * @return Term|null
+     * getSpecialDay
+     *
+     * @return SchoolYearSpecialDay|null
      */
-    public function getSpecialDay(): ?SpecialDay
+    public function getSpecialDay(): ?SchoolYearSpecialDay
     {
         return $this->specialDay;
+    }
+
+    /**
+     * @return SettingManager
+     */
+    public function getSettingManager(): SettingManager
+    {
+        return $this->settingManager;
     }
 
     /**
@@ -314,7 +318,7 @@ class SchoolYearManager implements TabManagerInterface
 schoolYear:
     label: school_year.details.tab
     include: SchoolYear/school_year_tab.html.twig
-    message: calendarMessage
+    message: schoolYearMessage
     translation: SchoolYear
 terms:
     label: school_year.terms.tab
@@ -343,8 +347,8 @@ specialDays:
 	 */
 	public function generate(SchoolYear $schoolYear)
 	{
-		$this->calendar = $schoolYear;
-		return $this->year->generate($this->calendar);
+		$this->schoolYear = $schoolYear;
+		return $this->year->generate($this->getSchoolYear());
 	}
 
 	/**
@@ -358,13 +362,13 @@ specialDays:
 	public function setSchoolYearDays(Year $year, SchoolYear $schoolYear)
 	{
 		$this->year     = $year;
-		$this->calendar = $schoolYear;
+		$this->schoolYear = $schoolYear;
 		$this->setNonSchoolDays();
 		$this->setTermBreaks();
 		$this->setClosedDays();
 		$this->setSpecialDays();
 
-		return $this->calendar;
+		return $this->getSchoolYear();
 	}
 
 	/**
@@ -425,7 +429,7 @@ specialDays:
 		// Check if the day is a possible school day. i.e. Ignore Weekends
 		if ($currentDate->isTermBreak()) return true;
 
-		foreach ($this->calendar->getTerms() as $term)
+		foreach ($this->getSchoolYear()->getTerms() as $term)
 		{
 			if ($currentDate->getDate() >= $term->getFirstDay() && $currentDate->getDate() <= $term->getLastDay())
 				return false;
@@ -441,8 +445,8 @@ specialDays:
 	 */
 	public function setClosedDays()
 	{
-		if (!is_null($this->calendar->getSpecialDays()))
-			foreach ($this->calendar->getSpecialDays() as $specialDay)
+		if (!is_null($this->getSchoolYear()->getSpecialDays()))
+			foreach ($this->getSchoolYear()->getSpecialDays() as $specialDay)
 				if ($specialDay->getType() == 'closure')
 					$this->year->getDay($specialDay->getDay()->format('d.m.Y'))->setClosed(true, $specialDay->getName());
 	}
@@ -452,8 +456,8 @@ specialDays:
 	 */
 	public function setSpecialDays()
 	{
-		if (!is_null($this->calendar->getSpecialDays()))
-			foreach ($this->calendar->getSpecialDays() as $specialDay)
+		if (!is_null($this->getSchoolYear()->getSpecialDays()))
+			foreach ($this->getSchoolYear()->getSpecialDays() as $specialDay)
 				if ($specialDay->getType() != 'closure')
 					$this->year->getDay($specialDay->getDay()->format('d.m.Y'))->setSpecial(true, $specialDay->getName());
 	}
@@ -562,81 +566,13 @@ specialDays:
     public function find($id): ?SchoolYear
     {
         if ($id === 'Add')
-            $this->calendar = new SchoolYear();
+            $this->schoolYear = new SchoolYear();
         if (empty($id))
-            $this->calendar = null;
+            $this->schoolYear = null;
         if (intval($id) > 0)
-            $this->calendar = $this->getEntityManager()->getRepository(SchoolYear::class)->find($id);
+            $this->schoolYear = $this->getEntityManager()->getRepository(SchoolYear::class)->find($id);
 
         return $this->getSchoolYear();
-    }
-
-    /**
-     * @param $cid
-     */
-    public function removeSchoolYearGrade($cid)
-    {
-        $this->setStatus('default');
-        if ($cid === 'ignore')
-            return ;
-
-        if (! $this->getSchoolYear())
-            return ;
-
-        $this->findSchoolYearGrade($cid);
-
-        $this->setStatus('warning');
-
-        if (empty($this->calendarGrade) || ! $this->calendarGrade instanceof SchoolYearGrade) {
-            $this->messageManager->add('warning', 'schoolDay.grades.missing.warning', ['%{calendarGrade}' => $cid]);
-            return;
-        }
-
-        if ($this->calendar->getSchoolYearGrades()->contains($this->calendarGrade) && $this->calendarGradeManager->canDelete($this->calendarGrade)) {
-            // Staff is NOT Deleted, but the DepartmentMember link is deleted.
-            $this->calendar->removeSchoolYearGrade($this->calendarGrade);
-            $this->getEntityManager()->remove($this->calendarGrade);
-            $this->getEntityManager()->persist($this->calendar);
-            $this->getEntityManager()->flush();
-
-            $this->setStatus('success');
-            $this->messageManager->add('success', 'schoolDay.calendar_grade.removed.success', ['%{calendarGrade}' => $this->calendarGrade->getFullName()]);
-        } else {
-            $this->setStatus('info');
-            $this->messageManager->add('info', 'schoolDay.calendar_grade.removed.info', ['%{calendarGrade}' => $this->calendarGrade->getFullName()]);
-        }
-    }
-
-    /**
-     * @var null|SchoolYearGrade
-     */
-    private $schoolYearGrade;
-
-    /**
-     * @param $id
-     * @return null|SchoolYearGrade
-     */
-    public function findSchoolYearGrade($id): ?SchoolYearGrade
-    {
-        $this->calendarGrade = $this->getEntityManager()->getRepository(SchoolYearGrade::class)->find(intval($id));
-
-        return $this->getSchoolYearGrade();
-    }
-
-    /**
-     * @return SchoolYear|null
-     */
-    public function refreshSchoolYearGrades(): ?SchoolYear
-    {
-        if (empty($this->calendar))
-            return $this->calendar;
-
-        try {
-            $this->getEntityManager()->refresh($this->calendar);
-            return $this->calendar->refresh();
-        } catch (\Exception $e) {
-            return $this->calendar;
-        }
     }
 
     /**
@@ -660,11 +596,11 @@ specialDays:
             return ;
         }
 
-        if ($this->calendar->getTerms()->contains($this->term) && $this->term->canDelete()) {
+        if ($this->getSchoolYear()->getTerms()->contains($this->term) && $this->term->canDelete()) {
             // Staff is NOT Deleted, but the DepartmentMember link is deleted.
-            $this->calendar->removeTerm($this->term);
+            $this->getSchoolYear()->removeTerm($this->term);
             $this->getEntityManager()->remove($this->term);
-            $this->getEntityManager()->persist($this->calendar);
+            $this->getEntityManager()->persist($this->getSchoolYear());
             $this->getEntityManager()->flush();
 
             $this->setStatus('success');
@@ -686,7 +622,7 @@ specialDays:
      */
     public function findTerm($id): ?Term
     {
-        $this->term = $this->getEntityManager()->getRepository(Term::class)->find(intval($id));
+        $this->term = $this->getEntityManager()->getRepository(SchoolYearTerm::class)->find(intval($id));
 
         return $this->getTerm();
     }
@@ -708,37 +644,38 @@ specialDays:
         $this->setStatus('warning');
 
         if (empty($this->specialDay)) {
-            $this->messageManager->add('warning', 'schoolDay.special_day.missing.warning', ['%{specialDay}' => $cid]);
+            $this->messageManager->add('warning', 'special_day.missing.warning', ['%{specialDay}' => $cid]);
             return ;
         }
 
-        if ($this->calendar->getSpecialDays()->contains($this->specialDay) && $this->specialDay->canDelete()) {
-            // Staff is NOT Deleted, but the DepartmentMember link is deleted.
-            $this->calendar->removeTerm($this->specialDay);
+        if ($this->getSchoolYear()->getSpecialDays()->contains($this->specialDay) && $this->specialDay->canDelete()) {
+            $this->getSchoolYear()->removeSpecialDay($this->specialDay);
             $this->getEntityManager()->remove($this->specialDay);
-            $this->getEntityManager()->persist($this->calendar);
+            $this->getEntityManager()->persist($this->getSchoolYear());
             $this->getEntityManager()->flush();
 
             $this->setStatus('success');
-            $this->messageManager->add('success', 'schoolDay.special_day.removed.success', ['%{specialDay}' => $this->specialDay->getFullName()]);
+            $this->messageManager->add('success', 'special_day.removed.success', ['%{specialDay}' => $this->specialDay->getFullName($this->getSettingManager()->get('date.format.long'))]);
         } else {
             $this->setStatus('info');
-            $this->messageManager->add('info', 'schoolDay.special_day.removed.info', ['%{specialDay}' => $this->specialDay->getFullName()]);
+            $this->messageManager->add('info', 'special_day.removed.info', ['%{specialDay}' => $this->specialDay->getFullName($this->getSettingManager()->get('date.format.long'))]);
         }
     }
 
     /**
-     * @var null|SpecialDay
+     * @var null|SchoolYearSpecialDay
      */
     private $specialDay;
 
     /**
+     * findSpecialDay
+     *
      * @param $id
-     * @return null|SchoolYearGrade
+     * @return SchoolYearSpecialDay|null
      */
-    public function findSpecialDay($id): ?SpecialDay
+    public function findSpecialDay($id): ?SchoolYearSpecialDay
     {
-        $this->specialDay = $this->getEntityManager()->getRepository(SpecialDay::class)->find(intval($id));
+        $this->specialDay = $this->getEntityManager()->getRepository(SchoolYearSpecialDay::class)->find(intval($id));
 
         return $this->getSpecialDay();
     }
@@ -749,9 +686,8 @@ specialDays:
     public function getResetScripts(): string
     {
         $request = $this->stack->getCurrentRequest();
-        $xx = "manageCollection('" . $this->router->generate("calendar_grade_manage", ["id" => $request->get("id"), "cid" => "ignore"]) . "','gradeCollection', '')\n";
-        $xx .= "manageCollection('" . $this->router->generate("calendar_term_manage", ["id" => $request->get("id"), "cid" => "ignore"]) . "','termCollection', '')\n";
-        $xx .= "manageCollection('" . $this->router->generate("calendar_special_day_manage", ["id" => $request->get("id"), "cid" => "ignore"]) . "','specialDayCollection', '')\n";
+        $xx = "manageCollection('" . $this->router->generate("term_manage", ["id" => $request->get("id"), "cid" => "ignore"]) . "','termCollection', '')\n";
+        $xx .= "manageCollection('" . $this->router->generate("special_day_manage", ["id" => $request->get("id"), "cid" => "ignore"]) . "','specialDayCollection', '')\n";
 
         return $xx;
     }

@@ -22,8 +22,21 @@ abstract class SchoolYearSpecialDayExtension
      *
      * @return bool
      */
-    public function canDelete()
+    public function canDelete(): bool
     {
         return true;
+    }
+
+    /**
+     * getFullName
+     *
+     * @param string $format
+     * @return string
+     */
+    public function getFullName($format = 'Ymd'): ?string
+    {
+        if ($this->getDate())
+            return $this->getName(). ' on ' . $this->getDate()->format($format);
+        return $this->getName();
     }
 }

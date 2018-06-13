@@ -29,10 +29,12 @@ App\Entity\SchoolYear:
         terms:
             targetEntity: App\Entity\SchoolYearTerm
             mappedBy: schoolYear
-            cascade: [ 'persist' ]
+            cascade: [persist, remove]
             orphanRemoval: true
+            orderBy: {firstDay: ASC}
         specialDays:
             targetEntity: App\Entity\SchoolYearSpecialDay
             mappedBy: schoolYear
-            cascade: [ 'persist' ]
+            cascade: [persist, remove]
             orphanRemoval: true
+            orderBy: {date: ASC}

@@ -11,34 +11,34 @@ App\Entity\DayOfWeek:
         name:
             length: 10
             nullable: false
- #       nameShort:
- #           length: 4
- #           nullable: false
- #           column: name_short
- #       sequenceNumber:
- #           type: integer
- #           length: 2
- #           nullable: false
- #           column: sequence_number
- #       schoolDay:
- #           type: boolean
- #           nullable: false
- #           column: school_day
- #           options:
- #               default: '1'
- #       schoolOpen:
- ##           type: time
-  #          nullable: true
-  #          column: school_open
-  #      schoolStart:
-  #          type: time
-  #          nullable: true
-  #          column: school_start
-  #      schoolEnd:
-  #          type: time
-  #          nullable: true
- #           column: school_end
- #       schoolClose:
- #           type: time
- #           nullable: true
- #           column: school_close
+        nameShort:
+            length: 4
+            nullable: false
+            column: name_short
+        sequenceNumber:
+            type: integer
+            length: 2
+            nullable: false
+            column: sequence_number
+        schoolDay:
+            type: boolean
+            nullable: false
+            column: school_day
+            options:
+                default: '1'
+        schoolOpen:
+            type: time
+            nullable: true
+            column: school_open
+        schoolStart:
+            type: time
+            nullable: true
+            column: school_start
+        schoolEnd:
+            type: time
+            nullable: true
+            column: school_end
+        schoolClose:
+            type: time
+            nullable: true
+            column: school_close

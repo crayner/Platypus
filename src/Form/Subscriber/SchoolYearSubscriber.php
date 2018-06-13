@@ -43,7 +43,7 @@ class SchoolYearSubscriber implements EventSubscriberInterface
 		$form   = $event->getForm();
 		$entity = $form->getData();
 
-		$specDays = [];
+/*		$specDays = [];
 		if (isset($data['specialDays']) && !empty($entity->getSpecialDays()) && $entity->getSpecialDays()->count() > 0)
 		{
 			foreach ($entity->getSpecialDays() as $key => $sd)
@@ -51,10 +51,9 @@ class SchoolYearSubscriber implements EventSubscriberInterface
 				$delete = true;
 				foreach ($data['specialDays'] as $q => $nsd)
 				{
-					$day = $nsd['day'];
-					if ($sd->getDay()->format('Ymd') == $day['year'] . str_pad($day['month'], 2, '0', STR_PAD_LEFT) . str_pad($day['day'], 2, '0', STR_PAD_LEFT))
+					$day = $nsd['date'];
+					if ($sd->getDate()->format('Ymd') == $day['year'] . str_pad($day['month'], 2, '0', STR_PAD_LEFT) . str_pad($day['day'], 2, '0', STR_PAD_LEFT))
 					{
-						$delete         = false;
 						$specDays[$key] = $nsd;
 						unset($data['specialDays'][$q]);
 						break;
@@ -74,7 +73,7 @@ class SchoolYearSubscriber implements EventSubscriberInterface
 		if (!empty($specDays))
 			$data['specialDays'] = $specDays;
 
-/*		if (!empty($entity->getDownloadCache()) && file_exists($entity->getDownloadCache()))
+		/*		if (!empty($entity->getDownloadCache()) && file_exists($entity->getDownloadCache()))
                     unlink($entity->getDownloadCache());
 
                 if ($data['calendarGrades']) {

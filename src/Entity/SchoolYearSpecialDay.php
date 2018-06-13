@@ -135,7 +135,7 @@ class SchoolYearSpecialDay extends SchoolYearSpecialDayExtension
     /**
      * @return \DateTime
      */
-    public function getDate(): \DateTime
+    public function getDate(): ?\DateTime
     {
         return $this->date;
     }
@@ -167,7 +167,7 @@ class SchoolYearSpecialDay extends SchoolYearSpecialDayExtension
      * @param \DateTime $schoolOpen
      * @return SchoolYearSpecialDay
      */
-    public function setSchoolOpen(\DateTime $schoolOpen): SchoolYearSpecialDay
+    public function setSchoolOpen(?\DateTime $schoolOpen): SchoolYearSpecialDay
     {
         $this->schoolOpen = $schoolOpen;
         return $this;
@@ -190,7 +190,7 @@ class SchoolYearSpecialDay extends SchoolYearSpecialDayExtension
      * @param \DateTime $schoolStart
      * @return SchoolYearSpecialDay
      */
-    public function setSchoolStart(\DateTime $schoolStart): SchoolYearSpecialDay
+    public function setSchoolStart(?\DateTime $schoolStart): SchoolYearSpecialDay
     {
         $this->schoolStart = $schoolStart;
         return $this;
@@ -213,7 +213,7 @@ class SchoolYearSpecialDay extends SchoolYearSpecialDayExtension
      * @param \DateTime $schoolEnd
      * @return SchoolYearSpecialDay
      */
-    public function setSchoolEnd(\DateTime $schoolEnd): SchoolYearSpecialDay
+    public function setSchoolEnd(?\DateTime $schoolEnd): SchoolYearSpecialDay
     {
         $this->schoolEnd = $schoolEnd;
         return $this;
@@ -236,7 +236,7 @@ class SchoolYearSpecialDay extends SchoolYearSpecialDayExtension
      * @param \DateTime $schoolClose
      * @return SchoolYearSpecialDay
      */
-    public function setSchoolClose(\DateTime $schoolClose): SchoolYearSpecialDay
+    public function setSchoolClose(?\DateTime $schoolClose): SchoolYearSpecialDay
     {
         $this->schoolClose = $schoolClose;
         return $this;
@@ -263,7 +263,7 @@ class SchoolYearSpecialDay extends SchoolYearSpecialDayExtension
     public function setSchoolYear(?SchoolYear $schoolYear, $add = true): SchoolYearSpecialDay
     {
         if ($add && $schoolYear)
-            $schoolYear->addTerm($this, false);
+            $schoolYear->addSpecialDay($this, false);
 
         $this->schoolYear = $schoolYear;
         return $this;

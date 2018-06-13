@@ -1,7 +1,7 @@
 <?php
 namespace App\Validator\Constraints;
 
-use App\Entity\SpecialDay;
+use App\Entity\SchoolYearSpecialDay;
 use App\Util\DaysTimesHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\Constraint;
@@ -15,19 +15,13 @@ class SpecialDayDateValidator extends ConstraintValidator
 	private $entityManager;
 
 	/**
-	 * @var DaysTimesManager
-	 */
-	private $daysTimesManager;
-
-	/**
 	 * SpecialDayDateValidator constructor.
 	 *
 	 * @param EntityManagerInterface $entityManager
 	 */
-	public function __construct(EntityManagerInterface $entityManager, DaysTimesHelper $daysTimesManager)
+	public function __construct(EntityManagerInterface $entityManager)
 	{
 		$this->entityManager = $entityManager;
-		$this->daysTimesManager = $daysTimesManager;
 	}
 
 	/**
@@ -40,7 +34,7 @@ class SpecialDayDateValidator extends ConstraintValidator
 	{
 		if (empty($value))
 			return;
-		$days = $this->entityManager->getRepository(SpecialDay::class)->findBy(['calendar' => $constraint->calendar->getId()], ['day' => 'ASC']);
+		$days = $this->entityManager->getRepository(SchoolYearSpecialDay::class)->findBy(['schoolYear' => $constraint->schoolYear->getId()], ['date' => 'ASC']);
 
 		if (!empty($days))
 			foreach ($days as $d)
@@ -49,7 +43,7 @@ class SpecialDayDateValidator extends ConstraintValidator
 					if (!$d->canDelete())
 					{
 						$this->context->buildViolation('calendar.specialDay.error.delete', ['%day%' => $d->getDay()->format('jS M/Y')])
-							->setTranslationDomain('Calendar')
+							->setTranslationDomain('SchoolYear')
 							->atPath('['.$value->indexOf($d).'].name')
 							->addViolation();
 
@@ -65,7 +59,7 @@ class SpecialDayDateValidator extends ConstraintValidator
 				{
 					$day->setOpen($this->daysTimesManager->getTime()->getOpen());
 					$this->context->buildViolation('calendar.specialDay.error.timeEmpty', ['%{date}' => $day->getDay()->format('jS M/Y'), '%{time_name}' => $this->daysTimesManager->getTime()->getTranslation('open'), '%{name}' => $day->getName()])
-						->setTranslationDomain('Calendar')
+						->setTranslationDomain('SchoolYear')
 						->atPath('['.$key.'].open')
 						->addViolation();
 				}
@@ -74,7 +68,7 @@ class SpecialDayDateValidator extends ConstraintValidator
 				{
 					$day->setStart($this->daysTimesManager->getTime()->getBegin());
 					$this->context->buildViolation('calendar.specialDay.error.timeEmpty', ['%{date}' => $day->getDay()->format('jS M/Y'), '%{time_name}' => $this->daysTimesManager->getTime()->getTranslation('start'), '%{name}' => $day->getName()])
-						->setTranslationDomain('Calendar')
+						->setTranslationDomain('SchoolYear')
 						->atPath('['.$key.'].start')
 						->addViolation();
 				}
