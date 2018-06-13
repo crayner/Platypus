@@ -56,7 +56,7 @@ class CoreExtension extends AbstractExtension
             new \Twig_SimpleFunction('addScript', array($this->scriptManager, 'addScript')),
             new \Twig_SimpleFunction('getScripts', array($this->scriptManager, 'getScripts')),
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
-            new \Twig_SimpleFunction('formatUserName', [$this, 'getFullUserName']),
+            new \Twig_SimpleFunction('getFullUserName', [$this, 'getFullUserName']),
         ];
     }
 

@@ -1,14 +1,11 @@
 <?php
 namespace App\Manager;
 
-use App\Entity\SchoolYearGrade;
 use App\Entity\SchoolYear;
 use App\Entity\SchoolYearSpecialDay;
 use App\Entity\SchoolYearTerm;
-use App\Entity\SpecialDay;
-use App\Entity\Student;
-use App\Entity\Term;
 use App\Repository\SchoolYearRepository;
+use App\Util\UserHelper;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Driver\PDOException;
 use Doctrine\DBAL\Exception\DriverException;
@@ -17,7 +14,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -37,16 +33,6 @@ class SchoolYearManager implements TabManagerInterface
 	 * @var array
 	 */
 	private $data;
-
-	/**
-	 * @var TokenStorageInterface
-	 */
-	private static $tokenStorage;
-
-	/**
-	 * @var UserInterface
-	 */
-	private static $currentUser;
 
     /**
      * @var SchoolYear
@@ -103,12 +89,11 @@ class SchoolYearManager implements TabManagerInterface
 	 *
 	 * @param ObjectManager $manager
 	 */
-	public function __construct(TokenStorageInterface $tokenStorage, Year $year,
+	public function __construct(Year $year,
                                 RouterInterface $router, RequestStack $stack,
                                 SettingManager $settingManager)
 	{
 		$this->manager = $settingManager->getEntityManager();
-		self::$tokenStorage = $tokenStorage;
 		self::$schoolYearRepository = $this->getEntityManager()->getRepository(SchoolYear::class);
 		$this->year = $year;
         $this->messageManager = $settingManager->getMessageManager();
@@ -195,9 +180,9 @@ class SchoolYearManager implements TabManagerInterface
     }
 
     /**
-     * @return Term|null
+     * @return SchoolYearTerm|null
      */
-    public function getTerm(): ?Term
+    public function getTerm(): ?SchoolYearTerm
     {
         return $this->term;
     }
@@ -235,12 +220,12 @@ class SchoolYearManager implements TabManagerInterface
 		catch (DriverException $e)
 		{
 			if (!in_array($e->getErrorCode(), ['1091']))
-				throw new \Exception($e->getMessage());
+				throw $e;
 		}
         catch (PDOException $e)
         {
             if (!in_array($e->getErrorCode(), ['1146']))
-                throw new \Exception($e->getMessage());
+                throw $e;
         }
 	}
 
@@ -257,26 +242,6 @@ class SchoolYearManager implements TabManagerInterface
 	}
 
     /**
-     * getCurrentUser
-     *
-     */
-    private static function getCurrentUser() 
-	{
-		if (! is_null(self::$currentUser))
-			return ;
-		$token = self::$tokenStorage->getToken();
-
-		if (is_null($token))
-			return ;
-
-		$user = $token->getUser();
-		if ($user instanceof UserInterface)
-			self::$currentUser = $user;
-
-		return;
-	}
-
-    /**
      * getCurrentSchoolYear
      *
      * @return SchoolYear|null
@@ -286,12 +251,11 @@ class SchoolYearManager implements TabManagerInterface
 		if (! is_null(self::$currentSchoolYear))
 			return self::$currentSchoolYear;
 
-		self::getCurrentUser();
-		if (self::$currentUser instanceof UserInterface)
+		if (UserHelper::getCurrentUser() instanceof UserInterface)
 		{
-			$settings = self::$currentUser->getUserSettings();
-			if (isset($settings['calendar']))
-				self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['id' => $settings['calendar']]);
+			$settings = UserHelper::getCurrentUser()->getUserSettings();
+			if (isset($settings['school_year']))
+				self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['id' => $settings['school_year']]);
 			else
 				self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['status' => 'current']);
 		}
@@ -592,7 +556,7 @@ specialDays:
         $this->setStatus('warning');
 
         if (empty($this->term)) {
-            $this->messageManager->add('warning', 'schoolDay.term.missing.warning', ['%{term}' => $cid]);
+            $this->messageManager->add('warning', 'term.missing.warning', ['%{term}' => $cid]);
             return ;
         }
 
@@ -604,23 +568,23 @@ specialDays:
             $this->getEntityManager()->flush();
 
             $this->setStatus('success');
-            $this->messageManager->add('success', 'schoolDay.term.removed.success', ['%{term}' => $this->term->getFullName()]);
+            $this->messageManager->add('success', 'term.removed.success', ['%{term}' => $this->term->getFullName()]);
         } else {
             $this->setStatus('info');
-            $this->messageManager->add('info', 'schoolDay.term.removed.info', ['%{term}' => $this->term->getFullName()]);
+            $this->messageManager->add('info', 'term.removed.info', ['%{term}' => $this->term->getFullName()]);
         }
     }
 
     /**
-     * @var null|Term
+     * @var null|SchoolYearTerm
      */
     private $term;
 
     /**
      * @param $id
-     * @return null|SchoolYearGrade
+     * @return null|SchoolYearTerm
      */
-    public function findTerm($id): ?Term
+    public function findTerm($id): ?SchoolYearTerm
     {
         $this->term = $this->getEntityManager()->getRepository(SchoolYearTerm::class)->find(intval($id));
 

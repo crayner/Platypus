@@ -116,29 +116,6 @@ class SchoolYearTerm extends SchoolYearTermExtension
     }
 
     /**
-     * @var integer|null
-     */
-    private $sequenceNumber;
-
-    /**
-     * @return int|null
-     */
-    public function getSequenceNumber(): ?int
-    {
-        return $this->sequenceNumber;
-    }
-
-    /**
-     * @param int|null $sequenceNumber
-     * @return SchoolYearTerm
-     */
-    public function setSequenceNumber(?int $sequenceNumber): SchoolYearTerm
-    {
-        $this->sequenceNumber = $sequenceNumber;
-        return $this;
-    }
-
-    /**
      * @var \DateTime
      */
     private $firstDay;
@@ -146,7 +123,7 @@ class SchoolYearTerm extends SchoolYearTermExtension
     /**
      * @return \DateTime
      */
-    public function getFirstDay(): \DateTime
+    public function getFirstDay(): ?\DateTime
     {
         return $this->firstDay;
     }
@@ -155,7 +132,7 @@ class SchoolYearTerm extends SchoolYearTermExtension
      * @param \DateTime $firstDay
      * @return SchoolYearTerm
      */
-    public function setFirstDay(\DateTime $firstDay): SchoolYearTerm
+    public function setFirstDay(?\DateTime $firstDay): SchoolYearTerm
     {
         $this->firstDay = $firstDay;
         return $this;
@@ -169,7 +146,7 @@ class SchoolYearTerm extends SchoolYearTermExtension
     /**
      * @return \DateTime
      */
-    public function getLastDay(): \DateTime
+    public function getLastDay(): ?\DateTime
     {
         return $this->lastDay;
     }
@@ -178,7 +155,7 @@ class SchoolYearTerm extends SchoolYearTermExtension
      * @param \DateTime $lastDay
      * @return SchoolYearTerm
      */
-    public function setLastDay(\DateTime $lastDay): SchoolYearTerm
+    public function setLastDay(?\DateTime $lastDay): SchoolYearTerm
     {
         $this->lastDay = $lastDay;
         return $this;

@@ -6,7 +6,7 @@
   name: "Monday"
   name_short: "Mon"
   sequence_number: 1
-  school_day: "Y"
+  school_day: 1
   school_open: "07:45:00"
   school_start: "08:30:00"
   school_end: "15:30:00"
@@ -16,7 +16,7 @@
   name: "Tuesday"
   name_short: "Tue"
   sequence_number: 2
-  school_day: "Y"
+  school_day: 1
   school_open: "07:45:00"
   school_start: "08:30:00"
   school_end: "15:30:00"
@@ -26,7 +26,7 @@
   name: "Wednesday"
   name_short: "Wed"
   sequence_number: 3
-  school_day: "Y"
+  school_day: 1
   school_open: "07:45:00"
   school_start: "08:30:00"
   school_end: "15:30:00"
@@ -36,7 +36,7 @@
   name: "Thursday"
   name_short: "Thu"
   sequence_number: 4
-  school_day: "Y"
+  school_day: 1
   school_open: "07:45:00"
   school_start: "08:30:00"
   school_end: "15:30:00"
@@ -46,7 +46,7 @@
   name: "Friday"
   name_short: "Fri"
   sequence_number: 5
-  school_day: "Y"
+  school_day: 1
   school_open: "07:45:00"
   school_start: "08:30:00"
   school_end: "15:30:00"
@@ -56,11 +56,11 @@
   name: "Saturday"
   name_short: "Sat"
   sequence_number: 6
-  school_day: "N"
+  school_day: 0
 -
   id: 07
   name: "Sunday"
   name_short: "Sun"
   sequence_number: 7
-  school_day: "N"
+  school_day: 0
 ...

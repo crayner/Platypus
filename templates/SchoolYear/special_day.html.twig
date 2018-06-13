@@ -4,7 +4,7 @@
 {% block school_year_special_day_errors %}{% endblock %}
 
 {% block school_year_special_day_widget %}
-    {% if form.name.vars.value is empty %}{% set panelTitle = 'school_year.special_day.add'|trans %}{% else %}{% set panelTitle = form.name.vars.value %}{% endif %}
+    {% if form.name.vars.value is empty %}{% set panelTitle = 'school_year.special_day.add'|trans %}{% else %}{% set panelTitle = form.vars.value.fullName(get_setting('date.format.long')) %}{% endif %}
     {% set h3Content = '<div class="collection-actions">' %}
     {% set h3Content = h3Content ~ saveButton() %}
     {% set h3Content = h3Content ~ '</div>' %}

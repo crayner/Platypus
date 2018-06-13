@@ -84,7 +84,11 @@ class SchoolYearController extends Controller
         {
             foreach($form->get('specialDays')->getData() as $sd) {
                 $schoolYear->addSpecialDay($sd);
-                dump($sd);
+                $em->persist($sd);
+            }
+            foreach($form->get('terms')->getData() as $term) {
+                $schoolYear->addTerm($term);
+                $em->persist($term);
             }
             $em->persist($schoolYear);
             $em->flush();

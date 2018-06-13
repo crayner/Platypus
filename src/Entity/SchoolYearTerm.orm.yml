@@ -15,10 +15,6 @@ App\Entity\SchoolYearTerm:
             length: 4
             nullable: false
             column: name_short
-        sequenceNumber:
-            type: integer
-            length: 5
-            column: sequence_number
         firstDay:
             type: date
             nullable: false

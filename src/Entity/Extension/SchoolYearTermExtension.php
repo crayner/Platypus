@@ -25,7 +25,7 @@ abstract class SchoolYearTermExtension
      */
     public function canDelete(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -42,8 +42,8 @@ abstract class SchoolYearTermExtension
     public function getFullName(): string
     {
         $name = '';
-        if ($this->getCalendar())
-            $name = $this->getCalendar()->getName();
+        if ($this->getSchoolYear())
+            $name = $this->getSchoolYear()->getName();
         $name = trim($name . ' ' . $this->getName());
         return $name;
     }
