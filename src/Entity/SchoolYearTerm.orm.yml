@@ -14,15 +14,19 @@ App\Entity\SchoolYearTerm:
         nameShort:
             length: 4
             nullable: false
+            column: name_short
         sequenceNumber:
             type: integer
             length: 5
+            column: sequence_number
         firstDay:
             type: date
             nullable: false
+            column: first_day
         lastDay:
             type: date
             nullable: false
+            column: last_day
     manyToOne:
         schoolYear:
             targetEntity: App\Entity\SchoolYear

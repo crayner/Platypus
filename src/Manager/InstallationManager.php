@@ -582,4 +582,17 @@ class InstallationManager
 
         return $user;
     }
+
+    /**
+     * hasDatabaseTables
+     *
+     * @return bool
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function hasDatabaseTables(bool $throw = true)
+    {
+        $this->getSQLParameters();
+
+        return $this->getConnection()->getSchemaManager()->listTableNames() ? true : false ;
+    }
 }

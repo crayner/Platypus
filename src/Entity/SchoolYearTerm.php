@@ -15,7 +15,9 @@
  */
 namespace App\Entity;
 
-class SchoolYearTerm
+use App\Entity\Extension\SchoolYearTermExtension;
+
+class SchoolYearTerm extends SchoolYearTermExtension
 {
     /**
      * @var integer|null
@@ -71,7 +73,7 @@ class SchoolYearTerm
     /**
      * @return SchoolYear|null
      */
-    public function getSchoolYear(): ?SchoolYearTerm
+    public function getSchoolYear(): ?SchoolYear
     {
         return $this->schoolYear;
     }

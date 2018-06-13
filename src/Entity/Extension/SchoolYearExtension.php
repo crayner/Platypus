@@ -12,20 +12,15 @@ abstract class SchoolYearExtension
 	 */
 	public function canDelete()
 	{
-		if (!empty($this->getTerms()))
-			foreach ($this->getTerms()->toArray() as $term)
-				if (!$term->canDelete())
-					return false;
-        return false;
-		if (!empty($this->getCalendarGrades()))
-			foreach ($this->getCalendarGrades()->toArray() as $grade)
-				if (!$grade->canDelete())
-					return false;
 		if (!empty($this->getSpecialDays()))
 			foreach ($this->getSpecialDays()->toArray() as $specialDay)
 				if (!$specialDay->canDelete())
 					return false;
-		if (!empty($this->getTerms()) && !empty($this->getCalendarGrades()) && !empty($this->getSpecialDays()))
+        if (!empty($this->getTerms()))
+            foreach ($this->getTerms()->toArray() as $term)
+                if (!$term->canDelete())
+                    return false;
+		if (!empty($this->getTerms()) && !empty($this->getSpecialDays()))
 			return false;
 
 		return true;

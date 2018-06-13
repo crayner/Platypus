@@ -15,6 +15,10 @@
  */
 namespace App\Controller;
 
+use App\Demonstration\SchoolFixtures;
+use App\Demonstration\SchoolYearFixtures;
+use App\Demonstration\TruncateTables;
+use App\Demonstration\UserFixtures;
 use App\Form\InstallLanguageType;
 use App\Form\InstallDatabaseType;
 use App\Form\InstallUserType;
@@ -106,7 +110,8 @@ class InstallerController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function createDatabase(bool $demo, InstallationManager $installationManager, Request $request, KernelInterface $kernel,
+    public function createDatabase(bool $demo, InstallationManager $installationManager,
+                                   Request $request, KernelInterface $kernel,
                                    EntityManagerInterface $entityManager, SettingManager $settingManager)
     {
         $installationManager->setStep(2);
@@ -141,8 +146,8 @@ class InstallerController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $installationManager->writeSystemUser($request, $entityManager, $settingManager);
-            if ($demo ? true : false)
-                return $this->redirectToRoute('load_dummy_data');
+            if ($demo ? true : false  || true)
+                return $this->redirectToRoute('load_demonstration_data', ['section' => 'Start']);
             else
                 return $this->redirectToRoute('installer_complete');
         }
@@ -157,15 +162,16 @@ class InstallerController extends Controller
 
     /**
      * loadDummyData
-     * @Route("/load/dummy/{section}/data/", name="load_dummy_data")
+     * @Route("/load/demonstration/{section}/data/", name="load_demonstration_data")
      * @param ObjectManager $objectManager
      * @param Request $request
      * @return RedirectResponse
      */
-    public function loadDummyData(ObjectManager $objectManager, Request $request, string $section)
+    public function loadDemonstrationData(ObjectManager $objectManager, Request $request, string $section)
     {
-        $logger = $this->get('monolog.logger.dummy_data');
-        $request->getSession()->invalidate();
+        $logger = $this->get('monolog.logger.demonstration');
+        if ($request->hasSession())
+            $request->getSession()->invalidate();
 
         if ($section === 'Start') {
             $logger->addInfo(sprintf('Section %s started.', $section));
@@ -178,7 +184,7 @@ class InstallerController extends Controller
             $load->load($objectManager, $logger);
 
             $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('load_dummy_data', ['section' => 'School']);
+            return $this->redirectToRoute('load_demonstration_data', ['section' => 'School']);
         }
 
         if ($section === 'School') {
@@ -187,11 +193,12 @@ class InstallerController extends Controller
             $load = new SchoolFixtures();
             $load->load($objectManager, $logger);
 
-            $load = new CalendarFixtures();
+            $load = new SchoolYearFixtures();
             $load->load($objectManager, $logger);
 
             $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('load_dummy_data', ['section' => 'People']);
+            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('load_demonstration_data', ['section' => 'People']);
         }
 
         if ($section === 'People') {
@@ -201,7 +208,7 @@ class InstallerController extends Controller
             $load->load($objectManager, $logger);
 
             $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('load_dummy_data', ['section' => 'Timetable']);
+            return $this->redirectToRoute('load_demonstration_data', ['section' => 'Timetable']);
         }
 
         if ($section === 'Timetable') {
@@ -211,7 +218,7 @@ class InstallerController extends Controller
             $load->load($objectManager, $logger);
 
             $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('load_dummy_data', ['section' => 'Activity']);
+            return $this->redirectToRoute('load_demonstration_data', ['section' => 'Activity']);
         }
 
         if ($section === 'Activity') {
@@ -221,7 +228,7 @@ class InstallerController extends Controller
             $load->load($objectManager, $logger);
 
             $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('load_dummy_data', ['section' => 'ActivityStudent']);
+            return $this->redirectToRoute('load_demonstration_data', ['section' => 'ActivityStudent']);
         }
 
         if ($section === 'ActivityStudent') {
@@ -259,4 +266,15 @@ class InstallerController extends Controller
         );
     }
 
+    /**
+     * blank
+     *
+     * @param array $options
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/blank/", name="blank")
+     */
+    public function blank(array $options = [])
+    {
+        return $this->render('blank.html.twig', ['options' => $options]);
+    }
 }

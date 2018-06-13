@@ -22,15 +22,19 @@ App\Entity\SchoolYearSpecialDay:
         schoolOpen:
             type: time
             nullable: true
+            column: school_open
         schoolStart:
             type: time
             nullable: true
+            column: school_start
         schoolEnd:
             type: time
             nullable: true
+            column: school_end
         schoolClose:
             type: time
             nullable: true
+            column: school_close
     manyToOne:
         schoolYear:
             targetEntity: App\Entity\SchoolYear

@@ -50,23 +50,23 @@ class SchoolYearTermType extends AbstractType
 					'help' => 'term.name.help',
 				)
 			)
-			->add('code', TextType::class,
+			->add('nameShort', TextType::class,
 				array(
-					'label' => 'term.code.label',
-					'help' => 'term.code.help',
+					'label' => 'term.name_short.label',
+					'help' => 'term.name_short.help',
 				)
 			)
 			->add('firstDay', DateType::class,
 				array(
-					'label' => 'calendar.firstDay.label',
-					'help' => 'calendar.firstDay.help',
+					'label' => 'term.first_day.label',
+					'help' => 'term.first_day.help',
 					'years' => $schoolYears,
 				)
 			)
 			->add('lastDay', DateType::class,
 				array(
-					'label' => 'calendar.lastDay.label',
-					'help' => 'calendar.lastDay.help',
+					'label' => 'term.last_day.label',
+					'help' => 'term.last_day.help',
 					'years' => $schoolYears,
 				)
 			)

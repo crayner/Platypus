@@ -1,0 +1,173 @@
+%YAML 1.1
+---
+# school_year_special_day
+-
+  id: 1
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2017-10-02"
+  type: "closure"
+  name: "Half Term Break"
+  school_open: "07:45:00"
+  school_start: "08:45:00"
+  school_end: "15:00:00"
+  school_close: "17:00:00"
+  #last_modified: "2018-04-02 15:02:30"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 2
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2017-10-03"
+  type: "closure"
+  name: "Half Term Break"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 3
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2017-10-04"
+  type: "closure"
+  name: "Half Term Break"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 4
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2017-10-05"
+  type: "closure"
+  name: "Half Term Break"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 5
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2017-10-06"
+  type: "closure"
+  name: "Half Term Break"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 6
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-02-15"
+  type: "closure"
+  name: "Chinese New Year"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 7
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-02-16"
+  type: "closure"
+  name: "Chinese New Year"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 8
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-02-19"
+  type: "closure"
+  name: "Chinese New Year"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 9
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-02-20"
+  type: "closure"
+  name: "Chinese New Year"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 10
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-02-21"
+  type: "closure"
+  name: "Chinese New Year"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 11
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-02-22"
+  type: "closure"
+  name: "Chinese New Year"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 12
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-02-23"
+  type: "closure"
+  name: "Chinese New Year"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 13
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-06-18"
+  type: "closure"
+  name: "Tuen Ng Festival"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 14
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-05-22"
+  type: "closure"
+  name: "Birthday of Buddha"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+-
+  id: 15
+  school_year_id: 5
+  #created_by: 1
+  #modified_by: 1
+  date: "2018-05-01"
+  type: "closure"
+  name: "Labour Day"
+  #last_modified: "2018-03-26 23:53:32"
+  #created_on: "2018-03-26 23:06:33"
+  description: ''
+...

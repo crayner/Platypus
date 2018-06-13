@@ -15,8 +15,9 @@
  */
 namespace App\Entity;
 
+use App\Entity\Extension\SchoolYearSpecialDayExtension;
 
-class SchoolYearSpecialDay
+class SchoolYearSpecialDay extends SchoolYearSpecialDayExtension
 {
     /**
      * @var integer|null
@@ -70,11 +71,27 @@ class SchoolYearSpecialDay
     private $type;
 
     /**
+     * @var array
+     */
+    public static $typeList = [
+        'school_closure',
+        'timing_change',
+    ];
+
+    /**
+     * @return array
+     */
+    public function getTypeList(): array
+    {
+        return self::$typeList;
+    }
+
+    /**
      * @return null|string
      */
-    public function getType(): ?string
+    public function getType(): string
     {
-        return $this->type;
+        return $this->type = in_array($this->type, $this->getTypeList()) ? $this->type : 'school_closure';
     }
 
     /**
@@ -83,7 +100,7 @@ class SchoolYearSpecialDay
      */
     public function setType(?string $type): SchoolYearSpecialDay
     {
-        $this->type = $type;
+        $this->type = in_array($type, $this->getTypeList()) ? $type : 'school_closure';
         return $this;
     }
 
@@ -139,9 +156,9 @@ class SchoolYearSpecialDay
     private $schoolOpen;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getSchoolOpen(): \DateTime
+    public function getSchoolOpen(): ?\DateTime
     {
         return $this->schoolOpen;
     }
@@ -162,9 +179,9 @@ class SchoolYearSpecialDay
     private $schoolStart;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getSchoolStart(): \DateTime
+    public function getSchoolStart(): ?\DateTime
     {
         return $this->schoolStart;
     }
@@ -185,9 +202,9 @@ class SchoolYearSpecialDay
     private $schoolEnd;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getSchoolEnd(): \DateTime
+    public function getSchoolEnd(): ?\DateTime
     {
         return $this->schoolEnd;
     }
@@ -208,9 +225,9 @@ class SchoolYearSpecialDay
     private $schoolClose;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getSchoolClose(): \DateTime
+    public function getSchoolClose(): ?\DateTime
     {
         return $this->schoolClose;
     }
@@ -231,9 +248,9 @@ class SchoolYearSpecialDay
     private $schoolYear;
 
     /**
-     * @return SchoolYearSpecialDay|null
+     * @return SchoolYear|null
      */
-    public function getSchoolYearSpecialDay(): ?SchoolYear
+    public function getSchoolYear(): ?SchoolYear
     {
         return $this->schoolYear;
     }
@@ -243,7 +260,7 @@ class SchoolYearSpecialDay
      * @param bool $add
      * @return SchoolYear
      */
-    public function setSchoolYearSpecialDay(?SchoolYear $schoolYear, $add = true): SchoolYearSpecialDay
+    public function setSchoolYear(?SchoolYear $schoolYear, $add = true): SchoolYearSpecialDay
     {
         if ($add && $schoolYear)
             $schoolYear->addTerm($this, false);

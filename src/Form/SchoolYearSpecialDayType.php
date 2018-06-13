@@ -4,9 +4,12 @@ namespace App\Form;
 use App\Entity\SchoolYear;
 use App\Entity\SchoolYearSpecialDay;
 use Hillrange\Form\Type\DateType;
+use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\HiddenEntityType;
+use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\TimeType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -41,44 +44,40 @@ class SchoolYearSpecialDayType extends AbstractType
 		else
 			$calendars = range($calendar->getFirstDay()->format('Y'), $calendar->getLastDay()->format('Y'));
 		$builder
-			->add('day', DateType::class,
+			->add('date', DateType::class,
 				array(
-					'label' => 'special_day.day.label',
-					'help' => 'special_day.day.help',
+					'label' => 'special_day.date.label',
+					'help' => 'special_day.date.help',
 					'years' => $calendars,
 					'attr' => [
 						'class' => 'form-sub-sm'
 					],
 				)
 			)
-			->add('type', ChoiceType::class,
-				array(
-					'label'   => 'special_day.type.label',
-					'help'  => 'special_day.type.help',
-					'attr'    => array(
+			->add('type', EnumType::class,
+				[
+					'label' => 'special_day.type.label',
+                    'help'  => 'special_day.type.help',
+					'attr'  => [
 						'class' => 'alterType',
-					),
-					'choices' => array(
-						'special_day.type.alter'   => 'alter',
-						'special_day.type.closure' => 'closure',
-					),
-				)
+					],
+				]
 			)
-			->add('name', null,
+			->add('name', TextType::class,
 				array(
 					'label' => 'special_day.name.label',
 					'help' => 'special_day.name.help',
 				)
 			)
-			->add('description', null,
-				array(
+			->add('description', TextareaType::class,
+				[
 					'label'    => 'special_day.description.label',
-					'attr'     => array(
+					'attr'     => [
 						'rows' => '3'
-					),
+					],
 					'help' => 'special_day.description.help',
 					'required' => false,
-				)
+				]
 			)
 			->add('schoolOpen', TimeType::class,
 				array(

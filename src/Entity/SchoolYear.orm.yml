@@ -20,6 +20,7 @@ App\Entity\SchoolYear:
             type: integer
             length: 3
             nullable: false
+            column: sequence_number
         firstDay:
             type: date
         lastDay:

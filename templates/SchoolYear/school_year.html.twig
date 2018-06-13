@@ -28,7 +28,7 @@
     {{ parent() }}
     {{ collections_manage(form, ['specialDays','terms'])|raw }}
     {% include 'SchoolYear/term_script.html.twig' %}
-    {% include "SchoolYear/special_days_cript.html.twig" %}
+    {% include "SchoolYear/special_days_script.html.twig" %}
     {% include 'SchoolYear/script.html.twig' %}
     {% include 'Script/formTabSubmitScript.html.twig' with {'route': 'school_year_edit'} %}
 {% endblock javascripts %}

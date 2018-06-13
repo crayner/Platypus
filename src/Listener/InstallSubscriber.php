@@ -63,6 +63,7 @@ class InstallSubscriber implements EventSubscriberInterface
                     'installer_start',
                     'installer_database_settings',
                     'installer_database_create',
+                    'blank',
                 ]
             )
         ) {
@@ -91,7 +92,9 @@ class InstallSubscriber implements EventSubscriberInterface
         // Are the database settings correct?
         if (! $this->installationManager->isConnected())
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_start'));
-        elseif (! $this->installationManager->hasDatabase()) // Can I connect to the database
+        elseif (! $this->installationManager->hasDatabase()) // Can I connect to the database?
+            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create', ['demo' => 0]));
+        elseif (! $this->installationManager->hasDatabaseTables()) // Have the tables been built?
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create', ['demo' => 0]));
 
         if (! is_null($response)) {
