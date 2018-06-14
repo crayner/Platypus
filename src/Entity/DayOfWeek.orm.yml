@@ -15,11 +15,11 @@ App\Entity\DayOfWeek:
             length: 4
             nullable: false
             column: name_short
-        sequenceNumber:
+        sequence:
             type: integer
-            length: 2
+            length: 3
             nullable: false
-            column: sequence_number
+            column: sequence
         schoolDay:
             type: boolean
             nullable: false

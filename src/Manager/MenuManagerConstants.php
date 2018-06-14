@@ -23,6 +23,12 @@ class MenuManagerConstants
     CONST SECTIONS = '
 School Admin:
     years_days_times:
+        school_days_times:
+            label: menu.school.days_of_week
+            transDomain: School
+            route: days_of_week_manage
+            parameters: {}
+            role: ROLE_REGISTRAR
         school_year_manage:
             label: menu.school_year.manage
             role: ROLE_REGISTRAR
@@ -35,7 +41,7 @@ School Admin:
             route: school_year_edit
             parameters:
                 id: current
-                _fragment: specialDays
+                _fragment: specialdays
             transDomain: SchoolYear 
         manage_year_terms:
             label: menu.school_year.terms

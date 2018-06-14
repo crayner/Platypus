@@ -1,0 +1,30 @@
+{% trans_default_domain "School" %}
+
+{% block school_day_of_week_label %}{% endblock %}
+{% block school_day_of_week_errors %}{% endblock %}
+
+{% block school_day_of_week_widget %}
+    {% set h3Content = '<div class="collection-actions">' %}
+    {% set h3Content = h3Content ~ saveButton({mergeClass: 'btn-sm'}) %}
+    {% set h3Content = h3Content ~ '</div>' %}
+    {% set name = value.name|trans({}, 'System') %}
+    {% set short = value.nameShort|trans({}, 'System') %}
+    {% set panelParagraph =  '<div style="float: right">' ~ ('day_of_week.school_day.label'|trans) ~ '&nbsp;' ~ form_widget(form.schoolDay) ~ '</div' %}
+    {% include 'Default/panelStart.html.twig' with {header: 'day.name', headerParams: {'%{name}': name, '%{short}': short}, panelStyle: 'light', transDomain: 'School', bodyAttr: 'id=display_school_times_' ~  id|replace({'days_of_week_days_': ''})} %}
+    <div class="row small">
+        <div class="col-3">
+            {{ form_row(form.schoolOpen) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.schoolStart) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.schoolEnd) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.schoolClose) }}
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {% include 'Default/panelEnd.html.twig' %}
+{% endblock school_day_of_week_widget %}

@@ -23,6 +23,7 @@ use App\Manager\FlashBagManager;
 use App\Manager\MessageManager;
 use App\Manager\SchoolYearManager;
 use App\Manager\SettingManager;
+use App\Util\UserHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -69,7 +70,7 @@ class SchoolYearController extends Controller
     {
         if ($id === 'current')
         {
-            $schoolYear = SchoolYearManager::getCurrentSchoolYear();
+            $schoolYear = UserHelper::getCurrentSchoolYear();
 
             return $this->redirectToRoute('school_year_edit', ['id' => $schoolYear->getId()]);
         }

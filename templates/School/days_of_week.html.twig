@@ -1,0 +1,60 @@
+{% trans_default_domain "School" %}
+
+{% set transDomain = 'School' %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    'School/day_of_week.html.twig'
+    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ parent() }}{{ 'days_of_week.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'days_of_week.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'days_of_week.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-disappear show hide") }}
+    {{ form_start(form) }}
+    {% include '@HillrangeForm/Script/collection_message.html.twig' %}
+    <p class="alert alert-info">{{ 'days_of_week.help'|trans }}</p>
+    {{ collection_widget(form.days) }}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ collections_manage(form, ['days'])|raw }}
+    {{ collection_script(form.days) }}
+    {{ toggle_script() }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("input.schoolDayChange").each(function(){
+                var value = $(this).val();
+                var id = $(this).attr('id');
+                id = id.replace('days_of_week_days_', '');
+                id = id.replace('_schoolDay', '');
+                id = '#display_school_times_' + id;
+                if (value == '1') {
+                    $(id).fadeIn(200);
+                } else {
+                    $(id).fadeOut(200);
+                }
+            })
+        })
+        $("#days_of_week_days").on('change', 'input.schoolDayChange', function(){
+            var value = $(this).val();
+            var id = $(this).attr('id');
+            id = id.replace('days_of_week_days_', '');
+            id = id.replace('_schoolDay', '');
+            id = '#display_school_times_' + id;
+            if (value == '1') {
+                $(id).fadeOut(200);
+            } else {
+                $(id).fadeIn(200);
+            }
+        })
+    </script>
+
+{% endblock javascripts %}

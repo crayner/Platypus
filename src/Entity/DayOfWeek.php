@@ -89,23 +89,25 @@ class DayOfWeek
     /**
      * @var integer|null
      */
-    private $sequenceNumber;
+    private $sequence;
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getSequenceNumber(): ?int
+    public function getSequence(): int
     {
-        return $this->sequenceNumber;
+        return $this->sequence ?: 0;
     }
 
     /**
-     * @param int|null $sequenceNumber
+     * setSequence
+     *
+     * @param int|null $sequence
      * @return DayOfWeek
      */
-    public function setSequenceNumber(?int $sequenceNumber): DayOfWeek
+    public function setSequence(?int $sequence): DayOfWeek
     {
-        $this->sequenceNumber = $sequenceNumber;
+        $this->sequence = $sequence ?: 0;
         return $this;
     }
 

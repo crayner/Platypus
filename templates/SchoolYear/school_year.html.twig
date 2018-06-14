@@ -18,7 +18,7 @@
 
 {% block contentContainer %}
     {{ all_form_errors(fullForm, "div", "alert alert-danger alert-disappear show hide") }}
-    {{ form_start(form, {'action': path('school_year_edit', {'id': calendar_id} ) } ) }}
+    {{ form_start(form) }}
     {% include '@HillrangeForm/Script/collection_message.html.twig' %}
     {% include 'Default/tabs.html.twig' with {tabManager: manager} %}
     {{ form_end(form) }}
