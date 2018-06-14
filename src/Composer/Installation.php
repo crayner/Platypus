@@ -26,6 +26,7 @@ class Installation
         //$composer = $event->getComposer();
         // do stuff
 
+        echo 'Platypus Installation';
         $content = file_get_contents(__DIR__ . '/../../config/packages/platypus.yaml.dist');
         file_put_contents(__DIR__ . '/../../config/packages/platypus.yaml', $content);
 

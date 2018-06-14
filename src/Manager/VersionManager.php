@@ -22,7 +22,7 @@ class VersionManager
     /**
      * @var string
      */
-    const VERSION = '0.1.01';
+    const VERSION = '0.1.02';
 
     /**
      * @param $version
