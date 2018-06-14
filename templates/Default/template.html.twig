@@ -2,6 +2,8 @@
 
 {% extends 'Default/headerNotice.html.twig' %}
 
+{% set fullPage = fullPage|default(false) %}
+
 {% block htmlContent %}
     <!DOCTYPE html >
     <html xmlns="http://www.w3.org/1999/xhtml">
@@ -29,7 +31,7 @@
         {% endblock menuContainer %}
     {% endif %}
 
-    {% if not(fullPage is defined) %}
+    {% if not(fullPage) %}
         {% set sections = get_section() %}
 
         {% if sections is empty %}

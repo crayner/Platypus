@@ -20,7 +20,34 @@ class MenuManagerConstants
     order: 10
     route: school_year_manage
 ';
-    CONST SECTIONS = '';
+    CONST SECTIONS = '
+School Admin:
+    years_days_times:
+        school_year_manage:
+            label: menu.school_year.manage
+            role: ROLE_REGISTRAR
+            route: school_year_manage
+            parameters: {}
+            transDomain: SchoolYear 
+        manage_year_special_days:
+            label: menu.school_year.special_days
+            role: ROLE_REGISTRAR
+            route: school_year_edit
+            parameters:
+                id: current
+                _fragment: specialDays
+            transDomain: SchoolYear 
+        manage_year_terms:
+            label: menu.school_year.terms
+            role: ROLE_REGISTRAR
+            route: school_year_edit
+            parameters:
+                id: current
+                _fragment: terms
+            transDomain: SchoolYear 
+    hidden:
+        - school_year_edit
+';
     /*
 	CONST NODES = '
 1:
@@ -65,7 +92,7 @@ class MenuManagerConstants
     node: 1
     order: 11
     route: timetable_manage
-    translate: School
+    transDomain: School
 20:
     label: menu.people.manage
     name: People Admin
@@ -133,7 +160,7 @@ School Admin:
             route: houses_edit
             parameters: {}
         manage_calendar_grades:
-            label: menu.calendar.grades
+            label: menu.school_year.grades
             role: ROLE_REGISTRAR
             route: school_year_edit
             parameters:
@@ -141,7 +168,7 @@ School Admin:
                 _fragment: calendarGrades
         manage_rolls:
             label: roll.menu.list
-            translate: School
+            transDomain: School
             route: roll_list
             parameters: {}
             role: ROLE_REGISTRAR
@@ -152,27 +179,27 @@ School Admin:
 	        role: ROLE_REGISTRAR
 	        route: campus_manage
 	        parameters: {}
-	        translate: Facility
+	        transDomain: Facility
         space_list:
 	        label: menu.space.list.title
 	        name: Space Management
 	        role: ROLE_REGISTRAR
 	        route: space_list
 	        parameters: {}
-	        translate: Facility
+	        transDomain: Facility
         space_type:
 	        label: menu.space.type.title
 	        name: Space Management
 	        role: ROLE_SYSTEM_ADMIN
 	        route: facility_type_manage
-	        translate: Setting
+	        transDomain: Setting
 	        parameters: {}
 	        target:
                 name: Setting_Facility_Type
                 options: width=1200,height=900
     years_days_times:
         calendar_years:
-            label: menu.calendar.manage
+            label: menu.school_year.manage
             role: ROLE_REGISTRAR
             route: calendar_years
             parameters: {}
@@ -184,7 +211,7 @@ School Admin:
         display_calendar:
             route: calendar_display
             role: ROLE_REGISTRAR
-            label: menu.calendar.display
+            label: menu.school_year.display
             parameters: 
                 id: current
                 closeWindow: closeWindow 
@@ -192,14 +219,14 @@ School Admin:
                 name: Calendar
                 options: width=1200,height=900
         manage_year_special_days:
-            label: menu.calendar.special_days
+            label: menu.school_year.special_days
             role: ROLE_REGISTRAR
             route: school_year_edit
             parameters:
                 id: current
                 _fragment: specialDays
         manage_year_terms:
-            label: menu.calendar.terms
+            label: menu.school_year.terms
             role: ROLE_REGISTRAR
             route: school_year_edit
             parameters:
@@ -234,21 +261,21 @@ Timetable Admin:
         course_list:
             route: course_list
             label: course.list.menu.label
-            translate: School
+            transDomain: School
             role: ROLE_REGISTRAR
             parameters: {}
     timetable_manage:
         timetable_manage:
             route: timetable_manage
             label: timetable.manage.menu.label
-            translate: Timetable
+            transDomain: Timetable
             role: ROLE_PRINCIPAL
             parameters: {}
     line_manage:
         line_manage:
             route: line_list
             label: line.list.menu.label
-            translate: Timetable
+            transDomain: Timetable
             role: ROLE_PRINCIPAL
             parameters: {}
     hidden:
@@ -265,7 +292,7 @@ Activities:
             label: menu.activities.external.list
             role: ROLE_ADMIN
             parameters: {}
-            translate: School
+            transDomain: School
     departments:
         department_edit:
             label: menu.school.department.edit
