@@ -23,11 +23,11 @@ class Installation
 {
     public static function postInstall(Event $event)
     {
-        $composer = $event->getComposer();
+        //$composer = $event->getComposer();
         // do stuff
 
-        $content = file_get_contents(__DIR__ . '/../../config/packages/doctrine.yaml.dist');
-        file_put_contents(__DIR__ . '/../../config/packages/doctrine.yaml', $content);
+        $content = file_get_contents(__DIR__ . '/../../config/packages/platypus.yaml.dist');
+        file_put_contents(__DIR__ . '/../../config/packages/platypus.yaml', $content);
 
         $content = file_get_contents(__DIR__ . '/../../.env.dist');
         file_put_contents(__DIR__ . '/../../.env', $content);
