@@ -65,7 +65,7 @@ class Database
 	 */
 	private $charset = 'utf8mb4';
 
-	/**
+    /**
 	 * @return null|string
 	 */
 	public function getName(): ?string
@@ -266,7 +266,7 @@ class Database
 	 */
 	public function setPrefix(string $prefix): Database
 	{
-		$this->prefix = trim($prefix, '_') . '_';
+		$this->prefix = trim(substr($prefix, 0, 5), '_') . '_';
 
 		return $this;
 }
@@ -387,6 +387,46 @@ class Database
     public function setDemoData(bool $demoData): Database
     {
         $this->demoData = $demoData ? true : false ;
+        return $this;
+    }
+
+    /**
+     * @var string
+     */
+    private $environment = 'prod';
+
+    /**
+     * @var array
+     */
+    public static $environmentList = [
+        'prod',
+        'dev',
+        'test',
+    ];
+
+    /**
+     * @return array
+     */
+    public function getEnvironmentList(): array
+    {
+        return self::$environmentList;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnvironment(): string
+    {
+        return $this->environment = in_array($this->environment, $this->getEnvironmentList()) ? $this->environment : 'prod';
+    }
+
+    /**
+     * @param string $environment
+     * @return Database
+     */
+    public function setEnvironment(string $environment): Database
+    {
+        $this->environment = in_array($environment, $this->getEnvironmentList()) ? $environment : 'prod';
         return $this;
     }
 }

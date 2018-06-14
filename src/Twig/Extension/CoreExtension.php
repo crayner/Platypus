@@ -17,8 +17,6 @@ namespace App\Twig\Extension;
 
 use App\Manager\ScriptManager;
 use App\Manager\VersionManager;
-use App\Util\PersonNameHelper;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Twig\Extension\AbstractExtension;
 
 /**
@@ -36,7 +34,7 @@ class CoreExtension extends AbstractExtension
      * CoreExtension constructor.
      * @param ScriptManager $scriptManager
      */
-    public function __construct(ScriptManager $scriptManager, PersonNameHelper $personNameHelper)
+    public function __construct(ScriptManager $scriptManager)
     {
         $this->scriptManager = $scriptManager;
     }
@@ -51,12 +49,10 @@ class CoreExtension extends AbstractExtension
         return [
             new \Twig_SimpleFunction('getVersion', [$this, 'getVersion']),
             new \Twig_SimpleFunction('get_UserSetting', [$this, 'crashBurn']),
-            new \Twig_SimpleFunction('get_CurrentCalendarName', [$this, 'crashBurn']),
             new \Twig_SimpleFunction('hideSection', [$this, 'hideSection']),
             new \Twig_SimpleFunction('addScript', array($this->scriptManager, 'addScript')),
             new \Twig_SimpleFunction('getScripts', array($this->scriptManager, 'getScripts')),
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
-            new \Twig_SimpleFunction('getFullUserName', [$this, 'getFullUserName']),
         ];
     }
 
@@ -103,16 +99,5 @@ class CoreExtension extends AbstractExtension
     public function isInstanceof($var, string $instance)
     {
         return ($var instanceof $instance);
-    }
-
-    /**
-     * getFullUserName
-     *
-     * @param null|UserInterface $user
-     * @return string
-     */
-    public function getFullUserName(?UserInterface $user): string
-    {
-        return PersonNameHelper::getFullUserName($user);
     }
 }

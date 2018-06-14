@@ -68,7 +68,6 @@ class SettingChoiceValidator extends ConstraintValidator
 
         $list = array_merge($list, $constraint->extra_choices);
 
-dump([$constraint, $value, $list]);
 		if (! in_array($value, $list))
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%{value}', $value)

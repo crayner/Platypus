@@ -17,6 +17,7 @@ namespace App\Organism;
 
 use App\Entity\Setting;
 use App\Repository\SettingRepository;
+use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
@@ -667,6 +668,8 @@ class SettingCache
                 $this->setting = null;
             else
                 throw $e;
+        } catch (ConnectionException $e) {
+            $this->setting = null;
         }
         return $this;
     }

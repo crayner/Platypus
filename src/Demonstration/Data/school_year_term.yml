@@ -12,7 +12,7 @@
   last_day: "2015-12-18"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 1
+  #sequence_number: 1
 -
   id: 2
   school_year_id: 3
@@ -24,7 +24,7 @@
   last_day: "2016-03-24"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 2
+  #sequence_number: 2
 -
   id: 3
   school_year_id: 3
@@ -36,7 +36,7 @@
   last_day: "2016-06-23"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 3
+  #sequence_number: 3
 -
   id: 4
   school_year_id: 4
@@ -48,7 +48,7 @@
   last_day: "2016-12-16"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 4
+  #sequence_number: 4
 -
   id: 5
   school_year_id: 4
@@ -60,7 +60,7 @@
   last_day: "2017-03-31"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 5
+  #sequence_number: 5
 -
   id: 6
   school_year_id: 4
@@ -72,7 +72,7 @@
   last_day: "2017-06-28"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 6
+  #sequence_number: 6
 -
   id: 7
   school_year_id: 5
@@ -84,7 +84,7 @@
   last_day: "2017-12-15"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 7
+  #sequence_number: 7
 -
   id: 8
   school_year_id: 5
@@ -96,7 +96,7 @@
   last_day: "2018-03-28"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 8
+  #sequence_number: 8
 -
   id: 9
   school_year_id: 5
@@ -108,5 +108,5 @@
   last_day: "2018-06-28"
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 9
+  #sequence_number: 9
 ...

@@ -137,7 +137,7 @@ class PersonNameHelper
      * PersonNameHelper constructor.
      * @param UserManager $userManager
      */
-    public function __construct(UserManager $userManager)
+    public function __construct(UserManager $userManager, UserHelper $userHelper)
     {
         self::$userManager = $userManager;
     }

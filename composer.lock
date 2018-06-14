@@ -930,16 +930,16 @@
         },
         {
             "name": "easycorp/easy-log-handler",
-            "version": "v1.0.4",
+            "version": "v1.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EasyCorp/easy-log-handler.git",
-                "reference": "1a617a37ab9389eac4e2e1d14cb70ee0087d724d"
+                "reference": "21c442f5d08b6761a6fa7653e08a5525fb4ccd2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EasyCorp/easy-log-handler/zipball/1a617a37ab9389eac4e2e1d14cb70ee0087d724d",
-                "reference": "1a617a37ab9389eac4e2e1d14cb70ee0087d724d",
+                "url": "https://api.github.com/repos/EasyCorp/easy-log-handler/zipball/21c442f5d08b6761a6fa7653e08a5525fb4ccd2b",
+                "reference": "21c442f5d08b6761a6fa7653e08a5525fb4ccd2b",
                 "shasum": ""
             },
             "require": {
@@ -976,7 +976,7 @@
                 "monolog",
                 "productivity"
             ],
-            "time": "2018-01-10T08:34:20+00:00"
+            "time": "2018-06-12T06:27:09+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -1218,16 +1218,16 @@
         },
         {
             "name": "hillrange/security",
-            "version": "0.0.34",
+            "version": "0.0.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/security.git",
-                "reference": "3940b205b58147e67929d56edd422aceba9d9f1c"
+                "reference": "8aa8a0489887d9b27e45e7a3f4a5a2c464ac730c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/security/zipball/3940b205b58147e67929d56edd422aceba9d9f1c",
-                "reference": "3940b205b58147e67929d56edd422aceba9d9f1c",
+                "url": "https://api.github.com/repos/crayner/security/zipball/8aa8a0489887d9b27e45e7a3f4a5a2c464ac730c",
+                "reference": "8aa8a0489887d9b27e45e7a3f4a5a2c464ac730c",
                 "shasum": ""
             },
             "require": {
@@ -1279,20 +1279,20 @@
             "keywords": [
                 "security"
             ],
-            "time": "2018-06-11T05:24:08+00:00"
+            "time": "2018-06-13T06:42:15+00:00"
         },
         {
             "name": "hillrange/symfony-form",
-            "version": "0.1.70",
+            "version": "0.1.71",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/symfony-form.git",
-                "reference": "f4412d20131760fbd40ad133ec057c7077089d16"
+                "reference": "4519cb598b490c1ae4a4f165f8348d6559524345"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/f4412d20131760fbd40ad133ec057c7077089d16",
-                "reference": "f4412d20131760fbd40ad133ec057c7077089d16",
+                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/4519cb598b490c1ae4a4f165f8348d6559524345",
+                "reference": "4519cb598b490c1ae4a4f165f8348d6559524345",
                 "shasum": ""
             },
             "require": {
@@ -1336,7 +1336,7 @@
             "keywords": [
                 "form"
             ],
-            "time": "2018-06-09T13:57:07+00:00"
+            "time": "2018-06-13T06:39:51+00:00"
         },
         {
             "name": "jdorn/sql-formatter",

@@ -35,7 +35,6 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class InstallerController extends Controller
 {
@@ -59,6 +58,9 @@ class InstallerController extends Controller
         if ($form->isSubmitted() && $form->isValid())
             if ($installationManager->saveLanguage($request))
                 return $this->redirectToRoute('installer_database_settings');
+        $content = file_get_contents($installationManager->getProjectDir() . '/.env.dist');
+        $content = str_replace(['APP_ENV=dev', 'APP_ENV=prod', 'APP_ENV=test'], "APP_ENV=dev" , $content);
+        file_put_contents(__DIR__ . '/../../.env', $content);
 
         return $this->render('Installer/step1.html.twig',
             [
@@ -87,7 +89,7 @@ class InstallerController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             if ($installationManager->saveSQLParameters($database))
-                return $this->redirectToRoute('installer_database_create', ['demo' => $database->isDemoData() ? '1' : '0']);
+                return $this->redirectToRoute('installer_database_create', ['demo' => $database->isDemoData() ? '1' : '0', 'appEnv' => $database->getEnvironment()]);
         }
 
         return $this->render('Installer/step2.html.twig',
@@ -99,9 +101,11 @@ class InstallerController extends Controller
     }
 
     /**
-     * createDatabase
-     * @Route("/installer/database/{demo}/create/", name="installer_database_create")
+     * Create Database
+     *
+     * @Route("/installer/database/{demo}/create/{appEnv}/", name="installer_database_create")
      * @param bool $demo
+     * @param string $appEnv
      * @param InstallationManager $installationManager
      * @param Request $request
      * @param KernelInterface $kernel
@@ -110,7 +114,7 @@ class InstallerController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function createDatabase(bool $demo, InstallationManager $installationManager,
+    public function createDatabase(bool $demo, $appEnv = 'prod', InstallationManager $installationManager,
                                    Request $request, KernelInterface $kernel,
                                    EntityManagerInterface $entityManager, SettingManager $settingManager)
     {
@@ -135,10 +139,14 @@ class InstallerController extends Controller
             // return the output, don't use if you used NullOutput()
             $content = $output->fetch();
         }
-        if ($installationManager->hasDatabase())
-            if ($installationManager->setAction(true)->buildDatabase($entityManager))
-                $settingManager->setAction(true)->buildSystemSettings();
-
+        if ($installationManager->hasDatabase()) {
+            $content = file_get_contents($installationManager->getProjectDir() . '/.env.dist');
+            $content = str_replace(['APP_ENV=dev', 'APP_ENV=prod', 'APP_ENV=test'], "APP_ENV=" . $appEnv, $content);
+            file_put_contents(__DIR__ . '/../../.env', $content);
+            if ($installationManager->setAction(true)->buildDatabase($entityManager)) {
+                $settingManager->setAction(true)->buildSystemSettings($appEnv);
+            }
+        }
         $form = $this->createForm(InstallUserType::class);
 
         $form->handleRequest($request);

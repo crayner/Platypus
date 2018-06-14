@@ -3,6 +3,7 @@ namespace App\Repository;
 
 use App\Entity\SchoolYear;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception\ConnectionException;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -20,6 +21,11 @@ class SchoolYearRepository extends ServiceEntityRepository
 	 */
 	public function __construct(RegistryInterface $registry)
 	{
-		parent::__construct($registry, SchoolYear::class);
+		try {
+		    parent::__construct($registry, SchoolYear::class);
+        } catch (ConnectionException $e)
+        {
+
+        }
     }
 }

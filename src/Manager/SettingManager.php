@@ -908,7 +908,7 @@ class SettingManager implements ContainerAwareInterface
 
     /**
      * @return bool
-     * @throws \Exception
+     * @throws \Doctrine\ORM\ORMException
      */
     public function buildSystemSettings(): bool
     {
@@ -928,7 +928,6 @@ class SettingManager implements ContainerAwareInterface
             $this->getMessageManager()->add('info', 'update.setting.required', ['%{software}' => $software, '%{current}' => $current], 'System');
             return false;
         }
-
 
         while (version_compare($current, $software, '<'))
         {

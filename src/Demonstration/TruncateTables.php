@@ -39,7 +39,6 @@ class TruncateTables
 
             foreach ($tables as $table)
             {
-                dump($table);
                 if (mb_strpos($table->getName(), '_user') === false) {
                     $sql = $dbPlatform->getTruncateTableSql($table->getName());
                     $connection->executeUpdate($sql);

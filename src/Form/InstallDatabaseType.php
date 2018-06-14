@@ -1,6 +1,7 @@
 <?php
 namespace App\Form;
 
+use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
 use App\Organism\Database;
 use Hillrange\Form\Type\ToggleType;
@@ -91,7 +92,7 @@ class InstallDatabaseType extends AbstractType
 					'help' => 'database.prefix.help',
 					'required' => false,
                     'constraints' => [
-                        new Length(['max' => 5]),
+                        new Length(['max' => 6]),
                     ],
 
                 ]
@@ -111,6 +112,13 @@ class InstallDatabaseType extends AbstractType
                 [
                     'label'    => 'database.demo_data.label',
                     'help' => 'database.demo_data.help',
+                    'required' => true,
+                ]
+            )
+            ->add('environment', EnumType::class,
+                [
+                    'label' => 'database.environment.label',
+                    'help' => 'database.environment.help',
                     'required' => true,
                 ]
             )

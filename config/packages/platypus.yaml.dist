@@ -1,0 +1,52 @@
+parameters:
+    locale: en
+    session_name: 'platypus_session'
+    encoder.cost: 15
+    security.hierarchy.roles:
+        ROLE_USER: ~
+        ROLE_ALLOWED_TO_SWITCH: ~
+        ROLE_PARENT:
+            - ROLE_USER
+        ROLE_STUDENT:
+            - ROLE_USER
+        ROLE_STAFF:
+            - ROLE_USER
+        ROLE_TEACHER:
+            - ROLE_ALLOWED_TO_SWITCH
+            - ROLE_STUDENT
+            - ROLE_STAFF
+        ROLE_HEAD_TEACHER:
+            - ROLE_TEACHER
+        ROLE_PRINCIPAL:
+            - ROLE_HEAD_TEACHER
+        ROLE_ADMIN:
+            - ROLE_ALLOWED_TO_SWITCH
+        ROLE_REGISTRAR:
+            - ROLE_PRINCIPAL
+            - ROLE_ADMIN
+        ROLE_SYSTEM_ADMIN:
+            - ROLE_REGISTRAR
+            - ROLE_PARENT
+    security.password.settings:
+        min_length: 8
+        specials: false
+        numbers: true
+        mixed_case: true
+    security.routes:
+        security_user_edit: user_edit
+        security_user_login: login
+        security_user_check: login
+        security_user_logout: logout
+        security_password_forgot: password_request_reset
+        security_forced_password_change: forced_password_change
+        security_home: home
+    db_driver: pdo_mysql
+    db_host: localhost
+    db_port: '3306'
+    db_name: ''
+    db2_name: ''
+    db_user: ''
+    db_pass: ''
+    db_prefix: jsgdy_
+    db_server: mysql
+    db_charset: utf8mb4

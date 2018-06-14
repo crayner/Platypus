@@ -78,8 +78,6 @@ class SettingChoiceSubscriber implements EventSubscriberInterface
 
         $choices = $this->settingManager->get($options['setting_name']);
         $setting = $this->settingManager->getSetting($options['setting_name']);
-        if ($options['setting_name'] === 'department.staff.type.list.administration')
-            dump([$options['setting_name'],$setting,$options,$choices,$this->settingManager]);
 
         if (is_null($setting)) {
             $form->getParent()->add($name, MessageType::class,

@@ -34,21 +34,6 @@ class SchoolYearManager implements TabManagerInterface
 	 */
 	private $data;
 
-    /**
-     * @var SchoolYear
-     */
-    private static $currentSchoolYear;
-
-    /**
-     * @var SchoolYear
-     */
-    private static $nextSchoolYear;
-
-	/**
-	 * @var SchoolYearRepository
-	 */
-	private static $schoolYearRepository;
-
 	/**
 	 * @var Year
 	 */
@@ -94,7 +79,6 @@ class SchoolYearManager implements TabManagerInterface
                                 SettingManager $settingManager)
 	{
 		$this->manager = $settingManager->getEntityManager();
-		self::$schoolYearRepository = $this->getEntityManager()->getRepository(SchoolYear::class);
 		$this->year = $year;
         $this->messageManager = $settingManager->getMessageManager();
         $this->messageManager->setDomain('SchoolYear');
@@ -241,36 +225,12 @@ class SchoolYearManager implements TabManagerInterface
 		return $schoolYear->canDelete();
 	}
 
-    /**
-     * getCurrentSchoolYear
-     *
-     * @return SchoolYear|null
-     */
-    public static function getCurrentSchoolYear(): ?SchoolYear
-	{
-		if (! is_null(self::$currentSchoolYear))
-			return self::$currentSchoolYear;
-
-		if (UserHelper::getCurrentUser() instanceof UserInterface)
-		{
-			$settings = UserHelper::getCurrentUser()->getUserSettings();
-			if (isset($settings['school_year']))
-				self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['id' => $settings['school_year']]);
-			else
-				self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['status' => 'current']);
-		}
-		else
-			self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['status' => 'current']);
-
-		return self::$currentSchoolYear;
-	}
-
 	/**
 	 * @return SchoolYearRepository
 	 */
-	public static function getSchoolYearRepository(): SchoolYearRepository
+	public function getSchoolYearRepository(): SchoolYearRepository
 	{
-		return self::$schoolYearRepository;
+		return $this->getEntityManager()->getRepository(SchoolYear::class);
 	}
 
 	/**
@@ -476,28 +436,6 @@ specialDays:
 		$results = $this->getEntityManager()->getRepository(SchoolYear::class)->findBy([], ['firstDay' => 'DESC']);
 		return empty($results) ? [] : $results ;
 	}
-
-    /**
-     * @param SchoolYear|null $schoolYear
-     * @return null|SchoolYear
-     */
-    public static function getNextSchoolYear(?SchoolYear $schoolYear): ?SchoolYear
-    {
-        if (self::$nextSchoolYear && is_null($schoolYear))
-            return self::$nextSchoolYear;
-
-        $schoolYear = $schoolYear ?: self::getCurrentSchoolYear();
-
-        $result = self::getSchoolYearRepository()->createQueryBuilder('c')
-            ->where('c.firstDay > :firstDay')
-            ->setParameter('firstDay', $schoolYear->getFirstDay()->format('Y-m-d'))
-            ->getQuery()
-            ->getResult();
-
-        self::$nextSchoolYear = $result ? $result[0] : null ;
-
-        return self::$nextSchoolYear;
-    }
 
     /**
      * @param SchoolYear $schoolYear

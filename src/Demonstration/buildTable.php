@@ -17,6 +17,7 @@ namespace App\Demonstration;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
+use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use Psr\Log\LoggerInterface;
 
 trait buildTable
@@ -63,6 +64,9 @@ trait buildTable
             } catch (ForeignKeyConstraintViolationException $e)
             {
                 $this->getLogger()->addError('The table row in ' . $metaData->table['name'] .' encounted an error: '.$e->getMessage(), $item);
+            } catch (InvalidFieldNameException $e) {
+                $this->getLogger()->addError('The table row in ' . $metaData->table['name'] .' encounted an error: '.$e->getMessage(), $item);
+
             }
             $count++;
 

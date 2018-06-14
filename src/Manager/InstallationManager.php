@@ -158,7 +158,7 @@ class InstallationManager
     {
         $params = file($this->getProjectDir() . '/.env');
 
-        $x = Yaml::parse(file_get_contents($this->getProjectDir() . '/config/packages/doctrine.yaml'));
+        $x = Yaml::parse(file_get_contents($this->getProjectDir() . '/config/packages/platypus.yaml'));
         $x = $x['parameters'];
 
         $params = array_merge($params, $x);
@@ -182,7 +182,7 @@ class InstallationManager
      *
      * @return string
      */
-    private function getProjectDir(): string
+    public function getProjectDir(): string
     {
         return realpath(__DIR__ . '/../../');
     }
@@ -275,7 +275,7 @@ class InstallationManager
      */
     public function setCanInstall(): InstallationManager
     {
-        if (is_writable($this->getProjectDir() . '/config/packages/doctrine.yaml') && is_writable($this->getProjectDir() . '/config/packages/platypus.yaml')) {
+        if (is_writable($this->getProjectDir() . '/config/packages/platypus.yaml')) {
             $this->addStatus('success', 'installer.file.permission.success');
             $canInstall = true;
         } else {
@@ -369,18 +369,18 @@ class InstallationManager
     public function saveSQLParameters(Database $sql): bool
     {
         try{
-            $params = Yaml::parse(file_get_contents($this->getProjectDir() . '/config/packages/doctrine.yaml'));
+            $params = Yaml::parse(file_get_contents($this->getProjectDir() . '/config/packages/platypus.yaml'));
 
-            $params['parameters']['db_driver'] = $sql->getDriver();
-            $params['parameters']['db_host'] = $sql->getHost();
-            $params['parameters']['db_port'] = $sql->getPort();
-            $params['parameters']['db_name'] = $sql->getName();
-            $params['parameters']['db_user'] = $sql->getUser();
-            $params['parameters']['db_pass'] = $sql->getPass();
-            $params['parameters']['db_prefix'] = $sql->getPrefix();
-            $params['parameters']['db_server'] = $sql->getServer();
+            $params['parameters']['db_driver']  = $sql->getDriver();
+            $params['parameters']['db_host']    = $sql->getHost();
+            $params['parameters']['db_port']    = $sql->getPort();
+            $params['parameters']['db_name']    = $sql->getName();
+            $params['parameters']['db_user']    = $sql->getUser();
+            $params['parameters']['db_pass']    = $sql->getPass();
+            $params['parameters']['db_prefix']  = $sql->getPrefix();
+            $params['parameters']['db_server']  = $sql->getServer();
 
-            if (file_put_contents($this->getProjectDir() . '/config/packages/doctrine.yaml', Yaml::dump($params, 8))) {
+            if (file_put_contents($this->getProjectDir() . '/config/packages/platypus.yaml', Yaml::dump($params, 8))) {
                 $env = file($this->getProjectDir() . '/.env');
                 foreach ($env as $q => $w) {
                     if (strpos($w, 'DATABASE_URL=') === 0)
@@ -391,13 +391,13 @@ class InstallationManager
                 return file_put_contents($this->getProjectDir() . '/.env', $env);
             }
         } catch (ParseException $e) {
-            $this->addStatus('danger', 'installer.file.parse.error', ['%{name}' => 'doctrine.yaml']);
+            $this->addStatus('danger', 'installer.file.parse.error', ['%{name}' => 'platypus.yaml']);
             return false;
         } catch (DumpException $e) {
-            $this->addStatus('danger', 'installer.file.dump.error', ['%{name}' => 'doctrine.yaml']);
+            $this->addStatus('danger', 'installer.file.dump.error', ['%{name}' => 'platypus.yaml']);
             return false;
         } catch (\ErrorException $e) {
-            $this->addStatus('danger', 'installer.file.write.error', ['%{name}' => 'doctrine.yaml / .env']);
+            $this->addStatus('danger', 'installer.file.write.error', ['%{name}' => 'platypus.yaml or .env']);
             return false;
         }
 
@@ -418,7 +418,7 @@ class InstallationManager
             $connection->connect();
         } catch (ConnectionException $e) {
             if ($throw)
-                $this->addStatus('danger', 'installer.database.create.fail', ['%{name}' => $this->sql->getName()], 'System');
+                $this->addStatus('danger', 'installer.database.create.fail', ['%{name}' => $this->sql->getName(), '%{message}' => $e->getMessage()]);
         }
         if ($connection->isConnected() && $this->sql->getDriver() === 'pdo_mysql')
             $connection->executeQuery("ALTER DATABASE `" . $this->sql->getName() . "` CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`");
