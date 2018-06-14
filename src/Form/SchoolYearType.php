@@ -77,7 +77,6 @@ class SchoolYearType extends AbstractType
 					),
 					'label'         => false,
 					'by_reference'  => false,
-                    'allow_duplicate' => true,
                     'route'         => 'term_manage',
 				)
 			)

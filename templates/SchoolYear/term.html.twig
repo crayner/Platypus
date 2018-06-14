@@ -14,18 +14,18 @@
         {% include 'Default/panelStart.html.twig' with {'header': termTitle, 'panelStyle': 'info', transDomain: false} %}
         <div class="container-fluid">
             <div class="row">
-                <div class="col-3 card">
+                <div class="col-4 card">
                     {{ form_row(form.name) }}
                 </div>
                 <div class="col-3 card">
                     {{ form_row(form.nameShort) }}
                 </div>
-                <div class="col-6 card">
+                <div class="col-5 card">
                     {{ form_row(form.firstDay) }}
                 </div>
             </div>
             <div class="row">
-                <div class="col-6 offset-6 card">
+                <div class="col-5 offset-7 card">
                     {{ form_row(form.lastDay) }}
                     {{ form_row(form.schoolYear, {'value': app.request.get('id')}) }}
                     {{ form_rest(form) }}
