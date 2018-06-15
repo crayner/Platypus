@@ -1283,16 +1283,16 @@
         },
         {
             "name": "hillrange/symfony-form",
-            "version": "0.1.74",
+            "version": "0.1.76",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/symfony-form.git",
-                "reference": "8ed5356f72569ec5043e054cdb2e5b683ca378e4"
+                "reference": "192fd97fee90bbda388ab7dc3ccd7eded07ba5ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/8ed5356f72569ec5043e054cdb2e5b683ca378e4",
-                "reference": "8ed5356f72569ec5043e054cdb2e5b683ca378e4",
+                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/192fd97fee90bbda388ab7dc3ccd7eded07ba5ec",
+                "reference": "192fd97fee90bbda388ab7dc3ccd7eded07ba5ec",
                 "shasum": ""
             },
             "require": {
@@ -1336,7 +1336,7 @@
             "keywords": [
                 "form"
             ],
-            "time": "2018-06-14T07:03:47+00:00"
+            "time": "2018-06-15T03:32:23+00:00"
         },
         {
             "name": "jdorn/sql-formatter",

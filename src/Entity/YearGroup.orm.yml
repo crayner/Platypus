@@ -11,3 +11,9 @@ App\Entity\YearGroup:
         name:
             length: 10
             nullable: false
+        nameShort:
+            length: 4
+            nullable: false
+            column: name_short
+        sequence:
+            type: integer

@@ -1,0 +1,15 @@
+{% trans_default_domain "School" %}
+
+{% block year_group_label %}{% endblock %}
+{% block year_group_errors %}{% endblock %}
+
+{% block year_group_widget %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-4 card">{{ form_widget(form.name) }}</div>
+            <div class="col-4 card">{{ form_widget(form.nameShort) }}</div>
+            <div class="col-4 card"><div class="collection-actions">{{ saveButton({mergeClass: 'btn-sm'})|raw }}</div></div>
+        </div>
+        {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock year_group_widget %}

@@ -1,7 +1,7 @@
 {% set templateName = get_setting('template.name', 'PlatypusTemplateOriginal') %}
 
-{% include '@' ~ templateName ~ '/style.html.twig' %}
 {% include '@HillrangeForm/style.html.twig' %}
+{% include '@' ~ templateName ~ '/style.html.twig' %}
 
 <link href="{{ asset('css/jquery-ui.min.css') }}" type="text/css" rel="stylesheet"/>
 

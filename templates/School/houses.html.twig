@@ -13,10 +13,15 @@
 {% block headerLead %}{{ 'school.houses.description'|trans }}{% endblock headerLead %}
 
 {% block contentContainer %}
-    {{ all_form_errors(fullForm, "div", "alert alert-danger alert0dismissable show hide") }}
-    {% set form_path = [] %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
     {% include 'Default/panelStart.html.twig' with {header: 'school.houses.title', transDomain: 'School'} %}
     <div class="houseMessage"></div>
+    <div class="row row-header">
+        <div class="col-3 text-center">{{ 'school.house.name.label'|trans }}</div>
+        <div class="col-2 text-center">{{ 'school.house.name_short.label'|trans }}</div>
+        <div class="col-4 text-center">{{ 'school.house.logo.label'|trans }}</div>
+        <div class="col-3 text-right">{{ 'action'|trans({}, 'System') }}</div>
+    </div>
     {{ form_start(form) }}
     {{ collection_widget(form.houses) }}
     {{ form_end(form) }}

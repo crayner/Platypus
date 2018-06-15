@@ -17,8 +17,12 @@ namespace App\Controller;
 
 use App\Entity\DayOfWeek;
 use App\Entity\House;
+use App\Entity\YearGroup;
+use App\Form\CollectionType;
 use App\Form\DaysOfWeekType;
 use App\Form\HousesType;
+use App\Form\YearGroupType;
+use App\Manager\CollectionManager;
 use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
 use App\Organism\DaysOfWeek;
@@ -115,15 +119,72 @@ class SchoolController extends Controller
     /**
      * @Route("/school/house/{cid}/delete/", name="house_remove")
      * @IsGranted("ROLE_REGISTRAR")
-     * @param int $id
-     * @param string $cid
-     * @param HouseManager $houseManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteHouse($cid = 'ignore', HouseManager $houseManager)
     {
         $houseManager->removeHouse($houseManager->find($cid));
 
-        return $this->redirectToRoute('houses_edit');
+        return $this->forward(SchoolController::class.'::editHouses');
+    }
+
+    /**
+     * editYearGroups
+     *
+     * @param Request $request
+     * @param CollectionManager $collectionManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/school/year/groups/manage/", name="year_groups_manage")
+     * @IsGranted("ROLE_REGISTRAR")
+     */
+    public function editYearGroups(Request $request, CollectionManager $collectionManager)
+    {
+        $yearGroups = $collectionManager->getEntityManager()->getRepository(YearGroup::class)->findBy([], ['sequence' => 'ASC']);
+        $collectionManager->setCollection(new ArrayCollection($yearGroups));
+
+        $form = $this->createForm(CollectionType::class, $collectionManager,
+            [   'entry_type' => YearGroupType::class,
+                'entry_options_data_class' => YearGroup::class,
+                'translation_domain' => 'School',
+                'sort_manage' => true,
+                'button_merge_class' => 'btn-sm',
+                'redirect_route' => 'year_group_remove'
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            foreach($form->get('collection')->getData()->toArray() as $yearGroup)
+                $collectionManager->getEntityManager()->persist($yearGroup);
+            $collectionManager->getEntityManager()->flush();
+        }
+
+        return $this->render('School/year_groups.html.twig',
+            [
+                'form'     => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/year/groups/{cid}/delete/", name="year_group_remove")
+     * @IsGranted("ROLE_REGISTRAR")
+     * @param string $cid
+     * @param EntityManagerInterface $entityManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function deleteYearGroup($cid = 'ignore', EntityManagerInterface $entityManager)
+    {
+        $yg = $entityManager->getRepository(YearGroup::class)->find($cid);
+
+        if ($yg instanceof YearGroup)
+        {
+            $entityManager->remove($yg);
+            $entityManager->flush();
+        }
+
+        return $this->forward(SchoolController::class.'::editYearGroups');
     }
 }

@@ -48,6 +48,7 @@ class HousesType extends AbstractType
                         'deletePhoto'       => $options['deletePhoto'],
                     ],
                     'redirect_route'    => 'house_remove',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
         ;

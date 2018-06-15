@@ -29,6 +29,12 @@ School Admin:
             route: houses_edit
             parameters: {}
             transDomain: School
+        manage_year_groups:
+            label: menu.year_groups.manage
+            role: ROLE_REGISTRAR
+            route: year_groups_manage
+            parameters: {}
+            transDomain: School
     years_days_times:
         school_days_times:
             label: menu.school.days_of_week

@@ -5,16 +5,12 @@
 
 {% block house_widget %}
     {% spaceless %}
-        {% set h3Content = '<div class="collection-actions">' %}
-        {% set h3Content = h3Content ~ saveButton()|raw %}
-        {% set h3Content = h3Content ~ '</div>' %}
-        {% include 'Default/panelStart.html.twig' with {header: 'school.house.name.title', name: form.name.vars.value|default('Add House'|trans), panelStyle: 'default', transDomain: 'School'} %}
         <div class="row">
-            <div class="col-4 card">{{ form_row(form.name) }}</div>
-            <div class="col-3 card">{{ form_row(form.nameShort) }}</div>
-            <div class="col-5 card">{{ form_row(form.logo) }}</div>
+            <div class="col-3 card">{{ form_widget(form.name) }}</div>
+            <div class="col-2 card">{{ form_widget(form.nameShort) }}</div>
+            <div class="col-4 card">{{ form_widget(form.logo) }}</div>
+            <div class="col-3 card"><div class="collection-actions">{{ saveButton({mergeClass: 'btn-sm'})|raw }}</div></div>
         </div>
         {{ form_rest(form) }}
-        {% include 'Default/panelEnd.html.twig' %}
     {% endspaceless %}
 {% endblock house_widget %}

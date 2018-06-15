@@ -16,6 +16,7 @@
 namespace App\Form;
 
 use App\Entity\House;
+use App\Entity\YearGroup;
 use App\Form\Subscriber\HouseSubscriber;
 use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\TextType;
@@ -27,10 +28,10 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class HouseType
+ * Class YearGroupType
  * @package App\Form
  */
-class HouseType extends AbstractType
+class YearGroupType extends AbstractType
 {
     /**
      * buildForm
@@ -43,7 +44,7 @@ class HouseType extends AbstractType
         $builder
             ->add('name', TextType::class,
                 [
-                    'label'       => 'school.house.name.label',
+                    'label'       => 'school.year_group.name.label',
                     'attr'      => [
                         'class' => 'form-control-sm',
                     ],
@@ -51,23 +52,10 @@ class HouseType extends AbstractType
             )
             ->add('nameShort', TextType::class,
                 [
-                    'label'       => 'school.house.name_short.label',
+                    'label'       => 'school.year_group.name_short.label',
                     'attr'      => [
                         'class' => 'form-control-sm',
                     ],
-                ]
-            )
-            ->add('logo', ImageType::class,
-                [
-                    'label'       => 'school.house.logo.label',
-                    'help'       => 'school.house.logo.help',
-                    'attr'        => [
-                        'imageClass' => 'smallLogo',
-                        'class' => 'form-control-sm',
-                    ],
-                    'required'    => false,
-                    'deletePhoto' => $options['deletePhoto'],
-                    'fileName'    => 'house_logo',
                 ]
             )
             ->add('id', HiddenType::class,
@@ -90,12 +78,7 @@ class HouseType extends AbstractType
         $resolver->setDefaults(
             [
                 'translation_domain' => 'School',
-                'data_class'         => House::class,
-            ]
-        );
-        $resolver->setRequired(
-            [
-                'deletePhoto',
+                'data_class'         => YearGroup::class,
             ]
         );
     }
@@ -107,18 +90,6 @@ class HouseType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'house';
-    }
-
-    /**
-     * buildView
-     *
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        $view->vars['deletePhoto'] = $options['deletePhoto'];
+        return 'year_group';
     }
 }
