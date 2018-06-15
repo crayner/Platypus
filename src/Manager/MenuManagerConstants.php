@@ -22,6 +22,13 @@ class MenuManagerConstants
 ';
     CONST SECTIONS = '
 School Admin:
+    groupings:
+        houses_edit:
+            label: menu.houses.manage
+            role: ROLE_REGISTRAR
+            route: houses_edit
+            parameters: {}
+            transDomain: School
     years_days_times:
         school_days_times:
             label: menu.school.days_of_week

@@ -1,0 +1,25 @@
+App\Entity\House:
+    type: entity
+    table: house
+    repositoryClass: App\Repository\HouseRepository
+    uniqueConstraints:
+        locality:
+            columns:
+                - name
+                - nameShort
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 30
+        nameShort:
+            length: 4
+        logo:
+            length: 255
+            nullable: true
+    lifecycleCallbacks:
+        preRemove:
+            - clearPhotos

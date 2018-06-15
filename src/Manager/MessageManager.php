@@ -195,6 +195,16 @@ class MessageManager
     }
 
     /**
+     * getStatus
+     *
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->getHighestLevel();
+    }
+
+    /**
      * addStatusMessages
      *
      * @param $status

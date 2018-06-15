@@ -1,0 +1,19 @@
+App\Entity\House:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name, nameShort]
+            message: house.validation.duplicate
+    fields:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 30
+        nameShort:
+            - NotBlank: ~
+            - Length:
+                max: 4
+        logo:
+            - Image:
+                maxRatio: 1.25
+                minRatio: 0.75
+                maxSize: 750k

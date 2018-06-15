@@ -1,0 +1,32 @@
+{% trans_default_domain "School" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    "School/house.html.twig"
+    "@HillrangeForm/FormTheme/jquery.collection.html.twig"
+    "@HillrangeForm/FormTheme/bootstrap.html.twig"
+%}
+
+{% block title %}{{ parent() }}{{ 'school.houses.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'school.houses.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'school.houses.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert0dismissable show hide") }}
+    {% set form_path = [] %}
+    {% include 'Default/panelStart.html.twig' with {header: 'school.houses.title', transDomain: 'School'} %}
+    <div class="houseMessage"></div>
+    {{ form_start(form) }}
+    {{ collection_widget(form.houses) }}
+    {{ form_end(form) }}
+    {% include 'Default/panelEnd.html.twig' %}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {{ collections_manage(form, ['houses'])|raw }}
+    {{ collection_script(form.houses)|raw }}
+    {% include 'Script/monitorForm.html.twig' with {'route': 'houses_edit'} %}
+{% endblock javascripts %}
