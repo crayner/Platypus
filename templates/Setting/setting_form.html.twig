@@ -1,0 +1,18 @@
+{% trans_default_domain "School" %}
+
+{% block multiple_setting_label %}{% endblock %}
+{% block multiple_setting_errors %}{% endblock %}
+
+{% block multiple_setting_widget %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-4 card">
+                {{ form_label(form.value) }}
+                {{ form_errors(form.value) }}
+            </div>
+            <div class="col-8 card">
+                {{ form_widget(form.value) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock multiple_setting_widget %}

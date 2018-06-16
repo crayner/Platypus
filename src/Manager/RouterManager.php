@@ -3,6 +3,7 @@ namespace App\Manager;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\RouterInterface;
 
 class RouterManager
 {
@@ -15,6 +16,7 @@ class RouterManager
 	 * @var RequestStack
 	 */
 	private $request;
+
 	/**
 	 * RouterManager constructor.
 	 */
@@ -48,6 +50,9 @@ class RouterManager
 
 		if ($request instanceof Request)
 			$this->currentRoute = $request->get('_route');
+
+		if (empty($this->currentRoute) && ! empty($this->request))
+            $this->currentRoute = $this->request->getParentRequest()->get('_route');
 
 		return $this;
 	}

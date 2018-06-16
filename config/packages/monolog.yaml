@@ -1,6 +1,7 @@
 monolog:
     channels:
         - 'demonstration'
+        - 'setting'
     handlers:
         security:
             # log all messages (since debug is the lowest level)
@@ -33,3 +34,9 @@ monolog:
             path:     '%kernel.logs_dir%/demonstration.%kernel.environment%.log'
             channels: [demonstration]
             max_files: 1
+        setting:
+            level:    debug
+            type:     rotating_file
+            path:     '%kernel.logs_dir%/setting.%kernel.environment%.log'
+            channels: [setting]
+            max_files: 7

@@ -32,9 +32,8 @@ App\Entity\Setting:
             type: string
             length: '50'
             nullable: true
-        validator:
-            type: string
-            length: '255'
+        validators:
+            type: array
             nullable: true
         role:
             type: string

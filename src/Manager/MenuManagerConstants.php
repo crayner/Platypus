@@ -35,6 +35,13 @@ School Admin:
             route: year_groups_manage
             parameters: {}
             transDomain: School
+    teaching_learning:
+        resource_settings:
+            label: manage_resource_settings
+            role: ROLE_PRINCIPAL
+            route: resource_settings_manage
+            parameters: {}
+            transDomain: System
     years_days_times:
         school_days_times:
             label: menu.school.days_of_week
@@ -66,6 +73,7 @@ School Admin:
             transDomain: SchoolYear 
     hidden:
         - school_year_edit
+        - multiple_settings_manage
 ';
     /*
 	CONST NODES = '

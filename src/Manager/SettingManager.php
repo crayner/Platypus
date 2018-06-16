@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Validator\Integer;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -63,11 +64,18 @@ class SettingManager implements ContainerAwareInterface
     private $databaseFail = false;
 
     /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * SettingManager constructor.
      * @param ContainerInterface $container
      * @param MessageManager $messageManager
      */
-    public function __construct(ContainerInterface $container, MessageManager $messageManager, AuthorizationCheckerInterface $authorisation, TwigManager $twig, ValidatorInterface $validator)
+    public function __construct(ContainerInterface $container, MessageManager $messageManager,
+                                AuthorizationCheckerInterface $authorisation, TwigManager $twig,
+                                ValidatorInterface $validator)
     {
         $this->setContainer($container);
         $this->messageManager = $messageManager;
@@ -79,6 +87,7 @@ class SettingManager implements ContainerAwareInterface
         } catch (ConnectionException $e) {
             $this->setDatabaseFail(true);
         }
+        $this->logger = $container->get('monolog.logger.setting');
     }
 
     /**
@@ -105,18 +114,23 @@ class SettingManager implements ContainerAwareInterface
      */
     public function get(string $name, $default = null, array $options = [])
     {
-        if ($this->isDatabaseFail())
+        if ($this->isDatabaseFail()) {
+            $this->logger->error(sprintf('The database is not available. Default value returned for setting %s.', $name), [$name, $default, $options]);
             return $default;
+        }
         $name = strtolower($name);
         $this->readSession()->setName($name)->getSetting($name);
 
-        if ($this->isValid())
+        if ($this->isValid()) {
+            $this->logger->debug(sprintf('The setting %s was found and returned from the cache.', $name), [$name, $default, $options]);
             return $this->getValue($default, $options);
-
+        }
         $this->loadSetting($name);
 
-        if ($this->isValid())
+        if ($this->isValid()) {
+            $this->logger->debug(sprintf('The setting %s was found and returned from the database.', $name), [$name, $default, $options]);
             return $this->getValue($default, $options);
+        }
 
         return $default;
     }

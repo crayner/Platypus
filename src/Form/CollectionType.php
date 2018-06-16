@@ -39,9 +39,9 @@ class CollectionType extends AbstractType
             ->add('collection', \Hillrange\Form\Type\CollectionType::class,
                 [
                     'entry_type'        => $options['entry_type'],
-                    'entry_options'     => [
+                    'entry_options'     => array_merge([
                         'data_class'        => $options['entry_options_data_class'],
-                    ],
+                    ], $options['entry_options']),
                     'allow_add'         => $options['allow_add'],
                     'allow_delete'      => $options['allow_delete'],
                     'sort_manage'       => $options['sort_manage'],
@@ -99,6 +99,7 @@ class CollectionType extends AbstractType
                 'duplicate_button'      => '',
                 'button_merge_class'    => '',
                 'removal_warning'       => null,
+                'entry_options'         => [],
             ]
         );
         $resolver->setRequired(

@@ -4,6 +4,7 @@ namespace App\Entity;
 use App\Core\Organism\SettingCache;
 use Hillrange\Security\Util\UserTrackInterface;
 use Hillrange\Security\Util\UserTrackTrait;
+use Symfony\Component\Validator\Constraint;
 
 /**
  * Setting
@@ -13,23 +14,23 @@ class Setting implements UserTrackInterface
 	use UserTrackTrait;
 
     /**
-     * @var int:null
+     * @var int|null
      */
 	private $id;
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
     /**
-     * @param int $id
+     * @param int|null $id
      * @return Setting
      */
-    public function setId(int $id): Setting
+    public function setId(?int $id): Setting
     {
         $this->id = $id;
         return $this;
@@ -137,7 +138,7 @@ class Setting implements UserTrackInterface
      */
     public function getValue()
     {
-        return $this->value;
+        return $this->value ?: null;
     }
 
     /**
@@ -146,7 +147,7 @@ class Setting implements UserTrackInterface
      */
     public function setValue($value): Setting
     {
-        $this->value = $value;
+        $this->value = $value ?: null;
         return $this;
     }
 
@@ -174,25 +175,41 @@ class Setting implements UserTrackInterface
     }
 
     /**
-     * @var string|null
+     * @var array|null
      */
-    private $validator;
+    private $validators;
 
     /**
-     * @return null|string
+     * @return array
      */
-    public function getValidator(): ?string
+    public function getValidators(): array
     {
-        return $this->validator;
+        return $this->validators ?: [];
     }
 
     /**
-     * @param null|string $validator
+     * @param null|string $validators
      * @return Setting
      */
-    public function setValidator(?string $validator): Setting
+    public function setValidators(?array $validators): Setting
     {
-        $this->validator = $validator;
+        $this->validators = $validators ?: null;
+        return $this;
+    }
+
+    /**
+     * add Validator
+     *
+     * @param null|Constraint $constraint
+     * @return Setting
+     */
+    public function addValidator(?Constraint $constraint): Setting
+    {
+        if (empty($constraint) || in_array($constraint, $this->getValidators()))
+            return $this;
+
+        $this->validators[] = $constraint;
+
         return $this;
     }
 
