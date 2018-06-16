@@ -18,7 +18,9 @@ namespace App\Controller;
 use App\Entity\Setting;
 use App\Form\CollectionType;
 use App\Form\MultipleSettingType;
+use App\Form\SectionSettingType;
 use App\Manager\CollectionManager;
+use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
 use App\Repository\SettingRepository;
 use App\Validator\Yaml;
@@ -68,14 +70,16 @@ class SettingController extends Controller
      * resource Settings
      *
      * @param Request $request
+     * @param SettingManager $sm
+     * @return Response
      * @Route("/setting/resource/manage/", name="resource_settings_manage")
      * @IsGranted("ROLE_PRINCIPAL")
      */
-    public function resourceSettings(Request $request, EntityManagerInterface $entityManager)
+    public function resourceSettings(Request $request, SettingManager $sm)
     {
         $settings = [];
 
-        $setting = $entityManager->getRepository(Setting::class)->findOneByName('resources.categories');
+        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('resources.categories');
         if (is_null($setting))
             $setting = new Setting();
         $setting->setName('resources.categories');
@@ -97,7 +101,7 @@ class SettingController extends Controller
         }
         $settings[] = $setting;
 
-        $setting = $entityManager->getRepository(Setting::class)->findOneByName('resources.purposes_general');
+        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('resources.purposes_general');
         if (is_null($setting))
             $setting = new Setting();
         $setting->setName('resources.purposes_general');
@@ -119,7 +123,7 @@ class SettingController extends Controller
         }
         $settings[] = $setting;
 
-        $setting = $entityManager->getRepository(Setting::class)->findOneByName('resources.purposes_restricted');
+        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('resources.purposes_restricted');
         if (is_null($setting))
             $setting = new Setting();
         $setting->setName('resources.purposes_restricted');
@@ -140,10 +144,15 @@ class SettingController extends Controller
         }
         $settings[] = $setting;
 
-        $settings['name'] = 'Resource Settings';
-        $settings['description'] = '';
+        $sections = [];
 
-        $request->getSession()->set('manage_settings', $settings);
+        $section['name'] = 'Resource Settings';
+        $section['description'] = '';
+        $section['settings'] = $settings;
+
+        $sections[] = $section;
+
+        $request->getSession()->set('manage_settings', $sections);
 
         return $this->forward(SettingController::class.'::manageMultipleSettings');
     }
@@ -155,37 +164,22 @@ class SettingController extends Controller
      * @return Response
      * @Route("/setting/multiple/manage/", name="multiple_settings_manage")
      */
-    public function manageMultipleSettings(Request $request, CollectionManager $collectionManager, SettingManager $settingManager)
+    public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager)
     {
-        $settings = $request->getSession()->get('manage_settings');
-        $name = $settings['name'];
-        unset($settings['name']);
-        $description = null;
-        if (isset($settings['description'])){
-            $description = $settings['description'];
-            unset($settings['description']);
-        }
+        foreach($request->getSession()->get('manage_settings') as $section)
+            $multipleSettingManager->addSection($section);
+        $multipleSettingManager->setHeader('Manage Resource Settings');
 
-        $collectionManager->setCollection(new ArrayCollection($settings));
+        $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
 
-        $form = $this->createForm(CollectionType::class, $collectionManager,
-            [
-                'allow_up' => false,
-                'allow_down' => false,
-                'entry_type' => MultipleSettingType::class,
-                'entry_options_data_class' => Setting::class,
-                'entry_options' => [
-                    'all_data' => $collectionManager->getCollection(),
-                ],
-            ]
-        );
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            foreach($form->get('collection')->getData()->toArray() as $setting)
-                $settingManager->getEntityManager()->persist($setting);
+            foreach($multipleSettingManager->getSections() as $section)
+                foreach($section['settings'] as $setting)
+                    $settingManager->getEntityManager()->persist($setting);
             $settingManager->getEntityManager()->flush();
         }
 
@@ -193,8 +187,6 @@ class SettingController extends Controller
         return $this->render('Setting/multiple.html.twig',
             [
                 'form' => $form->createView(),
-                'name' => $name,
-                'description' => $description,
                 'fullForm' => $form,
             ]
         );

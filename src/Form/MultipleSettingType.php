@@ -21,6 +21,8 @@ use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -76,7 +78,7 @@ class MultipleSettingType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'multiple_setting';
+        return 'multiple_settings';
     }
 
     /**
@@ -89,6 +91,8 @@ class MultipleSettingType extends AbstractType
         $resolver->setRequired(
             [
                 'all_data',
+                'section_name',
+                'section_description',
             ]
         );
         $resolver->setDefaults(
@@ -97,5 +101,18 @@ class MultipleSettingType extends AbstractType
                 'data_class' => Setting::class,
             ]
         );
+    }
+
+    /**
+     * buildView
+     *
+     * @param FormView $view
+     * @param FormInterface $form
+     * @param array $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        $view->vars['section_name'] = $options['section_name'];
+        $view->vars['section_description'] = $options['section_description'];
     }
 }

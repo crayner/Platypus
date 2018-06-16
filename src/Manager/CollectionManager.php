@@ -30,7 +30,7 @@ class CollectionManager
     private $collection;
 
     /**
-     * @param House $entity
+     * @param object $entity
      *
      * @return CollectionManager
      */

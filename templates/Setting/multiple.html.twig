@@ -9,17 +9,24 @@
 %}
 
 {% block title %}{{ parent() }} {{ 'School Admin'|trans({}, 'System') }}{% endblock title %}
-{% block headerTitle %}{{ name|trans }}{% endblock headerTitle %}
-{% block headerLead %}{{ description|trans }}{% endblock headerLead %}
+{% block headerTitle %}{{ form.vars.value.header|trans }}{% endblock headerTitle %}
+{% block headerLead %}{% endblock headerLead %}
+
+{% set manager = form.vars.value %}
 
 {% block contentContainer %}
     <div class="container-fluid">
     {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
     {{ form_start(form) }}
-    {% set h3Content = saveButton() %}
-    {% include 'Default/panelStart.html.twig' with {header: name, name: '', transDomain: 'System', panelParagraph: description, panelStyle: 'warning'} %}
-        {{ collection_widget(form.collection) }}
-    {% include 'Default/panelEnd.html.twig' %}
+    {% for section_name, section_form in form.children %}
+        {% if section_name is not same as('_token') %}
+            {% set section = manager.sections[section_name] %}
+            {% set h3Content = saveButton() %}
+            {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'System', panelParagraph: section['description'], panelStyle: 'warning'} %}
+                {{ collection_widget(section_form.collection) }}
+            {% include 'Default/panelEnd.html.twig' %}
+        {% endif %}
+    {% endfor %}
     {{ form_end(form) }}
     </div>
 {% endblock contentContainer %}
