@@ -17,6 +17,7 @@ namespace App\Form;
 
 use App\Entity\Setting;
 use App\Form\Transformer\SettingValueTransformer;
+use App\Organism\SettingCache;
 use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -98,7 +99,7 @@ class MultipleSettingType extends AbstractType
         $resolver->setDefaults(
             [
                 'translation_domain' => 'Setting',
-                'data_class' => Setting::class,
+                'data_class' => SettingCache::class,
             ]
         );
     }

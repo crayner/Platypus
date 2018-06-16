@@ -896,15 +896,27 @@ class SettingCache
     }
 
     /**
-     * getValidator
+     * getValidators
      *
-     * @return null|string
+     * @return null|array
      */
-    public function getValidator(): ?string
+    public function getValidators(): ?array
     {
         if ($this->getSetting())
-            return $this->getSetting()->getValidator();
+            return $this->getSetting()->getValidators();
         return null;
+    }
+
+    /**
+     * getValidators
+     *
+     * @return SettingCache
+     */
+    public function setValidators($value): SettingCache
+    {
+        if ($this->getSetting())
+            $this->getSetting()->setValidators($value);
+        return $this;
     }
 
     /**
@@ -916,6 +928,40 @@ class SettingCache
     {
         if ($this->getSetting())
             return $this->getSetting()->getDisplayName();
+        return null;
+    }
+
+    /**
+     * __set
+     *
+     * @param $name
+     * @param $value
+     * @return SettingCache
+     */
+    public function __set($name, $value): SettingCache
+    {
+        $method = 'set' . ucfirst($name);
+        if (method_exists($this, $method))
+            return $this->$method($value);
+
+        if ($this->getSetting())
+        {
+            $this->getSetting()->$method($value);
+            return $this;
+        }
+
+        trigger_error('The setting field "'.$name.'"" does not seem to exist.', E_ERROR);
+    }
+
+    /**
+     * getDescription
+     *
+     * @return null|string
+     */
+    public function getDescription(): ?string
+    {
+        if ($this->getSetting())
+            return $this->getSetting()->getDescription();
         return null;
     }
 }

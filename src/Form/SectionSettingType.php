@@ -16,6 +16,7 @@
 namespace App\Form;
 
 use App\Entity\Setting;
+use App\Organism\SettingCache;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -40,7 +41,7 @@ class SectionSettingType extends AbstractType
                     'allow_down' => false,
                     'data' => $collectionManager,
                     'entry_type' => MultipleSettingType::class,
-                    'entry_options_data_class' => Setting::class,
+                    'entry_options_data_class' => SettingCache::class,
                     'entry_options' => [
                         'all_data' => $collectionManager->getCollection(),
                         'section_name' => $section['name'],

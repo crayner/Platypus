@@ -452,7 +452,7 @@ class SettingManager implements ContainerAwareInterface
                 'defaultValue' => null,
                 'role' => null,
                 'choice' => null,
-                'validator' => null,
+                'validators' => null,
                 'translateChoice' => null,
             ]
         );
@@ -1044,4 +1044,31 @@ class SettingManager implements ContainerAwareInterface
         $this->databaseFail = $databaseFail ? true : false;
         return $this;
     }
+
+
+    /**
+     * createOneByName
+     *
+     * @param string $name
+     * @return SettingCache|null
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function createOneByName(string $name): ?SettingCache
+    {
+        $setting = $this->getSettingCache();
+
+        $this->addSetting($setting->findOneByName($name, $this->getEntityManager()));
+
+        if ($this->setting->getSetting() instanceof Setting)
+             return $this->setting;
+
+        $setting = new Setting();
+        $setting->setName($name);
+        $this->setting->setSetting($setting);
+        $this->setting->setName($name);
+
+        return $this->setting;
+    }
+
 }

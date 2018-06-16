@@ -43,16 +43,14 @@ class SettingController extends Controller
      * @Route("/setting/{name}/edit/{closeWindow}", name="setting_edit_name")
      * @IsGranted("ROLE_SYSTEM_ADMIN")
      */
-    public function editName($name, $closeWindow = null,  Request $request, SettingRepository $settingRepository)
+    public function editName($name, $closeWindow = null, Request $request, SettingRepository $settingRepository)
     {
         $setting = null;
         $original = $name;
-        do
-        {
+        do {
             $setting = $settingRepository->findOneByName($name);
 
-            if (is_null($setting))
-            {
+            if (is_null($setting)) {
                 $name = explode('.', $name);
                 array_pop($name);
                 $name = implode('.', $name);
@@ -63,7 +61,7 @@ class SettingController extends Controller
         if (is_null($setting))
             throw new \InvalidArgumentException('The System setting of name: ' . $original . ' was not found');
 
-        return $this->forward(SettingController::class.'::edit', ['id' => $setting->getId(), 'closeWindow' => $closeWindow]);
+        return $this->forward(SettingController::class . '::edit', ['id' => $setting->getId(), 'closeWindow' => $closeWindow]);
     }
 
     /**
@@ -79,68 +77,68 @@ class SettingController extends Controller
     {
         $settings = [];
 
-        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('resources.categories');
-        if (is_null($setting))
-            $setting = new Setting();
-        $setting->setName('resources.categories');
-        $setting->setRole('ROLE_PRINCIPAL');
-        $setting->setType('array');
-        $setting->setDisplayName('Categories');
-        $setting->setDescription('Allowable choices for category.');
+        $setting = $sm->createOneByName('resources.categories');
+
+        $setting->setName('resources.categories')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('array')
+            ->__set('displayName', 'Categories')
+            ->__set('description', 'Allowable choices for category.');
         if (empty($setting->getValue())) {
-            $setting->setValue(['Article', 'Book', 'Document', 'Graphic', 'Idea', 'Music', 'Object', 'Painting', 'Person', 'Photo', 'Place', 'Poetry', 'Prose', 'Rubric', 'Text', 'Video', 'Website', 'Work Sample', 'Other']);
-            $setting->setchoice(null);
-            $setting->setValidators(
-                [
-                    new NotBlank(),
-                    new Yaml(),
-                ]
-            );
-            $setting->setDefaultValue(null);
-            $setting->setTranslateChoice('Setting');
+            $setting->setValue(['Article', 'Book', 'Document', 'Graphic', 'Idea', 'Music', 'Object', 'Painting', 'Person', 'Photo', 'Place', 'Poetry', 'Prose', 'Rubric', 'Text', 'Video', 'Website', 'Work Sample', 'Other'])
+                ->__set('choice', null)
+                ->setValidators(
+                    [
+                        new NotBlank(),
+                        new Yaml(),
+                    ]
+                )
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
         }
         $settings[] = $setting;
 
-        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('resources.purposes_general');
-        if (is_null($setting))
-            $setting = new Setting();
-        $setting->setName('resources.purposes_general');
-        $setting->setRole('ROLE_PRINCIPAL');
-        $setting->setType('array');
-        $setting->setDisplayName('Purposes (General)');
-        $setting->setDescription('Allowable choices for purpose when creating a resource.');
+        $setting = $sm->createOneByName('resources.purposes_general');
+
+        $setting->setName('resources.purposes_general')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('array')
+            ->__set('displayName', 'Purposes (General)')
+            ->__set('description', 'Allowable choices for purpose when creating a resource.');
         if (empty($setting->getValue())) {
-            $setting->setValue(['Assessment Aid', 'Concept', 'Inspiration', 'Learner Profile', 'Mass Mailer Attachment', 'Provocation', 'Skill', 'Teaching and Learning Strategy', 'Other']);
-            $setting->setchoice(null);
-            $setting->setValidators(
-                [
-                    new NotBlank(),
-                    new Yaml(),
-                ]
-            );
-            $setting->setDefaultValue(null);
-            $setting->setTranslateChoice('Setting');
+            $setting->setValue(['Assessment Aid', 'Concept', 'Inspiration', 'Learner Profile', 'Mass Mailer Attachment', 'Provocation', 'Skill', 'Teaching and Learning Strategy', 'Other'])
+                ->__set('choice', null)
+                ->setValidators(
+                    [
+                        new NotBlank(),
+                        new Yaml(),
+                    ]
+                )
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
         }
         $settings[] = $setting;
 
-        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('resources.purposes_restricted');
-        if (is_null($setting))
-            $setting = new Setting();
-        $setting->setName('resources.purposes_restricted');
-        $setting->setRole('ROLE_PRINCIPAL');
-        $setting->setType('array');
-        $setting->setDisplayName('Purposes (Restricted) ');
-        $setting->setDescription('Additional allowable choices for purpose when creating a resource, for those with "Manage All Resources" rights.');
+        $setting = $sm->createOneByName('resources.purposes_restricted');
+
+        $setting->setName('resources.purposes_restricted')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('array')
+            ->__set('displayName', 'Purposes (Restricted) ')
+            ->__set('description', 'Additional allowable choices for purpose when creating a resource, for those with "Manage All Resources" rights.');
         if (empty($setting->getValue())) {
-            $setting->setValue([]);
-            $setting->setchoice(null);
-            $setting->setValidators(
-                [
-                    new Yaml(),
-                ]
-            );
-            $setting->setDefaultValue(null);
-            $setting->setTranslateChoice('Setting');
+            $setting->setValue([])
+                ->__set('choice', null)
+                ->setValidators(
+                    [
+                        new Yaml(),
+                    ]
+                )
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
         }
         $settings[] = $setting;
 
@@ -154,7 +152,7 @@ class SettingController extends Controller
 
         $request->getSession()->set('manage_settings', $sections);
 
-        return $this->forward(SettingController::class.'::manageMultipleSettings');
+        return $this->forward(SettingController::class . '::manageMultipleSettings');
     }
 
     /**
@@ -166,7 +164,7 @@ class SettingController extends Controller
      */
     public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager)
     {
-        foreach($request->getSession()->get('manage_settings') as $section)
+        foreach ($request->getSession()->get('manage_settings') as $section)
             $multipleSettingManager->addSection($section);
         $multipleSettingManager->setHeader('Manage Resource Settings');
 
@@ -175,11 +173,10 @@ class SettingController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            foreach($multipleSettingManager->getSections() as $section)
-                foreach($section['settings'] as $setting)
-                    $settingManager->getEntityManager()->persist($setting);
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($multipleSettingManager->getSections() as $section)
+                foreach ($section['settings'] as $setting)
+                    $settingManager->getEntityManager()->persist($setting->getSetting());
             $settingManager->getEntityManager()->flush();
         }
 
@@ -190,5 +187,67 @@ class SettingController extends Controller
                 'fullForm' => $form,
             ]
         );
+    }
+
+    /**
+     * plannerSettings
+     *
+     * @param Request $request
+     * @param SettingManager $sm
+     * @return Response
+     * @Route("/setting/planner/manage/", name="manage_planner_settings")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function plannerSettings(Request $request, SettingManager $sm)
+    {
+        $settings = [];
+
+        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('planner.lesson_details_template');
+        if (is_null($setting))
+            $setting = new Setting();
+        $setting->setName('planner.lesson_details_template');
+        $setting->setRole('ROLE_PRINCIPAL');
+        $setting->setType('html');
+        $setting->setDisplayName('Lesson Details Template');
+        $setting->setDescription('Template to be inserted into Lesson Details field');
+        if (empty($setting->getValue())) {
+            $setting->setValue(null);
+            $setting->setchoice(null);
+            $setting->setValidators(null);
+            $setting->setDefaultValue(null);
+            $setting->setTranslateChoice('Setting');
+        }
+        $settings[] = $setting;
+
+        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('planner.teachers_notes_template');
+        if (is_null($setting))
+            $setting = new Setting();
+        $setting->setName('planner.teachers_notes_template');
+        $setting->setRole('ROLE_PRINCIPAL');
+        $setting->setType('html');
+        $setting->setDisplayName('Teacher\'s Notes Template');
+        $setting->setDescription('Template to be inserted into Teacher\'s Notes field');
+        if (empty($setting->getValue())) {
+            $setting->setValue(null);
+            $setting->setchoice(null);
+            $setting->setValidators(null);
+            $setting->setDefaultValue(null);
+            $setting->setTranslateChoice('Setting');
+        }
+        $settings[] = $setting;
+
+        $sections = [];
+
+        $section['name'] = 'Planner Templates';
+        $section['description'] = '';
+        $section['settings'] = $settings;
+
+        $sections[] = $section;
+
+        $settings = [];
+
+        $request->getSession()->set('manage_settings', $sections);
+
+        return $this->forward(SettingController::class . '::manageMultipleSettings');
     }
 }

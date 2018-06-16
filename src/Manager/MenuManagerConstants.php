@@ -36,6 +36,12 @@ School Admin:
             parameters: {}
             transDomain: School
     teaching_learning:
+        planner_settings:
+            label: manage_planner_settings
+            role: ROLE_PRINCIPAL
+            route: manage_planner_settings
+            parameters: {}
+            transDomain: System
         resource_settings:
             label: manage_resource_settings
             role: ROLE_PRINCIPAL
