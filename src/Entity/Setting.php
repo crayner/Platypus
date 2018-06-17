@@ -138,7 +138,7 @@ class Setting implements UserTrackInterface
      */
     public function getValue()
     {
-        return $this->value ?: null;
+        return $this->value;
     }
 
     /**
@@ -147,7 +147,7 @@ class Setting implements UserTrackInterface
      */
     public function setValue($value): Setting
     {
-        $this->value = $value ?: null;
+        $this->value = $value;
         return $this;
     }
 
@@ -180,7 +180,7 @@ class Setting implements UserTrackInterface
     private $validators;
 
     /**
-     * @return array
+     * @return array|null
      */
     public function getValidators(): array
     {
@@ -193,7 +193,7 @@ class Setting implements UserTrackInterface
      */
     public function setValidators(?array $validators): Setting
     {
-        $this->validators = $validators ?: null;
+        $this->validators = $validators ?: [];
         return $this;
     }
 

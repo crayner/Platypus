@@ -53,6 +53,10 @@ class SettingValueTransformer implements DataTransformerInterface
                     return null;
                 return $value;
                 break;
+            case 'html':
+            case 'boolean':
+                return $value;
+                break;
             default:
                 trigger_error('Deal with setting type ' . $this->type, E_USER_ERROR);
         }

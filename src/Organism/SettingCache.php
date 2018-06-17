@@ -1068,7 +1068,9 @@ class SettingCache
      */
     public function createOneByName(string $name): SettingCache
     {
-        return $this->setSetting(new Setting())
+        $setting = new Setting();
+        $name = strtolower($name);
+        return $this->setSetting($setting->setName($name))
             ->setName($name);
     }
 }
