@@ -17,6 +17,8 @@
 namespace App\Manager;
 
 
+use Doctrine\ORM\Tools\SchemaTool;
+
 class VersionManager
 {
     /**

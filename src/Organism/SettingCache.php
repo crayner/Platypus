@@ -691,6 +691,8 @@ class SettingCache
                 $this->value = $value;
             elseif ($field === 'defaultValue')
                 $this->defaultValue = $value;
+            elseif ($field === 'validators')
+                $this->validators = $this->convertValidators($value);
             else
                 $this->getSetting()->$func($value);
         }
@@ -699,6 +701,25 @@ class SettingCache
         $entityManager->flush();
 
         return true;
+    }
+
+    public function convertValidators($value): array
+    {
+        if (empty($value))
+            return [];
+
+        if (! is_array($value))
+            $value = [$value];
+
+        $results = [];
+
+        foreach($value as $validator)
+            if (class_exists($validator))
+                $results[] = new $validator();
+            else
+                trigger_error('The validator ' .$validator . ' is not available', E_USER_ERROR);
+
+        return $results;
     }
 
     /**
@@ -947,10 +968,9 @@ class SettingCache
      */
     public function writeSetting(EntityManagerInterface $entityManager, ValidatorInterface $validator, array $constraints)
     {
-        if (! empty($this->getValidator()) && class_exists($this->getValidator())) {
-            $w = $this->getValidator();
-            $constraints[] = new $w();
-        }
+        if (! empty($this->getValidators()))
+            $constraints[] = $this->getValidators();
+
         if (! empty($constraints)) {
             $errors = $validator->validate($this->getSetting()->getValue(), $constraints);
             $errors->addAll($validator->validate($this->getSetting()->getDefaultValue(), $constraints));

@@ -2,7 +2,7 @@
 ---
 # craigray_platypus.platy_setting
 -
-  id: 11
+  id: 1
   created_by: 1
   modified_by: 1
   type: "array"
@@ -11,11 +11,10 @@
   description: "The name of your organisation"
   value: "long: 'Busybee Learning'\nshort: BEE\n"
   role: "ROLE_REGISTRAR"
-  default_value: "{  }"
   last_modified: "2018-06-01 15:27:45"
   created_on: "2018-03-26 23:02:04"
 -
-  id: 30
+  id: 2
   created_by: 1
   modified_by: 1
   type: "image"
@@ -23,12 +22,12 @@
   display_name: "Organisation Logo"
   description: "The organisation Logo"
   value: ""
-  role: "ROLE_ADMIN"
+  role: "ROLE_REGISTRAR"
   default_value: "bundles/platypustemplateoriginal/img/bee.png"
   last_modified: "2018-06-01 14:54:16"
   created_on: "2018-03-26 23:02:05"
 -
-  id: 52
+  id: 3
   created_by: 1
   modified_by: 1
   type: "array"
@@ -37,11 +36,10 @@
   description: "Display the time in reports in this format. Formats are found at http://php.net/manual/en/function.date.php"
   value: "long: 'h:i:s a'\nshort: 'H:i'\n"
   role: "ROLE_REGISTRAR"
-  default_value: "{  }"
   last_modified: "2018-06-01 15:27:45"
   created_on: "2018-03-26 23:02:05"
 -
-  id: 64
+  id: 4
   created_by: 1
   modified_by: 1
   type: "array"
@@ -50,20 +48,220 @@
   description: "Google Authentication and App Access details."
   value: "o_auth: '1'\nclient_id: 142820932329-q1upj2vokedceen3nhcp6l8uo6hulsl2.apps.googleusercontent.com\nclient_secret: EZ9oJc3uuvHh_2X27lkMexZ-\n"
   role: "ROLE_SYSTEM_ADMIN"
-  default_value: "{  }"
   last_modified: "2018-06-01 15:27:45"
   created_on: "2018-03-26 23:02:05"
 -
-  id: 67
+  id: 5
   created_by: 1
   modified_by: 1
   type: "system"
   name: "version"
   display_name: "System Version"
   description: "The version of Busybee currently configured on your system."
-  value: "0.1.00"
+  value: "0.1.02"
   role: "ROLE_SYSTEM_ADMIN"
   default_value: "0.0.00"
-  last_modified: "2018-06-01 16:20:17"
+  last_modified: "2018-06-17 12:06:07"
   created_on: "2018-03-26 23:02:05"
+  validators: "a:0:{}"
+-
+  id: 6
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "resources.categories"
+  display_name: "Categories"
+  description: "Allowable choices for category."
+  value: "- Article\n- Book\n- Document\n- Graphic\n- Idea\n- Music\n- Object\n- Painting\n- Person\n- Photo\n- Place\n- Poetry\n- Prose\n- Rubric\n- Text\n- Video\n- Website\n- 'Work Sample'\n- Other\n"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 09:15:03"
+  created_on: "2018-06-16 13:36:52"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+-
+  id: 7
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "resources.purposes_general"
+  display_name: "Purposes (General)"
+  description: "Allowable choices for purpose when creating a resource."
+  value: "- 'Assessment Aid'\n- Concept\n- Inspiration\n- 'Learner Profile'\n- 'Mass Mailer Attachment'\n- Provocation\n- Skill\n- 'Teaching and Learning Strategy'\n- Other\n"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 09:15:03"
+  created_on: "2018-06-16 13:36:52"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+-
+  id: 8
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "resources.purposes_restricted"
+  display_name: "Purposes (Restricted) "
+  description: "Additional allowable choices for purpose when creating a resource, for those with \"Manage All Resources\" rights."
+  value: "{  }"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 10:06:05"
+  created_on: "2018-06-16 13:36:52"
+  validators: "a:1:{i:0;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+-
+  id: 9
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "planner.lesson_details_template"
+  display_name: "Lesson Details Template"
+  description: "Template to be inserted into Lesson Details field"
+  value: "<h2>Lesson Details Template</h2>"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:26:46"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 10
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "planner.teachers_notes_template"
+  display_name: "Teacher's Notes Template"
+  description: "Template to be inserted into Teacher's Notes field"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:36:47"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 11
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "planner.unit_outline_template"
+  display_name: "Unit Outline Template"
+  description: "Template to be inserted into Unit Outline section of planner"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:36:47"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 12
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "planner.smart_block_template"
+  display_name: "Smart Block Template"
+  description: "Template to be inserted into new block in Smart Unit"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:36:47"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 13
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.make_units_public"
+  display_name: "Make Units Public"
+  description: "Enables a public listing of units, with teachers able to opt in to share units."
+  value: ""
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:36:47"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 14
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.share_unit_outline"
+  display_name: "Share Unit Outline"
+  description: "Allow users who do not have access to the unit planner to see Unit Outlines via the lesson planner?"
+  value: ""
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:36:47"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 15
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.allow_outcome_editing"
+  display_name: "Allow Outcome Editing"
+  description: "Should the text within outcomes be editable when planning lessons and units?"
+  value: 1
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:26:46"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 16
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.sharing_default_parents"
+  display_name: "Sharing Default: Parents"
+  description: "When adding lessons and deploying units, should sharing default for parents?"
+  value: 1
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:26:46"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 17
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.sharing_default_students"
+  display_name: "Sharing Default: Students"
+  description: "When adding lessons and deploying units, should sharing default for students?"
+  value: 1
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:26:46"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 18
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.parent_weekly_email_summary_include_behaviour"
+  display_name: "Parent Weekly Email Summary Include Behaviour"
+  description: "Should behaviour information be included in the weekly planner email summary that goes out to parents?"
+  value: 1
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:26:46"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
+-
+  id: 19
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.parent_weekly_email_summary_include_markbook"
+  display_name: "Parent Weekly Email Summary Include Markbook"
+  description: "Should Markbook information be included in the weekly planner email summary that goes out to parents?"
+  value: ""
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-17 11:36:47"
+  created_on: "2018-06-17 11:26:46"
+  validators: "a:0:{}"
 ...

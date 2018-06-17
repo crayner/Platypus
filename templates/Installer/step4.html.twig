@@ -13,6 +13,8 @@
 {% endblock sectionMenu %}
 
 {% block contentContainer %}
+    {% set h3Content = miscButton({title: 'home', transDomain: 'System', class: 'btn btn-success fas fa-home', windowOpen: {route: path('home')}}) %}
+    {% set h3Content = h3Content ~ miscButton({title: 'database.demo_data.label', transDomain: 'Installer', class: 'btn btn-primary fas fa-database', windowOpen: {route: path('load_demonstration_data', {section: 'Start'})}}) %}
     {% include 'Default/panelStart.html.twig' with {panelStyle: 'default', header: 'installer.completed', transDomain: 'Installer'} %}
     {% include 'Default/messages.html.twig' with {messages: manager.messageManager.addStatusMessages(manager.status, 'Installer')} %}
     {% include 'Default/panelEnd.html.twig' %}

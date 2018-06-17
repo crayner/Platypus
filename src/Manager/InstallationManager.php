@@ -73,17 +73,22 @@ class InstallationManager
      */
     private $passwordManager;
 
+    /**
+     * @var SettingManager
+     */
+    private $settingManager;
 
     /**
      * InstallationManager constructor.
      * @param RouterInterface $router
      */
-    public function __construct(RouterInterface $router, MessageManager $messageManager, PasswordManager $passwordManager)
+    public function __construct(RouterInterface $router, MessageManager $messageManager, PasswordManager $passwordManager, SettingManager $settingManager)
     {
         $this->router = $router;
         $this->messageManager = $messageManager;
         $this->passwordManager = $passwordManager;
         $this->sql = new Database();
+        $this->settingManager = $settingManager;
     }
 
     /**
@@ -594,5 +599,37 @@ class InstallationManager
         $this->getSQLParameters();
 
         return $this->getConnection()->getSchemaManager()->listTableNames() ? true : false ;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isUpToDate(): bool
+    {
+        $schemaTool = new SchemaTool($this->getEntityManager());
+
+        $metaData = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();
+
+        $this->SQLCount = $schemaTool->getUpdateSchemaSql($metaData);
+        if (count($this->SQLCount) > 0)
+            return false;
+
+        return version_compare(VersionManager::VERSION, $this->getSettingManager()->get('version'), '<=');
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->getSettingManager()->getEntityManager();
+    }
+
+    /**
+     * @return SettingManager
+     */
+    public function getSettingManager(): SettingManager
+    {
+        return $this->settingManager;
     }
 }

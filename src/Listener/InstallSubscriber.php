@@ -63,6 +63,8 @@ class InstallSubscriber implements EventSubscriberInterface
                     'installer_start',
                     'installer_database_settings',
                     'installer_database_create',
+                    'load_demonstration_data',
+                    'installer_update',
                     'blank',
                 ]
             )
@@ -90,12 +92,14 @@ class InstallSubscriber implements EventSubscriberInterface
         $response = null;
 
         // Are the database settings correct?
-        if (! $this->installationManager->isConnected())
+        if (! $this->getInstallationManager()->isConnected())
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_start'));
-        elseif (! $this->installationManager->hasDatabase()) // Can I connect to the database?
-            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create', ['demo' => 0]));
-        elseif (! $this->installationManager->hasDatabaseTables()) // Have the tables been built?
-            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create', ['demo' => 0]));
+        elseif (! $this->getInstallationManager()->hasDatabase()) // Can I connect to the database?
+            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create'));
+        elseif (! $this->getInstallationManager()->hasDatabaseTables()) // Have the tables been built?
+            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create'));
+        elseif (! $this->getInstallationManager()->isUpToDate()) //Are the latest settings and database changes installed.
+            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_update'));
 
         if (! is_null($response)) {
             if ($event->getRequest()->hasSession())

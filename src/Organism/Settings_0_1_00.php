@@ -22,7 +22,7 @@ org.name:
         long: 'Busybee Learning'
         short: BEE
     choice: null
-    validator: null
+    validators: null
     role: ROLE_REGISTRAR
     defaultValue: {  }
     translateChoice: null
@@ -33,7 +33,7 @@ countrytype:
     description: 'Determines how the country details are obtained and stored in the database.'
     value: Symfony\Component\Form\Extension\Core\Type\CountryType
     choice: null
-    validator: null
+    validators: null
     role: ROLE_SYSTEM_ADMIN
     defaultValue: null
     translateChoice: null
@@ -44,7 +44,7 @@ org.logo:
     description: 'The organisation Logo'
     value: ''
     choice: null
-    validator: App\Validator\Logo
+    validators: [App\Validator\Logo]
     role: ROLE_REGISTRAR
     defaultValue: bundles/platypustemplateoriginal/img/bee.png
     translateChoice: null
@@ -55,7 +55,7 @@ org.transparent.logo:
     description: 'The organisation Logo in a transparent form.  Recommended to be 80% opacity. Only PNG or GIF image formats support transparency.'
     value: ''
     choice: null
-    validator: App\Validator\Logo
+    validators: [App\Validator\Logo]
     role: ROLE_REGISTRAR
     defaultValue: bundles/platypustemplateoriginal/img/bee-transparent.png
     translateChoice: null
@@ -66,7 +66,7 @@ background.image:
     description: 'Change the background displayed for the site.  The image needs to be a minimum of 1200px width.  You can load an image of 1M size, but the smaller the size the better.'
     value: ''
     choice: null
-    validator: App\Core\Validator\BackgroundImage
+    validators: [App\Validator\BackgroundImage]
     role: ROLE_ADMIN
     defaultValue: bundles/platypustemplateoriginal/img/backgroundPage.jpg
     translateChoice: null
@@ -80,7 +80,7 @@ date.format:
         short: j/m/Y
         widget: dMMMy
     choice: null
-    validator: null
+    validators: null
     role: ROLE_REGISTRAR
     defaultValue: {  }
     translateChoice: null
@@ -94,9 +94,27 @@ google:
         client_id: 142820932329-q1upj2ghkedceen3nhcp6l8uo6hulsl2.apps.googleusercontent.com
         client_secret: EZ9oJc3ughHh_2X27lkMexZ-
     choice: null
-    validator: null
+    validators: null
     role: ROLE_SYSTEM_ADMIN
     defaultValue: {  }
+    translateChoice: null
+person.title.list:
+    type: array
+    name: person.title.list
+    displayName: 'List of Titles'
+    description: 'List of personal titles used in the system.'
+    value:
+        - mr
+        - mrs
+        - ms
+        - master
+        - miss
+        - dr
+        - rev
+    choice: null
+    validators: null
+    role: ROLE_REGISTRAR
+    defaultValue: null
     translateChoice: null
 LLL;
 	}

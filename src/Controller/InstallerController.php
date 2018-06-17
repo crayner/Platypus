@@ -22,11 +22,14 @@ use App\Demonstration\UserFixtures;
 use App\Form\InstallLanguageType;
 use App\Form\InstallDatabaseType;
 use App\Form\InstallUserType;
+use App\Manager\FlashBagManager;
 use App\Manager\InstallationManager;
 use App\Manager\SettingManager;
+use App\Manager\VersionManager;
 use App\Organism\Language;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Hillrange\Security\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,6 +38,7 @@ use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class InstallerController extends Controller
 {
@@ -103,8 +107,7 @@ class InstallerController extends Controller
     /**
      * Create Database
      *
-     * @Route("/installer/database/{demo}/create/{appEnv}/", name="installer_database_create")
-     * @param bool $demo
+     * @Route("/installer/database/create/{appEnv}/", name="installer_database_create")
      * @param string $appEnv
      * @param InstallationManager $installationManager
      * @param Request $request
@@ -114,7 +117,7 @@ class InstallerController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function createDatabase(bool $demo, $appEnv = 'prod', InstallationManager $installationManager,
+    public function createDatabase($appEnv = 'ignore', InstallationManager $installationManager,
                                    Request $request, KernelInterface $kernel,
                                    EntityManagerInterface $entityManager, SettingManager $settingManager)
     {
@@ -140,12 +143,19 @@ class InstallerController extends Controller
             $content = $output->fetch();
         }
         if ($installationManager->hasDatabase()) {
-            $content = file_get_contents($installationManager->getProjectDir() . '/.env.dist');
-            $content = str_replace(['APP_ENV=dev', 'APP_ENV=prod', 'APP_ENV=test'], "APP_ENV=" . $appEnv, $content);
-            file_put_contents(__DIR__ . '/../../.env', $content);
-            if ($installationManager->setAction(true)->buildDatabase($entityManager)) {
-                $settingManager->setAction(true)->buildSystemSettings($appEnv);
+            if ($appEnv !== 'ignore') {
+                $content = file_get_contents($installationManager->getProjectDir() . '/.env.dist');
+                $content = str_replace(['APP_ENV=dev', 'APP_ENV=prod', 'APP_ENV=test'], "APP_ENV=" . $appEnv, $content);
+                file_put_contents(__DIR__ . '/../../.env', $content);
             }
+            if ($installationManager->setAction(true)->buildDatabase($entityManager))
+                $settingManager->setAction(true)->buildSystemSettings();
+
+            $user = $entityManager->getRepository(User::class)->find(1);
+            if ($user instanceof UserInterface)
+                return $this->redirectToRoute('installer_complete');
+
+
         }
         $form = $this->createForm(InstallUserType::class);
 
@@ -154,10 +164,7 @@ class InstallerController extends Controller
         if ($form->isSubmitted() && $form->isValid())
         {
             $installationManager->writeSystemUser($request, $entityManager, $settingManager);
-            if ($demo ? true : false  || true)
-                return $this->redirectToRoute('load_demonstration_data', ['section' => 'Start']);
-            else
-                return $this->redirectToRoute('installer_complete');
+            return $this->redirectToRoute('installer_complete');
         }
 
         return $this->render('Installer/step3.html.twig',
@@ -192,6 +199,7 @@ class InstallerController extends Controller
             $load->load($objectManager, $logger);
 
             $logger->addInfo(sprintf('Section %s completed.', $section));
+
             return $this->redirectToRoute('load_demonstration_data', ['section' => 'School']);
         }
 
@@ -205,7 +213,7 @@ class InstallerController extends Controller
             $load->load($objectManager, $logger);
 
             $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('installer_complete');
             return $this->redirectToRoute('load_demonstration_data', ['section' => 'People']);
         }
 
@@ -265,7 +273,9 @@ class InstallerController extends Controller
         $installationManager
             ->setStep(3)
             ->clearStatus()
-            ->addStatus('info', 'installer.complete', ['useRaw' => true, '%home%' => $this->generateUrl('home'), 'fixedMessage' => true]);
+            ->addStatus('info', 'installer.complete', ['useRaw' => true, '%home%' => $this->generateUrl('home'), 'fixedMessage' => true, '%demo%' => $this->generateUrl('load_demonstration_data', ['section' => 'Start'])]);
+
+        $installationManager->getSettingManager()->set('version', VersionManager::VERSION);
 
         return $this->render('Installer/step4.html.twig',
             [
@@ -284,5 +294,28 @@ class InstallerController extends Controller
     public function blank(array $options = [])
     {
         return $this->render('blank.html.twig', ['options' => $options]);
+    }
+
+    /**
+     * install Update
+     *
+     * @Route("/installer/update/", name="installer_update")
+     * @param InstallationManager $installationManager
+     * @param SettingManager $settingManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function updateInstallation(InstallationManager $installationManager, SettingManager $settingManager, FlashBagManager $flashBagManager)
+    {
+        if ($installationManager->setAction(true)->buildDatabase($settingManager->getEntityManager())) {
+            $settingManager->setAction(true)->buildSystemSettings();
+        }
+
+        $installationManager->getMessageManager()->addStatusMessages($installationManager->getStatus(), 'Installer');
+
+        $flashBagManager->renderMessages($installationManager->getMessageManager());
+
+        return $this->forward(InstallerController::class.'::installComplete');
     }
 }

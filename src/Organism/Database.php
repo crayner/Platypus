@@ -122,7 +122,7 @@ class Database
 	 *
 	 * @return Database
 	 */
-	public function setUser(string $user): Database
+	public function setUser(?string $user): Database
 	{
 		$this->user = $user;
 

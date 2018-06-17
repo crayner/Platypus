@@ -108,13 +108,6 @@ class InstallDatabaseType extends AbstractType
                     ],
                 ]
             )
-            ->add('demoData', ToggleType::class,
-                [
-                    'label'    => 'database.demo_data.label',
-                    'help' => 'database.demo_data.help',
-                    'required' => true,
-                ]
-            )
             ->add('environment', EnumType::class,
                 [
                     'label' => 'database.environment.label',
