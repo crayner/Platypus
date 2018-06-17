@@ -18,7 +18,9 @@ namespace App\Form;
 use App\Entity\Setting;
 use App\Form\Transformer\SettingValueTransformer;
 use App\Organism\SettingCache;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Hillrange\Form\Type\TextType;
+use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -45,24 +47,33 @@ class MultipleSettingType extends AbstractType
         if ($key !== "") {
             $data = $options['all_data'][$key];
             $attr = [];
+            $additional = [];
             switch ($data->getType()) {
                 case 'array':
                     $formType = TextareaType::class;
                     $attr = ['rows' => '5',];
+                    break;
+                case 'html':
+                    $formType = CKEditorType::class;
+                    $additional = ['config_name' => 'setting_toolbar'];
+                    $attr = ['rows' => '3'];
+                    break;
+                case 'boolean':
+                    $formType = ToggleType::class;
                     break;
                 default:
                     $formType = TextType::class;
             }
             $builder
                 ->add('value', $formType,
-                    [
+                    array_merge($additional, [
                         'label' => $data->getDisplayName(),
                         'help' => $data->getDescription(),
                         'translation_domain' => empty($data->getTranslateChoice()) ? 'Setting' : $data->getTranslateChoice(),
                         'attr' => $attr,
                         'required' => false,
                         'constraints' => $data->getValidators(),
-                    ]
+                    ])
                 )
             ;
         } else

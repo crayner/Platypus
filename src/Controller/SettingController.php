@@ -202,37 +202,74 @@ class SettingController extends Controller
     {
         $settings = [];
 
-        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('planner.lesson_details_template');
-        if (is_null($setting))
-            $setting = new Setting();
-        $setting->setName('planner.lesson_details_template');
-        $setting->setRole('ROLE_PRINCIPAL');
-        $setting->setType('html');
-        $setting->setDisplayName('Lesson Details Template');
-        $setting->setDescription('Template to be inserted into Lesson Details field');
+        $setting = $sm->createOneByName('planner.lesson_details_template');
+
+        $setting->setName('planner.lesson_details_template')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('html')
+            ->__set('displayName', 'Lesson Details Template')
+            ->__set('description', 'Template to be inserted into Lesson Details field');
         if (empty($setting->getValue())) {
-            $setting->setValue(null);
-            $setting->setchoice(null);
-            $setting->setValidators(null);
-            $setting->setDefaultValue(null);
-            $setting->setTranslateChoice('Setting');
+            $setting->setValue(null)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
         }
         $settings[] = $setting;
 
-        $setting = $sm->getEntityManager()->getRepository(Setting::class)->findOneByName('planner.teachers_notes_template');
-        if (is_null($setting))
-            $setting = new Setting();
-        $setting->setName('planner.teachers_notes_template');
-        $setting->setRole('ROLE_PRINCIPAL');
-        $setting->setType('html');
-        $setting->setDisplayName('Teacher\'s Notes Template');
-        $setting->setDescription('Template to be inserted into Teacher\'s Notes field');
+
+        $setting = $sm->createOneByName('planner.teachers_notes_template');
+
+        $setting->setName('planner.teachers_notes_template')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('html')
+            ->__set('displayName', 'Teacher\'s Notes Template')
+            ->__set('description', 'Template to be inserted into Teacher\'s Notes field');
         if (empty($setting->getValue())) {
-            $setting->setValue(null);
-            $setting->setchoice(null);
-            $setting->setValidators(null);
-            $setting->setDefaultValue(null);
-            $setting->setTranslateChoice('Setting');
+            $setting->setValue(null)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+
+        $setting = $sm->createOneByName('planner.unit_outline_template');
+
+        $setting->setName('planner.unit_outline_template')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('html')
+            ->__set('displayName', 'Unit Outline Template')
+            ->__set('description', 'Template to be inserted into Unit Outline section of planner');
+        if (empty($setting->getValue())) {
+            $setting->setValue(null)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+
+        $setting = $sm->createOneByName('planner.smart_block_template');
+
+        $setting->setName('planner.smart_block_template')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('html')
+            ->__set('displayName', 'Smart Block Template')
+            ->__set('description', 'Template to be inserted into new block in Smart Unit');
+        if (empty($setting->getValue())) {
+            $setting->setValue(null)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
         }
         $settings[] = $setting;
 
@@ -246,6 +283,144 @@ class SettingController extends Controller
 
         $settings = [];
 
+
+        $setting = $sm->createOneByName('planner.make_units_public');
+
+        $setting->setName('planner.make_units_public')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('boolean')
+            ->__set('displayName', 'Make Units Public')
+            ->__set('description', 'Enables a public listing of units, with teachers able to opt in to share units.');
+        if (empty($setting->getValue())) {
+            $setting->setValue(false)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+
+        $setting = $sm->createOneByName('planner.share_unit_outline');
+
+        $setting->setName('planner.share_unit_outline')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('boolean')
+            ->__set('displayName', 'Share Unit Outline')
+            ->__set('description', 'Allow users who do not have access to the unit planner to see Unit Outlines via the lesson planner?');
+        if (empty($setting->getValue())) {
+            $setting->setValue(false)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+
+        $setting = $sm->createOneByName('planner.allow_outcome_editing');
+
+        $setting->setName('planner.allow_outcome_editing')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('boolean')
+            ->__set('displayName', 'Allow Outcome Editing')
+            ->__set('description', 'Should the text within outcomes be editable when planning lessons and units?');
+        if (empty($setting->getValue())) {
+            $setting->setValue(true)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+
+        $setting = $sm->createOneByName('planner.sharing_default_parents');
+
+        $setting->setName('planner.allow_outcome_editing')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('boolean')
+            ->__set('displayName', 'Sharing Default: Parents')
+            ->__set('description', 'When adding lessons and deploying units, should sharing default for parents?');
+        if (empty($setting->getValue())) {
+            $setting->setValue(true)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+
+        $setting = $sm->createOneByName('planner.sharing_default_students');
+
+        $setting->setName('planner.sharing_default_students')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('boolean')
+            ->__set('displayName', 'Sharing Default: Students')
+            ->__set('description', 'When adding lessons and deploying units, should sharing default for students?');
+        if (empty($setting->getValue())) {
+            $setting->setValue(true)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+        $section['name'] = 'Access Settings';
+        $section['description'] = '';
+        $section['settings'] = $settings;
+
+        $sections[] = $section;
+        $settings = [];
+
+
+        $setting = $sm->createOneByName('planner.parent_weekly_email_summary_include_behaviour');
+
+        $setting->setName('planner.parent_weekly_email_summary_include_behaviour')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('boolean')
+            ->__set('displayName', 'Parent Weekly Email Summary Include Behaviour')
+            ->__set('description', 'Should behaviour information be included in the weekly planner email summary that goes out to parents?');
+        if (empty($setting->getValue())) {
+            $setting->setValue(true)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+
+        $setting = $sm->createOneByName('planner.parent_weekly_email_summary_include_markbook');
+
+        $setting->setName('planner.parent_weekly_email_summary_include_markbook')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('boolean')
+            ->__set('displayName', 'Parent Weekly Email Summary Include Markbook')
+            ->__set('description', 'Should Markbook information be included in the weekly planner email summary that goes out to parents?');
+        if (empty($setting->getValue())) {
+            $setting->setValue(false)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+        $section['name'] = 'Miscellaneous';
+        $section['description'] = '';
+        $section['settings'] = $settings;
+
+        $sections[] = $section;
         $request->getSession()->set('manage_settings', $sections);
 
         return $this->forward(SettingController::class . '::manageMultipleSettings');

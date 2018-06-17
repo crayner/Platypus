@@ -5,13 +5,21 @@
 
 {% block multiple_settings_widget %}
     {% spaceless %}
+        {% set columnA = '4' %}
+        {% set columnB = '8' %}
+        {% if 'hillrange_toggle' in form.value.vars.cache_key %}
+            {% set columnA = '10' %}
+            {% set columnB = '2' %}
+        {% endif %}
         <div class="row">
-            <div class="col-4 card">
+            <div class="col-{{ columnA }} card">
                 {{ form_label(form.value) }}
                 {{ form_errors(form.value) }}
             </div>
-            <div class="col-8 card">
+            <div class="col-{{ columnB }} card">
+                <div>
                 {{ form_widget(form.value) }}
+                </div>
             </div>
         </div>
     {% endspaceless %}

@@ -30,3 +30,9 @@
     {{ form_end(form) }}
     </div>
 {% endblock contentContainer %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include '@HillrangeForm/Toggle/script.html.twig' %}
+{% endblock javascripts %}

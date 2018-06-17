@@ -112,6 +112,8 @@ class SettingCache
     public function getValue()
     {
         if (empty($this->value) && $this->isBaseSetting()) {
+            if (empty($this->getSetting()) || empty($this->getSetting()->getType()))
+                return null;
             $method = 'get' . ucfirst($this->getSetting()->getType()) . 'Value';
             $this->value = $this->$method();
         }
@@ -126,6 +128,8 @@ class SettingCache
     {
         $this->value = $value;
         if ($this->isBaseSetting()) {
+            if (empty($this->getSetting()) || empty($this->getSetting()->getType()))
+                return $this;
             $method = 'set' . ucfirst($this->getSetting()->getType()) . 'Value';
             return $this->$method();
         }
@@ -203,10 +207,12 @@ class SettingCache
      * @param mixed $defaultValue
      * @return SettingCache
      */
-    public function setDefaultValue($defaultValue)
+    public function setDefaultValue($defaultValue): SettingCache
     {
         $this->defaultValue = $defaultValue;
         if ($this->isBaseSetting()) {
+            if (empty($this->getSetting()) || empty($this->getSetting()->getType()))
+                return $this;
             $method = 'setDefault' . ucfirst($this->getSetting()->getType()) . 'Value';
             return $this->$method();
         }
@@ -431,6 +437,50 @@ class SettingCache
     }
 
     /**
+     * getHtmlValue
+     *
+     * @return null|string
+     */
+    private function getHtmlValue(): ?string
+    {
+
+        return $this->getStringValue();
+    }
+
+    /**
+     * setHtmlValue
+     *
+     * @return SettingCache
+     */
+    private function setHtmlValue(): SettingCache
+    {
+        return $this->setStringValue();
+    }
+
+    /**
+     * getBooleanValue
+     *
+     * @return bool
+     */
+    private function getBooleanValue(): bool
+    {
+
+        return $this->getSetting()->getValue() ? true : false;
+    }
+
+    /**
+     * setBooleanValue
+     *
+     * @return SettingCache
+     */
+    private function setBooleanValue(): SettingCache
+    {
+        $this->value = $this->value ? true : false;
+        $this->getSetting()->setValue($this->value);
+        return $this;
+    }
+
+    /**
      * @var bool
      */
     private $baseSetting = true;
@@ -599,6 +649,8 @@ class SettingCache
     public function setType($type): SettingCache
     {
         $this->type = $type;
+        if (! empty($this->getSetting()))
+            $this->getSetting()->setType($type);
         return $this;
     }
 
@@ -824,6 +876,49 @@ class SettingCache
     }
 
     /**
+     * getDefaultHtmlValue
+     *
+     * @return null|string
+     */
+    private function getDefaultHtmlValue(): ?string
+    {
+        return $this->getDefaultStringValue();
+    }
+
+    /**
+     * setDefaultHtmlValue
+     *
+     * @return SettingCache
+     */
+    private function setDefaultHtmlValue(): SettingCache
+    {
+        return $this->setDefaultStringValue();
+    }
+
+    /**
+     * getBooleanValue
+     *
+     * @return bool
+     */
+    private function getDefaultBooleanValue(): bool
+    {
+
+        return $this->getSetting()->getDefaultValue() ? true : false;
+    }
+
+    /**
+     * setBooleanValue
+     *
+     * @return SettingCache
+     */
+    private function setDefaultBooleanValue(): SettingCache
+    {
+        $this->defaultValue = $this->defaultValue ? true : false;
+        $this->getSetting()->setDefaultValue($this->defaultValue);
+        return $this;
+    }
+
+    /**
      * getFinalValue
      *
      * @param $default
@@ -950,7 +1045,7 @@ class SettingCache
             return $this;
         }
 
-        trigger_error('The setting field "'.$name.'"" does not seem to exist.', E_ERROR);
+        trigger_error('The setting field "'.$name.'"" does not seem to exist.', E_USER_ERROR);
     }
 
     /**
@@ -963,5 +1058,17 @@ class SettingCache
         if ($this->getSetting())
             return $this->getSetting()->getDescription();
         return null;
+    }
+
+    /**
+     * createOneByName
+     *
+     * @param string $name
+     * @return SettingCache
+     */
+    public function createOneByName(string $name): SettingCache
+    {
+        return $this->setSetting(new Setting())
+            ->setName($name);
     }
 }

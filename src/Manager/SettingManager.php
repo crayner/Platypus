@@ -1060,15 +1060,14 @@ class SettingManager implements ContainerAwareInterface
 
         $this->addSetting($setting->findOneByName($name, $this->getEntityManager()));
 
-        if ($this->setting->getSetting() instanceof Setting)
+        if ($setting === $this->setting)
              return $this->setting;
 
-        $setting = new Setting();
-        $setting->setName($name);
-        $this->setting->setSetting($setting);
-        $this->setting->setName($name);
+        $setting = $this->getSettingCache();
+        $setting->createOneByName($name);
+        $this->addSetting($setting);
 
-        return $this->setting;
+        return $setting;
     }
 
 }

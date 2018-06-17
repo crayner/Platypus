@@ -65,9 +65,9 @@ class SettingValueTransformer implements DataTransformerInterface
 
     /**
      * SettingValueTransformer constructor.
-     * @param string $type
+     * @param null|string $type
      */
-    public function __construct(string $type = 'string')
+    public function __construct(?string $type = 'string')
     {
         $this->type = $type;
     }
