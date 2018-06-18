@@ -1,0 +1,27 @@
+{% trans_default_domain "School" %}
+
+{% block student_note_category_label %}{% endblock %}
+{% block student_note_category_errors %}{% endblock %}
+
+{% block student_note_category_widget %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_widget(form.name) }}
+            </div>
+            <div class="col-2 card text-center">
+                <div>{{ form_widget(form.active) }}</div>
+            </div>
+            <div class="col-4 card">
+                <div class="collection-actions">
+                    {{ saveButton()|raw }}
+                    {{ miscButton({title: 'student_note_category.template.open', transDomain: 'Student', class: 'openTemplate btn btn-primary fas fa-pencil-alt', additional: {id: form.vars.id ~ '_displayButton'} })|raw }}</div>
+            </div>
+        </div>
+        <div class="row" id="{{ form.vars.id }}_display">
+            <div class="col-12 card">
+                {{ form_row(form.template) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock student_note_category_widget %}

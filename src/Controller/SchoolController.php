@@ -18,7 +18,7 @@ namespace App\Controller;
 use App\Entity\DayOfWeek;
 use App\Entity\House;
 use App\Entity\YearGroup;
-use App\Form\CollectionType;
+use App\Form\CollectionManagerType;
 use App\Form\DaysOfWeekType;
 use App\Form\HousesType;
 use App\Form\YearGroupType;
@@ -141,7 +141,7 @@ class SchoolController extends Controller
         $yearGroups = $collectionManager->getEntityManager()->getRepository(YearGroup::class)->findBy([], ['sequence' => 'ASC']);
         $collectionManager->setCollection(new ArrayCollection($yearGroups));
 
-        $form = $this->createForm(CollectionType::class, $collectionManager,
+        $form = $this->createForm(CollectionManagerType::class, $collectionManager,
             [   'entry_type' => YearGroupType::class,
                 'entry_options_data_class' => YearGroup::class,
                 'translation_domain' => 'School',

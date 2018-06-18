@@ -35,7 +35,7 @@ class SectionSettingType extends AbstractType
         {
             $collectionManager = $data->getNewCollection($section);
 
-            $builder->add(strtolower(str_replace([' '], '_', trim($section['name']))),CollectionType::class,
+            $builder->add(strtolower(str_replace([' '], '_', trim($section['name']))),CollectionManagerType::class,
                 [
                     'allow_up' => false,
                     'allow_down' => false,

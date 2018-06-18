@@ -15,10 +15,15 @@
  */
 namespace App\Controller;
 
+use App\Entity\StudentNoteCategory;
 use App\Form\SectionSettingType;
+use App\Form\StudentsSettingsType;
+use App\Manager\CollectionManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
+use App\Organism\StudentNoteCategories;
 use App\Repository\SettingRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -70,42 +75,6 @@ class SettingController extends Controller
         $request->getSession()->set('manage_settings', $sm->createSettingDefinition('Resources'));
 
         return $this->forward(SettingController::class . '::manageMultipleSettings');
-    }
-
-    /**
-     * manage Multiple Settings
-     *
-     * @param Request $request
-     * @return Response
-     * @Route("/setting/multiple/manage/", name="multiple_settings_manage")
-     */
-    public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager)
-    {
-        foreach ($request->getSession()->get('manage_settings') as $name =>$section)
-            if ($name === 'header')
-                $multipleSettingManager->setHeader($section);
-            else
-                $multipleSettingManager->addSection($section);
-
-        $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
-
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($multipleSettingManager->getSections() as $section)
-                foreach ($section['settings'] as $setting)
-                    $settingManager->getEntityManager()->persist($setting->getSetting());
-            $settingManager->getEntityManager()->flush();
-        }
-
-
-        return $this->render('Setting/multiple.html.twig',
-            [
-                'form' => $form->createView(),
-                'fullForm' => $form,
-            ]
-        );
     }
 
     /**
@@ -183,10 +152,60 @@ class SettingController extends Controller
      * @Route("/setting/student/manage/", name="manage_student_settings")
      * @IsGranted("ROLE_PRINCIPAL")
      */
-    public function studentSettings(Request $request, SettingManager $sm)
+    public function studentSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
     {
-        $request->getSession()->set('manage_settings', $sm->createSettingDefinition('Students'));
+        $categories = new StudentNoteCategories();
+        $notes = new ArrayCollection($sm->getEntityManager()->getRepository(StudentNoteCategory::class)->findAll());
+        $categories->setCategories($notes);
+        foreach ($sm->createSettingDefinition('Students') as $name =>$section)
+            if ($name === 'header')
+                $multipleSettingManager->setHeader($section);
+            else
+                $multipleSettingManager->addSection($section);
+        $categories->setMultipleSettings($multipleSettingManager);
 
-        return $this->forward(SettingController::class . '::manageMultipleSettings');
+        $form = $this->createForm(StudentsSettingsType::class, $categories);
+
+        return $this->render('Setting/student_settings.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * manage Multiple Settings
+     *
+     * @param Request $request
+     * @return Response
+     * @Route("/setting/multiple/manage/", name="multiple_settings_manage")
+     */
+    public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager)
+    {
+        foreach ($request->getSession()->get('manage_settings') as $name =>$section)
+            if ($name === 'header')
+                $multipleSettingManager->setHeader($section);
+            else
+                $multipleSettingManager->addSection($section);
+
+        $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($multipleSettingManager->getSections() as $section)
+                foreach ($section['settings'] as $setting)
+                    $settingManager->getEntityManager()->persist($setting->getSetting());
+            $settingManager->getEntityManager()->flush();
+        }
+
+
+        return $this->render('Setting/multiple.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
     }
 }

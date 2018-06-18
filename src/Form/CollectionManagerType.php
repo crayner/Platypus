@@ -16,16 +16,19 @@
 namespace App\Form;
 
 use App\Manager\CollectionManager;
+use Hillrange\Form\Util\ButtonManager;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\Util\StringUtil;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class CollectionType
+ * Class CollectionManagerType
  * @package App\Form
  */
-class CollectionType extends AbstractType
+class CollectionManagerType extends AbstractType
 {
     /**
      * buildForm
@@ -117,11 +120,63 @@ class CollectionType extends AbstractType
 
     /**
      * @param string $blockPrefix
-     * @return CollectionType
+     * @return CollectionManagerType
      */
-    public function setBlockPrefix(string $blockPrefix): CollectionType
+    public function setBlockPrefix(string $blockPrefix): CollectionManagerType
     {
         $this->blockPrefix = $blockPrefix;
         return $this;
+    }
+
+    /**
+     * @param FormView $view
+     * @param FormInterface $form
+     * @param array $options
+     */
+    public function buildView(FormView $view, FormInterface $form, array $options)
+    {
+        if ($options['button_merge_class'])
+        {
+            if (empty($options['add_button']))
+                $options['add_button'] = $this->buttonManager->addButton(['mergeClass' => $options['button_merge_class']]);
+            if (empty($options['remove_button']))
+                $options['remove_button'] = $this->buttonManager->removeButton(['mergeClass' => $options['button_merge_class']]);
+            if (empty($options['up_button']))
+                $options['up_button'] = $this->buttonManager->upButton(['mergeClass' => $options['button_merge_class']]);
+            if (empty($options['down_button']))
+                $options['down_button'] = $this->buttonManager->downButton(['mergeClass' => $options['button_merge_class']]);
+            if (empty($options['duplicate_button']))
+                $options['duplicate_button'] = $this->buttonManager->duplicateButton(['mergeClass' => $options['button_merge_class']]);
+        }
+
+        $view->vars['allow_up']             = $options['sort_manage'];
+        $view->vars['allow_down']           = $options['sort_manage'];
+        $view->vars['allow_duplicate']      = $options['allow_duplicate'];
+        $view->vars['unique_key']           = $options['unique_key'];
+        $view->vars['route']                = $options['route'];
+        $view->vars['redirect_route']       = $options['redirect_route'];
+        $view->vars['route_params']         = $options['route_params'];
+        $view->vars['display_script']       = $options['display_script'];
+        $view->vars['add_button']           = $options['add_button'];
+        $view->vars['remove_button']        = $options['remove_button'];
+        $view->vars['up_button']            = $options['up_button'];
+        $view->vars['down_button']          = $options['down_button'];
+        $view->vars['removal_warning']      = $options['removal_warning'];
+        $view->vars['allow_add']            = $options['allow_add'];
+        $view->vars['allow_delete']         = $options['allow_delete'];
+    }
+
+    /**
+     * @var ButtonManager
+     */
+    private $buttonManager;
+
+    /**
+     * CollectionManagerType constructor.
+     * @param CollectionSubscriber $collectionSubscriber
+     */
+    public function __construct(ButtonManager $buttonManager)
+    {
+        $this->buttonManager = $buttonManager;
     }
 }
