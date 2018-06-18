@@ -5,11 +5,14 @@
 
 {% block multiple_settings_widget %}
     {% spaceless %}
-        {% set columnA = '4' %}
-        {% set columnB = '8' %}
+        {% set columnA = '6' %}
+        {% set columnB = '6' %}
         {% if 'hillrange_toggle' in form.value.vars.cache_key %}
             {% set columnA = '10' %}
             {% set columnB = '2' %}
+        {% elseif 'ckeditor' in form.value.vars.cache_key %}
+            {% set columnA = '4' %}
+            {% set columnB = '8' %}
         {% endif %}
         <div class="row">
             <div class="col-{{ columnA }} card">

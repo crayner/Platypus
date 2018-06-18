@@ -35,7 +35,20 @@ School Admin:
             route: year_groups_manage
             parameters: {}
             transDomain: School
+    people:
+        student_settings:
+            label: manage_student_settings
+            role: ROLE_PRINCIPAL
+            route: manage_student_settings
+            parameters: {}
+            transDomain: System
     teaching_learning:
+        activities_settings:
+            label: manage_activities_settings
+            role: ROLE_PRINCIPAL
+            route: manage_activities_settings
+            parameters: {}
+            transDomain: System
         library_settings:
             label: manage_library_settings
             role: ROLE_PRINCIPAL

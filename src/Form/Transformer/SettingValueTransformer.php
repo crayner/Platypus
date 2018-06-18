@@ -58,6 +58,7 @@ class SettingValueTransformer implements DataTransformerInterface
             case 'integer':
             case 'colour':
             case 'image':
+            case 'choice':
                 return $value;
                 break;
             default:

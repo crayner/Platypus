@@ -1,6 +1,7 @@
 <?php
 namespace App\Manager;
 
+use App\Manager\Settings\SettingCreationInterface;
 use App\Organism\SettingCache;
 use App\Validator\Regex;
 use App\Validator\Twig;
@@ -1070,4 +1071,26 @@ class SettingManager implements ContainerAwareInterface
         return $setting;
     }
 
+    /**
+     * createSettingDefinition
+     *
+     * @param $name
+     * @return array
+     */
+    public function createSettingDefinition($name): array
+    {
+        $class = 'App\\Manager\\Settings\\' . $name . 'Settings';
+        if (! class_exists($class))
+            trigger_error('The class ' . $class . ' does not exist,');
+
+        $class = new $class();
+
+        if (! $class instanceof SettingCreationInterface)
+            trigger_error('The class ' . get_class($class) . ' does not implement the ' . SettingCreationInterface::class);
+
+        if ($name !== $class->getName())
+            trigger_error('The class ' . get_class($class) . ' does not match the setting\'s name: '.$name);
+
+        return $class->getSettings($this);
+    }
 }

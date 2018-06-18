@@ -78,6 +78,17 @@ class MultipleSettingType extends AbstractType
                         'deletePhoto' => $this->router->generate('delete_setting_image', ['name' => $data->getName(), 'route' => $route]),
                     ];
                     break;
+                case 'choice':
+                    $formType = ChoiceType::class;
+                    $choices = [];
+                    $x = explode(',', $data->__get('choice'));
+                    foreach($x as $value)
+                        $choices[$data->getName().'.'.trim($value)] = trim($value);
+                    $additional = [
+                        'choices' => $choices,
+                        'placeholder' => false,
+                    ];
+                    break;
                 case 'integer':
                     $formType = TextType::class;
                     foreach($data->getValidators() as $validator)

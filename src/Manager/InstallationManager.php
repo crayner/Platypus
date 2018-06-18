@@ -349,7 +349,7 @@ class InstallationManager
         try{
             $contents = Yaml::parse(file_get_contents($this->getProjectDir().'/config/packages/platypus.yaml'));
             $contents['parameters']['locale'] = $locale;
-            file_put_contents($this->getProjectDir().'/config/packages/platypus.yaml', Yaml::dump($contents, 4));
+            file_put_contents($this->getProjectDir().'/config/packages/platypus.yaml', Yaml::dump($contents, 8));
         } catch (ParseException $e) {
             $this->addStatus('danger', 'installer.file.parse.error', ['%{name}' => 'platypus.yaml']);
             return false;

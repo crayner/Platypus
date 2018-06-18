@@ -513,6 +513,26 @@ class SettingCache
     }
 
     /**
+     * getChoiceValue
+     *
+     * @return null|string
+     */
+    private function getChoiceValue(): ?string
+    {
+        return $this->getStringValue();
+    }
+
+    /**
+     * setChoiceValue
+     *
+     * @return SettingCache
+     */
+    private function setChoiceValue(): SettingCache
+    {
+        return $this->setStringValue();
+    }
+
+    /**
      * @var bool
      */
     private $baseSetting = true;
@@ -1004,6 +1024,26 @@ class SettingCache
     }
 
     /**
+     * getDefaultChoiceValue
+     *
+     * @return null|string
+     */
+    private function getDefaultChoiceValue(): ?string
+    {
+        return $this->getDefaultStringValue();
+    }
+
+    /**
+     * setDefaultChoiceValue
+     *
+     * @return SettingCache
+     */
+    private function setDefaultChoiceValue(): SettingCache
+    {
+        return $this->setDefaultStringValue();
+    }
+
+    /**
      * getFinalValue
      *
      * @param $default
@@ -1113,11 +1153,11 @@ class SettingCache
     /**
      * __set
      *
-     * @param $name
+     * @param string $name
      * @param $value
      * @return SettingCache
      */
-    public function __set($name, $value): SettingCache
+    public function __set(string $name, $value): SettingCache
     {
         $method = 'set' . ucfirst($name);
         if (method_exists($this, $method))
@@ -1132,6 +1172,26 @@ class SettingCache
         trigger_error('The setting field "'.$name.'"" does not seem to exist.', E_USER_ERROR);
     }
 
+
+    /**
+     * __get
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        $method = 'get' . ucfirst($name);
+        if (method_exists($this, $method))
+            return $this->$method();
+
+        if ($this->getSetting())
+        {
+            return $this->getSetting()->$method();
+        }
+
+        trigger_error('The setting field "'.$name.'"" does not seem to exist.', E_USER_ERROR);
+    }
     /**
      * getDescription
      *

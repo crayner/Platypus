@@ -30,7 +30,7 @@ class MenuController
     public function sectionMenuDisplay($display, Request $request)
     {
         if ($request->hasSession())
-            $request->getSession()->set('showSectionMenu', $display === 'hide' ? false : true);
+            $request->getSession()->set('showSectionMenu', $display === 'hide' ? 'hide' : 'show');
 
         return JsonResponse::create('', 200);
     }

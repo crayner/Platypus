@@ -59,11 +59,11 @@
   display_name: "System Version"
   description: "The version of Busybee currently configured on your system."
   value: "0.1.02"
+  validators: "a:0:{}"
   role: "ROLE_SYSTEM_ADMIN"
   default_value: "0.0.00"
   last_modified: "2018-06-17 12:06:07"
   created_on: "2018-03-26 23:02:05"
-  validators: "a:0:{}"
 -
   id: 6
   created_by: 1
@@ -73,11 +73,11 @@
   display_name: "Categories"
   description: "Allowable choices for category."
   value: "- Article\n- Book\n- Document\n- Graphic\n- Idea\n- Music\n- Object\n- Painting\n- Person\n- Photo\n- Place\n- Poetry\n- Prose\n- Rubric\n- Text\n- Video\n- Website\n- 'Work Sample'\n- Other\n"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
   last_modified: "2018-06-17 09:15:03"
   created_on: "2018-06-16 13:36:52"
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
 -
   id: 7
   created_by: 1
@@ -87,11 +87,11 @@
   display_name: "Purposes (General)"
   description: "Allowable choices for purpose when creating a resource."
   value: "- 'Assessment Aid'\n- Concept\n- Inspiration\n- 'Learner Profile'\n- 'Mass Mailer Attachment'\n- Provocation\n- Skill\n- 'Teaching and Learning Strategy'\n- Other\n"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
   last_modified: "2018-06-17 09:15:03"
   created_on: "2018-06-16 13:36:52"
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
 -
   id: 8
   created_by: 1
@@ -101,11 +101,12 @@
   display_name: "Purposes (Restricted) "
   description: "Additional allowable choices for purpose when creating a resource, for those with \"Manage All Resources\" rights."
   value: "{  }"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-17 10:06:05"
-  created_on: "2018-06-16 13:36:52"
   validators: "a:1:{i:0;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:12:46"
+  created_on: "2018-06-16 13:36:52"
 -
   id: 9
   created_by: 1
@@ -114,12 +115,11 @@
   name: "planner.lesson_details_template"
   display_name: "Lesson Details Template"
   description: "Template to be inserted into Lesson Details field"
-  value: "<h2>Lesson Details Template</h2>"
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:26:46"
+  last_modified: "2018-06-18 11:55:36"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 10
   created_by: 1
@@ -128,11 +128,11 @@
   name: "planner.teachers_notes_template"
   display_name: "Teacher's Notes Template"
   description: "Template to be inserted into Teacher's Notes field"
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:36:47"
+  last_modified: "2018-06-18 11:55:36"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 11
   created_by: 1
@@ -141,11 +141,11 @@
   name: "planner.unit_outline_template"
   display_name: "Unit Outline Template"
   description: "Template to be inserted into Unit Outline section of planner"
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:36:47"
+  last_modified: "2018-06-18 11:55:36"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 12
   created_by: 1
@@ -154,11 +154,11 @@
   name: "planner.smart_block_template"
   display_name: "Smart Block Template"
   description: "Template to be inserted into new block in Smart Unit"
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:36:47"
+  last_modified: "2018-06-18 11:55:36"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 13
   created_by: 1
@@ -168,12 +168,12 @@
   display_name: "Make Units Public"
   description: "Enables a public listing of units, with teachers able to opt in to share units."
   value: ""
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:36:47"
+  last_modified: "2018-06-18 14:18:04"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 14
   created_by: 1
@@ -183,12 +183,12 @@
   display_name: "Share Unit Outline"
   description: "Allow users who do not have access to the unit planner to see Unit Outlines via the lesson planner?"
   value: ""
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:36:47"
+  last_modified: "2018-06-18 14:18:04"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 15
   created_by: 1
@@ -198,12 +198,12 @@
   display_name: "Allow Outcome Editing"
   description: "Should the text within outcomes be editable when planning lessons and units?"
   value: 1
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:26:46"
+  last_modified: "2018-06-18 11:54:07"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 16
   created_by: 1
@@ -213,12 +213,12 @@
   display_name: "Sharing Default: Parents"
   description: "When adding lessons and deploying units, should sharing default for parents?"
   value: 1
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:26:46"
+  last_modified: "2018-06-18 11:54:07"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 17
   created_by: 1
@@ -228,12 +228,12 @@
   display_name: "Sharing Default: Students"
   description: "When adding lessons and deploying units, should sharing default for students?"
   value: 1
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:26:46"
+  last_modified: "2018-06-18 11:54:07"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 18
   created_by: 1
@@ -243,12 +243,12 @@
   display_name: "Parent Weekly Email Summary Include Behaviour"
   description: "Should behaviour information be included in the weekly planner email summary that goes out to parents?"
   value: 1
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
   last_modified: "2018-06-17 11:26:46"
   created_on: "2018-06-17 11:26:46"
-  validators: "a:0:{}"
 -
   id: 19
   created_by: 1
@@ -258,10 +258,191 @@
   display_name: "Parent Weekly Email Summary Include Markbook"
   description: "Should Markbook information be included in the weekly planner email summary that goes out to parents?"
   value: ""
+  validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-17 11:36:47"
+  last_modified: "2018-06-18 11:56:04"
   created_on: "2018-06-17 11:26:46"
+-
+  id: 20
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "library.default_loan_length"
+  display_name: "Default Loan Length"
+  description: "The standard loan length for a library item, in days"
+  value: 7
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:31;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_HEAD_TEACHER"
+  default_value: 7
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 09:51:04"
+  created_on: "2018-06-18 09:51:04"
+-
+  id: 21
+  created_by: 1
+  modified_by: 1
+  type: "colour"
+  name: "library.browse.bg.colour"
+  display_name: "Browse Library BG Colour "
+  description: "Background colour used behind library browsing screen."
+  value: "#0000ff"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:31:\"Hillrange\\Form\\Validator\\Colour\":4:{s:7:\"message\";s:23:\"colour.validation.error\";s:11:\"transDomain\";s:10:\"validators\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_HEAD_TEACHER"
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 12:06:04"
+  created_on: "2018-06-18 09:51:04"
+-
+  id: 22
+  created_by: 1
+  modified_by: 1
+  type: "image"
+  name: "library.browse.bg.image"
+  display_name: "Browse Library BG Image"
+  description: "URL to background image used behind library browsing screen."
+  validators: "a:1:{i:0;O:29:\"App\\Validator\\BackgroundImage\":43:{s:8:\"minWidth\";i:1200;s:7:\"maxSize\";i:1024000;s:11:\"allowSquare\";b:0;s:14:\"allowLandscape\";b:1;s:13:\"allowPortrait\";b:0;s:15:\"detectCorrupted\";b:1;s:9:\"mimeTypes\";s:7:\"image/*\";s:8:\"maxWidth\";N;s:9:\"maxHeight\";N;s:9:\"minHeight\";N;s:8:\"maxRatio\";N;s:8:\"minRatio\";N;s:9:\"minPixels\";N;s:9:\"maxPixels\";N;s:16:\"mimeTypesMessage\";s:31:\"This file is not a valid image.\";s:22:\"sizeNotDetectedMessage\";s:44:\"The size of the image could not be detected.\";s:15:\"maxWidthMessage\";s:87:\"The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.\";s:15:\"minWidthMessage\";s:90:\"The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.\";s:16:\"maxHeightMessage\";s:91:\"The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.\";s:16:\"minHeightMessage\";s:94:\"The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.\";s:16:\"minPixelsMessage\";s:103:\"The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.\";s:16:\"maxPixelsMessage\";s:104:\"The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.\";s:15:\"maxRatioMessage\";s:83:\"The image ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.\";s:15:\"minRatioMessage\";s:86:\"The image ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.\";s:18:\"allowSquareMessage\";s:80:\"The image is square ({{ width }}x{{ height }}px). Square images are not allowed.\";s:21:\"allowLandscapeMessage\";s:104:\"The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not allowed.\";s:20:\"allowPortraitMessage\";s:102:\"The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not allowed.\";s:16:\"corruptedMessage\";s:28:\"The image file is corrupted.\";s:12:\"binaryFormat\";b:0;s:15:\"notFoundMessage\";s:28:\"The file could not be found.\";s:18:\"notReadableMessage\";s:25:\"The file is not readable.\";s:14:\"maxSizeMessage\";s:98:\"The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.\";s:20:\"disallowEmptyMessage\";s:29:\"An empty file is not allowed.\";s:25:\"uploadIniSizeErrorMessage\";s:72:\"The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.\";s:26:\"uploadFormSizeErrorMessage\";s:22:\"The file is too large.\";s:25:\"uploadPartialErrorMessage\";s:37:\"The file was only partially uploaded.\";s:24:\"uploadNoFileErrorMessage\";s:21:\"No file was uploaded.\";s:26:\"uploadNoTmpDirErrorMessage\";s:46:\"No temporary folder was configured in php.ini.\";s:27:\"uploadCantWriteErrorMessage\";s:36:\"Cannot write temporary file to disk.\";s:27:\"uploadExtensionErrorMessage\";s:42:\"A PHP extension caused the upload to fail.\";s:18:\"uploadErrorMessage\";s:31:\"The file could not be uploaded.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_HEAD_TEACHER"
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:18:07"
+  created_on: "2018-06-18 09:51:04"
+-
+  id: 23
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "activities.date_type"
+  display_name: "Date Type"
+  description: "Should activities be organised around dates (flexible) or terms (easy)?"
+  value: "term"
+  choice: "date,term"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "term"
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 12:51:04"
+  created_on: "2018-06-18 12:51:04"
+-
+  id: 24
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "activities.max_per_term"
+  display_name: "Maximum Activities per Term"
+  description: "The most a student can sign up for in one term. Set to 0 for unlimited."
+  value: 0
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:5;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 0
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:28:22"
+  created_on: "2018-06-18 12:51:04"
+-
+  id: 25
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "activities.access"
+  display_name: "Access"
+  description: "System-wide access control"
+  value: "register"
+  choice: "none, view, register"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "register"
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 12:51:04"
+  created_on: "2018-06-18 12:51:04"
+-
+  id: 26
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "activities.payment"
+  display_name: "Payment"
+  description: "Payment system"
+  value: "per_activity"
+  choice: "none, single, per_activity, single_per_activity"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "per_activity"
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:28:22"
+  created_on: "2018-06-18 14:28:22"
+-
+  id: 27
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "activities.enrolment_type"
+  display_name: "Enrolment Type"
+  description: "Enrolment process type"
+  value: "competitive"
+  choice: "competitive, selection"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "competitive"
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:28:22"
+  created_on: "2018-06-18 14:28:22"
+-
+  id: 28
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "activities.backup_choice"
+  display_name: "Backup Choice"
+  description: "Allow students to choose a backup, in case enroled activity is full."
+  value: 1
   validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:28:22"
+  created_on: "2018-06-18 14:28:22"
+-
+  id: 29
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "activities.activity_types"
+  display_name: "Activity Types"
+  description: "List of the different activity types available in school. Leave blank to disable this feature."
+  value: "\"- creativity\\r\\n- action\\r\\n- service\""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:28:22"
+  created_on: "2018-06-18 14:28:22"
+-
+  id: 30
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "activities.disable_external_provider_signup"
+  display_name: "Disable External Provider Signup"
+  description: "Should we turn off the option to sign up for activities provided by an outside agency?"
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:28:22"
+  created_on: "2018-06-18 14:28:22"
+-
+  id: 31
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "activities.hide_external_provider_cost"
+  display_name: "Hide External Provider Cost"
+  description: "Should we hide the cost of activities provided by an outside agency from the Activities View?"
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-18 14:28:22"
+  created_on: "2018-06-18 14:28:22"
 ...

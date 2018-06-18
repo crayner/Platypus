@@ -26,7 +26,8 @@
         var foldMenu = $('.foldMenu');
         var container = foldMenu.parent();
         var icon = foldMenu.children('svg');
-        if (icon.hasClass('fa-times-circle')) {
+        var show = '{{ app.session.get('showSectionMenu')|default('show') }}';
+        if (show) {
             $.ajax({
                 url: '{{ path('section_menu_display', {display: 'hide'}) }}',
                 type: 'POST'
@@ -51,17 +52,20 @@
     });
 
     function iconDoneRendering () {
-        var show = '{{ app.session.get('showSectionMenu')|default(0) }}';
+        {% if not app.session.has('showSectionMenu') %}
+            {% set x = app.session.set('showSectionMenu', 'show') %}
+        {% endif %}
+        var show = '{{ app.session.get('showSectionMenu')|default('show') }}';
 
         {% if fullpage is defined %}
             {% if (fullpage) %}
-                {{ 'show = 0;' }}
+                {{ 'show = "hide";' }}
             {% else %}
-                {{ 'show = 1;' }}
+                {{ 'show = "show";' }}
             {% endif %}
         {% endif %}
 
-        if (show == 0) {
+        if (show == 'hide') {
             $('.foldMenu').click();
         }
     }

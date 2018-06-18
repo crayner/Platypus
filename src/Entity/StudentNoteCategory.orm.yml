@@ -1,0 +1,19 @@
+App\Entity\StudentNoteCategory:
+    type: entity
+    table: student_note_category
+    repositoryClass: App\Repository\StudentNoteCategoryRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 30
+            nullable: false
+        template:
+            type: text
+        active:
+            type: boolean
+            options:
+                default: '1'
