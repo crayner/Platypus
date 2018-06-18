@@ -1,7 +1,7 @@
 <?php
 namespace App\Entity;
 
-use App\Core\Organism\SettingCache;
+use App\Util\PhotoHelper;
 use Hillrange\Security\Util\UserTrackInterface;
 use Hillrange\Security\Util\UserTrackTrait;
 use Symfony\Component\Validator\Constraint;
@@ -147,6 +147,9 @@ class Setting implements UserTrackInterface
      */
     public function setValue($value): Setting
     {
+        if ($this->getType() === 'image' && $value !== $this->getValue())
+            PhotoHelper::deletePhotoFile($this->getValue());
+
         $this->value = $value;
         return $this;
     }

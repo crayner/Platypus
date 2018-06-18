@@ -36,6 +36,12 @@ School Admin:
             parameters: {}
             transDomain: School
     teaching_learning:
+        library_settings:
+            label: manage_library_settings
+            role: ROLE_PRINCIPAL
+            route: manage_library_settings
+            parameters: {}
+            transDomain: System
         planner_settings:
             label: manage_planner_settings
             role: ROLE_PRINCIPAL

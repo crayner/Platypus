@@ -15,23 +15,20 @@
  */
 namespace App\Controller;
 
-use App\Entity\Setting;
-use App\Form\CollectionType;
-use App\Form\MultipleSettingType;
 use App\Form\SectionSettingType;
-use App\Manager\CollectionManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
 use App\Repository\SettingRepository;
+use App\Validator\BackgroundImage;
 use App\Validator\Yaml;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
+use Hillrange\Form\Validator\Colour;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Range;
 
 class SettingController extends Controller
 {
@@ -424,5 +421,113 @@ class SettingController extends Controller
         $request->getSession()->set('manage_settings', $sections);
 
         return $this->forward(SettingController::class . '::manageMultipleSettings');
+    }
+    /**
+     * library Settings
+     *
+     * @param Request $request
+     * @param SettingManager $sm
+     * @return Response
+     * @Route("/setting/library/manage/", name="manage_library_settings")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function librarySettings(Request $request, SettingManager $sm)
+    {
+        $settings = [];
+
+        $setting = $sm->createOneByName('library.default_loan_length');
+
+        $setting->setName('library.default_loan_length')
+            ->__set('role', 'ROLE_HEAD_TEACHER')
+            ->setType('integer')
+            ->__set('displayName', 'Default Loan Length')
+            ->__set('description', 'The standard loan length for a library item, in days');
+        if (empty($setting->getValue())) {
+            $setting->setValue('7')
+                ->__set('choice', null)
+                ->setValidators(
+                    [
+                        new NotBlank(),
+                        new Range(['min' => 0, 'max' => 31]),
+                    ]
+                )
+                ->setDefaultValue('7')
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('library.browse.bg.colour');
+
+        $setting->setName('library.browse.bg.colour')
+            ->__set('role', 'ROLE_HEAD_TEACHER')
+            ->setType('colour')
+            ->__set('displayName', 'Browse Library BG Colour ')
+            ->__set('description', 'Background colour used behind library browsing screen.');
+        if (empty($setting->getValue())) {
+            $setting->setValue(null)
+                ->__set('choice', null)
+                ->setValidators(
+                    [
+                        new NotBlank(),
+                        new Colour(),
+                    ]
+                )
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('library.browse.bg.image');
+
+        $setting->setName('library.browse.bg.image')
+            ->__set('role', 'ROLE_HEAD_TEACHER')
+            ->setType('image')
+            ->__set('displayName', 'Browse Library BG Image')
+            ->__set('description', 'URL to background image used behind library browsing screen.');
+        if (empty($setting->getValue())) {
+            $setting->setValue(null)
+                ->__set('choice', null)
+                ->setValidators(
+                    [
+                        new BackgroundImage(),
+                    ]
+                )
+                ->setDefaultValue(null)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+        $sections = [];
+
+        $section['name'] = 'Descriptors';
+        $section['description'] = '';
+        $section['settings'] = $settings;
+
+        $sections[] = $section;
+
+        $request->getSession()->set('manage_settings', $sections);
+
+        return $this->forward(SettingController::class . '::manageMultipleSettings');
+    }
+
+    /**
+     * Delete Setting Image
+     * @Route("/setting/{route}/image/{name}/delete/", name="delete_setting_image")
+     * @param $name
+     * @param $route
+     * @param SettingManager $settingManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     */
+    public function delete_setting_image($name, $route, SettingManager $settingManager)
+    {
+        $settingManager->set($name, null);
+
+        return $this->redirectToRoute($route);
     }
 }

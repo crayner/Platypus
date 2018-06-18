@@ -51,8 +51,11 @@ class RouterManager
 		if ($request instanceof Request)
 			$this->currentRoute = $request->get('_route');
 
-		if (empty($this->currentRoute) && ! empty($this->request))
-            $this->currentRoute = $this->request->getParentRequest()->get('_route');
+		while (empty($this->currentRoute) && ! empty($this->request))
+        {
+            $this->request = $this->request->getParentRequest();
+            $this->currentRoute = $this->request->get('_route');
+        }
 
 		return $this;
 	}

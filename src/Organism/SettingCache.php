@@ -241,16 +241,6 @@ class SettingCache
     }
 
     /**
-     * setIntegerValue
-     *
-     * @return SettingCache
-     */
-    private function setIntegerValue(): SettingCache
-    {
-        return $this->setStringValue();
-    }
-
-    /**
      * getArrayValue
      *
      * @param null $default
@@ -478,6 +468,48 @@ class SettingCache
         $this->value = $this->value ? true : false;
         $this->getSetting()->setValue($this->value);
         return $this;
+    }
+
+    /**
+     * getIntegerValue
+     *
+     * @return string
+     */
+    private function getIntegerValue(): string
+    {
+        return strval(intval($this->getSetting()->getValue()));
+    }
+
+    /**
+     * setIntegerValue
+     *
+     * @return SettingCache
+     */
+    private function setIntegerValue(): SettingCache
+    {
+        $this->value = strval(intval($this->value));
+        $this->getSetting()->setValue($this->value);
+        return $this;
+    }
+
+    /**
+     * getColourValue
+     *
+     * @return string
+     */
+    private function getColourValue(): ?string
+    {
+        return $this->getStringValue();
+    }
+
+    /**
+     * setColourValue
+     *
+     * @return SettingCache
+     */
+    private function setColourValue(): SettingCache
+    {
+        return $this->setStringValue();
     }
 
     /**
@@ -887,16 +919,6 @@ class SettingCache
     }
 
     /**
-     * setDefaultIntegerValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultIntegerValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
-    }
-
-    /**
      * getDefaultHtmlValue
      *
      * @return null|string
@@ -917,18 +939,40 @@ class SettingCache
     }
 
     /**
-     * getBooleanValue
+     * getDefaultIntegerValue
+     *
+     * @return string
+     */
+    private function getDefaultIntegerValue(): string
+    {
+
+        return strval(intval($this->getSetting()->getDefaultValue()));
+    }
+
+    /**
+     * setDefaultIntegerValue
+     *
+     * @return SettingCache
+     */
+    private function setDefaultIntegerValue(): SettingCache
+    {
+        $this->defaultValue = strval(intval($this->defaultValue));
+        $this->getSetting()->setDefaultValue($this->defaultValue);
+        return $this;
+    }
+
+    /**
+     * getDefaultBooleanValue
      *
      * @return bool
      */
     private function getDefaultBooleanValue(): bool
     {
-
         return $this->getSetting()->getDefaultValue() ? true : false;
     }
 
     /**
-     * setBooleanValue
+     * setDefaultBooleanValue
      *
      * @return SettingCache
      */
@@ -937,6 +981,26 @@ class SettingCache
         $this->defaultValue = $this->defaultValue ? true : false;
         $this->getSetting()->setDefaultValue($this->defaultValue);
         return $this;
+    }
+
+    /**
+     * getDefaultColourValue
+     *
+     * @return null|string
+     */
+    private function getDefaultColourValue(): ?string
+    {
+        return $this->getDefaultStringValue();
+    }
+
+    /**
+     * setDefaultColourValue
+     *
+     * @return SettingCache
+     */
+    private function setDefaultColourValue(): SettingCache
+    {
+        return $this->setDefaultStringValue();
     }
 
     /**
@@ -969,7 +1033,7 @@ class SettingCache
     public function writeSetting(EntityManagerInterface $entityManager, ValidatorInterface $validator, array $constraints)
     {
         if (! empty($this->getValidators()))
-            $constraints[] = $this->getValidators();
+            $constraints = $this->getValidators();
 
         if (! empty($constraints)) {
             $errors = $validator->validate($this->getSetting()->getValue(), $constraints);
