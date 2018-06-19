@@ -15,18 +15,23 @@
  */
 namespace App\Controller;
 
+use App\Entity\INDescriptor;
 use App\Entity\StudentNoteCategory;
+use App\Form\INDescriptorsType;
 use App\Form\SectionSettingType;
 use App\Form\StudentsSettingsType;
 use App\Manager\CollectionManager;
+use App\Manager\IndividualNeedDescriptorManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
+use App\Organism\IndividualNeedsDescriptors;
 use App\Organism\StudentNoteCategories;
 use App\Repository\SettingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -213,5 +218,68 @@ class SettingController extends Controller
                 'fullForm' => $form,
             ]
         );
+    }
+
+    /**
+     * Individual Need Settings
+     *
+     * @param Request $request
+     * @param SettingManager $sm
+     * @return Response
+     * @Route("/setting/individual/need/manage/", name="manage_individual_need_settings")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function individualNeedSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
+    {
+        $descriptors = new IndividualNeedsDescriptors();
+        $data = new ArrayCollection($sm->getEntityManager()->getRepository(INDescriptor::class)->findBy([], ['sequence' => 'ASC']));
+        $descriptors->setDescriptors($data);
+        foreach ($sm->createSettingDefinition('IndividualNeeds') as $name =>$section)
+            if ($name === 'header')
+                $multipleSettingManager->setHeader($section);
+            else
+                $multipleSettingManager->addSection($section);
+        $descriptors->setMultipleSettings($multipleSettingManager);
+
+        $form = $this->createForm(INDescriptorsType::class, $descriptors);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $multipleSettingManager->saveSections($sm->getEntityManager());
+            foreach($descriptors->getDescriptors()->toArray() as $ind)
+                $sm->getEntityManager()->persist($ind);
+            $sm->getEntityManager()->flush();
+        }
+
+        return $this->render('Setting/individual_need_settings.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * deleteIndividualNeedDescriptor
+     *
+     * @Route("/student/individual/need/descriptor/{cid}/delete/", name="remove_individual_need_descriptor")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param $cid
+     * @param IndividualNeedDescriptorManager $INDescriptorManager
+     * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function deleteStudentNoteCategory($cid, IndividualNeedDescriptorManager $INDescriptorManager)
+    {
+        $INDescriptorManager->remove($cid);
+
+        return new JsonResponse(
+            [
+                'message' => $INDescriptorManager->getMessages(),
+            ],
+            200);
     }
 }

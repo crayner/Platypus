@@ -1,0 +1,28 @@
+{% trans_default_domain "System" %}
+
+{% block individual_need_descriptor_label %}{% endblock %}
+{% block individual_need_descriptor_errors %}{% endblock %}
+
+{% block individual_need_descriptor_widget %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-4 card">
+                {{ form_widget(form.name) }}
+                <div class="row">
+                    <div class="offset-1 col-11">
+
+                    {{ form_widget(form.nameShort) }}
+                    </div></div>
+            </div>
+            <div class="col-5 card text-center">
+                {{ form_widget(form.description) }}
+                {{ form_rest(form) }}
+            </div>
+            <div class="col-3 card">
+                <div class="collection-actions">
+                    {{ saveButton({mergeClass: 'btn-sm'})|raw }}
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock individual_need_descriptor_widget %}

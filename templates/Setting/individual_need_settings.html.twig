@@ -1,0 +1,59 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% form_theme form
+    "Setting/setting_form.html.twig"
+    "Setting/individual_need_descriptor.html.twig"
+    "@HillrangeForm/FormTheme/jquery.collection.html.twig"
+    "@HillrangeForm/FormTheme/bootstrap.html.twig"
+%}
+
+{% block title %}{{ parent() }} {{ 'School Admin'|trans({}, 'System') }}{% endblock title %}
+{% block headerTitle %}{{ 'individual_need_descriptior_header'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{% endblock headerLead %}
+
+{% set manager = form.multipleSettings.vars.data %}
+
+{% block contentContainer %}
+    <div class="container-fluid">
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
+    {{ form_start(form) }}
+
+    <div class="container">
+        {% include '@HillrangeForm/Script/collection_message.html.twig' %}
+        <div class="row row-header">
+            <div class="col-4 text-center">
+                {{ 'individual_need_descriptor.description.name.label'|trans }}<br/>
+                <small>{{ 'individual_need_descriptor.description.name_short.label'|trans }}</small>
+            </div>
+            <div class="col-5 text-center">
+                {{ 'individual_need_descriptor.description.label'|trans }}
+            </div>
+            <div class="col-3 text-center">
+                {{ 'actions'|trans }}
+            </div>
+        </div>
+        {{ collection_widget(form.descriptors, 0, 0) }}
+    </div>
+        <hr style="clear: both;"/>
+        {% for section_name, section_form in form.multipleSettings.children %}
+        {% if section_name is not same as('_token') %}
+            {% set section = manager.sections[section_name] %}
+            {% set h3Content = saveButton() %}
+            {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'System', panelParagraph: section['description'], panelStyle: 'warning'} %}
+                {{ collection_widget(section_form.collection) }}
+            {% include 'Default/panelEnd.html.twig' %}
+        {% endif %}
+    {% endfor %}
+    {{ form_end(form) }}
+    </div>
+{% endblock contentContainer %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ collections_manage(form, ['descriptors'])|raw }}
+    {{ collection_script(form.descriptors)|raw }}
+    {{ toggle_script() }}
+{% endblock javascripts %}
