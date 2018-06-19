@@ -103,7 +103,7 @@ School Admin:
             route: school_year_edit
             parameters:
                 id: current
-                _fragment: specialdays
+                tabName: specialdays
             transDomain: SchoolYear 
         manage_year_terms:
             label: menu.school_year.terms
@@ -111,7 +111,7 @@ School Admin:
             route: school_year_edit
             parameters:
                 id: current
-                _fragment: terms
+                tabName: terms
             transDomain: SchoolYear 
     hidden:
         - school_year_edit

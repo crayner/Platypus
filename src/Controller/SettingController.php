@@ -20,7 +20,6 @@ use App\Entity\StudentNoteCategory;
 use App\Form\INDescriptorsType;
 use App\Form\SectionSettingType;
 use App\Form\StudentsSettingsType;
-use App\Manager\CollectionManager;
 use App\Manager\IndividualNeedDescriptorManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
@@ -90,7 +89,7 @@ class SettingController extends Controller
      * @param Request $request
      * @param SettingManager $sm
      * @return Response
-     * @Route("/setting/student/manage/", name="manage_student_settings")
+     * @Route("/setting/student/management/", name="manage_student_settings")
      * @IsGranted("ROLE_PRINCIPAL")
      */
     public function studentSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)

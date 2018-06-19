@@ -63,6 +63,7 @@ class RouterManager
             $this->currentRoute = $this->request->get('_route');
             $this->currentRouteParams = $this->request->get('_route_params');
         }
+        if (!empty($this->request))
 
 		return $this;
 	}

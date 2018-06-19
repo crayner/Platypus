@@ -53,7 +53,7 @@ class SchoolYearController extends Controller
     }
 
     /**
-     * @Route("/school/year/{id}/edit/", name="school_year_edit")
+     * @Route("/school/year/{id}/edit/{tabName}/", name="school_year_edit")
      * @IsGranted("ROLE_REGISTRAR")
      * @param $id
      * @param Request $request
@@ -63,7 +63,7 @@ class SchoolYearController extends Controller
      * @param FlashBagManager $flashBagManager
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function edit($id, Request $request,
+    public function edit($id, $tabName = 'schoolyear', Request $request,
                          SchoolYearManager $schoolYearManager,
                          EntityManagerInterface $em, MessageManager $messageManager,
                          FlashBagManager $flashBagManager)
@@ -72,7 +72,7 @@ class SchoolYearController extends Controller
         {
             $schoolYear = UserHelper::getCurrentSchoolYear();
 
-            return $this->redirectToRoute('school_year_edit', ['id' => $schoolYear->getId()]);
+            return $this->redirectToRoute('school_year_edit', ['id' => $schoolYear->getId(), 'tabName' => $tabName]);
         }
 
         $schoolYear = $id === 'Add' ? new SchoolYear() : $schoolYearManager->getSchoolYearRepository()->find($id);
@@ -99,7 +99,7 @@ class SchoolYearController extends Controller
             $flashBagManager->addMessages($messageManager);
 
             if ($id === 'Add')
-                return new RedirectResponse($this->generateUrl('school_year_edit', array('id' => $schoolYear->getId())));
+                return new RedirectResponse($this->generateUrl('school_year_edit', ['id' => $schoolYear->getId(), 'tabName' => $tabName]));
 
             $em->refresh($schoolYear);
 

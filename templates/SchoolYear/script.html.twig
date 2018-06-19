@@ -9,11 +9,10 @@
             id = '0';
         }
 
-        var path = '{{ path('school_year_edit', { 'id': '__id__', '_fragment': '__fragment__'}) }}';
+        var path = '{{ path('school_year_edit', { 'id': '__id__', 'tabName': '__fragment__'}) }}';
         path = path.replace('__id__', id);
         path = path.replace('__fragment__', fragment);
 
-        location.assign(path);
-        location.reload(true);
+        window.open(path, '_self');
     }
 </script>

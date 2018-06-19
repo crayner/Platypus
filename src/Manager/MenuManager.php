@@ -451,6 +451,12 @@ class MenuManager extends MenuManagerConstants
     }
 
 
+    /**
+     * isCurrentRoute
+     *
+     * @param $r
+     * @return bool
+     */
     private function isCurrentRoute($r): bool
     {
         $currentRoute = $this->routerManager->getCurrentRoute();
@@ -458,6 +464,7 @@ class MenuManager extends MenuManagerConstants
             return false;
 
         $currentRouteParams = $this->routerManager->getCurrentRouteParams();
+
         if (isset($currentRouteParams['_locale']))
             unset($currentRouteParams['_locale']);
 
