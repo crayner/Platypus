@@ -220,7 +220,6 @@ class PlannerSettings implements SettingCreationInterface
         $sections[] = $section;
         $settings = [];
 
-
         $setting = $sm->createOneByName('planner.parent_weekly_email_summary_include_behaviour');
 
         $setting->setName('planner.parent_weekly_email_summary_include_behaviour')
@@ -237,6 +236,29 @@ class PlannerSettings implements SettingCreationInterface
             ;
         }
         $settings[] = $setting;
+
+        $setting = $sm->createOneByName('planner.parent_weekly_email_summary_include_markbook');
+
+        $setting->setName('planner.parent_weekly_email_summary_include_markbook')
+            ->__set('role', 'ROLE_PRINCIPAL')
+            ->setType('boolean')
+            ->__set('displayName', 'Parent Weekly Email Summary Include Markbook')
+            ->__set('description', 'Should Markbook information be included in the weekly planner email summary that goes out to parents?');
+        if (empty($setting->getValue())) {
+            $setting->setValue(false)
+                ->__set('choice', null)
+                ->setValidators(null)
+                ->setDefaultValue(false)
+                ->__set('translateChoice', 'Setting')
+            ;
+        }
+        $settings[] = $setting;
+
+        $section['name'] = 'Miscellaneous';
+        $section['description'] = '';
+        $section['settings'] = $settings;
+
+        $sections[] = $section;
 
         $sections['header'] = 'manage_planner_settings';
 

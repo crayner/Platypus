@@ -37,6 +37,9 @@ class SettingValueTransformer implements DataTransformerInterface
         if (is_array($value))
             return Yaml::dump($value);
 
+        if (is_object($value))
+            dd($value);
+
         return $value;
     }
 
@@ -47,36 +50,8 @@ class SettingValueTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        switch ($this->type) {
-            case 'array':
-                if (empty($value))
-                    return null;
-                return $value;
-                break;
-            case 'html':
-            case 'boolean':
-            case 'integer':
-            case 'colour':
-            case 'image':
-            case 'choice':
-                return $value;
-                break;
-            default:
-                trigger_error('Deal with setting type ' . $this->type, E_USER_ERROR);
-        }
-    }
-
-    /**
-     * @var string
-     */
-    private $type;
-
-    /**
-     * SettingValueTransformer constructor.
-     * @param null|string $type
-     */
-    public function __construct(?string $type = 'string')
-    {
-        $this->type = $type;
+        if (empty($value))
+            return null;
+        return $value;
     }
 }

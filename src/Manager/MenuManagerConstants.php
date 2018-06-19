@@ -59,26 +59,30 @@ School Admin:
         activities_settings:
             label: manage_activities_settings
             role: ROLE_PRINCIPAL
-            route: manage_activities_settings
-            parameters: {}
+            route: manage_settings
+            parameters: 
+                name: Activities
             transDomain: System
         library_settings:
             label: manage_library_settings
             role: ROLE_PRINCIPAL
-            route: manage_library_settings
-            parameters: {}
+            route: manage_settings
+            parameters: 
+                name: Library
             transDomain: System
         planner_settings:
             label: manage_planner_settings
             role: ROLE_PRINCIPAL
-            route: manage_planner_settings
-            parameters: {}
+            route: manage_settings
+            parameters: 
+                name: Planner
             transDomain: System
         resource_settings:
             label: manage_resource_settings
             role: ROLE_PRINCIPAL
-            route: resource_settings_manage
-            parameters: {}
+            route: manage_settings
+            parameters: 
+                name: Resources
             transDomain: System
     years_days_times:
         school_days_times:

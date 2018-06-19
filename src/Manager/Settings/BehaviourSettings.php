@@ -137,6 +137,7 @@ class BehaviourSettings implements SettingCreationInterface
                 ->__set('translateChoice', 'Setting')
             ;
         }
+        $setting->setHideParent('level');
         $settings[] = $setting;
 
         $setting = $sm->createOneByName('behaviour.levels');
@@ -154,6 +155,7 @@ class BehaviourSettings implements SettingCreationInterface
                 ->__set('translateChoice', 'Setting')
             ;
         }
+        $setting->setHideParent('level');
         $settings[] = $setting;
 
         $section['name'] = 'Levels';
@@ -179,6 +181,7 @@ class BehaviourSettings implements SettingCreationInterface
                 ->__set('translateChoice', 'Setting')
             ;
         }
+        $setting->setHideParent('letters');
         $settings[] = $setting;
 
         $nf = new \NumberFormatter(null, \NumberFormatter::ORDINAL);
@@ -201,6 +204,7 @@ class BehaviourSettings implements SettingCreationInterface
                     ->setDefaultValue($i*3)
                     ->__set('translateChoice', 'Setting');
             }
+            $setting->setHideParent('letters');
             $settings[] = $setting;
 
             $setting = $sm->createOneByName('behaviour.behaviour_letters_letter_'.$i.'_text');
@@ -217,6 +221,7 @@ class BehaviourSettings implements SettingCreationInterface
                     ->setDefaultValue("Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the ".$nf->format($i)." communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor.")
                     ->__set('translateChoice', 'Setting');
             }
+            $setting->setHideParent('letters');
             $settings[] = $setting;
         }
 

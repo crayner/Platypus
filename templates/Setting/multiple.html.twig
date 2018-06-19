@@ -35,4 +35,33 @@
 {% block javascripts %}
     {{ parent() }}
     {% include '@HillrangeForm/Toggle/script.html.twig' %}
+    <script type="text/javascript">
+        {% for section_name, section_form in form.children %}
+            {% if section_name is not same as('_token') %}
+                {% for setting in section_form.collection %}
+                    {% if setting.vars.value.type is same as('boolean') and setting.vars.value.hideParent is not empty %}
+
+        var id = '#' + $('.' + '{{ setting.vars.value.hideParent }}' + 'Parent').find('input[type=hidden]').attr('id');
+        toggleHideParent('{{ setting.vars.value.hideParent }}', 0);
+        $(document).on('change', id, function() {
+            toggleHideParent('{{ setting.vars.value.hideParent }}', 1);
+        });
+
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        function toggleHideParent(name, xxx) {
+            var value = $('.' + name + 'Parent').find('input[type=hidden]').val() - xxx;
+
+            if (Math.abs(value) == '1'){
+                $('.' + name + 'Child').fadeIn();
+            } else {
+                $('.' + name + 'Child').fadeOut();
+            }
+        }
+
+
+    </script>
 {% endblock javascripts %}

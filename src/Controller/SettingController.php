@@ -67,54 +67,6 @@ class SettingController extends Controller
     }
 
     /**
-     * resource Settings
-     *
-     * @param Request $request
-     * @param SettingManager $sm
-     * @return Response
-     * @Route("/setting/resource/manage/", name="resource_settings_manage")
-     * @IsGranted("ROLE_PRINCIPAL")
-     */
-    public function resourceSettings(Request $request, SettingManager $sm)
-    {
-        $request->getSession()->set('manage_settings', $sm->createSettingDefinition('Resources'));
-
-        return $this->forward(SettingController::class . '::manageMultipleSettings');
-    }
-
-    /**
-     * plannerSettings
-     *
-     * @param Request $request
-     * @param SettingManager $sm
-     * @return Response
-     * @Route("/setting/planner/manage/", name="manage_planner_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
-     */
-    public function plannerSettings(Request $request, SettingManager $sm)
-    {
-        $request->getSession()->set('manage_settings', $sm->createSettingDefinition('Planner'));
-
-        return $this->forward(SettingController::class . '::manageMultipleSettings');
-    }
-
-    /**
-     * library Settings
-     *
-     * @param Request $request
-     * @param SettingManager $sm
-     * @return Response
-     * @Route("/setting/library/manage/", name="manage_library_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
-     */
-    public function librarySettings(Request $request, SettingManager $sm)
-    {
-        $request->getSession()->set('manage_settings', $sm->createSettingDefinition('Library'));
-
-        return $this->forward(SettingController::class . '::manageMultipleSettings');
-    }
-
-    /**
      * Delete Setting Image
      * @Route("/setting/{route}/image/{name}/delete/", name="delete_setting_image")
      * @param $name
@@ -130,22 +82,6 @@ class SettingController extends Controller
         $settingManager->set($name, null);
 
         return $this->redirectToRoute($route);
-    }
-
-    /**
-     * Activities Settings
-     *
-     * @param Request $request
-     * @param SettingManager $sm
-     * @return Response
-     * @Route("/setting/activities/manage/", name="manage_activities_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
-     */
-    public function activitiesSettings(Request $request, SettingManager $sm)
-    {
-        $request->getSession()->set('manage_settings', $sm->createSettingDefinition('Activities'));
-
-        return $this->forward(SettingController::class . '::manageMultipleSettings');
     }
 
     /**
@@ -210,7 +146,6 @@ class SettingController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $multipleSettingManager->saveSections($settingManager->getEntityManager());
         }
-
 
         return $this->render('Setting/multiple.html.twig',
             [

@@ -37,6 +37,30 @@ class SettingCache
      */
     private $setting;
 
+
+    /**
+     * @var string
+     */
+    private $hideParent;
+
+    /**
+     * @return null|string
+     */
+    public function getHideParent(): ?string
+    {
+        return $this->hideParent;
+    }
+
+    /**
+     * @param string $hideParent
+     * @return SettingCache
+     */
+    public function setHideParent(string $hideParent): SettingCache
+    {
+        $this->hideParent = $hideParent;
+        return $this;
+    }
+
     /**
      * @return Setting|null
      */
@@ -111,11 +135,16 @@ class SettingCache
      */
     public function getValue()
     {
+        if ($this->value === $this)
+            $this->value = null;
         if (empty($this->value) && $this->isBaseSetting()) {
-            if (empty($this->getSetting()) || empty($this->getSetting()->getType()))
+            if (empty($this->getSetting()) || empty($this->getType()))
                 return null;
-            $method = 'get' . ucfirst($this->getSetting()->getType()) . 'Value';
-            $this->value = $this->$method();
+            $method = 'get' . ucfirst($this->getType()) . 'Value';
+            if (method_exists($this, $method))
+                $this->value = $this->$method();
+            else
+                $this->value = $this->getTextValue();
         }
         return $this->value;
     }
@@ -128,10 +157,13 @@ class SettingCache
     {
         $this->value = $value;
         if ($this->isBaseSetting()) {
-            if (empty($this->getSetting()) || empty($this->getSetting()->getType()))
+            if (empty($this->getSetting()) || empty($this->getType()))
                 return $this;
-            $method = 'set' . ucfirst($this->getSetting()->getType()) . 'Value';
-            return $this->$method();
+            $method = 'set' . ucfirst($this->getType()) . 'Value';
+            if (method_exists($this, $method))
+                $this->value = $this->$method();
+            else
+                $this->getSetting()->setValue($this->value);
         }
         return $this;
     }
@@ -198,7 +230,10 @@ class SettingCache
     {
         if (empty($this->defaultValue) && $this->isBaseSetting()) {
             $method = 'getDefault' . ucfirst($this->getSetting()->getType()) . 'Value';
-            $this->defaultValue = $this->$method();
+            if (method_exists($this, $method))
+                $this->defaultValue = $this->$method();
+            else
+                $this->defaultValue = $this->getDefaultTextValue();
         }
         return $this->defaultValue;
     }
@@ -214,30 +249,12 @@ class SettingCache
             if (empty($this->getSetting()) || empty($this->getSetting()->getType()))
                 return $this;
             $method = 'setDefault' . ucfirst($this->getSetting()->getType()) . 'Value';
-            return $this->$method();
+            if (method_exists($this, $method))
+                return $this->$method();
+            else
+                $this->getSetting()->setDefaultValue($defaultValue);
         }
         return $this;
-    }
-
-    /**
-     * getSystemValue
-     *
-     * @param null $default
-     * @return mixed|null
-     */
-    private function getSystemValue(): ?string
-    {
-        return $this->getStringValue();
-    }
-
-    /**
-     * setSystemValue
-     *
-     * @return SettingCache
-     */
-    private function setSystemValue(): SettingCache
-    {
-        return $this->setStringValue();
     }
 
     /**
@@ -263,56 +280,14 @@ class SettingCache
     }
 
     /**
-     * getImageValue
-     *
-     * @return null|string
-     */
-    private function getImageValue(): ?string
-    {
-        return $this->getStringValue();
-    }
-
-    /**
-     * getTwigValue
-     *
-     * @param null $default
-     * @param array $options
-     * @return mixed
-     */
-    private function getTwigValue(): ?string
-    {
-        return $this->getStringValue();
-    }
-
-    /**
-     * setTwigValue
-     *
-     * @return SettingCache
-     */
-    private function setTwigValue(): SettingCache
-    {
-        return $this->setStringValue();
-    }
-
-    /**
-     * getRegexValue
+     * getTextValue
      *
      * @param null $default
      * @return mixed
      */
-    private function getRegexValue(): ?string
+    private function getTextValue(): ?string
     {
-        return $this->getStringValue();
-    }
-
-    /**
-     * setRegexValue
-     *
-     * @return SettingCache
-     */
-    private function setRegexValue(): SettingCache
-    {
-        return $this->setStringValue();
+        return $this->getSetting()->getValue();
     }
 
     /**
@@ -322,18 +297,18 @@ class SettingCache
      */
     private function setTextValue(): SettingCache
     {
-        return $this->setStringValue();
+        $this->getSetting()->setValue($this->value);
+        return $this;
     }
 
     /**
      * getStringValue
      *
-     * @param null $default
-     * @return mixed
+     * @return null|string
      */
     private function getStringValue(): ?string
     {
-        return $this->getSetting()->getValue();
+        return mb_substr($this->getSetting()->getValue() ?: '', 0, 255);
     }
 
     /**
@@ -343,39 +318,8 @@ class SettingCache
      */
     private function setStringValue(): SettingCache
     {
-        $this->getSetting()->setValue($this->value);
+        $this->getSetting()->setValue(mb_substr($this->value, 0, 255));
         return $this;
-    }
-
-    /**
-     * getEnumValue
-     *
-     * @param null $default
-     * @return mixed
-     */
-    private function getEnumValue($default = null)
-    {
-        return $this->getStringValue($default);
-    }
-
-    /**
-     * setEnumValue
-     *
-     * @return SettingCache
-     */
-    private function setEnumValue(): SettingCache
-    {
-        return $this->setStringValue();
-    }
-
-    /**
-     * setImageValue
-     *
-     * @return SettingCache
-     */
-    private function setImageValue(): SettingCache
-    {
-        return $this->setStringValue();
     }
 
     /**
@@ -427,27 +371,6 @@ class SettingCache
     }
 
     /**
-     * getHtmlValue
-     *
-     * @return null|string
-     */
-    private function getHtmlValue(): ?string
-    {
-
-        return $this->getStringValue();
-    }
-
-    /**
-     * setHtmlValue
-     *
-     * @return SettingCache
-     */
-    private function setHtmlValue(): SettingCache
-    {
-        return $this->setStringValue();
-    }
-
-    /**
      * getBooleanValue
      *
      * @return bool
@@ -490,46 +413,6 @@ class SettingCache
         $this->value = strval(intval($this->value));
         $this->getSetting()->setValue($this->value);
         return $this;
-    }
-
-    /**
-     * getColourValue
-     *
-     * @return string
-     */
-    private function getColourValue(): ?string
-    {
-        return $this->getStringValue();
-    }
-
-    /**
-     * setColourValue
-     *
-     * @return SettingCache
-     */
-    private function setColourValue(): SettingCache
-    {
-        return $this->setStringValue();
-    }
-
-    /**
-     * getChoiceValue
-     *
-     * @return null|string
-     */
-    private function getChoiceValue(): ?string
-    {
-        return $this->getStringValue();
-    }
-
-    /**
-     * setChoiceValue
-     *
-     * @return SettingCache
-     */
-    private function setChoiceValue(): SettingCache
-    {
-        return $this->setStringValue();
     }
 
     /**
@@ -627,52 +510,27 @@ class SettingCache
     }
 
     /**
-     * getDefaultImageValue
+     * getDefaultArrayValue
      *
-     * @return null|string
+     * @return array|null
      */
-    private function getDefaultImageValue(): ?string
-    {
-        return $this->getDefaultStringValue();
-    }
-
-    /**
-     * getDefaultSystemValue
-     *
-     * @return null|string
-     */
-    private function getDefaultSystemValue(): ?string
-    {
-        return $this->getDefaultStringValue();
-    }
-
     private function getDefaultArrayValue(): ?array
     {
         return self::convertDatabaseToArray($this->getSetting()->getDefaultValue());
     }
 
     /**
-     * getDefaultStringValue
+     * getDefaultTextValue
      *
      * @param $default
      * @return null|string
      */
-    private function getDefaultStringValue(): ?string
+    private function getDefaultTextValue(): ?string
     {
         $value = $this->getSetting()->getDefaultValue();
         if (is_null($value) || is_string($value))
             return $value;
         return null;
-    }
-
-    /**
-     * getDefaultTwigValue
-     *
-     * @return null|string
-     */
-    private function getDefaultTwigValue(): ?string
-    {
-        return $this->getDefaultStringValue();
     }
 
     /**
@@ -755,6 +613,12 @@ class SettingCache
         return true;
     }
 
+    /**
+     * convertValidators
+     *
+     * @param $value
+     * @return array
+     */
     public function convertValidators($value): array
     {
         if (empty($value))
@@ -833,21 +697,11 @@ class SettingCache
     }
 
     /**
-     * setDefaultTwigValue
+     * setDefaultTextValue
      *
      * @return SettingCache
      */
-    private function setDefaultTwigValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
-    }
-
-    /**
-     * setDefaultStringValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultStringValue(): SettingCache
+    private function setDefaultTextValue(): SettingCache
     {
         $this->getSetting()->setDefaultValue($this->defaultValue);
         return $this;
@@ -862,46 +716,6 @@ class SettingCache
     {
         $this->getSetting()->setDefaultValue(Yaml::dump($this->defaultValue));
         return $this;
-    }
-
-    /**
-     * setDefaultRegexValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultRegexValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
-    }
-
-    /**
-     * setDefaultTextValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultTextValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
-    }
-
-    /**
-     * setDefaultEnumValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultEnumValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
-    }
-
-    /**
-     * setDefaultImageValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultImageValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
     }
 
     /**
@@ -926,36 +740,6 @@ class SettingCache
         else
             $this->getSetting()->setDefaultValue(null);
         return $this;
-    }
-
-    /**
-     * setDefaultSystemValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultSystemValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
-    }
-
-    /**
-     * getDefaultHtmlValue
-     *
-     * @return null|string
-     */
-    private function getDefaultHtmlValue(): ?string
-    {
-        return $this->getDefaultStringValue();
-    }
-
-    /**
-     * setDefaultHtmlValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultHtmlValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
     }
 
     /**
@@ -1001,46 +785,6 @@ class SettingCache
         $this->defaultValue = $this->defaultValue ? true : false;
         $this->getSetting()->setDefaultValue($this->defaultValue);
         return $this;
-    }
-
-    /**
-     * getDefaultColourValue
-     *
-     * @return null|string
-     */
-    private function getDefaultColourValue(): ?string
-    {
-        return $this->getDefaultStringValue();
-    }
-
-    /**
-     * setDefaultColourValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultColourValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
-    }
-
-    /**
-     * getDefaultChoiceValue
-     *
-     * @return null|string
-     */
-    private function getDefaultChoiceValue(): ?string
-    {
-        return $this->getDefaultStringValue();
-    }
-
-    /**
-     * setDefaultChoiceValue
-     *
-     * @return SettingCache
-     */
-    private function setDefaultChoiceValue(): SettingCache
-    {
-        return $this->setDefaultStringValue();
     }
 
     /**

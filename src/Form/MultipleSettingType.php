@@ -127,7 +127,7 @@ class MultipleSettingType extends AbstractType
             $builder
                 ->add('value', TextType::class);
 
-        $builder->get('value')->addViewTransformer(new SettingValueTransformer($data ? $data->getType() : 'string'));
+        $builder->get('value')->addViewTransformer(new SettingValueTransformer());
     }
 
     /**

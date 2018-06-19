@@ -7,21 +7,30 @@
     {% spaceless %}
         {% set columnA = '6' %}
         {% set columnB = '6' %}
+        {% if form.vars.value is not empty and form.vars.value.hideParent is not empty %}
+            {% set rowClass = 'row ' ~ form.vars.value.hideParent ~ 'Child' %}
+        {% endif %}
         {% if 'hillrange_toggle' in form.value.vars.cache_key %}
             {% set columnA = '10' %}
             {% set columnB = '2' %}
+            {% if form.vars.value is not empty and form.vars.value.hideParent is not empty %}
+                {% set toggleClass = (form.value.vars.div_class|default('')) ~ ' ' ~ form.vars.value.hideParent ~ 'Parent' %}
+                {% set rowClass = 'row' %}
+            {% else %}
+                {% set toggleClass = form.value.vars.div_class|default('') %}
+            {% endif %}
         {% elseif 'ckeditor' in form.value.vars.cache_key %}
             {% set columnA = '4' %}
             {% set columnB = '8' %}
         {% endif %}
-        <div class="row">
+        <div class="{{ rowClass|default('row') }}">
             <div class="col-{{ columnA }} card">
                 {{ form_label(form.value) }}
                 {{ form_errors(form.value) }}
             </div>
             <div class="col-{{ columnB }} card">
                 <div>
-                {{ form_widget(form.value) }}
+                {{ form_widget(form.value, {div_class: toggleClass|default('')}) }}
                 </div>
             </div>
         </div>
