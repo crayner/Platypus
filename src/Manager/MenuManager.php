@@ -341,7 +341,7 @@ class MenuManager extends MenuManagerConstants
 				foreach ($w as $e => $r)
 				{
 					$sections[$q][$e]['linkClass'] = 'sectionLink';
-					if ($r['route'] === $currentRoute)
+					if ($this->isCurrentRoute($r))
 						$sections[$q][$e]['linkClass'] .= ' currentLink';
 					if (!empty($r['role']) && false === $this->checker->isGranted($r['role']))
 					{
@@ -448,5 +448,26 @@ class MenuManager extends MenuManagerConstants
     public function getContainer(): ContainerInterface
     {
         return $this->container;
+    }
+
+
+    private function isCurrentRoute($r): bool
+    {
+        $currentRoute = $this->routerManager->getCurrentRoute();
+        if ($currentRoute !== $r['route'])
+            return false;
+
+        $currentRouteParams = $this->routerManager->getCurrentRouteParams();
+        if (isset($currentRouteParams['_locale']))
+            unset($currentRouteParams['_locale']);
+
+        foreach($r['parameters'] as $name=>$value)
+            if (isset($currentRouteParams[$name]) && $currentRouteParams[$name] === $value)
+                unset($currentRouteParams[$name]);
+
+        if (empty($currentRouteParams))
+            return true;
+
+        return false;
     }
 }

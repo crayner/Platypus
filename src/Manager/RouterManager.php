@@ -12,6 +12,11 @@ class RouterManager
 	 */
 	private $currentRoute;
 
+    /**
+     * @var array|null
+     */
+	private $currentRouteParams;
+
 	/**
 	 * @var RequestStack
 	 */
@@ -48,15 +53,27 @@ class RouterManager
 		if (is_null($request))
 			$request = $this->request->getCurrentRequest();
 
-		if ($request instanceof Request)
-			$this->currentRoute = $request->get('_route');
-
+		if ($request instanceof Request){
+            $this->currentRoute = $request->get('_route');
+            $this->currentRouteParams = $request->get('_route_params');
+            }
 		while (empty($this->currentRoute) && ! empty($this->request))
         {
             $this->request = $this->request->getParentRequest();
             $this->currentRoute = $this->request->get('_route');
+            $this->currentRouteParams = $this->request->get('_route_params');
         }
 
 		return $this;
 	}
+
+    /**
+     * @return array|null
+     */
+    public function getCurrentRouteParams(): ?array
+    {
+        $this->setCurrentRoute();
+
+        return $this->currentRouteParams;
+    }
 }

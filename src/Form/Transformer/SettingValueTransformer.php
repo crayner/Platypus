@@ -16,6 +16,7 @@
 namespace App\Form\Transformer;
 
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -36,6 +37,9 @@ class SettingValueTransformer implements DataTransformerInterface
 
         if (is_array($value))
             return Yaml::dump($value);
+
+        if ($value instanceof File)
+            return $value;
 
         if (is_object($value))
             dd($value);
