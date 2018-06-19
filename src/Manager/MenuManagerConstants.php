@@ -36,6 +36,13 @@ School Admin:
             parameters: {}
             transDomain: School
     people:
+        behaviour_settings:
+            label: manage_behaviour_settings
+            role: ROLE_PRINCIPAL
+            route: manage_settings
+            parameters: 
+                name: Behaviour
+            transDomain: System
         individual_needs:
             label: manage_individual_need_settings
             role: ROLE_PRINCIPAL

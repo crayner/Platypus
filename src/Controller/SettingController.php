@@ -282,4 +282,21 @@ class SettingController extends Controller
             ],
             200);
     }
+
+    /**
+     * Manage Settings
+     *
+     * @param Request $request
+     * @param SettingManager $sm
+     * @return Response
+     * @Route("/setting/{name}/manage/", name="manage_settings")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function manageSettings(string $name, Request $request, SettingManager $sm)
+    {
+        $request->getSession()->set('manage_settings', $sm->createSettingDefinition($name));
+
+        return $this->forward(SettingController::class . '::manageMultipleSettings');
+    }
+
 }
