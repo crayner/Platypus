@@ -16,11 +16,9 @@ App\Entity\SchoolYear:
             options:
                 default: 'upcoming'
             nullable: false
-        sequenceNumber:
+        sequence:
             type: integer
-            length: 3
             nullable: false
-            column: sequence_number
         firstDay:
             type: date
         lastDay:

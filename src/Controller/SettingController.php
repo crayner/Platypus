@@ -155,7 +155,7 @@ class SettingController extends Controller
     public function studentSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
     {
         $categories = new StudentNoteCategories();
-        $notes = new ArrayCollection($sm->getEntityManager()->getRepository(StudentNoteCategory::class)->findAll());
+        $notes = new ArrayCollection($sm->getEntityManager()->getRepository(StudentNoteCategory::class)->findBy([], ['name' => 'ASC']));
         $categories->setCategories($notes);
         foreach ($sm->createSettingDefinition('Students') as $name =>$section)
             if ($name === 'header')

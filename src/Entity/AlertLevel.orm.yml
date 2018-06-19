@@ -24,7 +24,5 @@ App\Entity\AlertLevel:
             column: colour_bg
         description:
             type: text
-        sequenceNumber:
+        sequence:
             type: integer
-            column: sequence_number
-            length: 3

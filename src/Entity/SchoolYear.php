@@ -123,23 +123,23 @@ class SchoolYear extends SchoolYearExtension
     /**
      * @var integer|null
      */
-    private $sequenceNumber;
+    private $sequence;
 
     /**
      * @return int|null
      */
-    public function getSequenceNumber(): ?int
+    public function getSequence(): ?int
     {
-        return $this->sequenceNumber;
+        return $this->sequence;
     }
 
     /**
-     * @param int|null $sequenceNumber
+     * @param int|null $sequence
      * @return SchoolYear
      */
-    public function setSequenceNumber(?int $sequenceNumber): SchoolYear
+    public function setSequence(?int $sequence): SchoolYear
     {
-        $this->sequenceNumber = $sequenceNumber ?: 0;
+        $this->sequence = $sequence ?: 0;
         return $this;
     }
 

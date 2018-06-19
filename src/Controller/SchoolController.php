@@ -25,6 +25,7 @@ use App\Form\YearGroupType;
 use App\Manager\CollectionManager;
 use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
+use App\Manager\StudentNoteCategoryManager;
 use App\Organism\DaysOfWeek;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;

@@ -1,0 +1,24 @@
+App\Entity\INDescriptor:
+    type: entity
+    table: individual_needs_descriptor
+    repositoryClass: App\Repository\INDescriptorRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 50
+            nullable: false
+        nameShort:
+            length: 50
+            nullable: false
+            column: name_short
+        sequence:
+            type: integer
+            nullable: false
+            length: 3
+        description:
+            type: text
+            nullable: false

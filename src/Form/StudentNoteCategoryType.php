@@ -19,6 +19,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -47,12 +48,20 @@ class StudentNoteCategoryType extends AbstractType
                     'label' => 'student_note_category.template.label',
                     'help' => 'student_note_category.template.help',
                     'config_name' => 'setting_toolbar',
+                    'required' => false,
                 ]
             )
             ->add('active', ToggleType::class,
                 [
                     'label' => 'student_note_category.active.label',
                     'div_class' => '',
+                ]
+            )
+            ->add('id', HiddenType::class,
+                [
+                    'attr' => [
+                        'class' => 'removeElement',
+                    ],
                 ]
             )
         ;

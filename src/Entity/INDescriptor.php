@@ -10,12 +10,12 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 11/06/2018
- * Time: 16:39
+ * Date: 19/06/2018
+ * Time: 10:24
  */
 namespace App\Entity;
 
-class AlertLevel
+class INDescriptor
 {
     /**
      * @var integer|null
@@ -32,9 +32,9 @@ class AlertLevel
 
     /**
      * @param int|null $id
-     * @return AlertLevel
+     * @return INDescriptor
      */
-    public function setId(?int $id): AlertLevel
+    public function setId(?int $id): INDescriptor
     {
         $this->id = $id;
         return $this;
@@ -55,9 +55,9 @@ class AlertLevel
 
     /**
      * @param null|string $name
-     * @return AlertLevel
+     * @return INDescriptor
      */
-    public function setName(?string $name): AlertLevel
+    public function setName(?string $name): INDescriptor
     {
         $this->name = $name;
         return $this;
@@ -78,57 +78,36 @@ class AlertLevel
 
     /**
      * @param null|string $nameShort
-     * @return AlertLevel
+     * @return INDescriptor
      */
-    public function setNameShort(?string $nameShort): AlertLevel
+    public function setNameShort(?string $nameShort): INDescriptor
     {
         $this->nameShort = $nameShort;
         return $this;
     }
 
     /**
-     * @var string|null
+     * @var integer|null
      */
-    private $colour;
+    private $sequence;
 
     /**
-     * @return null|string
+     * @return int
      */
-    public function getColour(): ?string
+    public function getSequence(): int
     {
-        return $this->colour;
+        return $this->sequence ?: 0;
     }
 
     /**
-     * @param null|string $colour
-     * @return AlertLevel
+     * setSequence
+     *
+     * @param int|null $sequence
+     * @return INDescriptor
      */
-    public function setColour(?string $colour): AlertLevel
+    public function setSequence(?int $sequence): INDescriptor
     {
-        $this->colour = $colour;
-        return $this;
-    }
-
-    /**
-     * @var string|null
-     */
-    private $colourBG;
-
-    /**
-     * @return null|string
-     */
-    public function getColourBG(): ?string
-    {
-        return $this->colourBG;
-    }
-
-    /**
-     * @param null|string $colourBG
-     * @return AlertLevel
-     */
-    public function setColourBG(?string $colourBG): AlertLevel
-    {
-        $this->colourBG = $colourBG;
+        $this->sequence = $sequence ?: 0;
         return $this;
     }
 
@@ -147,34 +126,11 @@ class AlertLevel
 
     /**
      * @param null|string $description
-     * @return AlertLevel
+     * @return INDescriptor
      */
-    public function setDescription(?string $description): AlertLevel
+    public function setDescription(?string $description): INDescriptor
     {
         $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @var integer|null
-     */
-    private $sequence;
-
-    /**
-     * @return int|null
-     */
-    public function getSequence(): ?int
-    {
-        return $this->sequence;
-    }
-
-    /**
-     * @param int|null $sequence
-     * @return AlertLevel
-     */
-    public function setSequence(?int $sequence): AlertLevel
-    {
-        $this->sequence = $sequence;
         return $this;
     }
 }
