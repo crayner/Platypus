@@ -25,14 +25,13 @@
     $('.foldMenu').on('click', function(){
         var foldMenu = $('.foldMenu');
         var container = foldMenu.parent();
+        console.log(container);
         var icon = foldMenu.children('svg');
-        var show = '{{ app.session.get('showSectionMenu')|default('show') }}';
-        if (show) {
+        if (icon.hasClass('fa-times-circle')) {
             $.ajax({
                 url: '{{ path('section_menu_display', {display: 'hide'}) }}',
                 type: 'POST'
             });
-            console.log(container);
             container.css('flex', 'auto');
             container.css('max-width', 'none');
         } else {
@@ -40,7 +39,6 @@
                 url: '{{ path('section_menu_display', {display: 'show'}) }}',
                 type: 'POST'
             });
-            console.log(container);
             container.removeAttr('style');
         }
         icon.toggleClass('fa-times-circle fa-bars');
