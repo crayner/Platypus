@@ -223,8 +223,6 @@ class StudentsSettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $sections = [];
-
         $section['name'] = 'Alerts';
         $section['description'] = '';
         $section['settings'] = $settings;

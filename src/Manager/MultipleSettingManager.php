@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MultipleSettingManager
@@ -171,5 +172,18 @@ class MultipleSettingManager
     public function safeName($name): string
     {
         return strtolower(str_replace([' '], '_', trim($name)));
+    }
+
+    /**
+     * saveSections
+     *
+     * @param EntityManagerInterface $em
+     */
+    public function saveSections(EntityManagerInterface $em)
+    {
+        foreach ($this->getSections() as $section)
+            foreach ($section['settings'] as $setting)
+                $em->persist($setting->getSetting());
+        $em->flush();
     }
 }

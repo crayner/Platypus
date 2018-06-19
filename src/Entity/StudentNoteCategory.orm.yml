@@ -13,6 +13,7 @@ App\Entity\StudentNoteCategory:
             nullable: false
         template:
             type: text
+            nullable: true
         active:
             type: boolean
             options:

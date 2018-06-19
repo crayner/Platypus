@@ -73,7 +73,7 @@ class StudentNoteCategory
      */
     public function isActive(): bool
     {
-        return $this->active;
+        return $this->active ? true : false ;
     }
 
     /**
@@ -82,7 +82,7 @@ class StudentNoteCategory
      */
     public function setActive(bool $active): StudentNoteCategory
     {
-        $this->active = $active;
+        $this->active = $active ? true : false ;
         return $this;
     }
 

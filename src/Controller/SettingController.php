@@ -166,6 +166,15 @@ class SettingController extends Controller
 
         $form = $this->createForm(StudentsSettingsType::class, $categories);
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $multipleSettingManager->saveSections($sm->getEntityManager());
+            foreach($categories->getCategories()->toArray() as $snc)
+                $sm->getEntityManager()->persist($snc);
+            $sm->getEntityManager()->flush();
+        }
+
         return $this->render('Setting/student_settings.html.twig',
             [
                 'form' => $form->createView(),
@@ -194,10 +203,7 @@ class SettingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($multipleSettingManager->getSections() as $section)
-                foreach ($section['settings'] as $setting)
-                    $settingManager->getEntityManager()->persist($setting->getSetting());
-            $settingManager->getEntityManager()->flush();
+            $multipleSettingManager->saveSections($settingManager->getEntityManager());
         }
 
 
