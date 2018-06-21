@@ -36,6 +36,12 @@ School Admin:
             parameters: {}
             transDomain: School
     people:
+        attendance_settings:
+            label: manage_attendance_settings
+            role: ROLE_PRINCIPAL
+            route: manage_attendance_settings
+            parameters: {}
+            transDomain: System
         behaviour_settings:
             label: manage_behaviour_settings
             role: ROLE_PRINCIPAL

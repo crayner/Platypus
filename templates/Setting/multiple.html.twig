@@ -22,7 +22,8 @@
         {% if section_name is not same as('_token') %}
             {% set section = manager.sections[section_name] %}
             {% set h3Content = saveButton() %}
-            {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'System', panelParagraph: section['description'], panelStyle: 'warning'} %}
+            {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'System', panelParagraph: section['description'],
+                panelStyle: 'warning', headerParams: section['name_parameters'], panelParams: section['description_parameters']} %}
                 {{ collection_widget(section_form.collection) }}
             {% include 'Default/panelEnd.html.twig' %}
         {% endif %}

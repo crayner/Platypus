@@ -46,6 +46,7 @@ class SettingExtension extends AbstractExtension
             new \Twig_SimpleFunction('displayBoolean', array($this, 'displayBoolean')),
             new \Twig_SimpleFunction('settingLink', array($this->settingManager, 'settingLink'), ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('exit', [$this, 'exit']),
+            new \Twig_SimpleFunction('dumpSetting', [$this, 'dumpSetting']),
 		);
 	}
 
@@ -114,5 +115,10 @@ class SettingExtension extends AbstractExtension
     public function exit()
     {
         die();
+    }
+
+    public function dumpSetting()
+    {
+        dd($this->settingManager);
     }
 }

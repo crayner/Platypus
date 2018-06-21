@@ -15,13 +15,16 @@
  */
 namespace App\Demonstration;
 
+use App\Entity\AttendanceCode;
 use App\Entity\Campus;
 use App\Entity\Course;
 use App\Entity\DayOfWeek;
 use App\Entity\Department;
+use App\Entity\INDescriptor;
 use App\Entity\Invoice;
 use App\Entity\Scale;
 use App\Entity\Setting;
+use App\Entity\StudentNoteCategory;
 use Doctrine\Common\Persistence\ObjectManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -43,6 +46,18 @@ class SchoolFixtures implements DummyDataInterface
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/day_of_week.yml'));
 
         $this->buildTable($data, DayOfWeek::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/individual_needs_descriptor.yml'));
+
+        $this->setLogger($logger)->buildTable($data, INDescriptor::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/student_note_category.yml'));
+
+        $this->setLogger($logger)->buildTable($data, StudentNoteCategory::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/attendance_code.yml'));
+
+        $this->setLogger($logger)->buildTable($data, AttendanceCode::class, $manager);
 
         /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
 

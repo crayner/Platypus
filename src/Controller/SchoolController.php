@@ -15,24 +15,30 @@
  */
 namespace App\Controller;
 
+use App\Entity\AttendanceCode;
 use App\Entity\DayOfWeek;
 use App\Entity\House;
 use App\Entity\YearGroup;
+use App\Form\AttendanceSettingsType;
 use App\Form\CollectionManagerType;
 use App\Form\DaysOfWeekType;
 use App\Form\HousesType;
 use App\Form\YearGroupType;
+use App\Manager\AttendanceCodeManager;
 use App\Manager\CollectionManager;
-use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
-use App\Manager\StudentNoteCategoryManager;
+use App\Manager\MultipleSettingManager;
+use App\Manager\SettingManager;
+use App\Organism\AttendanceCodes;
 use App\Organism\DaysOfWeek;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class SchoolController extends Controller
 {
@@ -187,5 +193,71 @@ class SchoolController extends Controller
         }
 
         return $this->forward(SchoolController::class.'::editYearGroups');
+    }
+
+
+    /**
+     * Student Settings
+     *
+     * @param Request $request
+     * @param SettingManager $sm
+     * @param MultipleSettingManager $multipleSettingManager
+     * @param AttendanceCodeManager $manager  (Force load to ensure static methods are available.)
+     * @return Response
+     * @Route("/school/attendance/settings/manage/", name="manage_attendance_settings")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function attendanceSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager, AttendanceCodeManager $manager)
+    {
+        $settings = new AttendanceCodes();
+        $results = new ArrayCollection($sm->getEntityManager()->getRepository(AttendanceCode::class)->findBy([], ['sequence' => 'ASC']));
+        $settings->setAttendanceCodes($results);
+        foreach ($sm->createSettingDefinition('Attendance') as $name =>$section)
+            if ($name === 'header')
+                $multipleSettingManager->setHeader($section);
+            else
+                $multipleSettingManager->addSection($section);
+        $settings->setMultipleSettings($multipleSettingManager);
+
+        $form = $this->createForm(AttendanceSettingsType::class, $settings);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $multipleSettingManager->saveSections($sm);
+            foreach($settings->getAttendanceCodes()->toArray() as $entity)
+                $sm->getEntityManager()->persist($entity);
+            $sm->getEntityManager()->flush();
+        }
+
+        return $this->render('School/attendance_settings.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * deleteStudentNoteCategory
+     *
+     * @Route("/school/attendance/code/{cid}/delete/", name="remove_attendance_code")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param $cid
+     * @param AttendanceCodeManager $manager
+     * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function deleteAttendanceCode($cid, AttendanceCodeManager $manager)
+    {
+        $manager->remove($cid);
+
+        return new JsonResponse(
+            [
+                'message' => $manager->getMessages(),
+            ],
+            200);
     }
 }

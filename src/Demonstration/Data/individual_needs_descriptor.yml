@@ -1,0 +1,22 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_individual_needs_descriptor
+-
+  id: 1
+  name: "Special Education Needs"
+  name_short: "SEN"
+  sequence: 1
+  description: "Official learning needs that have been professionally identified."
+-
+  id: 2
+  name: "English as a Second Language"
+  name_short: "ESL"
+  sequence: 2
+  description: "Obvious language needs in English acquisition."
+-
+  id: 3
+  name: "Other Needs"
+  name_short: "ON"
+  sequence: 3
+  description: "Any other case. E.g. learning issues that have not been assessed, or ongoing home/family issues that should be known to staff and which may relate to teaching and learning."
+...

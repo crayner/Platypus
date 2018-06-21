@@ -1,0 +1,41 @@
+App\Entity\AttendanceCode:
+    type: entity
+    table: attendance_code
+    repositoryClass: App\Repository\AttendanceCodeRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 30
+            nullable: false
+            unique: true
+        nameShort:
+            length: 4
+            nullable: false
+            column: name_short
+            unique: true
+        type:
+            length: 16
+            nullable: false
+        direction:
+            length: 8
+            nullable: false
+        scope:
+            length: 16
+            nullable: false
+        active:
+            type: boolean
+        reportable:
+            type: boolean
+        future:
+            type: boolean
+        sequence:
+            type: integer
+        role:
+            length: 16
+    lifecycleCallbacks:
+        prePersist:
+            - setDefaults

@@ -1,0 +1,44 @@
+{% trans_default_domain "School" %}
+
+{% block attendance_code_label %}{% endblock %}
+{% block attendance_code_errors %}{% endblock %}
+
+{% block attendance_code_widget %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-1 card">
+                {{ form_widget(form.nameShort, {attr: {class: 'form-control-sm'}}) }}
+            </div>
+            <div class="col-3 card">
+                {{ form_widget(form.name, {attr: {class: 'form-control-sm'}}) }}
+            </div>
+            <div class="col-2 card">
+                {{ form_widget(form.direction, {attr: {class: 'form-control-sm'}}) }}
+            </div>
+            <div class="col-2 card">
+                {{ form_widget(form.scope, {attr: {class: 'form-control-sm'}}) }}
+            </div>
+            <div class="col-4 card">
+                <div class="collection-actions">
+                    {{ saveButton({mergeClass: 'btn-sm'})|raw }}
+                    {{ miscButton({title: 'reveal.hidden', transDomain: 'System', class: 'btn btn-sm btn-info fas fa-pencil-alt toggleHidden',
+                        colour: 'info', additional: {id: form.vars.id ~ '_displayButton'}})|raw }}
+                    <div>{{ form_widget(form.active, {button_class_off: 'btn btn-sm btn-danger', button_class_on: 'btn btn-sm btn-success'}) }}</div>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="{{ form.vars.id }}_display">
+            <div class="col-3 card small">
+                {{ form_row(form.reportable, {button_class_off: 'btn btn-sm btn-danger', button_class_on: 'btn btn-sm btn-success'}) }}
+            </div>
+            <div class="col-3 card small">
+                {{ form_row(form.future, {button_class_off: 'btn btn-sm btn-danger', button_class_on: 'btn btn-sm btn-success'}) }}
+            </div>
+            <div class="col-6 card small">
+                {{ form_row(form.role, {attr: {class: 'form-control-sm'}}) }}
+                {{ form_widget(form.id) }}
+                {{ form_widget(form.sequence) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock attendance_code_widget %}

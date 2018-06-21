@@ -73,7 +73,9 @@ class MultipleSettingManager
             'name',
         ]);
         $resolver->setDefaults([
+            'name_parameters' => [],
             'description' => null,
+            'description_parameters' => [],
         ]);
         $section = $resolver->resolve($section);
 
@@ -177,13 +179,11 @@ class MultipleSettingManager
     /**
      * saveSections
      *
-     * @param EntityManagerInterface $em
      */
-    public function saveSections(EntityManagerInterface $em)
+    public function saveSections(SettingManager $sm)
     {
         foreach ($this->getSections() as $section)
             foreach ($section['settings'] as $setting)
-                $em->persist($setting->getSetting());
-        $em->flush();
+                $sm->createSetting($setting->getSetting());
     }
 }

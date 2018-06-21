@@ -82,8 +82,24 @@ class MultipleSettingType extends AbstractType
                     $formType = ChoiceType::class;
                     $choices = [];
                     $x = explode(',', $data->__get('choice'));
-                    foreach($x as $value)
-                        $choices[$data->getName().'.'.trim($value)] = trim($value);
+
+                    if (count($x) === 1 && mb_strpos($x[0], '::') !== false)
+                    {
+                        $x = explode('::', $x[0]);
+                        if (count($x) === 2)
+                        {
+                            if (class_exists($x[0]))
+                            {
+                                $method = $x[1];
+                                if (method_exists($x[0], $x[1]))
+                                    $choices = $x[0]::$method();
+                            }
+                        }
+                        else
+                            $x = [];
+                    } else
+                        foreach($x as $value)
+                            $choices[$data->getName().'.'.trim($value)] = trim($value);
                     $additional = [
                         'choices' => $choices,
                         'placeholder' => false,

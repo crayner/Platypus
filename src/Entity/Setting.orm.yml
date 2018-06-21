@@ -29,8 +29,7 @@ App\Entity\Setting:
             type: text
             nullable: true
         choice:
-            type: string
-            length: '50'
+            type: text
             nullable: true
         validators:
             type: array

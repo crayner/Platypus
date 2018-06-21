@@ -1,0 +1,20 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_student_note_category
+-
+  id: 1
+  name: "Behaviour"
+  active: 1
+-
+  id: 2
+  name: "Academic"
+  active: 1
+-
+  id: 3
+  name: "Other"
+  active: 1
+-
+  id: 4
+  name: "Pastoral"
+  active: 1
+...

@@ -12,7 +12,7 @@
   #import_identifier: 19
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 1
+  sequence: 1
 -
   id: 2
   #created_by: 1
@@ -24,7 +24,7 @@
   #import_identifier: 20
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 2
+  sequence: 2
 -
   id: 3
   #created_by: 1
@@ -36,7 +36,7 @@
   #import_identifier: 21
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 3
+  sequence: 3
 -
   id: 4
   #created_by: 1
@@ -48,7 +48,7 @@
   #import_identifier: 22
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 4
+  sequence: 4
 -
   id: 5
   #created_by: 1
@@ -60,7 +60,7 @@
   #import_identifier: 23
   #last_modified: "2018-04-04 16:01:38"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 5
+  sequence: 5
 -
   id: 6
   #created_by: 1
@@ -72,5 +72,5 @@
   #import_identifier: 24
   #last_modified: "2018-03-26 23:06:33"
   #created_on: "2018-03-26 23:06:33"
-  sequence_number: 6
+  sequence: 6
 ...

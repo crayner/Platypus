@@ -15,11 +15,19 @@
  */
 namespace App\Controller;
 
+use App\Entity\StudentNoteCategory;
+use App\Form\StudentsSettingsType;
+use App\Manager\MultipleSettingManager;
+use App\Manager\SettingManager;
 use App\Manager\StudentNoteCategoryManager;
+use App\Organism\StudentNoteCategories;
+use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class StudentController
@@ -44,5 +52,45 @@ class StudentController extends Controller
                 'message' => $studentNoteCategoryManager->getMessages(),
             ],
             200);
+    }
+
+    /**
+     * Student Settings
+     *
+     * @param Request $request
+     * @param SettingManager $sm
+     * @return Response
+     * @Route("/setting/student/management/", name="manage_student_settings")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function studentSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
+    {
+        $categories = new StudentNoteCategories();
+        $notes = new ArrayCollection($sm->getEntityManager()->getRepository(StudentNoteCategory::class)->findBy([], ['name' => 'ASC']));
+        $categories->setCategories($notes);
+        foreach ($sm->createSettingDefinition('Students') as $name =>$section)
+            if ($name === 'header')
+                $multipleSettingManager->setHeader($section);
+            else
+                $multipleSettingManager->addSection($section);
+        $categories->setMultipleSettings($multipleSettingManager);
+
+        $form = $this->createForm(StudentsSettingsType::class, $categories);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $multipleSettingManager->saveSections($sm);
+            foreach($categories->getCategories()->toArray() as $snc)
+                $sm->getEntityManager()->persist($snc);
+            $sm->getEntityManager()->flush();
+        }
+
+        return $this->render('Setting/student_settings.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
     }
 }

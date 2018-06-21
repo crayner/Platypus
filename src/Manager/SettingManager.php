@@ -1093,4 +1093,26 @@ class SettingManager implements ContainerAwareInterface
 
         return $class->getSettings($this);
     }
+
+    /**
+     * createSetting
+     *
+     * @param Setting $setting
+     * @return SettingManager
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     */
+    public function createSetting(Setting $setting): SettingManager
+    {
+        $exists = $this->get($setting->getName());
+        if ($exists instanceof SettingCache)
+            return $this->set($setting->getName(), $setting->getValue());
+
+        $this->getEntityManager()->persist($setting);
+        $this->getEntityManager()->flush();
+
+        return $this;
+    }
 }

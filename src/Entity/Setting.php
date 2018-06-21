@@ -124,6 +124,8 @@ class Setting implements UserTrackInterface
      */
     public function setDescription(?string $description): Setting
     {
+        if (empty($description))
+            $description = '';
         $this->description = $description;
         return $this;
     }

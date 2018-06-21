@@ -108,11 +108,19 @@ class SettingCache
     private $cacheTime;
 
     /**
-     * @return null|\DateTime
+     * @return bool
      */
-    public function getCacheTime(): ?\DateTime
+    public function isCacheTimeCurrent(): bool
     {
-        return $this->cacheTime;
+        if (empty($this->cacheTime))
+            return false;
+
+        if ($this->cacheTime->getTimestamp() > strtotime('-20 minutes'))
+            return true;
+
+        $this->setCacheTime(null);
+
+        return false;
     }
 
     /**
@@ -681,19 +689,19 @@ class SettingCache
      */
     public function isValid(): bool
     {
+        if (! $this->isBaseSetting() && ! empty($this->getName() && $this->isCacheTimeCurrent())) {
+            if (is_array($this->getValue()) && !$this->getType() === 'System')
+                return false;
+            return true;
+        }
+
         if ($this->isBaseSetting() && ! $this->getSetting() instanceof Setting)
             return false;
 
-        if (empty($this->getCacheTime()) || empty($this->getName()))
+        if (empty($this->getName()))
             return false;
 
-        if ($this->getCacheTime()->getTimestamp() < strtotime('-20 minutes'))
-        {
-            $this->setCacheTime(null);
-            return false;
-        }
-
-        return true;
+        return $this->isCacheTimeCurrent();
     }
 
     /**

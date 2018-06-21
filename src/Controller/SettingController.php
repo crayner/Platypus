@@ -84,46 +84,6 @@ class SettingController extends Controller
     }
 
     /**
-     * Student Settings
-     *
-     * @param Request $request
-     * @param SettingManager $sm
-     * @return Response
-     * @Route("/setting/student/management/", name="manage_student_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
-     */
-    public function studentSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
-    {
-        $categories = new StudentNoteCategories();
-        $notes = new ArrayCollection($sm->getEntityManager()->getRepository(StudentNoteCategory::class)->findBy([], ['name' => 'ASC']));
-        $categories->setCategories($notes);
-        foreach ($sm->createSettingDefinition('Students') as $name =>$section)
-            if ($name === 'header')
-                $multipleSettingManager->setHeader($section);
-            else
-                $multipleSettingManager->addSection($section);
-        $categories->setMultipleSettings($multipleSettingManager);
-
-        $form = $this->createForm(StudentsSettingsType::class, $categories);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($sm->getEntityManager());
-            foreach($categories->getCategories()->toArray() as $snc)
-                $sm->getEntityManager()->persist($snc);
-            $sm->getEntityManager()->flush();
-        }
-
-        return $this->render('Setting/student_settings.html.twig',
-            [
-                'form' => $form->createView(),
-                'fullForm' => $form,
-            ]
-        );
-    }
-
-    /**
      * manage Multiple Settings
      *
      * @param Request $request
@@ -143,7 +103,7 @@ class SettingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($settingManager->getEntityManager());
+            $multipleSettingManager->saveSections($settingManager);
         }
 
         return $this->render('Setting/multiple.html.twig',
@@ -180,7 +140,7 @@ class SettingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($sm->getEntityManager());
+            $multipleSettingManager->saveSections($sm);
             foreach($descriptors->getDescriptors()->toArray() as $ind)
                 $sm->getEntityManager()->persist($ind);
             $sm->getEntityManager()->flush();
