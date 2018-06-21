@@ -17,6 +17,7 @@ namespace App\Manager;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Stmt\Else_;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MultipleSettingManager
@@ -76,6 +77,7 @@ class MultipleSettingManager
             'name_parameters' => [],
             'description' => null,
             'description_parameters' => [],
+            'colour' => 'warning',
         ]);
         $section = $resolver->resolve($section);
 
@@ -178,7 +180,11 @@ class MultipleSettingManager
 
     /**
      * saveSections
-     *
+     * @param SettingManager $sm
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
      */
     public function saveSections(SettingManager $sm)
     {

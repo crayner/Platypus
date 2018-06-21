@@ -19,6 +19,8 @@ use App\Entity\Setting;
 use App\Organism\SettingCache;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * Class SectionSettingType
@@ -47,13 +49,34 @@ class SectionSettingType extends AbstractType
                         'section_name' => $section['name'],
                         'section_description' => $section['description'],
                     ],
+                    'constraints' => [
+                        new Valid(),
+                    ],
                 ]
             );
         }
     }
 
+    /**
+     * getBlockPrefix
+     *
+     * @return null|string
+     */
     public function getBlockPrefix()
     {
         return 'section';
+    }
+
+    /**
+     * configureOptions
+     *
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            [
+            ]
+        );
     }
 }

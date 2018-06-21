@@ -19,6 +19,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -55,11 +56,6 @@ class SettingManager implements ContainerAwareInterface
     private $twig;
 
     /**
-     * @var ValidatorInterface
-     */
-    private $validator;
-
-    /**
      * @var bool
      */
     private $databaseFail = false;
@@ -75,14 +71,12 @@ class SettingManager implements ContainerAwareInterface
      * @param MessageManager $messageManager
      */
     public function __construct(ContainerInterface $container, MessageManager $messageManager,
-                                AuthorizationCheckerInterface $authorisation, TwigManager $twig,
-                                ValidatorInterface $validator)
+                                AuthorizationCheckerInterface $authorisation, TwigManager $twig)
     {
         $this->setContainer($container);
         $this->messageManager = $messageManager;
         $this->authorisation = $authorisation;
         $this->twig = $twig;
-        $this->validator = $validator;
         try {
             $this->getEntityManager()->getRepository(Setting::class);
         } catch (ConnectionException $e) {
@@ -1114,5 +1108,29 @@ class SettingManager implements ContainerAwareInterface
         $this->getEntityManager()->flush();
 
         return $this;
+    }
+
+    /**
+     * validateSetting
+     *
+     * @param Setting $setting
+     * @param $value
+     * @return bool
+     */
+    public function validateSetting(Setting $setting, $value): bool
+    {
+        if (! empty($setting->getValidators())) {
+            $validator = Validation::createValidator();
+            $violations = $validator->validate($value, $setting->getValidators());
+
+            if (0 !== count($violations)) {
+                // there are errors, now you can show them
+                foreach ($violations as $violation) {
+                    $this->getMessageManager()->add('danger', $violation->getMessage(), [], false);
+                }
+                return false;
+            }
+        }
+        return true;
     }
 }

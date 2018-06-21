@@ -35,6 +35,14 @@ School Admin:
             route: year_groups_manage
             parameters: {}
             transDomain: School
+    other:
+        messenger_settings:
+            label: manage_messenger_settings
+            role: ROLE_PRINCIPAL
+            route: manage_settings
+            parameters: 
+                name: Messenger
+            transDomain: System
     people:
         alert_levels:
             label: manage_alert_levels

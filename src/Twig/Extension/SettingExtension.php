@@ -119,6 +119,6 @@ class SettingExtension extends AbstractExtension
 
     public function dumpSetting()
     {
-        dd($this->settingManager);
+        dump($this->settingManager);
     }
 }
