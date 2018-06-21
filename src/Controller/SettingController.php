@@ -15,18 +15,22 @@
  */
 namespace App\Controller;
 
+use App\Entity\AlertLevel;
 use App\Entity\INDescriptor;
 use App\Entity\StudentNoteCategory;
+use App\Form\AlertLevelsType;
 use App\Form\INDescriptorsType;
 use App\Form\SectionSettingType;
 use App\Form\StudentsSettingsType;
 use App\Manager\IndividualNeedDescriptorManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
+use App\Organism\AlertLevels;
 use App\Organism\IndividualNeedsDescriptors;
 use App\Organism\StudentNoteCategories;
 use App\Repository\SettingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -141,8 +145,8 @@ class SettingController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $multipleSettingManager->saveSections($sm);
-            foreach($descriptors->getDescriptors()->toArray() as $ind)
-                $sm->getEntityManager()->persist($ind);
+            foreach($descriptors->getDescriptors()->toArray() as $entity)
+                $sm->getEntityManager()->persist($entity);
             $sm->getEntityManager()->flush();
         }
 
@@ -160,19 +164,19 @@ class SettingController extends Controller
      * @Route("/student/individual/need/descriptor/{cid}/delete/", name="remove_individual_need_descriptor")
      * @IsGranted("ROLE_PRINCIPAL")
      * @param $cid
-     * @param IndividualNeedDescriptorManager $INDescriptorManager
+     * @param IndividualNeedDescriptorManager $ENTITYescriptorManager
      * @return JsonResponse
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function deleteStudentNoteCategory($cid, IndividualNeedDescriptorManager $INDescriptorManager)
+    public function deleteStudentNoteCategory($cid, IndividualNeedDescriptorManager $ENTITYescriptorManager)
     {
-        $INDescriptorManager->remove($cid);
+        $ENTITYescriptorManager->remove($cid);
 
         return new JsonResponse(
             [
-                'message' => $INDescriptorManager->getMessages(),
+                'message' => $ENTITYescriptorManager->getMessages(),
             ],
             200);
     }
@@ -193,4 +197,37 @@ class SettingController extends Controller
         return $this->forward(SettingController::class . '::manageMultipleSettings');
     }
 
+    /**
+     * Alert Levels Manage
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @Route("/setting/alert/level/manage/", name="manage_alert_levels")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function alertLevels(Request $request, EntityManagerInterface $entityManager)
+    {
+        $entities = $entityManager->getRepository(AlertLevel::class)->findBy([], ['sequence' => 'ASC']);
+        $alertLevels = new AlertLevels();
+        $alertLevels->setAlertLevels(new ArrayCollection($entities));
+
+
+        $form = $this->createForm(AlertLevelsType::class, $alertLevels);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach($alertLevels->getAlertLevels()->toArray() as $entity)
+                $entityManager->persist($entity);
+            $entityManager->flush();
+        }
+
+        return $this->render('Setting/alert_levels.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
 }

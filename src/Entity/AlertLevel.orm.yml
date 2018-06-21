@@ -16,10 +16,10 @@ App\Entity\AlertLevel:
             nullable: false
             column: name_short
         colour:
-            length: 6
+            length: 20
             nullable: true
         colourBG:
-            length: 6
+            length: 20
             nullable: true
             column: colour_bg
         description:

@@ -36,6 +36,12 @@ School Admin:
             parameters: {}
             transDomain: School
     people:
+        alert_levels:
+            label: manage_alert_levels
+            role: ROLE_PRINCIPAL
+            route: manage_alert_levels
+            parameters: {}
+            transDomain: System
         attendance_settings:
             label: manage_attendance_settings
             role: ROLE_PRINCIPAL

@@ -1,0 +1,36 @@
+{% trans_default_domain "System" %}
+
+{% block alert_level_label %}{% endblock %}
+{% block alert_level_errors %}{% endblock %}
+
+{% block alert_level_widget %}
+    {% spaceless %}
+        {% set h3Content = '<div class="collection-actions">' ~ saveButton({mergeClass: 'btn-sm'}) ~ '</div>' %}
+        {% include 'Default/panelStart.html.twig' with {header: form.name.vars.value|default('New Alert Level'|trans), colour: 'info'} %}
+        <div class="row">
+            <div class="col-6 card">
+                <div class="row">
+                    <div class="col-8 card">
+                        {{ form_row(form.name) }}
+                    </div>
+                    <div class="col-4 card">
+                        {{ form_row(form.nameShort) }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 card">
+                        {{ form_row(form.colour) }}
+                    </div>
+                    <div class="col-6 card">
+                        {{ form_row(form.colourBG) }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.description) }}
+            </div>
+        </div>
+        {{ form_rest(form) }}
+        {% include 'Default/panelEnd.html.twig' %}
+    {% endspaceless %}
+{% endblock alert_level_widget %}
