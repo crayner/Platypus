@@ -1,3 +1,9 @@
 [submodule "translations"]
 	path = translations
 	url = https://github.com/crayner/PlatypusTranslation.git
+[submodule "vendor\\hillrange\\security"]
+	path = vendor\\hillrange\\security
+	url = https://github.com/crayner/security.git
+[submodule "vendor\\hillrange\\security-form"]
+	path = vendor\\hillrange\\security-form
+	url = https://github.com/crayner/symfony-form.git
