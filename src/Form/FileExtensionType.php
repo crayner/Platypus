@@ -10,26 +10,23 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 19/06/2018
- * Time: 06:46
+ * Date: 22/06/2018
+ * Time: 11:51
  */
 namespace App\Form;
 
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use Hillrange\Form\Type\ColourType;
+use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
-use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class AlertLevelType
+ * Class FileExtensionType
  * @package App\Form
  */
-class AlertLevelType extends AbstractType
+class FileExtensionType extends AbstractType
 {
     /**
      * buildForm
@@ -42,35 +39,28 @@ class AlertLevelType extends AbstractType
         $builder
             ->add('name', TextType::class,
                 [
-                    'label' => 'alert_level.name.label',
-                ]
-            )
-            ->add('nameShort', TextType::class,
-                [
-                    'label' => 'alert_level.name_short.label',
-                ]
-            )
-            ->add('colour', ColourType::class,
-                [
-                    'required' => false,
-                    'label' => 'alert_level.colour.label',
-                ]
-            )
-            ->add('colourBG', ColourType::class,
-                [
-                    'required' => false,
-                    'label' => 'alert_level.colour_bg.label',
-                ]
-            )
-            ->add('description', TextareaType::class,
-                [
-                    'label' => 'alert_level.description.label',
+                    'label' => 'file_extension.name.label',
                     'attr' => [
-                        'rows' => '6',
+                        'class' => 'form-control-sm',
                     ],
                 ]
             )
-            ->add('sequence', HiddenType::class)
+            ->add('extension', TextType::class,
+                [
+                    'label' => 'file_extension.extension.label',
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
+                ]
+            )
+            ->add('type', EnumType::class,
+                [
+                    'label' => 'file_extension.type.label',
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
+                ]
+            )
             ->add('id', HiddenType::class,
                 [
                     'attr' => [
@@ -88,7 +78,7 @@ class AlertLevelType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'alert_level';
+        return 'file_extension';
     }
 
     /**

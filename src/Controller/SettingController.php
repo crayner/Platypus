@@ -16,18 +16,20 @@
 namespace App\Controller;
 
 use App\Entity\AlertLevel;
+use App\Entity\FileExtension;
 use App\Entity\INDescriptor;
-use App\Entity\StudentNoteCategory;
 use App\Form\AlertLevelsType;
+use App\Form\FileExtensionsType;
 use App\Form\INDescriptorsType;
 use App\Form\SectionSettingType;
-use App\Form\StudentsSettingsType;
+use App\Manager\FileExtensionManager;
+use App\Manager\FlashBagManager;
 use App\Manager\IndividualNeedDescriptorManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
 use App\Organism\AlertLevels;
+use App\Organism\FileExtensions;
 use App\Organism\IndividualNeedsDescriptors;
-use App\Organism\StudentNoteCategories;
 use App\Repository\SettingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -163,19 +165,19 @@ class SettingController extends Controller
      * @Route("/student/individual/need/descriptor/{cid}/delete/", name="remove_individual_need_descriptor")
      * @IsGranted("ROLE_PRINCIPAL")
      * @param $cid
-     * @param IndividualNeedDescriptorManager $ENTITYescriptorManager
+     * @param IndividualNeedDescriptorManager $INDescriptorManager
      * @return JsonResponse
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
      */
-    public function deleteStudentNoteCategory($cid, IndividualNeedDescriptorManager $ENTITYescriptorManager)
+    public function deleteStudentNoteCategory($cid, IndividualNeedDescriptorManager $INDescriptorManager)
     {
-        $ENTITYescriptorManager->remove($cid);
+        $INDescriptorManager->remove($cid);
 
         return new JsonResponse(
             [
-                'message' => $ENTITYescriptorManager->getMessages(),
+                'message' => $INDescriptorManager->getMessages(),
             ],
             200);
     }
@@ -228,5 +230,59 @@ class SettingController extends Controller
                 'fullForm' => $form,
             ]
         );
+    }
+
+    /**
+     * File Extension Manage
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @Route("/setting/file/extension/manage/", name="manage_file_extensions")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function fileExtensions(Request $request, EntityManagerInterface $entityManager)
+    {
+        $entities = $entityManager->getRepository(FileExtension::class)->findBy([], ['extension' => 'ASC']);
+        $alertLevels = new FileExtensions();
+        $alertLevels->setFileExtensions(new ArrayCollection($entities));
+
+
+        $form = $this->createForm(FileExtensionsType::class, $alertLevels);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach($alertLevels->getFileExtensions()->toArray() as $entity)
+                $entityManager->persist($entity);
+            $entityManager->flush();
+        }
+
+        return $this->render('Setting/file_extensions.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * delete File Extension
+     *
+     * @Route("/setting/file/extension/{cid}/remove/", name="remove_file_extension")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param $cid
+     * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     */
+    public function deleteFileExtension($cid, FileExtensionManager $manager, FlashBagManager $flashBagManager)
+    {
+        $manager->remove($cid);
+
+        $flashBagManager->renderMessages($manager->getMessageManager());
+
+        return $this->redirectToRoute('manage_file_extensions');
     }
 }

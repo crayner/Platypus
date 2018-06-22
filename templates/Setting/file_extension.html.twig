@@ -1,0 +1,24 @@
+{% trans_default_domain "System" %}
+
+{% block file_extension_label %}{% endblock %}
+{% block file_extension_errors %}{% endblock %}
+
+{% block file_extension_widget %}
+    {% spaceless %}
+    <div class="row">
+        <div class="col-2 card">
+            {{ form_widget(form.extension) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="col-3 card">
+            {{ form_widget(form.type) }}
+        </div>
+        <div class="col-3 card">
+            <div class="collection-actions">{{ saveButton({mergeClass: 'btn-sm'})|raw }}</div>
+        </div>
+    </div>
+    {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock file_extension_widget %}

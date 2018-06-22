@@ -1,0 +1,229 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_file_extension
+-
+  id: 1
+  name: "Microsoft Word 97/2/XP"
+  type: "document"
+  extension: "doc"
+-
+  id: 2
+  name: "Microsoft Word 27+"
+  type: "document"
+  extension: "docx"
+-
+  id: 3
+  name: "Apple Pages"
+  type: "document"
+  extension: "pages"
+-
+  id: 4
+  name: "OpenOffice Text"
+  type: "document"
+  extension: "odt"
+-
+  id: 5
+  name: "Plain Text"
+  type: "document"
+  extension: "txt"
+-
+  id: 6
+  name: "Rich Text Format"
+  type: "document"
+  extension: "rtf"
+-
+  id: 7
+  name: "Microsoft Excel 97/2/XP"
+  type: "spreadsheet"
+  extension: "xls"
+-
+  id: 8
+  name: "Microsoft Excel 27+"
+  type: "spreadsheet"
+  extension: "xlsx"
+-
+  id: 9
+  name: "OpenOffice SpreadSheet"
+  type: "spreadsheet"
+  extension: "ods"
+-
+  id: 10
+  name: "Apple Numbers"
+  type: "spreadsheet"
+  extension: "numbers"
+-
+  id: 11
+  name: "Comma Seperate Values"
+  type: "spreadsheet"
+  extension: "csv"
+-
+  id: 12
+  name: "Microsoft PowerPoint 97/2/XP"
+  type: "presentation"
+  extension: "ppt"
+-
+  id: 13
+  name: "Microsoft PowerPoint 27+"
+  type: "presentation"
+  extension: "pptx"
+-
+  id: 14
+  name: "Apple Keynote"
+  type: "presentation"
+  extension: "key"
+-
+  id: 15
+  name: "MPEG Audio"
+  type: "audio"
+  extension: "mp3"
+-
+  id: 16
+  name: "MPEG Audio"
+  type: "audio"
+  extension: "mp4"
+-
+  id: 17
+  name: "MPEG Audio"
+  type: "audio"
+  extension: "m4a"
+-
+  id: 18
+  name: "Windows Media Audio"
+  type: "audio"
+  extension: "wma"
+-
+  id: 19
+  name: "Vorbis Ogg"
+  type: "audio"
+  extension: "ogg"
+-
+  id: 20
+  name: "MPEG Audio"
+  type: "audio"
+  extension: "aac"
+-
+  id: 21
+  name: "Portable Network Graphics"
+  type: "graphics_design"
+  extension: "png"
+-
+  id: 22
+  name: "Joint Picture Expert Group"
+  type: "graphics_design"
+  extension: "jpg"
+-
+  id: 23
+  name: "Graphics Interchange Format"
+  type: "graphics_design"
+  extension: "gif"
+-
+  id: 24
+  name: "Acorn"
+  type: "graphics_design"
+  extension: "acorn"
+-
+  id: 25
+  name: "Adobe Illustrator"
+  type: "graphics_design"
+  extension: "ai"
+-
+  id: 26
+  name: "Adobe Photoshop"
+  type: "graphics_design"
+  extension: "psd"
+-
+  id: 28
+  name: "GIMP eXperimental Computing Facility"
+  type: "graphics_design"
+  extension: "xcf"
+-
+  id: 29
+  name: "Audio Video Interleave"
+  type: "video"
+  extension: "avi"
+-
+  id: 30
+  name: "Windows Media Video"
+  type: "video"
+  extension: "wmv"
+-
+  id: 31
+  name: "MPEG Video"
+  type: "video"
+  extension: "mpg"
+-
+  id: 32
+  name: "QuickTime Movie"
+  type: "video"
+  extension: "mov"
+-
+  id: 33
+  name: "Adobe Flash Video"
+  type: "video"
+  extension: "flv"
+-
+  id: 34
+  name: "Adobe Flash"
+  type: "other"
+  extension: "fla"
+-
+  id: 35
+  name: "Adobe Flash"
+  type: "video"
+  extension: "swf"
+-
+  id: 36
+  name: "Google SketchUp"
+  type: "graphics_design"
+  extension: "skp"
+-
+  id: 37
+  name: "Portable Document Format"
+  type: "document"
+  extension: "pdf"
+-
+  id: 38
+  name: "Joint Picture Expert Group"
+  type: "graphics_design"
+  extension: "jpeg"
+-
+  id: 39
+  name: "MPEG Video"
+  type: "video"
+  extension: "mpeg"
+-
+  id: 40
+  name: "Scratch"
+  type: "other"
+  extension: "sb"
+-
+  id: 41
+  name: "MPG Varient"
+  type: "video"
+  extension: "m4v"
+-
+  id: 42
+  name: "ZIP Compressed Archive"
+  type: "compression"
+  extension: "zip"
+-
+  id: 43
+  name: "HyperText Marrkup Language"
+  type: "document"
+  extension: "htm"
+-
+  id: 44
+  name: "HyperText Marrkup Language"
+  type: "document"
+  extension: "html"
+-
+  id: 45
+  name: "3rd Generation Partnership Video"
+  type: "video"
+  extension: "3gp"
+-
+  id: 46
+  name: "Scratch 2"
+  type: "other"
+  extension: "sb2"
+...

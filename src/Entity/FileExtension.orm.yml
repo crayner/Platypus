@@ -19,3 +19,4 @@ App\Entity\FileExtension:
         extension:
             length: 7
             nullable: false
+            unique: true

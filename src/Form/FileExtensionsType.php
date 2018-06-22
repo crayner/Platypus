@@ -10,22 +10,22 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 18/06/2018
- * Time: 18:31
+ * Date: 22/06/2018
+ * Time: 11:49
  */
 namespace App\Form;
 
-use App\Entity\AlertLevel;
+use App\Entity\FileExtension;
 use Hillrange\Form\Type\CollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class AlertLevelsType
+ * Class FileExtensionsType
  * @package App\Form
  */
-class AlertLevelsType extends AbstractType
+class FileExtensionsType extends AbstractType
 {
     /**
      * buildForm
@@ -36,16 +36,16 @@ class AlertLevelsType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('alertLevels', CollectionType::class,
+            ->add('fileExtensions', CollectionType::class,
                 [
-                    'entry_type' => AlertLevelType::class,
+                    'entry_type' => FileExtensionType::class,
                     'entry_options' => [
-                        'data_class' => AlertLevel::class,
+                        'data_class' => FileExtension::class,
                     ],
                     'allow_add' => true,
-                    'allow_delete' => false,
-                    'sort_manage' => true,
+                    'allow_delete' => true,
                     'button_merge_class' => 'btn-sm',
+                    'redirect_route' => 'remove_file_extension',
                 ]
             )
         ;

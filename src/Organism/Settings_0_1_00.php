@@ -25,7 +25,7 @@ org.name:
     validators: null
     role: ROLE_REGISTRAR
     defaultValue: {  }
-    translateChoice: null
+    translateChoice: System
 countrytype:
     type: text
     name: countrytype
@@ -36,7 +36,18 @@ countrytype:
     validators: null
     role: ROLE_SYSTEM_ADMIN
     defaultValue: null
-    translateChoice: null
+    translateChoice: System
+currency:
+    type: text
+    name: currency
+    displayName: 'Currency'
+    description: 'The currency used by the system for financial details.'
+    value: Symfony\Component\Form\Extension\Core\Type\CurrencyType
+    choice: null
+    validators: [Symfony\Component\Validator\Constraints\Currency]
+    role: ROLE_SYSTEM_ADMIN
+    defaultValue: AUD
+    translateChoice: System
 org.logo:
     type: image
     name: org.logo
@@ -47,7 +58,7 @@ org.logo:
     validators: [App\Validator\Logo]
     role: ROLE_REGISTRAR
     defaultValue: bundles/platypustemplateoriginal/img/bee.png
-    translateChoice: null
+    translateChoice: System
 org.transparent.logo:
     type: image
     name: org.transparent.logo

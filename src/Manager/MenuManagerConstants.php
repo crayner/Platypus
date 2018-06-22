@@ -36,6 +36,12 @@ School Admin:
             parameters: {}
             transDomain: School
     other:
+        file_extension:
+            label: manage_file_extension
+            role: ROLE_PRINCIPAL
+            route: manage_file_extensions
+            parameters: {}
+            transDomain: System
         finance_settings:
             label: manage_finance_settings
             role: ROLE_PRINCIPAL

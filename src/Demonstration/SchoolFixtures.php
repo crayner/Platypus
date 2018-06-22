@@ -20,6 +20,7 @@ use App\Entity\Campus;
 use App\Entity\Course;
 use App\Entity\DayOfWeek;
 use App\Entity\Department;
+use App\Entity\FileExtension;
 use App\Entity\INDescriptor;
 use App\Entity\Invoice;
 use App\Entity\Scale;
@@ -58,6 +59,10 @@ class SchoolFixtures implements DummyDataInterface
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/attendance_code.yml'));
 
         $this->setLogger($logger)->buildTable($data, AttendanceCode::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/file_extension.yml'));
+
+        $this->setLogger($logger)->buildTable($data, FileExtension::class, $manager);
 
         /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
 

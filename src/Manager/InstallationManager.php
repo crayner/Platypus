@@ -15,7 +15,6 @@
  */
 namespace App\Manager;
 
-
 use App\Organism\Database;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\ConnectionException;

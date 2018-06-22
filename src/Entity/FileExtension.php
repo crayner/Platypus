@@ -27,6 +27,7 @@ class FileExtension
      */
     public static function getTypeList(): array
     {
+        sort(self::$typeList);
         return self::$typeList;
     }
 
@@ -80,7 +81,7 @@ class FileExtension
      * @var array
      */
     public static $typeList = [
-        'document','spreadsheet','presentation','graphics_design','video','audio','other',
+        'document','spreadsheet','presentation','graphics_design','video','audio','compression','other',
     ];
 
     /**
@@ -88,8 +89,7 @@ class FileExtension
      */
     public function getType(): ?string
     {
-
-        return $this->type = in_array($this->type, self::$typeList) ? $this->type : null ;
+        return $this->type = in_array(strtolower($this->type), self::$typeList) ? strtolower($this->type) : 'other' ;
     }
 
     /**
@@ -98,7 +98,7 @@ class FileExtension
      */
     public function setType(?string $type): FileExtension
     {
-        $this->type = in_array($type, self::$typeList) ? $type : null ;;
+        $this->type = in_array(strtolower($type), self::$typeList) ? strtolower($type) : 'other' ;
         return $this;
     }
 
@@ -112,7 +112,7 @@ class FileExtension
      */
     public function getExtension(): ?string
     {
-        return $this->extension;
+        return strtolower($this->extension);
     }
 
     /**
@@ -121,7 +121,7 @@ class FileExtension
      */
     public function setExtension(string $extension): FileExtension
     {
-        $this->extension = $extension;
+        $this->extension = strtolower(in_array($extension, self::getTypeList()) ? $extension: 'other');
         return $this;
     }
 }
