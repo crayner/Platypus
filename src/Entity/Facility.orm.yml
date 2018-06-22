@@ -11,6 +11,7 @@ App\Entity\Facility:
         name:
             length: 30
             nullable: false
+            unique: true
         type:
             length: 32
         capacity:

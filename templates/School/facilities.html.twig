@@ -46,7 +46,7 @@
                     {{ resource.entity.name }}
                 </div>
                 <div class="col-2 form-inline">
-                    {{ resource.entity.type }}
+                    {{ ('school_admin.facility_types.' ~ resource.entity.type)|trans({}, 'Setting') }}
                 </div>
                 <div class="col-2 form-inline text-right">
                     {{ resource.entity.capacity }}
@@ -64,7 +64,7 @@
                     {% if resource.entity.phoneExt %}{{ 'facility.phone_ext.label'|trans }} {{ resource.entity.phoneExt }}<br/>{% endif %}
                 </div>
                 <div class="col-2 form-inline">
-                    {{ editButton({title: 'facility.edit.title', transDomain: 'School', mergeClass: 'btn-sm', windowOpen: {route: path('facility_edit', {id: resource.id})}})|raw }}
+                    {{ editButton({title: 'facility.edit.title', transDomain: 'School', mergeClass: 'btn-sm', windowOpen: {route: path('facility_edit', {id: resource.id}), target: 'FacilityEdit', params: 'width=1000,height=650'}})|raw }}
                 </div>
             </div>
         {% endfor %}

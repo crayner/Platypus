@@ -73,7 +73,7 @@ class Facility
      */
     public function getType(): ?string
     {
-        return $this->type;
+        return strtolower($this->type);
     }
 
     /**
@@ -82,7 +82,7 @@ class Facility
      */
     public function setType(?string $type): Facility
     {
-        $this->type = $type;
+        $this->type = strtolower($type);
         return $this;
     }
 

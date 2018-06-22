@@ -51,6 +51,7 @@ class FacilityType extends AbstractType
                     ],
                     'setting_name' => 'school_admin.facility_types',
                     'sort_choice' => false,
+                    'choice_translation_domain' => 'Setting',
                 )
             )
             ->add('capacity', IntegerType::class, array(
@@ -60,7 +61,6 @@ class FacilityType extends AbstractType
                         'max'   => '9999',
                         'class' => 'monitorChange',
                     ),
-                    'help'  => 'facility.capacity.help',
                     'empty_data' => '0',
                 )
             )
@@ -129,6 +129,7 @@ class FacilityType extends AbstractType
             )
             ->add('phoneInt', null, array(
                     'label' => 'facility.phoneint.label',
+                    'help' => 'facility.phoneint.help',
                     'attr'     => [
                         'class' => 'monitorChange',
                     ],
@@ -136,6 +137,7 @@ class FacilityType extends AbstractType
             )
             ->add('phoneExt', null, array(
                     'label' => 'facility.phoneext.label',
+                    'help' => 'facility.phoneext.help',
                     'attr'     => [
                         'class' => 'monitorChange',
                     ],
@@ -146,6 +148,7 @@ class FacilityType extends AbstractType
                     'required' => false,
                     'attr'     => [
                         'class' => 'monitorChange',
+                        'rows' => '5',
                     ],
                 )
             )

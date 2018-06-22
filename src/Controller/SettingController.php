@@ -16,11 +16,9 @@
 namespace App\Controller;
 
 use App\Entity\AlertLevel;
-use App\Entity\Facility;
 use App\Entity\FileExtension;
 use App\Entity\INDescriptor;
 use App\Form\AlertLevelsType;
-use App\Form\FacilityType;
 use App\Form\FileExtensionsType;
 use App\Form\INDescriptorsType;
 use App\Form\SectionSettingType;
@@ -32,7 +30,6 @@ use App\Manager\SettingManager;
 use App\Organism\AlertLevels;
 use App\Organism\FileExtensions;
 use App\Organism\IndividualNeedsDescriptors;
-use App\Pagination\FacilityPagination;
 use App\Repository\SettingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -286,106 +283,5 @@ class SettingController extends Controller
         $flashBagManager->renderMessages($manager->getMessageManager());
 
         return $this->redirectToRoute('manage_file_extensions');
-    }
-
-    /**
-     * @Route("/setting/facility/list/", name="manage_facilities")
-     * @IsGranted("ROLE_REGISTRAR")
-     * @param Request         $request
-     * @param FacilityPagination $pagination
-     *
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function facilityList(Request $request, FacilityPagination $pagination)
-    {
-        $pagination->injectRequest($request);
-
-        $pagination->getDataSet();
-
-        return $this->render('School/facilities.html.twig',
-            array(
-                'pagination' => $pagination,
-            )
-        );
-    }
-
-    /**
-     * @Route("/setting/facility/{id}/edit/", name="facility_edit")
-     * @IsGranted("ROLE_REGISTRAR")
-     * @param $id
-     * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function editFacility($id, Request $request)
-    {
-        $facility = new Facility();
-
-        if (intval($id) > 0)
-            $facility = $this->getDoctrine()->getManager()->getRepository(Facility::class)->find($id);
-
-        $facility->cancelURL = $this->get('router')->generate('manage_facilities');
-
-        $form = $this->createForm(FacilityType::class, $facility);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $em = $this->get('doctrine')->getManager();
-
-            $em->persist($facility);
-            $em->flush();
-
-            if ($id === 'Add')
-                return $this->redirectToRoute('facility_edit', ['id' => $facility->getId()]);
-        }
-
-        return $this->render('School/facilityEdit.html.twig', ['id' => $id, 'form' => $form->createView()]);
-    }
-
-    /**
-     * @Route("/school/facility/duplicate/", name="facility_duplicate")
-     * @IsGranted("ROLE_REGISTRAR")
-     * @param Request $request
-     * @return Response
-     */
-    public function duplicateFacility(Request $request)
-    {
-        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, null);
-
-        $id = $request->get('facility')['duplicateid'];
-
-        if ($id === "Add")
-            $facility = new Facility();
-        else
-            $facility = $this->getDoctrine()->getManager()->getRepository(Facility::class)->find($id);
-
-        $facility->cancelURL = $this->generateUrl('manage_facilities');
-
-        $form = $this->createForm(FacilityType::class, $facility);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $em = $this->get('doctrine')->getManager();
-
-            $em->persist($facility);
-            $em->flush();
-
-            $route = $this->generateUrl('facility_edit', ['id' => 'Add']);
-            $facility->setId(null);
-            $facility->setName(null);
-            $form = $this->createForm(FacilityType::class, $facility, ['action' => $route]);
-            $id   = 'Add';
-        }
-
-
-        return $this->render('School/facilityEdit.html.twig',
-            [
-                'id'   => $id,
-                'form' => $form->createView(),
-            ]
-        );
     }
 }
