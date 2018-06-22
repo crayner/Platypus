@@ -821,7 +821,7 @@ class SettingManager implements ContainerAwareInterface
      */
     public function getValidator(): ValidatorInterface
     {
-        return $this->validator;
+        return Validation::createValidator();
     }
 
     /**

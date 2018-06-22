@@ -1,0 +1,21 @@
+App\Entity\FileExtension:
+    type: entity
+    table: file_extension
+    repositoryClass: App\Repository\FileExtensionRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 50
+            nullable: false
+        type:
+            length: 32
+            nullable: false
+            options:
+                default: other
+        extension:
+            length: 7
+            nullable: false
