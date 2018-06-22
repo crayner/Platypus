@@ -36,6 +36,13 @@ School Admin:
             parameters: {}
             transDomain: School
     other:
+        finance_settings:
+            label: manage_finance_settings
+            role: ROLE_PRINCIPAL
+            route: manage_settings
+            parameters: 
+                name: Finance
+            transDomain: System
         messenger_settings:
             label: manage_messenger_settings
             role: ROLE_PRINCIPAL

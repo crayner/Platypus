@@ -122,10 +122,12 @@ class SettingManager implements ContainerAwareInterface
         }
         $this->loadSetting($name);
 
-        if ($this->isValid()) {
+        if ($this->isValid() && $this->isCorrectName($name)) {
             $this->logger->debug(sprintf('The setting %s was found and returned from the database.', $name), [$name, $default, $options]);
             return $this->getValue($default, $options);
         }
+        elseif ($this->isValid() && ! $this->isCorrectName($name))
+            return $this->get($this->name, $default, $options);
 
         return $default;
     }
@@ -1132,5 +1134,18 @@ class SettingManager implements ContainerAwareInterface
             }
         }
         return true;
+    }
+
+    /**
+     * isCorrectName
+     *
+     * @param $name
+     * @return bool
+     */
+    private function isCorrectName($name): bool
+    {
+        if ($name === $this->name)
+            return true;
+        return false;
     }
 }

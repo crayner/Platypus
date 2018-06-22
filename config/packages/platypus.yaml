@@ -18,3 +18,4 @@ parameters:
     country: AU
     timezone: Australia/Sydney
     idleTimeout: 15
+    currency: AUD

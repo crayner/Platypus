@@ -104,8 +104,6 @@ class SettingController extends Controller
 
         $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
 
-        dump($form->get('message_wall_settings')->get('collection')->get('1')->get('value'));
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
