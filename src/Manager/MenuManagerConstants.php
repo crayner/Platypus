@@ -36,6 +36,13 @@ School Admin:
             parameters: {}
             transDomain: School
     other:
+        facility_settings:
+            label: manage_facility_settings
+            role: ROLE_PRINCIPAL
+            route: manage_settings
+            parameters: 
+                name: Facility
+            transDomain: System
         file_extension:
             label: manage_file_extension
             role: ROLE_PRINCIPAL
