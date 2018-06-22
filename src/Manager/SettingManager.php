@@ -120,15 +120,17 @@ class SettingManager implements ContainerAwareInterface
             $this->logger->debug(sprintf('The setting %s was found and returned from the cache.', $name), [$name, $default, $options]);
             return $this->getValue($default, $options);
         }
+
         $this->loadSetting($name);
 
         if ($this->isValid() && $this->isCorrectName($name)) {
             $this->logger->debug(sprintf('The setting %s was found and returned from the database.', $name), [$name, $default, $options]);
             return $this->getValue($default, $options);
         }
-        elseif ($this->isValid() && ! $this->isCorrectName($name))
+        elseif ($this->isValid() && ! $this->isCorrectName($name)) {
+            $this->logger->error(sprintf('The setting %s was found but an issue caused the system to reject the value..', $name), [$name, $default, $options]);
             return $this->get($this->name, $default, $options);
-
+        }
         return $default;
     }
 
@@ -282,6 +284,7 @@ class SettingManager implements ContainerAwareInterface
             if ($this->setting instanceof SettingCache && $this->setting->isValid()) {
                 if ($this->setting->getType() !== 'array')
                     return $this;
+
                 foreach ($this->setting->getValue() as $key => $value) {
                     if (strtolower($part) === strtolower($key)) {
                         $setting = $this->getSettingCache();
@@ -291,7 +294,9 @@ class SettingManager implements ContainerAwareInterface
                             ->setParentKey($key)->setValue($value)
                             ->setDefaultValue(null)
                             ->setCacheTime(new \DateTime('now'));
-                        $this->addSetting($setting);
+                        $xxx = $this->setting->getSetting()->getName() . '.' . strtolower($key);
+                        $this->addSetting($setting, $xxx);
+                        $this->logger->debug(sprintf('The setting "%s" was created from an array parent.', $xxx));
                         return $this;
                     }
                 }
@@ -1142,10 +1147,17 @@ class SettingManager implements ContainerAwareInterface
      * @param $name
      * @return bool
      */
-    private function isCorrectName($name): bool
+    public function isCorrectName($name): bool
     {
-        if ($name === $this->name)
+        if ($name === $this->setting->getName())
             return true;
+
+        $this->settings = null;
+        $this->setting = null;
+
+        if($this->hasSession())
+            $this->getSession()->set('settings', $this->getSettings());
+
         return false;
     }
 }
