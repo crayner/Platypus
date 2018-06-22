@@ -34,7 +34,10 @@
             <div class="col-3 card small">
                 {{ form_row(form.future, {button_class_off: 'btn btn-sm btn-danger', button_class_on: 'btn btn-sm btn-success'}) }}
             </div>
-            <div class="col-6 card small">
+            <div class="col-3 card small">
+                {{ form_row(form.type, {attr: {class: 'form-control-sm'}}) }}
+            </div>
+            <div class="col-3 card small">
                 {{ form_row(form.role, {attr: {class: 'form-control-sm'}}) }}
                 {{ form_widget(form.id) }}
                 {{ form_widget(form.sequence) }}
