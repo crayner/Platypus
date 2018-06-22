@@ -16,8 +16,10 @@
 namespace App\Form;
 
 use App\Entity\House;
+use App\Entity\Person;
 use App\Entity\YearGroup;
 use App\Form\Subscriber\HouseSubscriber;
+use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
@@ -56,6 +58,18 @@ class YearGroupType extends AbstractType
                     'attr'      => [
                         'class' => 'form-control-sm',
                     ],
+                ]
+            )
+            ->add('headOfYear', EntityType::class,
+                [
+                    'label'       => 'school.year_group.head_of_year.label',
+                    'class'     => Person::class,
+                    'placeholder' => 'school.year_group.head_of_year.placeholder',
+                    'choice_label' => 'fullName',
+                    'attr'      => [
+                        'class' => 'form-control-sm',
+                    ],
+                    'required' => false,
                 ]
             )
             ->add('id', HiddenType::class,

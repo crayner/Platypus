@@ -110,4 +110,27 @@ class YearGroup
         $this->sequence = $sequence ?: 0;
         return $this;
     }
+
+    /**
+     * @var Person|null
+     */
+    private $headOfYear;
+
+    /**
+     * @return Person|null
+     */
+    public function getHeadOfYear(): ?Person
+    {
+        return $this->headOfYear;
+    }
+
+    /**
+     * @param Person|null $headOfYear
+     * @return YearGroup
+     */
+    public function setHeadOfYear(?Person $headOfYear): YearGroup
+    {
+        $this->headOfYear = $headOfYear;
+        return $this;
+    }
 }

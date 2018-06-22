@@ -19,9 +19,10 @@
     <div class="houseMessage"></div>
     {{ form_start(form) }}
     <div class="row row-header">
-        <div class="col-4 text-center">{{ 'school.year_group.name.label'|trans }}</div>
-        <div class="col-4 text-center">{{ 'school.year_group.name_short.label'|trans }}</div>
-        <div class="col-4 text-right">{{ 'action'|trans({}, 'System') }}</div>
+        <div class="col-3 text-center">{{ 'school.year_group.name.label'|trans }}</div>
+        <div class="col-3 text-center">{{ 'school.year_group.name_short.label'|trans }}</div>
+        <div class="col-3 text-center">{{ 'school.year_group.head_of_year.label'|trans }}</div>
+        <div class="col-3 text-right">{{ 'action'|trans({}, 'System') }}</div>
     </div>
     {{ collection_widget(form.collection) }}
     {{ form_end(form) }}
