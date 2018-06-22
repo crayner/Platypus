@@ -1,0 +1,28 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_alert_level
+-
+  id: 1
+  name: "Low"
+  name_short: "L"
+  colour: "#939090"
+  colour_bg: "#dddddd"
+  description: "Low severity, requiring little to no readiness, action, individual support or differentiation."
+  sequence: 1
+-
+  id: 2
+  name: "Medium"
+  name_short: "M"
+  colour: "#ff7414"
+  colour_bg: "#ffd2a9"
+  description: "Moderate severity, requiring intermediate level of readiness, action, individual support or differentiation."
+  sequence: 2
+-
+  id: 3
+  name: "High"
+  name_short: "H"
+  colour: "#cc0000"
+  colour_bg: "#f6cecb"
+  description: "Highest level of severity, requiring intense and immediate readiness, action, individual support or differentiation."
+  sequence: 3
+...

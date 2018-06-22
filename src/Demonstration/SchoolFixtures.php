@@ -15,6 +15,7 @@
  */
 namespace App\Demonstration;
 
+use App\Entity\AlertLevel;
 use App\Entity\AttendanceCode;
 use App\Entity\Campus;
 use App\Entity\Course;
@@ -22,11 +23,13 @@ use App\Entity\DayOfWeek;
 use App\Entity\Department;
 use App\Entity\Facility;
 use App\Entity\FileExtension;
+use App\Entity\House;
 use App\Entity\INDescriptor;
 use App\Entity\Invoice;
 use App\Entity\Scale;
 use App\Entity\Setting;
 use App\Entity\StudentNoteCategory;
+use App\Entity\YearGroup;
 use Doctrine\Common\Persistence\ObjectManager;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -68,6 +71,18 @@ class SchoolFixtures implements DummyDataInterface
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/facility.yml'));
 
         $this->setLogger($logger)->buildTable($data, Facility::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/house.yml'));
+
+        $this->setLogger($logger)->buildTable($data, House::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/alert_level.yml'));
+
+        $this->setLogger($logger)->buildTable($data, AlertLevel::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/year_group.yml'));
+
+        $this->setLogger($logger)->buildTable($data, YearGroup::class, $manager);
 
         /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
 

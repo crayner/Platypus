@@ -1,0 +1,39 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_year_group
+-
+  id: 1
+  name: "Year 13"
+  name_short: "Y13"
+  sequence: 501
+-
+  id: 2
+  name: "Year 12"
+  name_short: "Y12"
+  sequence: 502
+-
+  id: 3
+  name: "Year 11"
+  name_short: "Y11"
+  sequence: 503
+-
+  id: 4
+  name: "Year 10"
+  name_short: "Y10"
+  sequence: 504
+-
+  id: 5
+  name: "Year 9"
+  name_short: "Y09"
+  sequence: 505
+-
+  id: 6
+  name: "Year 8"
+  name_short: "Y08"
+  sequence: 506
+-
+  id: 7
+  name: "Year 7"
+  name_short: "Y07"
+  sequence: 507
+...

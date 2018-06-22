@@ -1,0 +1,16 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_house
+-
+  id: 1
+  name: "Ming"
+  nameShort: "M"
+-
+  id: 2
+  name: "Tang"
+  nameShort: "T"
+-
+  id: 3
+  name: "Song"
+  nameShort: "S"
+...
