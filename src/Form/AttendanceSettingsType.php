@@ -42,8 +42,8 @@ class AttendanceSettingsType extends AbstractType
                         'data_class' => AttendanceCode::class,
                     ],
                     'allow_add' => true,
-                    'allow_delete' => false,
-                    'remove_element_route' => 'remove_attendance_code',
+                    'allow_delete' => true,
+                    'redirect_route' => 'remove_attendance_code',
                     'button_merge_class'    => 'btn-sm',
                     'sort_manage' => true,
                 ]

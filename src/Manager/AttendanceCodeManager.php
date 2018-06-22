@@ -86,19 +86,24 @@ class AttendanceCodeManager
      */
     public function remove($id): bool
     {
-        $snc = $this->find($id);
-        if (empty($snc)) {
+        $entity = $this->find($id);
+        if (empty($entity)) {
             $this->getMessageManager()->add('warning', 'attendance_code.not_found');
             return false;
         }
+        
+        if (!$entity->canDelete()){
+            $this->getMessageManager()->add('warning', 'attendance_code.remove.locked', ['%{name}' => $entity->getName()]);
+            return false;
+        }
         try {
-            $this->getEntityManager()->remove($snc);
+            $this->getEntityManager()->remove($entity);
             $this->getEntityManager()->flush();
         } catch (\Exception $e) {
             $this->getMessageManager()->add('danger', 'attendance_code.remove.error', ['%{message}' => $e->getMessage()]);
             return false;
         }
-        $this->getMessageManager()->add('success', 'attendance_code.remove.success', ['%{name}' => $snc->getName()]);
+        $this->getMessageManager()->add('success', 'attendance_code.remove.success', ['%{name}' => $entity->getName()]);
         return true;
     }
 

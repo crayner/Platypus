@@ -344,4 +344,16 @@ class AttendanceCode
         $this->setType($this->getType());
         return $this;
     }
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        if ($this->getType() === 'core')
+            return false;
+        return true;
+    }
 }
