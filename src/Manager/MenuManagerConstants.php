@@ -36,6 +36,13 @@ School Admin:
             parameters: {}
             transDomain: School
     other:
+        dashboard_settings:
+            label: manage_dashboard_settings
+            role: ROLE_PRINCIPAL
+            route: manage_settings
+            parameters: 
+                name: Dashboard
+            transDomain: System
         manage_facilities:
             label: manage_facilities
             role: ROLE_PRINCIPAL

@@ -1411,4 +1411,61 @@
   translate_choice: "School"
   last_modified: "2018-06-22 11:25:23"
   created_on: "2018-06-22 11:25:23"
+-
+  id: 124
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "school_admin.facility_types"
+  display_name: "Facility Types"
+  description: "List of types for facilities."
+  value: "- classroom\n- hall\n- laboratory\n- library\n- office\n- outdoor\n- performance\n- staffroom\n- storage\n- study\n- undercover\n- other\n"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "- classroom\n- hall\n- laboratory\n- library\n- office\n- outdoor\n- performance\n- staffroom\n- storage\n- study\n- undercover\n- other\n"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 13:14:01"
+  created_on: "2018-06-22 13:13:33"
+-
+  id: 125
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "school_admin.staff_dashboard_default_tab"
+  display_name: "Staff Dashboard Default Tab"
+  description: "The default landing tab for the staff dashboard."
+  choice: ",planner"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 16:30:03"
+  created_on: "2018-06-22 16:29:03"
+-
+  id: 126
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "school_admin.student_dashboard_default_tab"
+  display_name: "Student Dashboard Default Tab"
+  description: "The default landing tab for the student dashboard."
+  choice: ",planner"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 16:30:03"
+  created_on: "2018-06-22 16:29:03"
+-
+  id: 127
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "school_admin.parent_dashboard_default_tab"
+  display_name: "Parent Dashboard Default Tab"
+  description: "The default landing tab for the parent dashboard."
+  choice: ",learning_overview,timetable,activities"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 16:30:03"
+  created_on: "2018-06-22 16:29:03"
 ...
