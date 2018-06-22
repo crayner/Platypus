@@ -20,6 +20,7 @@ use App\Entity\Campus;
 use App\Entity\Course;
 use App\Entity\DayOfWeek;
 use App\Entity\Department;
+use App\Entity\Facility;
 use App\Entity\FileExtension;
 use App\Entity\INDescriptor;
 use App\Entity\Invoice;
@@ -64,13 +65,17 @@ class SchoolFixtures implements DummyDataInterface
 
         $this->setLogger($logger)->buildTable($data, FileExtension::class, $manager);
 
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/facility.yml'));
+
+        $this->setLogger($logger)->buildTable($data, Facility::class, $manager);
+
         /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
 
                 $this->setLogger($logger)->buildTable($data, Campus::class, $manager);
 
                 $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/space.yml'));
 
-                $this->buildTable($data, Space::class, $manager);
+                $this->buildTable($data, Facility::class, $manager);
 
                 $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department.yml'));
 

@@ -36,6 +36,12 @@ School Admin:
             parameters: {}
             transDomain: School
     other:
+        manage_facilities:
+            label: manage_facilities
+            role: ROLE_PRINCIPAL
+            route: manage_facilities
+            parameters: {}
+            transDomain: System
         facility_settings:
             label: manage_facility_settings
             role: ROLE_PRINCIPAL
@@ -291,14 +297,14 @@ School Admin:
 	        transDomain: Facility
         space_list:
 	        label: menu.space.list.title
-	        name: Space Management
+	        name: Facility Management
 	        role: ROLE_REGISTRAR
 	        route: space_list
 	        parameters: {}
 	        transDomain: Facility
         space_type:
 	        label: menu.space.type.title
-	        name: Space Management
+	        name: Facility Management
 	        role: ROLE_SYSTEM_ADMIN
 	        route: facility_type_manage
 	        transDomain: Setting

@@ -1,0 +1,47 @@
+App\Entity\Facility:
+    type: entity
+    table: facility
+    repositoryClass: App\Repository\FacilityRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 30
+            nullable: false
+        type:
+            length: 32
+        capacity:
+            type: integer
+            nullable: true
+        computer:
+            type: boolean
+            options:
+                default: '0'
+        studentComputers:
+            type: integer
+            options:
+                default: '0'
+        projector:
+            type: boolean
+        tv:
+            type: boolean
+        dvd:
+            type: boolean
+        hifi:
+            type: boolean
+        speakers:
+            type: boolean
+        iwb:
+            type: boolean
+        phoneInt:
+            length: '5'
+            nullable: true
+        phoneExt:
+            length: '20'
+            nullable: true
+        comment:
+            type: text
+            nullable: true

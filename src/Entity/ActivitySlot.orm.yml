@@ -33,9 +33,9 @@ App\Entity\ActivitySlot:
                 name: day_of_week_id
                 referencedColumnName: id
                 nullable: false
-        space:
-            targetEntity: App\Entity\Space
+        facility:
+            targetEntity: App\Entity\Facility
             joinColumn:
-                name: space_id
+                name: facility_id
                 referencedColumnName: id
                 nullable: false

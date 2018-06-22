@@ -156,25 +156,25 @@ class ActivitySlot
     }
 
     /**
-     * @var Space|null
+     * @var Facility|null
      */
-    private $space;
+    private $facility;
 
     /**
-     * @return Space|null
+     * @return Facility|null
      */
-    public function getSpace(): ?Space
+    public function getFacility(): ?Facility
     {
-        return $this->space;
+        return $this->facility;
     }
 
     /**
-     * @param Space|null $space
+     * @param Facility|null $facility
      * @return ActivitySlot
      */
-    public function setSpace(?Space $space): ActivitySlot
+    public function setFacility(?Facility $facility): ActivitySlot
     {
-        $this->space = $space;
+        $this->facility = $facility;
         return $this;
     }
 }

@@ -16,6 +16,7 @@
 namespace App\Controller;
 
 use App\Entity\AlertLevel;
+use App\Entity\Facility;
 use App\Entity\FileExtension;
 use App\Entity\INDescriptor;
 use App\Form\AlertLevelsType;
@@ -30,6 +31,7 @@ use App\Manager\SettingManager;
 use App\Organism\AlertLevels;
 use App\Organism\FileExtensions;
 use App\Organism\IndividualNeedsDescriptors;
+use App\Pagination\FacilityPagination;
 use App\Repository\SettingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -272,10 +274,9 @@ class SettingController extends Controller
      * @Route("/setting/file/extension/{cid}/remove/", name="remove_file_extension")
      * @IsGranted("ROLE_PRINCIPAL")
      * @param $cid
-     * @return JsonResponse
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @param FileExtensionManager $manager
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteFileExtension($cid, FileExtensionManager $manager, FlashBagManager $flashBagManager)
     {
@@ -284,5 +285,60 @@ class SettingController extends Controller
         $flashBagManager->renderMessages($manager->getMessageManager());
 
         return $this->redirectToRoute('manage_file_extensions');
+    }
+
+    /**
+     * @Route("/setting/facility/list/", name="manage_facilities")
+     * @IsGranted("ROLE_REGISTRAR")
+     * @param Request         $request
+     * @param FacilityPagination $pagination
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function facilityList(Request $request, FacilityPagination $pagination)
+    {
+        $pagination->injectRequest($request);
+
+        $pagination->getDataSet();
+
+        return $this->render('Setting/facilities.html.twig',
+            array(
+                'pagination' => $pagination,
+            )
+        );
+    }
+
+    /**
+     * @Route("/setting/facility/{id}/edit/", name="facility_edit")
+     * @IsGranted("ROLE_REGISTRAR")
+     * @param $id
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editFacility($id, Request $request)
+    {
+        $facility = new Facility();
+
+        if (intval($id) > 0)
+            $facility = $this->getDoctrine()->getManager()->getRepository(Facility::class)->find($id);
+
+        $facility->cancelURL = $this->get('router')->generate('facility_list');
+
+        $form = $this->createForm(FacilityType::class, $facility);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->get('doctrine')->getManager();
+
+            $em->persist($facility);
+            $em->flush();
+
+            if ($id === 'Add')
+                return $this->redirectToRoute('facility_edit', ['id' => $facility->getId()]);
+        }
+
+        return $this->render('Facility/facilityEdit.html.twig', ['id' => $id, 'form' => $form->createView()]);
     }
 }

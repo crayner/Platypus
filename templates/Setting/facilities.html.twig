@@ -1,0 +1,73 @@
+{% trans_default_domain "School" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% block title %}{{ parent() }}{{ 'facilities.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'facilities.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'facilities.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% include 'Pagination/index.html.twig' %}
+    {% set h3Content = addButton({'windowOpen': {'route': path('facility_edit', {'id': 'Add'})}}) %}
+    {% include 'Default/panelStart.html.twig' with {header: 'facilities.title', transDomain: 'School'} %}
+    <div class="container-fluid">
+        <div class="row row-header">
+            <div class="col-3 text-center" style="display: inline-block;">
+                {% if pagination.getSortByName == 'facility.sort.name' %}
+                    <span class="fas fa-sort-alpha-down"></span> {{ 'facility.name.label'|trans }}
+                {% else %}
+                    {{ 'facility.name.label'|trans }}
+                {% endif %}
+            </div>
+            <div class="col-2 text-center" style="display: inline-block;">
+                {% if pagination.getSortByName == 'facility.sort.type' %}
+                    <span class="fas fa-sort-alpha-down"></span> {{ 'facility.type.label'|trans }}
+                {% else %}
+                    {{ 'facility.type.label'|trans }}
+                {% endif %}
+            </div>
+            <div class="col-2 text-center" style="display: inline-block;">
+                {% if pagination.getSortByName == 'facility.sort.capacity' %}
+                    <span class="fas fa-sort-alpha-down"></span> {{ 'facility.capacity.label'|trans }}
+                {% else %}
+                    {{ 'facility.capacity.label'|trans }}
+                {% endif %}
+            </div>
+            <div class="col-3 text-center">
+                {{ 'facility.facilities.label'|trans }}
+            </div>
+            <div class="col-2 withAdd">
+                {{ 'actions'|trans({}, 'System') }}
+            </div>
+        </div>
+        {% for resource in pagination.getResult %}
+            <div class="row row-striped">
+                <div class="col-3 form-inline">
+                    {{ resource.entity.name }}
+                </div>
+                <div class="col-2 form-inline">
+                    {{ resource.entity.type }}
+                </div>
+                <div class="col-2 form-inline text-right">
+                    {{ resource.entity.capacity }}
+                </div>
+                <div class="col-3 form-inline small">
+                    {% if resource.entity.computer %}{{ 'facility.computer.label'|trans }}<br/>{% endif %}
+                    {% if resource.entity.studentComputers > 0 %}{{ 'facility.student_computers.count'|transchoice(resource.entity.studentComputers) }}<br/>{% endif %}
+                    {% if resource.entity.projector %}{{ 'facility.projector.label'|trans }}<br/>{% endif %}
+                    {% if resource.entity.tv %}{{ 'facility.tv.label'|trans }}<br/>{% endif %}
+                    {% if resource.entity.dvd %}{{ 'facility.dvd.label'|trans }}<br/>{% endif %}
+                    {% if resource.entity.hifi %}{{ 'facility.hifi.label'|trans }}<br/>{% endif %}
+                    {% if resource.entity.speakers %}{{ 'facility.speakers.label'|trans }}<br/>{% endif %}
+                    {% if resource.entity.iwb %}{{ 'facility.iwb.label'|trans }}<br/>{% endif %}
+                    {% if resource.entity.phoneInt %}{{ 'facility.phone_int.label'|trans }} {{ resource.entity.phoneInt }}<br/>{% endif %}
+                    {% if resource.entity.phoneExt %}{{ 'facility.phone_ext.label'|trans }} {{ resource.entity.phoneExt }}<br/>{% endif %}
+                </div>
+                <div class="col-2 form-inline">
+                    {{ editButton({title: 'facility.edit.title', transDomain: 'School', mergeClass: 'btn-sm', windowOpen: {route: path('facility_edit', {id: resource.id})}})|raw }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'Default/panelEnd.html.twig' %}
+{% endblock contentContainer %}
