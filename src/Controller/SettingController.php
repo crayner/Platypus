@@ -20,6 +20,7 @@ use App\Entity\Facility;
 use App\Entity\FileExtension;
 use App\Entity\INDescriptor;
 use App\Form\AlertLevelsType;
+use App\Form\FacilityType;
 use App\Form\FileExtensionsType;
 use App\Form\INDescriptorsType;
 use App\Form\SectionSettingType;
@@ -301,7 +302,7 @@ class SettingController extends Controller
 
         $pagination->getDataSet();
 
-        return $this->render('Setting/facilities.html.twig',
+        return $this->render('School/facilities.html.twig',
             array(
                 'pagination' => $pagination,
             )
@@ -322,7 +323,7 @@ class SettingController extends Controller
         if (intval($id) > 0)
             $facility = $this->getDoctrine()->getManager()->getRepository(Facility::class)->find($id);
 
-        $facility->cancelURL = $this->get('router')->generate('facility_list');
+        $facility->cancelURL = $this->get('router')->generate('manage_facilities');
 
         $form = $this->createForm(FacilityType::class, $facility);
 
@@ -339,6 +340,52 @@ class SettingController extends Controller
                 return $this->redirectToRoute('facility_edit', ['id' => $facility->getId()]);
         }
 
-        return $this->render('Facility/facilityEdit.html.twig', ['id' => $id, 'form' => $form->createView()]);
+        return $this->render('School/facilityEdit.html.twig', ['id' => $id, 'form' => $form->createView()]);
+    }
+
+    /**
+     * @Route("/school/facility/duplicate/", name="facility_duplicate")
+     * @IsGranted("ROLE_REGISTRAR")
+     * @param Request $request
+     * @return Response
+     */
+    public function duplicateFacility(Request $request)
+    {
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, null);
+
+        $id = $request->get('facility')['duplicateid'];
+
+        if ($id === "Add")
+            $facility = new Facility();
+        else
+            $facility = $this->getDoctrine()->getManager()->getRepository(Facility::class)->find($id);
+
+        $facility->cancelURL = $this->generateUrl('manage_facilities');
+
+        $form = $this->createForm(FacilityType::class, $facility);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->get('doctrine')->getManager();
+
+            $em->persist($facility);
+            $em->flush();
+
+            $route = $this->generateUrl('facility_edit', ['id' => 'Add']);
+            $facility->setId(null);
+            $facility->setName(null);
+            $form = $this->createForm(FacilityType::class, $facility, ['action' => $route]);
+            $id   = 'Add';
+        }
+
+
+        return $this->render('School/facilityEdit.html.twig',
+            [
+                'id'   => $id,
+                'form' => $form->createView(),
+            ]
+        );
     }
 }

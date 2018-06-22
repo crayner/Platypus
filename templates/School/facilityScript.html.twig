@@ -1,0 +1,20 @@
+{% trans_default_domain "School" %}
+
+<script type="text/javascript" language="JavaScript">
+    $('button[type="submit"]').click(function (e) {
+        e.preventDefault();
+
+        ButtonValue = $(this).attr('id');
+
+        if (ButtonValue === 'save') {
+            var path = '{{ path('facility_edit', {'id': id}) }}';
+            $('#FacilityForm').attr('action', path);
+        } else if (ButtonValue === 'duplicate') {
+            var path = '{{ path('facility_duplicate') }}';
+            $('#FacilityForm').attr('action', path);
+        }
+
+        $('#FacilityForm').submit();
+    });
+
+</script>
