@@ -107,7 +107,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: "null"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:39"
+  last_modified: "2018-06-22 17:20:53"
   created_on: "2018-06-16 13:36:52"
 -
   id: 9
@@ -289,11 +289,11 @@
   name: "library.browse.bg.colour"
   display_name: "Browse Library BG Colour "
   description: "Background colour used behind library browsing screen."
-  value: "#0000ff"
+  value: "#34d32c"
   validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:31:\"Hillrange\\Form\\Validator\\Colour\":4:{s:7:\"message\";s:23:\"colour.validation.error\";s:11:\"transDomain\";s:10:\"validators\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_HEAD_TEACHER"
   translate_choice: "Setting"
-  last_modified: "2018-06-18 12:06:04"
+  last_modified: "2018-06-22 17:21:24"
   created_on: "2018-06-18 09:51:04"
 -
   id: 22
@@ -306,7 +306,7 @@
   validators: "a:1:{i:0;O:29:\"App\\Validator\\BackgroundImage\":43:{s:8:\"minWidth\";i:1200;s:7:\"maxSize\";i:1024000;s:11:\"allowSquare\";b:0;s:14:\"allowLandscape\";b:1;s:13:\"allowPortrait\";b:0;s:15:\"detectCorrupted\";b:1;s:9:\"mimeTypes\";s:7:\"image/*\";s:8:\"maxWidth\";N;s:9:\"maxHeight\";N;s:9:\"minHeight\";N;s:8:\"maxRatio\";N;s:8:\"minRatio\";N;s:9:\"minPixels\";N;s:9:\"maxPixels\";N;s:16:\"mimeTypesMessage\";s:31:\"This file is not a valid image.\";s:22:\"sizeNotDetectedMessage\";s:44:\"The size of the image could not be detected.\";s:15:\"maxWidthMessage\";s:87:\"The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.\";s:15:\"minWidthMessage\";s:90:\"The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.\";s:16:\"maxHeightMessage\";s:91:\"The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.\";s:16:\"minHeightMessage\";s:94:\"The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.\";s:16:\"minPixelsMessage\";s:103:\"The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.\";s:16:\"maxPixelsMessage\";s:104:\"The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.\";s:15:\"maxRatioMessage\";s:83:\"The image ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.\";s:15:\"minRatioMessage\";s:86:\"The image ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.\";s:18:\"allowSquareMessage\";s:80:\"The image is square ({{ width }}x{{ height }}px). Square images are not allowed.\";s:21:\"allowLandscapeMessage\";s:104:\"The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not allowed.\";s:20:\"allowPortraitMessage\";s:102:\"The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not allowed.\";s:16:\"corruptedMessage\";s:28:\"The image file is corrupted.\";s:12:\"binaryFormat\";b:0;s:15:\"notFoundMessage\";s:28:\"The file could not be found.\";s:18:\"notReadableMessage\";s:25:\"The file is not readable.\";s:14:\"maxSizeMessage\";s:98:\"The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.\";s:20:\"disallowEmptyMessage\";s:29:\"An empty file is not allowed.\";s:25:\"uploadIniSizeErrorMessage\";s:72:\"The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.\";s:26:\"uploadFormSizeErrorMessage\";s:22:\"The file is too large.\";s:25:\"uploadPartialErrorMessage\";s:37:\"The file was only partially uploaded.\";s:24:\"uploadNoFileErrorMessage\";s:21:\"No file was uploaded.\";s:26:\"uploadNoTmpDirErrorMessage\";s:46:\"No temporary folder was configured in php.ini.\";s:27:\"uploadCantWriteErrorMessage\";s:36:\"Cannot write temporary file to disk.\";s:27:\"uploadExtensionErrorMessage\";s:42:\"A PHP extension caused the upload to fail.\";s:18:\"uploadErrorMessage\";s:31:\"The file could not be uploaded.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_HEAD_TEACHER"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:36"
+  last_modified: "2018-06-22 17:21:24"
   created_on: "2018-06-18 09:51:04"
 -
   id: 23
@@ -581,7 +581,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:41"
+  last_modified: "2018-06-22 17:22:30"
   created_on: "2018-06-21 10:56:07"
 -
   id: 41
@@ -726,7 +726,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:43"
+  last_modified: "2018-06-22 17:22:04"
   created_on: "2018-06-21 13:16:37"
 -
   id: 73
@@ -830,7 +830,7 @@
   validators: "a:1:{i:0;O:43:\"Symfony\\Component\\Validator\\Constraints\\Url\":7:{s:7:\"message\";s:30:\"This value is not a valid URL.\";s:10:\"dnsMessage\";s:31:\"The host could not be resolved.\";s:9:\"protocols\";a:2:{i:0;s:4:\"http\";i:1;s:5:\"https\";}s:8:\"checkDNS\";b:0;s:16:\"relativeProtocol\";b:0;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:43"
+  last_modified: "2018-06-22 17:22:04"
   created_on: "2018-06-21 13:16:38"
 -
   id: 82
@@ -875,7 +875,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:45"
+  last_modified: "2018-06-22 17:22:46"
   created_on: "2018-06-21 13:22:57"
 -
   id: 85
@@ -890,7 +890,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:45"
+  last_modified: "2018-06-22 17:22:46"
   created_on: "2018-06-21 13:22:57"
 -
   id: 86
@@ -952,7 +952,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "School"
-  last_modified: "2018-06-22 11:41:45"
+  last_modified: "2018-06-22 17:22:46"
   created_on: "2018-06-21 13:22:58"
 -
   id: 90
@@ -1082,7 +1082,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:15:23"
+  last_modified: "2018-06-22 17:28:24"
   created_on: "2018-06-21 15:36:13"
 -
   id: 100
@@ -1135,7 +1135,7 @@
   validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Email\":7:{s:7:\"message\";s:40:\"This value is not a valid email address.\";s:7:\"checkMX\";b:0;s:9:\"checkHost\";b:0;s:6:\"strict\";N;s:4:\"mode\";N;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:47:02"
+  last_modified: "2018-06-22 17:21:57"
   created_on: "2018-06-22 11:24:05"
 -
   id: 104
@@ -1150,7 +1150,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:47:02"
+  last_modified: "2018-06-22 17:21:57"
   created_on: "2018-06-22 11:24:05"
 -
   id: 105
@@ -1165,7 +1165,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:47:02"
+  last_modified: "2018-06-22 17:21:57"
   created_on: "2018-06-22 11:24:05"
 -
   id: 106
@@ -1264,7 +1264,7 @@
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:47:02"
+  last_modified: "2018-06-22 17:21:57"
   created_on: "2018-06-22 11:24:05"
 -
   id: 113
@@ -1468,4 +1468,255 @@
   translate_choice: "Setting"
   last_modified: "2018-06-22 16:30:03"
   created_on: "2018-06-22 16:29:03"
+-
+  id: 128
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.enable_effort"
+  display_name: "Enable Effort"
+  description: "Should columns have the Effort section enabled?"
+  value: 1
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 129
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.enable_rubrics"
+  display_name: "Enable Rubrics"
+  description: "Should columns have Rubrics section enabled?"
+  value: 1
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 130
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.enable_column_weighting"
+  display_name: "Enable Column Weighting"
+  description: "Should column weighting and total scores be enabled in the Markbook?"
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 131
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.enable_display_cumulative_marks"
+  display_name: "Enable Display Cumulative Marks"
+  description: "Should cumulative marks be displayed on the View Markbook page for Students and Parents and in Student Profiles?"
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 132
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.enable_raw_attainment"
+  display_name: "Enable Raw Attainment Marks"
+  description: "Should recording of raw marks be enabled in the Markbook?"
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 133
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "markbook.type"
+  display_name: "Markbook Type"
+  description: "List of types to make available in the Markbook."
+  value: "\"- essay\\r\\n- exam\\r\\n- homework\\r\\n- reflection\\r\\n- test\\r\\n- unit\\r\\n- end_of_year\\r\\n- other\""
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "- essay\n- exam\n- homework\n- reflection\n- test\n- unit\n- end_of_year\n- other\n"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 134
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.enable_group_by_term"
+  display_name: "Group Columns by Term"
+  description: "Should columns and total scores be grouped by term?"
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 135
+  created_by: 1
+  modified_by: 1
+  type: "string"
+  name: "markbook.attainment_alternative_name"
+  display_name: "Attainment Alternative Name"
+  description: "A name to use instead of \"Attainment\" in the first grade column of the markbook."
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:08:40"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 136
+  created_by: 1
+  modified_by: 1
+  type: "string"
+  name: "markbook.attainment_alternative_name_abbrev"
+  display_name: "Attainment Alternative Name Abbreviation"
+  description: "A short name to use instead of \"Attainment\" in the first grade column of the markbook."
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:08:40"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 137
+  created_by: 1
+  modified_by: 1
+  type: "string"
+  name: "markbook.effort_alternative_name"
+  display_name: "Effort Alternative Name"
+  description: "A name to use instead of \"Effort\" in the second grade column of the markbook."
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:08:40"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 138
+  created_by: 1
+  modified_by: 1
+  type: "string"
+  name: "markbook.effort_alternative_name_abbrev"
+  display_name: "Effort Alternative Name Abbreviation"
+  description: "A short name to use instead of \"Effort\" in the second grade column of the markbook."
+  value: ""
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:08:40"
+  created_on: "2018-06-22 21:08:40"
+-
+  id: 139
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.show_student_attainment_warning"
+  display_name: "Show Student Attainment Warning"
+  description: "Show low attainment grade visual warning to students?"
+  value: 1
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:18:28"
+-
+  id: 140
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.show_student_effort_warning"
+  display_name: "Show Student Effort Warning"
+  description: "Show low effort grade visual warning to students?"
+  value: 1
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:18:28"
+-
+  id: 141
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.show_parent_attainment_warning"
+  display_name: "Show Parent Attainment Warning"
+  description: "Show low attainment grade visual warning to parents?"
+  value: 1
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:18:28"
+-
+  id: 142
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.show_parent_effort_warning"
+  display_name: "Show Parent Effort Warning"
+  description: "Show low effort grade visual warning to parents?"
+  value: 1
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:18:28"
+-
+  id: 143
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.personalised_warnings"
+  display_name: "Personalised Warnings"
+  description: "Should markbook warnings be based on personal targets, if they are available?"
+  value: 1
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:18:28"
+-
+  id: 144
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "markbook.wordpress_comment_push"
+  display_name: "Wordpress Comment Push"
+  description: "Where student work is submitted via a WordPress website, the teacher can choose to push their Markbook comment to the site."
+  value: 1
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-22 21:18:28"
+  created_on: "2018-06-22 21:18:28"
 ...

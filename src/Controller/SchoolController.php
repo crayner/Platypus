@@ -28,6 +28,7 @@ use App\Form\HousesType;
 use App\Form\YearGroupType;
 use App\Manager\AttendanceCodeManager;
 use App\Manager\CollectionManager;
+use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
@@ -248,20 +249,15 @@ class SchoolController extends Controller
      * @IsGranted("ROLE_PRINCIPAL")
      * @param $cid
      * @param AttendanceCodeManager $manager
-     * @return JsonResponse
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Runtime
-     * @throws \Twig_Error_Syntax
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAttendanceCode($cid, AttendanceCodeManager $manager)
+    public function deleteAttendanceCode($cid, AttendanceCodeManager $manager, FlashBagManager $flashBagManager)
     {
         $manager->remove($cid);
+        $flashBagManager->addMessages($manager->getMessageManager());
 
-        return new JsonResponse(
-            [
-                'message' => $manager->getMessages(),
-            ],
-            200);
+        return $this->redirectToRoute('manage_attendance_settings');
     }
 
     /**

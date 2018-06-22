@@ -22,6 +22,14 @@ class MenuManagerConstants
 ';
     CONST SECTIONS = '
 School Admin:
+    assessment:
+        markbook_settings:
+            label: manage_markbook_settings
+            role: ROLE_PRINCIPAL
+            route: manage_settings
+            parameters: 
+                name: Markbook
+            transDomain: System
     groupings:
         houses_edit:
             label: menu.houses.manage

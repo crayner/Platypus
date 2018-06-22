@@ -42,10 +42,10 @@
                 {% for setting in section_form.collection %}
                     {% if setting.vars.value.type is same as('boolean') and setting.vars.value.hideParent is not empty %}
 
-        var id = '#' + $('.' + '{{ setting.vars.value.hideParent }}' + 'Parent').find('input[type=hidden]').attr('id');
-        toggleHideParent('{{ setting.vars.value.hideParent }}', 0);
+        var id = '#' + $('.' + '{{ camelCase(setting.vars.value.hideParent ~ '_parent') }}').find('input[type=hidden]').attr('id');
+        toggleHideParent('{{ camelCase(setting.vars.value.hideParent) }}', 0);
         $(document).on('change', id, function() {
-            toggleHideParent('{{ setting.vars.value.hideParent }}', 1);
+            toggleHideParent('{{ camelCase(setting.vars.value.hideParent) }}', 1);
         });
 
                     {% endif %}

@@ -53,6 +53,7 @@ class CoreExtension extends AbstractExtension
             new \Twig_SimpleFunction('addScript', array($this->scriptManager, 'addScript')),
             new \Twig_SimpleFunction('getScripts', array($this->scriptManager, 'getScripts')),
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
+            new \Twig_SimpleFunction('camelCase', array($this, 'camelCase')),
         ];
     }
 
@@ -99,5 +100,22 @@ class CoreExtension extends AbstractExtension
     public function isInstanceof($var, string $instance)
     {
         return ($var instanceof $instance);
+    }
+
+    /**
+     * camelCase
+     *
+     * @param $value
+     * @return string
+     */
+    public function camelCase($value): string
+    {
+        $value = str_replace(['_', '.'], ',', $value);
+        $value = explode(',', $value);
+        $result = '';
+        foreach($value as $item)
+            $result .= ucfirst(strtolower(trim(str_replace(' ', '', $item))));
+
+        return lcfirst($result);
     }
 }

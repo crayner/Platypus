@@ -7,14 +7,14 @@
     {% spaceless %}
         {% set columnA = '6' %}
         {% set columnB = '6' %}
-        {% if form.vars.value is not empty and form.vars.value.hideParent is not empty %}
-            {% set rowClass = 'row ' ~ form.vars.value.hideParent ~ 'Child' %}
+        {% if form.vars.value is not empty and form.vars.value.hideParent is not empty and form.vars.value.hideParent != form.vars.value.name  %}
+            {% set rowClass = 'row ' ~ camelCase(form.vars.value.hideParent ~ '_child') %}
         {% endif %}
         {% if 'hillrange_toggle' in form.value.vars.cache_key %}
             {% set columnA = '10' %}
             {% set columnB = '2' %}
-            {% if form.vars.value is not empty and form.vars.value.hideParent is not empty %}
-                {% set toggleClass = (form.value.vars.div_class|default('')) ~ ' ' ~ form.vars.value.hideParent ~ 'Parent' %}
+            {% if form.vars.value is not empty and form.vars.value.hideParent is not empty  and form.vars.value.hideParent == form.vars.value.name %}
+                {% set toggleClass = (form.value.vars.div_class|default('')) ~ ' ' ~ camelCase(form.vars.value.hideParent ~ '_parent') %}
                 {% set rowClass = 'row' %}
             {% else %}
                 {% set toggleClass = form.value.vars.div_class|default('') %}
