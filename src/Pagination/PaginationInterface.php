@@ -1,5 +1,6 @@
 <?php
 namespace App\Pagination;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * Pagination Interface
@@ -15,7 +16,7 @@ interface PaginationInterface
 	 *
 	 * @param bool $count
 	 *
-	 * @return mixed
+	 * @return QueryBuilder
 	 */
-	public function buildQuery($count = false);
+	public function buildQuery($count = false): QueryBuilder;
 }

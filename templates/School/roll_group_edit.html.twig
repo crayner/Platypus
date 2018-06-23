@@ -1,0 +1,80 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'School' %}
+
+{% form_theme form
+    'School/roll_group_tutor.html.twig'
+    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ ('school.roll_group.edit.title')|trans }}{% endblock title %}
+{% block headerTitle %}{{ ('school.roll_group.edit.title')|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ ('school.roll_group.edit.description')|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-disappear show hide") }}
+    {{ form_start(form, {attr: {id: 'saveForm'}}) }}
+    {% include '@HillrangeForm/Script/collection_message.html.twig' %}
+    {% set h3Content = '' %}
+    {% if app.request.get('closeWindow') is empty %}
+        {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_roll_groups')}}) %}
+    {% else %}
+        {% set h3Content = h3Content ~ closeButton() %}
+    {% endif %}
+    {% set h3Content = h3Content ~ resetButton() %}
+    {% set h3Content = h3Content ~ saveButton() %}
+    {% include 'Default/panelStart.html.twig' with {header: 'school.roll_group.manage.title', name: form.vars.value.name, transDomain: 'School'} %}
+
+    <div class="row">
+        <div class="col-6 card">
+            {{ form_row(form.name) }}
+        </div>
+        <div class="col-3 card">
+            {{ form_row(form.nameShort) }}
+        </div>
+        <div class="col-3 card">
+            {{ form_row(form.nextRollGroup) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4 card">
+            {{ form_row(form.attendance) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_row(form.website) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_row(form.facility) }}
+            {{ form_row(form.schoolYear) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            {% set h3Content = '' %}
+            {% include 'Default/panelStart.html.twig' with {colour: 'success', header: 'school.roll_group.tutors.label', transDomain: 'School', panelParagraph: 'school.roll_group.tutors.help'} %}
+            <section id="roll_group_tutors_target">
+                {{ form_widget(form.tutors) }}
+            </section>
+            {% include 'Default/panelEnd.html.twig' %}
+        </div>
+        <div class="col-6">
+            {% set h3Content = '' %}
+            {% include 'Default/panelStart.html.twig' with {colour: 'success', header: 'school.roll_group.assistants.label', transDomain: 'School', panelParagraph: 'school.roll_group.assistants.help'} %}
+            <section id="roll_group_assistants_target">
+                {{ form_widget(form.assistants) }}
+            </section>
+            {% include 'Default/panelEnd.html.twig' %}
+        </div>
+    </div>
+    {% include 'Default/panelEnd.html.twig' %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {{ collections_manage(form, ['tutors', 'assistants'])|raw }}
+    {{ collection_script(form.tutors)|raw }}
+    {{ collection_script(form.assistants)|raw }}
+{% endblock %}

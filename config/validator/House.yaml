@@ -2,8 +2,8 @@ App\Entity\House:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: [name, nameShort]
-            message: house.validation.duplicate
-    fields:
+            message: validation.duplicate
+    properties:
         name:
             - NotBlank: ~
             - Length:

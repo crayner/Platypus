@@ -1,0 +1,19 @@
+App\Entity\RollGroup:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name, schoolYear]
+            message: validation.duplicate
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [nameShort, schoolYear]
+            message: validation.duplicate
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 10
+        nameShort:
+            - NotBlank:
+            - Length:
+                max: 5
+        website:
+            - Url: ~

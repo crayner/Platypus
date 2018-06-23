@@ -1,0 +1,58 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'School' %}
+
+{% block title %}{{ 'school.roll_group.list.title'|trans({'%{school_year}': getCurrentSchoolYear().name}) }}{% endblock title %}
+{% block headerTitle %}{{ 'school.roll_group.list.title'|trans({'%{school_year}': getCurrentSchoolYear().name}) }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'school.roll_group.list.description'|trans  }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% include 'Pagination/index.html.twig' %}
+
+    {% set h3Content = addButton({windowOpen: {route: path('roll_group_edit', {id: 'Add'})}}) %}
+    {% if manager.nextYearEmpty is same as(true) %}
+        {% set h3Content = h3Content ~ miscButton({class: 'btn btn-dark fas fa-copy', title: 'school.roll_groups.copy', transDomain: 'School', windowOpen: {route: path('roll_group_copy_to_next_year')}}) %}
+    {% endif %}
+    {% include 'Default/panelStart.html.twig' with {header: 'school.roll_group.list.title', name: {'%{school_year}': getCurrentSchoolYear().name}, transDomain: 'School', panelParagraph: 'school.roll_group.list.help'} %}
+    <div class="container-fluid">
+        <div class="row row-header small">
+            <div class="col-2 text-center" style="display: inline-block;">
+                   {{ 'roll_group.name.label'|trans }}<br /><small>{{ 'roll_group.name_short.label'|trans }}</small>
+            </div>
+            <div class="col-4 text-center">
+                {{ 'roll_group.tutors.label'|trans({}) }}
+            </div>
+            <div class="col-2 text-center">
+                {{ 'roll_group.facility.label'|trans({}) }}
+            </div>
+            <div class="col-2 text-center">
+                {{ 'roll_group.website.label'|trans({}) }}
+            </div>
+            <div class="col-2 text-center">
+                {{ 'actions'|trans({}, 'System') }}
+            </div>
+        </div>
+        {% for roll_group in pagination.getResult %}
+            <div class="row row-striped">
+                <div class="col-2 form-inline text-center">
+                    {{ roll_group.name }}<br /><small>{{ roll_group.nameShort }}</small>
+                </div>
+                <div class="col-4 form-inline small">
+                    {{ roll_group.entity.tutorList|raw }}
+                </div>
+                <div class="col-2 form-inline small text-center">
+                    {{ roll_group.facilityName }}
+                </div>
+                <div class="col-2 form-inline small">
+                    {{ roll_group.website }}
+                </div>
+                <div class="col-2 form-inline text-center">
+                    {{ editButton({title: 'school.roll_group.edit.title', transDomain: 'School', windowOpen: {route: path('roll_group_edit', {id: roll_group.id})}, style: '', mergeClass: 'btn-sm'})|raw }}
+                        {{ deleteButton({title: 'school.roll_group.delete.title', transDomain: 'School', mergeClass: 'btn-sm', style: '', colour: 'warning', windowOpen: {route: path('roll_group_delete', {id: roll_group.id})}})|raw }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    {% include 'Default/panelEnd.html.twig' %}
+{% endblock contentContainer %}
+

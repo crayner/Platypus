@@ -70,7 +70,7 @@
                 {{ form_widget(form.total, {value: pagination.getTotal}) }}
                 {% set pages = pagination.getTotalPages %}
                 <span class="small text-muted">
-                {% transchoice pages with {'%total%': pagination.getTotal, '%current%': pagination.getCurrentPage, '%pages%': pages, '%first%': pagination.getFirstRecord, '%last%': pagination.getLastRecord} %}
+                {% transchoice pages with {'%total%': pagination.getTotal, '%current%': pagination.getCurrentPage, '%count%': pages, '%first%': pagination.getFirstRecord, '%last%': pagination.getLastRecord} %}
                 pagination.figures
                 {% endtranschoice %}
                 </span>
@@ -85,7 +85,7 @@
                 {% set pages = pagination.getTotalPages %}
 
                 <span class="small text-muted">
-                {% transchoice pages with {'%total%': pagination.getTotal, '%current%': pagination.getCurrentPage, '%pages%': pages, '%first%': pagination.getFirstRecord, '%last%': pagination.getLastRecord} %}
+                {% transchoice pages with {'%total%': pagination.getTotal, '%current%': pagination.getCurrentPage, '%count%': pages, '%first%': pagination.getFirstRecord, '%last%': pagination.getLastRecord} %}
                 pagination.figures
                 {% endtranschoice %}
                 </span>

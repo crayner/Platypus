@@ -2,6 +2,7 @@
 namespace App\Pagination;
 
 use App\Entity\Facility;
+use Doctrine\ORM\QueryBuilder;
 
 class FacilityPagination extends PaginationManager
 {
@@ -75,9 +76,9 @@ class FacilityPagination extends PaginationManager
 	 *
 	 * @param    boolean $count
 	 *
-	 * @return    query
+	 * @return    QueryBuilder
 	 */
-	public function buildQuery($count = false)
+	public function buildQuery($count = false): QueryBuilder
 	{
 		$this->initiateQuery($count);
 		if ($count)

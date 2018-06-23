@@ -37,6 +37,12 @@ School Admin:
             route: houses_edit
             parameters: {}
             transDomain: School
+        manage_roll_groups:
+            label: manage_roll_groups
+            role: ROLE_PRINCIPAL
+            route: manage_roll_groups
+            parameters: {}
+            transDomain: School
         manage_year_groups:
             label: menu.year_groups.manage
             role: ROLE_REGISTRAR
@@ -177,6 +183,7 @@ School Admin:
     hidden:
         - school_year_edit
         - multiple_settings_manage
+        - roll_group_edit
 ';
     /*
 	CONST NODES = '

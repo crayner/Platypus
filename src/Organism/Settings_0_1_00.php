@@ -109,10 +109,10 @@ google:
     role: ROLE_SYSTEM_ADMIN
     defaultValue: {  }
     translateChoice: null
-person.title.list:
+personal.title.list:
     type: array
-    name: person.title.list
-    displayName: 'List of Titles'
+    name: personal.title.list
+    displayName: 'List of Personal Titles'
     description: 'List of personal titles used in the system.'
     value:
         - mr

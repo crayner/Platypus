@@ -25,16 +25,19 @@ use App\Form\CollectionManagerType;
 use App\Form\DaysOfWeekType;
 use App\Form\FacilityType;
 use App\Form\HousesType;
+use App\Form\RollGroupType;
 use App\Form\YearGroupType;
 use App\Manager\AttendanceCodeManager;
 use App\Manager\CollectionManager;
 use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
 use App\Manager\MultipleSettingManager;
+use App\Manager\RollGroupManager;
 use App\Manager\SettingManager;
 use App\Organism\AttendanceCodes;
 use App\Organism\DaysOfWeek;
 use App\Pagination\FacilityPagination;
+use App\Pagination\RollGroupPagination;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -357,5 +360,93 @@ class SchoolController extends Controller
                 'form' => $form->createView(),
             ]
         );
+    }
+
+    /**
+     * rollGroupManage
+     *
+     * @param Request $request
+     * @param RollGroupPagination $pagination
+     * @return Response
+     * @Route("/school/roll/group/manage/", name="manage_roll_groups")
+     */
+    public function rollGroupManage(Request $request, RollGroupPagination $pagination, RollGroupManager $manager)
+    {
+        $pagination->injectRequest($request);
+
+        $pagination->getDataSet();
+
+        return $this->render('School/roll_group_list.html.twig',
+            [
+                'pagination' => $pagination,
+                'manager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/roll/group/{id}/edit/{closeWindow}", name="roll_group_edit")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param Request $request
+     * @param string $id
+     * @param RollGroupManager $manager
+     * @param string|null $closeWindow
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function rollEdit(Request $request, $id = 'Add', RollGroupManager $manager, string $closeWindow = null)
+    {
+        $roll = $manager->find($id);
+
+        $form = $this->createForm(RollGroupType::class, $roll);
+
+        $form->handleRequest($request);
+        dump($form);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $manager->getEntityManager()->persist($roll);
+            $manager->getEntityManager()->flush();
+
+            if ($id === 'Add')
+                return $this->redirectToRoute('roll_group_edit', ['id' => $roll->getId(),  'closeWindow' => $closeWindow]);
+        }
+
+        return $this->render('School/roll_group_edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+                'tabManager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/roll/group/{id}/delete/", name="roll_group_delete")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param Request $request
+     * @param string $id
+     * @param RollGroupManager $manager
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function rollDelete(Request $request, $id = 'Add', RollGroupManager $manager, FlashBagManager $flashBagManager)
+    {
+        $manager->delete($id);
+        $flashBagManager->addMessages($manager->getMessageManager());
+        return $this->redirectToRoute('manage_roll_groups');
+    }
+
+    /**
+     * @Route("/school/roll/groups/copy/", name="roll_group_copy_to_next_year")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param RollGroupManager $manager
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function rollCopy(RollGroupManager $manager, FlashBagManager $flashBagManager)
+    {
+        $manager->copyToNextYear();
+        $flashBagManager->addMessages($manager->getMessageManager());
+        return $this->redirectToRoute('manage_roll_groups');
     }
 }

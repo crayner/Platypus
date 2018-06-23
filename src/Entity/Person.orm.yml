@@ -13,3 +13,23 @@ App\Entity\Person:
             joinColumn:
                 name: user_id
                 referencedColumnName: id
+                nullable: true
+    fields:
+        surname:
+            length: 30
+        firstName:
+            length: 30
+            column: first_name
+        title:
+            length: 5
+        preferredName:
+            length: 30
+            column: preferred_name
+        gender:
+            length: 1
+        dob:
+            type: date
+            nullable: true
+        email:
+            length: 50
+            nullable: true

@@ -16,7 +16,6 @@ framework:
         enabled: true
     validation:
         enabled: true
-        enable_annotations: false
 
     #esi: true
     #fragments: true

@@ -46,8 +46,13 @@ class FlashBagManager
 		{
 			if (!$message instanceof Message)
 				continue;
-			$this->flashBag->add($message->getLevel(), $this->translator->trans($message->getMessage(), $message->getOptions(), $message->getDomain()));
+
+			if ($message->getTransChoice() !== false)
+                $this->flashBag->add($message->getLevel(), $this->translator->transChoice($message->getMessage(), $message->getTransChoice(), $message->getOptions(), $message->getDomain()));
+            else
+    			$this->flashBag->add($message->getLevel(), $this->translator->trans($message->getMessage(), $message->getOptions(), $message->getDomain()));
 		}
+
 		$messages->clearMessages();
 	}
 
