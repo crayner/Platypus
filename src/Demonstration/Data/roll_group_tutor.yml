@@ -1,0 +1,64 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_roll_group_tutor
+-
+  roll_group_id: 2
+  tutor_id: 397
+-
+  roll_group_id: 3
+  tutor_id: 527
+-
+  roll_group_id: 3
+  tutor_id: 758
+-
+  roll_group_id: 4
+  tutor_id: 213
+-
+  roll_group_id: 5
+  tutor_id: 792
+-
+  roll_group_id: 6
+  tutor_id: 970
+-
+  roll_group_id: 7
+  tutor_id: 206
+-
+  roll_group_id: 8
+  tutor_id: 19
+-
+  roll_group_id: 9
+  tutor_id: 706
+-
+  roll_group_id: 10
+  tutor_id: 704
+-
+  roll_group_id: 11
+  tutor_id: 132
+-
+  roll_group_id: 12
+  tutor_id: 210
+-
+  roll_group_id: 13
+  tutor_id: 212
+-
+  roll_group_id: 13
+  tutor_id: 705
+-
+  roll_group_id: 14
+  tutor_id: 3
+-
+  roll_group_id: 15
+  tutor_id: 525
+-
+  roll_group_id: 16
+  tutor_id: 130
+-
+  roll_group_id: 17
+  tutor_id: 131
+-
+  roll_group_id: 18
+  tutor_id: 6
+-
+  roll_group_id: 20
+  tutor_id: 129
+...

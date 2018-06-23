@@ -1,0 +1,112 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_roll_group
+-
+  id: 2
+  school_year_id: 5
+  name: 07.2
+  name_short: 07.2
+  attendance: 1
+-
+  id: 3
+  school_year_id: 5
+  name: 07.3
+  name_short: 07.3
+  attendance: 1
+-
+  id: 4
+  school_year_id: 5
+  name: 08.1
+  name_short: 08.1
+  attendance: 1
+-
+  id: 5
+  school_year_id: 5
+  name: 08.2
+  name_short: 08.2
+  attendance: 1
+-
+  id: 6
+  school_year_id: 5
+  name: 08.3
+  name_short: 08.3
+  attendance: 1
+-
+  id: 7
+  school_year_id: 5
+  name: 09.1
+  name_short: 09.1
+  attendance: 1
+-
+  id: 8
+  school_year_id: 5
+  name: 09.2
+  name_short: 09.2
+  attendance: 1
+-
+  id: 9
+  school_year_id: 5
+  name: 09.3
+  name_short: 09.3
+  attendance: 1
+-
+  id: 10
+  school_year_id: 5
+  name: 10.1
+  name_short: 10.1
+  attendance: 1
+-
+  id: 11
+  school_year_id: 5
+  name: 10.2
+  name_short: 10.2
+  attendance: 1
+-
+  id: 12
+  school_year_id: 5
+  name: 11.2
+  name_short: 11.2
+  attendance: 1
+-
+  id: 13
+  school_year_id: 5
+  name: 12.1
+  name_short: 12.1
+  attendance: 1
+-
+  id: 14
+  school_year_id: 5
+  name: 11.3
+  name_short: 11.3
+  attendance: 1
+-
+  id: 15
+  school_year_id: 5
+  name: 11.1
+  name_short: 11.1
+  attendance: 1
+-
+  id: 16
+  school_year_id: 5
+  name: 13.2
+  name_short: 13.2
+  attendance: 1
+-
+  id: 17
+  school_year_id: 5
+  name: 13.1
+  name_short: 13.1
+  attendance: 1
+-
+  id: 18
+  school_year_id: 5
+  name: 12.2
+  name_short: 12.2
+  attendance: 1
+-
+  id: 20
+  school_year_id: 5
+  name: 07.1
+  name_short: 07.1
+  attendance: 1
+...
