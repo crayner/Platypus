@@ -15,7 +15,6 @@
 {% set manager = form.vars.value %}
 
 {% block contentContainer %}
-    <div class="container-fluid">
     {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
     {{ form_start(form) }}
     {% for section_name, section_form in form.children %}
@@ -29,7 +28,6 @@
         {% endif %}
     {% endfor %}
     {{ form_end(form) }}
-    </div>
     {% include 'School/department_list.html.twig' %}
 {% endblock contentContainer %}
 
