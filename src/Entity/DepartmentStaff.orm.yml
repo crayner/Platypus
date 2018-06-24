@@ -1,0 +1,34 @@
+App\Entity\DepartmentStaff:
+    type: entity
+    table: department_staff
+    repositoryClass: App\Repository\DepartmentStaffRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        role:
+            length: 32
+            nullable: false
+    manyToOne:
+        department:
+            targetEntity: App\Entity\Department
+            inversedBy: members
+            orderBy:
+                name: ASC
+            joinColumn:
+                name: dept_id
+                referencedColumnName: id
+                nullable: false
+        member:
+            targetEntity: App\Entity\Person
+            inversedBy: departments
+            joinColumn:
+                name: member_id
+                referencedColumnName: id
+                nullable: false
+                orderBy:
+                    surname: ASC
+                    firstName: ASC
+

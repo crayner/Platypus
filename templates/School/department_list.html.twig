@@ -1,0 +1,41 @@
+
+{% trans_default_domain 'School' %}
+
+{% include 'Pagination/index.html.twig' %}
+
+{% set h3Content = addButton({windowOpen: {route: path('department_edit', {id: 'Add'})}}) %}
+{% include 'Default/panelStart.html.twig' with {header: 'school.department.list.title', name: {'%{school_year}': getCurrentSchoolYear().name}, transDomain: 'School', panelParagraph: 'school.department.list.help'} %}
+<div class="container-fluid">
+    <div class="row row-header small">
+        <div class="col-3">
+               {{ 'department.name.label'|trans }}<br/><small>{{ 'department.name_short.label'|trans }}</small>
+        </div>
+        <div class="col-3">
+            {{ 'department.type.label'|trans({}) }}
+        </div>
+        <div class="col-4">
+            {{ 'department.staff.label'|trans({}) }}
+        </div>
+        <div class="col-2">
+            {{ 'actions'|trans({}, 'System') }}
+        </div>
+    </div>
+    {% for department in pagination.getResult %}
+        <div class="row row-striped">
+            <div class="col-3 text-center">
+                {{ department.name }}<br /><small>{{ department.nameShort }}</small>
+            </div>
+            <div class="col-3">
+                {{ ('department.type.' ~ department.type)|trans }}
+            </div>
+            <div class="col-4 small">
+                {{ dept_manager.staffList(department.entity)|raw }}
+            </div>
+            <div class="col-2 text-center">
+                {{ editButton({title: 'school.department.edit.title', transDomain: 'School', windowOpen: {route: path('department_edit', {id: department.id})}, style: '', mergeClass: 'btn-sm'})|raw }}
+                {{ deleteButton({title: 'school.department.delete.title', transDomain: 'School', mergeClass: 'btn-sm', style: '', colour: 'warning', windowOpen: {route: path('department_delete', {id: department.id})}})|raw }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% include 'Default/panelEnd.html.twig' %}

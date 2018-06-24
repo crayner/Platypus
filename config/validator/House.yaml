@@ -13,7 +13,4 @@ App\Entity\House:
             - Length:
                 max: 4
         logo:
-            - Image:
-                maxRatio: 1.25
-                minRatio: 0.75
-                maxSize: 750k
+            - App\Validator\Logo: ~

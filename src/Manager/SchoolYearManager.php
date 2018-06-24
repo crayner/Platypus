@@ -4,8 +4,8 @@ namespace App\Manager;
 use App\Entity\SchoolYear;
 use App\Entity\SchoolYearSpecialDay;
 use App\Entity\SchoolYearTerm;
+use App\Manager\Interfaces\TabManagerInterface;
 use App\Repository\SchoolYearRepository;
-use App\Util\UserHelper;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Driver\PDOException;
 use Doctrine\DBAL\Exception\DriverException;
@@ -14,7 +14,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Yaml\Yaml;
 
 class SchoolYearManager implements TabManagerInterface
@@ -598,7 +597,7 @@ specialDays:
      * @param string $method
      * @return bool
      */
-    public function isDisplay(string $method = ''): bool
+    public function isDisplay($method = []): bool
     {
         return true;
     }

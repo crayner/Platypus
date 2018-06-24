@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 use Symfony\Component\Yaml\Yaml;
 
-class MenuManager extends MenuManagerConstants
+class MenuManager extends MenuConstantsManager
 {
 	/**
 	 * @var object|AuthorizationChecker
@@ -365,7 +365,7 @@ class MenuManager extends MenuManagerConstants
 	 */
 	private function getNodes(): array
 	{
-		return Yaml::parse(str_replace("\t", "    ", MenuManagerConstants::NODES)) ?: [];
+		return Yaml::parse(str_replace("\t", "    ", MenuConstantsManager::NODES)) ?: [];
 	}
 
 	/**
@@ -373,7 +373,7 @@ class MenuManager extends MenuManagerConstants
 	 */
 	private function getItems()
 	{
-		return Yaml::parse(str_replace("\t", "    ", MenuManagerConstants::ITEMS));
+		return Yaml::parse(str_replace("\t", "    ", MenuConstantsManager::ITEMS));
 	}
 
 	/**
@@ -381,7 +381,7 @@ class MenuManager extends MenuManagerConstants
 	 */
 	private function getSections()
 	{
-		return Yaml::parse(str_replace("\t", "    ", MenuManagerConstants::SECTIONS)) ?: [];
+		return Yaml::parse(str_replace("\t", "    ", MenuConstantsManager::SECTIONS)) ?: [];
 	}
 
 	/**

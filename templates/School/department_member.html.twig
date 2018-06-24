@@ -1,0 +1,25 @@
+{% trans_default_domain 'School' %}
+
+{% block department_member_label %}{% endblock %}
+{% block department_member_error %}{% endblock %}
+
+{% block department_member_widget %}
+    {% spaceless %}
+        {% set h3Content = '<div class="collection-actions">' %}
+        {% set h3Content = h3Content ~ saveButton()|raw %}
+        {% set h3Content = h3Content ~ '</div>' %}
+        <div class="row">
+            <div class="col-5 card">
+                {{ form_widget(form.member) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_widget(form.role) }}
+                {{ form_row(form.department, {'id': app.request.get('id')}) }}
+            </div>
+            <div class="col-3 card">
+                {{ h3Content|raw }}
+                {{ form_rest(form) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock department_member_widget %}

@@ -1,5 +1,5 @@
 <?php
-namespace App\Manager;
+namespace App\Manager\Interfaces;
 
 interface TabManagerInterface
 {
@@ -22,8 +22,8 @@ interface TabManagerInterface
 
     /**
      * Use this method as a callable to test if the tab is to be displayed.
-     * @param string $method
+     * @param array|string $method
      * @return bool
      */
-    public function isDisplay(string $method = ''): bool;
+    public function isDisplay($method = []): bool;
 }

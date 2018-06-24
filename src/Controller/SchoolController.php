@@ -17,25 +17,33 @@ namespace App\Controller;
 
 use App\Entity\AttendanceCode;
 use App\Entity\DayOfWeek;
+use App\Entity\Department;
+use App\Entity\DepartmentStaff;
 use App\Entity\Facility;
 use App\Entity\House;
+use App\Entity\Person;
 use App\Entity\YearGroup;
 use App\Form\AttendanceSettingsType;
 use App\Form\CollectionManagerType;
 use App\Form\DaysOfWeekType;
+use App\Form\DepartmentType;
 use App\Form\FacilityType;
 use App\Form\HousesType;
 use App\Form\RollGroupType;
+use App\Form\SectionSettingType;
 use App\Form\YearGroupType;
 use App\Manager\AttendanceCodeManager;
 use App\Manager\CollectionManager;
+use App\Manager\DepartmentManager;
 use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\RollGroupManager;
 use App\Manager\SettingManager;
+use App\Manager\TwigManager;
 use App\Organism\AttendanceCodes;
 use App\Organism\DaysOfWeek;
+use App\Pagination\DepartmentPagination;
 use App\Pagination\FacilityPagination;
 use App\Pagination\RollGroupPagination;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -448,5 +456,197 @@ class SchoolController extends Controller
         $manager->copyToNextYear();
         $flashBagManager->addMessages($manager->getMessageManager());
         return $this->redirectToRoute('manage_roll_groups');
+    }
+
+    /**
+     * Department Manage
+     *
+     * @param Request $request
+     * @param DepartmentPagination $pagination
+     * @param DepartmentManager $manager
+     * @param MultipleSettingManager $multipleSettingManager
+     * @param SettingManager $sm
+     * @return Response
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     * @Route("/school/departments/manage/", name="manage_departments")
+     */
+    public function departmentSettings(Request $request, DepartmentPagination $pagination, DepartmentManager $manager,
+                                       MultipleSettingManager $multipleSettingManager,  SettingManager $sm)
+    {
+        $pagination->injectRequest($request);
+
+        $pagination->getDataSet();
+
+        foreach($sm->createSettingDefinition('Department') as $name =>$section)
+            if ($name === 'header')
+                $multipleSettingManager->setHeader($section);
+            else
+                $multipleSettingManager->addSection($section);
+
+        $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $multipleSettingManager->saveSections($sm);
+        }
+
+        return $this->render('School/department_settings.html.twig',
+            [
+                'pagination' => $pagination,
+                'dept_manager' => $manager,
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * @param $id
+     * @param string $tabName
+     * @param Request $request
+     * @param FlashBagManager $flashBagManager
+     * @param DepartmentManager $departmentManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/school/department/{id}/edit/{tabName}/", name="department_edit")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function edit($id, $tabName = 'department_details', Request $request, FlashBagManager $flashBagManager, DepartmentManager $departmentManager)
+    {
+        $entity = $departmentManager->findDepartment($id);
+
+        $form = $this->createForm(DepartmentType::class, $entity, ['deletePhoto' => $this->generateUrl('department_logo_delete', ['id' => $id])]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $departmentManager->getEntityManager();
+            $em->persist($entity);
+
+            $flashBagManager->add('success', 'form.submit.success', [], 'System');
+
+            if ($id == 'Add')
+            {
+                $count = 0;
+                foreach ($entity->getMembers()->toArray() as $member)
+                {
+                    $member->addDepartment($entity);
+
+                    $em->persist($member);
+                    $count++;
+                }
+                $em->flush();
+
+                if ($count > 0)
+                    $flashBagManager->add('success', 'department.member.added.success', [], 'School');
+                $flashBagManager->addMessages();
+
+                return $this->redirectToRoute('department_edit', ['id' => $entity->getId(), 'tabName' => $tabName]);
+            }
+            $em->flush();
+
+            $form = $this->createForm(DepartmentType::class, $entity, ['deletePhoto' => $this->generateUrl('department_logo_delete', ['id' => $id])]);
+
+        }
+
+        $flashBagManager->addMessages();
+
+        return $this->render('School/department_edit.html.twig', [
+                'form'      => $form->createView(),
+                'fullForm'  => $form,
+                'tabManager' => $departmentManager,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/department/logo/delete/{id}/", name="department_logo_delete")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param $id
+     * @param DepartmentManager $departmentManager
+     * @param FlashBagManager $flashBagManager
+     * @return Response
+     */
+    public function deleteLogo($id, DepartmentManager $departmentManager, FlashBagManager $flashBagManager)
+    {
+
+        $departmentManager->removeLogo($id);
+        $flashBagManager->addMessages($departmentManager->getMessageManager());
+/*
+        $om     = $this->getDoctrine()->getManager();
+        $entity = $om->getRepository(Department::class)->find($id);
+
+        if ($entity instanceof Department)
+        {
+            $file = $entity->getLogo();
+            if (file_exists($file))
+                unlink($file);
+
+            $entity->setLogo(null);
+            $om->persist($entity);
+            $om->flush();
+        }
+*/
+        return $this->forward(SchoolController::class.'::edit', ['id' => $id]);
+    }
+
+    /**
+     * @param string $cid
+     * @param $id
+     * @param DepartmentManager $departmentManager
+     * @param \Twig_Environment $twig
+     * @return JsonResponse
+     * @Route("/school/department/{id}/members/{cid}/manage/", name="department_members_manage")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function manageMemberCollection($cid = 'ignore', $id, DepartmentManager $departmentManager, TwigManager $twig)
+    {
+        $departmentManager->removeMember($id, $cid);
+
+        $form = $this->createForm(DepartmentType::class, $departmentManager->refreshDepartment(), ['deletePhoto' => $this->generateUrl('department_logo_delete', ['id' => $id])]);
+
+        $collection = $form->has('members') ? $form->get('members')->createView() : null;
+
+        if (empty($collection))
+            $departmentManager->getMessageManager()->add('warning', 'department.members.not_defined');
+
+        $content = $this->renderView("School/department_collection.html.twig",
+            [
+                'collection'    => $collection,
+                'route'         => 'department_members_manage',
+                'contentTarget' => 'department_members_target',
+            ]
+        );
+
+        return new JsonResponse(
+            [
+                'content' => $content,
+                'status'  => $departmentManager->getMessageManager()->getStatus(),
+                'message' => $departmentManager->getMessageManager()->renderView($twig->getTwig()),
+            ],
+            200
+        );
+    }
+
+    /**
+     * deleteDepartment
+     *
+     * @Route("/school/department/{id}/delete/", name="department_delete")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param $id
+     * @param DepartmentManager $departmentManager
+     * @param FlashBagManager $flashBagManager
+     * @return Response
+     * @throws \Exception
+     */
+    public function deleteDepartment($id, DepartmentManager $departmentManager, FlashBagManager $flashBagManager)
+    {
+        $departmentManager->delete($id);
+        $flashBagManager->addMessages($departmentManager->getMessageManager());
+        return $this->forward(SchoolController::class.'::departmentSettings');
     }
 }

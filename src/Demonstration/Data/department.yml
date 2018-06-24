@@ -1,0 +1,101 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_department
+-
+  id: 1
+  name: "English"
+  name_short: "ENG"
+  type: "learning_area"
+  subject_listing: "English, English as an Additional Language"
+-
+  id: 2
+  name: "Finance"
+  name_short: "FIN"
+  type: "administration"
+-
+  id: 3
+  name: "Human Technologies"
+  name_short: "HT"
+  type: "learning_area"
+  subject_listing: "HT, PSHE, DCVT, ENF"
+-
+  id: 4
+  name: "Science"
+  name_short: "SCI"
+  type: "learning_area"
+  subject_listing: "Sciences"
+  blurb: ""
+  logo: ""
+-
+  id: 5
+  name: "The Arts"
+  name_short: "TA"
+  type: "learning_area"
+  subject_listing: "Art, Dance, Drama, Media, Music"
+  blurb: ""
+  logo: ""
+-
+  id: 6
+  name: "Humanities"
+  name_short: "HUM"
+  type: "learning_area"
+  subject_listing: "Humanities, Economics, Religious Studies, Environmental Management"
+  blurb: ""
+  logo: ""
+-
+  id: 7
+  name: "Languages"
+  name_short: "LNG"
+  type: "learning_area"
+  subject_listing: "Chinese First Language, Chinese Second Language, Japanese, Spanish"
+  blurb: ""
+  logo: ""
+-
+  id: 8
+  name: "Physical Education"
+  name_short: "PE"
+  type: "learning_area"
+  subject_listing: "Physical Education"
+  blurb: ""
+  logo: ""
+-
+  id: 9
+  name: "Library"
+  name_short: "LIB"
+  type: "administration"
+  subject_listing: ""
+  blurb: ""
+  logo: ""
+-
+  id: 10
+  name: "IT Services"
+  name_short: "ITS"
+  type: "administration"
+  subject_listing: ""
+  blurb: ""
+  logo: ""
+-
+  id: 11
+  name: "Pastoral"
+  name_short: "PAST"
+  type: "learning_area"
+  subject_listing: ""
+  blurb: ""
+  logo: ""
+-
+  id: 12
+  name: "Mathematics"
+  name_short: "MA"
+  type: "learning_area"
+  subject_listing: "Maths"
+  blurb: ""
+  logo: ""
+-
+  id: 13
+  name: "Individual Needs"
+  name_short: "IN"
+  type: "learning_area"
+  subject_listing: ""
+  blurb: ""
+  logo: ""
+...

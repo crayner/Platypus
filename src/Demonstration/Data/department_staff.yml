@@ -1,0 +1,469 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_department_staff
+-
+  id: 1
+  dept_id: 3
+  member_id: 4
+  role: "teacher_curriculum"
+-
+  id: 7
+  dept_id: 3
+  member_id: 1
+  role: "teacher_curriculum"
+-
+  id: 8
+  dept_id: 3
+  member_id: 706
+  role: "teacher_curriculum"
+-
+  id: 9
+  dept_id: 3
+  member_id: 5
+  role: "teacher_curriculum"
+-
+  id: 10
+  dept_id: 3
+  member_id: 527
+  role: "coordinator"
+-
+  id: 11
+  dept_id: 6
+  member_id: 4
+  role: "coordinator"
+-
+  id: 12
+  dept_id: 11
+  member_id: 4
+  role: "teacher_curriculum"
+-
+  id: 13
+  dept_id: 8
+  member_id: 2
+  role: "coordinator"
+-
+  id: 14
+  dept_id: 11
+  member_id: 2
+  role: "teacher_curriculum"
+-
+  id: 15
+  dept_id: 7
+  member_id: 19
+  role: "teacher_curriculum"
+-
+  id: 16
+  dept_id: 11
+  member_id: 19
+  role: "teacher_curriculum"
+-
+  id: 17
+  dept_id: 3
+  member_id: 19
+  role: "teacher_curriculum"
+-
+  id: 18
+  dept_id: 7
+  member_id: 5
+  role: "teacher_curriculum"
+-
+  id: 19
+  dept_id: 11
+  member_id: 5
+  role: "teacher_curriculum"
+-
+  id: 20
+  dept_id: 5
+  member_id: 35
+  role: "teacher_curriculum"
+-
+  id: 21
+  dept_id: 11
+  member_id: 35
+  role: "teacher_curriculum"
+-
+  id: 22
+  dept_id: 7
+  member_id: 6
+  role: "coordinator"
+-
+  id: 23
+  dept_id: 11
+  member_id: 6
+  role: "teacher_curriculum"
+-
+  id: 24
+  dept_id: 8
+  member_id: 34
+  role: "teacher_curriculum"
+-
+  id: 25
+  dept_id: 3
+  member_id: 34
+  role: "teacher_curriculum"
+-
+  id: 26
+  dept_id: 11
+  member_id: 34
+  role: "teacher_curriculum"
+-
+  id: 27
+  dept_id: 6
+  member_id: 114
+  role: "teacher_curriculum"
+-
+  id: 28
+  dept_id: 5
+  member_id: 114
+  role: "teacher_curriculum"
+-
+  id: 29
+  dept_id: 3
+  member_id: 114
+  role: "teacher_curriculum"
+-
+  id: 30
+  dept_id: 11
+  member_id: 114
+  role: "teacher_curriculum"
+-
+  id: 31
+  dept_id: 10
+  member_id: 1
+  role: "director"
+-
+  id: 32
+  dept_id: 11
+  member_id: 1
+  role: "teacher_curriculum"
+-
+  id: 33
+  dept_id: 4
+  member_id: 132
+  role: "teacher_curriculum"
+-
+  id: 34
+  dept_id: 11
+  member_id: 132
+  role: "teacher_curriculum"
+-
+  id: 35
+  dept_id: 7
+  member_id: 131
+  role: "teacher_curriculum"
+-
+  id: 36
+  dept_id: 11
+  member_id: 131
+  role: "teacher_curriculum"
+-
+  id: 37
+  dept_id: 6
+  member_id: 208
+  role: "teacher_curriculum"
+-
+  id: 38
+  dept_id: 3
+  member_id: 208
+  role: "teacher_curriculum"
+-
+  id: 39
+  dept_id: 11
+  member_id: 208
+  role: "teacher_curriculum"
+-
+  id: 40
+  dept_id: 13
+  member_id: 208
+  role: "coordinator"
+-
+  id: 41
+  dept_id: 12
+  member_id: 129
+  role: "teacher_curriculum"
+-
+  id: 42
+  dept_id: 11
+  member_id: 129
+  role: "teacher_curriculum"
+-
+  id: 43
+  dept_id: 12
+  member_id: 206
+  role: "teacher_curriculum"
+-
+  id: 44
+  dept_id: 11
+  member_id: 206
+  role: "teacher_curriculum"
+-
+  id: 45
+  dept_id: 8
+  member_id: 206
+  role: "teacher_curriculum"
+-
+  id: 46
+  dept_id: 1
+  member_id: 213
+  role: "teacher_curriculum"
+-
+  id: 47
+  dept_id: 11
+  member_id: 213
+  role: "teacher_curriculum"
+-
+  id: 48
+  dept_id: 1
+  member_id: 130
+  role: "coordinator"
+-
+  id: 49
+  dept_id: 11
+  member_id: 130
+  role: "teacher_curriculum"
+-
+  id: 50
+  dept_id: 6
+  member_id: 211
+  role: "teacher_curriculum"
+-
+  id: 51
+  dept_id: 4
+  member_id: 211
+  role: "teacher_curriculum"
+-
+  id: 52
+  dept_id: 11
+  member_id: 211
+  role: "coordinator"
+-
+  id: 53
+  dept_id: 7
+  member_id: 210
+  role: "teacher_curriculum"
+-
+  id: 54
+  dept_id: 11
+  member_id: 210
+  role: "teacher_curriculum"
+-
+  id: 55
+  dept_id: 3
+  member_id: 210
+  role: "teacher_curriculum"
+-
+  id: 56
+  dept_id: 7
+  member_id: 212
+  role: "teacher_curriculum"
+-
+  id: 57
+  dept_id: 11
+  member_id: 212
+  role: "teacher_curriculum"
+-
+  id: 58
+  dept_id: 12
+  member_id: 209
+  role: "teacher_curriculum"
+-
+  id: 59
+  dept_id: 4
+  member_id: 209
+  role: "teacher_curriculum"
+-
+  id: 60
+  dept_id: 11
+  member_id: 209
+  role: "teacher_curriculum"
+-
+  id: 61
+  dept_id: 6
+  member_id: 88
+  role: "teacher_curriculum"
+-
+  id: 62
+  dept_id: 4
+  member_id: 88
+  role: "coordinator"
+-
+  id: 63
+  dept_id: 11
+  member_id: 88
+  role: "teacher_curriculum"
+-
+  id: 64
+  dept_id: 5
+  member_id: 36
+  role: "coordinator"
+-
+  id: 65
+  dept_id: 11
+  member_id: 36
+  role: "teacher_curriculum"
+-
+  id: 66
+  dept_id: 3
+  member_id: 36
+  role: "teacher_curriculum"
+-
+  id: 67
+  dept_id: 11
+  member_id: 3
+  role: "teacher_curriculum"
+-
+  id: 68
+  dept_id: 12
+  member_id: 3
+  role: "coordinator"
+-
+  id: 69
+  dept_id: 6
+  member_id: 706
+  role: "teacher_curriculum"
+-
+  id: 70
+  dept_id: 11
+  member_id: 706
+  role: "teacher_curriculum"
+-
+  id: 71
+  dept_id: 1
+  member_id: 527
+  role: "teacher_curriculum"
+-
+  id: 72
+  dept_id: 11
+  member_id: 527
+  role: "teacher_curriculum"
+-
+  id: 73
+  dept_id: 1
+  member_id: 396
+  role: "teacher_curriculum"
+-
+  id: 74
+  dept_id: 3
+  member_id: 396
+  role: "teacher_curriculum"
+-
+  id: 75
+  dept_id: 11
+  member_id: 396
+  role: "teacher_curriculum"
+-
+  id: 76
+  dept_id: 1
+  member_id: 525
+  role: "teacher_curriculum"
+-
+  id: 77
+  dept_id: 7
+  member_id: 525
+  role: "teacher_curriculum"
+-
+  id: 78
+  dept_id: 5
+  member_id: 525
+  role: "teacher_curriculum"
+-
+  id: 79
+  dept_id: 11
+  member_id: 525
+  role: "teacher_curriculum"
+-
+  id: 80
+  dept_id: 8
+  member_id: 525
+  role: "teacher_curriculum"
+-
+  id: 81
+  dept_id: 3
+  member_id: 526
+  role: "teacher_curriculum"
+-
+  id: 82
+  dept_id: 1
+  member_id: 526
+  role: "teacher_curriculum"
+-
+  id: 83
+  dept_id: 11
+  member_id: 526
+  role: "teacher_curriculum"
+-
+  id: 84
+  dept_id: 3
+  member_id: 397
+  role: "teacher_curriculum"
+-
+  id: 85
+  dept_id: 5
+  member_id: 397
+  role: "teacher_curriculum"
+-
+  id: 86
+  dept_id: 11
+  member_id: 397
+  role: "teacher_curriculum"
+-
+  id: 87
+  dept_id: 3
+  member_id: 705
+  role: "teacher_curriculum"
+-
+  id: 88
+  dept_id: 6
+  member_id: 705
+  role: "teacher_curriculum"
+-
+  id: 89
+  dept_id: 11
+  member_id: 705
+  role: "teacher_curriculum"
+-
+  id: 90
+  dept_id: 4
+  member_id: 704
+  role: "teacher_curriculum"
+-
+  id: 91
+  dept_id: 11
+  member_id: 704
+  role: "teacher_curriculum"
+-
+  id: 92
+  dept_id: 4
+  member_id: 703
+  role: "teacher_curriculum"
+-
+  id: 93
+  dept_id: 11
+  member_id: 703
+  role: "teacher_curriculum"
+-
+  id: 94
+  dept_id: 11
+  member_id: 758
+  role: "teacher_curriculum"
+-
+  id: 95
+  dept_id: 13
+  member_id: 758
+  role: "teacher_curriculum"
+-
+  id: 96
+  dept_id: 11
+  member_id: 737
+  role: "teacher_curriculum"
+-
+  id: 97
+  dept_id: 11
+  member_id: 544
+  role: "teacher_curriculum"
+-
+  id: 98
+  dept_id: 8
+  member_id: 792
+  role: "teacher_curriculum"
+...

@@ -2,7 +2,7 @@
 namespace App\Manager;
 
 /**
- * Pagination Interface
+ * Pagination Interfaces
  *
  * @version    25th October 2016
  * @since      25th October 2016

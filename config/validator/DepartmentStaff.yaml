@@ -1,0 +1,11 @@
+App\Entity\DepartmentStaff:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [member, department]
+    properties:
+        department:
+            - NotBlank: ~
+        member:
+            - NotBlank: ~
+        role:
+            - NotBlank: ~

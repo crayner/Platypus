@@ -21,6 +21,7 @@ use App\Entity\Campus;
 use App\Entity\Course;
 use App\Entity\DayOfWeek;
 use App\Entity\Department;
+use App\Entity\DepartmentStaff;
 use App\Entity\Facility;
 use App\Entity\FileExtension;
 use App\Entity\House;
@@ -83,6 +84,14 @@ class SchoolFixtures implements DummyDataInterface
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/year_group.yml'));
 
         $this->setLogger($logger)->buildTable($data, YearGroup::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department.yml'));
+
+        $this->setLogger($logger)->buildTable($data, Department::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department_staff.yml'));
+
+        $this->setLogger($logger)->buildTable($data, DepartmentStaff::class, $manager);
 
         /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
 

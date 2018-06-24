@@ -2,7 +2,7 @@
 namespace App\Twig\Extension;
 
 use App\Exception\MissingClassException;
-use App\Manager\TabManagerInterface;
+use App\Manager\Interfaces\TabManagerInterface;
 use Twig\Extension\AbstractExtension;
 
 class TabExtension extends AbstractExtension

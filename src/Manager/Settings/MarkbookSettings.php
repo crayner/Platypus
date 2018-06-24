@@ -248,7 +248,7 @@ class MarkbookSettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $section['name'] = 'Interface';
+        $section['name'] = 'Interfaces';
         $section['description'] = '';
         $section['settings'] = $settings;
 

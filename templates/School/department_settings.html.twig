@@ -1,0 +1,69 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% form_theme form
+    "Setting/setting_form.html.twig"
+    "@HillrangeForm/FormTheme/jquery.collection.html.twig"
+    "@HillrangeForm/FormTheme/bootstrap.html.twig"
+%}
+
+{% block title %}{{ parent() }} {{ 'School Admin'|trans({}, 'System') }}{% endblock title %}
+{% block headerTitle %}{{ form.vars.value.header|trans({}, 'School') }}{% endblock headerTitle %}
+{% block headerLead %}{% endblock headerLead %}
+
+{% set manager = form.vars.value %}
+
+{% block contentContainer %}
+    <div class="container-fluid">
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
+    {{ form_start(form) }}
+    {% for section_name, section_form in form.children %}
+        {% if section_name is not same as('_token') %}
+            {% set section = manager.sections[section_name] %}
+            {% set h3Content = saveButton() %}
+            {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'School', panelParagraph: section['description'],
+                panelStyle: section['colour']|default('warning'), headerParams: section['name_parameters'], panelParams: section['description_parameters']} %}
+                {{ collection_widget(section_form.collection) }}
+            {% include 'Default/panelEnd.html.twig' %}
+        {% endif %}
+    {% endfor %}
+    {{ form_end(form) }}
+    </div>
+    {% include 'School/department_list.html.twig' %}
+{% endblock contentContainer %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    <script type="text/javascript">
+        {% for section_name, section_form in form.children %}
+            {% if section_name is not same as('_token') %}
+                {% for setting in section_form.collection %}
+                    {% if setting.vars.value.type is same as('boolean') and setting.vars.value.hideParent is not empty %}
+
+        var id = '#' + $('.' + '{{ camelCase(setting.vars.value.hideParent ~ '_parent') }}').find('input[type=hidden]').attr('id');
+        toggleHideParent('{{ camelCase(setting.vars.value.hideParent) }}', 0);
+        $(document).on('change', id, function() {
+            toggleHideParent('{{ camelCase(setting.vars.value.hideParent) }}', 1);
+        });
+
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+
+        function toggleHideParent(name, xxx) {
+            var value = $('.' + name + 'Parent').find('input[type=hidden]').val() - xxx;
+
+            if (Math.abs(value) == '1'){
+                $('.' + name + 'Child').fadeIn();
+            } else {
+                $('.' + name + 'Child').fadeOut();
+            }
+        }
+
+
+    </script>
+{% endblock javascripts %}

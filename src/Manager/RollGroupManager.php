@@ -16,8 +16,8 @@
 namespace App\Manager;
 
 use App\Entity\RollGroup;
+use App\Manager\Traits\EntityTrait;
 use App\Util\SchoolYearHelper;
-use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class RollGroupManager
@@ -25,83 +25,12 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class RollGroupManager
 {
-    /**
-     * @var EntityManagerInterface
-     */
-    private $entityManager;
+    use EntityTrait;
 
     /**
-     * @var MessageManager
+     * @var string
      */
-    private $messageManager;
-
-    /**
-     * RollGroupManager constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param SchoolYearHelper $helper
-     */
-    public function __construct(EntityManagerInterface $entityManager, SchoolYearHelper $helper, MessageManager $messageManager)
-    {
-        $this->entityManager = $entityManager;
-        $this->messageManager = $messageManager;
-        $this->messageManager->setDomain('School');
-    }
-
-    /**
-     * getEntityManager
-     *
-     * @return EntityManagerInterface
-     */
-    public function getEntityManager(): EntityManagerInterface
-    {
-        return $this->entityManager;
-    }
-
-    /**
-     * find
-     *
-     * @param $id
-     * @return RollGroup|null
-     */
-    public function find($id): ?RollGroup
-    {
-        if ($id === 'Add')
-            return new RollGroup();
-        return $this->getEntityManager()->getRepository(RollGroup::class)->find($id);
-    }
-
-    /**
-     * @return MessageManager
-     */
-    public function getMessageManager(): MessageManager
-    {
-        return $this->messageManager;
-    }
-
-
-    /**
-     * delete
-     *
-     * @param $id
-     */
-    public function delete($id): void
-    {
-        $entity = $this->find($id);
-        if (empty($entity))
-        {
-            $this->getMessageManager()->add('warning', 'school.roll_group.not_found', [], 'School');
-            return ;
-        }
-
-        if ($entity->canDelete())
-        {
-            $this->getEntityManager()->remove($entity);
-            $this->getEntityManager()->flush();
-            $this->getMessageManager()->add('success', 'school.roll_group.removed.success', ['%{name}' => $entity->getName()], 'School');
-            return ;
-        }
-        $this->getMessageManager()->add('warning', 'school.roll_group.remove.locked', ['%{name}' => $entity->getName()], 'School');
-    }
+    private $entityName = RollGroup::class;
 
     /**
      * copyToNextYear

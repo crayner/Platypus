@@ -1,0 +1,20 @@
+App\Entity\Department:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [nameShort]
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 40
+        nameShort:
+            - NotBlank: ~
+            - Length:
+                max: 4
+        subjectListing:
+            - Length:
+                max: 255
+        logo:
+            - App\Validator\Logo: ~

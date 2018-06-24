@@ -1,0 +1,23 @@
+{% trans_default_domain 'School' %}
+
+{% set h3Content = '' %}
+{% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_departments')}})|raw %}
+{% set h3Content = h3Content ~ resetButton()|raw %}
+{% set h3Content = h3Content ~ saveButton()|raw %}
+{% include 'Default/panelStart.html.twig' with {header: 'department.edit.title', transDomain: 'School', panelParagraph: '', panelStyle: 'success', panelStyle: 'info'} %}
+<div class="container-fluid">
+    <div class="row row-header">
+        <div class="col-5 card">
+            {{ 'department.member.name.label'|trans }}
+        </div>
+        <div class="col-4 card">
+            {{ 'department.member.role.label'|trans }}
+        </div>
+        <div class="col-3 card">
+            {{ 'actions'|trans({}, 'System') }}
+        </div>
+    </div>
+    {{ collection_widget(form.members) }}
+</div>
+{% include 'Default/panelEnd.html.twig' %}
+{% do form.members.setRendered() %}

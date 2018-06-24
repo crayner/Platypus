@@ -16,6 +16,9 @@
 namespace App\Entity;
 
 use App\Util\PersonNameHelper;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 use Hillrange\Security\Util\ParameterInjector;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -288,5 +291,70 @@ class Person
     public function getFullName(array $options = []): string
     {
         return PersonNameHelper::getFullName($this, $options);
+    }
+
+    /**
+     * @var Collection|null
+     */
+    private $departments;
+
+    /**
+     * @return Collection
+     */
+    public function getDepartments(): Collection
+    {
+        if (empty($this->departments))
+            $this->departments = new ArrayCollection();
+
+        if ($this->departments instanceof PersistentCollection)
+            $this->departments->initialize();
+
+        return $this->departments;
+    }
+
+    /**
+     * @param Collection|null $departments
+     * @return Department
+     */
+    public function setDepartments(?Collection $departments): Person
+    {
+        $this->departments = $departments;
+        return $this;
+    }
+
+    /**
+     * addDepartment
+     *
+     * @param DepartmentStaff|null $department
+     * @param bool $add
+     * @return Department
+     */
+    public function addDepartment(?DepartmentStaff $department, $add = true): Person
+    {
+        if (empty($department) || $this->getDepartments()->contains($department))
+            return $this;
+
+        if ($add)
+            $department->setMember($this, false);
+
+        $this->departments->add($department);
+
+        return $this;
+    }
+
+    /**
+     * removeDepartment
+     *
+     * @param DepartmentStaff|null $department
+     * @return Department
+     */
+    public function removeDepartment(?DepartmentStaff $department): Person
+    {
+        $this->getDepartments()->removeElement($department);
+
+        if (! empty($department))
+            $department->setMember(null, false);
+
+        return $this;
     }
 }

@@ -10,19 +10,18 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 22/06/2018
- * Time: 13:05
+ * Date: 24/06/2018
+ * Time: 09:27
  */
 namespace App\Manager\Settings;
 
 use App\Manager\SettingManager;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Class FacilitySettings
+ * Class DepartmentSettings
  * @package App\Manager\Settings
  */
-class FacilitySettings implements SettingCreationInterface
+class DepartmentSettings implements SettingCreationInterface
 {
     /**
      * getName
@@ -31,7 +30,7 @@ class FacilitySettings implements SettingCreationInterface
      */
     public function getName(): string
     {
-        return 'Facility';
+        return 'Department';
     }
 
     /**
@@ -46,34 +45,30 @@ class FacilitySettings implements SettingCreationInterface
     {
         $settings = [];
 
-        $setting = $sm->createOneByName('school_admin.facility_types');
+        $setting = $sm->createOneByName('departments.make_departments_public');
 
-        $setting->setName('school_admin.facility_types')
+        $setting->setName('departments.make_departments_public')
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('array')
-            ->__set('displayName', 'Facility Types')
-            ->__set('description', 'List of types for facilities.');
+            ->setType('boolean')
+            ->__set('displayName', 'Make Departments Public')
+            ->__set('description', 'Should department information be made available to the public, via the Gibbon homepage?');
         if (empty($setting->getValue())) {
-            $setting->setValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
+            $setting->setValue(false)
                 ->__set('choice', null)
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                    ]
-                )
-                ->setDefaultValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
+                ->setValidators(null)
+                ->setDefaultValue(false)
                 ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
         $sections = [];
 
-        $section['name'] = 'Facility Settings';
+        $section['name'] = 'Department Access';
         $section['description'] = '';
         $section['settings'] = $settings;
 
         $sections[] = $section;
-        $sections['header'] = 'manage_facility_settings';
+        $sections['header'] = 'manage_departments';
 
         return $sections;
     }

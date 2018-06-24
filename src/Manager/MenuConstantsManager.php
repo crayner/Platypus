@@ -1,7 +1,7 @@
 <?php
 namespace App\Manager;
 
-class MenuManagerConstants
+class MenuConstantsManager
 {
     CONST NODES = '
 1:
@@ -31,6 +31,12 @@ School Admin:
                 name: Markbook
             transDomain: System
     groupings:
+        manage_departments:
+            label: manage_departments
+            role: ROLE_REGISTRAR
+            route: manage_departments
+            parameters: {}
+            transDomain: School
         houses_edit:
             label: menu.houses.manage
             role: ROLE_REGISTRAR
@@ -184,6 +190,7 @@ School Admin:
         - school_year_edit
         - multiple_settings_manage
         - roll_group_edit
+        - department_edit
 ';
     /*
 	CONST NODES = '

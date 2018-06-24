@@ -18,7 +18,7 @@
     });
 
     $('form').submit(function () {
-        var fragment = '{{ app.request.get('tabName') }}';
+        var fragment = $('.tab-content > .active').attr('id');;
 
         var path = "{{ path(route, options|merge({'id': app.request.get('id'), 'tabName': '__fragment__'})) }}";
 

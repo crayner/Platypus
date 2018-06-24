@@ -3,7 +3,7 @@ namespace App\Pagination;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * Pagination Interface
+ * Pagination Interfaces
  *
  * @version    25th October 2016
  * @since      25th October 2016

@@ -17,7 +17,7 @@ namespace App\Manager\Settings;
 use App\Manager\SettingManager;
 
 /**
- * Interface SettingCreationInterface
+ * Interfaces SettingCreationInterface
  * @package App\Manager\Settings
  */
 interface SettingCreationInterface

@@ -1,0 +1,38 @@
+App\Entity\Department:
+    type: entity
+    table: department
+    repositoryClass: App\Repository\DepartmentRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 50
+            nullable: false
+            unique: true
+        nameShort:
+            length: 4
+            nullable: false
+            unique: true
+            column: name_short
+        type:
+            length: 20
+            options:
+                default: 'learning_area'
+        subjectListing:
+            length: 255
+            nullable: true
+            column: subject_listing
+        blurb:
+            type: text
+            nullable: true
+        logo:
+            length: 255
+            nullable: true
+    oneToMany:
+        members:
+            targetEntity: App\Entity\DepartmentStaff
+            mappedBy: department
+            cascade: [ all ]
