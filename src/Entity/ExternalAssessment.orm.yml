@@ -26,3 +26,8 @@ App\Entity\ExternalAssessment:
             column: allow_file_upload
             options:
                 default: 0
+    oneToMany:
+        fields:
+            targetEntity: App\Entity\ExternalAssessmentField
+            mappedBy: externalAssessment
+            cascade: [ all ]

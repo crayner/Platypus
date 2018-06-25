@@ -68,7 +68,7 @@ class StudentController extends Controller
         $categories = new StudentNoteCategories();
         $notes = new ArrayCollection($sm->getEntityManager()->getRepository(StudentNoteCategory::class)->findBy([], ['name' => 'ASC']));
         $categories->setCategories($notes);
-        foreach ($sm->createSettingDefinition('Students') as $name =>$section)
+        foreach ($sm->createSettingDefinition('Students')->getSections() as $name =>$section)
             if ($name === 'header')
                 $multipleSettingManager->setHeader($section);
             else
@@ -80,7 +80,7 @@ class StudentController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($sm);
+            $multipleSettingManager->saveSections($sm, $request->request->get('students_settings')['multipleSettings']);
             foreach($categories->getCategories()->toArray() as $snc)
                 $sm->getEntityManager()->persist($snc);
             $sm->getEntityManager()->flush();

@@ -16,6 +16,7 @@
 namespace App\Controller;
 
 use App\Entity\AlertLevel;
+use App\Entity\ExternalAssessment;
 use App\Entity\FileExtension;
 use App\Entity\INDescriptor;
 use App\Form\AlertLevelsType;
@@ -28,6 +29,7 @@ use App\Manager\IndividualNeedDescriptorManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
 use App\Organism\AlertLevels;
+use App\Organism\ExternalAssessments;
 use App\Organism\FileExtensions;
 use App\Organism\IndividualNeedsDescriptors;
 use App\Repository\SettingRepository;
@@ -99,7 +101,8 @@ class SettingController extends Controller
      */
     public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager)
     {
-        foreach ($request->getSession()->get('manage_settings') as $name =>$section)
+        $settings = $request->getSession()->get('manage_settings');
+        foreach ($settings->getSections() as $name =>$section)
             if ($name === 'header')
                 $multipleSettingManager->setHeader($section);
             else
@@ -110,9 +113,11 @@ class SettingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
-            $multipleSettingManager->saveSections($settingManager, $request->request->get('section'));
-
-        $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
+            if ($multipleSettingManager->saveSections($settingManager, $request->request->get('section')))
+            {
+                $request->getSession()->set('manage_settings', $settingManager->createSettingDefinition($settings->getName()));
+                return $this->redirectToRoute('multiple_settings_manage');
+            }
 
         return $this->render('Setting/multiple.html.twig',
             [
@@ -136,7 +141,7 @@ class SettingController extends Controller
         $descriptors = new IndividualNeedsDescriptors();
         $data = new ArrayCollection($sm->getEntityManager()->getRepository(INDescriptor::class)->findBy([], ['sequence' => 'ASC']));
         $descriptors->setDescriptors($data);
-        foreach ($sm->createSettingDefinition('IndividualNeeds') as $name =>$section)
+        foreach ($sm->createSettingDefinition('IndividualNeeds')->getSections() as $name =>$section)
             if ($name === 'header')
                 $multipleSettingManager->setHeader($section);
             else
@@ -148,7 +153,7 @@ class SettingController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($sm);
+            $multipleSettingManager->saveSections($sm, $request->request->get('in_descriptors')['multipleSettings']);
             foreach($descriptors->getDescriptors()->toArray() as $entity)
                 $sm->getEntityManager()->persist($entity);
             $sm->getEntityManager()->flush();

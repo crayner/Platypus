@@ -39,11 +39,11 @@ class ActivitiesSettings implements SettingCreationInterface
      * getSettings
      *
      * @param SettingManager $sm
-     * @return array
+     * @return SettingCreationInterface
      * @throws \Doctrine\DBAL\Exception\TableNotFoundException
      * @throws \Doctrine\ORM\ORMException
      */
-    public function getSettings(SettingManager $sm): array
+    public function getSettings(SettingManager $sm): SettingCreationInterface
     {
         $settings = [];
 
@@ -56,15 +56,14 @@ class ActivitiesSettings implements SettingCreationInterface
             ->__set('description', 'Should activities be organised around dates (flexible) or terms (easy)?');
         if (empty($setting->getValue())) {
             $setting->setValue('term')
-                ->__set('choice', ['date','term'])
+                ->__set('choice', ['date', 'term'])
                 ->setValidators(
                     [
                         new NotBlank(),
                     ]
                 )
                 ->setDefaultValue('term')
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -84,8 +83,7 @@ class ActivitiesSettings implements SettingCreationInterface
                     ]
                 )
                 ->setDefaultValue('0')
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -98,15 +96,14 @@ class ActivitiesSettings implements SettingCreationInterface
             ->__set('description', 'System-wide access control');
         if (empty($setting->getValue())) {
             $setting->setValue('register')
-                ->__set('choice', ['none','view','register'])
+                ->__set('choice', ['none', 'view', 'register'])
                 ->setValidators(
                     [
                         new NotBlank(),
                     ]
                 )
                 ->setDefaultValue('register')
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -126,8 +123,7 @@ class ActivitiesSettings implements SettingCreationInterface
                     ]
                 )
                 ->setDefaultValue('per_activity')
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -147,8 +143,7 @@ class ActivitiesSettings implements SettingCreationInterface
                     ]
                 )
                 ->setDefaultValue('competitive')
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -164,8 +159,7 @@ class ActivitiesSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(null)
                 ->setDefaultValue(true)
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -177,12 +171,11 @@ class ActivitiesSettings implements SettingCreationInterface
             ->__set('displayName', 'Activity Types')
             ->__set('description', 'List of the different activity types available in school. Leave blank to disable this feature.');
         if (empty($setting->getValue())) {
-            $setting->setValue(['creativity','action','service'])
+            $setting->setValue(['creativity', 'action', 'service'])
                 ->__set('choice', null)
                 ->setValidators(null)
                 ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -198,8 +191,7 @@ class ActivitiesSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(null)
                 ->setDefaultValue(false)
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -215,8 +207,7 @@ class ActivitiesSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(null)
                 ->setDefaultValue(false)
-                ->__set('translateChoice', 'Setting')
-            ;
+                ->__set('translateChoice', 'Setting');
         }
         $settings[] = $setting;
 
@@ -229,6 +220,20 @@ class ActivitiesSettings implements SettingCreationInterface
         $sections[] = $section;
         $sections['header'] = 'manage_activities_settings';
 
-        return $sections;
+        $this->sections = $sections;
+        return $this;
+    }
+
+    /**
+     * @var array
+     */
+    private $sections;
+
+    /**
+     * @return array
+     */
+    public function getSections(): array
+    {
+        return $this->sections;
     }
 }

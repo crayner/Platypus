@@ -135,8 +135,10 @@ class ExternalAssessmentField
      * @param ExternalAssessment|null $externalAssessment
      * @return ExternalAssessmentField
      */
-    public function setExternalAssessment(?ExternalAssessment $externalAssessment): ExternalAssessmentField
+    public function setExternalAssessment(?ExternalAssessment $externalAssessment, $add = true): ExternalAssessmentField
     {
+        if ($add && ! empty($externalAssessment))
+            $externalAssessment->addField($this, false);
         $this->externalAssessment = $externalAssessment;
         return $this;
     }

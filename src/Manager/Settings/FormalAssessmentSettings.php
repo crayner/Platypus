@@ -10,18 +10,20 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 24/06/2018
- * Time: 09:27
+ * Date: 25/06/2018
+ * Time: 23:27
  */
 namespace App\Manager\Settings;
 
 use App\Manager\SettingManager;
+use App\Validator\Yaml;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * Class DepartmentSettings
+ * Class FormalAssessmentSettings
  * @package App\Manager\Settings
  */
-class DepartmentSettings implements SettingCreationInterface
+class FormalAssessmentSettings implements SettingCreationInterface
 {
     /**
      * getName
@@ -30,7 +32,7 @@ class DepartmentSettings implements SettingCreationInterface
      */
     public function getName(): string
     {
-        return 'Department';
+        return 'FormalAssessment';
     }
 
     /**
@@ -45,30 +47,35 @@ class DepartmentSettings implements SettingCreationInterface
     {
         $settings = [];
 
-        $setting = $sm->createOneByName('departments.make_departments_public');
+        $setting = $sm->createOneByName('formal_assessment.internal_assessment_types');
 
-        $setting->setName('departments.make_departments_public')
+        $setting->setName('formal_assessment.internal_assessment_types')
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('boolean')
-            ->__set('displayName', 'Make Departments Public')
-            ->__set('description', 'Should department information be made available to the public, via the Gibbon homepage?');
+            ->setType('array')
+            ->__set('displayName', 'Internal Assessment Types')
+            ->__set('description', 'List of types to make available in Internal Assessments.');
         if (empty($setting->getValue())) {
-            $setting->setValue(false)
+            $setting->setValue(['expected_grade','predicted_grade','target_grade'])
                 ->__set('choice', null)
-                ->setValidators(null)
-                ->setDefaultValue(false)
+                ->setValidators(
+                    [
+                        new NotBlank(),
+                        new Yaml(),
+                    ]
+                )
+                ->setDefaultValue(['expected_grade','predicted_grade','target_grade'])
                 ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
         $sections = [];
 
-        $section['name'] = 'Department Access';
+        $section['name'] = 'Internal Assessment Settings';
         $section['description'] = '';
         $section['settings'] = $settings;
 
         $sections[] = $section;
-        $sections['header'] = 'manage_departments';
+        $sections['header'] = 'manage_formal_assessments';
 
         $this->sections = $sections;
         return $this;

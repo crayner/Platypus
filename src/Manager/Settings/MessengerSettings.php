@@ -13,10 +13,9 @@
  * Date: 21/06/2018
  * Time: 14:55
  */
-
 namespace App\Manager\Settings;
+
 use App\Manager\SettingManager;
-use Hillrange\Form\Validator\AlwaysInValid;
 use Hillrange\Form\Validator\Colour;
 
 /**
@@ -39,11 +38,11 @@ class MessengerSettings implements SettingCreationInterface
      * getSettings
      *
      * @param SettingManager $sm
-     * @return array
+     * @return SettingCreationInterface
      * @throws \Doctrine\DBAL\Exception\TableNotFoundException
      * @throws \Doctrine\ORM\ORMException
      */
-    public function getSettings(SettingManager $sm): array
+    public function getSettings(SettingManager $sm): SettingCreationInterface
     {
         $settings = [];
 
@@ -206,6 +205,20 @@ class MessengerSettings implements SettingCreationInterface
 
         $sections['header'] = 'manage_messenger_settings';
 
-        return $sections;
+        $this->sections = $sections;
+        return $this;
+    }
+
+    /**
+     * @var array
+     */
+    private $sections;
+
+    /**
+     * @return array
+     */
+    public function getSections(): array
+    {
+        return $this->sections;
     }
 }

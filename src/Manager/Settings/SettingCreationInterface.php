@@ -14,6 +14,7 @@
  * Time: 11:35
  */
 namespace App\Manager\Settings;
+
 use App\Manager\SettingManager;
 
 /**
@@ -30,10 +31,17 @@ interface SettingCreationInterface
     public function getName(): string;
 
     /**
+     * getSections
+     *
+     * @return array
+     */
+    public function getSections(): array;
+
+    /**
      * getSettings
      *
      * @param SettingManager $sm
      * @return array
      */
-    public function getSettings(SettingManager $sm): array;
+    public function getSettings(SettingManager $sm): SettingCreationInterface;
 }

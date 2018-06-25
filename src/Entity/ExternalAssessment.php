@@ -17,6 +17,10 @@
 namespace App\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
+
 class ExternalAssessment
 {
     /**
@@ -177,6 +181,70 @@ class ExternalAssessment
     public function setAllowFileUpload(?bool $allowFileUpload): ExternalAssessment
     {
         $this->allowFileUpload = $allowFileUpload ? true : false;;
+        return $this;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $fields;
+
+    /**
+     * @return Collection
+     */
+    public function getFields(): Collection
+    {
+        if (empty($this->fields))
+            $this->fields = new ArrayCollection();
+
+        if ($this->fields instanceof PersistentCollection)
+            $this->fields->initialize();
+
+        return $this->fields;
+    }
+
+    /**
+     * setFields
+     *
+     * @param Collection|null $fields
+     * @return ExternalAssessment
+     */
+    public function setFields(?Collection $fields): ExternalAssessment
+    {
+        $this->fields = $fields;
+
+        return $this;
+    }
+
+    /**
+     * addField
+     *
+     * @param ExternalAssessmentField|null $field
+     * @param bool $add
+     * @return ExternalAssessment
+     */
+    public function addField(?ExternalAssessmentField $field, $add = true): ExternalAssessment
+    {
+        if (empty($field) || $this->getFields()->contains($field))
+            return $this;
+
+        if ($add)
+            $field->setExternalAssessment($this, false);
+
+        $this->fields->add($field);
+
+        return $this;
+    }
+
+    /**
+     * removeField
+     *
+     * @param ExternalAssessmentField|null $field
+     * @return ExternalAssessment
+     */
+    public function removeField(?ExternalAssessmentField $field): ExternalAssessment
+    {
+        $this->getFields()->removeElement($field);
         return $this;
     }
 }

@@ -39,11 +39,11 @@ class FinanceSettings implements SettingCreationInterface
      * getSettings
      *
      * @param SettingManager $sm
-     * @return array
+     * @return SettingCreationInterface
      * @throws \Doctrine\DBAL\Exception\TableNotFoundException
      * @throws \Doctrine\ORM\ORMException
      */
-    public function getSettings(SettingManager $sm): array
+    public function getSettings(SettingManager $sm): SettingCreationInterface
     {
         $settings = [];
 
@@ -431,6 +431,20 @@ class FinanceSettings implements SettingCreationInterface
 
         $sections['header'] = 'manage_finance_settings';
 
-        return $sections;
+        $this->sections = $sections;
+        return $this;
+    }
+
+    /**
+     * @var array
+     */
+    private $sections;
+
+    /**
+     * @return array
+     */
+    public function getSections(): array
+    {
+        return $this->sections;
     }
 }

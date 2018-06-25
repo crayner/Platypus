@@ -13,8 +13,8 @@
  * Date: 15/06/2018
  * Time: 14:30
  */
-
 namespace App\Manager;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 

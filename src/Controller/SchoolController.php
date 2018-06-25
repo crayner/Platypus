@@ -227,19 +227,21 @@ class SchoolController extends Controller
         $settings = new AttendanceCodes();
         $results = new ArrayCollection($sm->getEntityManager()->getRepository(AttendanceCode::class)->findBy([], ['sequence' => 'ASC']));
         $settings->setAttendanceCodes($results);
-        foreach ($sm->createSettingDefinition('Attendance') as $name =>$section)
+        foreach ($sm->createSettingDefinition('Attendance')->getSections() as $name =>$section)
             if ($name === 'header')
                 $multipleSettingManager->setHeader($section);
             else
                 $multipleSettingManager->addSection($section);
+
         $settings->setMultipleSettings($multipleSettingManager);
 
         $form = $this->createForm(AttendanceSettingsType::class, $settings);
 
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($sm);
+            $multipleSettingManager->saveSections($sm, $request->request->get('sections'));
             foreach($settings->getAttendanceCodes()->toArray() as $entity)
                 $sm->getEntityManager()->persist($entity);
             $sm->getEntityManager()->flush();
@@ -480,7 +482,7 @@ class SchoolController extends Controller
 
         $pagination->getDataSet();
 
-        foreach($sm->createSettingDefinition('Department') as $name =>$section)
+        foreach($sm->createSettingDefinition('Department')->getSections() as $name =>$section)
             if ($name === 'header')
                 $multipleSettingManager->setHeader($section);
             else
@@ -491,7 +493,7 @@ class SchoolController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($sm);
+            $multipleSettingManager->saveSections($sm, $request->request->get('section'));
         }
 
         return $this->render('School/department_settings.html.twig',

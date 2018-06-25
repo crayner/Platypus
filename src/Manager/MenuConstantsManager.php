@@ -23,6 +23,13 @@ class MenuConstantsManager
     CONST SECTIONS = '
 School Admin:
     assessment:
+        manage_formal_assessments:
+            label: manage_formal_assessments
+            role: ROLE_PRINCIPAL
+            route: manage_settings
+            parameters: 
+                name: FormalAssessment
+            transDomain: System
         markbook_settings:
             label: manage_markbook_settings
             role: ROLE_PRINCIPAL

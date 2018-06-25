@@ -36,9 +36,12 @@ class PlannerSettings implements SettingCreationInterface
     /**
      * getSettings
      *
-     * @return array
+     * @param SettingManager $sm
+     * @return SettingCreationInterface
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function getSettings(SettingManager $sm): array
+    public function getSettings(SettingManager $sm): SettingCreationInterface
     {
         $settings = [];
 
@@ -262,6 +265,20 @@ class PlannerSettings implements SettingCreationInterface
 
         $sections['header'] = 'manage_planner_settings';
 
-        return $sections;
+        $this->sections = $sections;
+        return $this;
+    }
+
+    /**
+     * @var array
+     */
+    private $sections;
+
+    /**
+     * @return array
+     */
+    public function getSections(): array
+    {
+        return $this->sections;
     }
 }

@@ -15,6 +15,7 @@
  */
 namespace App\Manager;
 
+use App\Util\StringHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Node\Stmt\Else_;
@@ -174,28 +175,42 @@ class MultipleSettingManager
         return $this;
     }
 
+    /**
+     * safeName
+     *
+     * @param $name
+     * @return string
+     */
     public function safeName($name): string
     {
-        return strtolower(str_replace([' '], '_', trim($name)));
+        return StringHelper::safeString($name);
     }
 
     /**
      * saveSections
+     *
      * @param SettingManager $sm
      * @param array $data
+     * @return bool
      * @throws \Doctrine\DBAL\Exception\TableNotFoundException
      * @throws \Throwable
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Syntax
      */
-    public function saveSections(SettingManager $sm, array $data)
+    public function saveSections(SettingManager $sm, array $data): bool
     {
+        $refresh = false;
         foreach ($this->getSections() as $name=>$section)
             foreach ($section['settings'] as $key=>$setting)
             {
                 if ($setting->getType() === 'multiChoice' && empty($data[$name]['collection'][$key]))
+                {
+                    $refresh = true;
                     $setting->setValue([]);
+                }
                 $sm->createSetting($setting->getSetting());
             }
+
+        return $refresh;
     }
 }

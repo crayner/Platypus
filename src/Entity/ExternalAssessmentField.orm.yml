@@ -21,6 +21,7 @@ App\Entity\ExternalAssessmentField:
     manyToOne:
         externalAssessment:
             targetEntity: App\Entity\ExternalAssessment
+            inversedBy: fields
             joinColumn:
                 name: external_assessment_id
                 referencedColumnName: id
