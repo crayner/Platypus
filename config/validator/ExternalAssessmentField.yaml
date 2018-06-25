@@ -1,0 +1,15 @@
+App\Entity\Department:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name, category]
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 50
+        category:
+            - NotBlank: ~
+            - Length:
+                max: 50
+        yearGroups:
+            - Valid: ~

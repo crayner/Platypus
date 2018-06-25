@@ -1,0 +1,45 @@
+App\Entity\ExternalAssessmentField:
+    type: entity
+    table: external_assessment_field
+    repositoryClass: App\Repository\ExternalAssessmentFieldRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 50
+            nullable: false
+        category:
+            length: 50
+            nullable: false
+        sequence:
+            type: integer
+            options:
+                default: '0'
+    manyToOne:
+        externalAssessment:
+            targetEntity: App\Entity\ExternalAssessment
+            joinColumn:
+                name: external_assessment_id
+                referencedColumnName: id
+                nullable: false
+        scale:
+            targetEntity: App\Entity\Scale
+            joinColumn:
+                name: scale_id
+                referencedColumnName: id
+                nullable: false
+    manyToMany:
+        yearGroups:
+            targetEntity: App\Entity\YearGroup
+            orderBy: { sequence: ASC }
+            joinTable:
+                name: external_assessment_year_group
+                joinColumns:
+                    external_assessment_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    year_group_id:
+                        referencedColumnName: id
