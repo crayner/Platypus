@@ -1,0 +1,22 @@
+App\Entity\Scale:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [nameShort]
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 40
+        nameShort:
+            - NotBlank: ~
+            - Length:
+                max: 5
+        usage:
+            - NotBlank: ~
+            - Length:
+                max: 50
+        lowestAcceptable:
+            - Length:
+                max: 5

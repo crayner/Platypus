@@ -1,0 +1,34 @@
+App\Entity\Scale:
+    type: entity
+    table: scale
+    repositoryClass: App\Repository\ScaleRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 40
+            nullable: false
+        nameShort:
+            length: 5
+            nullable: false
+            column: name_short
+        usage:
+            length: 50
+            nullable: false
+        lowestAcceptable:
+            length: 5
+            nullable: true
+            column: lowest_acceptable
+            options:
+                comment: 'This is the sequence number of the lowest grade a student can get without being unsatisfactory'
+        active:
+            type: boolean
+            options:
+                default: '1'
+        numeric:
+            type: boolean
+            options:
+                default: '0'
