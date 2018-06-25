@@ -59,1060 +59,10 @@
   display_name: "System Version"
   description: "The version of Busybee currently configured on your system."
   value: "0.1.02"
-  validators: "a:0:{}"
   role: "ROLE_SYSTEM_ADMIN"
   default_value: "0.0.00"
   last_modified: "2018-06-17 12:06:07"
   created_on: "2018-03-26 23:02:05"
--
-  id: 6
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "resources.categories"
-  display_name: "Categories"
-  description: "Allowable choices for category."
-  value: "- Article\n- Book\n- Document\n- Graphic\n- Idea\n- Music\n- Object\n- Painting\n- Person\n- Photo\n- Place\n- Poetry\n- Prose\n- Rubric\n- Text\n- Video\n- Website\n- 'Work Sample'\n- Other\n"
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "null"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:39"
-  created_on: "2018-06-16 13:36:52"
--
-  id: 7
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "resources.purposes_general"
-  display_name: "Purposes (General)"
-  description: "Allowable choices for purpose when creating a resource."
-  value: "- 'Assessment Aid'\n- Concept\n- Inspiration\n- 'Learner Profile'\n- 'Mass Mailer Attachment'\n- Provocation\n- Skill\n- 'Teaching and Learning Strategy'\n- Other\n"
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "null"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:39"
-  created_on: "2018-06-16 13:36:52"
--
-  id: 8
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "resources.purposes_restricted"
-  display_name: "Purposes (Restricted) "
-  description: "Additional allowable choices for purpose when creating a resource, for those with \"Manage All Resources\" rights."
-  value: "{  }"
-  validators: "a:1:{i:0;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "null"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:20:53"
-  created_on: "2018-06-16 13:36:52"
--
-  id: 9
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "planner.lesson_details_template"
-  display_name: "Lesson Details Template"
-  description: "Template to be inserted into Lesson Details field"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 11:55:36"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 10
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "planner.teachers_notes_template"
-  display_name: "Teacher's Notes Template"
-  description: "Template to be inserted into Teacher's Notes field"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 11:55:36"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 11
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "planner.unit_outline_template"
-  display_name: "Unit Outline Template"
-  description: "Template to be inserted into Unit Outline section of planner"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 11:55:36"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 12
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "planner.smart_block_template"
-  display_name: "Smart Block Template"
-  description: "Template to be inserted into new block in Smart Unit"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 11:55:36"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 13
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "planner.make_units_public"
-  display_name: "Make Units Public"
-  description: "Enables a public listing of units, with teachers able to opt in to share units."
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:37"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 14
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "planner.share_unit_outline"
-  display_name: "Share Unit Outline"
-  description: "Allow users who do not have access to the unit planner to see Unit Outlines via the lesson planner?"
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:37"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 15
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "planner.allow_outcome_editing"
-  display_name: "Allow Outcome Editing"
-  description: "Should the text within outcomes be editable when planning lessons and units?"
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:10:00"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 16
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "planner.sharing_default_parents"
-  display_name: "Sharing Default: Parents"
-  description: "When adding lessons and deploying units, should sharing default for parents?"
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:10:00"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 17
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "planner.sharing_default_students"
-  display_name: "Sharing Default: Students"
-  description: "When adding lessons and deploying units, should sharing default for students?"
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:10:00"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 18
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "planner.parent_weekly_email_summary_include_behaviour"
-  display_name: "Parent Weekly Email Summary Include Behaviour"
-  description: "Should behaviour information be included in the weekly planner email summary that goes out to parents?"
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:10:00"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 19
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "planner.parent_weekly_email_summary_include_markbook"
-  display_name: "Parent Weekly Email Summary Include Markbook"
-  description: "Should Markbook information be included in the weekly planner email summary that goes out to parents?"
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:37"
-  created_on: "2018-06-17 11:26:46"
--
-  id: 20
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "library.default_loan_length"
-  display_name: "Default Loan Length"
-  description: "The standard loan length for a library item, in days"
-  value: 7
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:31;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_HEAD_TEACHER"
-  default_value: 7
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 09:51:04"
-  created_on: "2018-06-18 09:51:04"
--
-  id: 21
-  created_by: 1
-  modified_by: 1
-  type: "colour"
-  name: "library.browse.bg.colour"
-  display_name: "Browse Library BG Colour "
-  description: "Background colour used behind library browsing screen."
-  value: "#34d32c"
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:31:\"Hillrange\\Form\\Validator\\Colour\":4:{s:7:\"message\";s:23:\"colour.validation.error\";s:11:\"transDomain\";s:10:\"validators\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_HEAD_TEACHER"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:21:24"
-  created_on: "2018-06-18 09:51:04"
--
-  id: 22
-  created_by: 1
-  modified_by: 1
-  type: "image"
-  name: "library.browse.bg.image"
-  display_name: "Browse Library BG Image"
-  description: "URL to background image used behind library browsing screen."
-  validators: "a:1:{i:0;O:29:\"App\\Validator\\BackgroundImage\":43:{s:8:\"minWidth\";i:1200;s:7:\"maxSize\";i:1024000;s:11:\"allowSquare\";b:0;s:14:\"allowLandscape\";b:1;s:13:\"allowPortrait\";b:0;s:15:\"detectCorrupted\";b:1;s:9:\"mimeTypes\";s:7:\"image/*\";s:8:\"maxWidth\";N;s:9:\"maxHeight\";N;s:9:\"minHeight\";N;s:8:\"maxRatio\";N;s:8:\"minRatio\";N;s:9:\"minPixels\";N;s:9:\"maxPixels\";N;s:16:\"mimeTypesMessage\";s:31:\"This file is not a valid image.\";s:22:\"sizeNotDetectedMessage\";s:44:\"The size of the image could not be detected.\";s:15:\"maxWidthMessage\";s:87:\"The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.\";s:15:\"minWidthMessage\";s:90:\"The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.\";s:16:\"maxHeightMessage\";s:91:\"The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.\";s:16:\"minHeightMessage\";s:94:\"The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.\";s:16:\"minPixelsMessage\";s:103:\"The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.\";s:16:\"maxPixelsMessage\";s:104:\"The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.\";s:15:\"maxRatioMessage\";s:83:\"The image ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.\";s:15:\"minRatioMessage\";s:86:\"The image ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.\";s:18:\"allowSquareMessage\";s:80:\"The image is square ({{ width }}x{{ height }}px). Square images are not allowed.\";s:21:\"allowLandscapeMessage\";s:104:\"The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not allowed.\";s:20:\"allowPortraitMessage\";s:102:\"The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not allowed.\";s:16:\"corruptedMessage\";s:28:\"The image file is corrupted.\";s:12:\"binaryFormat\";b:0;s:15:\"notFoundMessage\";s:28:\"The file could not be found.\";s:18:\"notReadableMessage\";s:25:\"The file is not readable.\";s:14:\"maxSizeMessage\";s:98:\"The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.\";s:20:\"disallowEmptyMessage\";s:29:\"An empty file is not allowed.\";s:25:\"uploadIniSizeErrorMessage\";s:72:\"The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.\";s:26:\"uploadFormSizeErrorMessage\";s:22:\"The file is too large.\";s:25:\"uploadPartialErrorMessage\";s:37:\"The file was only partially uploaded.\";s:24:\"uploadNoFileErrorMessage\";s:21:\"No file was uploaded.\";s:26:\"uploadNoTmpDirErrorMessage\";s:46:\"No temporary folder was configured in php.ini.\";s:27:\"uploadCantWriteErrorMessage\";s:36:\"Cannot write temporary file to disk.\";s:27:\"uploadExtensionErrorMessage\";s:42:\"A PHP extension caused the upload to fail.\";s:18:\"uploadErrorMessage\";s:31:\"The file could not be uploaded.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_HEAD_TEACHER"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:21:24"
-  created_on: "2018-06-18 09:51:04"
--
-  id: 23
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "activities.date_type"
-  display_name: "Date Type"
-  description: "Should activities be organised around dates (flexible) or terms (easy)?"
-  value: "term"
-  choice: "date,term"
-  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "term"
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 12:51:04"
-  created_on: "2018-06-18 12:51:04"
--
-  id: 24
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "activities.max_per_term"
-  display_name: "Maximum Activities per Term"
-  description: "The most a student can sign up for in one term. Set to 0 for unlimited."
-  value: 0
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:5;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 0
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:33"
-  created_on: "2018-06-18 12:51:04"
--
-  id: 25
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "activities.access"
-  display_name: "Access"
-  description: "System-wide access control"
-  value: "register"
-  choice: "none, view, register"
-  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "register"
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 12:51:04"
-  created_on: "2018-06-18 12:51:04"
--
-  id: 26
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "activities.payment"
-  display_name: "Payment"
-  description: "Payment system"
-  value: "per_activity"
-  choice: "none, single, per_activity, single_per_activity"
-  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "per_activity"
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 14:28:22"
-  created_on: "2018-06-18 14:28:22"
--
-  id: 27
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "activities.enrolment_type"
-  display_name: "Enrolment Type"
-  description: "Enrolment process type"
-  value: "competitive"
-  choice: "competitive, selection"
-  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "competitive"
-  translate_choice: "Setting"
-  last_modified: "2018-06-18 14:28:22"
-  created_on: "2018-06-18 14:28:22"
--
-  id: 28
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "activities.backup_choice"
-  display_name: "Backup Choice"
-  description: "Allow students to choose a backup, in case enroled activity is full."
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:10:08"
-  created_on: "2018-06-18 14:28:22"
--
-  id: 29
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "activities.activity_types"
-  display_name: "Activity Types"
-  description: "List of the different activity types available in school. Leave blank to disable this feature."
-  value: "- creativity\n- action\n- service\n"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "null"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:33"
-  created_on: "2018-06-18 14:28:22"
--
-  id: 30
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "activities.disable_external_provider_signup"
-  display_name: "Disable External Provider Signup"
-  description: "Should we turn off the option to sign up for activities provided by an outside agency?"
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:33"
-  created_on: "2018-06-18 14:28:22"
--
-  id: 31
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "activities.hide_external_provider_cost"
-  display_name: "Hide External Provider Cost"
-  description: "Should we hide the cost of activities provided by an outside agency from the Activities View?"
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:33"
-  created_on: "2018-06-18 14:28:22"
--
-  id: 32
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "students.enable_student_notes"
-  display_name: "Enable Student Notes"
-  description: "Should student notes be turned on?"
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:17:26"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 33
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "students.note_creation_notification"
-  display_name: "Note Creation Notification"
-  description: "Determines who to notify when a new student note is created."
-  value: "tutors"
-  choice: "tutors,tutors_teachers"
-  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "tutors"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 10:56:07"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 34
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "students.academic_alert_low_threshold"
-  display_name: "Low Academic Alert Threshold"
-  description: "The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student."
-  value: 3
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 3
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 10:56:07"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 35
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "students.academic_alert_medium_threshold"
-  display_name: "Medium Academic Alert Threshold"
-  description: "The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student."
-  value: 5
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 5
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 10:56:07"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 36
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "students.academic_alert_high_threshold"
-  display_name: "High Academic Alert Threshold"
-  description: "The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student."
-  value: 9
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 9
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 10:56:07"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 37
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "students.behaviour_alert_low_threshold"
-  display_name: "Low Behaviour Alert Threshold"
-  description: "The number of Behaviour concerns needed in the past 60 days to raise a low level Behaviour alert on a student."
-  value: 3
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 3
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 10:56:07"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 38
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "students.behaviour_alert_medium_threshold"
-  display_name: "Medium Behaviour Alert Threshold"
-  description: "The number of Behaviour concerns needed in the past 60 days to raise a medium level Behaviour alert on a student."
-  value: 5
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 5
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 10:56:07"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 39
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "students.behaviour_alert_high_threshold"
-  display_name: "High Behaviour Alert Threshold"
-  description: "The number of Behaviour concerns needed in the past 60 days to raise a high level Behaviour alert on a student."
-  value: 9
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 9
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 10:56:07"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 40
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "students.extended_brief_profile"
-  display_name: "Extended Brief Profile"
-  description: "The extended version of the brief student profile includes contact information of parents."
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:22:30"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 41
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "students.student_agreement_options"
-  display_name: "Student Agreement Options"
-  description: "List of agreements that students might be asked to sign in school (e.g. ICT Policy)."
-  value: "null"
-  choice: "tutors,tutors_teachers"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "null"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 10:56:07"
-  created_on: "2018-06-21 10:56:07"
--
-  id: 64
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "individual_needs.targets_template"
-  display_name: "Targets Template"
-  description: "An HTML template to be used in the targets field."
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:11:27"
-  created_on: "2018-06-21 13:11:27"
--
-  id: 65
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "individual_needs.teaching_strategies_template"
-  display_name: "Teaching Strategies Template"
-  description: "An HTML template to be used in the teaching strategies field."
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:11:27"
-  created_on: "2018-06-21 13:11:27"
--
-  id: 66
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "individual_needs.notes_review_template"
-  display_name: "Notes & Review Template"
-  description: "An HTML template to be used in the notes and review field."
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:11:27"
-  created_on: "2018-06-21 13:11:27"
--
-  id: 67
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "behaviour.enable_descriptors"
-  display_name: "Enable Descriptors"
-  description: "Setting to No reduces complexity of behaviour tracking."
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:16:37"
-  created_on: "2018-06-21 13:16:37"
--
-  id: 68
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "behaviour.positive_descriptors"
-  display_name: "Positive Descriptors"
-  description: "Allowable choices for positive behaviour"
-  value: "- 'Attitude to learning'\n- Collaboration\n- 'Community spirit'\n- Creativity\n- Effort\n- Leadership\n- Participation\n- Persistence\n- 'Problem solving'\n- 'Quality of work'\n- Values\n"
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:27:\"Symfony\\Component\\Yaml\\Yaml\":0:{}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "null"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:28"
-  created_on: "2018-06-21 13:16:37"
--
-  id: 69
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "behaviour.negative_descriptors"
-  display_name: "Negative Descriptors"
-  description: "Allowable choices for negative behaviour."
-  value: "- 'Classwork - Late'\n- 'Classwork - Incomplete'\n- 'Classwork - Unacceptable'\n- Disrespectful\n- Disruptive\n- 'Homework - Late'\n- 'Homework - Incomplete'\n- 'Homework - Unacceptable'\n- 'ICT Misuse'\n- Truancy\n- Other\n"
-  validators: "a:1:{i:0;O:27:\"Symfony\\Component\\Yaml\\Yaml\":0:{}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "null"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:28"
-  created_on: "2018-06-21 13:16:37"
--
-  id: 70
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "behaviour.enable_levels"
-  display_name: "Enable Levels"
-  description: "Setting to No reduces complexity of behaviour tracking."
-  value: 1
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:27:\"Symfony\\Component\\Yaml\\Yaml\":0:{}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:16:37"
-  created_on: "2018-06-21 13:16:37"
--
-  id: 71
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "behaviour.levels"
-  display_name: "Levels"
-  description: "Allowable choices for severity level (from lowest to highest)"
-  value: "- ''\n- 'Stage 1'\n- 'Stage 1 (Actioned)'\n- 'Stage 2'\n- 'Stage 2 (Actioned)'\n- 'Stage 3'\n- 'Stage 3 (Actioned)'\n- Actioned\n"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "- ''\n- 'Stage 1'\n- 'Stage 1 (Actioned)'\n- 'Stage 2'\n- 'Stage 2 (Actioned)'\n- 'Stage 3'\n- 'Stage 3 (Actioned)'\n- Actioned\n"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 11:41:28"
-  created_on: "2018-06-21 13:16:37"
--
-  id: 72
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "behaviour.enable_behaviour_letters"
-  display_name: "Enable Behaviour Letters"
-  description: "Should automated behaviour letter functionality be enabled?"
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:22:04"
-  created_on: "2018-06-21 13:16:37"
--
-  id: 73
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "behaviour.behaviour_letters_letter_1_count"
-  display_name: "Letter 1 Count"
-  description: "After how many negative records should letter 1 be sent?"
-  value: 3
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:1;s:3:\"max\";i:20;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 3
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:16:37"
-  created_on: "2018-06-21 13:16:37"
--
-  id: 74
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "behaviour.behaviour_letters_letter_1_text"
-  display_name: "Letter 1 Text"
-  description: "The contents of letter 1, as HTML."
-  value: "<p>Dear Parent/Guardian,<br />\r\n<br />\r\nThis letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br />\r\n<br />\r\n[behaviourRecord]<br />\r\n<br />\r\nThis letter represents the 1st communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br />\r\n<br />\r\nIf you would like more information on this matter, please contact your child&#39;s tutor.</p>"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the 1st communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor."
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:16:38"
-  created_on: "2018-06-21 13:16:38"
--
-  id: 75
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "behaviour.behaviour_letters_letter_2_count"
-  display_name: "Letter 2 Count"
-  description: "After how many negative records should letter 2 be sent?"
-  value: 6
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:1;s:3:\"max\";i:20;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 6
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:16:38"
-  created_on: "2018-06-21 13:16:38"
--
-  id: 76
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "behaviour.behaviour_letters_letter_2_text"
-  display_name: "Letter 2 Text"
-  description: "The contents of letter 2, as HTML."
-  value: "<p>Dear Parent/Guardian,<br />\r\n<br />\r\nThis letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br />\r\n<br />\r\n[behaviourRecord]<br />\r\n<br />\r\nThis letter represents the 2nd communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br />\r\n<br />\r\nIf you would like more information on this matter, please contact your child&#39;s tutor.</p>"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the 2nd communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor."
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:16:38"
-  created_on: "2018-06-21 13:16:38"
--
-  id: 77
-  created_by: 1
-  modified_by: 1
-  type: "integer"
-  name: "behaviour.behaviour_letters_letter_3_count"
-  display_name: "Letter 3 Count"
-  description: "After how many negative records should letter 3 be sent?"
-  value: 9
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:1;s:3:\"max\";i:20;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 9
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:16:38"
-  created_on: "2018-06-21 13:16:38"
--
-  id: 78
-  created_by: 1
-  modified_by: 1
-  type: "html"
-  name: "behaviour.behaviour_letters_letter_3_text"
-  display_name: "Letter 3 Text"
-  description: "The contents of letter 3, as HTML."
-  value: "<p>Dear Parent/Guardian,<br />\r\n<br />\r\nThis letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br />\r\n<br />\r\n[behaviourRecord]<br />\r\n<br />\r\nThis letter represents the 3rd communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br />\r\n<br />\r\nIf you would like more information on this matter, please contact your child&#39;s tutor.</p>"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the 3rd communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor."
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:16:38"
-  created_on: "2018-06-21 13:16:38"
--
-  id: 79
-  created_by: 1
-  modified_by: 1
-  type: "string"
-  name: "behaviour.policy_link"
-  display_name: "Policy Link"
-  description: "A link to the school behaviour policy."
-  value: ""
-  validators: "a:1:{i:0;O:43:\"Symfony\\Component\\Validator\\Constraints\\Url\":7:{s:7:\"message\";s:30:\"This value is not a valid URL.\";s:10:\"dnsMessage\";s:31:\"The host could not be resolved.\";s:9:\"protocols\";a:2:{i:0;s:4:\"http\";i:1;s:5:\"https\";}s:8:\"checkDNS\";b:0;s:16:\"relativeProtocol\";b:0;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:22:04"
-  created_on: "2018-06-21 13:16:38"
--
-  id: 82
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "attendance.attendance_reasons"
-  display_name: "Attendance Reasons"
-  description: "List of reasons which are available when taking attendance."
-  value: "- pending\n- education\n- family\n- medical\n- other\n"
-  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "- pending\n- education\n- family\n- medical\n- other\n"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:51:02"
-  created_on: "2018-06-21 13:22:57"
--
-  id: 83
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "attendance.prefill_roll_group"
-  display_name: "Pre-Fill Roll Group Attendance"
-  description: "Should Attendance by Roll Group be pre-filled with data available from other contexts?"
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 13:50:00"
-  created_on: "2018-06-21 13:22:57"
--
-  id: 84
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "attendance.prefill_class"
-  display_name: "Pre-Fill Class Attendance"
-  description: "Should Attendance by Class be pre-filled with data available from other contexts?"
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:22:46"
-  created_on: "2018-06-21 13:22:57"
--
-  id: 85
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "attendance.prefill_person"
-  display_name: "Pre-Fill Person Attendance"
-  description: "Should Attendance by Person be pre-filled with data available from other contexts?"
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:22:46"
-  created_on: "2018-06-21 13:22:57"
--
-  id: 86
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "attendance.default_roll_group_attendance_type"
-  display_name: "Default Roll Group Attendance Type"
-  description: "The default selection for attendance type when taking Roll Group attendance."
-  value: 1
-  choice: "App\\Manager\\AttendanceCodeManager::getActiveAttendanceCodeList"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "Present"
-  translate_choice: "School"
-  last_modified: "2018-06-21 13:50:00"
-  created_on: "2018-06-21 13:22:57"
--
-  id: 87
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "attendance.default_class_attendance_type"
-  display_name: "Default Class Attendance Type"
-  description: "The default selection for attendance type when taking Class attendance."
-  value: 1
-  choice: "App\\Manager\\AttendanceCodeManager::getActiveAttendanceCodeList"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "Present"
-  translate_choice: "School"
-  last_modified: "2018-06-21 13:50:00"
-  created_on: "2018-06-21 13:22:58"
--
-  id: 88
-  created_by: 1
-  modified_by: 1
-  type: "array"
-  name: "attendance.student_self_registration_ip_addresses"
-  display_name: "Student Self Registration IP Addresses"
-  description: "List of IP addresses within which students can self register."
-  value: "null"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: "null"
-  translate_choice: "School"
-  last_modified: "2018-06-21 13:22:58"
-  created_on: "2018-06-21 13:22:58"
--
-  id: 89
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "attendance.self_registration_redirect"
-  display_name: "Self Registration Redirect"
-  description: "Should self registration redirect to Message Wall?"
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "School"
-  last_modified: "2018-06-22 17:22:46"
-  created_on: "2018-06-21 13:22:58"
--
-  id: 90
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "attendance.attendance_cli_notify_by_roll_group"
-  display_name: "Enable Notifications by Roll Group"
-  description: ""
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "School"
-  last_modified: "2018-06-21 13:50:00"
-  created_on: "2018-06-21 13:22:58"
--
-  id: 91
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "attendance.attendance_cli_notify_by_class"
-  display_name: "Enable Notifications by Class"
-  description: ""
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "School"
-  last_modified: "2018-06-21 13:50:00"
-  created_on: "2018-06-21 13:22:58"
--
-  id: 93
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "attendance.attendance_cli_additional_users"
-  display_name: "Additional Users to Notify"
-  description: "Send the school-wide daily attendance report to additional users. Restricted to roles with permission to access Roll Groups Not Registered or Classes Not Registered.<br/>Use Control, Command and/or Shift to select multiple"
-  value: "do this list.."
-  choice: "do this list..,  Needs Staff table defined."
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "School"
-  last_modified: "2018-06-21 13:24:21"
-  created_on: "2018-06-21 13:24:21"
--
-  id: 94
-  created_by: 1
-  modified_by: 1
-  type: "string"
-  name: "messenger.sms_user_name"
-  display_name: "SMS Username "
-  description: "SMS gateway username."
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 15:05:49"
-  created_on: "2018-06-21 15:05:49"
--
-  id: 95
-  created_by: 1
-  modified_by: 1
-  type: "string"
-  name: "messenger.sms_password"
-  display_name: "SMS Password "
-  description: "SMS gateway password."
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 15:05:49"
-  created_on: "2018-06-21 15:05:49"
--
-  id: 96
-  created_by: 1
-  modified_by: 1
-  type: "url"
-  name: "messenger.sms_url"
-  display_name: "SMS URL"
-  description: "SMS gateway URL for send requests."
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 15:05:49"
-  created_on: "2018-06-21 15:05:49"
--
-  id: 97
-  created_by: 1
-  modified_by: 1
-  type: "url"
-  name: "messenger.sms_url_credit"
-  display_name: "SMS URL Credit"
-  description: "SMS gateway URL for checking credit."
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-21 15:05:49"
-  created_on: "2018-06-21 15:05:49"
--
-  id: 98
-  created_by: 1
-  modified_by: 1
-  type: "choice"
-  name: "messenger.message_bubble_width_type"
-  display_name: "Message Bubble Width Type"
-  description: "Should the message bubble be regular or wide?"
-  value: "regular"
-  choice: "regular, wide"
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 09:22:40"
-  created_on: "2018-06-21 15:36:13"
--
-  id: 99
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "messenger.enable_home_screen_widget"
-  display_name: "Enable Home Screen Widget"
-  description: "Adds a Message Wall widget to the home page, highlighting current messages."
-  value: ""
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: ""
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 17:28:24"
-  created_on: "2018-06-21 15:36:13"
--
-  id: 100
-  created_by: 1
-  modified_by: 1
-  type: "boolean"
-  name: "messenger.message_bubble_auto_hide"
-  display_name: "Message Bubble Auto Hide"
-  description: "Should message bubble fade out automatically?"
-  value: 1
-  validators: "a:0:{}"
-  role: "ROLE_PRINCIPAL"
-  default_value: 1
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 09:22:40"
-  created_on: "2018-06-21 15:36:13"
--
-  id: 101
-  created_by: 1
-  modified_by: 1
-  type: "string"
-  name: "messenger.message_bubble_bg_color"
-  display_name: "Message Bubble Background Colour"
-  description: "Message bubble background colour in RGBA (e.g. 100,100,100,0.50). If blank, theme default will be used."
-  value: "rgba(102, 102, 102, 0.5)"
-  validators: "a:1:{i:0;O:31:\"Hillrange\\Form\\Validator\\Colour\":5:{s:7:\"message\";s:23:\"colour.validation.error\";s:11:\"transDomain\";s:10:\"validators\";s:11:\"enforceType\";s:4:\"rgba\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
-  role: "ROLE_PRINCIPAL"
-  translate_choice: "Setting"
-  last_modified: "2018-06-22 09:22:27"
-  created_on: "2018-06-21 16:05:49"
 -
   id: 102
   created_by: 1
@@ -1125,20 +75,1144 @@
   last_modified: "2018-06-22 10:33:26"
   created_on: "2018-06-22 10:33:26"
 -
-  id: 103
+  id: 145
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "personal.title.list"
+  display_name: "List of Personal Titles"
+  description: "List of personal titles used in the system."
+  value: "- mr\r\n- mrs\r\n- ms\r\n- master\r\n- miss\r\n- dr\r\n- rev\r\n"
+  default_value: "- mr\r\n- mrs\r\n- ms\r\n- master\r\n- miss\r\n- dr\r\n- rev\r\n"
+  last_modified: "2018-06-23 12:18:40"
+  created_on: "2018-06-23 12:18:40"
+-
+  id: 147
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "activities.date_type"
+  display_name: "Date Type"
+  description: "Should activities be organised around dates (flexible) or terms (easy)?"
+  value: "term"
+  choice: "a:2:{i:0;s:4:\"date\";i:1;s:4:\"term\";}"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "term"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:24:34"
+  created_on: "2018-06-25 09:24:34"
+-
+  id: 149
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "activities.access"
+  display_name: "Access"
+  description: "System-wide access control"
+  value: "register"
+  choice: "a:1:{i:0;s:20:\"none, view, register\";}"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "register"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:24:34"
+  created_on: "2018-06-25 09:24:34"
+-
+  id: 150
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "activities.payment"
+  display_name: "Payment"
+  description: "Payment system"
+  value: "per_activity"
+  choice: "a:1:{i:0;s:47:\"none, single, per_activity, single_per_activity\";}"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "per_activity"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:24:34"
+  created_on: "2018-06-25 09:24:34"
+-
+  id: 151
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "activities.enrolment_type"
+  display_name: "Enrolment Type"
+  description: "Enrolment process type"
+  value: "competitive"
+  choice: "a:1:{i:0;s:22:\"competitive, selection\";}"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "competitive"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:24:34"
+  created_on: "2018-06-25 09:24:34"
+-
+  id: 160
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "activities.max_per_term"
+  display_name: "Maximum Activities per Term"
+  description: "The most a student can sign up for in one term. Set to 0 for unlimited."
+  value: 0
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:5;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 0
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:31:04"
+  created_on: "2018-06-25 09:27:26"
+-
+  id: 161
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "activities.backup_choice"
+  display_name: "Backup Choice"
+  description: "Allow students to choose a backup, in case enroled activity is full."
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:31:04"
+  created_on: "2018-06-25 09:27:26"
+-
+  id: 162
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "activities.activity_types"
+  display_name: "Activity Types"
+  description: "List of the different activity types available in school. Leave blank to disable this feature."
+  value: "\"- creativity\\r\\n- action\\r\\n- service\""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:31:04"
+  created_on: "2018-06-25 09:27:26"
+-
+  id: 163
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "activities.disable_external_provider_signup"
+  display_name: "Disable External Provider Signup"
+  description: "Should we turn off the option to sign up for activities provided by an outside agency?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:31:04"
+  created_on: "2018-06-25 09:27:26"
+-
+  id: 164
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "activities.hide_external_provider_cost"
+  display_name: "Hide External Provider Cost"
+  description: "Should we hide the cost of activities provided by an outside agency from the Activities View?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:31:04"
+  created_on: "2018-06-25 09:27:26"
+-
+  id: 165
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "resources.categories"
+  display_name: "Categories"
+  description: "Allowable choices for category."
+  value: "\"- Article\\r\\n- Book\\r\\n- Document\\r\\n- Graphic\\r\\n- Idea\\r\\n- Music\\r\\n- Object\\r\\n- Painting\\r\\n- Person\\r\\n- Photo\\r\\n- Place\\r\\n- Poetry\\r\\n- Prose\\r\\n- Rubric\\r\\n- Text\\r\\n- Video\\r\\n- Website\\r\\n- 'Work Sample'\\r\\n- Other\""
+  choice: "a:0:{}"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:23"
+  created_on: "2018-06-25 09:29:23"
+-
+  id: 166
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "resources.purposes_general"
+  display_name: "Purposes (General)"
+  description: "Allowable choices for purpose when creating a resource."
+  value: "\"- 'Assessment Aid'\\r\\n- Concept\\r\\n- Inspiration\\r\\n- 'Learner Profile'\\r\\n- 'Mass Mailer Attachment'\\r\\n- Provocation\\r\\n- Skill\\r\\n- 'Teaching and Learning Strategy'\\r\\n- Other\""
+  choice: "a:0:{}"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:23"
+  created_on: "2018-06-25 09:29:23"
+-
+  id: 167
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "resources.purposes_restricted"
+  display_name: "Purposes (Restricted) "
+  description: "Additional allowable choices for purpose when creating a resource, for those with \"Manage All Resources\" rights."
+  value: "null"
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:23"
+  created_on: "2018-06-25 09:29:23"
+-
+  id: 168
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "planner.lesson_details_template"
+  display_name: "Lesson Details Template"
+  description: "Template to be inserted into Lesson Details field"
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 169
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "planner.teachers_notes_template"
+  display_name: "Teacher's Notes Template"
+  description: "Template to be inserted into Teacher's Notes field"
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 170
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "planner.unit_outline_template"
+  display_name: "Unit Outline Template"
+  description: "Template to be inserted into Unit Outline section of planner"
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 171
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "planner.smart_block_template"
+  display_name: "Smart Block Template"
+  description: "Template to be inserted into new block in Smart Unit"
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 172
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.make_units_public"
+  display_name: "Make Units Public"
+  description: "Enables a public listing of units, with teachers able to opt in to share units."
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 173
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.share_unit_outline"
+  display_name: "Share Unit Outline"
+  description: "Allow users who do not have access to the unit planner to see Unit Outlines via the lesson planner?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 174
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.allow_outcome_editing"
+  display_name: "Allow Outcome Editing"
+  description: "Should the text within outcomes be editable when planning lessons and units?"
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 175
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.sharing_default_parents"
+  display_name: "Sharing Default: Parents"
+  description: "When adding lessons and deploying units, should sharing default for parents?"
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 176
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.sharing_default_students"
+  display_name: "Sharing Default: Students"
+  description: "When adding lessons and deploying units, should sharing default for students?"
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 177
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.parent_weekly_email_summary_include_behaviour"
+  display_name: "Parent Weekly Email Summary Include Behaviour"
+  description: "Should behaviour information be included in the weekly planner email summary that goes out to parents?"
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 178
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "planner.parent_weekly_email_summary_include_markbook"
+  display_name: "Parent Weekly Email Summary Include Markbook"
+  description: "Should Markbook information be included in the weekly planner email summary that goes out to parents?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:29:32"
+  created_on: "2018-06-25 09:29:32"
+-
+  id: 179
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "library.default_loan_length"
+  display_name: "Default Loan Length"
+  description: "The standard loan length for a library item, in days"
+  value: 7
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:31;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_HEAD_TEACHER"
+  default_value: 7
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:30:54"
+  created_on: "2018-06-25 09:30:54"
+-
+  id: 180
+  created_by: 1
+  modified_by: 1
+  type: "colour"
+  name: "library.browse.bg.colour"
+  display_name: "Browse Library BG Colour "
+  description: "Background colour used behind library browsing screen."
+  value: "#ffff80"
+  choice: "a:0:{}"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:31:\"Hillrange\\Form\\Validator\\Colour\":5:{s:7:\"message\";s:23:\"colour.validation.error\";s:11:\"transDomain\";s:9:\"FormTheme\";s:11:\"enforceType\";s:3:\"any\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_HEAD_TEACHER"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:30:54"
+  created_on: "2018-06-25 09:30:54"
+-
+  id: 181
+  created_by: 1
+  modified_by: 1
+  type: "image"
+  name: "library.browse.bg.image"
+  display_name: "Browse Library BG Image"
+  description: "URL to background image used behind library browsing screen."
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:29:\"App\\Validator\\BackgroundImage\":43:{s:8:\"minWidth\";i:1200;s:7:\"maxSize\";i:1024000;s:11:\"allowSquare\";b:0;s:14:\"allowLandscape\";b:1;s:13:\"allowPortrait\";b:0;s:15:\"detectCorrupted\";b:1;s:9:\"mimeTypes\";s:7:\"image/*\";s:8:\"maxWidth\";N;s:9:\"maxHeight\";N;s:9:\"minHeight\";N;s:8:\"maxRatio\";N;s:8:\"minRatio\";N;s:9:\"minPixels\";N;s:9:\"maxPixels\";N;s:16:\"mimeTypesMessage\";s:31:\"This file is not a valid image.\";s:22:\"sizeNotDetectedMessage\";s:44:\"The size of the image could not be detected.\";s:15:\"maxWidthMessage\";s:87:\"The image width is too big ({{ width }}px). Allowed maximum width is {{ max_width }}px.\";s:15:\"minWidthMessage\";s:90:\"The image width is too small ({{ width }}px). Minimum width expected is {{ min_width }}px.\";s:16:\"maxHeightMessage\";s:91:\"The image height is too big ({{ height }}px). Allowed maximum height is {{ max_height }}px.\";s:16:\"minHeightMessage\";s:94:\"The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px.\";s:16:\"minPixelsMessage\";s:103:\"The image has too few pixels ({{ pixels }} pixels). Minimum amount expected is {{ min_pixels }} pixels.\";s:16:\"maxPixelsMessage\";s:104:\"The image has too many pixels ({{ pixels }} pixels). Maximum amount expected is {{ max_pixels }} pixels.\";s:15:\"maxRatioMessage\";s:83:\"The image ratio is too big ({{ ratio }}). Allowed maximum ratio is {{ max_ratio }}.\";s:15:\"minRatioMessage\";s:86:\"The image ratio is too small ({{ ratio }}). Minimum ratio expected is {{ min_ratio }}.\";s:18:\"allowSquareMessage\";s:80:\"The image is square ({{ width }}x{{ height }}px). Square images are not allowed.\";s:21:\"allowLandscapeMessage\";s:104:\"The image is landscape oriented ({{ width }}x{{ height }}px). Landscape oriented images are not allowed.\";s:20:\"allowPortraitMessage\";s:102:\"The image is portrait oriented ({{ width }}x{{ height }}px). Portrait oriented images are not allowed.\";s:16:\"corruptedMessage\";s:28:\"The image file is corrupted.\";s:12:\"binaryFormat\";b:0;s:15:\"notFoundMessage\";s:28:\"The file could not be found.\";s:18:\"notReadableMessage\";s:25:\"The file is not readable.\";s:14:\"maxSizeMessage\";s:98:\"The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.\";s:20:\"disallowEmptyMessage\";s:29:\"An empty file is not allowed.\";s:25:\"uploadIniSizeErrorMessage\";s:72:\"The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.\";s:26:\"uploadFormSizeErrorMessage\";s:22:\"The file is too large.\";s:25:\"uploadPartialErrorMessage\";s:37:\"The file was only partially uploaded.\";s:24:\"uploadNoFileErrorMessage\";s:21:\"No file was uploaded.\";s:26:\"uploadNoTmpDirErrorMessage\";s:46:\"No temporary folder was configured in php.ini.\";s:27:\"uploadCantWriteErrorMessage\";s:36:\"Cannot write temporary file to disk.\";s:27:\"uploadExtensionErrorMessage\";s:42:\"A PHP extension caused the upload to fail.\";s:18:\"uploadErrorMessage\";s:31:\"The file could not be uploaded.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_HEAD_TEACHER"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:30:54"
+  created_on: "2018-06-25 09:30:54"
+-
+  id: 182
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "students.enable_student_notes"
+  display_name: "Enable Student Notes"
+  description: "Should student notes be turned on?"
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:46"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 183
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "students.note_creation_notification"
+  display_name: "Note Creation Notification"
+  description: "Determines who to notify when a new student note is created."
+  value: "tutors"
+  choice: "a:2:{i:0;s:6:\"tutors\";i:1;s:15:\"tutors_teachers\";}"
+  validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "tutors"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:32"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 184
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "students.academic_alert_low_threshold"
+  display_name: "Low Academic Alert Threshold"
+  description: "The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student."
+  value: 3
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 3
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:32"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 185
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "students.academic_alert_medium_threshold"
+  display_name: "Medium Academic Alert Threshold"
+  description: "The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student."
+  value: 6
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 5
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:46"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 186
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "students.academic_alert_high_threshold"
+  display_name: "High Academic Alert Threshold"
+  description: "The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student."
+  value: 9
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 9
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:32"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 187
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "students.behaviour_alert_low_threshold"
+  display_name: "Low Behaviour Alert Threshold"
+  description: "The number of Behaviour concerns needed in the past 60 days to raise a low level Behaviour alert on a student."
+  value: 3
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 3
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:32"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 188
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "students.behaviour_alert_medium_threshold"
+  display_name: "Medium Behaviour Alert Threshold"
+  description: "The number of Behaviour concerns needed in the past 60 days to raise a medium level Behaviour alert on a student."
+  value: 6
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 5
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:46"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 189
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "students.behaviour_alert_high_threshold"
+  display_name: "High Behaviour Alert Threshold"
+  description: "The number of Behaviour concerns needed in the past 60 days to raise a high level Behaviour alert on a student."
+  value: 9
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:50;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 9
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:32"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 190
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "students.extended_brief_profile"
+  display_name: "Extended Brief Profile"
+  description: "The extended version of the brief student profile includes contact information of parents."
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:46"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 191
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "students.student_agreement_options"
+  display_name: "Student Agreement Options"
+  description: "List of agreements that students might be asked to sign in school (e.g. ICT Policy)."
+  value: "null"
+  choice: "a:2:{i:0;s:6:\"tutors\";i:1;s:15:\"tutors_teachers\";}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:32:32"
+  created_on: "2018-06-25 09:32:32"
+-
+  id: 192
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "individual_needs.targets_template"
+  display_name: "Targets Template"
+  description: "An HTML template to be used in the targets field."
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:33:30"
+  created_on: "2018-06-25 09:33:30"
+-
+  id: 193
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "individual_needs.teaching_strategies_template"
+  display_name: "Teaching Strategies Template"
+  description: "An HTML template to be used in the teaching strategies field."
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:33:30"
+  created_on: "2018-06-25 09:33:30"
+-
+  id: 194
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "individual_needs.notes_review_template"
+  display_name: "Notes & Review Template"
+  description: "An HTML template to be used in the notes and review field."
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:33:30"
+  created_on: "2018-06-25 09:33:30"
+-
+  id: 195
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "behaviour.enable_descriptors"
+  display_name: "Enable Descriptors"
+  description: "Setting to No reduces complexity of behaviour tracking."
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:48:05"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 196
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "behaviour.positive_descriptors"
+  display_name: "Positive Descriptors"
+  description: "Allowable choices for positive behaviour"
+  value: "\"- 'Attitude to learning'\\r\\n- Collaboration\\r\\n- 'Community spirit'\\r\\n- Creativity\\r\\n- Effort\\r\\n- Leadership\\r\\n- Participation\\r\\n- Persistence\\r\\n- 'Problem solving'\\r\\n- 'Quality of work'\\r\\n- Values\""
+  choice: "a:0:{}"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:48:05"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 197
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "behaviour.negative_descriptors"
+  display_name: "Negative Descriptors"
+  description: "Allowable choices for negative behaviour."
+  value: "\"- 'Classwork - Late'\\r\\n- 'Classwork - Incomplete'\\r\\n- 'Classwork - Unacceptable'\\r\\n- Disrespectful\\r\\n- Disruptive\\r\\n- 'Homework - Late'\\r\\n- 'Homework - Incomplete'\\r\\n- 'Homework - Unacceptable'\\r\\n- 'ICT Misuse'\\r\\n- Truancy\\r\\n- Other\""
+  choice: "a:0:{}"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:48:05"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 198
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "behaviour.enable_levels"
+  display_name: "Enable Levels"
+  description: "Setting to No reduces complexity of behaviour tracking."
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:48:05"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 199
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "behaviour.levels"
+  display_name: "Levels"
+  description: "Allowable choices for severity level (from lowest to highest)"
+  value: "\"- ''\\r\\n- 'Stage 1'\\r\\n- 'Stage 1 (Actioned)'\\r\\n- 'Stage 2'\\r\\n- 'Stage 2 (Actioned)'\\r\\n- 'Stage 3'\\r\\n- 'Stage 3 (Actioned)'\\r\\n- Actioned\""
+  choice: "a:0:{}"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "- ''\n- 'Stage 1'\n- 'Stage 1 (Actioned)'\n- 'Stage 2'\n- 'Stage 2 (Actioned)'\n- 'Stage 3'\n- 'Stage 3 (Actioned)'\n- Actioned\n"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:48:05"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 200
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "behaviour.enable_behaviour_letters"
+  display_name: "Enable Behaviour Letters"
+  description: "Should automated behaviour letter functionality be enabled?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:48:05"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 201
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "behaviour.behaviour_letters_letter_1_count"
+  display_name: "Letter 1 Count"
+  description: "After how many negative records should letter 1 be sent?"
+  value: 3
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:1;s:3:\"max\";i:20;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 3
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:46:59"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 202
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "behaviour.behaviour_letters_letter_1_text"
+  display_name: "Letter 1 Text"
+  description: "The contents of letter 1, as HTML."
+  value: "<p>Dear Parent/Guardian,<br />\r\n<br />\r\nThis letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br />\r\n<br />\r\n[behaviourRecord]<br />\r\n<br />\r\nThis letter represents the 1st communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br />\r\n<br />\r\nIf you would like more information on this matter, please contact your child&#39;s tutor.</p>"
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the 1st communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor."
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:46:59"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 203
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "behaviour.behaviour_letters_letter_2_count"
+  display_name: "Letter 2 Count"
+  description: "After how many negative records should letter 2 be sent?"
+  value: 6
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:1;s:3:\"max\";i:20;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 6
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:46:59"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 204
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "behaviour.behaviour_letters_letter_2_text"
+  display_name: "Letter 2 Text"
+  description: "The contents of letter 2, as HTML."
+  value: "<p>Dear Parent/Guardian,<br />\r\n<br />\r\nThis letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br />\r\n<br />\r\n[behaviourRecord]<br />\r\n<br />\r\nThis letter represents the 2nd communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br />\r\n<br />\r\nIf you would like more information on this matter, please contact your child&#39;s tutor.</p>"
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the 2nd communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor."
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:46:59"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 205
+  created_by: 1
+  modified_by: 1
+  type: "integer"
+  name: "behaviour.behaviour_letters_letter_3_count"
+  display_name: "Letter 3 Count"
+  description: "After how many negative records should letter 3 be sent?"
+  value: 9
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:1;s:3:\"max\";i:20;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 9
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:46:59"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 206
+  created_by: 1
+  modified_by: 1
+  type: "html"
+  name: "behaviour.behaviour_letters_letter_3_text"
+  display_name: "Letter 3 Text"
+  description: "The contents of letter 3, as HTML."
+  value: "<p>Dear Parent/Guardian,<br />\r\n<br />\r\nThis letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br />\r\n<br />\r\n[behaviourRecord]<br />\r\n<br />\r\nThis letter represents the 3rd communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br />\r\n<br />\r\nIf you would like more information on this matter, please contact your child&#39;s tutor.</p>"
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the 3rd communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor."
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:46:59"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 207
+  created_by: 1
+  modified_by: 1
+  type: "string"
+  name: "behaviour.policy_link"
+  display_name: "Policy Link"
+  description: "A link to the school behaviour policy."
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:43:\"Symfony\\Component\\Validator\\Constraints\\Url\":7:{s:7:\"message\";s:30:\"This value is not a valid URL.\";s:10:\"dnsMessage\";s:31:\"The host could not be resolved.\";s:9:\"protocols\";a:2:{i:0;s:4:\"http\";i:1;s:5:\"https\";}s:8:\"checkDNS\";b:0;s:16:\"relativeProtocol\";b:0;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:48:05"
+  created_on: "2018-06-25 09:46:59"
+-
+  id: 208
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "attendance.attendance_reasons"
+  display_name: "Attendance Reasons"
+  description: "List of reasons which are available when taking attendance."
+  value: "\"- pending\\r\\n- education\\r\\n- family\\r\\n- medical\\r\\n- other\""
+  choice: "a:0:{}"
+  validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "- pending\n- education\n- family\n- medical\n- other\n"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 209
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "attendance.prefill_roll_group"
+  display_name: "Pre-Fill Roll Group Attendance"
+  description: "Should Attendance by Roll Group be pre-filled with data available from other contexts?"
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 210
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "attendance.prefill_class"
+  display_name: "Pre-Fill Class Attendance"
+  description: "Should Attendance by Class be pre-filled with data available from other contexts?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 211
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "attendance.prefill_person"
+  display_name: "Pre-Fill Person Attendance"
+  description: "Should Attendance by Person be pre-filled with data available from other contexts?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 212
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "attendance.default_roll_group_attendance_type"
+  display_name: "Default Roll Group Attendance Type"
+  description: "The default selection for attendance type when taking Roll Group attendance."
+  value: 1
+  choice: "a:1:{s:6:\"method\";s:62:\"App\\Manager\\AttendanceCodeManager::getActiveAttendanceCodeList\";}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "Present"
+  translate_choice: "School"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 213
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "attendance.default_class_attendance_type"
+  display_name: "Default Class Attendance Type"
+  description: "The default selection for attendance type when taking Class attendance."
+  value: 1
+  choice: "a:1:{s:6:\"method\";s:62:\"App\\Manager\\AttendanceCodeManager::getActiveAttendanceCodeList\";}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "Present"
+  translate_choice: "School"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 214
+  created_by: 1
+  modified_by: 1
+  type: "array"
+  name: "attendance.student_self_registration_ip_addresses"
+  display_name: "Student Self Registration IP Addresses"
+  description: "List of IP addresses within which students can self register."
+  value: "null"
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: "null"
+  translate_choice: "School"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 215
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "attendance.self_registration_redirect"
+  display_name: "Self Registration Redirect"
+  description: "Should self registration redirect to Message Wall?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "School"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 216
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "attendance.attendance_cli_notify_by_roll_group"
+  display_name: "Enable Notifications by Roll Group"
+  description: ""
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "School"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 217
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "attendance.attendance_cli_notify_by_class"
+  display_name: "Enable Notifications by Class"
+  description: ""
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "School"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 218
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "attendance.attendance_cli_additional_users"
+  display_name: "Additional Users to Notify"
+  description: "Send the school-wide daily attendance report to additional users. Restricted to roles with permission to access Roll Groups Not Registered or Classes Not Registered.<br/>Use Control, Command and/or Shift to select multiple"
+  value: "do this list.."
+  choice: "a:1:{i:0;s:43:\"do this list..,  Needs Staff table defined.\";}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "School"
+  last_modified: "2018-06-25 09:50:35"
+  created_on: "2018-06-25 09:50:35"
+-
+  id: 219
+  created_by: 1
+  modified_by: 1
+  type: "string"
+  name: "messenger.sms_user_name"
+  display_name: "SMS Username "
+  description: "SMS gateway username."
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:51:01"
+  created_on: "2018-06-25 09:51:01"
+-
+  id: 220
+  created_by: 1
+  modified_by: 1
+  type: "string"
+  name: "messenger.sms_password"
+  display_name: "SMS Password "
+  description: "SMS gateway password."
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:51:01"
+  created_on: "2018-06-25 09:51:01"
+-
+  id: 221
+  created_by: 1
+  modified_by: 1
+  type: "url"
+  name: "messenger.sms_url"
+  display_name: "SMS URL"
+  description: "SMS gateway URL for send requests."
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:51:01"
+  created_on: "2018-06-25 09:51:01"
+-
+  id: 222
+  created_by: 1
+  modified_by: 1
+  type: "url"
+  name: "messenger.sms_url_credit"
+  display_name: "SMS URL Credit"
+  description: "SMS gateway URL for checking credit."
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:51:01"
+  created_on: "2018-06-25 09:51:01"
+-
+  id: 223
+  created_by: 1
+  modified_by: 1
+  type: "choice"
+  name: "messenger.message_bubble_width_type"
+  display_name: "Message Bubble Width Type"
+  description: "Should the message bubble be regular or wide?"
+  value: "regular"
+  choice: "a:1:{i:0;s:13:\"regular, wide\";}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:51:01"
+  created_on: "2018-06-25 09:51:01"
+-
+  id: 224
+  created_by: 1
+  modified_by: 1
+  type: "string"
+  name: "messenger.message_bubble_bg_color"
+  display_name: "Message Bubble Background Colour"
+  description: "Message bubble background colour in RGBA (e.g. 100,100,100,0.50). If blank, theme default will be used."
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:31:\"Hillrange\\Form\\Validator\\Colour\":5:{s:7:\"message\";s:23:\"colour.validation.error\";s:11:\"transDomain\";s:9:\"FormTheme\";s:11:\"enforceType\";s:4:\"rgba\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  role: "ROLE_PRINCIPAL"
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:51:01"
+  created_on: "2018-06-25 09:51:01"
+-
+  id: 225
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "messenger.message_bubble_auto_hide"
+  display_name: "Message Bubble Auto Hide"
+  description: "Should message bubble fade out automatically?"
+  value: 1
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: 1
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:51:01"
+  created_on: "2018-06-25 09:51:01"
+-
+  id: 226
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "messenger.enable_home_screen_widget"
+  display_name: "Enable Home Screen Widget"
+  description: "Adds a Message Wall widget to the home page, highlighting current messages."
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:51:01"
+  created_on: "2018-06-25 09:51:01"
+-
+  id: 227
   created_by: 1
   modified_by: 1
   type: "email"
   name: "finance.email"
   display_name: "Email"
   description: "Send messages from this email address."
-  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Email\":7:{s:7:\"message\";s:40:\"This value is not a valid email address.\";s:7:\"checkMX\";b:0;s:9:\"checkHost\";b:0;s:6:\"strict\";N;s:4:\"mode\";N;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
+  value: "craig@craigrayner.com"
+  choice: "a:0:{}"
+  validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Email\":7:{s:7:\"message\";s:40:\"This value is not a valid email address.\";s:7:\"checkMX\";b:0;s:9:\"checkHost\";b:0;s:6:\"strict\";N;s:4:\"mode\";s:5:\"loose\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 17:21:57"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 104
+  id: 228
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1146,55 +1220,58 @@
   display_name: "Enable Online Payment"
   description: "Should invoices be payable online, via an encrypted link in the invoice? Requires correctly configured payment gateway in System Settings."
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 17:21:57"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:53:41"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 105
+  id: 229
   created_by: 1
   modified_by: 1
   type: "currency"
   name: "finance.online_payment_threshold"
   display_name: "Online Payment Threshold"
   description: "If invoices are payable online, what is the maximum payment allowed? Useful for controlling payment fees. No value means unlimited. In {{setting.currency}}"
-  value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 17:21:57"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:53:41"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 106
+  id: 230
   created_by: 1
   modified_by: 1
   type: "text"
   name: "finance.invoice_text"
   display_name: "Invoice Text"
   description: "Text to appear in invoice, above invoice details and fees."
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 107
+  id: 231
   created_by: 1
   modified_by: 1
   type: "text"
   name: "finance.invoice_notes"
   display_name: "Invoice Notes"
   description: "Text to appear in invoice, below invoice details and fees."
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 108
+  id: 232
   created_by: 1
   modified_by: 1
   type: "choice"
@@ -1202,15 +1279,15 @@
   display_name: "Invoicee Name Style"
   description: "Determines how invoicee name appears on invoices and receipts."
   value: "surname_preferred_name"
-  choice: "surname_preferred_name,official_name"
+  choice: "a:1:{i:0;s:36:\"surname_preferred_name,official_name\";}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: "surname_preferred_name"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 109
+  id: 233
   created_by: 1
   modified_by: 1
   type: "choice"
@@ -1218,41 +1295,43 @@
   display_name: "Invoice Number Style"
   description: "How should invoice numbers be constructed?"
   value: "invoice_id"
-  choice: "invoice_id,person_id_invoice_id,student_id_invoice_id"
+  choice: "a:1:{i:0;s:53:\"invoice_id,person_id_invoice_id,student_id_invoice_id\";}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: "invoice_id"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 110
+  id: 234
   created_by: 1
   modified_by: 1
   type: "text"
   name: "finance.receipt_text"
   display_name: "Receipt Text"
   description: "Text to appear in receipt, above receipt details and fees."
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 111
+  id: 235
   created_by: 1
   modified_by: 1
   type: "text"
   name: "finance.receipt_notes"
   display_name: "Receipt Notes"
   description: "Text to appear in receipt, below receipt details and fees."
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 112
+  id: 236
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1260,68 +1339,73 @@
   display_name: "Hide Itemisation"
   description: "Hide fee and payment details in receipts?"
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 17:21:57"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:53:41"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 113
+  id: 237
   created_by: 1
   modified_by: 1
   type: "text"
   name: "finance.reminder_1_text"
   display_name: "Reminder 1 Text"
   description: "Text to appear in first level reminder level, above invoice details and fees."
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 114
+  id: 238
   created_by: 1
   modified_by: 1
   type: "text"
   name: "finance.reminder_2_text"
   display_name: "Reminder 2 Text"
   description: "Text to appear in second level reminder level, above invoice details and fees."
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 115
+  id: 239
   created_by: 1
   modified_by: 1
   type: "text"
   name: "finance.reminder_3_text"
   display_name: "Reminder 3 Text"
   description: "Text to appear in third level reminder level, above invoice details and fees."
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 116
+  id: 240
   created_by: 1
   modified_by: 1
   type: "array"
   name: "finance.budget_categories"
   display_name: "Budget Categories"
   description: "List of budget categories."
-  value: "- academic\n- administration\n- capital\n"
+  value: "\"- academic\\r\\n- administration\\r\\n- capital\""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: "- academic\n- administration\n- capital\n"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:26:21"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 117
+  id: 241
   created_by: 1
   modified_by: 1
   type: "choice"
@@ -1329,15 +1413,15 @@
   display_name: "Expense Approval Type"
   description: "How should expense approval be dealt with?"
   value: "one_of"
-  choice: "one_of,two_of,chain_of_all"
+  choice: "a:1:{i:0;s:26:\"one_of,two_of,chain_of_all\";}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: "one_of"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 118
+  id: 242
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1345,27 +1429,29 @@
   display_name: "Budget Level Expense Approval"
   description: "Should approval from a budget member with Full access be required?"
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:25:23"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:53:41"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 119
+  id: 243
   created_by: 1
   modified_by: 1
   type: "html"
   name: "finance.expense_request_template"
   display_name: "Expense Request Template"
   description: "An HTML template to be used in the description field of expense requests."
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:24:05"
-  created_on: "2018-06-22 11:24:05"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 121
+  id: 244
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1373,14 +1459,15 @@
   display_name: "Allow Expense Add"
   description: "Allows privileged users to add expenses without going through request process."
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 11:25:23"
-  created_on: "2018-06-22 11:25:23"
+  last_modified: "2018-06-25 09:53:41"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 122
+  id: 245
   created_by: 1
   modified_by: 1
   type: "choice"
@@ -1388,15 +1475,15 @@
   display_name: "Purchasing Officer"
   description: "Staff member responsible for purchasing for the school."
   value: "do this list.."
-  choice: "do this list..,  Needs Staff table defined."
+  choice: "a:1:{i:0;s:43:\"do this list..,  Needs Staff table defined.\";}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "School"
-  last_modified: "2018-06-22 11:25:23"
-  created_on: "2018-06-22 11:25:23"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 123
+  id: 246
   created_by: 1
   modified_by: 1
   type: "choice"
@@ -1404,15 +1491,15 @@
   display_name: "Reimbursement Officer"
   description: "Staff member responsible for reimbursing expenses."
   value: "do this list.."
-  choice: "do this list..,  Needs Staff table defined."
+  choice: "a:1:{i:0;s:43:\"do this list..,  Needs Staff table defined.\";}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "School"
-  last_modified: "2018-06-22 11:25:23"
-  created_on: "2018-06-22 11:25:23"
+  last_modified: "2018-06-25 09:52:39"
+  created_on: "2018-06-25 09:52:39"
 -
-  id: 124
+  id: 247
   created_by: 1
   modified_by: 1
   type: "array"
@@ -1420,56 +1507,76 @@
   display_name: "Facility Types"
   description: "List of types for facilities."
   value: "- classroom\n- hall\n- laboratory\n- library\n- office\n- outdoor\n- performance\n- staffroom\n- storage\n- study\n- undercover\n- other\n"
+  choice: "a:0:{}"
   validators: "a:1:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_PRINCIPAL"
   default_value: "- classroom\n- hall\n- laboratory\n- library\n- office\n- outdoor\n- performance\n- staffroom\n- storage\n- study\n- undercover\n- other\n"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 13:14:01"
-  created_on: "2018-06-22 13:13:33"
+  last_modified: "2018-06-25 09:56:08"
+  created_on: "2018-06-25 09:53:59"
 -
-  id: 125
+  id: 248
   created_by: 1
   modified_by: 1
   type: "choice"
   name: "school_admin.staff_dashboard_default_tab"
   display_name: "Staff Dashboard Default Tab"
   description: "The default landing tab for the staff dashboard."
-  choice: ",planner"
+  value: ""
+  choice: "a:1:{i:0;s:8:\",planner\";}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 16:30:03"
-  created_on: "2018-06-22 16:29:03"
+  last_modified: "2018-06-25 09:54:15"
+  created_on: "2018-06-25 09:54:15"
 -
-  id: 126
+  id: 249
   created_by: 1
   modified_by: 1
   type: "choice"
   name: "school_admin.student_dashboard_default_tab"
   display_name: "Student Dashboard Default Tab"
   description: "The default landing tab for the student dashboard."
-  choice: ",planner"
+  value: ""
+  choice: "a:1:{i:0;s:8:\",planner\";}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 16:30:03"
-  created_on: "2018-06-22 16:29:03"
+  last_modified: "2018-06-25 09:54:15"
+  created_on: "2018-06-25 09:54:15"
 -
-  id: 127
+  id: 250
   created_by: 1
   modified_by: 1
   type: "choice"
   name: "school_admin.parent_dashboard_default_tab"
   display_name: "Parent Dashboard Default Tab"
   description: "The default landing tab for the parent dashboard."
-  choice: ",learning_overview,timetable,activities"
+  value: ""
+  choice: "a:1:{i:0;s:39:\",learning_overview,timetable,activities\";}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 16:30:03"
-  created_on: "2018-06-22 16:29:03"
+  last_modified: "2018-06-25 09:54:15"
+  created_on: "2018-06-25 09:54:15"
 -
-  id: 128
+  id: 251
+  created_by: 1
+  modified_by: 1
+  type: "boolean"
+  name: "departments.make_departments_public"
+  display_name: "Make Departments Public"
+  description: "Should department information be made available to the public, via the Gibbon homepage?"
+  value: ""
+  choice: "a:0:{}"
+  validators: "a:0:{}"
+  role: "ROLE_PRINCIPAL"
+  default_value: ""
+  translate_choice: "Setting"
+  last_modified: "2018-06-25 09:56:05"
+  created_on: "2018-06-25 09:56:05"
+-
+  id: 252
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1477,14 +1584,15 @@
   display_name: "Enable Effort"
   description: "Should columns have the Effort section enabled?"
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:54"
+  created_on: "2018-06-25 09:58:54"
 -
-  id: 129
+  id: 253
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1492,14 +1600,15 @@
   display_name: "Enable Rubrics"
   description: "Should columns have Rubrics section enabled?"
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 130
+  id: 254
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1507,14 +1616,15 @@
   display_name: "Enable Column Weighting"
   description: "Should column weighting and total scores be enabled in the Markbook?"
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 131
+  id: 255
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1522,14 +1632,15 @@
   display_name: "Enable Display Cumulative Marks"
   description: "Should cumulative marks be displayed on the View Markbook page for Students and Parents and in Student Profiles?"
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 132
+  id: 256
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1537,14 +1648,15 @@
   display_name: "Enable Raw Attainment Marks"
   description: "Should recording of raw marks be enabled in the Markbook?"
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 133
+  id: 257
   created_by: 1
   modified_by: 1
   type: "array"
@@ -1552,14 +1664,15 @@
   display_name: "Markbook Type"
   description: "List of types to make available in the Markbook."
   value: "\"- essay\\r\\n- exam\\r\\n- homework\\r\\n- reflection\\r\\n- test\\r\\n- unit\\r\\n- end_of_year\\r\\n- other\""
+  choice: "a:0:{}"
   validators: "a:2:{i:0;O:48:\"Symfony\\Component\\Validator\\Constraints\\NotBlank\":3:{s:7:\"message\";s:31:\"This value should not be blank.\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:18:\"App\\Validator\\Yaml\":4:{s:7:\"message\";s:21:\"yaml.validation.error\";s:11:\"transDomain\";s:7:\"Setting\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
   role: "ROLE_PRINCIPAL"
   default_value: "- essay\n- exam\n- homework\n- reflection\n- test\n- unit\n- end_of_year\n- other\n"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 134
+  id: 258
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1567,14 +1680,15 @@
   display_name: "Group Columns by Term"
   description: "Should columns and total scores be grouped by term?"
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: ""
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 135
+  id: 259
   created_by: 1
   modified_by: 1
   type: "string"
@@ -1582,13 +1696,14 @@
   display_name: "Attainment Alternative Name"
   description: "A name to use instead of \"Attainment\" in the first grade column of the markbook."
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:08:40"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 136
+  id: 260
   created_by: 1
   modified_by: 1
   type: "string"
@@ -1596,13 +1711,14 @@
   display_name: "Attainment Alternative Name Abbreviation"
   description: "A short name to use instead of \"Attainment\" in the first grade column of the markbook."
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:08:40"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 137
+  id: 261
   created_by: 1
   modified_by: 1
   type: "string"
@@ -1610,13 +1726,14 @@
   display_name: "Effort Alternative Name"
   description: "A name to use instead of \"Effort\" in the second grade column of the markbook."
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:08:40"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 138
+  id: 262
   created_by: 1
   modified_by: 1
   type: "string"
@@ -1624,13 +1741,14 @@
   display_name: "Effort Alternative Name Abbreviation"
   description: "A short name to use instead of \"Effort\" in the second grade column of the markbook."
   value: ""
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:08:40"
-  created_on: "2018-06-22 21:08:40"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 139
+  id: 263
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1638,14 +1756,15 @@
   display_name: "Show Student Attainment Warning"
   description: "Show low attainment grade visual warning to students?"
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:18:28"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 140
+  id: 264
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1653,14 +1772,15 @@
   display_name: "Show Student Effort Warning"
   description: "Show low effort grade visual warning to students?"
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:18:28"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 141
+  id: 265
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1668,14 +1788,15 @@
   display_name: "Show Parent Attainment Warning"
   description: "Show low attainment grade visual warning to parents?"
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:18:28"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 142
+  id: 266
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1683,14 +1804,15 @@
   display_name: "Show Parent Effort Warning"
   description: "Show low effort grade visual warning to parents?"
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:18:28"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 143
+  id: 267
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1698,14 +1820,15 @@
   display_name: "Personalised Warnings"
   description: "Should markbook warnings be based on personal targets, if they are available?"
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:18:28"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 -
-  id: 144
+  id: 268
   created_by: 1
   modified_by: 1
   type: "boolean"
@@ -1713,10 +1836,11 @@
   display_name: "Wordpress Comment Push"
   description: "Where student work is submitted via a WordPress website, the teacher can choose to push their Markbook comment to the site."
   value: 1
+  choice: "a:0:{}"
   validators: "a:0:{}"
   role: "ROLE_PRINCIPAL"
   default_value: 1
   translate_choice: "Setting"
-  last_modified: "2018-06-22 21:18:28"
-  created_on: "2018-06-22 21:18:28"
+  last_modified: "2018-06-25 09:58:55"
+  created_on: "2018-06-25 09:58:55"
 ...

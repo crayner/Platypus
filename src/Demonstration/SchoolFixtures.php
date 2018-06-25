@@ -22,6 +22,8 @@ use App\Entity\Course;
 use App\Entity\DayOfWeek;
 use App\Entity\Department;
 use App\Entity\DepartmentStaff;
+use App\Entity\ExternalAssessment;
+use App\Entity\ExternalAssessmentField;
 use App\Entity\Facility;
 use App\Entity\FileExtension;
 use App\Entity\House;
@@ -92,6 +94,18 @@ class SchoolFixtures implements DummyDataInterface
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department_staff.yml'));
 
         $this->setLogger($logger)->buildTable($data, DepartmentStaff::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/external_assessment.yml'));
+
+        $this->setLogger($logger)->buildTable($data, ExternalAssessment::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/scale.yml'));
+
+        $this->setLogger($logger)->buildTable($data, Scale::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/external_assessment_field.yml'));
+
+        $this->setLogger($logger)->buildTable($data, ExternalAssessmentField::class, $manager);
 
         /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
 
