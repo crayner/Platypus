@@ -53,9 +53,6 @@ App\Entity\RollGroup:
     manyToMany:
         tutors:
             targetEntity: App\Entity\Person
-            orderBy:
-                surname: ASC
-                firstName: ASC
             joinTable:
                 name: roll_group_tutor
                 joinColumns:
@@ -66,9 +63,6 @@ App\Entity\RollGroup:
                         referencedColumnName: id
         assistants:
             targetEntity: App\Entity\Person
-            orderBy:
-                surname: ASC
-                firstName: ASC
             joinTable:
                 name: roll_group_assistant
                 joinColumns:

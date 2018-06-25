@@ -54,7 +54,7 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('description', 'The default landing tab for the staff dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', ',planner')
+                ->__set('choice', [',planner'])
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', 'Setting')
@@ -71,7 +71,7 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('description', 'The default landing tab for the student dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', ',planner')
+                ->__set('choice', [',planner'])
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', 'Setting')
@@ -88,7 +88,7 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('description', 'The default landing tab for the parent dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', ',learning_overview,timetable,activities')
+                ->__set('choice', [',learning_overview,timetable,activities'])
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', 'Setting')

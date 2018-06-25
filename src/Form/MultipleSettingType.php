@@ -80,26 +80,24 @@ class MultipleSettingType extends AbstractType
                     break;
                 case 'choice':
                     $formType = ChoiceType::class;
-                    $choices = [];
-                    $x = explode(',', $data->__get('choice'));
+                    $choices = $data->__get('choice');
 
-                    if (count($x) === 1 && mb_strpos($x[0], '::') !== false)
+                    if (isset($choices[0]))
+                        if (count($choices) == 1 && mb_strpos($choices[0], ',') !== false)
+                            $choices = explode(',', $choices[0]);
+                    dump([$choices,$data]);
+
+                    if (isset($choices['method']))
                     {
-                        $x = explode('::', $x[0]);
-                        if (count($x) === 2)
-                        {
-                            if (class_exists($x[0]))
-                            {
-                                $method = $x[1];
-                                if (method_exists($x[0], $x[1]))
-                                    $choices = $x[0]::$method();
-                            }
-                        }
-                        else
-                            $x = [];
-                    } else
-                        foreach($x as $value)
-                            $choices[$data->getName().'.'.trim($value)] = trim($value);
+                        $method = $choices['method'];
+                        $with = isset($choices['with']) ? $choices['with'] : [];
+                        $choices = $method($with);
+                    } else {
+                        $x = $choices;
+                        $choices = [];
+                        foreach ($x as $value)
+                            $choices[$data->getName() . '.' . trim($value)] = trim($value);
+                    }
                     $additional = [
                         'choices' => $choices,
                         'placeholder' => false,

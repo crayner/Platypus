@@ -70,7 +70,7 @@ class StudentsSettings implements SettingCreationInterface
             ->__set('description', 'Determines who to notify when a new student note is created.');
         if (empty($setting->getValue())) {
             $setting->setValue('tutors')
-                ->__set('choice', 'tutors,tutors_teachers')
+                ->__set('choice', ['tutors','tutors_teachers'])
                 ->setValidators(
                     [
                         new NotBlank(),
@@ -103,7 +103,6 @@ class StudentsSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
-                        new NotBlank(),
                         new Range(['min' => 0, 'max' => 50])
                     ]
                 )
@@ -125,7 +124,6 @@ class StudentsSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
-                        new NotBlank(),
                         new Range(['min' => 0, 'max' => 50])
                     ]
                 )
@@ -147,7 +145,6 @@ class StudentsSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
-                        new NotBlank(),
                         new Range(['min' => 0, 'max' => 50])
                     ]
                 )
@@ -169,7 +166,6 @@ class StudentsSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
-                        new NotBlank(),
                         new Range(['min' => 0, 'max' => 50])
                     ]
                 )
@@ -191,7 +187,6 @@ class StudentsSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
-                        new NotBlank(),
                         new Range(['min' => 0, 'max' => 50])
                     ]
                 )
@@ -213,7 +208,6 @@ class StudentsSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
-                        new NotBlank(),
                         new Range(['min' => 0, 'max' => 50])
                     ]
                 )
@@ -257,7 +251,7 @@ class StudentsSettings implements SettingCreationInterface
             ->__set('description', 'List of agreements that students might be asked to sign in school (e.g. ICT Policy).');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', 'tutors,tutors_teachers')
+                ->__set('choice', ['tutors','tutors_teachers'])
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', 'Setting')

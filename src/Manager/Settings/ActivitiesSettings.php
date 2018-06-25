@@ -38,7 +38,10 @@ class ActivitiesSettings implements SettingCreationInterface
     /**
      * getSettings
      *
+     * @param SettingManager $sm
      * @return array
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getSettings(SettingManager $sm): array
     {
@@ -53,7 +56,7 @@ class ActivitiesSettings implements SettingCreationInterface
             ->__set('description', 'Should activities be organised around dates (flexible) or terms (easy)?');
         if (empty($setting->getValue())) {
             $setting->setValue('term')
-                ->__set('choice', 'date,term')
+                ->__set('choice', ['date','term'])
                 ->setValidators(
                     [
                         new NotBlank(),
@@ -77,7 +80,6 @@ class ActivitiesSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
-                        new NotBlank(),
                         new Range(['min' => 0, 'max' => 5]),
                     ]
                 )
@@ -96,7 +98,7 @@ class ActivitiesSettings implements SettingCreationInterface
             ->__set('description', 'System-wide access control');
         if (empty($setting->getValue())) {
             $setting->setValue('register')
-                ->__set('choice', 'none, view, register')
+                ->__set('choice', ['none','view','register'])
                 ->setValidators(
                     [
                         new NotBlank(),
@@ -112,12 +114,12 @@ class ActivitiesSettings implements SettingCreationInterface
 
         $setting->setName('activities.payment')
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('choice')
+            ->setType('choice', null)
             ->__set('displayName', 'Payment')
             ->__set('description', 'Payment system');
         if (empty($setting->getValue())) {
             $setting->setValue('per_activity')
-                ->__set('choice', 'none, single, per_activity, single_per_activity')
+                ->__set('choice', ['none, single, per_activity, single_per_activity'])
                 ->setValidators(
                     [
                         new NotBlank(),
@@ -133,12 +135,12 @@ class ActivitiesSettings implements SettingCreationInterface
 
         $setting->setName('activities.enrolment_type')
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('choice')
+            ->setType('choice', null)
             ->__set('displayName', 'Enrolment Type')
             ->__set('description', 'Enrolment process type');
         if (empty($setting->getValue())) {
             $setting->setValue('competitive')
-                ->__set('choice', 'competitive, selection')
+                ->__set('choice', ['competitive, selection'])
                 ->setValidators(
                     [
                         new NotBlank(),

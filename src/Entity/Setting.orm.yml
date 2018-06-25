@@ -29,7 +29,7 @@ App\Entity\Setting:
             type: text
             nullable: true
         choice:
-            type: text
+            type: array
             nullable: true
         validators:
             type: array

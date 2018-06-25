@@ -157,25 +157,29 @@ class Setting implements UserTrackInterface
     }
 
     /**
-     * @var string|null
+     * @var array|null
      */
     private $choice;
 
     /**
-     * @return null|string
+     * getChoice
+     *
+     * @return array|null
      */
-    public function getChoice(): ?string
+    public function getChoice(): ?array
     {
         return $this->choice;
     }
 
     /**
-     * @param null|string $choice
+     * setChoice
+     *
+     * @param array|null $choice
      * @return Setting
      */
-    public function setChoice(?string $choice): Setting
+    public function setChoice(?array $choice): Setting
     {
-        $this->choice = $choice;
+        $this->choice = $choice ?: [];
         return $this;
     }
 

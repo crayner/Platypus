@@ -14,11 +14,13 @@
  * Time: 14:04
  */
 namespace App\Manager\Settings;
+
 use App\Manager\SettingManager;
+use App\Validator\Yaml;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Url;
-use Symfony\Component\Yaml\Yaml;
+
 
 /**
  * Class BehaviourSettings
@@ -39,7 +41,10 @@ class BehaviourSettings implements SettingCreationInterface
     /**
      * getSettings
      *
+     * @param SettingManager $sm
      * @return array
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function getSettings(SettingManager $sm): array
     {
@@ -96,6 +101,7 @@ class BehaviourSettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
+                        new NotBlank(),
                         new Yaml(),
                     ]
                 )
@@ -127,17 +133,12 @@ class BehaviourSettings implements SettingCreationInterface
         if (empty($setting->getValue())) {
             $setting->setValue(true)
                 ->__set('choice', null)
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                        new Yaml(),
-                    ]
-                )
+                ->setValidators(null)
                 ->setDefaultValue(true)
                 ->__set('translateChoice', 'Setting')
             ;
         }
-        $setting->setHideParent('level');
+        $setting->setHideParent('behaviour.enable_levels');
         $settings[] = $setting;
 
         $setting = $sm->createOneByName('behaviour.levels');
@@ -150,12 +151,17 @@ class BehaviourSettings implements SettingCreationInterface
         if (empty($setting->getValue())) {
             $setting->setValue(['','Stage 1','Stage 1 (Actioned)','Stage 2','Stage 2 (Actioned)','Stage 3','Stage 3 (Actioned)','Actioned'])
                 ->__set('choice', null)
-                ->setValidators(null)
+                ->setValidators(
+                    [
+                        new NotBlank(),
+                        new Yaml(),
+                    ]
+                )
                 ->setDefaultValue(['','Stage 1','Stage 1 (Actioned)','Stage 2','Stage 2 (Actioned)','Stage 3','Stage 3 (Actioned)','Actioned'])
                 ->__set('translateChoice', 'Setting')
             ;
         }
-        $setting->setHideParent('level');
+        $setting->setHideParent('behaviour.enable_levels');
         $settings[] = $setting;
 
         $section['name'] = 'Levels';
@@ -181,7 +187,7 @@ class BehaviourSettings implements SettingCreationInterface
                 ->__set('translateChoice', 'Setting')
             ;
         }
-        $setting->setHideParent('letters');
+        $setting->setHideParent('behaviour.enable_behaviour_letters');
         $settings[] = $setting;
 
         $nf = new \NumberFormatter(null, \NumberFormatter::ORDINAL);
@@ -197,14 +203,15 @@ class BehaviourSettings implements SettingCreationInterface
             if (empty($setting->getValue())) {
                 $setting->setValue($i*3)
                     ->__set('choice', null)
-                    ->setValidators([
-                        new NotBlank(),
-                        new Range(['min' => 1, 'max' => 20])
-                    ])
+                    ->setValidators(
+                        [
+                            new Range(['min' => 1, 'max' => 20])
+                        ]
+                    )
                     ->setDefaultValue($i*3)
                     ->__set('translateChoice', 'Setting');
             }
-            $setting->setHideParent('letters');
+            $setting->setHideParent('behaviour.enable_behaviour_letters');
             $settings[] = $setting;
 
             $setting = $sm->createOneByName('behaviour.behaviour_letters_letter_'.$i.'_text');
@@ -221,7 +228,7 @@ class BehaviourSettings implements SettingCreationInterface
                     ->setDefaultValue("Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the ".$nf->format($i)." communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor.")
                     ->__set('translateChoice', 'Setting');
             }
-            $setting->setHideParent('letters');
+            $setting->setHideParent('behaviour.enable_behaviour_letters');
             $settings[] = $setting;
         }
 

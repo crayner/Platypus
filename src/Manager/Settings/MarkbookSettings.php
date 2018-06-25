@@ -252,6 +252,7 @@ class MarkbookSettings implements SettingCreationInterface
         $section['description'] = '';
         $section['settings'] = $settings;
 
+        $settings = [];
         $sections[] = $section;
 
         $setting = $sm->createOneByName('markbook.show_student_attainment_warning');

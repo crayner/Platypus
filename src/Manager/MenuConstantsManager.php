@@ -30,6 +30,13 @@ School Admin:
             parameters: 
                 name: Markbook
             transDomain: System
+        tracking_settings:
+            label: manage_tracking_settings
+            role: ROLE_PRINCIPAL
+            route: manage_settings
+            parameters: 
+                name: Tracking
+            transDomain: System
     groupings:
         manage_departments:
             label: manage_departments

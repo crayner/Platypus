@@ -58,7 +58,6 @@ class LibrarySettings implements SettingCreationInterface
                 ->__set('choice', null)
                 ->setValidators(
                     [
-                        new NotBlank(),
                         new Range(['min' => 0, 'max' => 31]),
                     ]
                 )

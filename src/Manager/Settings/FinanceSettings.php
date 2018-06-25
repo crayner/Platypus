@@ -81,7 +81,7 @@ class FinanceSettings implements SettingCreationInterface
                 ->__set('translateChoice', 'Setting')
             ;
         }
-        $setting->setHideParent('online_payment_enabled');
+        $setting->setHideParent('finance.online_payment_enabled');
         $settings[] = $setting;
 
         $setting = $sm->createOneByName('finance.online_payment_threshold');
@@ -99,7 +99,7 @@ class FinanceSettings implements SettingCreationInterface
                 ->__set('translateChoice', 'Setting')
             ;
         }
-        $setting->setHideParent('online_payment_enabled');
+        $setting->setHideParent('finance.online_payment_enabled');
         $settings[] = $setting;
 
         $section['name'] = 'General Settings';
@@ -155,7 +155,7 @@ class FinanceSettings implements SettingCreationInterface
             ->__set('description', 'Determines how invoicee name appears on invoices and receipts.');
         if (empty($setting->getValue())) {
             $setting->setValue('surname_preferred_name')
-                ->__set('choice', 'surname_preferred_name,official_name')
+                ->__set('choice', ['surname_preferred_name,official_name'])
                 ->setValidators(null)
                 ->setDefaultValue('surname_preferred_name')
                 ->__set('translateChoice', 'Setting')
@@ -172,7 +172,7 @@ class FinanceSettings implements SettingCreationInterface
             ->__set('description', 'How should invoice numbers be constructed?');
         if (empty($setting->getValue())) {
             $setting->setValue('invoice_id')
-                ->__set('choice', 'invoice_id,person_id_invoice_id,student_id_invoice_id')
+                ->__set('choice', ['invoice_id,person_id_invoice_id,student_id_invoice_id'])
                 ->setValidators(null)
                 ->setDefaultValue('invoice_id')
                 ->__set('translateChoice', 'Setting')
@@ -332,7 +332,7 @@ class FinanceSettings implements SettingCreationInterface
             ->__set('description', 'How should expense approval be dealt with?');
         if (empty($setting->getValue())) {
             $setting->setValue('one_of')
-                ->__set('choice', 'one_of,two_of,chain_of_all')
+                ->__set('choice', ['one_of,two_of,chain_of_all'])
                 ->setValidators(null)
                 ->setDefaultValue('one_of')
                 ->__set('translateChoice', 'Setting')
@@ -400,7 +400,7 @@ class FinanceSettings implements SettingCreationInterface
             ->__set('description', 'Staff member responsible for purchasing for the school.');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
-                ->__set('choice', 'do this list..,  Needs Staff table defined.')
+                ->__set('choice', ['do this list..,  Needs Staff table defined.'])
                 ->setValidators(null)
                 ->setDefaultValue(true)
                 ->__set('translateChoice', 'School');
@@ -416,7 +416,7 @@ class FinanceSettings implements SettingCreationInterface
             ->__set('description', 'Staff member responsible for reimbursing expenses.');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
-                ->__set('choice', 'do this list..,  Needs Staff table defined.')
+                ->__set('choice', ['do this list..,  Needs Staff table defined.'])
                 ->setValidators(null)
                 ->setDefaultValue(true)
                 ->__set('translateChoice', 'School');
