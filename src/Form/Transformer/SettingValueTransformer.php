@@ -32,11 +32,11 @@ class SettingValueTransformer implements DataTransformerInterface
      */
     public function transform($value)
     {
-        if (empty($value))
-            return null;
-
-        if (is_array($value))
+        if (is_array($value) && $this->type === 'array')
             return Yaml::dump($value);
+
+        if (empty($value) && $this->type === 'multiChoice')
+            return [];
 
         if ($value instanceof File)
             return $value;
@@ -54,8 +54,22 @@ class SettingValueTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (empty($value))
-            return null;
+        if (empty($value) && $this->type === 'multiChoice')
+            return [];
         return $value;
+    }
+
+    /**
+     * @var string
+     */
+    private $type;
+
+    /**
+     * SettingValueTransformer constructor.
+     * @param string $type
+     */
+    public function __construct(string $type)
+    {
+        $this->type = $type;
     }
 }

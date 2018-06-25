@@ -288,6 +288,27 @@ class SettingCache
     }
 
     /**
+     * getMultiChoiceValue
+     *
+     * @return array
+     */
+    private function getMultiChoiceValue(): array
+    {
+        return json_decode($this->getSetting()->getValue()) ?: [];
+    }
+
+    /**
+     * setMultiChoiceValue
+     *
+     * @return SettingCache
+     */
+    private function setMultiChoiceValue(): SettingCache
+    {
+        $this->getSetting()->setValue(json_encode($this->value ?: []));
+        return $this;
+    }
+
+    /**
      * getTextValue
      *
      * @param null $default
@@ -528,6 +549,16 @@ class SettingCache
     }
 
     /**
+     * getDefaultMultiChoiceValue
+     *
+     * @return array|null
+     */
+    private function getDefaultMultiChoiceValue(): ?array
+    {
+        return json_decode($this->getSetting()->getValue()) ?: [];
+    }
+
+    /**
      * getDefaultTextValue
      *
      * @param $default
@@ -723,6 +754,17 @@ class SettingCache
     private function setDefaultArrayValue(): SettingCache
     {
         $this->getSetting()->setDefaultValue(Yaml::dump($this->defaultValue));
+        return $this;
+    }
+
+    /**
+     * setDefaultMultiChoiceValue
+     *
+     * @return SettingCache
+     */
+    private function setDefaultMultiChoiceValue(): SettingCache
+    {
+        $this->getSetting()->setDefaultValue(json_encode($this->defaultValue ?: []));
         return $this;
     }
 

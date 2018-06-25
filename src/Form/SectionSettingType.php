@@ -17,6 +17,7 @@ namespace App\Form;
 
 use App\Entity\Setting;
 use App\Organism\SettingCache;
+use App\Util\StringHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -37,7 +38,7 @@ class SectionSettingType extends AbstractType
         {
             $collectionManager = $data->getNewCollection($section);
 
-            $builder->add(strtolower(str_replace([' '], '_', trim($section['name']))),CollectionManagerType::class,
+            $builder->add(StringHelper::safeString($section['name']),CollectionManagerType::class,
                 [
                     'allow_up' => false,
                     'allow_down' => false,

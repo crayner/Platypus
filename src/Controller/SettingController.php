@@ -36,6 +36,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Util\StringUtil;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,9 +109,11 @@ class SettingController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($settingManager);
-        }
+        if ($form->isSubmitted() && $form->isValid())
+            $multipleSettingManager->saveSections($settingManager, $request->request->get('section'));
+
+        $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
+
         return $this->render('Setting/multiple.html.twig',
             [
                 'form' => $form->createView(),

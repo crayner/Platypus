@@ -17,6 +17,7 @@ namespace App\Twig\Extension;
 
 use App\Manager\ScriptManager;
 use App\Manager\VersionManager;
+use App\Util\StringHelper;
 use Twig\Extension\AbstractExtension;
 
 /**
@@ -110,12 +111,6 @@ class CoreExtension extends AbstractExtension
      */
     public function camelCase($value): string
     {
-        $value = str_replace(['_', '.'], ',', $value);
-        $value = explode(',', $value);
-        $result = '';
-        foreach($value as $item)
-            $result .= ucfirst(strtolower(trim(str_replace(' ', '', $item))));
-
-        return lcfirst($result);
+        return StringHelper::camelCase($value);
     }
 }

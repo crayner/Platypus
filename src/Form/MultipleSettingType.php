@@ -15,6 +15,7 @@
  */
 namespace App\Form;
 
+use App\Form\Subscriber\SettingSubscriber;
 use App\Form\Transformer\SettingValueTransformer;
 use App\Manager\RouterManager;
 use App\Organism\SettingCache;
@@ -81,26 +82,19 @@ class MultipleSettingType extends AbstractType
                 case 'choice':
                     $formType = ChoiceType::class;
                     $choices = $data->__get('choice');
-
-                    if (isset($choices[0]))
-                        if (count($choices) == 1 && mb_strpos($choices[0], ',') !== false)
-                            $choices = explode(',', $choices[0]);
-                    dump([$choices,$data]);
-
-                    if (isset($choices['method']))
-                    {
-                        $method = $choices['method'];
-                        $with = isset($choices['with']) ? $choices['with'] : [];
-                        $choices = $method($with);
-                    } else {
-                        $x = $choices;
-                        $choices = [];
-                        foreach ($x as $value)
-                            $choices[$data->getName() . '.' . trim($value)] = trim($value);
-                    }
                     $additional = [
                         'choices' => $choices,
                         'placeholder' => false,
+                    ];
+                    break;
+                case 'multiChoice':
+                    $formType = ChoiceType::class;
+                    $choices = $data->__get('choice');
+                    $additional = [
+                        'choices' => $choices,
+                        'placeholder' => false,
+                        'multiple' => true,
+                        'expanded' => true,
                     ];
                     break;
                 case 'integer':
@@ -141,7 +135,7 @@ class MultipleSettingType extends AbstractType
             $builder
                 ->add('value', TextType::class);
 
-        $builder->get('value')->addViewTransformer(new SettingValueTransformer());
+        $builder->get('value')->addViewTransformer(new SettingValueTransformer(empty($data) ? 'text' : $data->getType()));
     }
 
     /**

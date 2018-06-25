@@ -18,6 +18,7 @@ namespace App\Manager;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use PhpParser\Node\Stmt\Else_;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MultipleSettingManager
@@ -181,15 +182,20 @@ class MultipleSettingManager
     /**
      * saveSections
      * @param SettingManager $sm
+     * @param array $data
      * @throws \Doctrine\DBAL\Exception\TableNotFoundException
      * @throws \Throwable
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Syntax
      */
-    public function saveSections(SettingManager $sm)
+    public function saveSections(SettingManager $sm, array $data)
     {
-        foreach ($this->getSections() as $section)
-            foreach ($section['settings'] as $setting)
+        foreach ($this->getSections() as $name=>$section)
+            foreach ($section['settings'] as $key=>$setting)
+            {
+                if ($setting->getType() === 'multiChoice' && empty($data[$name]['collection'][$key]))
+                    $setting->setValue([]);
                 $sm->createSetting($setting->getSetting());
+            }
     }
 }
