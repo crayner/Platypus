@@ -1,0 +1,28 @@
+App\Entity\ExternalAssessment:
+    type: entity
+    table: external_assessment
+    repositoryClass: App\Repository\ExternalAssessmentRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 50
+            nullable: false
+        nameShort:
+            length: 10
+            nullable: false
+            column: name_short
+        description:
+            type: text
+        website:
+            nullable: true
+        active:
+            type: boolean
+        allowFileUpload:
+            type: boolean
+            column: allow_file_upload
+            options:
+                default: 0

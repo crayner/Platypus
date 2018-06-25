@@ -1,0 +1,28 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_external_assessment
+-
+  id: 1
+  name: "Cognitive Abilities Test"
+  name_short: "CAT"
+  description: "UK-based standardised tests that provides scores in maths, verbal and non-verbal skills, as well as KS3 and GCSE predicted grades."
+  website: ""
+  active: 1
+  allow_file_upload: 0
+-
+  id: 2
+  name: "GCSE/iGCSE"
+  name_short: "GCSE"
+  description: "UK-based General Certificate of Secondary Education"
+  website: ""
+  active: 1
+  allow_file_upload: 0
+-
+  id: 3
+  name: "IB Diploma"
+  name_short: "IB Diploma"
+  description: "International Baccalaureate Diploma"
+  website: "http://www.ibo.org/"
+  active: 1
+  allow_file_upload: 0
+...

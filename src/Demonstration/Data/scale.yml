@@ -1,0 +1,116 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_scale
+-
+  id: 1
+  name: "International Baccalaureate"
+  name_short: "IB"
+  usage: "7 (highest) to 1 (lowest)"
+  lowest_acceptable: ""
+  active: 0
+  numeric: 1
+-
+  id: 2
+  name: "International Baccalaureate EE"
+  name_short: "IBEE"
+  usage: "A (highest) to E (lowest)"
+  lowest_acceptable: ""
+  active: 0
+  numeric: 0
+-
+  id: 3
+  name: "United Kingdom GCSE/iGCSE"
+  name_short: "GCSE"
+  usage: "A* (highest) to U (lowest)"
+  lowest_acceptable: ""
+  active: 1
+  numeric: 0
+-
+  id: 4
+  name: "Percentage"
+  name_short: "%"
+  usage: "100 (highest) to 0 (lowest)"
+  lowest_acceptable: 51
+  active: 1
+  numeric: 1
+-
+  id: 5
+  name: "Full Letter Grade"
+  name_short: "FLG"
+  usage: "A+ (highest) to F (lowest)"
+  lowest_acceptable: ""
+  active: 0
+  numeric: 0
+-
+  id: 6
+  name: "Simple Letter Grade"
+  name_short: "SLG"
+  usage: "A (highest) to F (lowest)"
+  lowest_acceptable: ""
+  active: 0
+  numeric: 0
+-
+  id: 7
+  name: "International College HK"
+  name_short: "ICHK"
+  usage: "7 (highest) to 1 (lowest)"
+  lowest_acceptable: 4
+  active: 1
+  numeric: 1
+-
+  id: 8
+  name: "Completion"
+  name_short: "Comp"
+  usage: "Has task has been completed?"
+  lowest_acceptable: 1
+  active: 1
+  numeric: 0
+-
+  id: 9
+  name: "Cognitive Abilities Test"
+  name_short: "CAT"
+  usage: "140 (highest) to 60 (lowest)"
+  lowest_acceptable: 70
+  active: 1
+  numeric: 1
+-
+  id: 10
+  name: "UK National Curriculum KS3"
+  name_short: "KS3"
+  usage: "8A (highest) to B3 (lowest)"
+  lowest_acceptable: 14
+  active: 1
+  numeric: 0
+-
+  id: 11
+  name: "United Kingdom GCSE/iGCSE Predicted"
+  name_short: "GPrd"
+  usage: "8A (highest) to B3 (lowest)"
+  lowest_acceptable: ""
+  active: 1
+  numeric: 0
+-
+  id: 12
+  name: "IB Diploma (Subject)"
+  name_short: "IBDS"
+  usage: "7 (highest) to 1 (lowest)"
+  lowest_acceptable: 4
+  active: 1
+  numeric: 1
+-
+  id: 13
+  name: "IB Diploma (Total)"
+  name_short: "IBDT"
+  usage: "45 (highest) to 0"
+  lowest_acceptable: 22
+  active: 1
+  numeric: 1
+-
+  id: 14
+  name: "UK National Curriculum KS3 Simplified"
+  name_short: "KS3S"
+  usage: "Level 8 (highest) to Level 3 (lowest)"
+  lowest_acceptable: 4
+  active: 1
+  numeric: 0
+...

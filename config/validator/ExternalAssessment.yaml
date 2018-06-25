@@ -1,0 +1,17 @@
+App\Entity\Department:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [nameShort]
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                max: 50
+        nameShort:
+            - NotBlank: ~
+            - Length:
+                max: 10
+        website:
+            - Url: ~

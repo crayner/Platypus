@@ -1,0 +1,900 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_external_assessment_field
+-
+  id: 1
+  external_assessment_id: 1
+  scale_id: 9
+  name: "Maths"
+  category: "1_Scores"
+  sequence: 1
+-
+  id: 2
+  external_assessment_id: 1
+  scale_id: 9
+  name: "Non-Verbal"
+  category: "1_Scores"
+  sequence: 2
+-
+  id: 3
+  external_assessment_id: 1
+  scale_id: 9
+  name: "Verbal"
+  category: "1_Scores"
+  sequence: 3
+-
+  id: 4
+  external_assessment_id: 1
+  scale_id: 10
+  name: "English"
+  category: "2_KS3 Target Grades"
+  sequence: 3
+-
+  id: 5
+  external_assessment_id: 1
+  scale_id: 10
+  name: "Maths"
+  category: "2_KS3 Target Grades"
+  sequence: 7
+-
+  id: 6
+  external_assessment_id: 1
+  scale_id: 10
+  name: "Science"
+  category: "2_KS3 Target Grades"
+  sequence: 11
+-
+  id: 7
+  external_assessment_id: 1
+  scale_id: 11
+  name: "English Language"
+  category: "3_GCSE Target Grades"
+  sequence: 10
+-
+  id: 8
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Mathematics"
+  category: "3_GCSE Target Grades"
+  sequence: 18
+-
+  id: 9
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Science - Double Award"
+  category: "3_GCSE Target Grades"
+  sequence: 25
+-
+  id: 10
+  external_assessment_id: 1
+  scale_id: 10
+  name: "Art & Design"
+  category: "2_KS3 Target Grades"
+  sequence: 1
+-
+  id: 11
+  external_assessment_id: 1
+  scale_id: 10
+  name: "Design & Tech"
+  category: "2_KS3 Target Grades"
+  sequence: 2
+-
+  id: 12
+  external_assessment_id: 1
+  scale_id: 10
+  name: "Geography"
+  category: "2_KS3 Target Grades"
+  sequence: 4
+-
+  id: 13
+  external_assessment_id: 1
+  scale_id: 10
+  name: "History"
+  category: "2_KS3 Target Grades"
+  sequence: 5
+-
+  id: 14
+  external_assessment_id: 1
+  scale_id: 10
+  name: "ICT"
+  category: "2_KS3 Target Grades"
+  sequence: 6
+-
+  id: 15
+  external_assessment_id: 1
+  scale_id: 10
+  name: "MFL"
+  category: "2_KS3 Target Grades"
+  sequence: 8
+-
+  id: 16
+  external_assessment_id: 1
+  scale_id: 10
+  name: "Music"
+  category: "2_KS3 Target Grades"
+  sequence: 9
+-
+  id: 17
+  external_assessment_id: 1
+  scale_id: 10
+  name: "PE"
+  category: "2_KS3 Target Grades"
+  sequence: 10
+-
+  id: 18
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Art & Design"
+  category: "3_GCSE Target Grades"
+  sequence: 1
+-
+  id: 19
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Business Studies"
+  category: "3_GCSE Target Grades"
+  sequence: 2
+-
+  id: 20
+  external_assessment_id: 1
+  scale_id: 11
+  name: "D&T - Electronics"
+  category: "3_GCSE Target Grades"
+  sequence: 3
+-
+  id: 21
+  external_assessment_id: 1
+  scale_id: 11
+  name: "D&T - Food"
+  category: "3_GCSE Target Grades"
+  sequence: 4
+-
+  id: 22
+  external_assessment_id: 1
+  scale_id: 11
+  name: "D&T - Graphics"
+  category: "3_GCSE Target Grades"
+  sequence: 5
+-
+  id: 23
+  external_assessment_id: 1
+  scale_id: 11
+  name: "D&T - Resistant Materials"
+  category: "3_GCSE Target Grades"
+  sequence: 6
+-
+  id: 24
+  external_assessment_id: 1
+  scale_id: 11
+  name: "D&T - Systems Control"
+  category: "3_GCSE Target Grades"
+  sequence: 7
+-
+  id: 25
+  external_assessment_id: 1
+  scale_id: 11
+  name: "D&T - Textiles"
+  category: "3_GCSE Target Grades"
+  sequence: 8
+-
+  id: 26
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Drama"
+  category: "3_GCSE Target Grades"
+  sequence: 9
+-
+  id: 27
+  external_assessment_id: 1
+  scale_id: 11
+  name: "English Literature"
+  category: "3_GCSE Target Grades"
+  sequence: 11
+-
+  id: 28
+  external_assessment_id: 1
+  scale_id: 11
+  name: "French"
+  category: "3_GCSE Target Grades"
+  sequence: 12
+-
+  id: 29
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Geography"
+  category: "3_GCSE Target Grades"
+  sequence: 13
+-
+  id: 30
+  external_assessment_id: 1
+  scale_id: 11
+  name: "German"
+  category: "3_GCSE Target Grades"
+  sequence: 14
+-
+  id: 31
+  external_assessment_id: 1
+  scale_id: 11
+  name: "History"
+  category: "3_GCSE Target Grades"
+  sequence: 15
+-
+  id: 32
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Home Economics"
+  category: "3_GCSE Target Grades"
+  sequence: 16
+-
+  id: 33
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Information Technology"
+  category: "3_GCSE Target Grades"
+  sequence: 17
+-
+  id: 34
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Media Studies"
+  category: "3_GCSE Target Grades"
+  sequence: 19
+-
+  id: 35
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Music"
+  category: "3_GCSE Target Grades"
+  sequence: 20
+-
+  id: 36
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Physical Education"
+  category: "3_GCSE Target Grades"
+  sequence: 21
+-
+  id: 37
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Religious Education"
+  category: "3_GCSE Target Grades"
+  sequence: 22
+-
+  id: 38
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Science - Biology"
+  category: "3_GCSE Target Grades"
+  sequence: 23
+-
+  id: 39
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Science - Chemistry"
+  category: "3_GCSE Target Grades"
+  sequence: 24
+-
+  id: 40
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Science - Physics"
+  category: "3_GCSE Target Grades"
+  sequence: 26
+-
+  id: 41
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Science - Single Award"
+  category: "3_GCSE Target Grades"
+  sequence: 27
+-
+  id: 42
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Sociology"
+  category: "3_GCSE Target Grades"
+  sequence: 28
+-
+  id: 43
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Spanish"
+  category: "3_GCSE Target Grades"
+  sequence: 29
+-
+  id: 44
+  external_assessment_id: 1
+  scale_id: 11
+  name: "Statistics"
+  category: "3_GCSE Target Grades"
+  sequence: 30
+-
+  id: 45
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Art & Design"
+  category: "1_Final Grade"
+  sequence: 1
+-
+  id: 46
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Chinese (Mandarin)"
+  category: "1_Final Grade"
+  sequence: 2
+-
+  id: 47
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Drama"
+  category: "1_Final Grade"
+  sequence: 3
+-
+  id: 48
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Dutch"
+  category: "1_Final Grade"
+  sequence: 4
+-
+  id: 49
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Economics"
+  category: "1_Final Grade"
+  sequence: 5
+-
+  id: 50
+  external_assessment_id: 2
+  scale_id: 3
+  name: "English Language"
+  category: "1_Final Grade"
+  sequence: 6
+-
+  id: 51
+  external_assessment_id: 2
+  scale_id: 3
+  name: "English Literature"
+  category: "1_Final Grade"
+  sequence: 7
+-
+  id: 52
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Environmental Management"
+  category: "1_Final Grade"
+  sequence: 8
+-
+  id: 53
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Mathematics"
+  category: "1_Final Grade"
+  sequence: 9
+-
+  id: 54
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Media Studies"
+  category: "1_Final Grade"
+  sequence: 10
+-
+  id: 55
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Physical Education"
+  category: "1_Final Grade"
+  sequence: 11
+-
+  id: 56
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Science - Double Award"
+  category: "1_Final Grade"
+  sequence: 12
+-
+  id: 57
+  external_assessment_id: 2
+  scale_id: 3
+  name: "Spanish"
+  category: "1_Final Grade"
+  sequence: 13
+-
+  id: 58
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Art & Design"
+  category: "0_Target Grade"
+  sequence: 1
+-
+  id: 59
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Chinese (Mandarin)"
+  category: "0_Target Grade"
+  sequence: 2
+-
+  id: 60
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Drama"
+  category: "0_Target Grade"
+  sequence: 3
+-
+  id: 61
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Dutch"
+  category: "0_Target Grade"
+  sequence: 4
+-
+  id: 62
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Economics"
+  category: "0_Target Grade"
+  sequence: 5
+-
+  id: 63
+  external_assessment_id: 2
+  scale_id: 11
+  name: "English Language"
+  category: "0_Target Grade"
+  sequence: 6
+-
+  id: 64
+  external_assessment_id: 2
+  scale_id: 11
+  name: "English Literature"
+  category: "0_Target Grade"
+  sequence: 7
+-
+  id: 65
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Environmental Management"
+  category: "0_Target Grade"
+  sequence: 8
+-
+  id: 66
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Mathematics"
+  category: "0_Target Grade"
+  sequence: 9
+-
+  id: 67
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Media Studies"
+  category: "0_Target Grade"
+  sequence: 10
+-
+  id: 68
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Physical Education"
+  category: "0_Target Grade"
+  sequence: 11
+-
+  id: 69
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Science - Double Award"
+  category: "0_Target Grade"
+  sequence: 12
+-
+  id: 70
+  external_assessment_id: 2
+  scale_id: 11
+  name: "Spanish"
+  category: "0_Target Grade"
+  sequence: 13
+-
+  id: 71
+  external_assessment_id: 3
+  scale_id: 13
+  name: "IB Diploma Total"
+  category: "0_Target Grade"
+  sequence: 0
+-
+  id: 72
+  external_assessment_id: 3
+  scale_id: 13
+  name: "IB Diploma Total"
+  category: "1_Final Grade"
+  sequence: 0
+-
+  id: 73
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chinese A: Language and Literature HL"
+  category: "0_Target Grade"
+  sequence: 1
+-
+  id: 74
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chinese A: Language and Literature SL"
+  category: "0_Target Grade"
+  sequence: 2
+-
+  id: 75
+  external_assessment_id: 3
+  scale_id: 12
+  name: "English A: Language and Literature HL"
+  category: "0_Target Grade"
+  sequence: 3
+-
+  id: 76
+  external_assessment_id: 3
+  scale_id: 12
+  name: "English A: Language and Literature SL"
+  category: "0_Target Grade"
+  sequence: 4
+-
+  id: 77
+  external_assessment_id: 3
+  scale_id: 12
+  name: "English A: Literature HL"
+  category: "0_Target Grade"
+  sequence: 5
+-
+  id: 78
+  external_assessment_id: 3
+  scale_id: 12
+  name: "English A: Literature SL"
+  category: "0_Target Grade"
+  sequence: 6
+-
+  id: 79
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Self-Taught Language SL"
+  category: "0_Target Grade"
+  sequence: 7
+-
+  id: 80
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chinese B HL"
+  category: "0_Target Grade"
+  sequence: 8
+-
+  id: 81
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chinese B SL"
+  category: "0_Target Grade"
+  sequence: 9
+-
+  id: 82
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Spanish B HL"
+  category: "0_Target Grade"
+  sequence: 10
+-
+  id: 83
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Spanish B SL"
+  category: "0_Target Grade"
+  sequence: 11
+-
+  id: 84
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Italian ab initio SL"
+  category: "0_Target Grade"
+  sequence: 12
+-
+  id: 85
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Economics HL"
+  category: "0_Target Grade"
+  sequence: 13
+-
+  id: 86
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Economics SL"
+  category: "0_Target Grade"
+  sequence: 14
+-
+  id: 87
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Psychology HL"
+  category: "0_Target Grade"
+  sequence: 15
+-
+  id: 88
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Psychology SL"
+  category: "0_Target Grade"
+  sequence: 16
+-
+  id: 89
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Environmental Systems and Society SL"
+  category: "0_Target Grade"
+  sequence: 17
+-
+  id: 90
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chemistry HL"
+  category: "0_Target Grade"
+  sequence: 18
+-
+  id: 91
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chemistry SL"
+  category: "0_Target Grade"
+  sequence: 19
+-
+  id: 92
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Physics HL"
+  category: "0_Target Grade"
+  sequence: 20
+-
+  id: 93
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Physics SL"
+  category: "0_Target Grade"
+  sequence: 21
+-
+  id: 94
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Mathematics HL"
+  category: "0_Target Grade"
+  sequence: 22
+-
+  id: 95
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Mathematics SL"
+  category: "0_Target Grade"
+  sequence: 23
+-
+  id: 96
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Maths Studies SL"
+  category: "0_Target Grade"
+  sequence: 24
+-
+  id: 97
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Theatre Arts HL"
+  category: "0_Target Grade"
+  sequence: 25
+-
+  id: 98
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Theatre Arts SL"
+  category: "0_Target Grade"
+  sequence: 26
+-
+  id: 99
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Visual Arts HL"
+  category: "0_Target Grade"
+  sequence: 27
+-
+  id: 100
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Visual Arts SL"
+  category: "0_Target Grade"
+  sequence: 28
+-
+  id: 101
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chinese A: Language and Literature HL"
+  category: "1_Final Grade"
+  sequence: 1
+-
+  id: 102
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chinese A: Language and Literature SL"
+  category: "1_Final Grade"
+  sequence: 2
+-
+  id: 103
+  external_assessment_id: 3
+  scale_id: 12
+  name: "English A: Language and Literature HL"
+  category: "1_Final Grade"
+  sequence: 3
+-
+  id: 104
+  external_assessment_id: 3
+  scale_id: 12
+  name: "English A: Language and Literature SL"
+  category: "1_Final Grade"
+  sequence: 4
+-
+  id: 105
+  external_assessment_id: 3
+  scale_id: 12
+  name: "English A: Literature HL"
+  category: "1_Final Grade"
+  sequence: 5
+-
+  id: 106
+  external_assessment_id: 3
+  scale_id: 12
+  name: "English A: Literature SL"
+  category: "1_Final Grade"
+  sequence: 6
+-
+  id: 107
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Self-Taught Language SL"
+  category: "1_Final Grade"
+  sequence: 7
+-
+  id: 108
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chinese B HL"
+  category: "1_Final Grade"
+  sequence: 8
+-
+  id: 109
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chinese B SL"
+  category: "1_Final Grade"
+  sequence: 9
+-
+  id: 110
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Spanish B HL"
+  category: "1_Final Grade"
+  sequence: 10
+-
+  id: 111
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Spanish B SL"
+  category: "1_Final Grade"
+  sequence: 11
+-
+  id: 112
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Italian ab initio SL"
+  category: "1_Final Grade"
+  sequence: 12
+-
+  id: 113
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Economics HL"
+  category: "1_Final Grade"
+  sequence: 13
+-
+  id: 114
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Economics SL"
+  category: "1_Final Grade"
+  sequence: 14
+-
+  id: 115
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Psychology HL"
+  category: "1_Final Grade"
+  sequence: 15
+-
+  id: 116
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Psychology SL"
+  category: "1_Final Grade"
+  sequence: 16
+-
+  id: 117
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Environmental Systems and Society SL"
+  category: "1_Final Grade"
+  sequence: 17
+-
+  id: 118
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chemistry HL"
+  category: "1_Final Grade"
+  sequence: 18
+-
+  id: 119
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Chemistry SL"
+  category: "1_Final Grade"
+  sequence: 19
+-
+  id: 120
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Physics HL"
+  category: "1_Final Grade"
+  sequence: 20
+-
+  id: 121
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Physics SL"
+  category: "1_Final Grade"
+  sequence: 21
+-
+  id: 122
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Mathematics HL"
+  category: "1_Final Grade"
+  sequence: 22
+-
+  id: 123
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Mathematics SL"
+  category: "1_Final Grade"
+  sequence: 23
+-
+  id: 124
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Maths Studies SL"
+  category: "1_Final Grade"
+  sequence: 24
+-
+  id: 125
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Theatre Arts HL"
+  category: "1_Final Grade"
+  sequence: 25
+-
+  id: 126
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Theatre Arts SL"
+  category: "1_Final Grade"
+  sequence: 26
+-
+  id: 127
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Visual Arts HL"
+  category: "1_Final Grade"
+  sequence: 27
+-
+  id: 128
+  external_assessment_id: 3
+  scale_id: 12
+  name: "Visual Arts SL"
+  category: "1_Final Grade"
+  sequence: 28
+...
