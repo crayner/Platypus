@@ -41,7 +41,15 @@ class SchoolYearController extends Controller
      */
     public function schoolYearManage(SchoolYearManager $schoolYearManager)
     {
-        $schoolYears = $schoolYearManager->getSchoolYearRepository()->findBy([], ['firstDay' => 'DESC'], 12);
+        $schoolYears = $schoolYearManager->getSchoolYearRepository()->createQueryBuilder('y')
+            ->orderBy('y.firstDay', 'DESC')
+            ->setMaxResults(12)
+            ->getQuery()
+            ->getArrayResult()
+        ;
+
+
+//        findBy([], ['firstDay' => 'DESC'], 12);
 
         return $this->render('SchoolYear/manage.html.twig',
             [

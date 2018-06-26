@@ -16,6 +16,10 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * Class SchoolYearManager
+ * @package App\Manager
+ */
 class SchoolYearManager implements TabManagerInterface
 {
 	/**
@@ -215,13 +219,27 @@ class SchoolYearManager implements TabManagerInterface
 	/**
 	 * Can Delete
 	 *
-	 * @param SchoolYear $year
+	 * @param SchoolYear|array $year
 	 *
 	 * @return bool
 	 */
-	public function canDelete(SchoolYear $schoolYear): bool
+	public function canDelete($schoolYear): bool
 	{
-		return $schoolYear->canDelete();
+	    if ($schoolYear instanceof SchoolYear && ! $schoolYear->canDelete())
+		    return false;
+
+        if ($schoolYear instanceof SchoolYear)
+            $schoolYear = (array) $schoolYear;
+
+	    if ($schoolYear['status'] === 'current')
+	        return false;
+
+	    if ($this->getEntityManager()->createQuery('SELECT COUNT(t.id) FROM ' . SchoolYearTerm::class . ' t WHERE t.schoolYear = :schoolYear')
+            ->setParameter('schoolYear', $schoolYear['id'])
+            ->getSingleScalarResult() > 0)
+	        return false;
+
+	    return true;
 	}
 
 	/**

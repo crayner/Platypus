@@ -31,10 +31,10 @@
                     {{ SchoolYear.name }}
                 </div>
                 <div class="col-3 small{% if SchoolYear.status == 'current' %} alert-success{% endif %}">
-                    {{ SchoolYear.firstDay|date(get_setting('date.format.long')) }}
+                    {{ SchoolYear.firstDay|date(get_setting('date.format.long', 'D, jS M/Y')) }}
                 </div>
                 <div class="col-3 small{% if SchoolYear.status == 'current' %} alert-success{% endif %}">
-                    {{ SchoolYear.lastDay|date(get_setting('date.format.long')) }}
+                    {{ SchoolYear.lastDay|date(get_setting('date.format.long', 'D, jS M/Y')) }}
                 </div>
                 <div class="col-4 col-4">
                     {{ editButton({'style': '', 'windowOpen': {'route': path('school_year_edit', {'id': SchoolYear.id})}, 'title': 'school_year.edit.title', 'class': 'btn btn-warning fas fa-edit', 'transDomain': 'SchoolYear'})|raw }}
