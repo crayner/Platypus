@@ -84,6 +84,36 @@ class TrackingSettings implements SettingCreationInterface
         $sections[] = $section;
         $sections['header'] = 'manage_tracking_settings';
 
+        $settings = [];
+
+
+        foreach($sm->get('formal_assessment.internal_assessment_types', ['expected_grade','predicted_grade','target_grade']) as $ia)
+        {
+            $setting = $sm->createOneByName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)));
+
+            $setting->setName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
+                ->__set('role', 'ROLE_PRINCIPAL')
+                ->setType('multiChoice')
+                ->__set('displayName', strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
+                ->__set('description', '');
+            if (empty($setting->getValue())) {
+                $setting->setValue([])
+                    ->__set('choice', YearGroupHelper::getYearGroupList())
+                    ->setValidators(null)
+                    ->setDefaultValue([])
+                    ->__set('translateChoice', 'School')
+                ;
+            }
+            $settings[] = $setting;
+        }
+
+        $section['name'] = 'Data Points - Internal Assessment';
+        $section['description'] = 'Use the options below to select the internal assessments that you wish to include in your Data Points export. If duplicates of any assessment exist, only the most recent entry will be shown.';
+        $section['settings'] = $settings;
+
+        $sections[] = $section;
+        $sections['header'] = 'manage_tracking_settings';
+
         $this->sections = $sections;
         return $this;
     }

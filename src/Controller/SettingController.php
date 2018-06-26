@@ -97,9 +97,9 @@ class SettingController extends Controller
      *
      * @param Request $request
      * @return Response
-     * @Route("/setting/multiple/manage/", name="multiple_settings_manage")
+     * @Route("/setting/manage/multiple/", name="multiple_settings_manage")
      */
-    public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager)
+    public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager, FlashBagManager $flashBagManager)
     {
         $settings = $request->getSession()->get('manage_settings');
         foreach ($settings->getSections() as $name =>$section)
@@ -112,12 +112,10 @@ class SettingController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-            if ($multipleSettingManager->saveSections($settingManager, $request->request->get('section')))
-            {
-                $request->getSession()->set('manage_settings', $settingManager->createSettingDefinition($settings->getName()));
-                return $this->redirectToRoute('multiple_settings_manage');
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $multipleSettingManager->saveSections($settingManager, $request->request->get('section'));
+            return $this->redirectToRoute('manage_settings', ['name' => $settings->getName()]);
+        }
 
         return $this->render('Setting/multiple.html.twig',
             [

@@ -294,7 +294,8 @@ class SettingCache
      */
     private function getMultiChoiceValue(): array
     {
-        return json_decode($this->getSetting()->getValue()) ?: [];
+        $result = json_decode($this->getSetting()->getValue()) ?: [];
+        return is_array($result) ? $result : [];
     }
 
     /**
@@ -304,7 +305,7 @@ class SettingCache
      */
     private function setMultiChoiceValue(): SettingCache
     {
-        $this->getSetting()->setValue(json_encode($this->value ?: []));
+        $this->getSetting()->setValue(json_encode(is_array($this->value) ? $this->value : []));
         return $this;
     }
 
@@ -729,7 +730,7 @@ class SettingCache
         if ($this->isBaseSetting() && ! $this->getSetting() instanceof Setting)
             return false;
 
-        if (empty($this->getName()))
+        if (empty($this->getName()) || empty($this->getSetting()->getId()))
             return false;
 
         return $this->isCacheTimeCurrent();

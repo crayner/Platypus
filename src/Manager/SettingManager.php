@@ -398,9 +398,6 @@ class SettingManager implements ContainerAwareInterface
         if (! $this->setting instanceof SettingCache)
             return false;
 
-        if ($this->isLockedCache())
-            return true;
-
         if ($this->setting->isValid())
             return true;
 
