@@ -66,34 +66,50 @@ class PersonNameHelper
     /**
      * getFullName
      *
-     * @param Person|null $person
+     * @param Person|array|null $person
      * @param array $options
      * @return string
      */
-    public static function getFullName(Person $person = null, array $options = []): string
+    public static function getFullName($person = null, array $options = []): string
     {
         $person = $person ?: self::getPerson();
 
-        if (empty($person) || ! $person instanceof Person)
+        if (empty($person))
             return 'No Name';
-
-        if (empty($person->getSurname())) return '';
 
         $options['surnameFirst']  = !isset($options['surnameFirst']) ? true : $options['surnameFirst'];
         $options['preferredOnly'] = !isset($options['preferredOnly']) ? false : $options['preferredOnly'];
 
-        if ($options['surnameFirst'])
-        {
-            if ($options['preferredOnly'])
-                return $person->getSurname() . ': ' . $person->getPreferredName();
+        if ($person instanceof Person) {
+            if (empty($person->getSurname())) return '';
 
-            return $person->getSurname() . ': ' . $person->getFirstName() . ' (' . $person->getPreferredName() . ')';
+            if ($options['surnameFirst']) {
+                if ($options['preferredOnly'])
+                    return $person->getSurname() . ': ' . $person->getPreferredName();
+
+                return $person->getSurname() . ': ' . $person->getFirstName() . ' (' . $person->getPreferredName() . ')';
+            }
+
+            if ($options['preferredOnly'])
+                return $person->getPreferredName() . ' ' . $person->getSurname();
+
+            return $person->getFirstName() . ' (' . $person->getPreferredName() . ') ' . $person->getSurname();
+        }
+
+        if (empty($person['surname'])) return '';
+
+        if ($options['surnameFirst']) {
+            if ($options['preferredOnly'])
+                return $person['surname'] . ': ' . $person['preferredName'];
+
+            return $person['surname'] . ': ' . $person['firstName'] . ' (' . $person['preferredName'] . ')';
         }
 
         if ($options['preferredOnly'])
-            return $person->getPreferredName() . ' ' . $person->getSurname();
+            return $person['preferredName'] . ' ' . $person['surname'];
 
-        return $person->getFirstName() . ' (' . $person->getPreferredName() . ') ' . $person->getSurname();
+        return $person['firstName'] . ' (' . $person['preferredName'] . ') ' . $person['surname'];
+
     }
 
     /**

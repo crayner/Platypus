@@ -20,6 +20,7 @@ namespace App\Manager;
 use App\Entity\Department;
 use App\Entity\DepartmentStaff;
 use App\Manager\Traits\EntityTrait;
+use App\Util\PersonNameHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Yaml\Yaml;
 
@@ -222,15 +223,21 @@ department_tutor_collection:
     /**
      * getStaffList
      *
-     * @param Department|null $department
+     * @param int|null $id
      * @return string
      */
-    public function getStaffList(?Department $department): string
+    public function getStaffList(?int $id): string
     {
-        $department = $department ?: $this->getDepartment();
+        $staff = $this->getEntityManager()->createQuery('SELECT p.surname, p.firstName, p.title, p.preferredName
+                FROM ' . DepartmentStaff::class . ' d 
+                LEFT JOIN d.member p 
+                WHERE d.department = :department 
+                ORDER BY p.surname, p.firstName')
+            ->setParameter('department', $id)
+            ->getArrayResult();
         $result = '';
-        foreach($department->getMembers() as $person)
-            $result .= $person->getMember()->getFullName(['preferredOnly' => true]) . "<br/>\n";
+        foreach($staff as $person)
+            $result .= PersonNameHelper::getFullName($person, ['preferredOnly' => true])."<br/>\n";
 
         return $result ? trim($result, "<br/>\n"): 'None';
     }

@@ -29,7 +29,7 @@
                 {{ ('department.type.' ~ department.type)|trans }}
             </div>
             <div class="col-4 small">
-                {{ dept_manager.staffList(department.entity)|raw }}
+                {{ dept_manager.staffList(department.id)|raw }}
             </div>
             <div class="col-2 text-center">
                 {{ editButton({title: 'school.department.edit.title', transDomain: 'School', windowOpen: {route: path('department_edit', {id: department.id})}, style: '', mergeClass: 'btn-sm'})|raw }}

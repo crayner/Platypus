@@ -82,6 +82,12 @@ class DepartmentPagination extends PaginationManager
 
     /**
      * @var string
+     * Use array or defaults to entity
+     */
+    protected $castAs = 'array';
+
+    /**
+     * @var string
      */
     protected $repositoryName = Department::class;
 
