@@ -230,8 +230,12 @@ abstract class PaginationManager implements PaginationInterface
 			->setMaxResults($this->getLimit())
 			->getQuery();
 
-		$this->result = $query
-			->getResult();
+		if (isset($this->castAs) && $this->castAs === 'array')
+            $this->result = $query
+                ->getArrayResult();
+		else
+            $this->result = $query
+                ->getResult();
 		$this->writeSession();
 
 		return $this->result;
