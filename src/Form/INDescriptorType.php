@@ -43,6 +43,7 @@ class INDescriptorType extends AbstractType
                 [
                     'attr' => [
                         'placeholder' => 'individual_need_descriptor.description.name.label',
+                        'class' => 'form-control-sm'
                     ],
                 ]
             )
@@ -58,7 +59,8 @@ class INDescriptorType extends AbstractType
                 [
                     'required' => false,
                     'attr' => [
-                        'rows' => 4,
+                        'rows' => 3,
+                        'class' => 'form-control-sm'
                     ],
                 ]
             )
