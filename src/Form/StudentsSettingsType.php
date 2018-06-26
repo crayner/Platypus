@@ -38,6 +38,7 @@ class StudentsSettingsType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'remove_element_route' => 'remove_student_note_category',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
             ->add('multipleSettings', SectionSettingType::class,

@@ -41,6 +41,9 @@ class StudentNoteCategoryType extends AbstractType
             ->add('name', TextType::class,
                 [
                     'label' => 'student_note_category.name.label',
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
                 ]
             )
             ->add('template', CKEditorType::class,
@@ -55,6 +58,7 @@ class StudentNoteCategoryType extends AbstractType
                 [
                     'label' => 'student_note_category.active.label',
                     'div_class' => '',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
             ->add('id', HiddenType::class,

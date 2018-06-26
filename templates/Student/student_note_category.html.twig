@@ -14,8 +14,8 @@
             </div>
             <div class="col-4 card">
                 <div class="collection-actions">
-                    {{ saveButton()|raw }}
-                    {{ miscButton({title: 'student_note_category.template.open', transDomain: 'Student', class: 'openTemplate btn btn-primary fas fa-pencil-alt', additional: {id: form.vars.id ~ '_displayButton'} })|raw }}</div>
+                    {{ saveButton({mergeClass: 'btn-sm'})|raw }}
+                    {{ miscButton({title: 'student_note_category.template.open', transDomain: 'Student', class: 'openTemplate btn btn-sm btn-primary fas fa-pencil-alt', additional: {id: form.vars.id ~ '_displayButton'} })|raw }}</div>
             </div>
         </div>
         <div class="row" id="{{ form.vars.id }}_display">
