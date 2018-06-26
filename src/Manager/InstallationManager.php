@@ -590,21 +590,34 @@ class InstallationManager
     /**
      * hasDatabaseTables
      *
+     * @param bool $throw
+     * @param bool $doFullCheck
      * @return bool
      * @throws \Doctrine\DBAL\DBALException
      */
-    public function hasDatabaseTables(bool $throw = true)
+    public function hasDatabaseTables(bool $throw = true, bool $doFullCheck = true): bool
     {
+        if (! $doFullCheck)
+            return true;
         $this->getSQLParameters();
 
         return $this->getConnection()->getSchemaManager()->listTableNames() ? true : false ;
     }
 
     /**
+     * isUpToDate
+     *
+     * @param bool $doFullCheck
      * @return bool
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
      */
-    public function isUpToDate(): bool
+    public function isUpToDate(bool $doFullCheck = true): bool
     {
+        if (! $doFullCheck)
+            return true;
         $schemaTool = new SchemaTool($this->getEntityManager());
 
         $metaData = $this->getEntityManager()->getMetadataFactory()->getAllMetadata();

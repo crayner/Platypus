@@ -88,6 +88,13 @@ class InstallSubscriber implements EventSubscriberInterface
             return;
 
 
+        $doFullCheck = true;
+        if ($event->getRequest()->hasSession()) {
+            if ($event->getRequest()->getSession()->has('installation_check') && strtotime('now') < $event->getRequest()->getSession()->get('installation_check'))
+                $doFullCheck = false;
+        }
+
+
         // Test for db installation.
         $response = null;
 
@@ -96,16 +103,23 @@ class InstallSubscriber implements EventSubscriberInterface
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_start'));
         elseif (! $this->getInstallationManager()->hasDatabase()) // Can I connect to the database?
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create'));
-        elseif (! $this->getInstallationManager()->hasDatabaseTables()) // Have the tables been built?
+        elseif (! $this->getInstallationManager()->hasDatabaseTables(true, $doFullCheck)) // Have the tables been built?
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create'));
-        elseif (! $this->getInstallationManager()->isUpToDate()) //Are the latest settings and database changes installed.
+        elseif (! $this->getInstallationManager()->isUpToDate($doFullCheck)) //Are the latest settings and database changes installed.
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_update'));
 
         if (! is_null($response)) {
-            if ($event->getRequest()->hasSession())
+            if ($event->getRequest()->hasSession()) {
                 $event->getRequest()->getSession()->remove('settings');
+                $event->getRequest()->getSession()->remove('installation_check');
+            }
             self::$installing = true;
             $event->setResponse($response);
+        } else {
+            if ($event->getRequest()->hasSession() && $doFullCheck) {
+                $event->getRequest()->getSession()->set('installation_check', strtotime('+6 Hours'));
+            }
+
         }
 
         return ;

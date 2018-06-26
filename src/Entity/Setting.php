@@ -9,10 +9,8 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Setting
  */
-class Setting implements UserTrackInterface
+class Setting
 {
-	use UserTrackTrait;
-
     /**
      * @var int|null
      */
