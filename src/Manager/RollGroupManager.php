@@ -15,8 +15,10 @@
  */
 namespace App\Manager;
 
+use App\Entity\Person;
 use App\Entity\RollGroup;
 use App\Manager\Traits\EntityTrait;
+use App\Util\PersonNameHelper;
 use App\Util\SchoolYearHelper;
 
 /**
@@ -81,5 +83,28 @@ class RollGroupManager
             return true;
 
         return false;
+    }
+
+    /**
+     * getTutorList
+     *
+     * @param int $id
+     * @return string
+     */
+    public function getTutorList(int $id): string
+    {
+        $result = $this->getEntityManager()->createQuery('SELECT p.preferredName, p.surname 
+                  FROM  ' . RollGroup::class . ' r 
+                  LEFT JOIN r.tutors p 
+                  WHERE r.id = :id 
+                  ORDER BY p.surname, p.firstName')
+            ->setParameter('id', $id)
+            ->getArrayResult()
+        ;
+        $tutors = '';
+        foreach($result as $tutor)
+            $tutors .= PersonNameHelper::getFullName($tutor, ['preferredOnly' => true]) . "<br />\n";
+
+        return rtrim($tutors, "<br />\n");
     }
 }

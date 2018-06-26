@@ -34,7 +34,7 @@
             {{ form_row(form.nameShort) }}
         </div>
         <div class="col-3 card">
-            {{ form_row(form.nextRollGroup) }}
+            {{ form_row(form.nextRollGroup, {value: transformData(form.nextRollGroup)}) }}
         </div>
     </div>
     <div class="row">
@@ -45,7 +45,7 @@
             {{ form_row(form.website) }}
         </div>
         <div class="col-4 card">
-            {{ form_row(form.facility) }}
+            {{ form_row(form.facility, {value: transformData(form.facility)}) }}
             {{ form_row(form.schoolYear) }}
         </div>
     </div>

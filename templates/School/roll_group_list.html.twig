@@ -38,7 +38,7 @@
                     {{ roll_group.name }}<br /><small>{{ roll_group.nameShort }}</small>
                 </div>
                 <div class="col-4 form-inline small">
-                    {{ roll_group.entity.tutorList|raw }}
+                    {{ manager.tutorList(roll_group.id)|raw }}
                 </div>
                 <div class="col-2 form-inline small text-center">
                     {{ roll_group.facilityName }}

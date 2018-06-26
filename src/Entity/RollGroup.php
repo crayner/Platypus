@@ -334,20 +334,6 @@ class RollGroup
     }
 
     /**
-     * getTutorList
-     *
-     * @return string
-     */
-    public function getTutorList(): string
-    {
-        $tutors = '';
-        foreach($this->getTutors()->toArray() as $tutor)
-            $tutors .= PersonNameHelper::getFullName($tutor) . "<br />\n";
-
-        return rtrim($tutors, "<br />\n");
-    }
-
-    /**
      * canDelete
      *
      * @todo Can Delete test
