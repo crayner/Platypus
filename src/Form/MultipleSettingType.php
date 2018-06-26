@@ -22,6 +22,7 @@ use App\Organism\SettingCache;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Hillrange\Form\Type\ColourType;
 use Hillrange\Form\Type\ImageType;
+use Hillrange\Form\Type\MultipleExpandedChoiceType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
@@ -88,13 +89,14 @@ class MultipleSettingType extends AbstractType
                     ];
                     break;
                 case 'multiChoice':
-                    $formType = ChoiceType::class;
+                    $formType = MultipleExpandedChoiceType::class;
                     $choices = $data->__get('choice');
                     $additional = [
                         'choices' => $choices,
                         'placeholder' => false,
-                        'multiple' => true,
-                        'expanded' => true,
+                        'expanded_attr' => [
+                            'class' => 'form-control-sm',
+                        ],
                     ];
                     break;
                 case 'integer':
