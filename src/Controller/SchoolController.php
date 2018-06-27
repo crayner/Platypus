@@ -40,6 +40,7 @@ use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\RollGroupManager;
+use App\Manager\ScaleGradeManager;
 use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
 use App\Manager\TwigManager;
@@ -677,7 +678,7 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/scale/{id}/edit/{closeWindow}", name="scale_edit")
+     * @Route("/school/scale/{id}/edit/{tabName}/{closeWindow}", name="scale_edit")
      * @IsGranted("ROLE_PRINCIPAL")
      * @param Request $request
      * @param string $id
@@ -700,8 +701,7 @@ class SchoolController extends Controller
             $manager->getEntityManager()->persist($scale);
             $manager->getEntityManager()->flush();
 
-            if ($id === 'Add')
-                return $this->redirectToRoute('scale_edit', ['id' => $scale->getId(), 'tabName' => $tabName, 'closeWindow' => $closeWindow]);
+            return $this->redirectToRoute('scale_edit', ['id' => $scale->getId(), 'tabName' => $tabName, 'closeWindow' => $closeWindow]);
         }
 
         return $this->render('School/scale_edit.html.twig',
@@ -722,11 +722,31 @@ class SchoolController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      */
-    public function scaleDelete($id = 'Add', ScaleManager $manager, FlashBagManager $flashBagManager)
+    public function scaleDelete($id, ScaleManager $manager, FlashBagManager $flashBagManager)
     {
         $manager->delete($id);
         $flashBagManager->addMessages($manager->getMessageManager());
 
         return $this->redirectToRoute('manage_scales');
+    }
+
+    /**
+     * @Route("/school/scale/grade/{cid}/delete/", name="scale_grade_delete")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param string $cid
+     * @param ScaleGradeManager $manager
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function scaleGradeDelete($cid, ScaleGradeManager $manager, FlashBagManager $flashBagManager)
+    {
+        $grade = $manager->find($cid);
+        $manager->delete($cid);
+        $flashBagManager->addMessages($manager->getMessageManager());
+        if ($grade)
+            return $this->redirectToRoute('scale_edit', ['id' => $grade->getScale()->getId(), 'tabName' => 'scale_grade_collection']);
+        else
+            return $this->redirectToRoute('manage_scales');
     }
 }

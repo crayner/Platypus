@@ -161,4 +161,14 @@ class ScaleGrade
         $this->scale = $scale;
         return $this;
     }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getValue() ?: '';
+    }
 }

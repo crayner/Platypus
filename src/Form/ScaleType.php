@@ -92,6 +92,7 @@ class ScaleType extends AbstractType
                     'allow_delete' => true,
                     'sort_manage' => true,
                     'button_merge_class' => 'btn-sm',
+                    'redirect_route' => 'scale_grade_delete',
                 ]
             )
         ;
