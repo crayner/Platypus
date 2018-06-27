@@ -1,0 +1,47 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'School' %}
+
+{% block title %}{{ 'school.scale.list.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'school.scale.list.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'school.scale.list.description'|trans  }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% include 'Pagination/index.html.twig' %}
+
+    <div class="container-fluid">
+        <div class="row row-header small">
+            <div class="col-4 text-center" style="display: inline-block;">
+                   {{ 'scale.name.label'|trans }}<br /><small>{{ 'scale.name_short.label'|trans }}</small>
+            </div>
+            <div class="col-3 text-center">
+                {{ 'scale.usage.label'|trans({}) }}
+            </div>
+            <div class="col-3 text-center">
+                {{ 'scale.active.label'|trans({}) }} -
+                {{ 'scale.numeric.label'|trans({}) }}
+            </div>
+            <div class="col-2 text-center">
+                {{ 'actions'|trans({}, 'System') }}
+            </div>
+        </div>
+        {% for scale in pagination.getResult %}{% dump(scale.active) %}
+            <div class="row row-striped{% if scale.active is same as(false) %} row-danger{% endif %}">
+                <div class="col-4 small">
+                    <strong>{{ scale.name }}</strong><br />&nbsp;<small>{{ scale.nameShort }}</small>
+                </div>
+                <div class="col-3 small">
+                    {{ scale.usage }}
+                </div>
+                <div class="col-3 small text-center">
+                    {{ onOffButton({value: scale.active, mergeClass: 'btn-sm', style: ''})|raw }}&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ onOffButton({value: scale.numeric, mergeClass: 'btn-sm', style: ''})|raw }}
+                </div>
+                <div class="col-2 text-center">
+                    {{ editButton({title: 'school.scale.edit.title', transDomain: 'School', windowOpen: {route: path('scale_edit', {id: scale.id})}, style: '', mergeClass: 'btn-sm'})|raw }}
+                        {{ deleteButton({title: 'school.scale.delete.title', transDomain: 'School', mergeClass: 'btn-sm', style: '', colour: 'warning', windowOpen: {route: path('scale_delete', {id: scale.id})}})|raw }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock contentContainer %}
+

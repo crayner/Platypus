@@ -17,7 +17,7 @@
 {% block headerLead %}{{ 'school_year.description'|trans }}{% endblock headerLead %}
 
 {% block contentContainer %}
-    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-disappear show hide") }}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
     {{ form_start(form) }}
     {% include '@HillrangeForm/Script/collection_message.html.twig' %}
     {% include 'Default/tabs.html.twig' with {tabManager: manager} %}

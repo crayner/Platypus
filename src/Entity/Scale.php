@@ -14,6 +14,9 @@
  * Time: 10:47
  */
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 
 /**
  * Class Scale
@@ -105,7 +108,7 @@ class Scale
 
     /**
      * @param null|bool $active
-     * @return AttendanceCode
+     * @return Scale
      */
     public function setActive(?bool $active): Scale
     {
@@ -174,11 +177,72 @@ class Scale
 
     /**
      * @param null|bool $numeric
-     * @return AttendanceCode
+     * @return Scale
      */
     public function setNumeric(?bool $numeric): Scale
     {
         $this->numeric = $numeric ? true : false;;
+        return $this;
+    }
+
+    /**
+     * @var Collection|null
+     */
+    private $grades;
+
+    /**
+     * @return Collection
+     */
+    public function getGrades(): Collection
+    {
+        if (empty($this->grades))
+            $this->grades = new ArrayCollection();
+
+        if ($this->grades instanceof PersistentCollection)
+            $this->grades->initialize();
+
+        return $this->grades;
+    }
+
+    /**
+     * @param Collection|null $grades
+     * @return Scale
+     */
+    public function setGrades(?Collection $grades): Scale
+    {
+        $this->grades = $grades;
+        return $this;
+    }
+
+    /**
+     * addGrade
+     *
+     * @param ScaleGrade|null $grade
+     * @param bool $add
+     * @return Scale
+     */
+    public function addGrade(?ScaleGrade $grade, $add = true): Scale
+    {
+        if (empty($grade) || $this->getGrades()->contains($grade))
+            return $this;
+
+        if ($add)
+            $grade->setScale($this, false);
+
+        $this->grades->add($grade);
+
+        return $this;
+    }
+
+    /**
+     * removeGrade
+     *
+     * @param ScaleGrade|null $grade
+     * @return Scale
+     */
+    public function removeGrade(?ScaleGrade $grade): Scale
+    {
+        $this->getGrades()->removeElement($grade);
         return $this;
     }
 }

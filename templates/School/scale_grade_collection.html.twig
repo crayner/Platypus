@@ -1,0 +1,19 @@
+{% trans_default_domain 'School' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'school.scale.edit.title', transDomain: 'School'} %}
+<div class="row row-header">
+    <div class="col-3">
+        {{ 'scale_grade.value.label'|trans }}
+    </div>
+    <div class="col-4">
+        {{ 'scale_grade.descriptor.label'|trans }}
+    </div>
+    <div class="col-2">
+        {{ 'scale_grade.default.label'|trans }}
+    </div>
+    <div class="col-3">
+        {{ 'actions'|trans({}, 'System') }}
+    </div>
+</div>
+{{ collection_widget(form.grades) }}
+{% include 'Default/panelEnd.html.twig' %}

@@ -30,6 +30,7 @@ use App\Form\DepartmentType;
 use App\Form\FacilityType;
 use App\Form\HousesType;
 use App\Form\RollGroupType;
+use App\Form\ScaleType;
 use App\Form\SectionSettingType;
 use App\Form\YearGroupType;
 use App\Manager\AttendanceCodeManager;
@@ -39,6 +40,7 @@ use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\RollGroupManager;
+use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
 use App\Manager\TwigManager;
 use App\Organism\AttendanceCodes;
@@ -46,6 +48,7 @@ use App\Organism\DaysOfWeek;
 use App\Pagination\DepartmentPagination;
 use App\Pagination\FacilityPagination;
 use App\Pagination\RollGroupPagination;
+use App\Pagination\ScalePagination;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -650,5 +653,79 @@ class SchoolController extends Controller
         $departmentManager->delete($id);
         $flashBagManager->addMessages($departmentManager->getMessageManager());
         return $this->forward(SchoolController::class.'::departmentSettings');
+    }
+
+    /**
+     * scaleManage
+     *
+     * @param Request $request
+     * @Route("/school/scale/manage/", name="manage_scales")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function scaleManage(Request $request, ScalePagination $pagination, ScaleManager $manager)
+    {
+        $pagination->injectRequest($request);
+
+        $pagination->getDataSet();
+
+        return $this->render('School/scale_list.html.twig',
+            [
+                'pagination' => $pagination,
+                'manager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/scale/{id}/edit/{closeWindow}", name="scale_edit")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param Request $request
+     * @param string $id
+     * @param ScaleManager $manager
+     * @param string|null $closeWindow
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function scaleEdit(Request $request, $id = 'Add', ScaleManager $manager, string $closeWindow = null)
+    {
+        $scale = $manager->find($id);
+
+        $scale->setGrades($manager->findFields($id));
+
+        $form = $this->createForm(ScaleType::class, $scale);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $manager->getEntityManager()->persist($scale);
+            $manager->getEntityManager()->flush();
+
+            if ($id === 'Add')
+                return $this->redirectToRoute('scale_edit', ['id' => $scale->getId(),  'closeWindow' => $closeWindow]);
+        }
+
+        return $this->render('School/scale_edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+                'tabManager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/scale/{id}/delete/", name="scale_delete")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param string $id
+     * @param ScaleManager $manager
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function scaleDelete($id = 'Add', ScaleManager $manager, FlashBagManager $flashBagManager)
+    {
+        $manager->delete($id);
+        $flashBagManager->addMessages($manager->getMessageManager());
+        return $this->redirectToRoute('manage_scales');
     }
 }

@@ -1,0 +1,27 @@
+{% trans_default_domain 'School' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'school.scale.edit.title', name: form.vars.value.name, transDomain: 'School'} %}
+
+<div class="row">
+    <div class="col-5 card">
+        {{ form_row(form.name) }}
+    </div>
+    <div class="col-2 card">
+        {{ form_row(form.nameShort) }}
+    </div>
+    <div class="col-5 card">
+        {{ form_row(form.lowestAcceptable) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6 card">
+        {{ form_row(form.usage) }}
+    </div>
+    <div class="col-3 card">
+        {{ form_row(form.active) }}
+    </div>
+    <div class="col-3 card">
+        {{ form_row(form.numeric) }}
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}

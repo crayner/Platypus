@@ -13,7 +13,7 @@
 {% block headerLead %}{{ ('school.roll_group.edit.description')|trans }}{% endblock headerLead %}
 
 {% block contentContainer %}
-    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-disappear show hide") }}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
     {{ form_start(form, {attr: {id: 'saveForm'}}) }}
     {% include '@HillrangeForm/Script/collection_message.html.twig' %}
     {% set h3Content = '' %}

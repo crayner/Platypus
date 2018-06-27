@@ -35,6 +35,11 @@ trait EntityTrait
     private $messageManager;
 
     /**
+     * @var Object
+     */
+    private $entity;
+
+    /**
      * EntityTrait constructor.
      * @param EntityManagerInterface $entityManager
      * @param MessageManager $messageManager
@@ -73,9 +78,10 @@ trait EntityTrait
     public function find($id): ?object
     {
         if ($id === 'Add')
-            return new $this->entityName();
+            $this->entity = new $this->entityName();
 
-        return $this->getEntityManager()->getRepository($this->getEntityName())->find($id);
+        $this->entity = $this->getEntityManager()->getRepository($this->getEntityName())->find($id);
+        return $this->entity;
     }
 
     /**
@@ -98,6 +104,7 @@ trait EntityTrait
                 $this->getEntityManager()->remove($entity);
                 $this->getEntityManager()->flush();
                 $this->getMessageManager()->add('success', 'entity.removed.success', ['%{entity}' => $this->getEntityName(), '%{name}' => $entity->__toString()], 'System');
+                $this->entity = null;
                 return;
 
             }
@@ -106,12 +113,14 @@ trait EntityTrait
                 $this->getEntityManager()->remove($entity);
                 $this->getEntityManager()->flush();
                 $this->getMessageManager()->add('success', 'entity.removed.success', ['%{entity}' => $this->getEntityName(), '%{name}' => $entity->__toString()], 'System');
+                $this->entity = null;
                 return;
             }
         } else {
             $this->getEntityManager()->remove($entity);
             $this->getEntityManager()->flush();
             $this->getMessageManager()->add('success', 'entity.removed.success', ['%{entity}' => $this->getEntityName(), '%{name}' => $entity->__toString()], 'System');
+            $this->entity = null;
             return;
 
         }
@@ -131,4 +140,13 @@ trait EntityTrait
         return $this->entityName;
     }
 
+    /**
+     * getEntity
+     *
+     * @return null|object
+     */
+    public function getEntity(): ?object
+    {
+        return $this->entity;
+    }
 }

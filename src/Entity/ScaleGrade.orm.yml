@@ -1,0 +1,30 @@
+App\Entity\ScaleGrade:
+    type: entity
+    table: scale_grade
+    repositoryClass: App\Repository\ScaleGradeRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        value:
+            length: 10
+            nullable: false
+        descriptor:
+            length: 50
+            nullable: false
+        sequence:
+            type: integer
+        default:
+            type: boolean
+            options:
+                default: '0'
+    manyToOne:
+        scale:
+            targetEntity: App\Entity\Scale
+            inversedBy: grades
+            joinColumn:
+                name: scale_id
+                referencedColumnName: id
+                nullable: false

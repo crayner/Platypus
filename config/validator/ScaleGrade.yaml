@@ -1,0 +1,15 @@
+App\Entity\ScaleGrade:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [value, scale]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [value, sequence, scale]
+    properties:
+        value:
+            - NotBlank: ~
+            - Length:
+                max: '10'
+        descriptor:
+            - NotBlank: ~
+            - Length:
+                max: 50

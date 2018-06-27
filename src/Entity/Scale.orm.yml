@@ -32,3 +32,9 @@ App\Entity\Scale:
             type: boolean
             options:
                 default: '0'
+    oneToMany:
+        grades:
+            targetEntity: App\Entity\ScaleGrade
+            mappedBy: scale
+            cascade: [ remove ]
+            orderBy: { sequence: ASC}

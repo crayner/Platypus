@@ -1,0 +1,24 @@
+{% trans_default_domain "School" %}
+
+{% block scale_grade_label %}{% endblock %}
+{% block scale_grade_errors %}{% endblock %}
+
+{% block scale_grade_widget %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-3">
+                {{ form_widget(form.value) }}
+            </div>
+            <div class="col-4">
+                {{ form_widget(form.descriptor) }}
+            </div>
+            <div class="col-2 text-center">
+                {{ form_widget(form.default) }}
+            </div>
+            <div class="col-3">
+                <div class="collection-actions">
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock scale_grade_widget %}

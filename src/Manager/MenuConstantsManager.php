@@ -30,6 +30,12 @@ School Admin:
             parameters: 
                 name: FormalAssessment
             transDomain: System
+        manage_scales:
+            label: manage_scales
+            role: ROLE_PRINCIPAL
+            route: manage_scales
+            parameters: {}
+            transDomain: School
         markbook_settings:
             label: manage_markbook_settings
             role: ROLE_PRINCIPAL
@@ -205,6 +211,7 @@ School Admin:
         - multiple_settings_manage
         - roll_group_edit
         - department_edit
+        - scale_edit
 ';
     /*
 	CONST NODES = '

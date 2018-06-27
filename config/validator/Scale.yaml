@@ -20,3 +20,5 @@ App\Entity\Scale:
         lowestAcceptable:
             - Length:
                 max: 5
+        grades:
+            - Valid: ~

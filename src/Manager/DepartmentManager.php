@@ -50,6 +50,7 @@ class DepartmentManager extends TabManager
         $this->messageManager = $messageManager;
         $this->departmentStaffManager = $departmentStaffManager;
     }
+
     /**
      * getTabs
      *

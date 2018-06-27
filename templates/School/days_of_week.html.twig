@@ -15,7 +15,7 @@
 {% block headerLead %}{{ 'days_of_week.description'|trans }}{% endblock headerLead %}
 
 {% block contentContainer %}
-    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-disappear show hide") }}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
     {{ form_start(form) }}
     {% include '@HillrangeForm/Script/collection_message.html.twig' %}
     <p class="alert alert-info">{{ 'days_of_week.help'|trans }}</p>

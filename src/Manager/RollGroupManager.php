@@ -15,7 +15,6 @@
  */
 namespace App\Manager;
 
-use App\Entity\Person;
 use App\Entity\RollGroup;
 use App\Manager\Traits\EntityTrait;
 use App\Util\PersonNameHelper;
