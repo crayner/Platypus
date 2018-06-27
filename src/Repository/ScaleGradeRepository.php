@@ -15,7 +15,23 @@
  */
 namespace App\Repository;
 
-class ScaleGradeRepository
-{
+use App\Entity\ScaleGrade;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * Class ScaleGradeRepository
+ * @package App\Repository
+ */
+class ScaleGradeRepository extends ServiceEntityRepository
+{
+    /**
+     * ScaleGradeRepository constructor.
+     *
+     * @param RegistryInterface $registry
+     */
+    public function __construct(RegistryInterface $registry)
+    {
+        parent::__construct($registry, ScaleGrade::class);
+    }
 }

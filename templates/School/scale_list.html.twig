@@ -22,7 +22,8 @@
                 {{ 'scale.numeric.label'|trans({}) }}
             </div>
             <div class="col-2 text-center">
-                {{ 'actions'|trans({}, 'System') }}
+                {{ 'actions'|trans({}, 'System') }}<br/>
+                {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('scale_edit', {id: 'Add'})}})|raw }}
             </div>
         </div>
         {% for scale in pagination.getResult %}{% dump(scale.active) %}

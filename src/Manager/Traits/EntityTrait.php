@@ -79,8 +79,8 @@ trait EntityTrait
     {
         if ($id === 'Add')
             $this->entity = new $this->entityName();
-
-        $this->entity = $this->getEntityManager()->getRepository($this->getEntityName())->find($id);
+        else
+            $this->entity = $this->getEntityManager()->getRepository($this->getEntityName())->find($id);
         return $this->entity;
     }
 
@@ -148,5 +148,27 @@ trait EntityTrait
     public function getEntity(): ?object
     {
         return $this->entity;
+    }
+
+    /**
+     * @param Object $entity
+     * @return EntityTrait
+     */
+    public function setEntity(object $entity): EntityTrait
+    {
+        $this->entity = $entity;
+        return $this;
+    }
+
+    /**
+     * getTransDomain
+     *
+     * @return string
+     */
+    public function getTransDomain(): string
+    {
+        if(empty($this->transDomain))
+            return 'System';
+        return $this->transDomain;
     }
 }

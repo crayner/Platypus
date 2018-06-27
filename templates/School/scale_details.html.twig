@@ -10,7 +10,7 @@
         {{ form_row(form.nameShort) }}
     </div>
     <div class="col-5 card">
-        {{ form_row(form.lowestAcceptable) }}
+        {{ form_row(form.lowestAcceptable, {value: transformData(form.lowestAcceptable)}) }}
     </div>
 </div>
 <div class="row">

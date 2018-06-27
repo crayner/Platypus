@@ -140,23 +140,23 @@ class Scale
     }
 
     /**
-     * @var string|null
+     * @var ScaleGrade|null
      */
     private $lowestAcceptable;
 
     /**
-     * @return null|string
+     * @return null|Scalegrade
      */
-    public function getLowestAcceptable(): ?string
+    public function getLowestAcceptable(): ?ScaleGrade
     {
         return $this->lowestAcceptable;
     }
 
     /**
-     * @param null|string $lowestAcceptable
+     * @param null|ScaleGrade $lowestAcceptable
      * @return Scale
      */
-    public function setLowestAcceptable(?string $lowestAcceptable): Scale
+    public function setLowestAcceptable(?ScaleGrade $lowestAcceptable): Scale
     {
         $this->lowestAcceptable = $lowestAcceptable;
         return $this;
@@ -244,5 +244,40 @@ class Scale
     {
         $this->getGrades()->removeElement($grade);
         return $this;
+    }
+
+    /**
+     * getFullName
+     *
+     * @return string
+     */
+    public function getFullName(): string
+    {
+        $result = '';
+        $result .= $this->getName(). ' ('.$this->getNameShort().')';
+        return $result;
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getFullName();
+    }
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        if ($this->isActive())
+            return false;
+
+        return true;
     }
 }

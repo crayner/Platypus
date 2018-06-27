@@ -35,6 +35,11 @@ class ScaleManager extends TabManager
     private $entityName = Scale::class;
 
     /**
+     * @var string
+     */
+    private $transDomain = 'System';
+
+    /**
      * getTabs
      *
      * @return array
@@ -56,15 +61,17 @@ scale_grade_collection:
     }
 
     /**
-     * findFields
+     * findGrades
      *
      * @param $id
      * @return ArrayCollection
      * @throws \Exception
      */
-    public function findFields($id): ArrayCollection
+    public function findGrades($id): ArrayCollection
     {
         $this->find($id);
+        if (empty($id) || $id === 'Add')
+            return new ArrayCollection();
         $result = $this->getEntityManager()->createQueryBuilder()
             ->from(ScaleGrade::class, 'g')
             ->select('g')

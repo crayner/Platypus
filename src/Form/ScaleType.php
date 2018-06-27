@@ -17,7 +17,9 @@ namespace App\Form;
 
 use App\Entity\Scale;
 use App\Entity\ScaleGrade;
+use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\CollectionType;
+use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
@@ -32,6 +34,7 @@ class ScaleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $scale = $options['data'];
         $builder
             ->add('name', TextType::class,
                 [
@@ -51,11 +54,23 @@ class ScaleType extends AbstractType
                     'help' => 'scale.usage.help',
                 ]
             )
-            ->add('lowestAcceptable', TextType::class,
+            ->add('lowestAcceptable', EntityType::class,
                 [
                     'label' => 'scale.lowest_acceptable.label',
                     'help' => 'scale.lowest_acceptable.help',
+                    'choice_label' => 'value',
+                    'class' => ScaleGrade::class,
+                    'query_builder' => function(EntityRepository $er) use ($scale) {
+                        return $er->createQueryBuilder('g')
+                            ->orderBy('g.sequence', 'ASC')
+                            ->leftJoin('g.scale', 's')
+                            ->where('s.id = :scale')
+                            ->setParameter('scale', $scale->getId())
+                        ;
+                    },
+                    'placeholder' => '',
                     'required' => false,
+                    'choice_translation_domain' => false,
                 ]
             )
             ->add('active', ToggleType::class,

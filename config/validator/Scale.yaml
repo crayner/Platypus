@@ -18,7 +18,7 @@ App\Entity\Scale:
             - Length:
                 max: 50
         lowestAcceptable:
-            - Length:
-                max: 5
+            - Valid: ~
         grades:
             - Valid: ~
+            - App\Validator\ScaleGrades: ~

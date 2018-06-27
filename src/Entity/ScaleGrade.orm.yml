@@ -20,6 +20,7 @@ App\Entity\ScaleGrade:
             type: boolean
             options:
                 default: '0'
+            column: default_value
     manyToOne:
         scale:
             targetEntity: App\Entity\Scale

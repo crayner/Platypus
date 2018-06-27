@@ -8,7 +8,7 @@ App\Entity\ScaleGrade:
         value:
             - NotBlank: ~
             - Length:
-                max: '10'
+                max: 10
         descriptor:
             - NotBlank: ~
             - Length:

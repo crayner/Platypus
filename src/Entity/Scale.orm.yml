@@ -18,12 +18,6 @@ App\Entity\Scale:
         usage:
             length: 50
             nullable: false
-        lowestAcceptable:
-            length: 5
-            nullable: true
-            column: lowest_acceptable
-            options:
-                comment: 'This is the sequence number of the lowest grade a student can get without being unsatisfactory'
         active:
             type: boolean
             options:
@@ -36,5 +30,12 @@ App\Entity\Scale:
         grades:
             targetEntity: App\Entity\ScaleGrade
             mappedBy: scale
-            cascade: [ remove ]
+            cascade: [ all ]
             orderBy: { sequence: ASC}
+    oneToOne:
+        lowestAcceptable:
+            targetEntity: App\Entity\ScaleGrade
+            joinColumn:
+                name: lowest_acceptable
+                referencedColumnName: id
+                nullable: true

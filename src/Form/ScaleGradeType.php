@@ -15,7 +15,9 @@
  */
 namespace App\Form;
 
+use App\Entity\Scale;
 use App\Entity\ScaleGrade;
+use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
@@ -78,6 +80,11 @@ class ScaleGradeType extends AbstractType
                     'attr' => [
                         'class' => 'removeElement',
                     ],
+                ]
+            )
+            ->add('scale', HiddenEntityType::class,
+                [
+                    'class' => Scale::class,
                 ]
             )
         ;

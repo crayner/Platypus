@@ -730,7 +730,7 @@ class SettingCache
         if ($this->isBaseSetting() && ! $this->getSetting() instanceof Setting)
             return false;
 
-        if (empty($this->getName()) || empty($this->getSetting()->getId()))
+        if (empty($this->getName()) || empty($this->getSetting()) || empty($this->getSetting()->getId()))
             return false;
 
         return $this->isCacheTimeCurrent();

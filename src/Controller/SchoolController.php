@@ -681,15 +681,15 @@ class SchoolController extends Controller
      * @IsGranted("ROLE_PRINCIPAL")
      * @param Request $request
      * @param string $id
+     * @param string $tabName
      * @param ScaleManager $manager
      * @param string|null $closeWindow
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
-    public function scaleEdit(Request $request, $id = 'Add', ScaleManager $manager, string $closeWindow = null)
+    public function scaleEdit(Request $request, $id = 'Add', $tabName = 'details', ScaleManager $manager, string $closeWindow = null)
     {
         $scale = $manager->find($id);
-
-        $scale->setGrades($manager->findFields($id));
 
         $form = $this->createForm(ScaleType::class, $scale);
 
@@ -701,7 +701,7 @@ class SchoolController extends Controller
             $manager->getEntityManager()->flush();
 
             if ($id === 'Add')
-                return $this->redirectToRoute('scale_edit', ['id' => $scale->getId(),  'closeWindow' => $closeWindow]);
+                return $this->redirectToRoute('scale_edit', ['id' => $scale->getId(), 'tabName' => $tabName, 'closeWindow' => $closeWindow]);
         }
 
         return $this->render('School/scale_edit.html.twig',
@@ -726,6 +726,7 @@ class SchoolController extends Controller
     {
         $manager->delete($id);
         $flashBagManager->addMessages($manager->getMessageManager());
+
         return $this->redirectToRoute('manage_scales');
     }
 }

@@ -14,6 +14,9 @@
             </div>
             <div class="col-2 text-center">
                 {{ form_widget(form.default) }}
+                {{ form_widget(form.scale, {value: app.request.get('id')}) }}
+                {{ form_widget(form.sequence) }}
+                {{ form_widget(form.id) }}
             </div>
             <div class="col-3">
                 <div class="collection-actions">

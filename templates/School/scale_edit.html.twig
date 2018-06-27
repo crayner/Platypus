@@ -19,6 +19,8 @@
     {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_scales')}})|raw %}
     {% set h3Content = h3Content ~ resetButton()|raw %}
     {% set h3Content = h3Content ~ saveButton()|raw %}
+    {% set panelParagraph = 'scale.name' %}
+    {% set panelParams = {'%{name}': form.vars.value.fullName} %}
     {% include '@HillrangeForm/Script/collection_message.html.twig' %}
     {% include 'Default/tabs.html.twig' with {translation: 'School'} %}
     {{ form_end(form) }}
@@ -26,10 +28,9 @@
 
 {% block javascripts %}
     {{ parent() }}
+    {{ toggle_script() }}
     {{ collections_manage(form, ['grades'])|raw }}
     {{ collection_script(form.grades) }}
     {% set route = 'scale_edit' %}
-    {{ toggle_script() }}
-    {% include 'Script/monitorForm.html.twig' %}
     {% include 'Script/formTabSubmitScript.html.twig' %}
 {% endblock javascripts %}
