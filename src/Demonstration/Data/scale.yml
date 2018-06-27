@@ -58,7 +58,7 @@
   active: 1
   numeric: 1
 -
-  id: 8
+  id: 9
   name: "Completion"
   name_short: "Comp"
   usage: "Has task has been completed?"
@@ -66,7 +66,7 @@
   active: 1
   numeric: 0
 -
-  id: 9
+  id: 10
   name: "Cognitive Abilities Test"
   name_short: "CAT"
   usage: "140 (highest) to 60 (lowest)"
@@ -74,7 +74,7 @@
   active: 1
   numeric: 1
 -
-  id: 10
+  id: 11
   name: "UK National Curriculum KS3"
   name_short: "KS3"
   usage: "8A (highest) to B3 (lowest)"
@@ -82,7 +82,7 @@
   active: 1
   numeric: 0
 -
-  id: 11
+  id: 12
   name: "United Kingdom GCSE/iGCSE Predicted"
   name_short: "GPrd"
   usage: "8A (highest) to B3 (lowest)"
@@ -90,7 +90,7 @@
   active: 1
   numeric: 0
 -
-  id: 12
+  id: 13
   name: "IB Diploma (Subject)"
   name_short: "IBDS"
   usage: "7 (highest) to 1 (lowest)"
@@ -98,7 +98,7 @@
   active: 1
   numeric: 1
 -
-  id: 13
+  id: 14
   name: "IB Diploma (Total)"
   name_short: "IBDT"
   usage: "45 (highest) to 0"
@@ -106,7 +106,7 @@
   active: 1
   numeric: 1
 -
-  id: 14
+  id: 15
   name: "UK National Curriculum KS3 Simplified"
   name_short: "KS3S"
   usage: "Level 8 (highest) to Level 3 (lowest)"

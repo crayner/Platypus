@@ -1,0 +1,2307 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_scale_grade
+-
+  id: 1
+  scale_id: 1
+  value: 7
+  descriptor: 7
+  sequence: 1
+  default: 0
+-
+  id: 2
+  scale_id: 1
+  value: 6
+  descriptor: 6
+  sequence: 2
+  default: 0
+-
+  id: 3
+  scale_id: 1
+  value: 5
+  descriptor: 5
+  sequence: 3
+  default: 0
+-
+  id: 4
+  scale_id: 1
+  value: 4
+  descriptor: 4
+  sequence: 4
+  default: 0
+-
+  id: 5
+  scale_id: 1
+  value: 3
+  descriptor: 3
+  sequence: 5
+  default: 0
+-
+  id: 6
+  scale_id: 1
+  value: 2
+  descriptor: 2
+  sequence: 6
+  default: 0
+-
+  id: 7
+  scale_id: 1
+  value: 1
+  descriptor: 1
+  sequence: 7
+  default: 0
+-
+  id: 8
+  scale_id: 2
+  value: "A"
+  descriptor: "49–60"
+  sequence: 1
+  default: 0
+-
+  id: 9
+  scale_id: 2
+  value: "B"
+  descriptor: "40–48"
+  sequence: 2
+  default: 0
+-
+  id: 10
+  scale_id: 2
+  value: "C"
+  descriptor: "32–39"
+  sequence: 3
+  default: 0
+-
+  id: 11
+  scale_id: 2
+  value: "D"
+  descriptor: "22–31"
+  sequence: 4
+  default: 0
+-
+  id: 12
+  scale_id: 2
+  value: "E"
+  descriptor: "0–21"
+  sequence: 5
+  default: 0
+-
+  id: 13
+  scale_id: 3
+  value: "A*"
+  descriptor: "A*"
+  sequence: 1
+  default: 0
+-
+  id: 14
+  scale_id: 3
+  value: "A"
+  descriptor: "A"
+  sequence: 2
+  default: 0
+-
+  id: 15
+  scale_id: 3
+  value: "B"
+  descriptor: "B"
+  sequence: 3
+  default: 0
+-
+  id: 16
+  scale_id: 3
+  value: "C"
+  descriptor: "C"
+  sequence: 4
+  default: 0
+-
+  id: 17
+  scale_id: 3
+  value: "D"
+  descriptor: "D"
+  sequence: 5
+  default: 0
+-
+  id: 18
+  scale_id: 3
+  value: "E"
+  descriptor: "E"
+  sequence: 6
+  default: 0
+-
+  id: 19
+  scale_id: 3
+  value: "F"
+  descriptor: "F"
+  sequence: 7
+  default: 0
+-
+  id: 20
+  scale_id: 3
+  value: "G"
+  descriptor: "G"
+  sequence: 8
+  default: 0
+-
+  id: 21
+  scale_id: 3
+  value: "U"
+  descriptor: "Unclassified"
+  sequence: 9
+  default: 0
+-
+  id: 22
+  scale_id: 4
+  value: "100%"
+  descriptor: "100%"
+  sequence: 1
+  default: 0
+-
+  id: 23
+  scale_id: 4
+  value: "99%"
+  descriptor: "99%"
+  sequence: 2
+  default: 0
+-
+  id: 24
+  scale_id: 4
+  value: "98%"
+  descriptor: "98%"
+  sequence: 3
+  default: 0
+-
+  id: 25
+  scale_id: 4
+  value: "97%"
+  descriptor: "97%"
+  sequence: 4
+  default: 0
+-
+  id: 26
+  scale_id: 4
+  value: "96%"
+  descriptor: "96%"
+  sequence: 5
+  default: 0
+-
+  id: 27
+  scale_id: 4
+  value: "95%"
+  descriptor: "95%"
+  sequence: 6
+  default: 0
+-
+  id: 28
+  scale_id: 4
+  value: "94%"
+  descriptor: "94%"
+  sequence: 7
+  default: 0
+-
+  id: 29
+  scale_id: 4
+  value: "93%"
+  descriptor: "93%"
+  sequence: 8
+  default: 0
+-
+  id: 30
+  scale_id: 4
+  value: "92%"
+  descriptor: "92%"
+  sequence: 9
+  default: 0
+-
+  id: 31
+  scale_id: 4
+  value: "91%"
+  descriptor: "91%"
+  sequence: 10
+  default: 0
+-
+  id: 32
+  scale_id: 4
+  value: "90%"
+  descriptor: "90%"
+  sequence: 11
+  default: 0
+-
+  id: 33
+  scale_id: 4
+  value: "89%"
+  descriptor: "89%"
+  sequence: 12
+  default: 0
+-
+  id: 34
+  scale_id: 4
+  value: "88%"
+  descriptor: "88%"
+  sequence: 13
+  default: 0
+-
+  id: 35
+  scale_id: 4
+  value: "87%"
+  descriptor: "87%"
+  sequence: 14
+  default: 0
+-
+  id: 36
+  scale_id: 4
+  value: "86%"
+  descriptor: "86%"
+  sequence: 15
+  default: 0
+-
+  id: 37
+  scale_id: 4
+  value: "85%"
+  descriptor: "85%"
+  sequence: 16
+  default: 0
+-
+  id: 38
+  scale_id: 4
+  value: "84%"
+  descriptor: "84%"
+  sequence: 17
+  default: 0
+-
+  id: 39
+  scale_id: 4
+  value: "83%"
+  descriptor: "83%"
+  sequence: 18
+  default: 0
+-
+  id: 40
+  scale_id: 4
+  value: "82%"
+  descriptor: "82%"
+  sequence: 19
+  default: 0
+-
+  id: 41
+  scale_id: 4
+  value: "81%"
+  descriptor: "81%"
+  sequence: 20
+  default: 0
+-
+  id: 42
+  scale_id: 4
+  value: "80%"
+  descriptor: "80%"
+  sequence: 21
+  default: 0
+-
+  id: 43
+  scale_id: 4
+  value: "79%"
+  descriptor: "79%"
+  sequence: 22
+  default: 0
+-
+  id: 44
+  scale_id: 4
+  value: "78%"
+  descriptor: "78%"
+  sequence: 23
+  default: 0
+-
+  id: 45
+  scale_id: 4
+  value: "77%"
+  descriptor: "77%"
+  sequence: 24
+  default: 0
+-
+  id: 46
+  scale_id: 4
+  value: "76%"
+  descriptor: "76%"
+  sequence: 25
+  default: 0
+-
+  id: 47
+  scale_id: 4
+  value: "75%"
+  descriptor: "75%"
+  sequence: 26
+  default: 0
+-
+  id: 48
+  scale_id: 4
+  value: "74%"
+  descriptor: "74%"
+  sequence: 27
+  default: 0
+-
+  id: 49
+  scale_id: 4
+  value: "73%"
+  descriptor: "73%"
+  sequence: 28
+  default: 0
+-
+  id: 50
+  scale_id: 4
+  value: "72%"
+  descriptor: "72%"
+  sequence: 29
+  default: 0
+-
+  id: 51
+  scale_id: 4
+  value: "71%"
+  descriptor: "71%"
+  sequence: 30
+  default: 0
+-
+  id: 52
+  scale_id: 4
+  value: "70%"
+  descriptor: "70%"
+  sequence: 31
+  default: 0
+-
+  id: 53
+  scale_id: 4
+  value: "69%"
+  descriptor: "69%"
+  sequence: 32
+  default: 0
+-
+  id: 54
+  scale_id: 4
+  value: "68%"
+  descriptor: "68%"
+  sequence: 33
+  default: 0
+-
+  id: 55
+  scale_id: 4
+  value: "67%"
+  descriptor: "67%"
+  sequence: 34
+  default: 0
+-
+  id: 56
+  scale_id: 4
+  value: "66%"
+  descriptor: "66%"
+  sequence: 35
+  default: 0
+-
+  id: 57
+  scale_id: 4
+  value: "65%"
+  descriptor: "65%"
+  sequence: 36
+  default: 0
+-
+  id: 58
+  scale_id: 4
+  value: "64%"
+  descriptor: "64%"
+  sequence: 37
+  default: 0
+-
+  id: 59
+  scale_id: 4
+  value: "63%"
+  descriptor: "63%"
+  sequence: 38
+  default: 0
+-
+  id: 60
+  scale_id: 4
+  value: "62%"
+  descriptor: "62%"
+  sequence: 39
+  default: 0
+-
+  id: 61
+  scale_id: 4
+  value: "61%"
+  descriptor: "61%"
+  sequence: 40
+  default: 0
+-
+  id: 62
+  scale_id: 4
+  value: "60%"
+  descriptor: "60%"
+  sequence: 41
+  default: 0
+-
+  id: 63
+  scale_id: 4
+  value: "59%"
+  descriptor: "59%"
+  sequence: 42
+  default: 0
+-
+  id: 64
+  scale_id: 4
+  value: "58%"
+  descriptor: "58%"
+  sequence: 43
+  default: 0
+-
+  id: 65
+  scale_id: 4
+  value: "57%"
+  descriptor: "57%"
+  sequence: 44
+  default: 0
+-
+  id: 66
+  scale_id: 4
+  value: "56%"
+  descriptor: "56%"
+  sequence: 45
+  default: 0
+-
+  id: 67
+  scale_id: 4
+  value: "55%"
+  descriptor: "55%"
+  sequence: 46
+  default: 0
+-
+  id: 68
+  scale_id: 4
+  value: "54%"
+  descriptor: "54%"
+  sequence: 47
+  default: 0
+-
+  id: 69
+  scale_id: 4
+  value: "53%"
+  descriptor: "53%"
+  sequence: 48
+  default: 0
+-
+  id: 70
+  scale_id: 4
+  value: "52%"
+  descriptor: "52%"
+  sequence: 49
+  default: 0
+-
+  id: 71
+  scale_id: 4
+  value: "51%"
+  descriptor: "51%"
+  sequence: 50
+  default: 0
+-
+  id: 72
+  scale_id: 4
+  value: "50%"
+  descriptor: "50%"
+  sequence: 51
+  default: 0
+-
+  id: 73
+  scale_id: 4
+  value: "49%"
+  descriptor: "49%"
+  sequence: 52
+  default: 0
+-
+  id: 74
+  scale_id: 4
+  value: "48%"
+  descriptor: "48%"
+  sequence: 53
+  default: 0
+-
+  id: 75
+  scale_id: 4
+  value: "47%"
+  descriptor: "47%"
+  sequence: 54
+  default: 0
+-
+  id: 76
+  scale_id: 4
+  value: "46%"
+  descriptor: "46%"
+  sequence: 55
+  default: 0
+-
+  id: 77
+  scale_id: 4
+  value: "45%"
+  descriptor: "45%"
+  sequence: 56
+  default: 0
+-
+  id: 78
+  scale_id: 4
+  value: "44%"
+  descriptor: "44%"
+  sequence: 57
+  default: 0
+-
+  id: 79
+  scale_id: 4
+  value: "43%"
+  descriptor: "43%"
+  sequence: 58
+  default: 0
+-
+  id: 80
+  scale_id: 4
+  value: "42%"
+  descriptor: "42%"
+  sequence: 59
+  default: 0
+-
+  id: 81
+  scale_id: 4
+  value: "41%"
+  descriptor: "41%"
+  sequence: 60
+  default: 0
+-
+  id: 82
+  scale_id: 4
+  value: "40%"
+  descriptor: "40%"
+  sequence: 61
+  default: 0
+-
+  id: 83
+  scale_id: 4
+  value: "39%"
+  descriptor: "39%"
+  sequence: 62
+  default: 0
+-
+  id: 84
+  scale_id: 4
+  value: "38%"
+  descriptor: "38%"
+  sequence: 63
+  default: 0
+-
+  id: 85
+  scale_id: 4
+  value: "37%"
+  descriptor: "37%"
+  sequence: 64
+  default: 0
+-
+  id: 86
+  scale_id: 4
+  value: "36%"
+  descriptor: "36%"
+  sequence: 65
+  default: 0
+-
+  id: 87
+  scale_id: 4
+  value: "35%"
+  descriptor: "35%"
+  sequence: 66
+  default: 0
+-
+  id: 88
+  scale_id: 4
+  value: "34%"
+  descriptor: "34%"
+  sequence: 67
+  default: 0
+-
+  id: 89
+  scale_id: 4
+  value: "33%"
+  descriptor: "33%"
+  sequence: 68
+  default: 0
+-
+  id: 90
+  scale_id: 4
+  value: "32%"
+  descriptor: "32%"
+  sequence: 69
+  default: 0
+-
+  id: 91
+  scale_id: 4
+  value: "31%"
+  descriptor: "31%"
+  sequence: 70
+  default: 0
+-
+  id: 92
+  scale_id: 4
+  value: "30%"
+  descriptor: "30%"
+  sequence: 71
+  default: 0
+-
+  id: 93
+  scale_id: 4
+  value: "29%"
+  descriptor: "29%"
+  sequence: 72
+  default: 0
+-
+  id: 94
+  scale_id: 4
+  value: "28%"
+  descriptor: "28%"
+  sequence: 73
+  default: 0
+-
+  id: 95
+  scale_id: 4
+  value: "27%"
+  descriptor: "27%"
+  sequence: 74
+  default: 0
+-
+  id: 96
+  scale_id: 4
+  value: "26%"
+  descriptor: "26%"
+  sequence: 75
+  default: 0
+-
+  id: 97
+  scale_id: 4
+  value: "25%"
+  descriptor: "25%"
+  sequence: 76
+  default: 0
+-
+  id: 98
+  scale_id: 4
+  value: "24%"
+  descriptor: "24%"
+  sequence: 77
+  default: 0
+-
+  id: 99
+  scale_id: 4
+  value: "23%"
+  descriptor: "23%"
+  sequence: 78
+  default: 0
+-
+  id: 100
+  scale_id: 4
+  value: "22%"
+  descriptor: "22%"
+  sequence: 79
+  default: 0
+-
+  id: 101
+  scale_id: 4
+  value: "21%"
+  descriptor: "21%"
+  sequence: 80
+  default: 0
+-
+  id: 102
+  scale_id: 4
+  value: "20%"
+  descriptor: "20%"
+  sequence: 81
+  default: 0
+-
+  id: 103
+  scale_id: 4
+  value: "19%"
+  descriptor: "19%"
+  sequence: 82
+  default: 0
+-
+  id: 104
+  scale_id: 4
+  value: "18%"
+  descriptor: "18%"
+  sequence: 83
+  default: 0
+-
+  id: 105
+  scale_id: 4
+  value: "17%"
+  descriptor: "17%"
+  sequence: 84
+  default: 0
+-
+  id: 106
+  scale_id: 4
+  value: "16%"
+  descriptor: "16%"
+  sequence: 85
+  default: 0
+-
+  id: 107
+  scale_id: 4
+  value: "15%"
+  descriptor: "15%"
+  sequence: 86
+  default: 0
+-
+  id: 108
+  scale_id: 4
+  value: "14%"
+  descriptor: "14%"
+  sequence: 87
+  default: 0
+-
+  id: 109
+  scale_id: 4
+  value: "13%"
+  descriptor: "13%"
+  sequence: 88
+  default: 0
+-
+  id: 110
+  scale_id: 4
+  value: "12%"
+  descriptor: "12%"
+  sequence: 89
+  default: 0
+-
+  id: 111
+  scale_id: 4
+  value: "11%"
+  descriptor: "11%"
+  sequence: 90
+  default: 0
+-
+  id: 112
+  scale_id: 4
+  value: "10%"
+  descriptor: "10%"
+  sequence: 91
+  default: 0
+-
+  id: 113
+  scale_id: 4
+  value: "9%"
+  descriptor: "9%"
+  sequence: 92
+  default: 0
+-
+  id: 114
+  scale_id: 4
+  value: "8%"
+  descriptor: "8%"
+  sequence: 93
+  default: 0
+-
+  id: 115
+  scale_id: 4
+  value: "7%"
+  descriptor: "7%"
+  sequence: 94
+  default: 0
+-
+  id: 116
+  scale_id: 4
+  value: "6%"
+  descriptor: "6%"
+  sequence: 95
+  default: 0
+-
+  id: 117
+  scale_id: 4
+  value: "5%"
+  descriptor: "5%"
+  sequence: 96
+  default: 0
+-
+  id: 118
+  scale_id: 4
+  value: "4%"
+  descriptor: "4%"
+  sequence: 97
+  default: 0
+-
+  id: 119
+  scale_id: 4
+  value: "3%"
+  descriptor: "3%"
+  sequence: 98
+  default: 0
+-
+  id: 120
+  scale_id: 4
+  value: "2%"
+  descriptor: "2%"
+  sequence: 99
+  default: 0
+-
+  id: 121
+  scale_id: 4
+  value: "1%"
+  descriptor: "2%"
+  sequence: 100
+  default: 0
+-
+  id: 122
+  scale_id: 4
+  value: "0%"
+  descriptor: "0%"
+  sequence: 101
+  default: 0
+-
+  id: 123
+  scale_id: 5
+  value: "A+"
+  descriptor: "A+"
+  sequence: 1
+  default: 0
+-
+  id: 124
+  scale_id: 5
+  value: "A"
+  descriptor: "A"
+  sequence: 2
+  default: 0
+-
+  id: 125
+  scale_id: 5
+  value: "A-"
+  descriptor: "A-"
+  sequence: 3
+  default: 0
+-
+  id: 126
+  scale_id: 5
+  value: "B+"
+  descriptor: "B+"
+  sequence: 4
+  default: 0
+-
+  id: 127
+  scale_id: 5
+  value: "B"
+  descriptor: "B"
+  sequence: 5
+  default: 0
+-
+  id: 128
+  scale_id: 5
+  value: "B-"
+  descriptor: "B-"
+  sequence: 6
+  default: 0
+-
+  id: 129
+  scale_id: 5
+  value: "C+"
+  descriptor: "C+"
+  sequence: 7
+  default: 0
+-
+  id: 130
+  scale_id: 5
+  value: "C"
+  descriptor: "C"
+  sequence: 8
+  default: 0
+-
+  id: 131
+  scale_id: 5
+  value: "C-"
+  descriptor: "C-"
+  sequence: 9
+  default: 0
+-
+  id: 132
+  scale_id: 5
+  value: "D+"
+  descriptor: "D+"
+  sequence: 10
+  default: 0
+-
+  id: 133
+  scale_id: 5
+  value: "D"
+  descriptor: "D"
+  sequence: 11
+  default: 0
+-
+  id: 134
+  scale_id: 5
+  value: "D-"
+  descriptor: "D-"
+  sequence: 12
+  default: 0
+-
+  id: 135
+  scale_id: 5
+  value: "E+"
+  descriptor: "E+"
+  sequence: 13
+  default: 0
+-
+  id: 136
+  scale_id: 5
+  value: "E"
+  descriptor: "E"
+  sequence: 14
+  default: 0
+-
+  id: 137
+  scale_id: 5
+  value: "E-"
+  descriptor: "E-"
+  sequence: 15
+  default: 0
+-
+  id: 138
+  scale_id: 5
+  value: "F"
+  descriptor: "F"
+  sequence: 16
+  default: 0
+-
+  id: 139
+  scale_id: 6
+  value: "A"
+  descriptor: "A"
+  sequence: 1
+  default: 0
+-
+  id: 140
+  scale_id: 6
+  value: "B"
+  descriptor: "B"
+  sequence: 2
+  default: 0
+-
+  id: 141
+  scale_id: 6
+  value: "C"
+  descriptor: "C"
+  sequence: 3
+  default: 0
+-
+  id: 142
+  scale_id: 6
+  value: "D"
+  descriptor: "D"
+  sequence: 4
+  default: 0
+-
+  id: 143
+  scale_id: 6
+  value: "E"
+  descriptor: "E"
+  sequence: 5
+  default: 0
+-
+  id: 144
+  scale_id: 6
+  value: "F"
+  descriptor: "F"
+  sequence: 6
+  default: 0
+-
+  id: 145
+  scale_id: 7
+  value: 7
+  descriptor: "Exceptional  Performance"
+  sequence: 1
+  default: 0
+-
+  id: 146
+  scale_id: 7
+  value: 6
+  descriptor: "Well Above Expected Level"
+  sequence: 2
+  default: 0
+-
+  id: 147
+  scale_id: 7
+  value: 5
+  descriptor: "Above Expected Level"
+  sequence: 3
+  default: 0
+-
+  id: 148
+  scale_id: 7
+  value: 4
+  descriptor: "At Expected Level"
+  sequence: 4
+  default: 0
+-
+  id: 149
+  scale_id: 7
+  value: 3
+  descriptor: "Below Expected Level 	"
+  sequence: 5
+  default: 0
+-
+  id: 150
+  scale_id: 7
+  value: 2
+  descriptor: "Well Below Expected Level"
+  sequence: 6
+  default: 0
+-
+  id: 151
+  scale_id: 7
+  value: 1
+  descriptor: "Cause For Concern"
+  sequence: 7
+  default: 0
+-
+  id: 152
+  scale_id: 9
+  value: "Complete"
+  descriptor: "Work complete"
+  sequence: 1
+  default: 0
+-
+  id: 153
+  scale_id: 9
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequence: 3
+  default: 0
+-
+  id: 154
+  scale_id: 9
+  value: "Late"
+  descriptor: "Work submitted late"
+  sequence: 2
+  default: 0
+-
+  id: 155
+  scale_id: 7
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequence: 8
+  default: 0
+-
+  id: 156
+  scale_id: 1
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequence: 8
+  default: 0
+-
+  id: 157
+  scale_id: 3
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequence: 10
+  default: 0
+-
+  id: 158
+  scale_id: 4
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequence: 102
+  default: 0
+-
+  id: 159
+  scale_id: 5
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequence: 17
+  default: 0
+-
+  id: 160
+  scale_id: 6
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequence: 7
+  default: 0
+-
+  id: 162
+  scale_id: 10
+  value: 60
+  descriptor: 60
+  sequence: 110
+  default: 0
+-
+  id: 163
+  scale_id: 10
+  value: 61
+  descriptor: 61
+  sequence: 109
+  default: 0
+-
+  id: 164
+  scale_id: 10
+  value: 62
+  descriptor: 62
+  sequence: 108
+  default: 0
+-
+  id: 165
+  scale_id: 10
+  value: 63
+  descriptor: 63
+  sequence: 107
+  default: 0
+-
+  id: 166
+  scale_id: 10
+  value: 64
+  descriptor: 64
+  sequence: 106
+  default: 0
+-
+  id: 167
+  scale_id: 10
+  value: 65
+  descriptor: 65
+  sequence: 105
+  default: 0
+-
+  id: 168
+  scale_id: 10
+  value: 66
+  descriptor: 66
+  sequence: 104
+  default: 0
+-
+  id: 169
+  scale_id: 10
+  value: 67
+  descriptor: 67
+  sequence: 103
+  default: 0
+-
+  id: 170
+  scale_id: 10
+  value: 68
+  descriptor: 68
+  sequence: 102
+  default: 0
+-
+  id: 171
+  scale_id: 10
+  value: 69
+  descriptor: 69
+  sequence: 101
+  default: 0
+-
+  id: 172
+  scale_id: 10
+  value: 70
+  descriptor: 70
+  sequence: 100
+  default: 0
+-
+  id: 173
+  scale_id: 10
+  value: 71
+  descriptor: 71
+  sequence: 99
+  default: 0
+-
+  id: 174
+  scale_id: 10
+  value: 72
+  descriptor: 72
+  sequence: 98
+  default: 0
+-
+  id: 175
+  scale_id: 10
+  value: 73
+  descriptor: 73
+  sequence: 97
+  default: 0
+-
+  id: 176
+  scale_id: 10
+  value: 74
+  descriptor: 74
+  sequence: 96
+  default: 0
+-
+  id: 177
+  scale_id: 10
+  value: 75
+  descriptor: 75
+  sequence: 95
+  default: 0
+-
+  id: 178
+  scale_id: 10
+  value: 76
+  descriptor: 76
+  sequence: 94
+  default: 0
+-
+  id: 179
+  scale_id: 10
+  value: 77
+  descriptor: 77
+  sequence: 93
+  default: 0
+-
+  id: 180
+  scale_id: 10
+  value: 78
+  descriptor: 78
+  sequence: 92
+  default: 0
+-
+  id: 181
+  scale_id: 10
+  value: 79
+  descriptor: 79
+  sequence: 91
+  default: 0
+-
+  id: 182
+  scale_id: 10
+  value: 80
+  descriptor: 80
+  sequence: 90
+  default: 0
+-
+  id: 183
+  scale_id: 10
+  value: 81
+  descriptor: 81
+  sequence: 89
+  default: 0
+-
+  id: 184
+  scale_id: 10
+  value: 82
+  descriptor: 82
+  sequence: 88
+  default: 0
+-
+  id: 185
+  scale_id: 10
+  value: 83
+  descriptor: 83
+  sequence: 87
+  default: 0
+-
+  id: 186
+  scale_id: 10
+  value: 84
+  descriptor: 84
+  sequence: 86
+  default: 0
+-
+  id: 187
+  scale_id: 10
+  value: 85
+  descriptor: 85
+  sequence: 85
+  default: 0
+-
+  id: 188
+  scale_id: 10
+  value: 86
+  descriptor: 86
+  sequence: 84
+  default: 0
+-
+  id: 189
+  scale_id: 10
+  value: 87
+  descriptor: 87
+  sequence: 83
+  default: 0
+-
+  id: 190
+  scale_id: 10
+  value: 88
+  descriptor: 88
+  sequence: 82
+  default: 0
+-
+  id: 191
+  scale_id: 10
+  value: 89
+  descriptor: 89
+  sequence: 81
+  default: 0
+-
+  id: 192
+  scale_id: 10
+  value: 90
+  descriptor: 90
+  sequence: 80
+  default: 0
+-
+  id: 193
+  scale_id: 10
+  value: 91
+  descriptor: 91
+  sequence: 79
+  default: 0
+-
+  id: 194
+  scale_id: 10
+  value: 92
+  descriptor: 92
+  sequence: 78
+  default: 0
+-
+  id: 195
+  scale_id: 10
+  value: 93
+  descriptor: 93
+  sequence: 77
+  default: 0
+-
+  id: 196
+  scale_id: 10
+  value: 94
+  descriptor: 94
+  sequence: 76
+  default: 0
+-
+  id: 197
+  scale_id: 10
+  value: 95
+  descriptor: 95
+  sequence: 75
+  default: 0
+-
+  id: 198
+  scale_id: 10
+  value: 96
+  descriptor: 96
+  sequence: 74
+  default: 0
+-
+  id: 199
+  scale_id: 10
+  value: 97
+  descriptor: 97
+  sequence: 73
+  default: 0
+-
+  id: 200
+  scale_id: 10
+  value: 98
+  descriptor: 98
+  sequence: 72
+  default: 0
+-
+  id: 201
+  scale_id: 10
+  value: 99
+  descriptor: 99
+  sequence: 71
+  default: 0
+-
+  id: 202
+  scale_id: 10
+  value: 100
+  descriptor: 100
+  sequence: 70
+  default: 0
+-
+  id: 203
+  scale_id: 10
+  value: 101
+  descriptor: 101
+  sequence: 69
+  default: 0
+-
+  id: 204
+  scale_id: 10
+  value: 102
+  descriptor: 102
+  sequence: 68
+  default: 0
+-
+  id: 205
+  scale_id: 10
+  value: 103
+  descriptor: 103
+  sequence: 67
+  default: 0
+-
+  id: 206
+  scale_id: 10
+  value: 104
+  descriptor: 104
+  sequence: 66
+  default: 0
+-
+  id: 207
+  scale_id: 10
+  value: 105
+  descriptor: 105
+  sequence: 65
+  default: 0
+-
+  id: 208
+  scale_id: 10
+  value: 106
+  descriptor: 106
+  sequence: 64
+  default: 0
+-
+  id: 209
+  scale_id: 10
+  value: 107
+  descriptor: 107
+  sequence: 63
+  default: 0
+-
+  id: 210
+  scale_id: 10
+  value: 108
+  descriptor: 108
+  sequence: 62
+  default: 0
+-
+  id: 211
+  scale_id: 10
+  value: 109
+  descriptor: 109
+  sequence: 61
+  default: 0
+-
+  id: 212
+  scale_id: 10
+  value: 110
+  descriptor: 110
+  sequence: 60
+  default: 0
+-
+  id: 213
+  scale_id: 10
+  value: 111
+  descriptor: 111
+  sequence: 59
+  default: 0
+-
+  id: 214
+  scale_id: 10
+  value: 112
+  descriptor: 112
+  sequence: 58
+  default: 0
+-
+  id: 215
+  scale_id: 10
+  value: 113
+  descriptor: 113
+  sequence: 57
+  default: 0
+-
+  id: 216
+  scale_id: 10
+  value: 114
+  descriptor: 114
+  sequence: 56
+  default: 0
+-
+  id: 217
+  scale_id: 10
+  value: 115
+  descriptor: 115
+  sequence: 55
+  default: 0
+-
+  id: 218
+  scale_id: 10
+  value: 116
+  descriptor: 116
+  sequence: 54
+  default: 0
+-
+  id: 219
+  scale_id: 10
+  value: 117
+  descriptor: 117
+  sequence: 53
+  default: 0
+-
+  id: 220
+  scale_id: 10
+  value: 118
+  descriptor: 118
+  sequence: 52
+  default: 0
+-
+  id: 221
+  scale_id: 10
+  value: 119
+  descriptor: 119
+  sequence: 51
+  default: 0
+-
+  id: 222
+  scale_id: 10
+  value: 120
+  descriptor: 120
+  sequence: 50
+  default: 0
+-
+  id: 223
+  scale_id: 10
+  value: 121
+  descriptor: 121
+  sequence: 49
+  default: 0
+-
+  id: 224
+  scale_id: 10
+  value: 122
+  descriptor: 122
+  sequence: 48
+  default: 0
+-
+  id: 225
+  scale_id: 10
+  value: 123
+  descriptor: 123
+  sequence: 47
+  default: 0
+-
+  id: 226
+  scale_id: 10
+  value: 124
+  descriptor: 124
+  sequence: 46
+  default: 0
+-
+  id: 227
+  scale_id: 10
+  value: 125
+  descriptor: 125
+  sequence: 45
+  default: 0
+-
+  id: 228
+  scale_id: 10
+  value: 126
+  descriptor: 126
+  sequence: 44
+  default: 0
+-
+  id: 229
+  scale_id: 10
+  value: 127
+  descriptor: 127
+  sequence: 43
+  default: 0
+-
+  id: 230
+  scale_id: 10
+  value: 128
+  descriptor: 128
+  sequence: 42
+  default: 0
+-
+  id: 231
+  scale_id: 10
+  value: 129
+  descriptor: 129
+  sequence: 41
+  default: 0
+-
+  id: 232
+  scale_id: 10
+  value: 130
+  descriptor: 130
+  sequence: 40
+  default: 0
+-
+  id: 233
+  scale_id: 10
+  value: 131
+  descriptor: 131
+  sequence: 39
+  default: 0
+-
+  id: 234
+  scale_id: 10
+  value: 132
+  descriptor: 132
+  sequence: 38
+  default: 0
+-
+  id: 235
+  scale_id: 10
+  value: 133
+  descriptor: 133
+  sequence: 37
+  default: 0
+-
+  id: 236
+  scale_id: 10
+  value: 134
+  descriptor: 134
+  sequence: 36
+  default: 0
+-
+  id: 237
+  scale_id: 10
+  value: 135
+  descriptor: 135
+  sequence: 35
+  default: 0
+-
+  id: 238
+  scale_id: 10
+  value: 136
+  descriptor: 136
+  sequence: 34
+  default: 0
+-
+  id: 239
+  scale_id: 10
+  value: 137
+  descriptor: 137
+  sequence: 33
+  default: 0
+-
+  id: 240
+  scale_id: 10
+  value: 138
+  descriptor: 138
+  sequence: 32
+  default: 0
+-
+  id: 241
+  scale_id: 10
+  value: 139
+  descriptor: 139
+  sequence: 31
+  default: 0
+-
+  id: 242
+  scale_id: 10
+  value: 140
+  descriptor: 140
+  sequence: 30
+  default: 0
+-
+  id: 243
+  scale_id: 11
+  value: "8A"
+  descriptor: "8A"
+  sequence: 1
+  default: 0
+-
+  id: 244
+  scale_id: 11
+  value: "8B"
+  descriptor: "8B"
+  sequence: 2
+  default: 0
+-
+  id: 245
+  scale_id: 11
+  value: "8C"
+  descriptor: "8C"
+  sequence: 3
+  default: 0
+-
+  id: 246
+  scale_id: 11
+  value: "7A"
+  descriptor: "7A"
+  sequence: 4
+  default: 0
+-
+  id: 247
+  scale_id: 11
+  value: "7B"
+  descriptor: "7B"
+  sequence: 5
+  default: 0
+-
+  id: 248
+  scale_id: 11
+  value: "7C"
+  descriptor: "7C"
+  sequence: 6
+  default: 0
+-
+  id: 249
+  scale_id: 11
+  value: "6A"
+  descriptor: "6A"
+  sequence: 7
+  default: 0
+-
+  id: 250
+  scale_id: 11
+  value: "6B"
+  descriptor: "6B"
+  sequence: 8
+  default: 0
+-
+  id: 251
+  scale_id: 11
+  value: "6C"
+  descriptor: "6C"
+  sequence: 9
+  default: 0
+-
+  id: 252
+  scale_id: 11
+  value: "5A"
+  descriptor: "5A"
+  sequence: 9
+  default: 0
+-
+  id: 253
+  scale_id: 11
+  value: "5B"
+  descriptor: "5B"
+  sequence: 10
+  default: 0
+-
+  id: 254
+  scale_id: 11
+  value: "5C"
+  descriptor: "5C"
+  sequence: 11
+  default: 0
+-
+  id: 255
+  scale_id: 11
+  value: "4A"
+  descriptor: "4A"
+  sequence: 12
+  default: 0
+-
+  id: 256
+  scale_id: 11
+  value: "4B"
+  descriptor: "4B"
+  sequence: 13
+  default: 0
+-
+  id: 257
+  scale_id: 11
+  value: "4C"
+  descriptor: "4C"
+  sequence: 14
+  default: 0
+-
+  id: 258
+  scale_id: 11
+  value: "B3"
+  descriptor: "B3"
+  sequence: 15
+  default: 0
+-
+  id: 259
+  scale_id: 12
+  value: "A"
+  descriptor: "A"
+  sequence: 1
+  default: 0
+-
+  id: 260
+  scale_id: 12
+  value: "A/B"
+  descriptor: "A/B"
+  sequence: 2
+  default: 0
+-
+  id: 261
+  scale_id: 12
+  value: "B"
+  descriptor: "B"
+  sequence: 3
+  default: 0
+-
+  id: 262
+  scale_id: 12
+  value: "B/C"
+  descriptor: "B/C"
+  sequence: 4
+  default: 0
+-
+  id: 263
+  scale_id: 12
+  value: "C"
+  descriptor: "C"
+  sequence: 5
+  default: 0
+-
+  id: 264
+  scale_id: 12
+  value: "C/D"
+  descriptor: "C/D"
+  sequence: 6
+  default: 0
+-
+  id: 265
+  scale_id: 12
+  value: "D"
+  descriptor: "D"
+  sequence: 7
+  default: 0
+-
+  id: 266
+  scale_id: 12
+  value: "D/E"
+  descriptor: "D/E"
+  sequence: 8
+  default: 0
+-
+  id: 267
+  scale_id: 12
+  value: "E"
+  descriptor: "E"
+  sequence: 9
+  default: 0
+-
+  id: 268
+  scale_id: 12
+  value: "E/F"
+  descriptor: "E/F"
+  sequence: 10
+  default: 0
+-
+  id: 269
+  scale_id: 12
+  value: "F"
+  descriptor: "F"
+  sequence: 11
+  default: 0
+-
+  id: 270
+  scale_id: 12
+  value: "G"
+  descriptor: "G"
+  sequence: 12
+  default: 0
+-
+  id: 271
+  scale_id: 12
+  value: "U"
+  descriptor: "Unclassified"
+  sequence: 13
+  default: 0
+-
+  id: 272
+  scale_id: 10
+  value: 141
+  descriptor: 141
+  sequence: 29
+  default: 0
+-
+  id: 273
+  scale_id: 13
+  value: 7
+  descriptor: 7
+  sequence: 1
+  default: 0
+-
+  id: 274
+  scale_id: 13
+  value: 6
+  descriptor: 6
+  sequence: 2
+  default: 0
+-
+  id: 275
+  scale_id: 13
+  value: 5
+  descriptor: 5
+  sequence: 3
+  default: 0
+-
+  id: 276
+  scale_id: 13
+  value: 4
+  descriptor: 4
+  sequence: 4
+  default: 0
+-
+  id: 277
+  scale_id: 13
+  value: 3
+  descriptor: 3
+  sequence: 5
+  default: 0
+-
+  id: 278
+  scale_id: 13
+  value: 2
+  descriptor: 2
+  sequence: 6
+  default: 0
+-
+  id: 279
+  scale_id: 13
+  value: 1
+  descriptor: 1
+  sequence: 7
+  default: 0
+-
+  id: 280
+  scale_id: 14
+  value: 45
+  descriptor: 45
+  sequence: 1
+  default: 0
+-
+  id: 281
+  scale_id: 14
+  value: 44
+  descriptor: 44
+  sequence: 2
+  default: 0
+-
+  id: 282
+  scale_id: 14
+  value: 43
+  descriptor: 43
+  sequence: 3
+  default: 0
+-
+  id: 283
+  scale_id: 14
+  value: 42
+  descriptor: 42
+  sequence: 4
+  default: 0
+-
+  id: 284
+  scale_id: 14
+  value: 41
+  descriptor: 41
+  sequence: 5
+  default: 0
+-
+  id: 285
+  scale_id: 14
+  value: 40
+  descriptor: 40
+  sequence: 6
+  default: 0
+-
+  id: 286
+  scale_id: 14
+  value: 39
+  descriptor: 39
+  sequence: 7
+  default: 0
+-
+  id: 287
+  scale_id: 14
+  value: 38
+  descriptor: 38
+  sequence: 8
+  default: 0
+-
+  id: 288
+  scale_id: 14
+  value: 37
+  descriptor: 37
+  sequence: 9
+  default: 0
+-
+  id: 289
+  scale_id: 14
+  value: 36
+  descriptor: 36
+  sequence: 10
+  default: 0
+-
+  id: 290
+  scale_id: 14
+  value: 35
+  descriptor: 35
+  sequence: 11
+  default: 0
+-
+  id: 291
+  scale_id: 14
+  value: 34
+  descriptor: 34
+  sequence: 12
+  default: 0
+-
+  id: 292
+  scale_id: 14
+  value: 33
+  descriptor: 33
+  sequence: 13
+  default: 0
+-
+  id: 293
+  scale_id: 14
+  value: 32
+  descriptor: 32
+  sequence: 14
+  default: 0
+-
+  id: 294
+  scale_id: 14
+  value: 31
+  descriptor: 31
+  sequence: 15
+  default: 0
+-
+  id: 295
+  scale_id: 14
+  value: 30
+  descriptor: 30
+  sequence: 16
+  default: 0
+-
+  id: 296
+  scale_id: 14
+  value: 29
+  descriptor: 29
+  sequence: 17
+  default: 0
+-
+  id: 297
+  scale_id: 14
+  value: 28
+  descriptor: 28
+  sequence: 18
+  default: 0
+-
+  id: 298
+  scale_id: 14
+  value: 27
+  descriptor: 27
+  sequence: 19
+  default: 0
+-
+  id: 299
+  scale_id: 14
+  value: 26
+  descriptor: 26
+  sequence: 20
+  default: 0
+-
+  id: 300
+  scale_id: 14
+  value: 25
+  descriptor: 25
+  sequence: 21
+  default: 0
+-
+  id: 301
+  scale_id: 14
+  value: 24
+  descriptor: 24
+  sequence: 22
+  default: 0
+-
+  id: 302
+  scale_id: 14
+  value: 23
+  descriptor: 23
+  sequence: 23
+  default: 0
+-
+  id: 303
+  scale_id: 14
+  value: 22
+  descriptor: 22
+  sequence: 24
+  default: 0
+-
+  id: 304
+  scale_id: 14
+  value: 21
+  descriptor: 21
+  sequence: 25
+  default: 0
+-
+  id: 305
+  scale_id: 14
+  value: 20
+  descriptor: 20
+  sequence: 26
+  default: 0
+-
+  id: 306
+  scale_id: 14
+  value: 19
+  descriptor: 19
+  sequence: 27
+  default: 0
+-
+  id: 307
+  scale_id: 14
+  value: 18
+  descriptor: 18
+  sequence: 28
+  default: 0
+-
+  id: 308
+  scale_id: 14
+  value: 17
+  descriptor: 17
+  sequence: 29
+  default: 0
+-
+  id: 309
+  scale_id: 14
+  value: 16
+  descriptor: 16
+  sequence: 30
+  default: 0
+-
+  id: 310
+  scale_id: 14
+  value: 15
+  descriptor: 15
+  sequence: 31
+  default: 0
+-
+  id: 311
+  scale_id: 14
+  value: 14
+  descriptor: 14
+  sequence: 32
+  default: 0
+-
+  id: 312
+  scale_id: 14
+  value: 13
+  descriptor: 13
+  sequence: 33
+  default: 0
+-
+  id: 313
+  scale_id: 14
+  value: 12
+  descriptor: 12
+  sequence: 34
+  default: 0
+-
+  id: 314
+  scale_id: 14
+  value: 11
+  descriptor: 11
+  sequence: 35
+  default: 0
+-
+  id: 315
+  scale_id: 14
+  value: 10
+  descriptor: 10
+  sequence: 36
+  default: 0
+-
+  id: 316
+  scale_id: 14
+  value: 9
+  descriptor: 9
+  sequence: 37
+  default: 0
+-
+  id: 317
+  scale_id: 14
+  value: 8
+  descriptor: 8
+  sequence: 38
+  default: 0
+-
+  id: 318
+  scale_id: 14
+  value: 7
+  descriptor: 7
+  sequence: 39
+  default: 0
+-
+  id: 319
+  scale_id: 14
+  value: 6
+  descriptor: 6
+  sequence: 40
+  default: 0
+-
+  id: 320
+  scale_id: 14
+  value: 5
+  descriptor: 5
+  sequence: 41
+  default: 0
+-
+  id: 321
+  scale_id: 14
+  value: 4
+  descriptor: 4
+  sequence: 42
+  default: 0
+-
+  id: 322
+  scale_id: 14
+  value: 3
+  descriptor: 3
+  sequence: 43
+  default: 0
+-
+  id: 323
+  scale_id: 14
+  value: 2
+  descriptor: 2
+  sequence: 44
+  default: 0
+-
+  id: 324
+  scale_id: 14
+  value: 1
+  descriptor: 1
+  sequence: 45
+  default: 0
+-
+  id: 325
+  scale_id: 15
+  value: 8
+  descriptor: "Level 8"
+  sequence: 1
+  default: 0
+-
+  id: 326
+  scale_id: 15
+  value: 7
+  descriptor: "Level 7"
+  sequence: 2
+  default: 0
+-
+  id: 327
+  scale_id: 15
+  value: 6
+  descriptor: "Level 6"
+  sequence: 3
+  default: 0
+-
+  id: 328
+  scale_id: 15
+  value: 5
+  descriptor: "Level 5"
+  sequence: 4
+  default: 0
+-
+  id: 329
+  scale_id: 15
+  value: 4
+  descriptor: "Level 4"
+  sequence: 5
+  default: 0
+-
+  id: 330
+  scale_id: 15
+  value: 3
+  descriptor: "Level 3"
+  sequence: 6
+  default: 0
+...

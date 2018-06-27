@@ -30,6 +30,7 @@ use App\Entity\House;
 use App\Entity\INDescriptor;
 use App\Entity\Invoice;
 use App\Entity\Scale;
+use App\Entity\ScaleGrade;
 use App\Entity\Setting;
 use App\Entity\StudentNoteCategory;
 use App\Entity\YearGroup;
@@ -106,6 +107,10 @@ class SchoolFixtures implements DummyDataInterface
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/external_assessment_field.yml'));
 
         $this->setLogger($logger)->buildTable($data, ExternalAssessmentField::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/scale_grade.yml'));
+
+        $this->setLogger($logger)->buildTable($data, ScaleGrade::class, $manager);
 
         /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
 
