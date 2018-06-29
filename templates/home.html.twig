@@ -4,7 +4,6 @@
 
 
 {% block title %}{%  if get_setting('org.name.long', 'Busybee Learning') is iterable %}
-    {{ dumpSetting() }}
 {% endif %}{{ 'home.heading'|trans({'%{header}': get_setting('org.name.long', 'Busybee Learning')}) }}{% endblock title %}
 {% block headerTitle %}{{ 'home.heading'|trans({'%{header}': get_setting('org.name.long', 'Busybee Learning')}) }}{% endblock headerTitle %}
 {% block headerLead %}{{ 'home.lead'|trans }}.{% endblock headerLead %}

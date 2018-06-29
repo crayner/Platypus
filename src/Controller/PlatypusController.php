@@ -31,14 +31,6 @@ class PlatypusController extends Controller
      */
     public function home(ExternalAssessmentManager $eam)
     {
-        $chain = new Chained();
-
-        $form = $this->createForm(TestFormType::class, $chain);
-
-        return $this->render('home.html.twig',
-            [
-                'form' => $form->createView(),
-            ]
-        );
+        return $this->render('home.html.twig');
     }
 }
