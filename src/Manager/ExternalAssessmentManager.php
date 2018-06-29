@@ -18,16 +18,18 @@ namespace App\Manager;
 use App\Entity\ExternalAssessment;
 use App\Entity\ExternalAssessmentField;
 use App\Entity\YearGroup;
+use App\Manager\Interfaces\TabManagerInterface;
 use App\Manager\Traits\EntityTrait;
 use App\Organism\PrimaryExternalAssessment;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class ExternalAssessmentManager
  * @package App\Manager
  */
-class ExternalAssessmentManager
+class ExternalAssessmentManager implements TabManagerInterface
 {
     use EntityTrait;
 
@@ -40,6 +42,11 @@ class ExternalAssessmentManager
      * @var SettingManager
      */
     private $settingManager;
+
+    /**
+     * @var string
+     */
+    private $entityName = ExternalAssessment::class;
 
     /**
      * ExternalAssessmentManager constructor.
@@ -164,5 +171,37 @@ class ExternalAssessmentManager
         $this->settingManager->createSetting($setting->getSetting());
 
         return $this;
+    }
+
+    /**
+     * getTabs
+     *
+     * @return array
+     */
+    public function getTabs(): array
+    {
+        return Yaml::parse("
+details:
+    label: external_assessment.details.tab
+    include: School/external_assessment_details.html.twig
+    message: externalAssessmentDetailsMessage
+    translation: School
+fields:
+    label: external_assessment.fields.tab
+    include: School/external_assessment_field_list.html.twig
+    message: externalAssessmentFieldsMessage
+    translation: School
+");
+    }
+
+    /**
+     * isDisplay
+     *
+     * @param array $method
+     * @return bool
+     */
+    public function isDisplay($method = []): bool
+    {
+        return true;
     }
 }

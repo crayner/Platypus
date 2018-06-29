@@ -27,6 +27,7 @@ use App\Form\AttendanceSettingsType;
 use App\Form\CollectionManagerType;
 use App\Form\DaysOfWeekType;
 use App\Form\DepartmentType;
+use App\Form\ExternalAssessmentType;
 use App\Form\FacilityType;
 use App\Form\HousesType;
 use App\Form\RollGroupType;
@@ -780,24 +781,23 @@ class SchoolController extends Controller
      * @Route("/school/external/assessment/{id}/edit/{tabName}/{closeWindow}", name="external_assessment_edit")
      * @IsGranted("ROLE_PRINCIPAL")
      */
-    public function editExternalAssessment(Request $request, $id = 'Add', $tabName = 'details', ScaleManager $manager, string $closeWindow = null)
+    public function editExternalAssessment(Request $request, $id = 'Add', string $tabName = 'details', ExternalAssessmentManager $manager, string $closeWindow = null)
     {
-        dd($this);
-        $scale = $manager->find($id);
+        $externalAssessment = $manager->find($id);
 
-        $form = $this->createForm(ScaleType::class, $scale);
+        $form = $this->createForm(ExternalAssessmentType::class, $externalAssessment);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $manager->getEntityManager()->persist($scale);
+            $manager->getEntityManager()->persist($externalAssessment);
             $manager->getEntityManager()->flush();
 
-            return $this->redirectToRoute('scale_edit', ['id' => $scale->getId(), 'tabName' => $tabName, 'closeWindow' => $closeWindow]);
+            return $this->redirectToRoute('external_assessment_edit', ['id' => $externalAssessment->getId(), 'tabName' => $tabName, 'closeWindow' => $closeWindow]);
         }
 
-        return $this->render('School/scale_edit.html.twig',
+        return $this->render('School/external_assessment_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'fullForm' => $form,

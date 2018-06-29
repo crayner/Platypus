@@ -15,3 +15,7 @@ App\Entity\ExternalDepartment:
                 max: 10
         website:
             - Url: ~
+        description:
+            - NotBlank: ~
+        fields:
+            - Valid: ~

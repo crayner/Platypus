@@ -217,6 +217,7 @@ School Admin:
         - roll_group_edit
         - department_edit
         - scale_edit
+        - external_assessment_edit
 ';
     /*
 	CONST NODES = '

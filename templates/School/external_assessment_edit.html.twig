@@ -1,0 +1,35 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'School' %}
+
+{% form_theme form
+    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ ('school.external_assessment.edit.title')|trans }}{% endblock title %}
+{% block headerTitle %}{{ ('school.external_assessment.edit.title')|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ ('school.external_assessment.edit.description')|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
+    {{ form_start(form) }}
+    {% set h3Content = '' %}
+    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_external_assessments')}})|raw %}
+    {% set h3Content = h3Content ~ resetButton()|raw %}
+    {% set h3Content = h3Content ~ saveButton()|raw %}
+    {% set panelParagraph = 'external_assessment.name' %}
+    {% set panelParams = {'%{name}': form.vars.value.name} %}
+    {% include '@HillrangeForm/Script/collection_message.html.twig' %}
+    {% include 'Default/tabs.html.twig' with {translation: 'School'} %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {{ collections_manage(form, ['fields'])|raw }}
+    {{ collection_script(form.fields) }}
+    {% set route = 'external_assessment_edit' %}
+    {% include 'Script/formTabSubmitScript.html.twig' %}
+{% endblock javascripts %}
