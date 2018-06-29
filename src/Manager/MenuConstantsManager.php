@@ -29,6 +29,12 @@ School Admin:
             route: manage_formal_assessments
             parameters: {}
             transDomain: System
+        manage_external_assessments:
+            label: manage_external_assessments
+            role: ROLE_PRINCIPAL
+            route: manage_external_assessments
+            parameters: {}
+            transDomain: School
         manage_scales:
             label: manage_scales
             role: ROLE_PRINCIPAL

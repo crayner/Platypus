@@ -36,6 +36,7 @@ use App\Form\YearGroupType;
 use App\Manager\AttendanceCodeManager;
 use App\Manager\CollectionManager;
 use App\Manager\DepartmentManager;
+use App\Manager\ExternalAssessmentManager;
 use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
 use App\Manager\MultipleSettingManager;
@@ -47,6 +48,7 @@ use App\Manager\TwigManager;
 use App\Organism\AttendanceCodes;
 use App\Organism\DaysOfWeek;
 use App\Pagination\DepartmentPagination;
+use App\Pagination\ExternalAssessmentPagination;
 use App\Pagination\FacilityPagination;
 use App\Pagination\RollGroupPagination;
 use App\Pagination\ScalePagination;
@@ -753,5 +755,67 @@ class SchoolController extends Controller
             return $this->redirectToRoute('scale_edit', ['id' => $grade->getScale()->getId(), 'tabName' => 'scale_grade_collection']);
         else
             return $this->redirectToRoute('manage_scales');
+    }
+
+    /**
+     * manageExternalAssessments
+     *
+     * @Route("/school/manage/external/assessments", name="manage_external_assessments")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function manageExternalAssessments(Request $request, ExternalAssessmentPagination $pagination)
+    {
+        $pagination->injectRequest($request);
+
+        $pagination->getDataSet();
+
+        return $this->render('School/external_assessment_list.html.twig',
+            [
+                'pagination' => $pagination,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/external/assessment/{id}/edit/{tabName}/{closeWindow}", name="external_assessment_edit")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function editExternalAssessment(Request $request, $id = 'Add', $tabName = 'details', ScaleManager $manager, string $closeWindow = null)
+    {
+        dd($this);
+        $scale = $manager->find($id);
+
+        $form = $this->createForm(ScaleType::class, $scale);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $manager->getEntityManager()->persist($scale);
+            $manager->getEntityManager()->flush();
+
+            return $this->redirectToRoute('scale_edit', ['id' => $scale->getId(), 'tabName' => $tabName, 'closeWindow' => $closeWindow]);
+        }
+
+        return $this->render('School/scale_edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+                'tabManager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/external/assessment/{id}/delete/", name="external_assessment_delete")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function deleteExternalAssessment($id, ScaleManager $manager, FlashBagManager $flashBagManager)
+    {
+        dd($this);
+        $manager->delete($id);
+        $flashBagManager->addMessages($manager->getMessageManager());
+
+        return $this->redirectToRoute('manage_scales');
     }
 }

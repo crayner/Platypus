@@ -1,0 +1,48 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'School' %}
+
+{% block title %}{{ 'school.external_assessment.list.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'school.external_assessment.list.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'school.external_assessment.list.description'|trans  }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% include 'Pagination/index.html.twig' %}
+
+    <div class="container-fluid">
+        <div class="row row-header small">
+            <div class="col-2 text-center" style="display: inline-block;">
+                   {{ 'external_assessment.name.label'|trans }}
+            </div>
+            <div class="col-5 text-center">
+                {{ 'external_assessment.description.label'|trans({}) }}
+            </div>
+            <div class="col-3 text-center">
+                {{ 'external_assessment.active.label'|trans({}) }} -
+                {{ 'external_assessment.allow_file_upload.label'|trans({}) }}
+            </div>
+            <div class="col-2 text-center">
+                {{ 'actions'|trans({}, 'System') }}<br/>
+                {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('scale_edit', {id: 'Add'})}})|raw }}
+            </div>
+        </div>
+        {% for external_assessment in pagination.getResult %}
+            <div class="row row-striped{% if external_assessment.active is same as(false) %} row-danger{% endif %}">
+                <div class="col-2">
+                    {{ external_assessment.name }}
+                </div>
+                <div class="col-5 small">
+                    {{ external_assessment.description }}
+                </div>
+                <div class="col-3 text-center">
+                    {{ onOffButton({value: external_assessment.active, mergeClass: 'btn-sm', style: ''})|raw }}&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;&nbsp;{{ onOffButton({value: external_assessment.allowFileUpload, mergeClass: 'btn-sm', style: ''})|raw }}
+                </div>
+                <div class="col-2 text-center">
+                    {{ editButton({title: 'school.external_assessment.edit.title', transDomain: 'School', windowOpen: {route: path('external_assessment_edit', {id: external_assessment.id})}, style: '', mergeClass: 'btn-sm'})|raw }}
+                        {{ deleteButton({title: 'school.external_assessment.delete.title', transDomain: 'School', mergeClass: 'btn-sm', style: '', colour: 'warning', windowOpen: {route: path('external_assessment_delete', {id: external_assessment.id})}})|raw }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock contentContainer %}
+
