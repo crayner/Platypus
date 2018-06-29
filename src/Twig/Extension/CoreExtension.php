@@ -15,7 +15,6 @@
  */
 namespace App\Twig\Extension;
 
-use App\Manager\ScriptManager;
 use App\Manager\VersionManager;
 use App\Util\StringHelper;
 use Twig\Extension\AbstractExtension;
@@ -27,20 +26,6 @@ use Twig\Extension\AbstractExtension;
 class CoreExtension extends AbstractExtension
 {
     /**
-     * @var ScriptManager
-     */
-    private $scriptManager;
-
-    /**
-     * CoreExtension constructor.
-     * @param ScriptManager $scriptManager
-     */
-    public function __construct(ScriptManager $scriptManager)
-    {
-        $this->scriptManager = $scriptManager;
-    }
-
-    /**
      * getFunctions
      *
      * @return array|\Twig_Function[]
@@ -51,8 +36,6 @@ class CoreExtension extends AbstractExtension
             new \Twig_SimpleFunction('getVersion', [$this, 'getVersion']),
             new \Twig_SimpleFunction('get_UserSetting', [$this, 'crashBurn']),
             new \Twig_SimpleFunction('hideSection', [$this, 'hideSection']),
-            new \Twig_SimpleFunction('addScript', array($this->scriptManager, 'addScript')),
-            new \Twig_SimpleFunction('getScripts', array($this->scriptManager, 'getScripts')),
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
             new \Twig_SimpleFunction('camelCase', array($this, 'camelCase')),
         ];

@@ -15,12 +15,13 @@
  */
 namespace App\Form;
 
-use App\Form\Subscriber\SettingSubscriber;
 use App\Form\Transformer\SettingValueTransformer;
 use App\Manager\RouterManager;
 use App\Organism\SettingCache;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Hillrange\Form\Type\ChainedChoiceType;
 use Hillrange\Form\Type\ColourType;
+use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\MultipleExpandedChoiceType;
 use Hillrange\Form\Type\TextType;
@@ -117,6 +118,15 @@ class MultipleSettingType extends AbstractType
                             break;
                         }
                     }
+                    break;
+                case 'chainedChoice':
+                    $formType = ChainedChoiceType::class;
+                    $additional = $data->getChainOptions() ?: [];
+                    dd($additional);
+                    break;
+                case 'entity':
+                    $formType = EntityType::class;
+                    $additional = $data->getEntityOptions() ?: [];
                     break;
                 default:
                     $formType = TextType::class;

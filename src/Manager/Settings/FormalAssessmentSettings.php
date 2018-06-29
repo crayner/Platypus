@@ -15,8 +15,15 @@
  */
 namespace App\Manager\Settings;
 
+use App\Entity\ExternalAssessment;
+use App\Entity\ExternalAssessmentField;
+use App\Entity\SchoolYear;
+use App\Manager\ExternalAssessmentManager;
 use App\Manager\SettingManager;
+use App\Util\StringHelper;
 use App\Validator\Yaml;
+use Doctrine\ORM\EntityRepository;
+use Hillrange\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -70,10 +77,10 @@ class FormalAssessmentSettings implements SettingCreationInterface
         $settings[] = $setting;
         $sections = [];
 
-        $section['name'] = 'Internal Assessment Settings';
+
+        $section['name'] = 'Primary External Assessment';
         $section['description'] = '';
         $section['settings'] = $settings;
-
         $sections[] = $section;
         $sections['header'] = 'manage_formal_assessments';
 

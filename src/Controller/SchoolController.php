@@ -216,15 +216,17 @@ class SchoolController extends Controller
 
 
     /**
-     * Student Settings
-     *
+     * @Route("/school/attendance/settings/manage/", name="manage_attendance_settings")
+     * @IsGranted("ROLE_PRINCIPAL")
      * @param Request $request
      * @param SettingManager $sm
      * @param MultipleSettingManager $multipleSettingManager
-     * @param AttendanceCodeManager $manager  (Force load to ensure static methods are available.)
+     * @param AttendanceCodeManager $manager
      * @return Response
-     * @Route("/school/attendance/settings/manage/", name="manage_attendance_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
      */
     public function attendanceSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager, AttendanceCodeManager $manager)
     {
@@ -406,6 +408,7 @@ class SchoolController extends Controller
      * @param RollGroupManager $manager
      * @param string|null $closeWindow
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
     public function rollEdit(Request $request, $id = 'Add', RollGroupManager $manager, string $closeWindow = null)
     {
@@ -456,6 +459,8 @@ class SchoolController extends Controller
      * @param RollGroupManager $manager
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
      */
     public function rollCopy(RollGroupManager $manager, FlashBagManager $flashBagManager)
     {

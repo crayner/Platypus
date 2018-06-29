@@ -64,17 +64,4 @@ class SectionSettingType extends AbstractType
     {
         return 'section';
     }
-
-    /**
-     * configureOptions
-     *
-     * @param OptionsResolver $resolver
-     */
-    public function configureOptions(OptionsResolver $resolver)
-    {
-        $resolver->setDefaults(
-            [
-            ]
-        );
-    }
 }

@@ -94,6 +94,8 @@
     FontAwesome.dom.i2svg({ callback: iconDoneRendering })
 </script>
 {% for xx in getScripts() %}
-    {% include xx %}
+    {% for yy in getScriptOptions(xx) %}
+        {% include xx with yy %}
+    {% endfor %}
 {% endfor %}
 <!-- core JavaScript end -->

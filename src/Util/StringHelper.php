@@ -44,12 +44,11 @@ class StringHelper
      * @param $value
      * @return string
      */
-    public static function safeString($value): string
+    public static function safeString($value, $lowerCase = false): string
     {
-        $value = str_replace(' ', '_', $value);
-        for($i=ord('A'); $i<=ord('Z'); $i++)
-            $value = str_replace(chr($i), '_'.chr($i+32), $value);
-        $value = trim(str_replace('__', '_', $value), '_');
-        return $value;
+        $value = str_replace([' ', '/'], '_', $value);
+        while (mb_strpos($value, '__') !== false)
+            $value = trim(str_replace('__', '_', $value), '_');
+        return trim($lowerCase ? strtolower($value) : $value, ' _');
     }
 }

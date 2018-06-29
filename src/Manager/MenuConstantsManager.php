@@ -26,9 +26,8 @@ School Admin:
         manage_formal_assessments:
             label: manage_formal_assessments
             role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: FormalAssessment
+            route: manage_formal_assessments
+            parameters: {}
             transDomain: System
         manage_scales:
             label: manage_scales

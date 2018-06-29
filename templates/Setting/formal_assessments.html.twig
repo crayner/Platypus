@@ -1,0 +1,56 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'Setting' %}
+
+{% form_theme form
+    "Setting/setting_form.html.twig"
+    "Setting/formal_assessment_manage.html.twig"
+    "@HillrangeForm/FormTheme/jquery.collection.html.twig"
+    "@HillrangeForm/FormTheme/bootstrap.html.twig"
+%}
+
+{% block title %}{{ parent() }} {{ 'School Admin'|trans({}, 'System') }}{% endblock title %}
+{% block headerTitle %}{{ 'manage_formal_assessments'|trans({}, 'System') }}{% endblock headerTitle %}
+{% block headerLead %}{% endblock headerLead %}
+
+{% set manager = form.multipleSettings.vars.data %}
+
+{% block contentContainer %}
+    <div class="container-fluid">
+
+    {{ form_start(form) }}
+        {% for section_name, section_form in form.multipleSettings.children %}
+            {% if section_name is not same as('_token') %}
+                {% set section = manager.sections[section_name] %}
+                {% set h3Content = saveButton() %}
+                {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'System', panelParagraph: section['description'], panelStyle: 'warning', headerParams: section['name_parameters'], panelParams: section['description_parameters']} %}
+                {{ collection_widget(section_form.collection) }}
+                {% include 'Default/panelEnd.html.twig' %}
+            {% endif %}
+        {% endfor %}
+    <div class="container">
+        {% include '@HillrangeForm/Script/collection_message.html.twig' %}
+        <div class="row row-header">
+            <div class="col-4 text-center">
+                {{ 'school.year_group.name.label'|trans({}, 'School') }}
+            </div>
+            <div class="col-4 text-center">
+                {{ 'setting.external_assessment.label'|trans }}
+            </div>
+            <div class="col-4 text-center">
+                {{ 'setting.field_set.label'|trans }}
+            </div>
+        </div>
+        {{ collection_widget(form.assessments, 0, 0) }}
+    </div>
+    <hr style="clear: both;"/>
+    {{ form_end(form) }}
+    </div>
+{% endblock contentContainer %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ collections_manage(form, ['assessments'])|raw }}
+    {{ collection_script(form.assessments)|raw }}
+{% endblock javascripts %}

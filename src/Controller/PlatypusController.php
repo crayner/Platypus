@@ -15,6 +15,9 @@
  */
 namespace App\Controller;
 
+use App\Manager\ExternalAssessmentManager;
+use App\test\Chained;
+use App\test\TestFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -26,8 +29,16 @@ class PlatypusController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="home")
      */
-    public function home()
+    public function home(ExternalAssessmentManager $eam)
     {
-        return $this->render('home.html.twig');
+        $chain = new Chained();
+
+        $form = $this->createForm(TestFormType::class, $chain);
+
+        return $this->render('home.html.twig',
+            [
+                'form' => $form->createView(),
+            ]
+        );
     }
 }

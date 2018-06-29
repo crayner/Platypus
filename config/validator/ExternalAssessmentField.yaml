@@ -1,4 +1,4 @@
-App\Entity\Department:
+App\Entity\ExternalAssessmentField:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: [name, category]

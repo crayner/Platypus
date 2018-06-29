@@ -16,13 +16,14 @@
 namespace App\Controller;
 
 use App\Entity\AlertLevel;
-use App\Entity\ExternalAssessment;
 use App\Entity\FileExtension;
 use App\Entity\INDescriptor;
 use App\Form\AlertLevelsType;
 use App\Form\FileExtensionsType;
+use App\Form\FormalAssessmentSettingsType;
 use App\Form\INDescriptorsType;
 use App\Form\SectionSettingType;
+use App\Manager\ExternalAssessmentManager;
 use App\Manager\FileExtensionManager;
 use App\Manager\FlashBagManager;
 use App\Manager\IndividualNeedDescriptorManager;
@@ -31,6 +32,7 @@ use App\Manager\SettingManager;
 use App\Organism\AlertLevels;
 use App\Organism\ExternalAssessments;
 use App\Organism\FileExtensions;
+use App\Organism\FormalAssessments;
 use App\Organism\IndividualNeedsDescriptors;
 use App\Repository\SettingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -38,7 +40,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Util\StringUtil;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,7 +100,7 @@ class SettingController extends Controller
      * @return Response
      * @Route("/setting/manage/multiple/", name="multiple_settings_manage")
      */
-    public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager, FlashBagManager $flashBagManager)
+    public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager, FlashBagManager $flashBagManager, ExternalAssessmentManager $eam)
     {
         $settings = $request->getSession()->get('manage_settings');
         foreach ($settings->getSections() as $name =>$section)
@@ -289,5 +290,51 @@ class SettingController extends Controller
         $flashBagManager->renderMessages($manager->getMessageManager());
 
         return $this->redirectToRoute('manage_file_extensions');
+    }
+
+    /**
+     * Alert Levels Manage
+     *
+     * @Route("/setting/formal/assessment/manage/", name="manage_formal_assessments")
+     * @IsGranted("ROLE_PRINCIPAL")
+     * @param Request $request
+     * @param ExternalAssessmentManager $externalAssessmentManager
+     * @param MultipleSettingManager $multipleSettingManager
+     * @return Response
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     */
+    public function formalAssessments(Request $request, ExternalAssessmentManager $externalAssessmentManager, MultipleSettingManager $multipleSettingManager)
+    {
+        $settings = new FormalAssessments();
+        $results = $externalAssessmentManager->getPrimaryExternalAssessment();
+
+        $settings->setAssessments($results);
+        foreach ($externalAssessmentManager->getSettingManager()->createSettingDefinition('FormalAssessment')->getSections() as $name =>$section)
+            if ($name === 'header')
+                $multipleSettingManager->setHeader($section);
+            else
+                $multipleSettingManager->addSection($section);
+
+        $settings->setMultipleSettings($multipleSettingManager);
+
+        $form = $this->createForm(FormalAssessmentSettingsType::class, $settings);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $multipleSettingManager->saveSections($externalAssessmentManager->getSettingManager(), $request->request->get('formal_assessment_settings'));
+            $externalAssessmentManager->setPrimaryExternalAssessment($settings->getAssessments());
+
+        }
+
+        return $this->render('Setting/formal_assessments.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
     }
 }

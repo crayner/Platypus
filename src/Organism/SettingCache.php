@@ -44,6 +44,16 @@ class SettingCache
     private $hideParent;
 
     /**
+     * @var array
+     */
+    private $chainOptions;
+
+    /**
+     * @var array
+     */
+    private $entityOptions;
+
+    /**
      * @return null|string
      */
     public function getHideParent(): ?string
@@ -58,6 +68,42 @@ class SettingCache
     public function setHideParent(string $hideParent): SettingCache
     {
         $this->hideParent = $hideParent;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getChainOptions(): array
+    {
+        return $this->chainOptions;
+    }
+
+    /**
+     * @param array $chainOptions
+     * @return SettingCache
+     */
+    public function setChainOptions(array $chainOptions): SettingCache
+    {
+        $this->chainOptions = $chainOptions;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getEntityOptions(): array
+    {
+        return $this->entityOptions;
+    }
+
+    /**
+     * @param array $entityOptions
+     * @return SettingCache
+     */
+    public function setEntityOptions(array $entityOptions): SettingCache
+    {
+        $this->entityOptions = $entityOptions;
         return $this;
     }
 
@@ -268,7 +314,6 @@ class SettingCache
     /**
      * getArrayValue
      *
-     * @param null $default
      * @return array
      */
     private function getArrayValue(): array
@@ -312,8 +357,7 @@ class SettingCache
     /**
      * getTextValue
      *
-     * @param null $default
-     * @return mixed
+     * @return null|string
      */
     private function getTextValue(): ?string
     {
@@ -562,7 +606,6 @@ class SettingCache
     /**
      * getDefaultTextValue
      *
-     * @param $default
      * @return null|string
      */
     private function getDefaultTextValue(): ?string
@@ -607,7 +650,7 @@ class SettingCache
     /**
      * convertImportValues
      *
-     * @return Setting
+     * @return SettingCache
      */
     public function convertImportValues(): SettingCache
     {
@@ -627,6 +670,7 @@ class SettingCache
      * importSetting
      *
      * @param array $values
+     * @param EntityManagerInterface $entityManager
      * @return bool
      * @throws TableNotFoundException
      * @throws \Doctrine\ORM\ORMException
@@ -682,6 +726,7 @@ class SettingCache
      * findOneByName
      *
      * @param string $name
+     * @param EntityManagerInterface $entityManager
      * @return SettingCache|null
      * @throws TableNotFoundException
      * @throws \Doctrine\ORM\ORMException
@@ -922,8 +967,9 @@ class SettingCache
     }
 
     /**
-     * getValidators
+     * setValidators
      *
+     * @param $value
      * @return SettingCache
      */
     public function setValidators($value): SettingCache

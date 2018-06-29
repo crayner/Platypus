@@ -1,0 +1,20 @@
+{% trans_default_domain "School" %}
+
+{% block primary_external_assessment_label %}{% endblock %}
+{% block primary_external_assessment_errors %}{% endblock %}
+
+{% block primary_external_assessment_widget %}
+    {% spaceless %}
+        <div class="row row-border">
+            <div class="col-4 card">
+                {{ form.vars.value.yearGroupName }}
+            </div>
+            <div class="col-4 card">
+                {{ form_widget(form.externalAssessment, {value: transformData(form.externalAssessment)}) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_widget(form.fieldSet, {value: transformData(form.fieldSet)}) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock primary_external_assessment_widget %}
