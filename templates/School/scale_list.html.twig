@@ -26,7 +26,7 @@
                 {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('scale_edit', {id: 'Add'})}})|raw }}
             </div>
         </div>
-        {% for scale in pagination.getResult %}{% dump(scale.active) %}
+        {% for scale in pagination.getResult %}
             <div class="row row-striped{% if scale.active is same as(false) %} row-danger{% endif %}">
                 <div class="col-4 small">
                     <strong>{{ scale.name }}</strong><br />&nbsp;<small>{{ scale.nameShort }}</small>
