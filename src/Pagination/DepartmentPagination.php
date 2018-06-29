@@ -69,16 +69,7 @@ class DepartmentPagination extends PaginationManager
     /**
      * @var array
      */
-    protected $join = [
-/*        'r.facility' => [
-            'alias' => 'f',
-            'type' => 'leftJoin',
-        ],
-        'r.schoolYear' => [
-            'alias' => 'y',
-            'type' => 'leftJoin',
-        ],*/
-    ];
+    protected $join = [];
 
     /**
      * @var string
