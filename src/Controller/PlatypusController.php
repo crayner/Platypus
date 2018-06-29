@@ -16,8 +16,6 @@
 namespace App\Controller;
 
 use App\Manager\ExternalAssessmentManager;
-use App\test\Chained;
-use App\test\TestFormType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
