@@ -10,24 +10,28 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 25/06/2018
- * Time: 10:51
+ * Date: 30/06/2018
+ * Time: 11:32
  */
 namespace App\Repository;
 
-use App\Entity\ExternalAssessmentField;
+use App\Entity\ExternalAssessmentCategory;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class ExternalAssessmentFieldRepository extends ServiceEntityRepository
+/**
+ * Class ExternalAssessmentCategoryRepository
+ * @package App\Repository
+ */
+class ExternalAssessmentCategoryRepository extends ServiceEntityRepository
 {
     /**
-     * ExternalAssessmentFieldRepository constructor.
+     * ExternalAssessmentCategoryRepository constructor.
      *
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, ExternalAssessmentField::class);
+        parent::__construct($registry, ExternalAssessmentCategory::class);
     }
 }

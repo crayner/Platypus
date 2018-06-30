@@ -16,8 +16,11 @@
 namespace App\Form;
 
 use App\Entity\ExternalAssessment;
+use App\Entity\ExternalAssessmentField;
 use Hillrange\Form\Type\CollectionEntityType;
 use Hillrange\Form\Type\CollectionType;
+use Hillrange\Form\Type\EntityType;
+use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
@@ -97,10 +100,24 @@ class ExternalAssessmentType extends AbstractType
             )
             ->add('fields', CollectionType::class,
                 [
-                    'label' => 'external_assessment.fields.label',
-                    'entry_type' => ExternalAssessmentFieldType::class,
+                    'entry_type' => ExternalAssessmentFieldListType::class,
+                    'allow_add' => false,
+                    'allow_delete' => false,
+                    'redirect_route' => 'external_assessment_field_delete',
+                    'sort_manage' => true,
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
         ;
+    }
+
+    /**
+     * getBlockPrefix
+     *
+     * @return null|string
+     */
+    public function getBlockPrefix()
+    {
+        return 'external_assessment';
     }
 }

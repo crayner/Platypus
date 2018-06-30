@@ -17,10 +17,8 @@
         {% include '@HillrangeSecurity/security/scripts.html.twig' %}
         <script src={{ asset('bundles/hillrangeform/js/bootstrap-submenu.min.js') }}></script>
     <script type="text/javascript" charset="utf-8">
-
         function menuSectionSlide() {
             var scroll_top = $(window).scrollTop();
-            var eTop = $('#pageBottom').offset().top;
             var menuHeight = $('#sectionMenuContainer').outerHeight();
             var contentHeight = $('#contentContainer').outerHeight();
             if (menuHeight > (contentHeight - 50)) {
@@ -37,7 +35,6 @@
                 $('#sectionMenuContainer').removeClass('is-sticky');
             }
         }
-
         $(window).scroll(menuSectionSlide);
     </script>
     {% endif %}
@@ -45,7 +42,6 @@
 <!-- fold Menu -->
 <script type="text/javascript" charset="utf-8">
     $(".alert").alert();
-
     $('.foldMenu').on('click', function(){
         var foldMenu = $('.foldMenu');
         var container = foldMenu.parent();

@@ -218,6 +218,7 @@ School Admin:
         - department_edit
         - scale_edit
         - external_assessment_edit
+        - external_assessment_field_edit
 ';
     /*
 	CONST NODES = '

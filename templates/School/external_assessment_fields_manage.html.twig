@@ -1,0 +1,24 @@
+{% trans_default_domain "School" %}
+
+{% block external_assessment_field_label %}{% endblock %}
+{% block external_assessment_field_errors %}{% endblock %}
+
+{% block external_assessment_field_widget %}
+    {% spaceless %}
+        <div class="row row-striped">
+            <div class="col-4">
+                {{ form.name.vars.value }}
+            </div>
+            <div class="col-5 small">
+                {{ form.vars.value.externalAssessmentCategory.scaleCategory }}
+            </div>
+            <div class="col-3 text-center">
+                <div class="collection-actions">
+                {{ editButton({title: 'external_assessment_field.edit.title', transDomain: 'School', windowOpen: {route: path('external_assessment_field_edit', {id: form.id.vars.value, ea: app.request.get('id')})}, mergeClass: 'btn-sm'})|raw }}
+                {{ deleteButton({title: 'external_assessment_field.delete.title', transDomain: 'School', mergeClass: 'btn-sm', colour: 'warning', windowOpen: {route: path('external_assessment_field_delete', {id: form.id.vars.value})}})|raw }}
+                </div>
+            </div>
+           {{ form_rest(form) }}
+        </div>
+    {% endspaceless %}
+{% endblock external_assessment_field_widget %}

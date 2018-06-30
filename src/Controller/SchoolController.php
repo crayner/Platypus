@@ -27,6 +27,7 @@ use App\Form\AttendanceSettingsType;
 use App\Form\CollectionManagerType;
 use App\Form\DaysOfWeekType;
 use App\Form\DepartmentType;
+use App\Form\ExternalAssessmentFieldType;
 use App\Form\ExternalAssessmentType;
 use App\Form\FacilityType;
 use App\Form\HousesType;
@@ -37,6 +38,7 @@ use App\Form\YearGroupType;
 use App\Manager\AttendanceCodeManager;
 use App\Manager\CollectionManager;
 use App\Manager\DepartmentManager;
+use App\Manager\ExternalAssessmentFieldManager;
 use App\Manager\ExternalAssessmentManager;
 use App\Manager\FlashBagManager;
 use App\Manager\HouseManager;
@@ -810,12 +812,59 @@ class SchoolController extends Controller
      * @Route("/school/external/assessment/{id}/delete/", name="external_assessment_delete")
      * @IsGranted("ROLE_PRINCIPAL")
      */
-    public function deleteExternalAssessment($id, ScaleManager $manager, FlashBagManager $flashBagManager)
+    public function deleteExternalAssessment($id, ExternalAssessmentManager $manager, FlashBagManager $flashBagManager)
     {
-        dd($this);
         $manager->delete($id);
         $flashBagManager->addMessages($manager->getMessageManager());
 
-        return $this->redirectToRoute('manage_scales');
+        return $this->redirectToRoute('manage_external_assessments');
+    }
+
+    /**
+     * editExternalAssessmentField
+     *
+     * @Route("/school/external/assessment/{ea}/field/{id}/edit/{tabName}/{closeWindow}", name="external_assessment_field_edit")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function editExternalAssessmentField(Request $request, $id = 'Add', int $ea, string $tabName = 'details',
+                                                ExternalAssessmentFieldManager $manager, ExternalAssessmentManager $externalAssessmentManager, string $closeWindow = null)
+    {
+        $externalAssessmentField = $manager->find($id);
+
+        if ($id === 'Add')
+            $externalAssessmentField->setExternalAssessment($externalAssessmentManager->find($ea));
+
+        $form = $this->createForm(ExternalAssessmentFieldType::class, $externalAssessmentField);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $manager->getEntityManager()->persist($externalAssessmentField);
+            $manager->getEntityManager()->flush();
+
+            return $this->redirectToRoute('external_assessment_field_edit', ['id' => $externalAssessmentField->getId(), 'ea' => $ea, 'tabName' => $tabName, 'closeWindow' => $closeWindow]);
+        }
+
+        return $this->render('School/external_assessment_field_edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+                'tabManager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * @Route("/school/external/assessment/field/{id}/delete/", name="external_assessment_field_delete")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function deleteExternalAssessmentField($id, ExternalAssessmentFieldManager $manager, FlashBagManager $flashBagManager)
+    {
+        $eaf = $manager->find($id);
+        $manager->delete($id);
+        $flashBagManager->addMessages($manager->getMessageManager());
+
+        return $this->redirectToRoute('external_assessment_edit', ['id' => $eaf->getExternalAssessment()->getId(), 'tabName' => 'fields']);
     }
 }

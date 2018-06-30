@@ -129,8 +129,10 @@ class ExternalAssessment
     }
 
     /**
+     * setWebsite
+     *
      * @param null|string $website
-     * @return RollGroup
+     * @return ExternalAssessment
      */
     public function setWebsite(?string $website): ExternalAssessment
     {
@@ -152,8 +154,10 @@ class ExternalAssessment
     }
 
     /**
-     * @param null|bool $active
-     * @return AttendanceCode
+     * setActive
+     *
+     * @param bool|null $active
+     * @return ExternalAssessment
      */
     public function setActive(?bool $active): ExternalAssessment
     {
@@ -167,6 +171,8 @@ class ExternalAssessment
     private $allowFileUpload;
 
     /**
+     * isAllowFileUpload
+     *
      * @return bool
      */
     public function isAllowFileUpload(): bool
@@ -175,8 +181,10 @@ class ExternalAssessment
     }
 
     /**
-     * @param null|bool $allowFileUpload
-     * @return AttendanceCode
+     * setAllowFileUpload
+     *
+     * @param bool|null $allowFileUpload
+     * @return ExternalAssessment
      */
     public function setAllowFileUpload(?bool $allowFileUpload): ExternalAssessment
     {
@@ -246,5 +254,15 @@ class ExternalAssessment
     {
         $this->getFields()->removeElement($field);
         return $this;
+    }
+
+    /**
+     * __toString
+     *
+     * @return null|string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

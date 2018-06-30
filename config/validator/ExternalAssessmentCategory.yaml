@@ -1,12 +1,10 @@
-App\Entity\ExternalAssessmentField:
+App\Entity\ExternalAssessmentCategory:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            fields: [name, category]
-        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-            fields: [externalAssessmentCategory, sequence]
+            fields: [category, scale, sequence, externalAssessment]
             message: sequence_category_scale
     properties:
-        name:
+        category:
             - NotBlank: ~
             - Length:
                 max: 50

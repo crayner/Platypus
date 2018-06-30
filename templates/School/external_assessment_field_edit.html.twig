@@ -1,0 +1,36 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'School' %}
+
+{% form_theme form
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ ('external_assessment_field.edit.title')|trans }}{% endblock title %}
+{% block headerTitle %}{{ ('external_assessment_field.edit.title')|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ ('external_assessment_field.edit.description')|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ form_start(form) }}
+    {%  set h3Content = returnButton({windowOpen: {route: path('external_assessment_edit', {id: form.vars.value.externalAssessment.id|default('Add'), tabName: 'fields'})}}) %}
+    {% set h3Content = h3Content ~ saveButton() %}
+    {% include 'Default/panelStart.html.twig' with {header: 'external_assessment_field.edit.header', name: form.vars.value.externalAssessment.name, transDomain: 'School'} %}
+
+        <div class="row">
+            <div class="col-3 card">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-5 card">
+                <div style="float: right;">{{ form_row(form.externalAssessmentCategory) }}
+                    {{ miscButton({title: 'add_external_assessment_category', class: 'btn btn-primary fas fa-plus'})|raw }}
+                </div>
+            </div>
+            <div class="col-4 card">
+                {{ form_row(form.yearGroups) }}
+            </div>
+        </div>
+
+    {% include 'Default/panelEnd.html.twig' %}
+    {{ form_end(form) }}
+
+{% endblock contentContainer %}

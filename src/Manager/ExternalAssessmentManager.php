@@ -18,7 +18,6 @@ namespace App\Manager;
 use App\Entity\ExternalAssessment;
 use App\Entity\ExternalAssessmentField;
 use App\Entity\YearGroup;
-use App\Manager\Interfaces\TabManagerInterface;
 use App\Manager\Traits\EntityTrait;
 use App\Organism\PrimaryExternalAssessment;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -29,7 +28,7 @@ use Symfony\Component\Yaml\Yaml;
  * Class ExternalAssessmentManager
  * @package App\Manager
  */
-class ExternalAssessmentManager implements TabManagerInterface
+class ExternalAssessmentManager extends TabManager
 {
     use EntityTrait;
 
@@ -191,17 +190,29 @@ fields:
     include: School/external_assessment_field_list.html.twig
     message: externalAssessmentFieldsMessage
     translation: School
+    display: hasFields
 ");
     }
 
     /**
-     * isDisplay
+     * canDelete
      *
-     * @param array $method
      * @return bool
      */
-    public function isDisplay($method = []): bool
+    public function canDelete(): bool
     {
-        return true;
+        return false;
+    }
+
+    /**
+     * hasFields
+     *
+     * @return bool
+     */
+    public function hasFields(): bool
+    {
+        if ($this->getEntity() instanceof ExternalAssessment && intval($this->getEntity()->getId()) > 0)
+            return true;
+        return false;
     }
 }

@@ -38,8 +38,10 @@ class ExternalAssessmentField
     }
 
     /**
+     * setId
+     *
      * @param int|null $id
-     * @return ExternalAssessment
+     * @return ExternalAssessmentField
      */
     public function setId(?int $id): ExternalAssessmentField
     {
@@ -61,35 +63,14 @@ class ExternalAssessmentField
     }
 
     /**
+     * setName
+     *
      * @param null|string $name
-     * @return ExternalAssessment
+     * @return ExternalAssessmentField
      */
     public function setName(?string $name): ExternalAssessmentField
     {
         $this->name = $name;
-        return $this;
-    }
-
-    /**
-     * @var string|null
-     */
-    private $category;
-
-    /**
-     * @return null|string
-     */
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param null|string $category
-     * @return ExternalAssessmentField
-     */
-    public function setCategory(?string $category): ExternalAssessmentField
-    {
-        $this->category = $category;
         return $this;
     }
 
@@ -110,59 +91,11 @@ class ExternalAssessmentField
      * setSequence
      *
      * @param int|null $sequence
-     * @return DayOfWeek
+     * @return ExternalAssessmentField
      */
     public function setSequence(?int $sequence): ExternalAssessmentField
     {
         $this->sequence = $sequence ?: 0;
-        return $this;
-    }
-
-    /**
-     * @var ExternalAssessment|null
-     */
-    private $externalAssessment;
-
-    /**
-     * @return ExternalAssessment|null
-     */
-    public function getExternalAssessment(): ?ExternalAssessment
-    {
-        return $this->externalAssessment;
-    }
-
-    /**
-     * @param ExternalAssessment|null $externalAssessment
-     * @return ExternalAssessmentField
-     */
-    public function setExternalAssessment(?ExternalAssessment $externalAssessment, $add = true): ExternalAssessmentField
-    {
-        if ($add && ! empty($externalAssessment))
-            $externalAssessment->addField($this, false);
-        $this->externalAssessment = $externalAssessment;
-        return $this;
-    }
-
-    /**
-     * @var Scale|null
-     */
-    private $scale;
-
-    /**
-     * @return Scale|null
-     */
-    public function getScale(): ?Scale
-    {
-        return $this->scale;
-    }
-
-    /**
-     * @param Scale|null $scale
-     * @return ExternalAssessmentField
-     */
-    public function setScale(?Scale $scale): ExternalAssessmentField
-    {
-        $this->scale = $scale;
         return $this;
     }
 
@@ -219,6 +152,69 @@ class ExternalAssessmentField
     public function removeYearGroup(?YearGroup $yearGroup): ExternalAssessmentField
     {
         $this->getYearGroups()->removeElement($yearGroup);
+        return $this;
+    }
+
+    /**
+     * __toString
+     *
+     * @return null|string
+     */
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+    /**
+     * @var ExternalAssessmentCategory|null
+     */
+    private $externalAssessmentCategory;
+
+    /**
+     * @return ExternalAssessmentCategory|null
+     */
+    public function getExternalAssessmentCategory(): ?ExternalAssessmentCategory
+    {
+        return $this->externalAssessmentCategory;
+    }
+
+    /**
+     * @param ExternalAssessmentCategory|null $externalAssessmentCategory
+     * @return ExternalAssessmentField
+     */
+    public function setExternalAssessmentCategory(?ExternalAssessmentCategory $externalAssessmentCategory): ExternalAssessmentField
+    {
+        $this->externalAssessmentCategory = $externalAssessmentCategory;
+        return $this;
+    }
+
+    /**
+     * @var ExternalAssessment|null
+     */
+    private $externalAssessment;
+
+    /**
+     * getExternalAssessment
+     *
+     * @return ExternalAssessment|null
+     */
+    public function getExternalAssessment(): ?ExternalAssessment
+    {
+        return $this->externalAssessment;
+    }
+
+    /**
+     * setExternalAssessment
+     *
+     * @param ExternalAssessment|null $externalAssessment
+     * @param bool $add
+     * @return ExternalAssessmentField
+     */
+    public function setExternalAssessment(?ExternalAssessment $externalAssessment, $add = true): ExternalAssessmentField
+    {
+        if ($add && ! empty($externalAssessment))
+            $externalAssessment->addField($this, false);
+        $this->externalAssessment = $externalAssessment;
         return $this;
     }
 }

@@ -5,31 +5,17 @@
 
     <div class="container-fluid">
         <div class="row row-header small">
-            <div class="col-5" style="display: inline-block;">
+            <div class="col-4" style="display: inline-block;">
                    {{ 'external_assessment_field.name.label'|trans }}
             </div>
-            <div class="col-4">
+            <div class="col-5">
                 {{ 'external_assessment_field.category.label'|trans({}) }}
             </div>
             <div class="col-3 text-center">
                 {{ 'actions'|trans({}, 'System') }}<br/>
-                {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('external_assessment_edit', {id: 'Add'})}})|raw }}
+                {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('external_assessment_field_edit', {id: 'Add', ea: app.request.get('id')})}})|raw }}
             </div>
         </div>
-        {% for field in form.fields.children %}
-            <div class="row row-striped">
-                <div class="col-5">
-                    {{ field.vars.value.name }}
-                </div>
-                <div class="col-4">
-                    {{ field.vars.value.category }}
-                </div>
-                <div class="col-3 text-center">
-                    {{ editButton({title: 'external_assessment_field.edit.title', transDomain: 'School', windowOpen: {route: path('external_assessment_edit', {id: field.vars.value.id})}, style: '', mergeClass: 'btn-sm'})|raw }}
-                        {{ deleteButton({title: 'external_assessment_field.delete.title', transDomain: 'School', mergeClass: 'btn-sm', style: '', colour: 'warning', windowOpen: {route: path('external_assessment_delete', {id: field.vars.value.id})}})|raw }}
-                </div>
-            </div>
-        {% endfor %}
-        {% do form.fields.setRendered() %}
+        {{ form_widget(form.fields) }}
     </div>
 {% include 'Default/panelEnd.html.twig' %}

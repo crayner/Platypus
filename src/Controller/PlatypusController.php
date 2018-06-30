@@ -15,7 +15,6 @@
  */
 namespace App\Controller;
 
-use App\Manager\ExternalAssessmentManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -27,7 +26,7 @@ class PlatypusController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/", name="home")
      */
-    public function home(ExternalAssessmentManager $eam)
+    public function home()
     {
         return $this->render('home.html.twig');
     }
