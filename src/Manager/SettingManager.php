@@ -122,6 +122,7 @@ class SettingManager implements ContainerAwareInterface
         }
 
         $this->loadSetting($name);
+        $this->readSession()->setName($name)->getSetting($name);
 
         if ($this->isValid() && $this->isCorrectName($name)) {
             $this->logger->debug(sprintf('The setting %s was found and returned from the database.', $name), [$name, $default, $options]);
