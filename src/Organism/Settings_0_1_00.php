@@ -127,6 +127,17 @@ personal.title.list:
     role: ROLE_REGISTRAR
     defaultValue: null
     translateChoice: null
+template.name:
+    type: string
+    name: template.name
+    displayName: 'Template Name'
+    description: 'The name of the template being used.'
+    value: null
+    choice: null
+    validators: null
+    role: ROLE_SYSTEM_ADMIN
+    defaultValue: PlatypusTemplateOriginal
+    translateChoice: null
 LLL;
 	}
 

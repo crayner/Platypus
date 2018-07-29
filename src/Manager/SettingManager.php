@@ -261,12 +261,46 @@ class SettingManager implements ContainerAwareInterface
         return $this;
     }
 
+
+    /**
+     * unpackArray
+     *
+     * @param $setting
+     */
+    private function unpackArray(SettingCache $setting)
+    {
+        foreach($setting->getValue() as $q=>$w)
+        {
+            $newSetting = new SettingCache(new Setting());
+            $newSetting->setName($setting->getName().'.'.strval($q))
+                ->setValue($w)
+                ->setParent($setting->getName())
+                ->setParentKey($q)
+                ->setBaseSetting(false)
+                ->setCacheTime(new \DateTime('now'));
+            if (is_array($w))
+                $newSetting->setType('array');
+            else
+                $newSetting->setType('system');
+
+            $this->Setting = $newSetting->getSetting();
+            $this->addSetting($newSetting);
+            if ($newSetting->getType() === 'array')
+                $this->unpackArray($newSetting);
+        }
+    }
+
     /**
      * loadSetting
      *
      * @param string $name
+     * @param string $preName
      * @return SettingManager
      * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
      */
     private function loadSetting(string $name): SettingManager
     {
@@ -274,34 +308,26 @@ class SettingManager implements ContainerAwareInterface
 
         if ($setting instanceof SettingCache)
             return $this->addSetting($setting);
+
         $parts = explode('.', $name);
+        $name = '';
 
-        if (count($parts) > 1) {
-            $part = array_pop($parts);
-            $name = implode('.', $parts);
-            $value = $this->get($name);
+        foreach($parts as $part)
+        {
+            $name .= '.' . $part;
+            $name = trim($name, '.');
+            $setting = $this->findOneByName($name);
 
-            if ($this->setting instanceof SettingCache && $this->setting->isValid()) {
-                if ($this->setting->getType() !== 'array')
-                    return $this;
-
-                foreach ($this->setting->getValue() as $key => $value) {
-                    if (strtolower($part) === strtolower($key)) {
-                        $setting = $this->getSettingCache();
-                        $setting->setType(is_array($value) ? 'array' : 'system')
-                            ->setName($this->setting->getSetting()->getName() . '.' . strtolower($key))
-                            ->setParent($this->setting->getSetting()->getName())
-                            ->setParentKey($key)->setValue($value)
-                            ->setDefaultValue(null)
-                            ->setCacheTime(new \DateTime('now'));
-                        $xxx = $this->setting->getSetting()->getName() . '.' . strtolower($key);
-                        $this->addSetting($setting, $xxx);
-                        $this->logger->debug(sprintf('The setting "%s" was created from an array parent.', $xxx));
-                        return $this;
-                    }
-                }
+            if ($setting instanceof SettingCache)
+            {
+                if ($setting->getType() !== 'array')
+                    return $this->addSetting($setting);
+                else
+                    $this->unpackArray($setting);
             }
         }
+
+        $this->readSession()->setName($name)->getSetting($name);
 
         return $this;
     }
