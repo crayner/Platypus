@@ -234,7 +234,7 @@ abstract class PaginationManager implements PaginationInterface
             ->setFirstResult($this->getOffSet())
             ->setMaxResults($this->getLimit())
             ->getQuery();
-dump($query->getSQL());
+
         if ($this->isCount()) {
             $this->result = $query->getScalarResult();
         } else {
