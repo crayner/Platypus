@@ -152,4 +152,14 @@ class ExternalAssessmentCategory
 
         return trim($result . $this->getCategory(), ' -');
     }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getScaleCategory();
+    }
 }

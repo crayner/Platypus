@@ -50,14 +50,14 @@ class TrackingSettings implements SettingCreationInterface
 
         new YearGroupHelper($sm->getEntityManager());
 
-        $eaList = $sm->getEntityManager()->createQuery('SELECT DISTINCT a.id, a.nameShort, f.category FROM '.ExternalAssessmentField::class.' f JOIN f.externalAssessment a WHERE a.active = :active ORDER BY a.nameShort ASC, f.category ASC')
+        $eaList = $sm->getEntityManager()->createQuery('SELECT DISTINCT a.id, a.nameShort, c.category FROM '.ExternalAssessmentField::class.' f JOIN f.externalAssessment a JOIN f.externalAssessmentCategory c WHERE a.active = :active ORDER BY a.nameShort ASC, c.sequence')
                 ->setParameter('active', true)
                 ->getArrayResult()
         ;
 
         foreach($eaList as $ea)
         {
-            $catName = mb_substr($ea['category'], mb_strpos($ea['category'],'_') +1);
+            $catName = $ea['category'];
             $setting = $sm->createOneByName(strtolower('tracking.ext_ass_data_point.'.StringHelper::safeString($ea['nameShort']).'.'.StringHelper::safeString($catName)));
 
             $setting->setName(strtolower('tracking.ext_ass_data_point.'.StringHelper::safeString($ea['nameShort']).'.'.StringHelper::safeString($catName)))

@@ -28,6 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Valid;
 
 /**
  * Class ExternalAssessmentType
@@ -106,6 +107,22 @@ class ExternalAssessmentType extends AbstractType
                     'redirect_route' => 'external_assessment_field_delete',
                     'sort_manage' => true,
                     'button_merge_class' => 'btn-sm',
+                    'constraints' => [
+                        new Valid(),
+                    ],
+                ]
+            )
+            ->add('categories', CollectionType::class,
+                [
+                    'entry_type' => ExternalAssessmentCategoryType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'redirect_route' => 'external_assessment_category_delete',
+                    'sort_manage' => true,
+                    'button_merge_class' => 'btn-sm',
+                    'constraints' => [
+                        new Valid(),
+                    ],
                 ]
             )
         ;

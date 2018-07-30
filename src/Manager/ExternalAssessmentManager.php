@@ -67,7 +67,7 @@ class ExternalAssessmentManager extends TabManager
      */
     public static function getExternalAssessmentFieldChains(): array
     {
-        $list = self::$em->createQuery('SELECT e.id as eaid, f.id, e.name, f.category FROM ' . ExternalAssessmentField::class . ' f LEFT JOIN f.externalAssessment e WHERE e.active = :true GROUP BY e.id, f.category ORDER BY e.name, f.category')
+        $list = self::$em->createQuery('SELECT e.id as eaid, f.id, e.name, c.category FROM ' . ExternalAssessmentField::class . ' f LEFT JOIN f.externalAssessment e JOIN f.externalAssessmentCategory c WHERE e.active = :true GROUP BY e.id, c.category ORDER BY e.name, c.category')
             ->setParameter('true', true)
             ->getArrayResult();
 
@@ -77,7 +77,7 @@ class ExternalAssessmentManager extends TabManager
             $result = [];
             $result['data-chained'] = $item['eaid'];
             $result['value'] = $item['id'];
-            $result['label'] = mb_substr($item['category'], mb_strpos($item['category'], '_') + 1);
+            $result['label'] = $item['category'];
             $results[$item['name']][] = $result;
         }
 
@@ -188,6 +188,12 @@ details:
 fields:
     label: external_assessment.fields.tab
     include: School/external_assessment_field_list.html.twig
+    message: externalAssessmentFieldsMessage
+    translation: School
+    display: hasFields
+categories:
+    label: external_assessment.categories.tab
+    include: School/external_assessment_category_manage.html.twig
     message: externalAssessmentFieldsMessage
     translation: School
     display: hasFields

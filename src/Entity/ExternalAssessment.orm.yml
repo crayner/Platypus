@@ -31,3 +31,7 @@ App\Entity\ExternalAssessment:
             targetEntity: App\Entity\ExternalAssessmentField
             mappedBy: externalAssessment
             cascade: [ all ]
+        categories:
+            targetEntity: App\Entity\ExternalAssessmentCategory
+            mappedBy: externalAssessment
+            cascade: [ all ]

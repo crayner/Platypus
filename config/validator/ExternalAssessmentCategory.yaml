@@ -8,3 +8,11 @@ App\Entity\ExternalAssessmentCategory:
             - NotBlank: ~
             - Length:
                 max: 50
+        externalAssessment:
+            - NotBlank: ~
+            - Valid: ~
+        scale:
+            - NotBlank: ~
+            - Valid: ~
+        sequence:
+            - NotBlank: ~

@@ -16,6 +16,7 @@
                 <div class="collection-actions">
                 {{ editButton({title: 'external_assessment_field.edit.title', transDomain: 'School', windowOpen: {route: path('external_assessment_field_edit', {id: form.id.vars.value, ea: app.request.get('id')})}, mergeClass: 'btn-sm'})|raw }}
                 {{ deleteButton({title: 'external_assessment_field.delete.title', transDomain: 'School', mergeClass: 'btn-sm', colour: 'warning', windowOpen: {route: path('external_assessment_field_delete', {id: form.id.vars.value})}})|raw }}
+                    <span style="float: right;">&nbsp;</span>
                 </div>
             </div>
            {{ form_rest(form) }}

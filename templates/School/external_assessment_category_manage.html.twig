@@ -1,0 +1,16 @@
+{% trans_default_domain 'School' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'school.external_assessment.edit.title', name: form.vars.value.name, transDomain: 'School', colour: 'dark'} %}
+    <div class="row row-header">
+        <div class="col-5 card">
+            {{ 'external.assessment.category.label'|trans }}
+        </div>
+        <div class="col-4 card">
+            {{ 'external.assessment.scale.label'|trans }}
+        </div>
+        <div class="col-3 card">
+            {{ 'actions'|trans({}, 'System') }}
+        </div>
+    </div>
+    {{ collection_widget(form.categories) }}
+{% include 'Default/panelEnd.html.twig' %}

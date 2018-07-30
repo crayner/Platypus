@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 use App\Entity\ExternalAssessmentCategory;
+use App\Entity\ExternalAssessmentField;
 use App\Manager\Traits\EntityTrait;
 
 /**
@@ -30,4 +31,21 @@ class ExternalAssessmentCategoryManager
      * @var string
      */
     private $entityName = ExternalAssessmentCategory::class;
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    protected function canDelete(): bool
+    {
+        if ($this->getEntityManager()->getRepository(ExternalAssessmentField::class)->createQueryBuilder('f')
+            ->select('f.id')
+            ->leftJoin('f.externalAssessmentCategory', 'c')
+            ->where('c.id = :identifier')
+            ->setParameter('identifier', $this->getEntity()->getId())
+            ->getQuery()->getResult())
+            return false;
+        return true;
+    }
 }

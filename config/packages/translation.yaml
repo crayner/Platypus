@@ -3,5 +3,7 @@ framework:
     translator:
         paths:
             - '%kernel.project_dir%/translations'
+            - '%kernel.project_dir%/vendor/hillrange/symfony-form/Resources/translations'
+            - '%kernel.project_dir%/vendor/hillrange/security/Resources/translations'
         fallbacks:
             - 'en'

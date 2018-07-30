@@ -10,17 +10,14 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 29/06/2018
- * Time: 16:00
+ * Date: 30/07/2018
+ * Time: 09:23
  */
 namespace App\Form;
 
 use App\Entity\ExternalAssessment;
 use App\Entity\ExternalAssessmentCategory;
-use App\Entity\ExternalAssessmentField;
 use App\Entity\Scale;
-use App\Entity\YearGroup;
-use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\TextType;
@@ -29,11 +26,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-/**
- * Class ExternalAssessmentFieldListType
- * @package App\Form
- */
-class ExternalAssessmentFieldListType extends AbstractType
+class ExternalAssessmentCategoryType extends AbstractType
 {
     /**
      * buildForm
@@ -44,12 +37,7 @@ class ExternalAssessmentFieldListType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', HiddenType::class)
-            ->add('externalAssessmentCategory', HiddenEntityType::class,
-                [
-                    'class' => ExternalAssessmentCategory::class,
-                ]
-            )
+            ->add('sequence', HiddenType::class)
             ->add('id', HiddenType::class,
                 [
                     'attr' => [
@@ -57,7 +45,30 @@ class ExternalAssessmentFieldListType extends AbstractType
                     ],
                 ]
             )
-            ->add('sequence', HiddenType::class)
+            ->add('category', TextType::class,
+                [
+                    'label' => 'external.assessment.category.label',
+                    'help' => 'external.assessment.category.help',
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
+                ]
+            )
+            ->add('externalAssessment', HiddenEntityType::class,
+                [
+                    'class' => ExternalAssessment::class,
+                ]
+            )
+            ->add('scale', EntityType::class,
+                [
+                    'class' => Scale::class,
+                    'label' => 'external.assessment.scale.label',
+                    'placeholder' => 'external.assessment.scale.placeholder',
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
+                ]
+            )
         ;
     }
 
@@ -70,8 +81,9 @@ class ExternalAssessmentFieldListType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => ExternalAssessmentField::class,
+                'data_class' => ExternalAssessmentCategory::class,
                 'translation_domain' => 'School',
+                'error_bubbling' => true,
             ]
         );
     }
@@ -83,6 +95,6 @@ class ExternalAssessmentFieldListType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'external_assessment_field';
+        return 'external_assessment_category';
     }
 }

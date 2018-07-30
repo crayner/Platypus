@@ -1,0 +1,16 @@
+{% trans_default_domain "School" %}
+
+{% block external_assessment_category_label %}{% endblock %}
+{% block external_assessment_category_errors %}{% endblock %}
+
+{% block external_assessment_category_widget %}
+    {% spaceless %}
+        <div class="row">
+            <div class="col-5 card">{{ form_widget(form.category) }}</div>
+            <div class="col-4 card">{{ form_widget(form.scale, {value: transformData(form.scale)}) }}</div>
+            <div class="col-3 card"><div class="collection-actions">{{ saveButton({mergeClass: 'btn-sm'})|raw }}<span style="float: right;">&nbsp;</span></div></div>
+        </div>
+        {{ form_widget(form.externalAssessment, {value: app.request.get('id')}) }}
+        {{ form_rest(form) }}
+    {% endspaceless %}
+{% endblock external_assessment_category_widget %}

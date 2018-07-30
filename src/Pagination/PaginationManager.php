@@ -153,6 +153,11 @@ abstract class PaginationManager implements PaginationInterface
      */
 	private $stack;
 
+    /**
+     * @var boolean
+     */
+	private $count = false;
+
 	/**
 	 * Constructor
 	 *
@@ -223,20 +228,24 @@ abstract class PaginationManager implements PaginationInterface
 	 * @return    array    of Data
 	 */
 	public function getDataSet()
-	{
-		$this->pages  = intval(ceil($this->getTotal() / $this->getLimit()));
-		$query = $this->buildQuery()
-			->setFirstResult($this->getOffSet())
-			->setMaxResults($this->getLimit())
-			->getQuery();
-
-		if (isset($this->castAs) && $this->castAs === 'array')
-            $this->result = $query
-                ->getArrayResult();
-		else
-            $this->result = $query
-                ->getResult();
-		$this->writeSession();
+    {
+        $this->pages = intval(ceil($this->getTotal() / $this->getLimit()));
+        $query = $this->buildQuery()
+            ->setFirstResult($this->getOffSet())
+            ->setMaxResults($this->getLimit())
+            ->getQuery();
+dump($query->getSQL());
+        if ($this->isCount()) {
+            $this->result = $query->getScalarResult();
+        } else {
+            if (isset($this->castAs) && $this->castAs === 'array')
+                $this->result = $query
+                    ->getArrayResult();
+            else
+                $this->result = $query
+                    ->getResult();
+            $this->writeSession();
+        }
 
 		return $this->result;
 	}
@@ -1075,6 +1084,24 @@ abstract class PaginationManager implements PaginationInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isCount(): bool
+    {
+        return $this->count;
+    }
+
+    /**
+     * @param bool $count
+     * @return PaginationManager
+     */
+    public function setCount(bool $count): PaginationManager
+    {
+        $this->count = $count;
+        return $this;
+    }
+
+    /**
      * @param array $sortBy
      * @return PaginationManager
      */
@@ -1098,8 +1125,9 @@ abstract class PaginationManager implements PaginationInterface
 	{
 		$this->query = $this->repository->createQueryBuilder($this->getAlias());
 		if ($count)
-			$this->query->select('COUNT(' . $this->getAlias() . ')');
+            $this->query->select('COUNT(' . $this->getAlias() . ')');
 
+        $this->setCount($count);
 		return $this->query;
 	}
 

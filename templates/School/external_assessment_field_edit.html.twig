@@ -11,26 +11,24 @@
 {% block headerLead %}{{ ('external_assessment_field.edit.description')|trans }}{% endblock headerLead %}
 
 {% block contentContainer %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
     {{ form_start(form) }}
     {%  set h3Content = returnButton({windowOpen: {route: path('external_assessment_edit', {id: form.vars.value.externalAssessment.id|default('Add'), tabName: 'fields'})}}) %}
     {% set h3Content = h3Content ~ saveButton() %}
     {% include 'Default/panelStart.html.twig' with {header: 'external_assessment_field.edit.header', name: form.vars.value.externalAssessment.name, transDomain: 'School'} %}
-
         <div class="row">
             <div class="col-3 card">
                 {{ form_row(form.name) }}
             </div>
             <div class="col-5 card">
-                <div style="float: right;">{{ form_row(form.externalAssessmentCategory) }}
-                    {{ miscButton({title: 'add_external_assessment_category', class: 'btn btn-primary fas fa-plus'})|raw }}
+                <div style="float: right;">{{ form_row(form.externalAssessmentCategory, {value: transformData(form.externalAssessmentCategory)}) }}
+                    {{ miscButton({title: 'add_external_assessment_category', class: 'btn btn-primary fas fa-plus', transDomain: 'School', windowOpen: {route: path('external_assessment_edit', {id: form.vars.value.externalAssessment.id, tabName: 'categories'})}})|raw }}
                 </div>
             </div>
             <div class="col-4 card">
                 {{ form_row(form.yearGroups) }}
             </div>
         </div>
-
     {% include 'Default/panelEnd.html.twig' %}
     {{ form_end(form) }}
-
 {% endblock contentContainer %}

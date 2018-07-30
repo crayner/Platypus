@@ -265,4 +265,44 @@ class ExternalAssessment
     {
         return $this->getName();
     }
+
+    /**
+     * @var Collection|null
+     */
+    private $categories;
+
+    /**
+     * getCategories
+     *
+     * @return Collection
+     */
+    public function getCategories(): Collection
+    {
+        if (empty($this->categories))
+            $this->categories = new ArrayCollection();
+
+        $iterator = $this->categories->getIterator();
+        $iterator->uasort(
+            function ($a, $b) {
+                return ($a->getSequence() < $b->getSequence()) ? -1 : 1;
+            }
+        );
+
+        $this->categories = new ArrayCollection(iterator_to_array($iterator, false));
+
+        return $this->categories;
+    }
+
+    /**
+     * setCategories
+     *
+     * @param Collection $categories
+     * @return ExternalAssessment
+     */
+    public function setCategories(Collection $categories): ExternalAssessment
+    {
+        $this->categories = $categories;
+
+        return $this;
+    }
 }

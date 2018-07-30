@@ -17,5 +17,3 @@ App\Entity\ExternalDepartment:
             - Url: ~
         description:
             - NotBlank: ~
-        fields:
-            - Valid: ~

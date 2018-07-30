@@ -27,6 +27,7 @@ App\Entity\ExternalAssessmentField:
                 name: category_id
                 referencedColumnName: id
                 nullable: false
+                orderBy: sequence
         externalAssessment:
             targetEntity: App\Entity\ExternalAssessment
             inversedBy: fields

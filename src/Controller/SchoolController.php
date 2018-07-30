@@ -19,6 +19,7 @@ use App\Entity\AttendanceCode;
 use App\Entity\DayOfWeek;
 use App\Entity\Department;
 use App\Entity\DepartmentStaff;
+use App\Entity\ExternalAssessmentField;
 use App\Entity\Facility;
 use App\Entity\House;
 use App\Entity\Person;
@@ -27,6 +28,8 @@ use App\Form\AttendanceSettingsType;
 use App\Form\CollectionManagerType;
 use App\Form\DaysOfWeekType;
 use App\Form\DepartmentType;
+use App\Form\ExternalAssessmentCategoryType;
+use App\Form\ExternalAssessmentCategoriesType;
 use App\Form\ExternalAssessmentFieldType;
 use App\Form\ExternalAssessmentType;
 use App\Form\FacilityType;
@@ -52,6 +55,7 @@ use App\Manager\TwigManager;
 use App\Organism\AttendanceCodes;
 use App\Organism\DaysOfWeek;
 use App\Pagination\DepartmentPagination;
+use App\Pagination\ExternalAssessmentCategoryPagination;
 use App\Pagination\ExternalAssessmentPagination;
 use App\Pagination\FacilityPagination;
 use App\Pagination\RollGroupPagination;
@@ -389,6 +393,7 @@ class SchoolController extends Controller
      *
      * @param Request $request
      * @param RollGroupPagination $pagination
+     * @param RollGroupManager $manager
      * @return Response
      * @Route("/school/roll/group/manage/", name="manage_roll_groups")
      */
@@ -446,13 +451,13 @@ class SchoolController extends Controller
     /**
      * @Route("/school/roll/group/{id}/delete/", name="roll_group_delete")
      * @IsGranted("ROLE_PRINCIPAL")
-     * @param Request $request
      * @param string $id
      * @param RollGroupManager $manager
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
-    public function rollDelete(Request $request, $id = 'Add', RollGroupManager $manager, FlashBagManager $flashBagManager)
+    public function rollDelete($id = 'Add', RollGroupManager $manager, FlashBagManager $flashBagManager)
     {
         $manager->delete($id);
         $flashBagManager->addMessages($manager->getMessageManager());
@@ -612,15 +617,18 @@ class SchoolController extends Controller
     }
 
     /**
-     * @param string $cid
-     * @param $id
-     * @param DepartmentManager $departmentManager
-     * @param \Twig_Environment $twig
-     * @return JsonResponse
      * @Route("/school/department/{id}/members/{cid}/manage/", name="department_members_manage")
      * @IsGranted("ROLE_PRINCIPAL")
+     * @param $id
+     * @param string $cid
+     * @param DepartmentManager $departmentManager
+     * @param TwigManager $twig
+     * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
      */
-    public function manageMemberCollection($cid = 'ignore', $id, DepartmentManager $departmentManager, TwigManager $twig)
+    public function manageMemberCollection($id, $cid = 'ignore', DepartmentManager $departmentManager, TwigManager $twig)
     {
         $departmentManager->removeMember($id, $cid);
 
@@ -670,9 +678,12 @@ class SchoolController extends Controller
     /**
      * scaleManage
      *
-     * @param Request $request
      * @Route("/school/scale/manage/", name="manage_scales")
      * @IsGranted("ROLE_PRINCIPAL")
+     * @param Request $request
+     * @param ScalePagination $pagination
+     * @param ScaleManager $manager
+     * @return Response
      */
     public function scaleManage(Request $request, ScalePagination $pagination, ScaleManager $manager)
     {
@@ -783,8 +794,15 @@ class SchoolController extends Controller
     /**
      * @Route("/school/external/assessment/{id}/edit/{tabName}/{closeWindow}", name="external_assessment_edit")
      * @IsGranted("ROLE_PRINCIPAL")
+     * @param Request $request
+     * @param ExternalAssessmentManager $manager
+     * @param string $id
+     * @param string $tabName
+     * @param string|null $closeWindow
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      */
-    public function editExternalAssessment(Request $request, $id = 'Add', string $tabName = 'details', ExternalAssessmentManager $manager, string $closeWindow = null)
+    public function editExternalAssessment(Request $request, ExternalAssessmentManager $manager, $id = 'Add', string $tabName = 'details', string $closeWindow = null)
     {
         $externalAssessment = $manager->find($id);
 
@@ -812,8 +830,13 @@ class SchoolController extends Controller
     /**
      * @Route("/school/external/assessment/{id}/delete/", name="external_assessment_delete")
      * @IsGranted("ROLE_PRINCIPAL")
+     * @param int $id
+     * @param ExternalAssessmentManager $manager
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
-    public function deleteExternalAssessment($id, ExternalAssessmentManager $manager, FlashBagManager $flashBagManager)
+    public function deleteExternalAssessment(int $id, ExternalAssessmentManager $manager, FlashBagManager $flashBagManager)
     {
         $manager->delete($id);
         $flashBagManager->addMessages($manager->getMessageManager());
@@ -859,8 +882,13 @@ class SchoolController extends Controller
     /**
      * @Route("/school/external/assessment/field/{id}/delete/", name="external_assessment_field_delete")
      * @IsGranted("ROLE_PRINCIPAL")
+     * @param int $id
+     * @param ExternalAssessmentFieldManager $manager
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
-    public function deleteExternalAssessmentField($id, ExternalAssessmentFieldManager $manager, FlashBagManager $flashBagManager)
+    public function deleteExternalAssessmentField(int $id, ExternalAssessmentFieldManager $manager, FlashBagManager $flashBagManager)
     {
         $eaf = $manager->find($id);
         $manager->delete($id);
@@ -870,50 +898,19 @@ class SchoolController extends Controller
     }
 
     /**
-     * editExternalAssessmentField
-     *
-     * @Route("/school/external/assessment/category/{id}/field/{field}/edit/{tabName}/{closeWindow}", name="external_assessment_category_edit")
+     * @Route("/school/external/assessment/{id}/category/{cid}/delete/", name="external_assessment_category_delete")
      * @IsGranted("ROLE_PRINCIPAL")
+     * @param int $cid
+     * @param ExternalAssessmentCategoryManager $manager
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      */
-    public function editExternalAssessmentCategory(Request $request, $id = 'Add', int $field, string $tabName = 'details',
-                                                ExternalAssessmentCategoryManager $manager, ExternalAssessmentManager $externalAssessmentManager, string $closeWindow = null)
+    public function deleteExternalAssessmentCategory(int $id, ExternalAssessmentCategoryManager $manager, FlashBagManager $flashBagManager, $cid = 'ignore')
     {
-        $externalAssessmentField = $manager->find($id);
-
-        if ($id === 'Add')
-            $externalAssessmentField->setExternalAssessment($externalAssessmentManager->find($ea));
-
-        $form = $this->createForm(ExternalAssessmentFieldType::class, $externalAssessmentField);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $manager->getEntityManager()->persist($externalAssessmentField);
-            $manager->getEntityManager()->flush();
-
-            return $this->redirectToRoute('external_assessment_field_edit', ['id' => $externalAssessmentField->getId(), 'ea' => $ea, 'tabName' => $tabName, 'closeWindow' => $closeWindow]);
-        }
-
-        return $this->render('School/external_assessment_field_edit.html.twig',
-            [
-                'form' => $form->createView(),
-                'fullForm' => $form,
-                'tabManager' => $manager,
-            ]
-        );
-    }
-
-    /**
-     * @Route("/school/external/assessment/category/{id}/delete/", name="external_assessment_category_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
-     */
-    public function deleteExternalAssessmentCategory($id, ExternalAssessmentCategoryManager $manager, FlashBagManager $flashBagManager)
-    {
-        dd($id);
-        $manager->delete($id);
+        $manager->delete($cid);
         $flashBagManager->addMessages($manager->getMessageManager());
 
-        return $this->redirectToRoute('external_assessment_edit', ['id' => $eaf->getExternalAssessment()->getId(), 'tabName' => 'fields']);
+        return $this->redirectToRoute('external_assessment_edit', ['id' => $id, 'tabName' => 'categories']);
     }
 }
