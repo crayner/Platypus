@@ -48,12 +48,18 @@ class SchoolYearTermType extends AbstractType
 				array(
 					'label' => 'term.name.label',
 					'help' => 'term.name.help',
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
 				)
 			)
 			->add('nameShort', TextType::class,
 				array(
 					'label' => 'term.name_short.label',
 					'help' => 'term.name_short.help',
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
 				)
 			)
 			->add('firstDay', DateType::class,
@@ -61,6 +67,9 @@ class SchoolYearTermType extends AbstractType
 					'label' => 'term.first_day.label',
 					'help' => 'term.first_day.help',
 					'years' => $schoolYears,
+                    'attr' => [
+                        'class' => 'small',
+                    ],
 				)
 			)
 			->add('lastDay', DateType::class,
@@ -68,6 +77,9 @@ class SchoolYearTermType extends AbstractType
 					'label' => 'term.last_day.label',
 					'help' => 'term.last_day.help',
 					'years' => $schoolYears,
+                    'attr' => [
+                        'class' => 'small',
+                    ],
 				)
 			)
 			->add('schoolYear', HiddenEntityType::class,

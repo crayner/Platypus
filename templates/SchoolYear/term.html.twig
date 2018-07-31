@@ -7,31 +7,21 @@
 
 {% block school_year_term_widget %}
     {% spaceless %}
-        {% if form.name.vars.value is empty %}{% set termTitle = 'term.add.label'|trans %}{% else %}{% set termTitle = form.name.vars.value %}{% endif %}
-        {% set h3Content = '<div class="collection-actions">' %}
-        {% set h3Content = h3Content ~ saveButton({'name': 'terms'}) %}
-        {% set h3Content = h3Content ~ '</div>' %}
-        {% include 'Default/panelStart.html.twig' with {'header': termTitle, 'panelStyle': 'info', transDomain: false} %}
-        <div class="container-fluid">
             <div class="row">
-                <div class="col-4 card">
-                    {{ form_row(form.name) }}
+                <div class="col-6 card">
+                    <div class="row">
+                        <div class="col-8">{{ form_widget(form.name) }}</div>
+                        <div class="col-4">{{ form_widget(form.nameShort) }}</div>
+                    </div>
                 </div>
                 <div class="col-3 card">
-                    {{ form_row(form.nameShort) }}
+                    {{ form_widget(form.firstDay) }}
                 </div>
-                <div class="col-5 card">
-                    {{ form_row(form.firstDay) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-5 offset-7 card">
-                    {{ form_row(form.lastDay) }}
+                <div class="col-3 card">
+                    {{ form_widget(form.lastDay) }}
                     {{ form_row(form.schoolYear, {'value': app.request.get('id')}) }}
                     {{ form_rest(form) }}
                 </div>
             </div>
-        </div>
-        {% include 'Default/panelEnd.html.twig' %}
     {% endspaceless %}
 {% endblock school_year_term_widget %}
