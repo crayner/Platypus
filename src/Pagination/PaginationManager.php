@@ -158,6 +158,11 @@ abstract class PaginationManager implements PaginationInterface
      */
 	private $count = false;
 
+    /**
+     * @var bool
+     */
+	private $react = false;
+
 	/**
 	 * Constructor
 	 *
@@ -1098,6 +1103,24 @@ abstract class PaginationManager implements PaginationInterface
     public function setCount(bool $count): PaginationManager
     {
         $this->count = $count;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReact(): bool
+    {
+        return $this->react;
+    }
+
+    /**
+     * @param bool $react
+     * @return PaginationManager
+     */
+    public function setReact(bool $react): PaginationManager
+    {
+        $this->react = $react;
         return $this;
     }
 

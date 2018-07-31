@@ -23,6 +23,21 @@
             {% set columnA = '4' %}
             {% set columnB = '8' %}
         {% endif %}
+        {% if form.vars.value is not empty and form.vars.value.type is same as('system') %}
+            <div class="{{ rowClass|default('row') }}">
+                <div class="col-{{ columnA }} card">
+                    {{ form_label(form.value) }}
+                    {{ form_errors(form.value) }}
+                </div>
+                <div class="col-{{ columnB }} card">
+                    <div>
+                        {{ form.value.vars.value }}<br/>
+                        <span class="text-muted small"> {{ 'system.value.warning'|trans }}</span>
+                        {{ form_widget(form.value) }}
+                    </div>
+                </div>
+            </div>
+        {% else %}
         <div class="{{ rowClass|default('row') }}">
             <div class="col-{{ columnA }} card">
                 {{ form_label(form.value) }}
@@ -34,5 +49,6 @@
                 </div>
             </div>
         </div>
+        {% endif %}
     {% endspaceless %}
 {% endblock multiple_settings_widget %}

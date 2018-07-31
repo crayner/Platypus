@@ -4,25 +4,24 @@
 {% block school_year_special_day_errors %}{% endblock %}
 
 {% block school_year_special_day_widget %}
-    {% if form.name.vars.value is empty %}{% set panelTitle = 'school_year.special_day.add'|trans %}{% else %}{% set panelTitle = form.vars.value.fullName(get_setting('date.format.long')) %}{% endif %}
+    {% if form.name.vars.value is empty %}{% set panelTitle = 'school_year.special_day.add'|trans %}{% else %}{% set panelTitle = form.vars.value.fullName(get_setting('date.format.long', 'D jS/M Y')) %}{% endif %}
     {% set h3Content = '<div class="collection-actions">' %}
-    {% set h3Content = h3Content ~ saveButton() %}
+    {% set h3Content = h3Content ~ saveButton({mergeClass: 'btn-sm'}) %}
     {% set h3Content = h3Content ~ '</div>' %}
     {% include 'Default/panelStart.html.twig' with {header: panelTitle, panelStyle: 'info', transDomain: false} %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-6 card">
-                {{ form_row(form.date) }}
-            </div>
-            <div class="col-6 card">
-                {{ form_row(form.type) }}
-            </div>
-        </div>
         <div class="row">
             <div class="col-4 card">
                 {{ form_row(form.name) }}
             </div>
-            <div class="col-8 card">
+            <div class="col-4 card">
+                {{ form_row(form.date) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_row(form.type) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 card">
                 {{ form_row(form.schoolYear, {'value': app.request.get('id')}) }}
                 {{ form_row(form.description) }}
             </div>
@@ -44,6 +43,5 @@
                 {{ form_rest(form) }}
             </div>
         </div>
-    </div>
     {% include 'Default/panelEnd.html.twig' %}
 {% endblock school_year_special_day_widget %}

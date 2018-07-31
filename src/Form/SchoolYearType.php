@@ -78,6 +78,7 @@ class SchoolYearType extends AbstractType
 					'label'         => false,
 					'by_reference'  => false,
                     'route'         => 'term_manage',
+                    'button_merge_class' => 'btn-sm',
 				)
 			)
 			->add('specialDays', CollectionType::class, array(
@@ -93,6 +94,7 @@ class SchoolYearType extends AbstractType
 					'allow_delete'  => true,
 					'by_reference'  => false,
                     'route'         => 'special_day_manage',
+                    'button_merge_class' => 'btn-sm',
 				)
 			)
         ;

@@ -1102,13 +1102,13 @@ class SettingManager implements ContainerAwareInterface
      * @param $name
      * @return SettingCreationInterface
      */
-    public function createSettingDefinition($name): SettingCreationInterface
+    public function createSettingDefinition(string $name, array $options = []): SettingCreationInterface
     {
         $class = 'App\\Manager\\Settings\\' . $name . 'Settings';
         if (! class_exists($class))
             trigger_error('The class ' . $class . ' does not exist,');
 
-        $class = new $class();
+        $class = new $class($options);
 
         if (! $class instanceof SettingCreationInterface)
             trigger_error('The class ' . get_class($class) . ' does not implement the ' . SettingCreationInterface::class);

@@ -28,6 +28,7 @@ use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -84,8 +85,18 @@ class MultipleSettingType extends AbstractType
                 case 'choice':
                     $formType = ChoiceType::class;
                     $choices = $data->__get('choice');
+                    if (empty($choices['method'])) {
+                        $x = [];
+                        foreach ($choices as $value)
+                            $x[$data->getName() . '.' . $value] = $value;
+                    } else {
+                        $r = explode('::', $choices['method']);
+                        $class = $r[0];
+                        $method = $r[1];
+                        $x = $class::$method();
+                    }
                     $additional = [
-                        'choices' => $choices,
+                        'choices' => $x,
                         'placeholder' => false,
                     ];
                     break;
@@ -126,6 +137,10 @@ class MultipleSettingType extends AbstractType
                     break;
                 case 'entity':
                     $formType = EntityType::class;
+                    $additional = $data->getEntityOptions() ?: [];
+                    break;
+                case 'system':
+                    $formType = HiddenType::class;
                     $additional = $data->getEntityOptions() ?: [];
                     break;
                 default:

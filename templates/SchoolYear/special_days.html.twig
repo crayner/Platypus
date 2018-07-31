@@ -1,7 +1,7 @@
 {% trans_default_domain "Calendar" %}
 
 {% include 'SchoolYear/school_year_menu.html.twig' with {header: 'school_year.special_day.title', name: form.name.vars.value, panelParagraph: 'school_year.special_day.help'} %}
-	<div id="school_year_specialDays_target"></div>
+	<div id="school_year_specialDays_target">{{ collection_widget(form.specialDays) }}</div>
 {% include 'Default/panelEnd.html.twig' %}
 
 {% do form.specialDays.setRendered %}

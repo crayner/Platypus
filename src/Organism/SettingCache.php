@@ -94,7 +94,7 @@ class SettingCache
      */
     public function getEntityOptions(): array
     {
-        return $this->entityOptions;
+        return $this->entityOptions ?: [];
     }
 
     /**

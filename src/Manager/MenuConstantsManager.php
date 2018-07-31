@@ -19,6 +19,13 @@ class MenuConstantsManager
     node: 1
     order: 10
     route: school_year_manage
+11:
+    label: menu.admin.system
+    name: System Admin
+    role: ROLE_REGISTRAR
+    node: 1
+    order: 11
+    route: manage_system_settings
 ';
     CONST SECTIONS = '
 School Admin:
@@ -219,6 +226,14 @@ School Admin:
         - scale_edit
         - external_assessment_edit
         - external_assessment_field_edit
+System Admin:
+    settings:
+        manage_system_settings:
+            label: manage_system_settings
+            role: ROLE_REGISTRAR
+            route: manage_system_settings
+            parameters: {}
+            transDomain: System
 ';
     /*
 	CONST NODES = '

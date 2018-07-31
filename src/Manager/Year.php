@@ -1,7 +1,7 @@
 <?php
 namespace App\Manager;
 
-use App\Entity\Calendar;
+use App\Entity\SchoolYear;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Year
@@ -41,16 +41,16 @@ class Year
 		$this->settingManager = $settingManager;
 	}
 
-	/**
-	 * Generate Year Calendar
-	 *
-	 * @param Calendar $calendar
-	 *
-	 * @return $this
-	 */
-	public function generate(Calendar $calendar)
+    /**
+     * Generate Year Calendar
+     *
+     * @param SchoolYear $calendar
+     * @return Year
+     * @throws \Exception
+     */
+	public function generate(SchoolYear $calendar)
 	{
-		$this->calendar       = $calendar;
+		$this->calendar   = $calendar;
 		$this->months     = new ArrayCollection();
 		$this->weeks      = new ArrayCollection();
 		$this->days       = new ArrayCollection();

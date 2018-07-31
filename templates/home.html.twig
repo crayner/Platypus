@@ -11,10 +11,14 @@
 {% block contentContainer %}
     <div id="content-container">
     <section>
-        <p>{{ 'home.para1'|trans }}</p>
-        <p>{{ 'home.para2'|trans }}</p>
-        <p>{{ 'home.para3'|trans }}</p>
-        <p>Craig Rayner</p>
+        {% if get_setting('system.index.text', null) is not empty %}
+            <p>{{ get_setting('system.index.text', null) }}</p>
+        {% else %}
+            <p>{{ 'home.para1'|trans }}</p>
+            <p>{{ 'home.para2'|trans }}</p>
+            <p>{{ 'home.para3'|trans }}</p>
+            <p>Craig Rayner</p>
+        {% endif %}
     </section>
     </div>
 {% endblock contentContainer %}

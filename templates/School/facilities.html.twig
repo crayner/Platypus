@@ -40,6 +40,7 @@
                 {{ 'actions'|trans({}, 'System') }}
             </div>
         </div>
+        <div id="pagination-content">
         {% for resource in pagination.getResult %}
             <div class="row row-striped">
                 <div class="col-3 form-inline">
@@ -68,6 +69,7 @@
                 </div>
             </div>
         {% endfor %}
+        </div>
     </div>
     {% include 'Default/panelEnd.html.twig' %}
 {% endblock contentContainer %}

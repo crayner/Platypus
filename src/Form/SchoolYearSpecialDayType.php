@@ -50,7 +50,7 @@ class SchoolYearSpecialDayType extends AbstractType
 					'help' => 'special_day.date.help',
 					'years' => $calendars,
 					'attr' => [
-						'class' => 'form-sub-sm'
+						'class' => 'small'
 					],
 				)
 			)
@@ -59,7 +59,7 @@ class SchoolYearSpecialDayType extends AbstractType
 					'label' => 'special_day.type.label',
                     'help'  => 'special_day.type.help',
 					'attr'  => [
-						'class' => 'alterType',
+						'class' => 'alterType form-control-sm',
 					],
 				]
 			)
@@ -73,7 +73,8 @@ class SchoolYearSpecialDayType extends AbstractType
 				[
 					'label'    => 'special_day.description.label',
 					'attr'     => [
-						'rows' => '3'
+						'rows' => '3',
+                        'class' => 'form-control-sm',
 					],
 					'help' => 'special_day.description.help',
 					'required' => false,
@@ -83,7 +84,7 @@ class SchoolYearSpecialDayType extends AbstractType
 				array(
 					'label'       => 'special_day.open.label',
 					'attr'        => array(
-						'class' => 'alterTime form-sub-sm',
+						'class' => 'alterTime small',
 					),
 					'help'  => 'special_day.open.help',
 					'placeholder' => array('hour' => 'special_day.hour', 'minute' => 'special_day.minute'),
@@ -93,7 +94,7 @@ class SchoolYearSpecialDayType extends AbstractType
 				array(
 					'label'       => 'special_day.start.label',
 					'attr'        => array(
-						'class' => 'alterTime form-sub-sm',
+						'class' => 'alterTime small',
 					),
 					'help'  => 'special_day.start.help',
 					'placeholder' => array('hour' => 'special_day.hour', 'minute' => 'special_day.minute'),
@@ -103,7 +104,7 @@ class SchoolYearSpecialDayType extends AbstractType
 				array(
 					'label'       => 'special_day.end.label',
 					'attr'        => array(
-						'class' => 'alterTime form-sub-sm',
+						'class' => 'alterTime small',
 					),
 					'help'  => 'special_day.end.help',
 					'placeholder' => array('hour' => 'special_day.hour', 'minute' => 'special_day.minute'),
@@ -113,7 +114,7 @@ class SchoolYearSpecialDayType extends AbstractType
 				array(
 					'label'       => 'special_day.close.label',
 					'attr'        => array(
-						'class' => 'alterTime form-sub-sm',
+						'class' => 'alterTime small',
 					),
 					'help'  => 'special_day.close.help',
 					'placeholder' => array('hour' => 'special_day.hour', 'minute' => 'special_day.minute'),
