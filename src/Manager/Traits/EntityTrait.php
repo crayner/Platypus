@@ -17,6 +17,7 @@ namespace App\Manager\Traits;
 
 use App\Manager\MessageManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * Trait EntityTrait
@@ -35,6 +36,11 @@ trait EntityTrait
     private $messageManager;
 
     /**
+     * @var EntityRepository
+     */
+    static private $entityRepository;
+
+    /**
      * @var Object
      */
     private $entity;
@@ -48,6 +54,7 @@ trait EntityTrait
     {
         $this->entityManager = $entityManager;
         $this->messageManager = $messageManager;
+        self::$entityRepository = $entityManager->getRepository($this->entityName);
     }
 
     /**

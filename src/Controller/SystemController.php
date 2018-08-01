@@ -17,6 +17,7 @@ namespace App\Controller;
 
 use App\Form\SectionSettingType;
 use App\Manager\MultipleSettingManager;
+use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,7 +44,7 @@ class SystemController extends Controller
      * @Route("/system/settings/manage/", name="manage_system_settings")
      * @IsGranted("ROLE_REGISTRAR")
      */
-    public function systemSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
+    public function systemSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager, ScaleManager $scaleManager)
     {
         $request->getSession()->set('manage_settings', $sm->createSettingDefinition('System', ['request' => $request]));
 

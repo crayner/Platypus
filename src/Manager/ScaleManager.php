@@ -82,4 +82,27 @@ scale_grade_collection:
             ->getResult();
         return new ArrayCollection($result);
     }
+
+    /**
+     * getScaleList
+     *
+     * @param bool $active
+     * @return array
+     */
+    public static function getScaleList($active = true): array
+    {
+        $query = self::$entityRepository->createQueryBuilder('s')
+            ->select('s.id')
+            ->addSelect('s.name')
+            ->orderBy('s.name');
+        if (is_bool($active))
+            $query->where('s.active = :active')
+                ->setParameter('active', $active);
+
+        $results = [];
+        foreach($query->getQuery()->getArrayResult() as $data)
+            $results[$data['name']] = $data['id'];
+
+        return $results;
+    }
 }

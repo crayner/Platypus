@@ -50,3 +50,8 @@ parameters:
     db_prefix: jsgdy_
     db_server: mysql
     db_charset: utf8mb4
+    mailer_transport: null
+    mailer_host: null
+    mailer_user: null
+    mailer_password: null
+    mailer_spool: { type: memory }

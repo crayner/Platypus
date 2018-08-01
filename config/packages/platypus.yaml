@@ -19,3 +19,8 @@ parameters:
     timezone: Australia/Sydney
     idle_timeout: 15
     currency: AUD
+    mailer_transport: gmail
+    mailer_host: smtp.gmail.com
+    mailer_user: craig@craigrayner.com
+    mailer_password: oaerkkeodcrjyhzw
+    mailer_spool: { type: memory }
