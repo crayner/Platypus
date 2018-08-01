@@ -15,6 +15,7 @@
  */
 namespace App\Manager;
 
+use App\Organism\SettingCache;
 use App\Util\StringHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -203,14 +204,28 @@ class MultipleSettingManager
         foreach ($this->getSections() as $name=>$section)
             foreach ($section['settings'] as $key=>$setting)
             {
-                if ($setting->getType() === 'multiChoice' && empty($data[$name]['collection'][$key]))
-                {
-                    $refresh = true;
-                    $setting->setValue([]);
+                if ($setting->isParameter()) {
+                    $this->saveParameter($sm, $setting);
+                } else {
+                    if ($setting->getType() === 'multiChoice' && empty($data[$name]['collection'][$key])) {
+                        $refresh = true;
+                        $setting->setValue([]);
+                    }
+                    $sm->createSetting($setting->getSetting());
                 }
-                $sm->createSetting($setting->getSetting());
             }
 
         return $refresh;
+    }
+
+    /**
+     * saveParameter
+     *
+     * @param SettingManager $settingManager
+     * @param SettingCache $setting
+     */
+    private function saveParameter(SettingManager $settingManager, SettingCache $setting)
+    {
+        $settingManager->setParameter(explode(':', $setting->getName()), $setting->getValue());
     }
 }

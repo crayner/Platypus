@@ -85,15 +85,16 @@ class MultipleSettingType extends AbstractType
                 case 'choice':
                     $formType = ChoiceType::class;
                     $choices = $data->__get('choice');
-                    if (empty($choices['method'])) {
-                        $x = [];
+                    if (empty($data->__get('translateChoice'))) {
+                        if (is_null($data->__get('translateChoice'))) {
+                            foreach ($choices as $value)
+                                $x[$value] = $value;
+                        } else {
+                            $x = $choices;
+                        }
+                    } else {
                         foreach ($choices as $value)
                             $x[$data->getName() . '.' . $value] = $value;
-                    } else {
-                        $r = explode('::', $choices['method']);
-                        $class = $r[0];
-                        $method = $r[1];
-                        $x = $class::$method();
                     }
                     $additional = [
                         'choices' => $x,

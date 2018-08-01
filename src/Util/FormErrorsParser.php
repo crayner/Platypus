@@ -101,12 +101,16 @@ class FormErrorsParser
 		if (empty($translation))
 		{
 			$parent = $form->getParent();
+
+			if (empty($parent))
+			    $translation = 'messages';
+
 			while (empty($translation))
 			{
 				$translation = $parent->getConfig()->getOption('translation_domain');
 				$parent      = $parent->getParent();
-				if (empty($parent) && empty($translation))
-					$tranlsation = 'messages';
+				if (! $parent instanceof FormInterface && empty($translation))
+					$translation = 'messages';
 			}
 		}
 

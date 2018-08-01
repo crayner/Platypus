@@ -3,4 +3,4 @@ twig:
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
     globals:
-        idleTimeout: '%idleTimeout%'
+        idleTimeout: '%idle_timeout%'

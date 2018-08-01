@@ -295,18 +295,18 @@ class Setting
     private $translateChoice;
 
     /**
-     * @return null|string
+     * @return null|boolean|string
      */
-    public function getTranslateChoice(): ?string
+    public function getTranslateChoice()
     {
         return $this->translateChoice;
     }
 
     /**
-     * @param null|string $translateChoice
+     * @param null|boolean|string $translateChoice
      * @return Setting
      */
-    public function setTranslateChoice(?string $translateChoice): Setting
+    public function setTranslateChoice($translateChoice): Setting
     {
         $this->translateChoice = $translateChoice;
         return $this;

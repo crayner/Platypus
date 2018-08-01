@@ -582,6 +582,48 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
+     * setParameter
+     *
+     * @param array $name
+     * @param $value
+     * @return mixed
+     */
+    public function setParameter(array $name, $value)
+    {
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'packages' . DIRECTORY_SEPARATOR . 'platypus.yaml';
+        $content = Yaml::parse(file_get_contents($path));
+
+        $content['parameters'] = $this->changeParameterValue($content['parameters'], $name, $value);
+
+        file_put_contents($path, Yaml::dump($content));
+    }
+
+    /**
+     * changeParameterValue
+     *
+     * @param array $parameters
+     * @param array $name
+     * @param mixed $value
+     * @return array
+     */
+    private function changeParameterValue(array $parameters, array $name, $value): array
+    {
+        $key = array_shift($name);
+
+        if (empty($name))
+        {
+            $parameters[$key] = $value;
+            return $parameters;
+        }
+
+        if (empty($parameters[$key]))
+            $parameters[$key] = [];
+
+        $parameters[$key] = $this->changeParameterValue($parameters[$key], $name, $value);
+
+        return $parameters;
+    }
+    /**
      * getValue
      *
      * @param null $default
@@ -1038,6 +1080,7 @@ class SettingManager implements ContainerAwareInterface
 
     /**
      * @param $current
+     * @throws \Doctrine\ORM\ORMException
      */
     private function updateCurrentVersion($current)
     {
@@ -1099,7 +1142,8 @@ class SettingManager implements ContainerAwareInterface
     /**
      * createSettingDefinition
      *
-     * @param $name
+     * @param string $name
+     * @param array $options
      * @return SettingCreationInterface
      */
     public function createSettingDefinition(string $name, array $options = []): SettingCreationInterface
@@ -1121,7 +1165,6 @@ class SettingManager implements ContainerAwareInterface
 
     /**
      * createSetting
-     *
      * @param Setting $setting
      * @return SettingManager
      * @throws \Doctrine\DBAL\Exception\TableNotFoundException

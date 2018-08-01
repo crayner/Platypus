@@ -16,6 +16,7 @@
 namespace App\Organism;
 
 use App\Entity\Setting;
+use App\Manager\SettingManager;
 use App\Repository\SettingRepository;
 use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\DBAL\Exception\TableNotFoundException;
@@ -104,6 +105,32 @@ class SettingCache
     public function setEntityOptions(array $entityOptions): SettingCache
     {
         $this->entityOptions = $entityOptions;
+        return $this;
+    }
+
+    /**
+     * @var boolean
+     */
+    private $parameter = false;
+
+    /**
+     * @return bool
+     */
+    public function isParameter(): bool
+    {
+        return $this->parameter ? true : false ;
+    }
+
+    /**
+     * @param bool $parameter
+     * @return SettingCache
+     */
+    public function setParameter(bool $parameter, SettingManager $settingManager, $default = null): SettingCache
+    {
+        $this->parameter = $parameter ? true : false ;
+        if ($this->parameter)
+            $this->setValue($settingManager->getParameter(str_replace(':', '.', $this->getName()), $default));
+
         return $this;
     }
 
