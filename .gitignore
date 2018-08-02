@@ -8,3 +8,5 @@
 /.idea/
 !/vendor/hillrange/*
 node_modules
+#Remove Settings from
+platypus.yaml
