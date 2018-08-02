@@ -1,0 +1,47 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% block title %}{{ 'string.replacement.pagination.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'string.replacement.pagination.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'string.replacement.pagination.description'|trans  }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% include 'Pagination/index.html.twig' %}
+
+    <div class="container-fluid">
+        <div class="row row-header small">
+            <div class="col-3 text-center" style="display: inline-block;">
+                {{ 'string.original.label'|trans }}
+            </div>
+            <div class="col-3 text-center">
+                {{ 'string.replacement.label'|trans }}
+            </div>
+            <div class="col-3 text-center">
+                {{ 'string.mode.pagination.header'|trans }}
+            </div>
+            <div class="col-3 text-center">
+                {{ 'actions'|trans({}, 'System') }}<br/>
+                {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_string_replacement', {id: 'Add'})}})|raw }}
+            </div>
+        </div>
+        {% for string in pagination.getResult %}
+            <div class="row row-striped">
+                <div class="col-3 small">
+                    {{ string.original}}
+                </div>
+                <div class="col-3 small">
+                    {{ string.replacement}}
+                </div>
+                <div class="col-3 small text-center">
+                    {{ string.replaceMode }} / {{ string.caseSensitive }} / {{ string.priority }}
+                </div>
+                <div class="col-2 text-center">
+                    {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_string_replacement', {id: string.id})}})|raw }}
+                    {{ deleteButton({mergeClass: 'btn-sm', windowOpen: {route: path('delete_string_replacement', {id: string.id})}, colour: 'warning'})|raw }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock contentContainer %}
+

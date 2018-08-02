@@ -1,0 +1,35 @@
+App\Entity\StringReplacement:
+    type: entity
+    table: string_replacement
+    repositoryClass: App\Repository\StringReplacementRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    indexes:
+        original:
+            columns:
+                - original
+    fields:
+        original:
+            length: 100
+            nullable: false
+            unique: true
+        replacement:
+            length: 100
+            nullable: false
+        replaceMode:
+            length: 8
+            column: replace_mode
+            options:
+                default: 'whole'
+        caseSensitive:
+            type: boolean
+            column: case_sensitive
+            options:
+                default: 0
+        priority:
+            type: integer
+            options:
+                default: 0

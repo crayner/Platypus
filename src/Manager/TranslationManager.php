@@ -1,31 +1,20 @@
 <?php
 namespace App\Manager;
 
-use App\Entity\Translate;
+use App\Entity\StringReplacement;
+use App\Repository\StringReplacementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\Loader\XliffFileLoader;
 use Symfony\Component\Translation\TranslatorBagInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 
 class TranslationManager implements TranslatorInterface, TranslatorBagInterface
 {
-    /**
-     * @var array
-     * Ensure that your add an entry in the translation home.en.xlf file under school.search.replace for each new entry.
-     */
-    private $source = [
-        'form_grade' => 'form_grade',
-        'forms_grades' => 'forms_grades',
-        'unique' => 'unique',
-        'this_school' => 'this_school',
-        'roll_name' => 'roll_name',
-        'rolls_name' => 'rolls_name',
-    ];
-
     public static $languages = [
         'nl_NL' => 'Dutch - Nederland',
         'en' => 'English - United Kingdom',
@@ -126,45 +115,37 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
      */
     private function getInstituteTranslation($trans, $locale): string
     {
-        $matches = [];
-        preg_match_all('/!!!(.*?)!!!/', $trans, $matches);
-
-        if (empty($matches[1]))
+        if (empty($trans))
             return $trans;
 
-        foreach($matches[1] as $q=>$source)
-        {
-            $translate = null;
-            if ($this->settingManager->has($source))
-            {
-                $translate = new Translate();
-                $translate->setValue($this->settingManager->get($source));
-            }
-            if (empty($translate) && ! empty($locale)) // translate override
-                $translate = $this->translateRepository->findOneBy(['source' => $source, 'locale' => $locale]);
-
-            if (empty($translate) && ! empty($this->getLocale())) // system locale
-                $translate = $this->translateRepository->findOneBy(['source' => $source, 'locale' => $this->getLocale()]);
-
-            if (empty($translate) && ! empty($this->settingManager->getParameter('locale')))  // fallBack Locale
-                $translate = $this->translateRepository->findOneBy(['source' => $source, 'locale' => $this->settingManager->getParameter('locale')]);
-
-            if (empty($translate))
-            {
-                if (in_array($source, $this->source))
-                {
-
-                    $translate = new Translate();
-                    $translate->setValue($this->trans('school.search.replace.' . $source, [], 'System'));
-                    $translate->setSource( $source );
-                    $translate->setLocale($this->settingManager->getParameter('locale'));
-                    $this->entityManager->persist($translate);
-                    $this->entityManager->flush();
+        $strings = $this->getStrings();
+        if ((! empty($strings) || $strings->count() > 0) && $strings instanceof ArrayCollection) {
+            foreach ($strings->toArray() AS $replacement) {
+                if ($replacement->getReplaceMode()=="partial") { //Partial match
+                    if ($replacement->isCaseSensitive()=="Y") {
+                        if (strpos($trans, $replacement->getOriginal())!==FALSE) {
+                            $trans=str_replace($replacement->getOriginal(), $replacement->getReplacement(), $trans);
+                        }
+                    }
+                    else {
+                        if (stripos($trans, $replacement->getOriginal())!==FALSE) {
+                            $trans=str_ireplace($replacement->getOriginal(), $replacement->getReplacement(), $trans);
+                        }
+                    }
+                }
+                else { //Whole match
+                    if ($replacement->isCaseSensitive()=="Y") {
+                        if ($replacement->getOriginal()==$trans) {
+                            $trans=$replacement->getReplacement();
+                        }
+                    }
+                    else {
+                        if (strtolower($replacement->getOriginal())==strtolower($trans)) {
+                            $trans=$replacement->getReplacement();
+                        }
+                    }
                 }
             }
-
-            if ($translate instanceof Translate)
-                $trans = str_replace($matches[0][$q], $translate->getValue(), $trans);
         }
 
         return $trans;
@@ -176,7 +157,7 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
     private $translator;
 
     /**
-     * @var TranslateRepository
+     * @var StringReplacementRepository
      */
     private $translateRepository;
 
@@ -197,6 +178,7 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
 
     /**
      * TranslationManager constructor.
+     *
      * @param TranslatorInterface $translator
      * @param EntityManagerInterface $entityManager
      * @param SettingManager $settingManager
@@ -206,7 +188,7 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
     {
         $this->settingManager = $settingManager;
         try {
-            $this->translateRepository = $entityManager->getRepository(Translate::class);
+            $this->translateRepository = $entityManager->getRepository(StringReplacement::class);
         } catch (ConnectionException $e) {
             //Ignore
         }
@@ -215,7 +197,6 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
 
         $translator->addLoader('xlf', new XliffFileLoader());
         $this->translator = $translator;
-
     }
 
     /**
@@ -228,8 +209,17 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
      */
     public function getStrings($refresh = false): ?Collection
     {
+        if (empty($this->strings) && ! $refresh)
+            $this->strings = $this->getSession()->get('stringReplacement', null);
+        else
+            return $this->strings;
+
         if (empty($this->strings) || $refresh)
-            $this->strings = new ArrayCollection($this->entityManager->getRepository(Translate::class)->findBy([],['source' => 'ASC', 'locale' => 'ASC']));
+            $this->strings = new ArrayCollection($this->entityManager->getRepository(StringReplacement::class)->findBy([],['priority' => 'DESC', 'original' => 'ASC']));
+        else
+            return $this->strings;
+
+        $this->getSession()->set('stringReplacement', $this->strings);
 
         return $this->strings;
     }
@@ -249,12 +239,12 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
     }
 
     /**
-     * @param Translate|null $translate
+     * @param StringReplacement|null $translate
      * @return TranslationManager
      */
-    public function addString(?Translate $translate): TranslationManager
+    public function addString(?StringReplacement $translate): TranslationManager
     {
-        if (empty($translate) || ! $translate instanceof Translate)
+        if (empty($translate) || ! $translate instanceof StringReplacement)
             return $this;
 
         if ($this->getStrings()->contains($translate))
@@ -269,7 +259,7 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
      * @param Translate|null $translate
      * @return TranslationManager
      */
-    public function removeString(?Translate $translate): TranslationManager
+    public function removeString(?StringReplacement $translate): TranslationManager
     {
         $this->getStrings()->removeElement($translate);
 
@@ -347,5 +337,13 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
         $message = strtr($message, $messages);
 
         return $message;
+    }
+
+    /**
+     * @return SessionInterface
+     */
+    public function getSession(): SessionInterface
+    {
+        return $this->settingManager->getSession();
     }
 }

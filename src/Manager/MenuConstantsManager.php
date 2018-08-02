@@ -228,6 +228,12 @@ School Admin:
         - external_assessment_field_edit
 System Admin:
     settings:
+        string_replacement:
+            label: string_replacement
+            role: ROLE_REGISTRAR
+            route: manage_string_replacement
+            parameters: {}
+            transDomain: System
         manage_system_settings:
             label: manage_system_settings
             role: ROLE_REGISTRAR
@@ -240,6 +246,8 @@ System Admin:
             route: third_party_settings
             parameters: {}
             transDomain: System
+    hidden:
+        - edit_string_replacement
 ';
     /*
 	CONST NODES = '

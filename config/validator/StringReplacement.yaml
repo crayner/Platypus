@@ -1,0 +1,22 @@
+App\Entity\StringReplacement:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [original]
+    properties:
+        original:
+            - NotBlank: ~
+            - Length:
+                max: 100
+        replacement:
+            - NotBlank: ~
+            - Length:
+                max: 100
+        priority:
+            - Hillrange\Form\Validator\Integer:
+            - Range:
+                min: 0
+                max: 99
+        replaceMode:
+            - Hillrange\Form\Validator\Enum:
+                class: App\Entity\StringReplacement
+                method: getReplaceMode

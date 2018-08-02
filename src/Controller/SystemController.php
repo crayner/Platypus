@@ -16,9 +16,13 @@
 namespace App\Controller;
 
 use App\Form\SectionSettingType;
+use App\Form\StringReplacementType;
+use App\Manager\FlashBagManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
+use App\Manager\StringReplacementManager;
+use App\Pagination\StringReplacementPagination;
 use Hillrange\Form\Util\ScriptManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -116,5 +120,87 @@ class SystemController extends Controller
                 'fullForm' => $form,
             ]
         );
+    }
+
+    /**
+     * stringReplacementManage
+     *
+     * @param Request $request
+     * @param StringReplacementPagination $pagination
+     * @param StringReplacementManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/system/string_replacement/manage/", name="manage_string_replacement")
+     * @IsGranted("ROLE_REGISTRAR")
+     */
+    public function stringReplacementManage(Request $request, StringReplacementPagination $pagination, StringReplacementManager $manager)
+    {
+        $pagination->injectRequest($request);
+
+        $pagination->getDataSet();
+
+        return $this->render('System/string_replacement_manage.html.twig',
+            [
+                'pagination' => $pagination,
+                'manager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * stringReplacementEdit
+     *
+     * @param Request $request
+     * @param StringReplacementManager $manager
+     * @param mixed $id
+     * @Route("/system/string_replacement/{id}/edit/", name="edit_string_replacement")
+     * @IsGranted("ROLE_REGISTRAR")
+     */
+    public function stringReplacementEdit(Request $request, StringReplacementManager $manager, $id = 'Add')
+    {
+        $entity = $manager->find($id);
+
+        $form = $this->createForm(StringReplacementType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->get('doctrine')->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            $this->get('session')->clear('stringReplacement');
+
+            if ($id === 'Add')
+                $this->redirectToRoute('edit_string_replacement', ['id' => $entity->getId()]);
+        }
+
+        return $this->render('System/string_replacement_edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * stringReplacementDelete
+     *
+     * @param StringReplacementManager $manager
+     * @param int $id
+     * @param FlashBagManager $flashBagManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/system/string_replacement/{id}/delete/", name="delete_string_replacement")
+     * @IsGranted("ROLE_REGISTRAR")
+     */
+    public function stringReplacementDelete(StringReplacementManager $manager, int $id, FlashBagManager $flashBagManager)
+    {
+        $manager->delete($id);
+
+        $flashBagManager->renderMessages($manager->getMessageManager());
+
+        $this->get('session')->clear('stringReplacement');
+
+        return $this->redirectToRoute('manage_string_replacement');
     }
 }

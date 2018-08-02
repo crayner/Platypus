@@ -82,7 +82,6 @@ class FormErrorsExtension extends AbstractExtension
 			foreach ($errorsList as $item)
 			{
 				$return .= $this->handleErrors($item, $tag, $class);
-				dump([$item, $return]);
 			}
 			if ($tag == 'li')
 			{

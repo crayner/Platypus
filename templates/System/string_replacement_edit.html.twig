@@ -1,0 +1,38 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% form_theme form
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ ('string.replacement.edit.title')|trans }}{% endblock title %}
+{% block headerTitle %}{{ ('string.replacement.edit.title')|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ ('string.replacement.edit.description')|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
+    {{ form_start(form) }}
+    {% set h3Content = '' %}
+    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_string_replacement')}})|raw %}
+    {% set h3Content = h3Content ~ resetButton()|raw %}
+    {% set h3Content = h3Content ~ deleteButton({windowOpen: {route: path('delete_string_replacement', {id: app.request.get('id')})}, colour: 'warning'})|raw %}
+    {% set h3Content = h3Content ~ saveButton()|raw %}
+    {% include 'Default/panelStart.html.twig' with {header: 'string.replacement.edit.title', transDomain: 'System'} %}
+    <div class="row">
+        <div class="col-6 card">{{ form_row(form.original) }}</div>
+        <div class="col-6 card">{{ form_row(form.replacement) }}</div>
+    </div>
+    <div class="row">
+        <div class="col-4 card">{{ form_row(form.replaceMode) }}</div>
+        <div class="col-4 card">{{ form_row(form.caseSensitive) }}</div>
+        <div class="col-4 card">{{ form_row(form.priority) }}</div>
+    </div>
+    {% include 'Default/panelEnd.html.twig' %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+{% endblock javascripts %}
