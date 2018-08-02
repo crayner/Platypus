@@ -594,8 +594,11 @@ class SettingManager implements ContainerAwareInterface
         $content = Yaml::parse(file_get_contents($path));
 
         $content['parameters'] = $this->changeParameterValue($content['parameters'], $name, $value);
-
-        file_put_contents($path, Yaml::dump($content));
+        try{
+            file_put_contents($path, Yaml::dump($content));
+        } catch (\ErrorException $e) {
+            throw new \ErrorException(sprintf("The file '%s' permissions are not set to allow the file to be written. This needs to be corrected on the server before the settings can be changed.", $path));
+        }
     }
 
     /**
