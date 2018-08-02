@@ -24,3 +24,8 @@ parameters:
     mailer_user: craig@craigrayner.com
     mailer_password: oaerkkeodcrjyhzw
     mailer_spool: { type: memory }
+    mailer_port: 465
+    mailer_encryption: ssl
+    mailer_auth_mode: login
+    mailer_sender_name: 'Platypus Institute Web Site'
+    mailer_sender_address: craig@craigrayner.com

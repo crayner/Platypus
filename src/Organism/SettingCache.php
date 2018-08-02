@@ -55,6 +55,11 @@ class SettingCache
     private $entityOptions;
 
     /**
+     * @var array
+     */
+    private $formAttr;
+
+    /**
      * @return null|string
      */
     public function getHideParent(): ?string
@@ -131,6 +136,24 @@ class SettingCache
         if ($this->parameter)
             $this->setValue($settingManager->getParameter(str_replace(':', '.', $this->getName()), $default));
 
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFormAttr(): array
+    {
+        return $this->formAttr ?: [];
+    }
+
+    /**
+     * @param array $formAttr
+     * @return SettingCache
+     */
+    public function setFormAttr(array $formAttr): SettingCache
+    {
+        $this->formAttr = $formAttr;
         return $this;
     }
 

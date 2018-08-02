@@ -16,12 +16,9 @@
 namespace App\Form;
 
 use App\Entity\ExternalAssessment;
-use App\Entity\ExternalAssessmentField;
-use App\Form\Transformer\FieldSetTransformer;
 use App\Manager\ExternalAssessmentManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Type\ChainedChoiceType;
-use Hillrange\Form\Type\ChainedEntityType;
 use Hillrange\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

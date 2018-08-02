@@ -23,8 +23,6 @@ use App\Validator\Logo;
 use App\Validator\OrgName;
 use App\Validator\Yaml;
 use Hillrange\Form\Validator\Integer;
-use Symfony\Component\Form\Extension\Core\Type\CurrencyType;
-use Symfony\Component\Form\Extension\Core\Type\TimezoneType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\Validator\Constraints\Country;

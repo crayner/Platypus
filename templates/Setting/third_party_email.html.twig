@@ -1,0 +1,39 @@
+<!-- Third Party EMail Script -->
+<script type="text/javascript" language="JavaScript">
+    $(document).ready(function(){
+        return transportSettings()
+    })
+    $('.emailTransport').change(function() {
+        return transportSettings()
+    })
+    function transportSettings(){
+        var transport = $('.emailTransport').val()
+
+        if (transport === 'gmail') {
+            $('#section_EMail_Settings_collection_4_value').val('465')
+            $('#section_EMail_Settings_collection_5_value').val('ssl')
+            $('#section_EMail_Settings_collection_6_value').val('login')
+            $('#section_EMail_Settings_collection_1_value').val('smtp.gmail.com')
+        }
+
+        if (transport === '') {
+            $('#section_EMail_Settings_collection_1').fadeOut(200)
+            $('#section_EMail_Settings_collection_2').fadeOut(200)
+            $('#section_EMail_Settings_collection_3').fadeOut(200)
+            $('#section_EMail_Settings_collection_4').fadeOut(200)
+            $('#section_EMail_Settings_collection_5').fadeOut(200)
+            $('#section_EMail_Settings_collection_6').fadeOut(200)
+            $('#section_EMail_Settings_collection_7').fadeOut(200)
+            $('#section_EMail_Settings_collection_8').fadeOut(200)
+        } else {
+            $('#section_EMail_Settings_collection_1').fadeIn(200)
+            $('#section_EMail_Settings_collection_2').fadeIn(200)
+            $('#section_EMail_Settings_collection_3').fadeIn(200)
+            $('#section_EMail_Settings_collection_4').fadeIn(200)
+            $('#section_EMail_Settings_collection_5').fadeIn(200)
+            $('#section_EMail_Settings_collection_6').fadeIn(200)
+            $('#section_EMail_Settings_collection_7').fadeIn(200)
+            $('#section_EMail_Settings_collection_8').fadeIn(200)
+        }
+    }
+</script>

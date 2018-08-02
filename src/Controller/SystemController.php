@@ -19,6 +19,7 @@ use App\Form\SectionSettingType;
 use App\Manager\MultipleSettingManager;
 use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
+use Hillrange\Form\Util\ScriptManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -63,6 +64,51 @@ class SystemController extends Controller
             $multipleSettingManager->saveSections($sm, $request->request->get('section'));
             return $this->redirectToRoute('manage_system_settings');
         }
+
+        return $this->render('Setting/multiple.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
+    }
+
+    /**
+     * thirdPartySettings
+     *
+     * @param Request $request
+     * @param SettingManager $sm
+     * @param MultipleSettingManager $multipleSettingManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     * @Route("/system/third_party/settings/", name="third_party_settings")
+     * @IsGranted("ROLE_SYSTEM_ADMIN")
+     */
+    public function thirdPartySettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
+    {
+        $request->getSession()->set('manage_settings', $sm->createSettingDefinition('ThirdParty', ['request' => $request]));
+
+        $settings = $request->getSession()->get('manage_settings');
+
+        foreach ($settings->getSections() as $name =>$section)
+            if ($name === 'header')
+                $multipleSettingManager->setHeader($section);
+            else
+                $multipleSettingManager->addSection($section);
+
+        $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $multipleSettingManager->saveSections($sm, $request->request->get('section'));
+            return $this->redirectToRoute('third_party_settings');
+        }
+
+        ScriptManager::addScript('Setting/third_party_email.html.twig');
 
         return $this->render('Setting/multiple.html.twig',
             [

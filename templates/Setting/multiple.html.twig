@@ -16,19 +16,19 @@
 
 {% block contentContainer %}
     <div class="container-fluid">
-    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
-    {{ form_start(form) }}
-    {% for section_name, section_form in form.children %}
-        {% if section_name is not same as('_token') %}
-            {% set section = manager.sections[section_name] %}
-            {% set h3Content = saveButton() %}
-            {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'System', panelParagraph: section['description'],
-                panelStyle: section['colour']|default('warning'), headerParams: section['name_parameters'], panelParams: section['description_parameters']} %}
-                {{ collection_widget(section_form.collection) }}
-            {% include 'Default/panelEnd.html.twig' %}
-        {% endif %}
-    {% endfor %}
-    {{ form_end(form) }}
+        {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
+        {{ form_start(form) }}
+            {% for section_name, section_form in form.children %}
+                {% if section_name is not same as('_token') %}
+                    {% set section = manager.sections[section_name] %}
+                    {% set h3Content = saveButton() %}
+                    {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'System', panelParagraph: section['description'],
+                        panelStyle: section['colour']|default('warning'), headerParams: section['name_parameters'], panelParams: section['description_parameters']} %}
+                        {{ collection_widget(section_form.collection) }}
+                    {% include 'Default/panelEnd.html.twig' %}
+                {% endif %}
+            {% endfor %}
+        {{ form_end(form) }}
     </div>
 {% endblock contentContainer %}
 
@@ -55,7 +55,6 @@
 
         function toggleHideParent(name, xxx) {
             var value = $('.' + name + 'Parent').find('input[type=hidden]').val() - xxx;
-
             if (Math.abs(value) == '1'){
                 $('.' + name + 'Child').fadeIn();
             } else {

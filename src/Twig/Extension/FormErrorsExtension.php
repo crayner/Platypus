@@ -69,7 +69,9 @@ class FormErrorsExtension extends AbstractExtension
 	public function getFormErrors(FormInterface $form, $tag = 'li', $class = "alert alert-danger alert-dismissable show hide", $noErrorMessage = 'form.submit.success', $noErrorClass = 'alert alert-success alert-dismissable show hide', $transDomain = 'System')
 	{
 		if (!$form->isSubmitted()) return '<div id="formErrorMessages"></div>';
+
 		$errorsList = $this->parser->parseErrors($form);
+
 		$return     = '';
 		if (count($errorsList) > 0)
 		{
@@ -80,12 +82,14 @@ class FormErrorsExtension extends AbstractExtension
 			foreach ($errorsList as $item)
 			{
 				$return .= $this->handleErrors($item, $tag, $class);
+				dump([$item, $return]);
 			}
 			if ($tag == 'li')
 			{
 				$return .= '</ul>';
 			}
 		}
+
 		if (count($errorsList) == 0 && ! empty($noErrorMessage))
 		{
 			if ($tag == 'li')
@@ -123,14 +127,21 @@ class FormErrorsExtension extends AbstractExtension
 			/** @var FormError $error */
 			foreach ($errors as $error)
 			{
-			    if (!$error->getCause())
-			        continue;
+
+			    if (!$error->getCause()) {
+                    $return .= '<' . $tag . ' class="' . $class . '">';
+                    $return .= $this->trans->trans($item['label'], [], $item['translation']);
+                    $return .= ': ';
+                    $return .= $error->getMessage();  // The translator has already translated any validation error.
+                    $return .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close" title="'.$this->trans->trans('Close Message', [], 'System').'" aria-hidden="true"><span class="far fa-times-circle"></span></button></' . $tag . '>';
+                    continue;
+                }
                 $constraint = $error->getCause()->getConstraint();
                 if (property_exists($constraint, 'severity'))
                     $class = str_replace('danger', $constraint->severity, $class);
 
 				$return .= '<' . $tag . ' class="' . $class . '">';
-				$return .= $this->trans->trans($item['label'], array(), $item['translation']);
+				$return .= $this->trans->trans($item['label'], [], $item['translation']);
 				$return .= ': ';
 				$return .= $error->getMessage();  // The translator has already translated any validation error.
 				$return .= '<button type="button" class="close" data-dismiss="alert" aria-label="Close" title="'.$this->trans->trans('Close Message', [], 'System').'" aria-hidden="true"><span class="far fa-times-circle"></span></button></' . $tag . '>';

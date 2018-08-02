@@ -23,8 +23,14 @@
             {% set columnA = '4' %}
             {% set columnB = '8' %}
         {% endif %}
+
+        {% set id = 'id=' ~ form.value.vars['id']|trim('_value') %}
+        {% if '__nam' in id %}
+            {% set id = '' %}
+        {% endif %}
+
         {% if form.vars.value is not empty and form.vars.value.type is same as('system') %}
-            <div class="{{ rowClass|default('row') }}">
+            <div class="{{ rowClass|default('row') }}" {{ id }}>
                 <div class="col-{{ columnA }} card">
                     {{ form_label(form.value) }}
                     {{ form_errors(form.value) }}
@@ -38,7 +44,7 @@
                 </div>
             </div>
         {% else %}
-        <div class="{{ rowClass|default('row') }}">
+        <div class="{{ rowClass|default('row') }}" {{ id }}>
             <div class="col-{{ columnA }} card">
                 {{ form_label(form.value) }}
                 {{ form_errors(form.value) }}

@@ -1174,6 +1174,8 @@ class SettingManager implements ContainerAwareInterface
      */
     public function createSetting(Setting $setting): SettingManager
     {
+        if ($setting->getType() === 'array')
+            $setting->setValue(str_replace(array("\\r", "\\n", '"'), array('', "\n", ''),$setting->getValue()));
         $exists = $this->get($setting->getName());
         if ($exists instanceof SettingCache)
             return $this->set($setting->getName(), $setting->getValue());

@@ -234,6 +234,12 @@ System Admin:
             route: manage_system_settings
             parameters: {}
             transDomain: System
+        third_party_settings:
+            label: third_party_settings
+            role: ROLE_REGISTRAR
+            route: third_party_settings
+            parameters: {}
+            transDomain: System
 ';
     /*
 	CONST NODES = '
