@@ -24,6 +24,7 @@ use App\Manager\NotificationEventManager;
 use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
 use App\Manager\StringReplacementManager;
+use App\Manager\ThemeManager;
 use App\Manager\VersionManager;
 use App\Pagination\NotificationEventPagination;
 use App\Pagination\StringReplacementPagination;
@@ -285,6 +286,23 @@ class SystemController extends Controller
         $manager->setEntityManager($em);
         $manager->setSettingManager($sm);
         return $this->render('System/system_check.html.twig',
+            [
+                'manager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * themeManage
+     *
+     * @Route("/system/themes/manage/", name="manage_themes")
+     * @IsGranted("ROLE_SYSTEM_ADMIN")
+     * @param ThemeManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function themesManage(ThemeManager $manager)
+    {
+        return $this->render('System/theme_manage.html.twig',
             [
                 'manager' => $manager,
             ]

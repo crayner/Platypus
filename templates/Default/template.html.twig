@@ -3,6 +3,7 @@
 {% extends 'Default/headerNotice.html.twig' %}
 
 {% set fullPage = fullPage|default(false) %}
+{% set templateName = getThemeName() %}
 
 {% block htmlContent %}
     <!DOCTYPE html >
@@ -58,8 +59,8 @@
             {% else %}
                 <main class="col-9" id="contentContainer">
                     <span class="foldMenu" data-toggle="collapse" data-target="#sidebar" aria-hidden="true"
-                          aria-expanded="false" aria-controls="sidebar" style="float: right; margin: 2px;"><span class="far fa-times-circle"></span></span>
-                    <div style="margin-right: 3px;">
+                          aria-expanded="false" aria-controls="sidebar" style="float: right; margin: -28px 0 0 -3px;"><span class="far fa-times-circle"></span></span>
+                    <div id="subContnentContainer">
             {% endif %}
                 {% block flashMessages %}
                     {% include 'Default/flash.html.twig' %}

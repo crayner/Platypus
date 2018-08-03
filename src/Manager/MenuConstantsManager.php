@@ -228,6 +228,12 @@ School Admin:
         - external_assessment_field_edit
 System Admin:
     extend_and_update:
+        manage_themes:
+            label: manage_themes_label
+            role: ROLE_SYSTEM_ADMIN
+            route: manage_themes
+            parameters: {}
+            transDomain: System
         system_check:
             label: system_check_label
             role: ROLE_SYSTEM_ADMIN

@@ -3,6 +3,7 @@ namespace App\Twig\Extension;
 
 use App\Manager\MenuManager;
 use App\Manager\SettingManager;
+use App\Manager\ThemeManager;
 use Twig\Extension\AbstractExtension;
 
 class SettingExtension extends AbstractExtension
@@ -17,16 +18,22 @@ class SettingExtension extends AbstractExtension
 	 */
 	private $menuManager;
 
+    /**
+     * @var ThemeManager
+     */
+	private $themeManager;
+
 	/**
 	 * SettingExtension constructor.
 	 *
 	 * @param SettingManager $sm
 	 * @param MenuManager    $menuManager
 	 */
-	public function __construct(SettingManager $sm, MenuManager $menuManager)
+	public function __construct(SettingManager $sm, MenuManager $menuManager, ThemeManager $themeManager)
 	{
 		$this->settingManager   = $sm;
 		$this->menuManager      = $menuManager;
+        $this->themeManager     = $themeManager;
 	}
 
 	/**
@@ -47,6 +54,7 @@ class SettingExtension extends AbstractExtension
             new \Twig_SimpleFunction('settingLink', array($this->settingManager, 'settingLink'), ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('exit', [$this, 'exit']),
             new \Twig_SimpleFunction('dumpSetting', [$this, 'dumpSetting']),
+            new \Twig_SimpleFunction('getThemeName', [$this->themeManager, 'getCurrentThemeName']),
 		);
 	}
 

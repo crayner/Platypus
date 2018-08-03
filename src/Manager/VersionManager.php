@@ -18,6 +18,7 @@ namespace App\Manager;
 
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 
 class VersionManager
@@ -236,10 +237,10 @@ class VersionManager
     }
 
     /**
-     * @param EntityManager $entityManager
+     * @param EntityManagerInterface $entityManager
      * @return VersionManager
      */
-    public function setEntityManager(EntityManager $entityManager): VersionManager
+    public function setEntityManager(EntityManagerInterface $entityManager): VersionManager
     {
         $this->entityManager = $entityManager;
         return $this;

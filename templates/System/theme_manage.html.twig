@@ -1,0 +1,44 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% block title %}{{ 'themes.manage.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'themes.manage.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{% endblock headerLead %}
+
+{% block contentContainer %}
+    <div class="container-fluid">
+        <div class="row alert alert-info">
+            {{ 'themes.manage.description'|trans  }}
+        </div>
+        <div class="row row-header">
+            <div class="col-2">{{ 'theme.name.label'|trans }}</div>
+            <div class="col-2">{{ 'theme.version.label'|trans }}</div>
+            <div class="col-4">{{ 'theme.description.label'|trans }}</div>
+            <div class="col-2">{{ 'theme.author.label'|trans }}</div>
+            <div class="col-2 text-center">{{ 'actions'|trans }}</div>
+        </div>
+        {% for theme in manager.installedThemes %}
+            <div class="row row-striped">
+                <div class="col-2">{{ theme.version.name }}</div>
+                <div class="col-2">{{ theme.version.version }}</div>
+                <div class="col-4">{{ theme.version.description }}</div>
+                <div class="col-2">
+                    {% if theme.version.url is not empty %}
+                        <a href="{{ theme.version.url }}", target="_blank">{{ theme.version.author }}</a>
+                    {% else %}
+                        {{ theme.version.author }}
+                    {% endif %}
+                </div>
+                <div class="col-2 text-center">
+                    {% if theme.version.templateName is same as(getThemeName(true)) %}
+                        {{ miscButton({class: 'btn btn-sm btn-success far fa-check-circle', style: ''})|raw }}
+                    {% else %}
+                        {{ miscButton({class: 'btn btn-sm btn-danger far fa-times-circle', style: ''})|raw }}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock contentContainer %}
+
