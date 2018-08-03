@@ -119,16 +119,5 @@ class SchoolFixtures implements DummyDataInterface
 
         $this->buildTable($data, Setting::class, $manager);
 
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/module.yml'));
-
-        $this->buildTable($data, Module::class, $manager);
-
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/action.yml'));
-
-        $this->buildTable($data, Action::class, $manager);
-
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/notification_event.yml'));
-
-        $this->buildTable($data, NotificationEvent::class, $manager);
     }
 }

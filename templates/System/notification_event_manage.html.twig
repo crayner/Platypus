@@ -8,7 +8,7 @@
 
 {% block contentContainer %}
     {% include 'Pagination/index.html.twig' %}
-
+    <h3 class="alert alert-warning">The notification system from Gibbon is not compatible with the Busybee structure and needs to be rebuilt when security, people and students are done fully.</h3>
     <div class="container-fluid">
         <div class="row row-header small">
             <div class="col-3 text-center" style="display: inline-block;">
@@ -43,7 +43,7 @@
                     {{ yesNo(event.active)|trans }}
                 </div>
                 <div class="col-2 text-center">
-                    {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_notification_event', {id: event.id})}})|raw }}
+                    {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_notification_event', {id: event.id})}, title: 'notification.event.edit', transDomain: 'System'})|raw }}
                 </div>
             </div>
         {% endfor %}

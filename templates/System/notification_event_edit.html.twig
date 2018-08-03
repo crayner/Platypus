@@ -1,0 +1,34 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% form_theme form
+    'System/notification_listener.html.twig'
+    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ ('notification.event.edit.title')|trans }}{% endblock title %}
+{% block headerTitle %}{{ ('notification.event.edit.title')|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ ('notification.event.edit.description')|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
+    {{ form_start(form) }}
+        {% set h3Content = '' %}
+        {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_notification_events')}})|raw %}
+        {% set h3Content = h3Content ~ resetButton()|raw %}
+        {% set h3Content = h3Content ~ saveButton()|raw %}
+        {% include '@HillrangeForm/Script/collection_message.html.twig' %}
+        {% include 'Default/tabs.html.twig' with {translation: 'System'} %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {{ collections_manage(form, ['notificationListeners'])|raw }}
+    {{ collection_script(form.notificationListeners) }}
+    {% set route = 'edit_notification_event' %}
+    {% include 'Script/formTabSubmitScript.html.twig' %}
+{% endblock javascripts %}

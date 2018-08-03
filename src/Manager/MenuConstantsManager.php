@@ -254,6 +254,7 @@ System Admin:
             transDomain: System
     hidden:
         - edit_string_replacement
+        - edit_notification_event
 ';
     /*
 	CONST NODES = '

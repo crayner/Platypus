@@ -236,36 +236,34 @@ class SystemController extends Controller
      *
      * @param Request $request
      * @param NotificationEventManager $manager
-     * @param string $id
+     * @param int $id
+     * @param string $tabName
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/system/notification_event/{id}/edit/", name="edit_notification_event")
      * @IsGranted("ROLE_REGISTRAR")
      */
-    public function notificationEventEdit(Request $request, NotificationEventManager $manager, $id = 'Add')
+    public function notificationEventEdit(Request $request, NotificationEventManager $manager, int $id, $tabName = 'details')
     {
-        $entity = $manager->find($id);
+        $scale = $manager->find($id);
 
-        $form = $this->createForm(NotificationEventType::class, $entity);
+        $form = $this->createForm(NotificationEventType::class, $scale, ['manager' => $manager]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->get('doctrine')->getManager();
-            $em->persist($entity);
-            $em->flush();
+            $manager->getEntityManager()->persist($scale);
+            $manager->getEntityManager()->flush();
 
-            $this->get('session')->clear('stringReplacement');
-
-            if ($id === 'Add')
-                $this->redirectToRoute('edit_string_replacement', ['id' => $entity->getId()]);
+            return $this->redirectToRoute('edit_notification_event', ['id' => $scale->getId(), 'tabName' => $tabName]);
         }
 
-        return $this->render('System/string_replacement_edit.html.twig',
+        return $this->render('System/notification_event_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'fullForm' => $form,
+                'tabManager' => $manager,
             ]
         );
     }

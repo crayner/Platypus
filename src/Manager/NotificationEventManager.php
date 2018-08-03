@@ -17,8 +17,9 @@ namespace App\Manager;
 
 use App\Entity\NotificationEvent;
 use App\Manager\Traits\EntityTrait;
+use Symfony\Component\Yaml\Yaml;
 
-class NotificationEventManager
+class NotificationEventManager extends TabManager
 {
     use EntityTrait;
 
@@ -26,4 +27,38 @@ class NotificationEventManager
      * @var string
      */
     private $entityName = NotificationEvent::class;
+
+    /**
+     * getTabs
+     *
+     * @return array
+     */
+    public function getTabs(): array
+    {
+        return Yaml::parse("
+details:
+    label: notification_event.details.tab
+    include: System/notification_event_details.html.twig
+    message: notificationEventDetailsMessage
+    translation: System
+listeners:
+    label: notification_event.listener.tab
+    include: System/notification_event_listener_list.html.twig
+    message: otificationEventListenersMessage
+    translation: System
+    display: hasDetails
+");
+    }
+
+    /**
+     * hasDetails
+     *
+     * @return bool
+     */
+    public function hasDetails()
+    {
+        if (empty($this->getEntity()->getId()))
+            return false;
+        return true;
+    }
 }

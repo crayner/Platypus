@@ -33,6 +33,11 @@ App\Entity\Person:
         email:
             length: 50
             nullable: true
+        receiveNotificationEmails:
+            type: boolean
+            options:
+                default: 1
+            column: receive_email_notifications
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff

@@ -15,8 +15,13 @@
  */
 namespace App\Form;
 
+use App\Entity\Action;
+use App\Entity\Module;
 use App\Entity\NotificationEvent;
-use Hillrange\Form\Type\TextType;
+use App\Form\Subscriber\NotificationEventSubscriber;
+use Hillrange\Form\Type\CollectionType;
+use Hillrange\Form\Type\HiddenEntityType;
+use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -36,12 +41,27 @@ class NotificationEventType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('event', TextType::class,
+            ->add('active', ToggleType::class,
                 [
-                    'label' => 'notification.event.label',
+                    'label' => 'notification.active.label',
+                ]
+            )
+            ->add('module', HiddenEntityType::class,
+                [
+                    'label' => 'notification.module.label',
+                    'class' => Module::class,
+                    'help' => 'notification.module.help',
+                ]
+            )
+            ->add('action', HiddenEntityType::class,
+                [
+                    'label' => 'notification.action.label',
+                    'class' => Action::class,
+                    'help' => 'notification.module.help',
                 ]
             )
         ;
+        $builder->addEventSubscriber(new NotificationEventSubscriber($options['manager']));
     }
 
     /**
@@ -55,6 +75,11 @@ class NotificationEventType extends AbstractType
             [
                 'translation_domain' => 'System',
                 'data_class' => NotificationEvent::class,
+            ]
+        );
+        $resolver->setRequired(
+            [
+                'manager',
             ]
         );
     }

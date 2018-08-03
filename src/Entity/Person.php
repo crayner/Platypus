@@ -357,4 +357,45 @@ class Person
 
         return $this;
     }
+
+    /**
+     * @var bool
+     */
+    private $receiveNotificationEmails;
+
+    /**
+     * @return bool
+     */
+    public function isReceiveNotificationEmails(): bool
+    {
+        return $this->receiveNotificationEmails ? true : false;
+    }
+
+    /**
+     * @param bool $receiveNotificationEmails
+     * @return Person
+     */
+    public function setReceiveNotificationEmails(bool $receiveNotificationEmails): Person
+    {
+        $this->receiveNotificationEmails = $receiveNotificationEmails ? true : false;
+        return $this;
+    }
+
+    /**
+     * Person constructor.
+     */
+    public function __construct()
+    {
+        $this->receiveNotificationEmails = true;
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return PersonNameHelper::getFullName($this);
+    }
 }

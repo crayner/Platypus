@@ -1,0 +1,27 @@
+{% trans_default_domain "System" %}
+
+{% block notification_listener_label %}{% endblock %}
+{% block notification_listener_errors %}{% endblock %}
+
+{% block notification_listener_widget %}
+    {% spaceless %}
+        <div class="row row-striped">
+            <div class="col-4">
+                {{ form_widget(form.person) }}
+            </div>
+            <div class="col-2">
+                {{ form_widget(form.receiveEmailNotifications) }}
+            </div>
+            <div class="col-2 text-center">
+                {{ form_widget(form.default) }}
+                {{ form_widget(form.scale, {value: app.request.get('id')}) }}
+                {{ form_widget(form.sequence) }}
+                {{ form_widget(form.id) }}
+            </div>
+            <div class="col-2">
+                <div class="collection-actions">
+                </div>
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock notification_listener_widget %}
