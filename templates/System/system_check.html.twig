@@ -1,0 +1,22 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% block title %}{{ 'system.check.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'system.check.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'system.check.description'|trans  }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% for section in manager.systemCheck %}
+        {% include 'Default/panelStart.html.twig' with {transDomain: 'System', header: 'system.check.' ~ section.header, colour: 'dark', panelParagraph: 'system.check.' ~ section.header ~ '.help'} %}
+            {% for check in section.checks %}
+                <div class="row row-striped">
+                    <div class="col-6">{{ ('system.check.' ~ check.label ~ '.label')|trans }}<br/><span class="text-muted small font-italic">{{ ('system.check.' ~ check.label ~ '.help')|trans({'{version}': check.requirement}) }}</span></div>
+                    <div class="col-4">{{ check.value }}</div>
+                    <div class="col-2">{{ onOffButton({value: check.ok, style: '', mergeClass: 'btn-sm'})|raw }}</div>
+                </div>
+            {% endfor %}
+        {% include 'Default/panelEnd.html.twig' %}
+    {% endfor %}
+{% endblock contentContainer %}
+

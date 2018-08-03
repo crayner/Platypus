@@ -18,6 +18,7 @@ namespace App\Manager\Settings;
 use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
 use App\Manager\StaffManager;
+use App\Manager\TranslationManager;
 use App\Util\InternationalHelper;
 use App\Validator\Logo;
 use App\Validator\OrgName;
@@ -28,6 +29,7 @@ use Symfony\Component\Intl\Intl;
 use Symfony\Component\Validator\Constraints\Country;
 use Symfony\Component\Validator\Constraints\Currency;
 use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\Language;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Url;
@@ -115,7 +117,7 @@ class SystemSettings implements SettingCreationInterface
 
         $setting->setName('system.index.text')
             ->__set('role', 'ROLE_REGISTRAR')
-            ->setType('string')
+            ->setType('html')
             ->__set('displayName', 'Index Page Text')
             ->__set('description', 'Text displayed in system\'s welcome page.  If left blank, then the system default is used.');
         if (empty($setting->getValue())) {
@@ -464,6 +466,23 @@ class SystemSettings implements SettingCreationInterface
                 new Currency(),
             ])
             ->setDefaultValue(true)
+            ->__set('translateChoice', false)
+        ;
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('locale');
+
+        $setting->setName('locale')
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setType('choice')
+            ->__set('displayName', 'Language Setting')
+            ->__set('description', 'This setting defaults the system to the selected language. Language can be over ridden by individual users.')
+            ->setParameter(true, $sm,'en')
+            ->__set('choice', array_flip(TranslationManager::$languages))
+            ->setValidators([
+                new Language(),
+            ])
+            ->setDefaultValue('en')
             ->__set('translateChoice', false)
         ;
         $settings[] = $setting;

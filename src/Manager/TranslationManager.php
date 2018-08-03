@@ -15,9 +15,10 @@ use Symfony\Component\Translation\TranslatorInterface;
 
 class TranslationManager implements TranslatorInterface, TranslatorBagInterface
 {
-    public static $languages = [
+    /*
+      public static $languages = [
         'nl_NL' => 'Dutch - Nederland',
-        'en' => 'English - United Kingdom',
+        'en'    => 'English - United Kingdom',
         'en_US' => 'English - United States',
         'es_ES' => 'Español',
         'fr_FR' => 'Français - France',
@@ -29,6 +30,11 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
         'ar_SA' => 'العربية - المملكة العربية السعودية',
         'th_TH' => 'ภาษาไทย - ราชอาณาจักรไทย',
         'zh_HK' => '體字 - 香港'
+    ];*/
+
+    public static $languages = [
+        'en'    => 'English - Default',
+//        'en_GB' => 'English - United Kingdom',
     ];
 
     /**

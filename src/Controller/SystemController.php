@@ -24,8 +24,11 @@ use App\Manager\NotificationEventManager;
 use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
 use App\Manager\StringReplacementManager;
+use App\Manager\VersionManager;
 use App\Pagination\NotificationEventPagination;
 use App\Pagination\StringReplacementPagination;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Util\ScriptManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -264,6 +267,26 @@ class SystemController extends Controller
                 'form' => $form->createView(),
                 'fullForm' => $form,
                 'tabManager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * systemCheck
+     *
+     * @Route("/system/check/", name="system_check")
+     * @IsGranted("ROLE_SYSTEM_ADMIN")
+     * @param VersionManager $manager
+     * @param EntityManagerInterface $em
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function systemCheck(VersionManager $manager, EntityManagerInterface $em, SettingManager $sm)
+    {
+        $manager->setEntityManager($em);
+        $manager->setSettingManager($sm);
+        return $this->render('System/system_check.html.twig',
+            [
+                'manager' => $manager,
             ]
         );
     }

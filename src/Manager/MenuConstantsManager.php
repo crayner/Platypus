@@ -227,7 +227,21 @@ School Admin:
         - external_assessment_edit
         - external_assessment_field_edit
 System Admin:
+    extend_and_update:
+        system_check:
+            label: system_check_label
+            role: ROLE_SYSTEM_ADMIN
+            route: system_check
+            parameters: {}
+            transDomain: System
     settings:
+        manage_language_setting:
+            label: manage_lanuage_setting
+            role: ROLE_REGISTRAR
+            route: manage_system_settings
+            parameters: 
+                _fragment: section_Localisation_collection_4
+            transDomain: System
         manage_notification_events:
             label: notification_event_settings
             role: ROLE_REGISTRAR
