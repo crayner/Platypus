@@ -430,4 +430,27 @@ class Action
         $this->module = $module;
         return $this;
     }
+
+    /**
+     * @var boolean
+     */
+    private $defaultPermissionParent;
+
+    /**
+     * @return bool
+     */
+    public function isDefaultPermissionParent(): bool
+    {
+        return $this->defaultPermissionParent ? true : false;
+    }
+
+    /**
+     * @param null|bool $defaultPermissionParent
+     * @return Action
+     */
+    public function setDefaultPermissionParent(?bool $defaultPermissionParent): Action
+    {
+        $this->defaultPermissionParent = $defaultPermissionParent ? true : false;
+        return $this;
+    }
 }

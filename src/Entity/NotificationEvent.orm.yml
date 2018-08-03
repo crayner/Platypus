@@ -1,0 +1,43 @@
+App\Entity\NotificationEvent:
+    type: entity
+    table: notification_event
+    repositoryClass: App\Repository\NotificationEventRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        event:
+            length: 90
+            nullable: false
+        type:
+            length: 10
+            options:
+                default: 'core'
+            nullable: false
+        scopes:
+            type: json_array
+            nullable: false
+        active:
+            type: boolean
+            nullable: false
+            options:
+                default: 1
+    manyToOne:
+        module:
+            targetEntity: App\Entity\Module
+            joinColumn:
+                name: module_id
+                referencedColumnName: id
+                nullable: false
+        action:
+            targetEntity: App\Entity\Action
+            joinColumn:
+                name: action_id
+                referencedColumnName: id
+                nullable: false
+    oneToMany:
+        notificationListeners:
+            targetEntity: App\Entity\NotificationListener
+            mappedBy: notificationEvent

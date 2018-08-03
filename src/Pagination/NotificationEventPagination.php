@@ -11,76 +11,73 @@
  *
  * User: craig
  * Date: 02/08/2018
- * Time: 12:15
+ * Time: 17:10
  */
 namespace App\Pagination;
 
-use App\Entity\StringReplacement;
+use App\Entity\NotificationEvent;
 use Doctrine\ORM\QueryBuilder;
 
 /**
- * Class StringReplacementPagination
+ * Class NotificationEventPagination
  * @package App\Pagination
  */
-class StringReplacementPagination extends PaginationManager
+class NotificationEventPagination extends PaginationManager
 {
     /**
      * @var string
      */
-    protected $paginationName = 'StringReplacement';
+    protected $paginationName = 'NotificationEvent';
 
     /**
      * @var string
      */
-    protected $alias = 's';
+    protected $alias = 'n';
 
     /**
      * @var array
      */
     protected $sortByList = [
         'string.original.sort' => [
-            's.original' => 'ASC',
-        ],
-        'string.replacement.sort' => [
-            's.replacement' => 'ASC',
-            's.original' => 'ASC',
-        ],
-        'string.priority.sort' => [
-            's.priority' => 'DESC',
-            's.original' => 'ASC',
+            'm.name' => 'ASC',
+            'n.event' => 'ASC',
         ],
     ];
 
     /**
      * @var int
      */
-    protected $limit = 50;
+    protected $limit = 100;
 
     /**
      * @var array
      */
-    protected $searchList = [
-        's.original',
-        's.replacement',
-        's.replaceMode',
-    ];
+    protected $searchList = [];
 
     /**
      * @var array
      */
     protected $select = [
-        's.original',
-        's.replacement',
-        's.replaceMode',
-        's.caseSensitive',
-        's.priority',
-        's.id',
+        'm.name as moduleName',
+        'n.event',
+        'n.active',
+        'n.id',
+        'COUNT(l.id) as listenerCount'
     ];
 
     /**
      * @var array
      */
-    protected $join = [];
+    protected $join = [
+        'n.module' => [
+            'type' => 'leftJoin',
+            'alias' => 'm',
+        ],
+        'n.notificationListeners' => [
+            'type' => 'leftJoin',
+            'alias' => 'l',
+        ],
+    ];
 
     /**
      * @var string
@@ -91,7 +88,7 @@ class StringReplacementPagination extends PaginationManager
     /**
      * @var string
      */
-    protected $repositoryName = StringReplacement::class;
+    protected $repositoryName = NotificationEvent::class;
 
     /**
      * @var string
@@ -121,6 +118,11 @@ class StringReplacementPagination extends PaginationManager
                 ->setQueryJoin()
                 ->setOrderBy()
                 ->setSearchWhere();
+
+        $this->getQuery()
+            ->andWhere('m.active = :active')
+            ->setParameter('active', true)
+            ->groupBy('n.id');
 
         return $this->getQuery();
     }

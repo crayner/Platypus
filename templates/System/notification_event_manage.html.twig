@@ -1,0 +1,52 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% block title %}{{ 'notification.event.pagination.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'notification.event.pagination.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'notification.event.pagination.description'|trans  }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% include 'Pagination/index.html.twig' %}
+
+    <div class="container-fluid">
+        <div class="row row-header small">
+            <div class="col-3 text-center" style="display: inline-block;">
+                {{ 'notification.event.module.label'|trans }}
+            </div>
+            <div class="col-3 text-center">
+                {{ 'notification.event.label'|trans }}
+            </div>
+            <div class="col-2 text-center">
+                {{ 'notification.event.subscriber.count'|trans }}
+            </div>
+            <div class="col-2 text-center">
+                {{ 'notification.event.active.label'|trans }}
+            </div>
+            <div class="col-2 text-center">
+                {{ 'actions'|trans({}, 'System') }}<br/>
+                {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_string_replacement', {id: 'Add'})}})|raw }}
+            </div>
+        </div>
+        {% for event in pagination.getResult %}
+            <div class="row row-striped">
+                <div class="col-3 small">
+                    {{ event.moduleName }}
+                </div>
+                <div class="col-3 small">
+                    {{ event.event }}
+                </div>
+                <div class="col-2 small text-center">
+                    {{ event.listenerCount }}
+                </div>
+                <div class="col-2 small text-center">
+                    {{ yesNo(event.active)|trans }}
+                </div>
+                <div class="col-2 text-center">
+                    {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_notification_event', {id: event.id})}})|raw }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock contentContainer %}
+

@@ -15,6 +15,7 @@
  */
 namespace App\Demonstration;
 
+use App\Entity\Action;
 use App\Entity\AlertLevel;
 use App\Entity\AttendanceCode;
 use App\Entity\Campus;
@@ -29,6 +30,8 @@ use App\Entity\FileExtension;
 use App\Entity\House;
 use App\Entity\INDescriptor;
 use App\Entity\Invoice;
+use App\Entity\Module;
+use App\Entity\NotificationEvent;
 use App\Entity\Scale;
 use App\Entity\ScaleGrade;
 use App\Entity\Setting;
@@ -112,37 +115,20 @@ class SchoolFixtures implements DummyDataInterface
 
         $this->setLogger($logger)->buildTable($data, ScaleGrade::class, $manager);
 
-        /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/campus.yml'));
-
-                $this->setLogger($logger)->buildTable($data, Campus::class, $manager);
-
-                $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/space.yml'));
-
-                $this->buildTable($data, Facility::class, $manager);
-
-                $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department.yml'));
-
-                $this->buildTable($data, Department::class, $manager);
-
-                $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/course.yml'));
-
-                $this->buildTable($data, Course::class, $manager);
-
-                $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/scale.yml'));
-
-                $this->buildTable($data, Scale::class, $manager);
-        */
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/setting.yml'));
 
         $this->buildTable($data, Setting::class, $manager);
-/*
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/translate.yml'));
 
-        $this->buildTable($data, Translate::class, $manager);
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/module.yml'));
 
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/invoice.yml'));
+        $this->buildTable($data, Module::class, $manager);
 
-        $this->buildTable($data ?: [], Invoice::class, $manager);
-*/
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/action.yml'));
+
+        $this->buildTable($data, Action::class, $manager);
+
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/notification_event.yml'));
+
+        $this->buildTable($data, NotificationEvent::class, $manager);
     }
 }

@@ -15,13 +15,16 @@
  */
 namespace App\Controller;
 
+use App\Form\NotificationEventType;
 use App\Form\SectionSettingType;
 use App\Form\StringReplacementType;
 use App\Manager\FlashBagManager;
 use App\Manager\MultipleSettingManager;
+use App\Manager\NotificationEventManager;
 use App\Manager\ScaleManager;
 use App\Manager\SettingManager;
 use App\Manager\StringReplacementManager;
+use App\Pagination\NotificationEventPagination;
 use App\Pagination\StringReplacementPagination;
 use Hillrange\Form\Util\ScriptManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -202,5 +205,68 @@ class SystemController extends Controller
         $this->get('session')->clear('stringReplacement');
 
         return $this->redirectToRoute('manage_string_replacement');
+    }
+
+    /**
+     * notificationEventManage
+     *
+     * @param Request $request
+     * @param StringReplacementPagination $pagination
+     * @param StringReplacementManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/system/notification_events/manage/", name="manage_notification_events")
+     * @IsGranted("ROLE_REGISTRAR")
+     */
+    public function notificationEventManage(Request $request, NotificationEventPagination $pagination, StringReplacementManager $manager)
+    {
+        $pagination->injectRequest($request);
+
+        $pagination->getDataSet();
+
+        return $this->render('System/notification_event_manage.html.twig',
+            [
+                'pagination' => $pagination,
+                'manager' => $manager,
+            ]
+        );
+   }
+
+    /**
+     * notificationEventEdit
+     *
+     * @param Request $request
+     * @param NotificationEventManager $manager
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     * @Route("/system/notification_event/{id}/edit/", name="edit_notification_event")
+     * @IsGranted("ROLE_REGISTRAR")
+     */
+    public function notificationEventEdit(Request $request, NotificationEventManager $manager, $id = 'Add')
+    {
+        $entity = $manager->find($id);
+
+        $form = $this->createForm(NotificationEventType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->get('doctrine')->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            $this->get('session')->clear('stringReplacement');
+
+            if ($id === 'Add')
+                $this->redirectToRoute('edit_string_replacement', ['id' => $entity->getId()]);
+        }
+
+        return $this->render('System/string_replacement_edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+            ]
+        );
     }
 }

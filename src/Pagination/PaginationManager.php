@@ -3,6 +3,8 @@ namespace App\Pagination;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\FormFactoryInterface;
@@ -272,8 +274,18 @@ abstract class PaginationManager implements PaginationInterface
 		{
 			$query = $this->buildQuery(true)
 				->getQuery();
-			$this->setTotal(intval($query
-				->getSingleScalarResult()));
+			try {
+                $this->setTotal(intval($query
+                    ->getSingleScalarResult()));
+            } catch (NoResultException $e) {
+                $results = $this->buildQuery()
+                    ->getQuery()->getResult();
+                $this->setTotal(count($results));
+            } catch (NonUniqueResultException $e) {
+                $results = $this->buildQuery()
+                    ->getQuery()->getResult();
+                $this->setTotal(count($results));
+            }
 		}
 
 		return $this->total;

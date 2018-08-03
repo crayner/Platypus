@@ -228,6 +228,12 @@ School Admin:
         - external_assessment_field_edit
 System Admin:
     settings:
+        manage_notification_events:
+            label: notification_event_settings
+            role: ROLE_REGISTRAR
+            route: manage_notification_events
+            parameters: {}
+            transDomain: System
         string_replacement:
             label: string_replacement
             role: ROLE_REGISTRAR

@@ -28,6 +28,8 @@ class PlatypusController extends Controller
      */
     public function home()
     {
-        return $this->render('home.html.twig');
+        return $this->render('home.html.twig', [
+            'xxx' => json_encode(['All,gibbonPersonIDStudent,gibbonYearGroupID']),
+        ]);
     }
 }

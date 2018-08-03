@@ -38,6 +38,7 @@ class CoreExtension extends AbstractExtension
             new \Twig_SimpleFunction('hideSection', [$this, 'hideSection']),
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
             new \Twig_SimpleFunction('camelCase', array($this, 'camelCase')),
+            new \Twig_SimpleFunction('yesNo', array($this, 'yesNo')),
         ];
     }
 
@@ -95,5 +96,16 @@ class CoreExtension extends AbstractExtension
     public function camelCase($value): string
     {
         return StringHelper::camelCase($value);
+    }
+
+    /**
+     * yesNo
+     *
+     * @param bool|null $data
+     * @return string
+     */
+    public function yesNo(?bool $data = false): string
+    {
+        return $data ? 'display.true' : 'display.false';
     }
 }

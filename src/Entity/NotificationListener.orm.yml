@@ -1,0 +1,32 @@
+App\Entity\NotificationListener:
+    type: entity
+    table: notification_listener
+    repositoryClass: App\Repository\NotificationListenerRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        scopeType:
+            length: 30
+            nullable: true
+            column: scope_type
+        scopeID:
+            type: bigint
+            nullable: true
+    manyToOne:
+        person:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: person_id
+                referencedColumnName: id
+                nullable: true
+        notificationEvent:
+            targetEntity: App\Entity\NotificationEvent
+            inversedBy: notificationListeners
+            cascade: ['persist']
+            joinColumn:
+                name: notification_event_id
+                referencedColumnName: id
+                nullable: true
