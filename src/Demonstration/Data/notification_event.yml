@@ -1,0 +1,196 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_notification_event
+-
+  id: 1
+  module_id: 16
+  action_id: 135
+  event: "Daily Behaviour Summary"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 2
+  module_id: 16
+  action_id: 81
+  event: "New Negative Record"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 3
+  module_id: 16
+  action_id: 81
+  event: "New Positive Record"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 4
+  module_id: 8
+  action_id: 160
+  event: "Family Data Updates"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 5
+  module_id: 8
+  action_id: 169
+  event: "Finance Data Updates"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 6
+  module_id: 8
+  action_id: 64
+  event: "Medical Form Updates"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 7
+  module_id: 8
+  action_id: 62
+  event: "Personal Data Updates"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 8
+  module_id: 2
+  action_id: 2
+  event: "Login - Failed"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 9
+  module_id: 2
+  action_id: 2
+  event: "New Public Registration"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 10
+  module_id: 5
+  action_id: 24
+  event: "New Application Form"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 11
+  module_id: 21
+  action_id: 232
+  event: "New Application Form"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 12
+  module_id: 14
+  action_id: 54
+  event: "Student Withdrawn"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 13
+  module_id: 14
+  action_id: 54
+  event: "New Activity Registration"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 14
+  module_id: 10
+  action_id: 45
+  event: "Updated Individual Needs"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 15
+  module_id: 5
+  action_id: 24
+  event: "New Student Note"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 16
+  module_id: 5
+  action_id: 24
+  event: "Updated Privacy Settings"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 17
+  module_id: 6
+  action_id: 30
+  event: "Daily Attendance Summary"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 18
+  module_id: 2
+  action_id: 2
+  event: "User Status Check and Fix"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 19
+  module_id: 19
+  action_id: 127
+  event: "Overdue Loan Items"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 20
+  module_id: 16
+  action_id: 81
+  event: "Behaviour Letters"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 21
+  module_id: 9
+  action_id: 184
+  event: "Parent Weekly Email Summary"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 22
+  module_id: 5
+  action_id: 24
+  event: "Application Form Accepted"
+  type: "Core"
+  scopes: "[\"All,YearGroupID\"]"
+  active: 1
+-
+  id: 23
+  module_id: 6
+  action_id: 253
+  event: "Weekly Attendance Summary "
+  type: "CLI"
+  scopes: "[\"All,YearGroupID\"]"
+  active: 1
+-
+  id: 24
+  module_id: 14
+  action_id: 54
+  event: "Student Bumped"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+...
