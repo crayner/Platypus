@@ -1,0 +1,148 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_notification_event
+-
+  id: 1
+  event: "Daily Behaviour Summary"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 2
+  event: "New Negative Record"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 3
+  event: "New Positive Record"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 4
+  event: "Family Data Updates"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 5
+  event: "Finance Data Updates"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 6
+  event: "Medical Form Updates"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 7
+  event: "Personal Data Updates"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 8
+  event: "Login - Failed"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 9
+  event: "New Public Registration"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 10
+  event: "New Application Form"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 11
+  event: "New Application Form"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 12
+  event: "Student Withdrawn"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 13
+  event: "New Activity Registration"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 14
+  event: "Updated Individual Needs"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 15
+  event: "New Student Note"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 16
+  event: "Updated Privacy Settings"
+  type: "Core"
+  scopes: "[\"All,PersonIDStudent,YearGroupID\"]"
+  active: 1
+-
+  id: 17
+  event: "Daily Attendance Summary"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 18
+  event: "User Status Check and Fix"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 19
+  event: "Overdue Loan Items"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 20
+  event: "Behaviour Letters"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 21
+  event: "Parent Weekly Email Summary"
+  type: "CLI"
+  scopes: "[\"All\"]"
+  active: 1
+-
+  id: 22
+  event: "Application Form Accepted"
+  type: "Core"
+  scopes: "[\"All,YearGroupID\"]"
+  active: 1
+-
+  id: 23
+  event: "Weekly Attendance Summary "
+  type: "CLI"
+  scopes: "[\"All,YearGroupID\"]"
+  active: 1
+-
+  id: 24
+  event: "Student Bumped"
+  type: "Core"
+  scopes: "[\"All\"]"
+  active: 1
+...
