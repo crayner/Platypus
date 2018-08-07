@@ -15,9 +15,11 @@
  */
 namespace App\Controller;
 
+use App\Form\AlarmType;
 use App\Form\NotificationEventType;
 use App\Form\SectionSettingType;
 use App\Form\StringReplacementType;
+use App\Manager\AlarmManager;
 use App\Manager\FlashBagManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\NotificationEventManager;
@@ -305,6 +307,32 @@ class SystemController extends Controller
         return $this->render('System/theme_manage.html.twig',
             [
                 'manager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * alarmAction
+     *
+     * @param SettingManager $sm
+     * @param AlarmManager $manager
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     * @Route("/system/alarm/manage/", name="manage_alarm")
+     * @IsGranted("ROLE_PRINCIPAL")
+     */
+    public function alarmAction(SettingManager $sm, AlarmManager $manager, $id = 'Add')
+    {
+        $entity = $manager->find($id);
+
+        $form = $this->createForm(AlarmType::class, $entity);
+
+        return $this->render('System/alarm.html.twig',
+            [
+                'manager' => $manager,
+                'form' => $form->createView(),
+                'fullForm' => $form,
             ]
         );
     }

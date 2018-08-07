@@ -23,6 +23,22 @@ class Alarm
     private $id;
 
     /**
+     * @return array
+     */
+    public static function getTypeList(): array
+    {
+        return self::$typeList;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getStatusList(): array
+    {
+        return self::$statusList;
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -72,10 +88,11 @@ class Alarm
      * @var array
      */
     public static $typeList = [
+        'none',
         'general',
-        'lockdown',
+        'lockdown-inplace',
+        'lockdown-internal',
         'custom',
-        null,
     ];
 
     /**
@@ -172,5 +189,14 @@ class Alarm
     {
         $this->timestampEnd = $timestampEnd;
         return $this;
+    }
+
+    /**
+     * Alarm constructor.
+     */
+    public function __construct()
+    {
+        $this->type = 'none';
+        $this->status = 'current';
     }
 }

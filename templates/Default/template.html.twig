@@ -52,15 +52,15 @@
                 </div>
             {% endblock titleContainer %}
         {% endif %}
-
-        <div class="row-fluid row">
+        <div class="row" style="margin-top: -32px; max-height: 25px;"><div class="col-11" id="notifications"></div><div class="col-1">
+                <span class="foldMenu" data-toggle="collapse" data-target="#sidebar" aria-hidden="true" aria-expanded="false" aria-controls="sidebar" style="float: right;"><span class="far fa-times-circle"></span></span>
+            </div></div>
+        <div class="row">
             {% if fullPage %}
                 <div class="col-12" id="contentContainer">
             {% else %}
                 <main class="col-9" id="contentContainer">
-                    <span class="foldMenu" data-toggle="collapse" data-target="#sidebar" aria-hidden="true"
-                          aria-expanded="false" aria-controls="sidebar" style="float: right; margin: -28px 0 0 -3px;"><span class="far fa-times-circle"></span></span>
-                    <div id="subContnentContainer">
+                    <div id="subContentContainer">
             {% endif %}
                 {% block flashMessages %}
                     {% include 'Default/flash.html.twig' %}

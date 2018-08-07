@@ -42,7 +42,7 @@
     $(".alert").alert();
     $('.foldMenu').on('click', function(){
         var foldMenu = $('.foldMenu');
-        var container = foldMenu.parent();
+        var container = $('#contentContainer');
         console.log(container);
         var icon = foldMenu.children('svg');
         if (icon.hasClass('fa-times-circle')) {
@@ -85,7 +85,30 @@
             $('.foldMenu').click();
         }
     }
-    FontAwesome.dom.i2svg({ callback: iconDoneRendering })
+
+    {% set interval = 120000 %}
+    {% if getUserManager().isStaff %}
+        {% set interval = 10000 %}
+    {% endif %}
+
+    $(document).ready(function(){
+        setInterval(function() {
+            $.ajax({
+                url:'{{ path('notification_manage') }}',
+                type: "POST",
+                dataType: "json",
+                async: true,
+                success: function (data)
+                {
+                    console.log(data)
+                    $('div#notifications').html(data.content);
+
+                }
+            });
+        }, '{{ interval }}');
+    });
+
+FontAwesome.dom.i2svg({ callback: iconDoneRendering })
 </script>
 {% for xx in getScripts() %}
     {% for yy in getScriptOptions(xx) %}

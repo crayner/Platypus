@@ -132,4 +132,9 @@ class UserManager
         $this->person = null;
         return $this;
     }
+
+    public function isStaff(): bool
+    {
+        return true;
+    }
 }

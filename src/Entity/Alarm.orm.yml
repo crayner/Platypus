@@ -10,7 +10,9 @@ App\Entity\Alarm:
     fields:
         type:
             length: 16
-            nullable: true
+            nullable: false
+            options:
+                default: 'none'
         status:
             length: 16
             options:
@@ -25,8 +27,8 @@ App\Entity\Alarm:
             column: timestamp_end
     manyToOne:
         person:
-            targetEntity: App\Entity\Person
+            targetEntity: Hillrange\Security\Entity\User
             joinColumn:
-                name: person_id
+                name: user_id
                 referencedColumnName: id
                 nullable: false

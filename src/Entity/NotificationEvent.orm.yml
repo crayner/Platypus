@@ -24,19 +24,6 @@ App\Entity\NotificationEvent:
             nullable: false
             options:
                 default: 1
-    manyToOne:
-        module:
-            targetEntity: App\Entity\Module
-            joinColumn:
-                name: module_id
-                referencedColumnName: id
-                nullable: false
-        action:
-            targetEntity: App\Entity\Action
-            joinColumn:
-                name: action_id
-                referencedColumnName: id
-                nullable: false
     oneToMany:
         notificationListeners:
             targetEntity: App\Entity\NotificationListener

@@ -4,3 +4,5 @@ twig:
     strict_variables: '%kernel.debug%'
     globals:
         idleTimeout: '%idle_timeout%'
+    form_themes:
+        - '@SymfonyForm/FormTheme/bootstrap.html.twig'
