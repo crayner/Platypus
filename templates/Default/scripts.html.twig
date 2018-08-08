@@ -3,38 +3,31 @@
 <!-- Placed at the end of the document so the pages load faster -->
 {%  trans_default_domain 'System' %}
 
+
 <script src="{{ asset('js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
 
 {% include '@' ~ templateName ~ '/script.html.twig' %}
 {% include '@HillrangeForm/script.html.twig' %}
 
+{% set notificationProps = {} %}
+{% if getUserManager().isStaff(app.user) %}
+    {% set notificationProps = notificationProps|merge({'interval': 10000}) %} {# 10 sec #}
+{% else %}
+    {% set notificationProps = notificationProps|merge({'interval': 20000}) %} {# 2 min #}
+{% endif %}
+
+<script>
+    window.NOTIFICATION_PROPS = {{ notificationProps|json_encode|raw }};
+</script>
+<script src="{{ asset('build/notifications.js') }}"></script>
+
+
 
 {% if app is defined %}
     {% if app.user is defined %}
         {% include '@HillrangeSecurity/security/scripts.html.twig' %}
         <script src={{ asset('bundles/hillrangeform/js/bootstrap-submenu.min.js') }}></script>
-    <script type="text/javascript" charset="utf-8">
-        function menuSectionSlide() {
-            var scroll_top = $(window).scrollTop();
-            var menuHeight = $('#sectionMenuContainer').outerHeight();
-            var contentHeight = $('#contentContainer').outerHeight();
-            if (menuHeight > (contentHeight - 50)) {
-                return ;
-            }
-            var windowHeight = $(window).height();
-            if (windowHeight < menuHeight) {
-                $('#sectionMenuContainer').css("overflow-y", "scroll");
-                return ;
-            }
-            if (scroll_top >= 247) { // the detection!
-                $('#sectionMenuContainer').addClass('is-sticky');
-            } else {
-                $('#sectionMenuContainer').removeClass('is-sticky');
-            }
-        }
-        $(window).scroll(menuSectionSlide);
-    </script>
     {% endif %}
 {% endif %}
 <!-- fold Menu -->
@@ -43,7 +36,6 @@
     $('.foldMenu').on('click', function(){
         var foldMenu = $('.foldMenu');
         var container = $('#contentContainer');
-        console.log(container);
         var icon = foldMenu.children('svg');
         if (icon.hasClass('fa-times-circle')) {
             $.ajax({
@@ -60,7 +52,7 @@
             container.removeAttr('style');
         }
         icon.toggleClass('fa-times-circle fa-bars');
-        if (icon.attr('data-prefix') == 'far') {
+        if (icon.attr('data-prefix') === 'far') {
             icon.attr('data-prefix', 'fas');
         } else {
             icon.attr('data-prefix', 'far');
@@ -85,30 +77,30 @@
             $('.foldMenu').click();
         }
     }
-
+    {#
     {% set interval = 120000 %}
     {% if getUserManager().isStaff %}
-        {% set interval = 10000 %}
+    {% set interval = 10000 %}
     {% endif %}
+
+    function setNotifications(){
+        fetch('{{ path('notification_manage') }}')
+            .then(function (a) {
+                return a.json(); // call the json method on the response to get JSON
+            })
+            .then(function (json) {
+                $('div#notifications').html(json.content);
+            })
+    }
 
     $(document).ready(function(){
         setInterval(function() {
-            $.ajax({
-                url:'{{ path('notification_manage') }}',
-                type: "POST",
-                dataType: "json",
-                async: true,
-                success: function (data)
-                {
-                    console.log(data)
-                    $('div#notifications').html(data.content);
+            setNotifications()
+        }, '{{ interval }}')
+        setNotifications()
+    });#}
 
-                }
-            });
-        }, '{{ interval }}');
-    });
-
-FontAwesome.dom.i2svg({ callback: iconDoneRendering })
+    FontAwesome.dom.i2svg({ callback: iconDoneRendering })
 </script>
 {% for xx in getScripts() %}
     {% for yy in getScriptOptions(xx) %}

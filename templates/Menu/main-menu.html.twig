@@ -1,5 +1,5 @@
 {% trans_default_domain "System" %}
-{% set bad_routes = [get_parameter('security.routes.security_user_login'), get_parameter('security.routes.security_forced_password_change')] %}
+{% set bad_routes = [getParameter('security.routes.security_user_login'), getParameter('security.routes.security_forced_password_change')] %}
 {% if app.request.get('_route') not in bad_routes %}
 <section class="hideSection">
     <div class="container theme-showcase bg-dark fixed-top" role="menu">
@@ -7,7 +7,7 @@
             <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ 'Toggle navigation'|trans }}">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="navbar-brand" href="{{ path('home') }}">{% block projectname %}{{ get_setting('org.name.short', 'BEE') }}{% endblock projectname %}</a>
+            <a class="navbar-brand" href="{{ path('home') }}">{% block projectname %}{{ getSetting('org.name.short', 'BEE') }}{% endblock projectname %}</a>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 {% block dynamicMenu %}

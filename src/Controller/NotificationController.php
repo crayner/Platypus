@@ -17,25 +17,27 @@ namespace App\Controller;
 
 use App\Manager\NotificationManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class NotificationController
+ * @package App\Controller
+ */
 class NotificationController
 {
     /**
      * notificationManage
      *
+     * @param Request $request
      * @param NotificationManager $manager
      * @return JsonResponse
-     * @Route("/system/notification/manage/", name="notification_manage")
+     * @Route("/system/notification/manage/", name="notification_manage", methods={"POST"})
      */
     public function notificationManage(NotificationManager $manager)
     {
-        $content = '
-<div class="ticker-wrap">
-    <div class="ticker">
-        <div class="ticker__item">This is a test message of a notification by Craig.</div>
-    </div>
-</div>';
+        $id = 1;
+        $content = [];
 
         return new JsonResponse(
             [

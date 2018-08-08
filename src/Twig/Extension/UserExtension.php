@@ -33,11 +33,10 @@ class UserExtension extends AbstractExtension
 	{
 		return [
 			new \Twig_SimpleFunction('getFullUserName', [$this, 'getFullUserName']),
-            new \Twig_SimpleFunction('get_userManager', [$this, 'getUserManager']),
             new \Twig_SimpleFunction('getUserManager', [$this, 'getUserManager']),
-            new \Twig_SimpleFunction('get_CurrentSchoolYear', [$this, 'getCurrentSchoolYear']),
-            new \Twig_SimpleFunction('get_CurrentSchoolYearName', [$this, 'getCurrentSchoolYearName']),
-			new \Twig_SimpleFunction('get_UserSetting', [$this->userManager, 'getUserSetting']),
+            new \Twig_SimpleFunction('getCurrentSchoolYear', [$this, 'getCurrentSchoolYear']),
+            new \Twig_SimpleFunction('getCurrentSchoolYearName', [$this, 'getCurrentSchoolYearName']),
+			new \Twig_SimpleFunction('getUserSetting', [$this->userManager, 'getUserSetting']),
 		];
 	}
 

@@ -2,12 +2,12 @@
 {% set headerNotices = '' %}
 {% spaceless %}
 {% if app.user is defined and app.user is not null %}
-    {% set route = get_parameter('security.routes')['security_user_edit'] %}
-    {% if get_UserSetting('Calendar') is not null %}
-        {% set headerNotices = headerNotices ~ miscButton({transDomain: 'SchoolYear', style: 'float: left;', title: 'user.school_yesr.warning', class: 'btn btn-warning btn-header', prompt: {message: 'user.school_year.name', 'params': {'%{name}': get_CurrentSchoolYearName() }}, windowOpen: {route: path(route, {id: app.user.id})}}) %}
+    {% set route = getParameter('security.routes')['security_user_edit'] %}
+    {% if getUserSetting('Calendar') is not null %}
+        {% set headerNotices = headerNotices ~ miscButton({transDomain: 'SchoolYear', style: 'float: left;', title: 'user.school_yesr.warning', class: 'btn btn-warning btn-header', prompt: {message: 'user.school_year.name', 'params': {'%{name}': getCurrentSchoolYearName() }}, windowOpen: {route: path(route, {id: app.user.id})}}) %}
         {% set containerThemeOverwrite = ' containerWarning' %}
     {% else %}
-        {% set headerNotices = headerNotices ~ miscButton({transDomain: 'SchoolYear', style: 'float: left;', title: 'user.school_year.current', class: 'btn btn-success btn-header', prompt: {message: 'user.school_year.name', params: {'%{name}': get_CurrentSchoolYearName() }}, windowOpen: {route: path(route, {id: app.user.id})}}) %}
+        {% set headerNotices = headerNotices ~ miscButton({transDomain: 'SchoolYear', style: 'float: left;', title: 'user.school_year.current', class: 'btn btn-success btn-header', prompt: {message: 'user.school_year.name', params: {'%{name}': getCurrentSchoolYearName() }}, windowOpen: {route: path(route, {id: app.user.id})}}) %}
     {% endif %}
 {% endif %}
 {% endspaceless %}

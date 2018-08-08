@@ -34,7 +34,6 @@ class CoreExtension extends AbstractExtension
     {
         return [
             new \Twig_SimpleFunction('getVersion', [$this, 'getVersion']),
-            new \Twig_SimpleFunction('get_UserSetting', [$this, 'crashBurn']),
             new \Twig_SimpleFunction('hideSection', [$this, 'hideSection']),
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
             new \Twig_SimpleFunction('camelCase', array($this, 'camelCase')),

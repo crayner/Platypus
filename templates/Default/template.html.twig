@@ -1,8 +1,9 @@
-{% trans_default_domain "home" %}
+{% trans_default_domain "Template" %}
 
 {% extends 'Default/headerNotice.html.twig' %}
 
 {% set fullPage = fullPage|default(false) %}
+{% set headerOff = headerOff|default(false) %}
 {% set templateName = getThemeName() %}
 
 {% block htmlContent %}
@@ -10,7 +11,7 @@
     <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-        <title>{% block title %}{{ get_setting('org.name.long', 'Busybee Institute') }} -  on Busybee {% endblock title %}</title>
+        <title>{% block title %}{{ getSetting('org.name.long', 'Busybee Institute') }} -  on Busybee {% endblock title %}</title>
 
         {% block stylesheets %}
             {% include 'Default/style.html.twig' %}
@@ -26,14 +27,14 @@
     {% endif %}
 
 
-    {% if not(headerOff is defined and headerOff) %}
+    {% if not(headerOff) %}
         {% block menuContainer %}
             {% include 'Menu/main-menu.html.twig' %}
         {% endblock menuContainer %}
     {% endif %}
 
     {% if not(fullPage) %}
-        {% set sections = get_section() %}
+        {% set sections = getSection() %}
 
         {% if sections is empty %}
             {% set fullPage = true %}
@@ -42,88 +43,70 @@
 
     <div class="container theme-showcase" role="main"{% if headerOff is defined and headerOff %} style="margin-top: -50px;"{% endif %}>
 
-        {% if not(headerOff is defined and headerOff) %}
-            {% block titleContainer %}
-                <div class="jumbotron hideSection{{ containerThemeOverwrite }}">
-                    <img src="{{ asset(get_setting('org.logo', 'bundles/' ~ get_setting('template.name', 'PlatypusTemplateOriginal')|lower ~ '/img/bee.png')) }}" alt="Busybee" id="bee-logo"/>
-                    <h2>{% block headerTitle %}Busybee - {{ get_setting('org.name.long') }}{% endblock headerTitle %}</h2>
+        {% block titleContainer %}
+            {% if not(headerOff is defined and headerOff) %}
+                <div class="jumbotron hideSection{{ containerThemeOverwrite }}" id="titleContent">
+                    <img src="{{ asset(getSetting('org.logo', 'bundles/' ~ getSetting('template.name', 'PlatypusTemplateOriginal')|lower ~ '/img/bee.png')) }}" alt="Busybee" id="bee-logo"/>
+                    <h2>{% block headerTitle %}Busybee - {{ getSetting('org.name.long') }}{% endblock headerTitle %}</h2>
                     <p class="lead">{% block headerLead %}{% endblock headerLead %}</p>
                     {% if headerNotices is not empty %}<p>{{ headerNotices|raw }}</p>{% endif %}
                 </div>
-            {% endblock titleContainer %}
-        {% endif %}
-        <div class="row" style="margin-top: -32px; max-height: 25px;"><div class="col-11" id="notifications"></div><div class="col-1">
-                <span class="foldMenu" data-toggle="collapse" data-target="#sidebar" aria-hidden="true" aria-expanded="false" aria-controls="sidebar" style="float: right;"><span class="far fa-times-circle"></span></span>
-            </div></div>
-        <div class="row">
-            {% if fullPage %}
-                <div class="col-12" id="contentContainer">
-            {% else %}
-                <main class="col-9" id="contentContainer">
-                    <div id="subContentContainer">
             {% endif %}
-                {% block flashMessages %}
-                    {% include 'Default/flash.html.twig' %}
-                {% endblock flashMessages %}
-                {% block contentContainer %}
+        {% endblock titleContainer %}
 
-                {{ include('Default/buttons.html.twig') }}
+            {% if fullPage %}
+                <div class="row" style="margin-top: -32px; max-height: 25px; min-height: 25px;">
+                    <div class="col-10 offset-1" id="notifications"></div>
+                    <div class="col-1">
+                        <span style="float: right;" class="text-muted"><span class="fas fa-bars"></span></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <main class="col-12" id="contentContainer">
+            {% else %}
+                <div class="row" style="margin-top: -32px; max-height: 25px; min-height: 25px;">
+                    <div class="col-10 offset-1" id="notifications"></div>
+                    <div class="col-1">
+                        <span class="foldMenu" data-toggle="collapse" data-target="#sidebar" aria-hidden="true" aria-expanded="false" aria-controls="sidebar" style="float: right;"><span class="far fa-times-circle"></span></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <main class="col-9" id="contentContainer">
+            {% endif %}
 
-                {{ include('Default/tables.html.twig') }}
+            {% block flashMessages %}
+                {% include 'Default/flash.html.twig' %}
+            {% endblock flashMessages %}
+            {% block contentContainer %}
+                {{ 'No content'|trans }}
+            {% endblock contentContainer %}
 
-                {{ include('Default/thumbnails.html.twig') }}
-
-                {{ include('Default/labels.html.twig') }}
-
-                {{ include('Default/badges.html.twig') }}
-
-                {{ include('Default/dropdowns.html.twig') }}
-
-                {{ include('Default/navs.html.twig') }}
-
-                {{ include('Default/navBars.html.twig') }}
-
-                {{ include('Default/alerts.html.twig') }}
-
-                {{ include('Default/progressBars.html.twig') }}
-
-                {{ include('Default/listGroups.html.twig') }}
-
-                {{ include('Default/panels.html.twig') }}
-
-                {{ include('Default/cards.html.twig') }}
-
-                {{ include('Default/carousel.html.twig') }}
-
-                {% endblock contentContainer %}
-            {% if fullPage is defined and fullPage %}
+            {% if fullPage %}
+                    </main>
                 </div>
             {% else %}
-                    </div>
-                </main>
-                <nav class="col-3 collapse show" id="sidebar">
-
-                    <div id="sectionMenuContainer">
-                    {% block sectionMenu %}
-                        {% include 'Menu/section-menu.html.twig' %}
-                    {% endblock sectionMenu %}
-                    </div>
-                </nav>
+                    </main>
+                    <nav class="col-3 collapse show" id="sidebar">
+                        <div id="sectionMenuContainer">
+                            {% block sectionMenu %}
+                                {% include 'Menu/section-menu.html.twig' %}
+                            {% endblock sectionMenu %}
+                        </div>
+                    </nav>
+            </div>
             {% endif %}
-        </div>
-    </div> <!-- /container -->
+    </div> <!-- container -->
 
+{% block footerContainer %}
     <div class="container theme-showcase" id="footerContainer">
-        {% block footerContainer %}
-            {{ include('Default/footer.html.twig') }}
-        {% endblock footerContainer %}
+        {{ include('Default/footer.html.twig') }}
     </div> <!-- /container footer -->
-        <div class="showLoader"><!-- Place at bottom of page --></div>
+    <div class="showLoader"><!-- Place at bottom of page --></div>
+{% endblock footerContainer %}
 
-    {% block javascripts %}
-        {% include "Default/scripts.html.twig" %}
-    {% endblock javascripts %}
-
+{% block javascripts %}
+    {% include "Default/scripts.html.twig" %}
+{% endblock javascripts %}
 
     </body>
     </html>

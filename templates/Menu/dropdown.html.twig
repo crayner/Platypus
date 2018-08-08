@@ -1,15 +1,15 @@
 {% trans_default_domain "System" %}
 {% if (menu.role is defined and is_granted(menu.role)) or menu.role is not defined %}
-    {% if (menu.test is defined and test_menuItem(menu.test)) or menu.test is not defined %}
-        {% if menu_required(menu.menu) %}
+    {% if (menu.test is defined and testMenuItem(menu.test)) or menu.test is not defined %}
+        {% if menuRequired(menu.menu) %}
             <li class="nav-item dropdown">
                 {% set translate = 'System' %}{% if menu.translate is defined %}{% set translate = menu.translate %}{% endif %}
                 <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenu{{ menu.label }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
                    >{{ menu.label|trans({}, translate) }}</a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenu{{ menu.label }}">
-                    {% for drop in get_menuItems(menu.menu) %}
+                    {% for drop in getMenuItems(menu.menu) %}
                         {% if (drop.role is defined and is_granted(drop.role)) or drop.role is not defined %}
-                            {% if (drop.test is defined and test_menuItem(drop.test)) or drop.test is not defined %}
+                            {% if (drop.test is defined and testMenuItem(drop.test)) or drop.test is not defined %}
                                 {% if drop.menu is defined %}
                                     {% include 'Menu/submenu.html.twig' with {'menu': drop} %}
                                 {% elseif drop.route is defined %}

@@ -8,18 +8,18 @@
             </li>
         </ul>
     {% else %}
-    {% set route = get_parameter('security.routes.security_user_check') %}
+    {% set route = getParameter('security.routes.security_user_check') %}
     <form class="form-inline ml-auto" action="{{ path(route) }}" method="post">
         <div class="form-group mb-2">
             <input type="text" id="login__username" class="form-control form-control-sm" name="login[_username]"
-                   value="{{ last_username|default("") }}" placeholder="{{ 'Username/Email'|trans }}" />
+                   value="{{ last_username|default("") }}" placeholder="{{ 'Username/Email'|trans }}" autocomplete="username" />
         </div>
         <div class="form-group mb-2">
             <div class="input-group input-group-sm">
                 <input type="password" id="login__password" name="login[_password]" class="form-control"
-                       placeholder="{{ 'Password'|trans }}" />
+                       placeholder="{{ 'Password'|trans }}" autocomplete="current-password"/>
                 <span class="input-group-append">{{ saveButton({class: 'btn btn-success fas fa-sign-in-alt'})|raw }}</span>
-                {% if get_setting('google.o_auth', false) %}
+                {% if getSetting('google.o_auth', false) %}
                 <span class="input-group-append">
                     {{ miscButton({class: 'btn btn-success fab fa-google', title: 'google.oauth', transDomain: 'System', windowOpen: {route: path('google_oauth')}})|raw }}
                 </span>

@@ -2,23 +2,26 @@
 
 {% trans_default_domain 'System' %}
 
-
-{% block title %}{%  if get_setting('org.name.long', 'Busybee Learning') is iterable %}
-{% endif %}{{ 'home.heading'|trans({'%{header}': get_setting('org.name.long', 'Busybee Learning')}) }}{% endblock title %}
-{% block headerTitle %}{{ 'home.heading'|trans({'%{header}': get_setting('org.name.long', 'Busybee Learning')}) }}{% endblock headerTitle %}
+{% block title %}{%  if getSetting('org.name.long', 'Busybee Learning') is iterable %}
+{% endif %}{{ 'home.heading'|trans({'%{header}': getSetting('org.name.long', 'Busybee Learning')}) }}{% endblock title %}
+{% block headerTitle %}{{ 'home.heading'|trans({'%{header}': getSetting('org.name.long', 'Busybee Learning')}) }}{% endblock headerTitle %}
 {% block headerLead %}{{ 'home.lead'|trans }}.{% endblock headerLead %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
 
 {% block contentContainer %}
     <div id="content-container">
-    <section>
-        {% if get_setting('system.index.text', null) is not empty %}
-            <p>{{ get_setting('system.index.text', null)|raw }}</p>
-        {% else %}
-            <p>{{ 'home.para1'|trans }}</p>
-            <p>{{ 'home.para2'|trans }}</p>
-            <p>{{ 'home.para3'|trans }}</p>
-            <p>Craig Rayner</p>
-        {% endif %}
-    </section>
+        <section>
+            {% if getSetting('system.index.text', null) is not empty %}
+                <p>{{ getSetting('system.index.text', null)|raw }}</p>
+            {% else %}
+                <p>{{ 'home.para1'|trans }}</p>
+                <p>{{ 'home.para2'|trans }}</p>
+                <p>{{ 'home.para3'|trans }}</p>
+                <p>Craig Rayner</p>
+            {% endif %}
+        </section>
     </div>
 {% endblock contentContainer %}

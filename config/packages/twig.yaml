@@ -5,4 +5,4 @@ twig:
     globals:
         idleTimeout: '%idle_timeout%'
     form_themes:
-        - '@SymfonyForm/FormTheme/bootstrap.html.twig'
+        - '@HillrangeForm/FormTheme/bootstrap.html.twig'

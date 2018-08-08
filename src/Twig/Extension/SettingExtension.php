@@ -42,14 +42,14 @@ class SettingExtension extends AbstractExtension
 	public function getFunctions()
 	{
 		return array(
-			new \Twig_SimpleFunction('get_setting', array($this->settingManager, 'get')),
-			new \Twig_SimpleFunction('get_parameter', array($this->settingManager, 'getParameter')),
-			new \Twig_SimpleFunction('get_menu', array($this->menuManager, 'getMenu')),
-			new \Twig_SimpleFunction('get_menuItems', array($this, 'getMenuItems')),
-			new \Twig_SimpleFunction('test_menuItem', array($this, 'testMenuItem')),
-			new \Twig_SimpleFunction('menu_required', array($this, 'menuRequired')),
+			new \Twig_SimpleFunction('getSetting', array($this->settingManager, 'get')),
+			new \Twig_SimpleFunction('getParameter', array($this->settingManager, 'getParameter')),
+			new \Twig_SimpleFunction('getMenu', array($this->menuManager, 'getMenu')),
+			new \Twig_SimpleFunction('getMenuItems', array($this, 'getMenuItems')),
+			new \Twig_SimpleFunction('testMenuItem', array($this->menuManager, 'testMenuItem')),
+			new \Twig_SimpleFunction('menuRequired', array($this->menuManager, 'menuRequired')),
 			new \Twig_SimpleFunction('array_flip', array($this, 'arrayFlip')),
-            new \Twig_SimpleFunction('get_section', array($this->menuManager, 'getSection')),
+            new \Twig_SimpleFunction('getSection', array($this->menuManager, 'getSection')),
             new \Twig_SimpleFunction('displayBoolean', array($this, 'displayBoolean')),
             new \Twig_SimpleFunction('settingLink', array($this->settingManager, 'settingLink'), ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('exit', [$this, 'exit']),
@@ -66,26 +66,6 @@ class SettingExtension extends AbstractExtension
 	public function getMenuItems($node)
 	{
 		return $this->menuManager->getMenuItems($node);
-	}
-
-	/**
-	 * @param $test
-	 *
-	 * @return bool
-	 */
-	public function testMenuItem($test)
-	{
-		return $this->menuManager->testMenuItem($test);
-	}
-
-	/**
-	 * @param $menu
-	 *
-	 * @return bool
-	 */
-	public function menuRequired($menu)
-	{
-		return $this->menuManager->menuRequired($menu);
 	}
 
 	/**
