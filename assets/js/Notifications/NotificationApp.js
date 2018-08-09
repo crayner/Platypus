@@ -14,7 +14,6 @@ export default class NotificationApp extends Component {
         this.state  = {
             interval: props.interval,
             content: [],
-            isLoaded: false,
             contentKey: 0,
             fullPage: props.fullPage,
             alwaysFullPage: props.alwaysFullPage,
@@ -52,7 +51,6 @@ export default class NotificationApp extends Component {
         }
         this.setState({
             content: data,
-            isLoaded: true,
             contentKey: 1,
             message: this.manageMessage(data[0]),
             interval: interval,
