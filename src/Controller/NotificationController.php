@@ -45,7 +45,6 @@ class NotificationController
                 'link' => '',
                 'alert' => 'dark',
             ],
-/*
             [
                 'id' => $id++,
                 'text' => 'This is a second test message of a notification by Craig with link.',
@@ -63,12 +62,11 @@ class NotificationController
                 'text' => 'This is a fourth test message of a notification by Craig with link.',
                 'link' => '',
             ],
-*/
         ];
 
         return new JsonResponse(
             [
-                'content' => $content,
+                'content' => [],
             ],
             200);
     }

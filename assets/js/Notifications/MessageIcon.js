@@ -17,8 +17,9 @@ export default function MessageIcon(props) {
     var title = translateMessage(translations, 'message.count', {'%{count}': messageCount})
 
     return (
-        <span style={{float: 'right'}} title={title}>
+        <span style={{float: 'right', top: '10px', left: '4px'}} title={title} className={'fa-layers fa-fw'}>
             <FontAwesomeIcon icon={faBell} />
+            <span className="fa-layers-text fa-inverse" data-fa-transform="shrink-9" style={{fontWeight:300}}>{messageCount}</span>
         </span>
     )
 }
