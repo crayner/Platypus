@@ -3,6 +3,7 @@
 {% extends 'Default/headerNotice.html.twig' %}
 
 {% set fullPage = fullPage|default(false) %}
+{% set alwaysFullPage = false %}
 {% set headerOff = headerOff|default(false) %}
 {% set templateName = getThemeName() %}
 
@@ -38,6 +39,7 @@
 
         {% if sections is empty %}
             {% set fullPage = true %}
+            {% set alwaysFullPage = true %}
         {% endif %}
     {% endif %}
 
@@ -53,23 +55,11 @@
                 </div>
             {% endif %}
         {% endblock titleContainer %}
-
+                <div id="notificationBar"></div>
             {% if fullPage %}
-                <div class="row" style="margin-top: -32px; max-height: 25px; min-height: 25px;">
-                    <div class="col-10 offset-1" id="notifications"></div>
-                    <div class="col-1">
-                        <span style="float: right;" class="text-muted"><span class="fas fa-bars"></span></span>
-                    </div>
-                </div>
                 <div class="row">
                     <main class="col-12" id="contentContainer">
             {% else %}
-                <div class="row" style="margin-top: -32px; max-height: 25px; min-height: 25px;">
-                    <div class="col-10 offset-1" id="notifications"></div>
-                    <div class="col-1">
-                        <span class="foldMenu" data-toggle="collapse" data-target="#sidebar" aria-hidden="true" aria-expanded="false" aria-controls="sidebar" style="float: right;"><span class="far fa-times-circle"></span></span>
-                    </div>
-                </div>
                 <div class="row">
                     <main class="col-9" id="contentContainer">
             {% endif %}

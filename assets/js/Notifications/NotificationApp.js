@@ -1,23 +1,29 @@
+'use strict';
+
 import React, { Component } from "react"
 import { getNotifications } from "./notification_api";
 import PropTypes from 'prop-types'
 import Notifications from "./Notifications";
 
-
 export default class NotificationApp extends Component {
     constructor(props) {
-        super(props);
+        super(props)
 
         this.state  = {
             interval: props.interval,
             content: [],
             isLoaded: false,
             contentKey: 0,
-            message: this.manageMessage({text: 'Loading...', id: 1, link: ''}),
+            fullPage: props.fullPage,
+            alwaysFullPage: props.alwaysFullPage,
+            message: this.manageMessage({text: '', id: 1, link: ''}),
         }
 
-        this.handleRefreshMessageTimeout = 0;
-        this.handleStepMessageTimeout = 0;
+        this.translations = props.translations
+        this.handleRefreshMessageTimeout = 0
+        this.handleStepMessageTimeout = 0
+        this.messageCount = 0
+        this.manageSideBarClick = this.manageSideBarClick.bind(this)
     }
 
     componentDidMount() {
@@ -28,7 +34,8 @@ export default class NotificationApp extends Component {
     }
 
     handleNewContent(data){
-        if (data.length === 0){
+        this.messageCount = data.length
+        if (this.messageCount === 0){
             data = {'0': {id: 1, text: "", link: "", alert: 'light'}}
         }
 
@@ -93,10 +100,33 @@ export default class NotificationApp extends Component {
         }
     }
 
+    manageSideBarClick(){
+        var container = $('#contentContainer')
+        var sideBar = $('#sectionMenuContainer')
+
+        if (this.state.fullPage) {
+            fetch('/en/menu/section/show/display/')
+            container.removeAttr('style');
+            sideBar.removeAttr('style');
+            this.setState({fullPage: false})
+        } else {
+            fetch('/en/menu/section/hide/display/')
+            container.css('flex', 'auto');
+            container.css('max-width', 'none');
+            sideBar.css('display', 'none');
+            this.setState({fullPage: true})
+        }
+    }
+
     render() {
         return (
             <Notifications
                 message={this.state.message}
+                fullPage={this.state.fullPage}
+                alwaysFullPage={this.state.alwaysFullPage}
+                manageSidebarClick={this.manageSideBarClick}
+                messageCount={this.messageCount}
+                translations={this.translations}
             />
         )
     }
@@ -104,4 +134,7 @@ export default class NotificationApp extends Component {
 
 NotificationApp.propTypes = {
     interval: PropTypes.number.isRequired,
+    fullPage: PropTypes.bool.isRequired,
+    alwaysFullPage: PropTypes.bool.isRequired,
+    translations: PropTypes.object.isRequired,
 }

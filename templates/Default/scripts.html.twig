@@ -10,7 +10,18 @@
 {% include '@' ~ templateName ~ '/script.html.twig' %}
 {% include '@HillrangeForm/script.html.twig' %}
 
-{% set notificationProps = {} %}
+{% if not app.session.has('showSectionMenu') %}
+    {% set x = app.session.set('showSectionMenu', 'show') %}
+{% endif %}
+{% if app.session.get('showSectionMenu')|default('show') is same as('hide') %}
+    {% set fullPage = true %}
+{% endif %}
+
+{% set translations = translations|default({}) %}
+{% set translations = translations|merge({'message.count': ('message.count'|trans) }) %}
+{% set translations = translations|merge({'toggle.sidebar': ('toggle.sidebar'|trans) }) %}
+
+{% set notificationProps = {fullPage: fullPage, alwaysFullPage: alwaysFullPage, translations: translations, locale: app.request.get('locale')} %}
 {% if getUserManager().isStaff(app.user) %}
     {% set notificationProps = notificationProps|merge({'interval': 10000}) %} {# 10 sec #}
 {% else %}
@@ -20,7 +31,10 @@
 <script>
     window.NOTIFICATION_PROPS = {{ notificationProps|json_encode|raw }};
 </script>
-<script src="{{ asset('build/notifications.js') }}"></script>
+
+<script src="{{ asset('build/manifest.js') }}" language="JavaScript" type="text/javascript"></script>
+<script src="{{ asset('build/core.js') }}" language="JavaScript" type="text/javascript"></script>
+<script src="{{ asset('build/notifications.js') }}" language="JavaScript" type="text/javascript"></script>
 
 
 
@@ -34,29 +48,6 @@
 <script type="text/javascript" charset="utf-8">
     $(".alert").alert();
     $('.foldMenu').on('click', function(){
-        var foldMenu = $('.foldMenu');
-        var container = $('#contentContainer');
-        var icon = foldMenu.children('svg');
-        if (icon.hasClass('fa-times-circle')) {
-            $.ajax({
-                url: '{{ path('section_menu_display', {display: 'hide'}) }}',
-                type: 'POST'
-            });
-            container.css('flex', 'auto');
-            container.css('max-width', 'none');
-        } else {
-            $.ajax({
-                url: '{{ path('section_menu_display', {display: 'show'}) }}',
-                type: 'POST'
-            });
-            container.removeAttr('style');
-        }
-        icon.toggleClass('fa-times-circle fa-bars');
-        if (icon.attr('data-prefix') === 'far') {
-            icon.attr('data-prefix', 'fas');
-        } else {
-            icon.attr('data-prefix', 'far');
-        }
     });
 
     function iconDoneRendering () {
@@ -72,33 +63,7 @@
                 {{ 'show = "show";' }}
             {% endif %}
         {% endif %}
-
-        if (show == 'hide') {
-            $('.foldMenu').click();
-        }
     }
-    {#
-    {% set interval = 120000 %}
-    {% if getUserManager().isStaff %}
-    {% set interval = 10000 %}
-    {% endif %}
-
-    function setNotifications(){
-        fetch('{{ path('notification_manage') }}')
-            .then(function (a) {
-                return a.json(); // call the json method on the response to get JSON
-            })
-            .then(function (json) {
-                $('div#notifications').html(json.content);
-            })
-    }
-
-    $(document).ready(function(){
-        setInterval(function() {
-            setNotifications()
-        }, '{{ interval }}')
-        setNotifications()
-    });#}
 
     FontAwesome.dom.i2svg({ callback: iconDoneRendering })
 </script>

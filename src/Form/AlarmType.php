@@ -73,6 +73,7 @@ class AlarmType extends AbstractType
                     'mapped' => false,
                     'label' => 'alarm.custom_alarm.label',
                     'help' => 'alarm.custom_alarm.help',
+                    'required' => false,
                 ]
             )
         ;
