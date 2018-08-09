@@ -4,7 +4,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import NoMessage from './NoMessage'
 import MessageIcon from './MessageIcon'
-import { translateMessage } from "../Component/MessageTranslator";
+import ToggleSidebarIcon from './ToggleSidebarIcon'
 
 export default function NotificationIcons(props) {
     const {
@@ -28,10 +28,13 @@ export default function NotificationIcons(props) {
     }
 
     return (
-        <div className="col-4 fa-2x" onClick={manageSidebarClick}>
-            <span style={{float: 'right'}} className={alwaysFullPage ? 'text-muted' : 'text-normal'} title={translateMessage(translations, 'toggle.sidebar', [])}>
-                <span className={fullPage ? "fas fa-bars" : "far fa-times-circle"}></span>
-            </span>
+        <div className="col-4 fa-2x">
+            <ToggleSidebarIcon
+                alwaysFullPage={alwaysFullPage}
+                fullPage={fullPage}
+                manageSidebarClick={manageSidebarClick}
+                translations={translations}
+            />
             <span style={{float: 'right'}}>&nbsp;&nbsp;</span>
             { notificationIcon() }
         </div>

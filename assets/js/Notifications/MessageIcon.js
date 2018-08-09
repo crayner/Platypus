@@ -2,8 +2,10 @@
 
 import React from 'react'
 import PropTypes from 'prop-types'
-import "../Component/MessageTranslator";
-import { translateMessage } from "../Component/MessageTranslator";
+import "../Component/MessageTranslator"
+import { translateMessage } from "../Component/MessageTranslator"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-solid-svg-icons'
 
 export default function MessageIcon(props) {
     const {
@@ -16,7 +18,7 @@ export default function MessageIcon(props) {
 
     return (
         <span style={{float: 'right'}} title={title}>
-            <span className={"fas fa-bell" }></span>
+            <FontAwesomeIcon icon={faBell} />
         </span>
     )
 }
@@ -25,3 +27,5 @@ MessageIcon.propTypes = {
     messageCount: PropTypes.number.isRequired,
     translations: PropTypes.object.isRequired,
 }
+
+

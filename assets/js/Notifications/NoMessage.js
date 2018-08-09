@@ -1,12 +1,14 @@
 'use strict';
 
 import React from 'react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBell } from '@fortawesome/free-regular-svg-icons'
 
 export default function NoMessage() {
 
     return (
         <span style={{float: 'right'}} className={'text-muted'}>
-            <span className={"far fa-bell"}></span>
+            <FontAwesomeIcon icon={faBell}/>
         </span>
     )
 }

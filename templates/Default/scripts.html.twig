@@ -21,7 +21,7 @@
 {% set translations = translations|merge({'message.count': ('message.count'|trans) }) %}
 {% set translations = translations|merge({'toggle.sidebar': ('toggle.sidebar'|trans) }) %}
 
-{% set notificationProps = {fullPage: fullPage, alwaysFullPage: alwaysFullPage, translations: translations, locale: app.request.get('locale')} %}
+{% set notificationProps = {fullPage: fullPage, alwaysFullPage: alwaysFullPage, translations: translations, locale: app.request.get('_locale')} %}
 {% if getUserManager().isStaff(app.user) %}
     {% set notificationProps = notificationProps|merge({'interval': 10000}) %} {# 10 sec #}
 {% else %}

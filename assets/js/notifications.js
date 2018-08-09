@@ -10,6 +10,7 @@ render(
         fullPage={window.NOTIFICATION_PROPS.fullPage}
         alwaysFullPage={window.NOTIFICATION_PROPS.alwaysFullPage}
         translations={window.NOTIFICATION_PROPS.translations}
+        locale={window.NOTIFICATION_PROPS.locale}
     />,
     document.getElementById('notificationBar')
 )

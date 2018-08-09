@@ -4,6 +4,8 @@ import React, { Component } from "react"
 import { getNotifications } from "./notification_api";
 import PropTypes from 'prop-types'
 import Notifications from "./Notifications";
+import { fetchJson} from "../Component/fetchJson";
+
 
 export default class NotificationApp extends Component {
     constructor(props) {
@@ -23,7 +25,10 @@ export default class NotificationApp extends Component {
         this.handleRefreshMessageTimeout = 0
         this.handleStepMessageTimeout = 0
         this.messageCount = 0
+        this.locale = props.locale
         this.manageSideBarClick = this.manageSideBarClick.bind(this)
+        if (props.fullPage)
+            this.closeSidebar()
     }
 
     componentDidMount() {
@@ -78,7 +83,7 @@ export default class NotificationApp extends Component {
     refreshMessages(){
         if(this.handleRefreshMessageTimeout >= this.state.interval) {
             this.handleRefreshMessageTimeout = 0
-            getNotifications(this.state.content)
+            getNotifications(this.state.content, this.locale)
                 .then((data) => {
                     this.handleNewContent(data)
                 });
@@ -100,21 +105,32 @@ export default class NotificationApp extends Component {
         }
     }
 
-    manageSideBarClick(){
+    openSidebar(){
         var container = $('#contentContainer')
         var sideBar = $('#sectionMenuContainer')
 
+        container.removeAttr('style');
+        sideBar.removeAttr('style');
+        return false
+    }
+
+    closeSidebar(){
+        var container = $('#contentContainer')
+        var sideBar = $('#sectionMenuContainer')
+
+        container.css('flex', 'auto');
+        container.css('max-width', 'none');
+        sideBar.css('display', 'none');
+        return true
+    }
+
+    manageSideBarClick(){
         if (this.state.fullPage) {
-            fetch('/en/menu/section/show/display/')
-            container.removeAttr('style');
-            sideBar.removeAttr('style');
-            this.setState({fullPage: false})
+            fetchJson('/menu/section/show/display/', {}, this.locale)
+            this.setState({fullPage: this.openSidebar()})
         } else {
-            fetch('/en/menu/section/hide/display/')
-            container.css('flex', 'auto');
-            container.css('max-width', 'none');
-            sideBar.css('display', 'none');
-            this.setState({fullPage: true})
+            fetchJson('/menu/section/hide/display/', {}, this.locale)
+            this.setState({fullPage: this.closeSidebar()})
         }
     }
 

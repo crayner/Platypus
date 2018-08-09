@@ -37,31 +37,33 @@ class NotificationController
     public function notificationManage(NotificationManager $manager)
     {
         $id = 1;
-        $content = [
-         [
-                           'id' => $id++,
-                           'text' => ' This is a first test message of a notification by Craig.',
-                           'link' => '',
-                           'alert' => 'dark',
-                       ],
-            /*                         [
-                           'id' => $id++,
-                           'text' => 'This is a second test message of a notification by Craig with link.',
-                           'link' => 'http://www.craigrayner.com',
-                           'alert' => 'warning',
-                       ],
-                       [
-                           'id' => $id++,
-                           'text' => 'This is a third test message of a notification by Craig with link.',
-                           'link' => 'http://www.craigrayner.com',
-                           'alert' => 'info',
-                       ],
-                       [
-                           'id' => $id++,
-                           'text' => 'This is a fourth test message of a notification by Craig with link.',
-                           'link' => '',
-                       ],
-           */
+        $content =
+        [
+            [
+                'id' => $id++,
+                'text' => ' This is a first test message of a notification by Craig.',
+                'link' => '',
+                'alert' => 'dark',
+            ],
+/*
+            [
+                'id' => $id++,
+                'text' => 'This is a second test message of a notification by Craig with link.',
+                'link' => 'http://www.craigrayner.com',
+                'alert' => 'warning',
+            ],
+            [
+                'id' => $id++,
+                'text' => 'This is a third test message of a notification by Craig with link.',
+                'link' => 'http://www.craigrayner.com',
+                'alert' => 'info',
+            ],
+            [
+                'id' => $id++,
+                'text' => 'This is a fourth test message of a notification by Craig with link.',
+                'link' => '',
+            ],
+*/
         ];
 
         return new JsonResponse(
