@@ -26,9 +26,12 @@ App\Entity\Alarm:
             nullable: true
             column: timestamp_end
     manyToOne:
-        person:
+        user:
             targetEntity: Hillrange\Security\Entity\User
             joinColumn:
                 name: user_id
                 referencedColumnName: id
                 nullable: false
+    lifecycleCallbacks:
+        prePersist:
+            - setUser

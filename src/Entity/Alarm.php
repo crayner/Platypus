@@ -15,6 +15,10 @@
  */
 namespace App\Entity;
 
+use App\Util\PersonNameHelper;
+use App\Util\UserHelper;
+use Symfony\Component\Security\Core\User\UserInterface;
+
 class Alarm
 {
     /**
@@ -57,25 +61,30 @@ class Alarm
     }
 
     /**
-     * @var Person|null
+     * @var User|null
      */
-    private $person;
+    private $user;
 
     /**
-     * @return Person|null
+     * @return User|null
      */
-    public function getPerson(): ?Person
+    public function getUser(): ?UserInterface
     {
-        return $this->person;
+        return $this->user;
     }
 
     /**
-     * @param Person|null $person
+     * @param UserInterface|null $user
      * @return Alarm
      */
-    public function setPerson(?Person $person): Alarm
+    public function setUser(?UserInterface $user): Alarm
     {
-        $this->person = $person;
+        if (empty($user))
+            $user = UserHelper::getCurrentUser();
+
+        $this->setUserName($user);
+
+        $this->user = $user;
         return $this;
     }
 
@@ -198,5 +207,46 @@ class Alarm
     {
         $this->type = 'none';
         $this->status = 'current';
+    }
+
+    /**
+     * normaliser
+     *
+     * @return array
+     */
+    public function normaliser(): array
+    {
+        return [
+            'status' => $this->getStatus(),
+            'type' => $this->getType(),
+            'user' => $this->setUser($this->getUser())->getUser()->getId(),
+        ];
+    }
+
+    /**
+     * @var string
+     */
+    private $userName;
+
+    /**
+     * getUserName
+     *
+     * @return string
+     */
+    public function getUserName(): string
+    {
+        return $this->userName;
+    }
+
+    /**
+     * setUserName
+     *
+     * @param null|UserInterface $user
+     * @return Alarm
+     */
+    public function setUserName(?UserInterface $user): Alarm
+    {
+        $this->userName = PersonNameHelper::getFullUserName($user ?: $this->getUser());
+        return $this;
     }
 }
