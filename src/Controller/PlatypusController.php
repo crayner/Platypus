@@ -15,8 +15,8 @@
  */
 namespace App\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
 
 class PlatypusController extends Controller
 {
@@ -28,8 +28,6 @@ class PlatypusController extends Controller
      */
     public function home()
     {
-        return $this->render('home.html.twig', [
-            'xxx' => json_encode(['All,gibbonPersonIDStudent,gibbonYearGroupID']),
-        ]);
+        return $this->render('home.html.twig');
     }
 }

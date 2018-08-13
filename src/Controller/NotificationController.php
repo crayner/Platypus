@@ -15,7 +15,9 @@
  */
 namespace App\Controller;
 
+use App\Manager\AlarmManager;
 use App\Manager\NotificationManager;
+use App\Manager\StaffManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -67,6 +69,48 @@ class NotificationController
         return new JsonResponse(
             [
                 'content' => [],
+            ],
+            200);
+    }
+
+    /**
+     * alarmCheck
+     *
+     * @param AlarmManager $manager
+     * @return JsonResponse
+     * @Route("/system/alarm/check/", name="check_alarm", methods={"GET"})
+     */
+    public function alarmCheck(AlarmManager $manager)    {
+
+        $alarm = $manager->findCurrent();
+
+        return new JsonResponse(
+            [
+                'alarm' => $alarm->normaliser(),
+            ],
+            200);
+    }
+
+    /**
+     * alarmCheck
+     *
+     * @param AlarmManager $manager
+     * @param StaffManager $staffManager
+     * @return JsonResponse
+     * @Route("/system/alarm/close/", name="close_alarm", methods={"GET"})
+     */
+    public function alarmClose(AlarmManager $manager, StaffManager $staffManager)    {
+
+        $alarm = $manager->findCurrent();
+        $alarm->setStatus('past');
+        $alarm->setTimestampEnd(new \DateTime());
+
+        $manager->saveEntity();
+
+        return new JsonResponse(
+            [
+                'alarm' => $alarm->normaliser(),
+                'staff' => $staffManager->getStaffList()
             ],
             200);
     }
