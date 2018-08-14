@@ -16,15 +16,12 @@
 namespace App\Form;
 
 use App\Entity\Alarm;
-use App\Entity\Person;
-use App\Util\UserHelper;
 use Hillrange\Form\Type\EnumType;
-use Hillrange\Form\Type\HiddenEntityType;
+use Hillrange\Form\Type\FileType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 /**
  * Class AlarmType
@@ -47,33 +44,19 @@ class AlarmType extends AbstractType
                     'help' => 'alarm.type.help',
                 ]
             )
-            ->add('status', HiddenType::class,
-                [
-                    'label' => 'alarm.status.label',
-                ]
-            )
-            ->add('person', HiddenEntityType::class,
-                [
-                    'class' => Person::class,
-                    'data' => UserHelper::getCurrentUser(),
-                ]
-            )
-            ->add('timestampStart', HiddenType::class,
-                [
-                    'label' => 'alarm.timestamp_start.label',
-                ]
-            )
-            ->add('timestampEnd', HiddenType::class,
-                [
-                    'label' => 'alarm.timestamp_end.label',
-                ]
-            )
             ->add('customAlarm', FileType::class,
                 [
                     'mapped' => false,
                     'label' => 'alarm.custom_alarm.label',
                     'help' => 'alarm.custom_alarm.help',
                     'required' => false,
+                    'constraints' => [
+                        new File([
+                            'mimeTypes' => ['audio/mp3', 'audio/mpeg', 'audio/vnd.wav', 'audio/mp4']
+                        ]),
+                    ],
+                    'fileName' => 'customAlarm',
+
                 ]
             )
         ;

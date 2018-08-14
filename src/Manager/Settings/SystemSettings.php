@@ -241,7 +241,7 @@ class SystemSettings implements SettingCreationInterface
             ->__set('description', 'The staff member who receives notifications for system events.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', StaffManager::staffList())
+                ->__set('choice', StaffManager::getStaffList())
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', false)
@@ -258,7 +258,7 @@ class SystemSettings implements SettingCreationInterface
             ->__set('description', 'The staff member who receives notifications for data events.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', StaffManager::staffList())
+                ->__set('choice', StaffManager::getStaffList())
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', false)
@@ -275,7 +275,7 @@ class SystemSettings implements SettingCreationInterface
             ->__set('description', 'The staff member who receives notifications for admissions events.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', StaffManager::staffList())
+                ->__set('choice', StaffManager::getStaffList())
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', false)
@@ -292,7 +292,7 @@ class SystemSettings implements SettingCreationInterface
             ->__set('description', 'The staff member who receives notifications for staffing events.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', StaffManager::staffList())
+                ->__set('choice', StaffManager::getStaffList())
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', false)

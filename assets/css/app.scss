@@ -1,0 +1,55 @@
+#showAlarm {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(128, 128, 128, .8);
+  text-align: center;
+  vertical-align: middle;
+}
+.alarmGeneral {
+
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.displayAlarm {
+  overflow: hidden;
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.displayAlarm #showAlarm {
+  display: block;
+}
+.outerAlarm {
+  text-align: center;
+  background-color: white ;
+  position: relative;
+  width: 75%;
+  top: 100px;
+  min-height: 250px;
+  left: 12.5%;
+  z-index: 2001;
+  overflow: hidden;
+}
+.innerAlarm {
+  background-color: orangered;
+  width: 90%;
+  margin-left: 5%;
+}
+.innerAlarm h1 {
+  clear: both;
+}
+.innerAlarm span {
+  float: right;
+  padding-right: 10px;
+}
+.closeAlarm{
+    font-size: 14px;
+    text-align: right;
+  padding-right: 10px;
+}

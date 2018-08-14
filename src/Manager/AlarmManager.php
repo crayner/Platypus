@@ -30,4 +30,20 @@ class AlarmManager
      * @var string
      */
     private $entityName = Alarm::class;
+
+    /**
+     * findCurrent
+     *
+     * @return Alarm
+     */
+    public function findCurrent(): Alarm
+    {
+        $alarm = $this->getEntityManager()->getRepository($this->getEntityName())->findOneByStatus('current');
+
+        $alarm = $alarm ?: new Alarm();
+
+        return $this
+            ->setEntity($alarm)
+            ->getEntity();
+    }
 }

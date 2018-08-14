@@ -138,6 +138,17 @@ template.name:
     role: ROLE_SYSTEM_ADMIN
     defaultValue: PlatypusTemplateOriginal
     translateChoice: null
+alarm.custom.name:
+    type: file
+    name: alarm.custom.name
+    displayName: 'Custom Alarm File'
+    description: 'Track the file for a curtome alarm.'
+    value: null
+    choice: null
+    validators: null
+    role: ROLE_STAFF
+    defaultValue: null
+    translateChoice: null
 LLL;
 	}
 

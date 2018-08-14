@@ -98,6 +98,7 @@ class Alarm
      */
     public static $typeList = [
         'none',
+        'fire',
         'general',
         'lockdown-inplace',
         'lockdown-internal',
@@ -110,7 +111,7 @@ class Alarm
     public function getType(): ?string
     {
 
-        return $this->type = in_array($this->type, self::$typeList) ? $this->type : null ;
+        return $this->type = strtolower(in_array($this->type, self::$typeList) ? $this->type : null );
     }
 
     /**
@@ -207,6 +208,8 @@ class Alarm
     {
         $this->type = 'none';
         $this->status = 'current';
+        $this->setUser(UserHelper::getCurrentUser());
+        $this->timestampStart = new \DateTime('now');
     }
 
     /**
@@ -219,7 +222,8 @@ class Alarm
         return [
             'status' => $this->getStatus(),
             'type' => $this->getType(),
-            'user' => $this->setUser($this->getUser())->getUser()->getId(),
+            'currentUser' => $this->setUser($this->getUser())->getUser() === UserHelper::getCurrentUser() && $this->setUser($this->getUser())->getUser() ? true : false,
+            'customFile' => $this->getCustomFile() ?: '',
         ];
     }
 
@@ -248,5 +252,47 @@ class Alarm
     {
         $this->userName = PersonNameHelper::getFullUserName($user ?: $this->getUser());
         return $this;
+    }
+
+    /**
+     * @var string
+     */
+    private $customFile = '';
+
+    /**
+     * @return string|null
+     */
+    public function getCustomFile(): ?string
+    {
+        return $this->customFile;
+    }
+
+    /**
+     * @param string|null $customFile
+     * @return Alarm
+     */
+    public function setCustomFile(?string $customFile): Alarm
+    {
+        if ($this->getStatus() === 'past' || $this->getType() === 'none') {
+            $this->customFile = '';
+            return $this;
+        }
+
+        if ($this->getType() === 'custom')
+            $this->customFile = '/' . ltrim($customFile, '/');
+        else
+            $this->customFile = '/build/static/audio/alarm_'.$this->getType().'.mp3';
+
+        return $this;
+    }
+
+    /**
+     * createUser
+     *
+     * @return Alarm
+     */
+    public function createUser($xx)
+    {
+        return $this->setUser($xx->getObject()->getUser());
     }
 }

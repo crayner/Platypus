@@ -33,8 +33,10 @@ use App\Pagination\StringReplacementPagination;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Util\ScriptManager;
+use Hillrange\Form\Util\UploadFileManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -320,14 +322,43 @@ class SystemController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/system/alarm/manage/", name="manage_alarm")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @IsGranted("ROLE_STAFF")
      */
-    public function alarmAction(SettingManager $sm, AlarmManager $manager, $id = 'Add')
+    public function alarmAction(SettingManager $sm, AlarmManager $manager, Request $request, UploadFileManager $fileManager, $id = 'Add')
     {
         $entity = $manager->find($id);
 
         $form = $this->createForm(AlarmType::class, $entity);
 
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            if ($form->get('customAlarm')->getData()) {
+                $file = $form->get('customAlarm')->getData();
+
+                $sm->set('alarm.custom.name', $file);
+            }
+
+            if ($form->get('type')->getData() === 'custom') {
+                $file = $sm->get('alarm.custom.name');
+
+                if (empty($file)) {
+                    $form->get('type')->addError(new FormError($this->get('translator')->trans('alarm.type.custom.invalid', [], 'System')));
+                }
+                elseif (! file_exists($sm->getParameter('kernel.project_dir').DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$file))
+                {
+                    $form->get('type')->addError(new FormError($this->get('translator')->trans('alarm.type.custom.invalid', [], 'System')));
+                }
+            }
+
+            if ($form->isValid() && $form->get('type')->getData() !== 'none')
+            {
+                $em = $this->get('doctrine')->getManager();
+                $em->persist($entity);
+                $em->flush();
+            }
+        }
         return $this->render('System/alarm.html.twig',
             [
                 'manager' => $manager,

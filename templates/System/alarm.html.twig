@@ -16,17 +16,36 @@
     {% set h3Content = '' %}
     {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_alarm')}})|raw %}
     {% set h3Content = h3Content ~ resetButton()|raw %}
-    {% set h3Content = h3Content ~ saveButton()|raw %}
-    {% include 'Default/panelStart.html.twig' with {header: 'alarm.title', transDomain: 'System'} %}
+    {% set h3Content = h3Content ~ saveButton({title: 'sound.alarm', transDomain: 'System', class: 'btn btn-success far fa-bell'})|raw %}
+    {% include 'Default/panelStart.html.twig' with {header: 'alarm.title', transDomain: 'System', panelParagraph: 'sound.alarm.help'} %}
     <div class="row">
         <div class="col-6 card">{{ form_row(form.type) }}</div>
-        <div class="col-6 card">{{ form_row(form.customAlarm) }}</div>
+        <div class="col-6 card">{{ form_row(form.customAlarm) }}
+            {% if getSetting('alarm.custom.name', '') is not same as('') and '.mp3' in getSetting('alarm.custom.name', '') %}
+                <div id="sound"></div>
+                <div>{{ 'play.custom.sound'|trans }}
+                {{ onOffButton({value: true, on: {class: 'btn btn-sm btn-info far fa-play-circle'}, off: {class: 'btn btn-sm btn-primary far fa-stop-circle'}, title: 'play.custom.sound', transDomain: 'System', javascript: {function: 'return playSound', 'options': []}})|raw }}</div>
+            {% endif %}
+        </div>
     </div>
-    {{ form_row(form.status) }}
-    {{ form_row(form.person) }}
-    {{ form_row(form.timestampStart) }}
-    {{ form_row(form.timestampEnd) }}
     {% include 'Default/panelEnd.html.twig' %}
     {{ form_end(form) }}
 {% endblock contentContainer %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {% if getSetting('alarm.custom.name', '') is not same as('') and '.mp3' in getSetting('alarm.custom.name', '') %}
+    <script type="text/javascript">
+        /**
+         * @param {string} filename The name of the file WITHOUT ending
+         */
+        {% set fileName = getSetting('alarm.custom.name', '') %}
+        {% set fileName = '/' ~ fileName|replace({'.mp3': ''}) %}
+        function playSound(){
+            document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="{{ fileName }}.mp3" type="audio/mpeg" /><source src="{{ fileName }}.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="{{ fileName }}.mp3" /></audio>';
+        }
+
+    </script>
+    {% endif %}
+{% endblock javascripts %}

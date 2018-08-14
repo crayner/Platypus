@@ -4,7 +4,7 @@ import React, { Component } from "react"
 import { getNotifications } from "./notification_api";
 import PropTypes from 'prop-types'
 import Notifications from "./Notifications";
-import { fetchJson} from "../Component/fetchJson";
+import { fetchJson } from "../Component/fetchJson";
 
 
 export default class NotificationApp extends Component {
@@ -35,6 +35,10 @@ export default class NotificationApp extends Component {
             .then((data) => {
                 this.handleNewContent(data)
             });
+    }
+
+    componentWillUnmount(){
+        clearTimeout(this.handleStepMessageTimeout)
     }
 
     handleNewContent(data){

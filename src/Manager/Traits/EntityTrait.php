@@ -18,6 +18,7 @@ namespace App\Manager\Traits;
 use App\Manager\MessageManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use PhpParser\Node\Expr\Cast\Object_;
 
 /**
  * Trait EntityTrait
@@ -161,7 +162,7 @@ trait EntityTrait
      * @param Object $entity
      * @return EntityTrait
      */
-    public function setEntity(object $entity): EntityTrait
+    public function setEntity(object $entity): Object
     {
         $this->entity = $entity;
         return $this;
@@ -177,5 +178,17 @@ trait EntityTrait
         if(empty($this->transDomain))
             return 'System';
         return $this->transDomain;
+    }
+
+    /**
+     * saveEntity
+     *
+     * @return Object
+     */
+    public function saveEntity(): Object
+    {
+        $this->getEntityManager()->persist($this->getEntity());
+        $this->getEntityManager()->flush();
+        return $this;
     }
 }

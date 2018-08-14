@@ -17,6 +17,7 @@ namespace App\Controller;
 
 use App\Manager\AlarmManager;
 use App\Manager\NotificationManager;
+use App\Manager\SettingManager;
 use App\Manager\StaffManager;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,7 +37,7 @@ class NotificationController
      * @return JsonResponse
      * @Route("/system/notification/manage/", name="notification_manage", methods={"POST"})
      */
-    public function notificationManage(NotificationManager $manager)
+    public function notificationManage( NotificationManager $manager)
     {
         $id = 1;
         $content =
@@ -66,6 +67,7 @@ class NotificationController
             ],
         ];
 
+
         return new JsonResponse(
             [
                 'content' => [],
@@ -80,9 +82,11 @@ class NotificationController
      * @return JsonResponse
      * @Route("/system/alarm/check/", name="check_alarm", methods={"GET"})
      */
-    public function alarmCheck(AlarmManager $manager)    {
+    public function alarmCheck(AlarmManager $manager, SettingManager $settingManager)    {
 
         $alarm = $manager->findCurrent();
+
+        $alarm->setCustomFile($settingManager->get('alarm.custom.name'));
 
         return new JsonResponse(
             [

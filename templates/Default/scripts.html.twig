@@ -20,12 +20,18 @@
 {% set translations = translations|default({}) %}
 {% set translations = translations|merge({'message.count': ('message.count'|trans) }) %}
 {% set translations = translations|merge({'toggle.sidebar': ('toggle.sidebar'|trans) }) %}
+{% set translations = translations|merge({'alarm.general.title': ('alarm.general.title'|trans) }) %}
+{% set translations = translations|merge({'alarm.fire.title': ('alarm.fire.title'|trans) }) %}
+{% set translations = translations|merge({'alarm.lockdown-inplace.title': ('alarm.lockdown-inplace.title'|trans) }) %}
+{% set translations = translations|merge({'alarm.lockdown-internal.title': ('alarm.lockdown-internal.title'|trans) }) %}
+{% set translations = translations|merge({'alarm.custom.title': ('alarm.custom.title'|trans) }) %}
+{% set translations = translations|merge({'alarm.turn.off.title': ('alarm.turn.off.title'|trans) }) %}
 
 {% set notificationProps = {fullPage: fullPage, alwaysFullPage: alwaysFullPage, translations: translations, locale: app.request.get('_locale')} %}
 {% if getUserManager().isStaff(app.user) %}
     {% set notificationProps = notificationProps|merge({'interval': 10000}) %} {# 10 sec #}
 {% else %}
-    {% set notificationProps = notificationProps|merge({'interval': 20000}) %} {# 2 min #}
+    {% set notificationProps = notificationProps|merge({'interval': 120000}) %} {# 2 min #}
 {% endif %}
 
 <script>
@@ -35,8 +41,7 @@
 <script src="{{ asset('build/manifest.js') }}" language="JavaScript" type="text/javascript"></script>
 <script src="{{ asset('build/core.js') }}" language="JavaScript" type="text/javascript"></script>
 <script src="{{ asset('build/notifications.js') }}" language="JavaScript" type="text/javascript"></script>
-
-
+<script src="{{ asset('build/alarm.js') }}" language="JavaScript" type="text/javascript"></script>
 
 {% if app is defined %}
     {% if app.user is defined %}

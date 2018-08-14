@@ -42,7 +42,7 @@ class StaffManager
      *
      * @return array
      */
-    public static function staffList(): array
+    public static function getStaffList(): array
     {
         return [];
     }

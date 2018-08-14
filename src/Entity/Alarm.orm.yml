@@ -9,7 +9,7 @@ App\Entity\Alarm:
                 strategy: AUTO
     fields:
         type:
-            length: 16
+            length: 20
             nullable: false
             options:
                 default: 'none'
@@ -34,4 +34,4 @@ App\Entity\Alarm:
                 nullable: false
     lifecycleCallbacks:
         prePersist:
-            - setUser
+            - createUser

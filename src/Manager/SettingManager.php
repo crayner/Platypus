@@ -704,19 +704,24 @@ class SettingManager implements ContainerAwareInterface
             if (!$this->getAuthorisation()->isGranted($this->setting->getSetting()->getRole(), $this->setting->getSetting()))
                 return $this;
 
+        if ($this->setting->getType() === 'file')
+            $this->removeFile($this->setting->getValue());
+
         $setting = $this->getEntityManager()->getRepository(Setting::class)->find($this->setting->getId());
         $this->getEntityManager()->refresh($setting);
         $this->setting = $this->getSettingCache($setting);
 
-        if (($x = $this->setting->setValue($value)
+        if ($x = $this->setting->setValue($value)
             ->setCacheTime(new \DateTime('now'))
-            ->writeSetting($this->getEntityManager(), $this->getValidator(), $this->getConstraints($this->setting->getType()))) !== true)
+            ->writeSetting($this->getEntityManager(), $this->getValidator(), $this->getConstraints($this->setting->getType())) !== true)
         {
             foreach($x->getIterator() as $constraintViolation)
             {
                 $this->getMessageManager()->add('danger', $constraintViolation->getMessage(), [], false);
             }
         }
+
+        unset($this->settings[$name]);
 
         return $this->removeSetting($this->setting)->addSetting($this->setting);
     }
@@ -1231,5 +1236,20 @@ class SettingManager implements ContainerAwareInterface
             $this->getSession()->set('settings', $this->getSettings());
 
         return false;
+    }
+
+    /**
+     * removeFile
+     *
+     * @param string $fileName
+     */
+    private function removeFile(?string $fileName = '')
+    {
+        if (empty($fileName))
+            return;
+
+        if (file_exists($this->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $fileName))
+            unlink($this->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $fileName);
+
     }
 }

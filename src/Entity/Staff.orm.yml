@@ -1,0 +1,17 @@
+App\Entity\Staff:
+    type: entity
+    table: staff
+    repositoryClass: App\Repository\StaffRepository
+    id:
+        id:
+          type: integer
+          generator:
+            strategy: AUTO
+    manyToOne:
+        person:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: person_id
+                referencedColumnName: id
+                nullable: false
+                unique: true
