@@ -7,9 +7,10 @@ App\Entity\Staff:
           type: integer
           generator:
             strategy: AUTO
-    manyToOne:
+    oneToOne:
         person:
             targetEntity: App\Entity\Person
+            inversedBy: staff
             joinColumn:
                 name: person_id
                 referencedColumnName: id

@@ -108,4 +108,12 @@ class AlarmConfirm
         $this->alarm = $alarm;
         return $this;
     }
+
+    /**
+     * AlarmConfirm constructor.
+     */
+    public function __construct()
+    {
+        $this->setTimestamp(null);
+    }
 }

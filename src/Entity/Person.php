@@ -398,4 +398,27 @@ class Person
     {
         return PersonNameHelper::getFullName($this);
     }
+
+    /**
+     * @var null|Staff
+     */
+    private $staff;
+
+    /**
+     * @return Staff|null
+     */
+    public function getStaff(): ?Staff
+    {
+        return $this->staff;
+    }
+
+    /**
+     * @param Staff|null $staff
+     * @return Person
+     */
+    public function setStaff(?Staff $staff): Person
+    {
+        $this->staff = $staff;
+        return $this;
+    }
 }

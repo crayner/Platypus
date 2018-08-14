@@ -127,6 +127,8 @@ export default class NotificationApp extends Component {
     }
 
     manageSideBarClick(){
+        if (this.state.alwaysFullPage)
+            return
         if (this.state.fullPage) {
             fetchJson('/menu/section/show/display/', {}, this.locale)
             this.setState({fullPage: this.openSidebar()})

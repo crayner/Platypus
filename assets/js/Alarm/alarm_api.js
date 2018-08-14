@@ -15,3 +15,12 @@ export function closeAlarm(locale = 'en') {
             return data
         })
 }
+
+export function acknowledgeAlarm(person, locale = 'en') {
+    var xxx = '/system/alarm/person/acknowledge/'
+    xxx = xxx.replace('person', person)
+    return fetchJson(xxx, {method: 'GET'}, locale)
+        .then((data) => {
+            return data
+        })
+}

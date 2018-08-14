@@ -1,7 +1,7 @@
 'use strict';
 
 import React, { Component } from "react"
-import { getAlarm, closeAlarm } from "./alarm_api";
+import { getAlarm, closeAlarm, acknowledgeAlarm } from "./alarm_api";
 import PropTypes from 'prop-types'
 import Alarm from './Alarm'
 
@@ -15,15 +15,19 @@ export default class AlarmApp extends Component {
             type: 'none',
             currentUser: false,
             modal: false,
+            currentPerson: new Object({'fullName': 'Rayner: Craig', 'id': '1'})
         }
 
         this.translations = props.translations
         this.locale = props.locale
         this.refreshTimeout = 0
         this.soundUrl = ''
+        this.staffList = new Object()
+        this.permission = false
         this.closeAlarmWindow = this.closeAlarmWindow.bind(this)
         this.turnOffTheAlarm = this.turnOffTheAlarm.bind(this)
         this.escFunction = this.escFunction.bind(this)
+        this.acknowledgeAlarm = this.acknowledgeAlarm.bind(this)
     }
 
     componentDidMount() {
@@ -41,6 +45,12 @@ export default class AlarmApp extends Component {
     }
 
     handleNewAlarm(data) {
+        this.staffList = data.staffList
+        if (this.staffList.length === 0)
+            this.staffList = new Object()
+        this.permission = data.permission
+        this.currentPerson = data.currentPerson
+
         data = data.alarm
         var change = false
         if (data.type !== this.state.type)
@@ -98,8 +108,20 @@ export default class AlarmApp extends Component {
                     modal: false,
                 })
                 this.handleNewAlarm(data)
-            });
+            })
 
+    }
+
+    acknowledgeAlarm(person)
+    {
+        if (person === 0)
+            return
+        acknowledgeAlarm(person, this.locale)
+            .then(() => {
+                this.setState({
+                    currentPerson: new Object(),
+                })
+            })
     }
 
     render() {
@@ -114,6 +136,10 @@ export default class AlarmApp extends Component {
                 turnOffTheAlarm={this.turnOffTheAlarm}
                 escFunction={this.escFunction}
                 soundUrl={this.soundUrl}
+                staffList={this.staffList}
+                permission={this.permission}
+                currentPerson={this.state.currentPerson}
+                acknowledgeAlarm={this.acknowledgeAlarm}
             />
         )
     }

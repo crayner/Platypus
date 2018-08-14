@@ -15,6 +15,7 @@
  */
 namespace App\Controller;
 
+use App\Entity\Person;
 use App\Form\AlarmType;
 use App\Form\NotificationEventType;
 use App\Form\SectionSettingType;
@@ -30,7 +31,7 @@ use App\Manager\ThemeManager;
 use App\Manager\VersionManager;
 use App\Pagination\NotificationEventPagination;
 use App\Pagination\StringReplacementPagination;
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Util\ScriptManager;
 use Hillrange\Form\Util\UploadFileManager;
@@ -357,6 +358,17 @@ class SystemController extends Controller
                 $em = $this->get('doctrine')->getManager();
                 $em->persist($entity);
                 $em->flush();
+
+                $list = new ArrayCollection($manager->getAlarmConfirmList());
+
+                $person = $em->getRepository(Person::class)->findOneByUser($entity->getUser());
+
+                if ($person instanceof Person)
+                    $list->remove($person->getId());
+
+
+
+                $request->getSession()->set('alarm_confirm_list', $list);
             }
         }
         return $this->render('System/alarm.html.twig',

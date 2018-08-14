@@ -74,6 +74,7 @@ class SettingManager implements ContainerAwareInterface
                                 AuthorizationCheckerInterface $authorisation, TwigManager $twig)
     {
         $this->setContainer($container);
+        new StaffManager($this->getEntityManager());
         $this->messageManager = $messageManager;
         $this->authorisation = $authorisation;
         $this->twig = $twig;

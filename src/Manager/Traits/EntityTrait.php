@@ -191,4 +191,17 @@ trait EntityTrait
         $this->getEntityManager()->flush();
         return $this;
     }
+
+    /**
+     * getRepository
+     *
+     * @param string $className
+     * @return EntityRepository
+     * @throws \Exception
+     */
+    public function getRepository(string $className = ''): EntityRepository
+    {
+        $className = $className ?: $this->getEntityName();
+        return $this->getEntityManager()->getRepository($className);
+    }
 }

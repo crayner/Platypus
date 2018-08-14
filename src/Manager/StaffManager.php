@@ -15,7 +15,8 @@
  */
 namespace App\Manager;
 
-use App\Repository\PersonRepository;
+use App\Entity\Staff;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class StaffManager
@@ -24,17 +25,17 @@ use App\Repository\PersonRepository;
 class StaffManager
 {
     /**
-     * @var
+     * @var EntityManagerInterface
      */
-    private static $personRepository;
+    private static $entityManager;
 
     /**
      * StaffManager constructor.
-     * @param PersonRepository $personRepository
+     * @param EntityManagerInterface $entityManager
      */
-    public function __construct(PersonRepository $personRepository)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        self::$personRepository;
+        self::$entityManager = $entityManager;
     }
 
     /**
@@ -42,8 +43,33 @@ class StaffManager
      *
      * @return array
      */
-    public static function getStaffList(): array
+    public static function getStaffList(array $select = ['s','p'], string $where = '', array $order = [], array $join = []): array
     {
-        return [];
+        $query = self::getEntityManager()->getRepository(Staff::class)->createQueryBuilder('s')
+            ->leftJoin('s.person', 'p')
+            ->select($select);
+        if (! empty($where))
+            $query->where($where);
+        $x=0;
+        foreach($order as $name=>$direction)
+            if ($x++ === 0)
+                $query->orderBy($name, $direction);
+            else
+                $query->addOrderBy($name, $direction);
+
+        foreach($join as $name=>$alias)
+            $query->leftJoin($name, $alias);
+
+        $results = $query->getQuery()->getArrayResult();
+
+        return $results;
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public static function getEntityManager(): EntityManagerInterface
+    {
+        return self::$entityManager;
     }
 }

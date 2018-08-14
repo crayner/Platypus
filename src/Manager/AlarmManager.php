@@ -16,6 +16,9 @@
 namespace App\Manager;
 
 use App\Entity\Alarm;
+use App\Entity\AlarmConfirm;
+use App\Entity\Person;
+use App\Entity\Staff;
 use App\Manager\Traits\EntityTrait;
 
 /**
@@ -45,5 +48,23 @@ class AlarmManager
         return $this
             ->setEntity($alarm)
             ->getEntity();
+    }
+
+    /**
+     * getAlarmConfirmList
+     *
+     * @return array
+     */
+    public function getAlarmConfirmList(): array
+    {
+        $query = $this->getEntityManager()->getRepository(Staff::class)->createQueryBuilder('s')
+            ->select(["CONCAT(p.surname,': ',p.preferredName) AS fullName", 'p.id'])
+            ->leftJoin('s.person','p')
+            ->orderBy('p.surname', 'ASC')
+            ->addOrderBy('p.preferredName', 'ASC')
+        ;
+
+        $result = $query->getQuery()->getArrayResult();
+        return $result;
     }
 }

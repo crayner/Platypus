@@ -1,0 +1,172 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_staff
+-
+  id: 1
+  person_id: 2
+-
+  id: 2
+  person_id: 3
+-
+  id: 3
+  person_id: 4
+-
+  id: 4
+  person_id: 5
+-
+  id: 5
+  person_id: 6
+-
+  id: 6
+  person_id: 15
+-
+  id: 7
+  person_id: 19
+-
+  id: 8
+  person_id: 34
+-
+  id: 9
+  person_id: 35
+-
+  id: 10
+  person_id: 36
+-
+  id: 11
+  person_id: 88
+-
+  id: 12
+  person_id: 108
+-
+  id: 13
+  person_id: 114
+-
+  id: 14
+  person_id: 127
+-
+  id: 15
+  person_id: 129
+-
+  id: 16
+  person_id: 130
+-
+  id: 17
+  person_id: 131
+-
+  id: 18
+  person_id: 132
+-
+  id: 19
+  person_id: 166
+-
+  id: 20
+  person_id: 193
+-
+  id: 21
+  person_id: 198
+-
+  id: 22
+  person_id: 202
+-
+  id: 23
+  person_id: 203
+-
+  id: 24
+  person_id: 204
+-
+  id: 25
+  person_id: 206
+-
+  id: 26
+  person_id: 207
+-
+  id: 27
+  person_id: 208
+-
+  id: 28
+  person_id: 209
+-
+  id: 29
+  person_id: 210
+-
+  id: 30
+  person_id: 211
+-
+  id: 31
+  person_id: 212
+-
+  id: 32
+  person_id: 213
+-
+  id: 33
+  person_id: 214
+-
+  id: 34
+  person_id: 351
+-
+  id: 35
+  person_id: 396
+-
+  id: 36
+  person_id: 397
+-
+  id: 37
+  person_id: 404
+-
+  id: 38
+  person_id: 405
+-
+  id: 39
+  person_id: 438
+-
+  id: 40
+  person_id: 525
+-
+  id: 41
+  person_id: 526
+-
+  id: 42
+  person_id: 527
+-
+  id: 43
+  person_id: 544
+-
+  id: 44
+  person_id: 549
+-
+  id: 45
+  person_id: 703
+-
+  id: 46
+  person_id: 704
+-
+  id: 47
+  person_id: 705
+-
+  id: 48
+  person_id: 706
+-
+  id: 49
+  person_id: 723
+-
+  id: 50
+  person_id: 727
+-
+  id: 51
+  person_id: 737
+-
+  id: 52
+  person_id: 758
+-
+  id: 53
+  person_id: 791
+-
+  id: 54
+  person_id: 792
+-
+  id: 55
+  person_id: 966
+-
+  id: 56
+  person_id: 970
+...
