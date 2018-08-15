@@ -15,8 +15,14 @@
  */
 namespace App\Controller;
 
+use Hillrange\Security\Exception\UserException;
+use Hillrange\Security\Form\ChangePasswordType;
+use Hillrange\Security\Util\PasswordManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class PersonController extends Controller
 {
@@ -33,4 +39,38 @@ class PersonController extends Controller
         return $this->redirectToRoute('person_edit', ['id' => $id, '_fragment' => 'user']);
     }
 
+    /**
+     * preferences
+     * @Route("/user/preferences/", name="preferences")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function preferences(AuthenticationUtils $authUtils, Request $request, PasswordManager $passwordManager)
+    {
+        $user = $this->getUser();
+
+        $translator = $this->get('translator');
+
+        $error = $authUtils->getLastAuthenticationError();
+
+        if (empty($user))
+            throw new \Symfony\Component\Security\Core\Exception\InvalidArgumentException('The user was not found.');
+
+        $form = $this->createForm(ChangePasswordType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $passwordManager->saveNewPassword($user);
+            $error = new UserException($translator->trans('security.password.forced.success', [], 'security'));
+        }
+
+        return $this->render('Person/preferences.html.twig',
+            [
+                'password_form'  => $form->createView(),
+                'error' => $error,
+                'passwordManager' => $passwordManager,
+            ]
+        );
+    }
 }

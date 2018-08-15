@@ -4,13 +4,24 @@ namespace App\Manager;
 use App\Calendar\Util\CalendarManager;
 use App\Entity\Calendar;
 use App\Entity\Person;
+use App\Entity\SchoolYear;
+use App\Manager\Traits\EntityTrait;
 use App\People\Util\PersonManager;
+use App\Util\UserHelper;
 use Doctrine\ORM\EntityManagerInterface;
+use Hillrange\Security\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserManager
 {
+    use EntityTrait;
+
+    /**
+     * @var string
+     */
+    private $entityName = User::class;
+
 	/**
 	 * @var UserInterface
 	 */
@@ -31,33 +42,40 @@ class UserManager
      */
     private $tokenStorage;
 
-	/**
-	 * UserManager constructor.
-	 *
-	 * @param TokenStorageInterface  $tokenStorage
-	 * @param EntityManagerInterface $entityManager
-	 */
-	public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager)
-	{
-		$this->entityManager = $entityManager;
+    /**
+     * UserManager constructor.
+     *
+     * @param TokenStorageInterface $tokenStorage
+     * @param EntityManagerInterface $entityManager
+     * @param MessageManager $messageManager
+     */
+	public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, MessageManager $messageManager)
+    {
+        $this->entityManager = $entityManager;
+        $this->messageManager = $messageManager;
+        self::$entityRepository = $entityManager->getRepository($this->entityName);
 		$this->tokenStorage = $tokenStorage;
 		$this->getUser();
 	}
 
     /**
-     * @return null|Calendar
+     * getSystemCalendar
+     *
+     * @return SchoolYear|null
      */
-    public function getSystemCalendar(): ?Calendar
+    public function getSystemCalendar(): ?SchoolYear
     {
         return $this->getCurrentCalendar();
     }
 
     /**
-     * @return null|Calendar
+     * getCurrentCalendar
+     *
+     * @return SchoolYear|null
      */
-    public function getCurrentCalendar(): ?Calendar
+    public function getCurrentCalendar(): ?SchoolYear
     {
-        return CalendarManager::getCurrentCalendar();
+        return UserHelper::getCurrentSchoolYear();
     }
 
 	/**
@@ -103,7 +121,7 @@ class UserManager
     public function getPerson(): ?Person
     {
         if (empty($this->person))
-            $this->person = $this->getEntityManager()->getRepository(Person::class)->findOneByUser($this->getUser());
+            $this->person = $this->getRepository(Person::class)->findOneByUser($this->getUser());
 
         return $this->person;
     }
@@ -133,8 +151,16 @@ class UserManager
         return $this;
     }
 
+    /**
+     * isStaff
+     *
+     * @return bool
+     * @throws \Doctrine\ORM\ORMException
+     */
     public function isStaff(): bool
     {
+        if (! $this->hasPerson())
+            return false;
         return true;
     }
 }

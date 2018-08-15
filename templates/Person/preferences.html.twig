@@ -1,0 +1,15 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'Person' %}
+
+{% block title %}{{ 'preferences.heading'|trans}}{% endblock title %}
+{% block headerTitle %}{{ 'preferences.heading'|trans}}{% endblock headerTitle %}
+{% block headerLead %}{{ 'preferences.lead'|trans}}{% endblock headerLead %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+
+{% block contentContainer %}
+    {% include '@HillrangeSecurity/security/forcedChangePasswordContent.html.twig' with {form: password_form} %}
+{% endblock contentContainer %}
