@@ -106,7 +106,7 @@ class NotificationController extends Controller
 
         $staffList = new ArrayCollection();
 
-        if ($alarm->getId() > 0) {
+        if ($alarm->getId() > 0 && $request->hasSession()) {
             $session = $request->getSession();
 
             if ($session->has('alarm_confirm_list'))
@@ -141,7 +141,8 @@ class NotificationController extends Controller
                     $staffList->set($key, $staff);
                 }
 
-        $session->set('alarm_confirm_list', $staffList);
+        if ($alarm->getId() > 0 && $request->hasSession())
+            $session->set('alarm_confirm_list', $staffList);
 
         return new JsonResponse(
             [
