@@ -86,14 +86,23 @@ class NotificationController extends Controller
      * alarmCheck
      *
      * @param AlarmManager $manager
+     * @param SettingManager $settingManager
+     * @param Request $request
+     * @param AuthorizationCheckerInterface $checker
      * @return JsonResponse
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
      * @Route("/system/alarm/check/", name="check_alarm", methods={"GET"})
      */
-    public function alarmCheck(AlarmManager $manager, SettingManager $settingManager, StaffManager $staffManager, Request $request, AuthorizationCheckerInterface $checker)    {
+    public function alarmCheck(AlarmManager $manager, SettingManager $settingManager, Request $request, AuthorizationCheckerInterface $checker)    {
 
         $alarm = $manager->findCurrent();
 
         $alarm->setCustomFile($settingManager->get('alarm.custom.name'));
+
+        $config = $this->getParameter('alarm_config');
 
         $staffList = new ArrayCollection();
 
@@ -115,11 +124,28 @@ class NotificationController extends Controller
                     $person = $value;
                     break;
                 }
+        $t = date_diff(new \DateTime('now'), $alarm->getTimestampStart());
 
+        $t = $t->s + $t->i * 60 + $t->h * 3600;
+        $volume = $config['start_volume'] ?: 80;
+        if ($t > $config['change_volume_time'])
+            $volume = $config['next_volume'] ?: 40;
+
+        $confirmed = $this->get('doctrine')->getManager()->getRepository(AlarmConfirm::class)->findByAlarm($alarm);
+
+        foreach($confirmed as $item)
+            foreach($staffList as $key=>$staff)
+                if ($staff['id'] === $item->getPerson()->getId())
+                {
+                    $staff['confirmed'] = true;
+                    $staffList->set($key, $staff);
+                }
+
+        $session->set('alarm_confirm_list', $staffList);
 
         return new JsonResponse(
             [
-                'alarm' => $alarm->normaliser(),
+                'alarm' => $alarm->normaliser($volume),
                 'staffList' => $staffList->toArray() ?: [],
                 'permission' => $user_permission,
                 'currentPerson' => $person ?: [],

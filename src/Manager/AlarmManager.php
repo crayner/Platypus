@@ -53,7 +53,7 @@ class AlarmManager
     /**
      * getAlarmConfirmList
      *
-     * @return array
+     * @return arrayr5
      */
     public function getAlarmConfirmList(): array
     {

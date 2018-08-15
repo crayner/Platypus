@@ -25,6 +25,7 @@ export default function Alarm(props) {
         currentPerson,
         staffList,
         acknowledgeAlarm,
+        volume,
     } = props;
 
     var className = ''
@@ -64,7 +65,7 @@ export default function Alarm(props) {
                 </div>
                 <Sound
                     url={soundUrl}
-                    volume={5}
+                    volume={volume}
                     loop={true}
                     playStatus={'PLAYING'}
                 />
@@ -88,8 +89,9 @@ Alarm.propTypes = {
     translations: PropTypes.object.isRequired,
     permission: PropTypes.bool.isRequired,
     currentPerson: PropTypes.object.isRequired,
-    staffList: PropTypes.object.isRequired,
+    staffList: PropTypes.array.isRequired,
     acknowledgeAlarm: PropTypes.func.isRequired,
+    volume: PropTypes.number.isRequired,
 }
 
 Alarm.defaultProps = {

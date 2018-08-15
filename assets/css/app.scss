@@ -31,7 +31,7 @@ body.displayAlarm #showAlarm {
   position: relative;
   width: 75%;
   top: 100px;
-  min-height: 250px;
+  min-height: 450px;
   left: 12.5%;
   z-index: 2001;
   overflow: hidden;
@@ -52,4 +52,9 @@ body.displayAlarm #showAlarm {
     font-size: 14px;
     text-align: right;
   padding-right: 10px;
+}
+.staffList {
+  margin-bottom: 50px;
+  max-height: 350px;
+  overflow-y: scroll;
 }

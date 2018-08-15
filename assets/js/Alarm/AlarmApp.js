@@ -15,15 +15,17 @@ export default class AlarmApp extends Component {
             type: 'none',
             currentUser: false,
             modal: false,
-            currentPerson: new Object({'fullName': 'Rayner: Craig', 'id': '1'})
+            currentPerson: new Object(),
+            volume: 100,
+            staffList: [],
         }
 
         this.translations = props.translations
         this.locale = props.locale
         this.refreshTimeout = 0
         this.soundUrl = ''
-        this.staffList = new Object()
         this.permission = false
+        this.config = props.config
         this.closeAlarmWindow = this.closeAlarmWindow.bind(this)
         this.turnOffTheAlarm = this.turnOffTheAlarm.bind(this)
         this.escFunction = this.escFunction.bind(this)
@@ -45,9 +47,9 @@ export default class AlarmApp extends Component {
     }
 
     handleNewAlarm(data) {
-        this.staffList = data.staffList
-        if (this.staffList.length === 0)
-            this.staffList = new Object()
+        var staffList = data.staffList
+        if (staffList.length === 0)
+            staffList = []
         this.permission = data.permission
         this.currentPerson = data.currentPerson
 
@@ -55,9 +57,8 @@ export default class AlarmApp extends Component {
         var change = false
         if (data.type !== this.state.type)
             change = true
-        if (data.status !== this.state.status) {
+        if (data.status !== this.state.status)
             change = true
-        }
         if (data.currentUser !== this.state.currentUser)
             change = true
         if (data.status === 'current' && data.type !== 'none')
@@ -66,6 +67,12 @@ export default class AlarmApp extends Component {
             data['modal'] = false
         if (data.modal !== this.state.modal)
             change = true
+        if (data.volume !== this.state.volume)
+            change = true
+        if (this.state.staffList !== staffList) {
+            data.staffList = staffList
+            change = true
+        }
         this.soundUrl = data.customFile
         if (change)
             this.setState({
@@ -117,7 +124,7 @@ export default class AlarmApp extends Component {
         if (person === 0)
             return
         acknowledgeAlarm(person, this.locale)
-            .then(() => {
+            .then((data) => {
                 this.setState({
                     currentPerson: new Object(),
                 })
@@ -136,10 +143,11 @@ export default class AlarmApp extends Component {
                 turnOffTheAlarm={this.turnOffTheAlarm}
                 escFunction={this.escFunction}
                 soundUrl={this.soundUrl}
-                staffList={this.staffList}
+                staffList={this.state.staffList}
                 permission={this.permission}
                 currentPerson={this.state.currentPerson}
                 acknowledgeAlarm={this.acknowledgeAlarm}
+                volume={this.state.volume}
             />
         )
     }

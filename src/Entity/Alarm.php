@@ -215,15 +215,17 @@ class Alarm
     /**
      * normaliser
      *
+     * @param int $volume
      * @return array
      */
-    public function normaliser(): array
+    public function normaliser(int $volume = 0): array
     {
         return [
             'status' => $this->getStatus(),
             'type' => $this->getType(),
             'currentUser' => $this->setUser($this->getUser())->getUser() === UserHelper::getCurrentUser() && $this->setUser($this->getUser())->getUser() ? true : false,
             'customFile' => $this->getCustomFile() ?: '',
+            'volume' => $volume,
         ];
     }
 

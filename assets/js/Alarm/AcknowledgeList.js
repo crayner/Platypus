@@ -17,9 +17,10 @@ export default function AcknowledgeList(props) {
 
     return (
         <div className={'staffList container'} key={'wbgfiljhgfpoiwehjgfwerhjgferq[9hg'}>
-            {Object.keys(staffList).map((item, index) => (
+            {staffList.map((item, index) => (
                 <StaffListRow
-                    obj={staffList[item]}
+                    item={item}
+                    key={index}
                 />
             ))}
         </div>
@@ -29,5 +30,5 @@ export default function AcknowledgeList(props) {
 
 AcknowledgeList.propTypes = {
     permission: PropTypes.bool.isRequired,
-    staffList: PropTypes.object.isRequired,
+    staffList: PropTypes.array.isRequired,
 }

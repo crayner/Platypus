@@ -60,3 +60,7 @@ parameters:
     mailer_auth_mode: plain
     mailer_sender_name: 'Busybee Web Site'
     mailer_sender_address: email@some-domain.com
+    alarm_config:
+        start_volume: 100
+        next_volume: 40
+        change_volume_time: 300

@@ -15,6 +15,7 @@
  */
 namespace App\Controller;
 
+use App\Entity\AlarmConfirm;
 use App\Entity\Person;
 use App\Form\AlarmType;
 use App\Form\NotificationEventType;
@@ -364,9 +365,18 @@ class SystemController extends Controller
                 $person = $em->getRepository(Person::class)->findOneByUser($entity->getUser());
 
                 if ($person instanceof Person)
-                    $list->remove($person->getId());
-
-
+                    foreach($list as $key=>$value) {
+                        if ($person->getId() === $value['id']) {
+                            $value['confirmed'] = true;
+                            $confirm = new AlarmConfirm();
+                            $confirm->setAlarm($entity);
+                            $confirm->setPerson($person);
+                            $em->persist($confirm);
+                            $em->flush();
+                        } else
+                            $value['confirmed'] = false;
+                        $list->set($key, $value);
+                    }
 
                 $request->getSession()->set('alarm_confirm_list', $list);
             }
