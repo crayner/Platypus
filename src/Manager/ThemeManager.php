@@ -15,10 +15,9 @@
  */
 namespace App\Manager;
 
+use App\Util\PersonHelper;
 use App\Util\ThemeVersionHelper;
-use App\Util\UserHelper;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class ThemeManager
@@ -31,27 +30,28 @@ class ThemeManager
      *
      * @return array
      */
-    public function getInstalledThemes(): array
+    public static function getInstalledThemes(): array
     {
         $fs = new Finder();
-        $path = $this->settingManager->getParameter('kernel.project_dir').DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'platypus-template';
+        $path = self::$settingManager->getParameter('kernel.project_dir').DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'platypus-template';
         $fs->directories()->in($path);
         $fs->depth(0);
         $templates = [];
         foreach($fs as $dir) {
             $template['name'] = $dir->getRelativePathname();
             $version = '\PlatypusTemplate\\'.ucfirst($template['name']).'\Util\VersionHelper';
-            $helper = $path.DIRECTORY_SEPARATOR.$template['name'].DIRECTORY_SEPARATOR.'Util'.DIRECTORY_SEPARATOR.'VersionHelper.php';
+            $helper = $path.DIRECTORY_SEPARATOR.$template['name'].DIRECTORY_SEPARATOR.'Util'.DIRECTORY_SEPARATOR . 'VersionHelper.php';
 
             if (file_exists($helper)) {
-                include $helper;
+                if (! class_exists($version))
+                    include $helper;
 
                 if (class_exists($version))
                     $template['version'] = new $version();
                 else
                     $template['version'] = new ThemeVersionHelper($template['name']);
 
-                if (! $this->isValidHelper($template['version']))
+                if (! self::isValidHelper($template['version']))
                     $template['version'] = new ThemeVersionHelper($template['name']);
             } else
                 $template['version'] = new ThemeVersionHelper($template['name']);
@@ -63,34 +63,49 @@ class ThemeManager
     /**
      * @var SettingManager
      */
-    private $settingManager;
+    private static $settingManager;
 
     /**
      * ThemeManager constructor.
      * @param SettingManager $settingManager
      */
-    public function __construct(SettingManager $settingManager)
+    public function __construct(SettingManager $settingManager, PersonHelper $personHelper)
     {
-        $this->settingManager = $settingManager;
+        self::$settingManager = $settingManager;
     }
 
     /**
      * getCurrentThemeName
      *
-     * @return string
+     * @return null|string
      */
-    public function getCurrentThemeName($default = false): string
+    public static function getCurrentThemeName($default = false): ?string
     {
-        $theme = $this->settingManager->get('current.theme', 'PlatypusTemplateOriginal');
+        return self::getCurrentTheme($default)->getTemplateName();
+    }
+
+    /**
+     * getCurrentThemeName
+     *
+     * @return null|ThemeVersionHelper
+     */
+    public static function getCurrentTheme($default = false): ?Object
+    {
+        $themeName = self::$settingManager->get('current.theme', 'PlatypusTemplateOriginal');
+
+        foreach(self::getInstalledThemes() as $theme)
+            if ($theme['version']->getTemplateName() === $themeName)
+                break;
         if ($default)
-            return $theme;
-        $user = UserHelper::getCurrentUser();
-        if ($user instanceof UserInterface)
-        {
-            if (! empty($user->getUserSetting('current.theme')))
-                $theme = $user->getUserSetting('current.theme');
-        }
-        return $theme;
+            return $theme['version'];
+
+        if (PersonHelper::hasPerson())
+            $themeName = PersonHelper::getPerson()->getPersonalTheme() ?: $themeName;
+        foreach(self::getInstalledThemes() as $theme)
+            if ($theme['version']->getTemplateName() === $themeName)
+                break;
+
+        return $theme['version'];
     }
 
     /**
@@ -99,7 +114,7 @@ class ThemeManager
      * @param object $helper
      * @return bool
      */
-    private function isValidHelper(object $helper): bool
+    private static function isValidHelper(object $helper): bool
     {
         if (! $helper instanceof \App\Manager\Interfaces\ThemeVersionHelper)
             return false;
@@ -119,5 +134,19 @@ class ThemeManager
         }
 
         return true;
+    }
+
+    /**
+     * getThemeChoiceList
+     *
+     * @return array
+     */
+    public static function getThemeChoiceList(): array
+    {
+        $results = [];
+        foreach(self::getInstalledThemes() as $theme)
+            $results[$theme['version']->getName()] = $theme['version']->getTemplateName();
+
+        return $results;
     }
 }

@@ -226,7 +226,7 @@ class SystemSettings implements SettingCreationInterface
                 ->setValidators([
                     new Logo(),
                 ])
-                ->setDefaultValue('bundles/platypustemplateoriginal/img/bee.png')
+                ->setDefaultValue('build/static/images/bee.png')
                 ->__set('translateChoice', null)
             ;
         }

@@ -1,0 +1,4 @@
+App\Entity\Person:
+    properties:
+        personalBackground:
+            - App\Validator\BackgroundImage: ~

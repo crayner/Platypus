@@ -157,3 +157,6 @@ AlarmApp.propTypes = {
     translations: PropTypes.object.isRequired,
     locale: PropTypes.string.isRequired,
 }
+AlarmApp.defaultTypes = {
+    locale: 'en'
+}

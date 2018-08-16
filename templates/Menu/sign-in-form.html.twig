@@ -1,7 +1,7 @@
 {% trans_default_domain "System" %}
 
 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-    {% if is_IPBlocked(app.request.clientIP) %}
+    {% if isIPBlocked(app.request.clientIP) %}
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <span class="nav-link">{{ 'Login Blocked'|trans({}, 'security') }}</span>
@@ -35,7 +35,7 @@
             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuUser" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ getFullUserName(app.user) }}</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuUser">
                 <li>
-                    <a href="{{ path(get_SecurityRoute('security_user_edit'), {id: app.user.id}) }}" class="dropdown-item" title="{{ 'menu.user.self.manage'|trans }}">{{ 'menu.user.self.manage'|trans }}</a>
+                    <a href="{{ path(getSecurityRoute('security_user_edit'), {id: app.user.id}) }}" class="dropdown-item" title="{{ 'menu.user.self.manage'|trans }}">{{ 'menu.user.self.manage'|trans }}</a>
                 </li>
                 <li>
                     <a href="{{ path('preferences') }}" class="dropdown-item" title="{{ 'menu.user.preferences.manage'|trans }}">{{ 'menu.user.preferences.manage'|trans }}</a>
@@ -45,7 +45,7 @@
                         <a href="{{ path('System', {'_switch_user': '_exit'}) }}" class="dropdown-item">{{ 'Exit Impersonation'|trans }}</a>
                     </li>
                 {% else %}
-                    <li><a href="{{ path(get_SecurityRoute('security_user_logout')) }}" class="dropdown-item">{{ 'Sign Out'|trans }}</a></li>
+                    <li><a href="{{ path(getSecurityRoute('security_user_logout')) }}" class="dropdown-item">{{ 'Sign Out'|trans }}</a></li>
                 {% endif %}
             </ul>
         </li>

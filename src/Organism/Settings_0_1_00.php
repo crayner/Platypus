@@ -57,7 +57,7 @@ org.logo:
     choice: null
     validators: [App\Validator\Logo]
     role: ROLE_REGISTRAR
-    defaultValue: bundles/platypustemplateoriginal/img/bee.png
+    defaultValue: 'build/static/images/bee.png'
     translateChoice: System
 org.transparent.logo:
     type: image
@@ -68,7 +68,7 @@ org.transparent.logo:
     choice: null
     validators: [App\Validator\Logo]
     role: ROLE_REGISTRAR
-    defaultValue: bundles/platypustemplateoriginal/img/bee-transparent.png
+    defaultValue: 'build/static/images/bee-transparent.png'
     translateChoice: null
 background.image:
     type: image
@@ -79,7 +79,7 @@ background.image:
     choice: null
     validators: [App\Validator\BackgroundImage]
     role: ROLE_ADMIN
-    defaultValue: bundles/platypustemplateoriginal/img/backgroundPage.jpg
+    defaultValue: overwrite/platypustemplateoriginal/img/backgroundPage.jpg
     translateChoice: null
 date.format:
     type: array

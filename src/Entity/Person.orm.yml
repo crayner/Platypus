@@ -41,6 +41,22 @@ App\Entity\Person:
             options:
                 default: 1
             column: receive_email_notifications
+        personalCalendarFeed:
+            type: text
+            nullable: true
+            column: personal_calendar_feed
+        personalBackground:
+            length: 255
+            nullable: true
+            column: personal_background
+        personalTheme:
+            length: 200
+            nullable: true
+            column: personal_theme
+        personalLanguage:
+            length: 10
+            nullable: true
+            column: personal_language
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff

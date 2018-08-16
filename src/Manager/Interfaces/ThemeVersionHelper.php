@@ -59,4 +59,11 @@ interface ThemeVersionHelper
      * @return string
      */
     public function getURL(): string;
+
+    /**
+     * getBackgroundImage
+     *
+     * @return null|string
+     */
+    public function getBackgroundImage(): ?string;
 }

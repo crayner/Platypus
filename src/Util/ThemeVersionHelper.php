@@ -85,8 +85,23 @@ class ThemeVersionHelper implements \App\Manager\Interfaces\ThemeVersionHelper
      * @var
      */
     private $name;
+
+    /**
+     * ThemeVersionHelper constructor.
+     * @param $name
+     */
     public function __construct($name)
     {
         $this->name = ucfirst($name);
+    }
+
+    /**
+     * getBackgroundImage
+     *
+     * @return null|string
+     */
+    public function getBackgroundImage(): ?string
+    {
+        return '';
     }
 }

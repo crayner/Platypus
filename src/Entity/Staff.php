@@ -66,4 +66,35 @@ class Staff
         $this->person = $person;
         return $this;
     }
+
+    /**
+     * @var boolean
+     */
+    private $smartWorkflowHelp;
+
+    /**
+     * @return bool
+     */
+    public function isSmartWorkflowHelp(): bool
+    {
+        return $this->smartWorkflowHelp ? true : false ;
+    }
+
+    /**
+     * @param bool|null $smartWorkflowHelp
+     * @return Staff
+     */
+    public function setSmartWorkflowHelp(?bool $smartWorkflowHelp): Staff
+    {
+        $this->smartWorkflowHelp = $smartWorkflowHelp ? true : false;
+        return $this;
+    }
+
+    /**
+     * Staff constructor.
+     */
+    public function __construct()
+    {
+        $this->smartWorkflowHelp = true;
+    }
 }

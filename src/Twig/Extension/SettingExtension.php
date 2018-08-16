@@ -54,7 +54,6 @@ class SettingExtension extends AbstractExtension
             new \Twig_SimpleFunction('settingLink', array($this->settingManager, 'settingLink'), ['is_safe' => ['html']]),
             new \Twig_SimpleFunction('exit', [$this, 'exit']),
             new \Twig_SimpleFunction('dumpSetting', [$this, 'dumpSetting']),
-            new \Twig_SimpleFunction('getThemeName', [$this->themeManager, 'getCurrentThemeName']),
 		);
 	}
 
@@ -105,6 +104,10 @@ class SettingExtension extends AbstractExtension
         die();
     }
 
+    /**
+     * dumpSetting
+     *
+     */
     public function dumpSetting()
     {
         dump($this->settingManager);

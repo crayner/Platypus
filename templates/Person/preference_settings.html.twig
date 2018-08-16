@@ -1,0 +1,31 @@
+{{ form_start(form) }}
+{% set h3Content = saveButton() %}
+{% set panelParagraph = 'preference.settings.help' %}
+{% include 'Default/panelStart.html.twig' with {header: 'preference.settings', transDomain: 'Security' }%}
+<div class="row">
+    <div class="col-4 card">
+        {{  form_row(form.personalCalendarFeed) }}
+    </div>
+    <div class="col-4 card">
+        {{  form_row(form.personalBackground) }}
+    </div>
+    <div class="col-4 card">
+        {{  form_row(form.personalTheme) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-4 card">
+        {{  form_row(form.personalLanguage) }}
+    </div>
+    <div class="col-4 card">
+        {{  form_row(form.receiveNotificationEmails) }}
+    </div>
+    {% if form.smartWorkflowHelp is defined %}
+    <div class="col-4 card">
+        {{ form_row(form.smartWorkflowHelp) }}
+    </div>
+    {% endif %}
+</div>
+
+{% include 'Default/panelEnd.html.twig' %}
+{{ form_end(form) }}

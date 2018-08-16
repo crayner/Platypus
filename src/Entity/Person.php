@@ -15,6 +15,7 @@
  */
 namespace App\Entity;
 
+use App\Util\AssetHelper;
 use App\Util\PersonNameHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -396,7 +397,7 @@ class Person
      */
     public function __toString(): string
     {
-        return PersonNameHelper::getFullName($this);
+        return $this->getId().': '.PersonNameHelper::getFullName($this);
     }
 
     /**
@@ -419,6 +420,98 @@ class Person
     public function setStaff(?Staff $staff): Person
     {
         $this->staff = $staff;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $personalCalendarFeed;
+
+    /**
+     * @return null|string
+     */
+    public function getPersonalCalendarFeed(): ?string
+    {
+        return $this->personalCalendarFeed;
+    }
+
+    /**
+     * @param null|string $personalCalendarFeed
+     * @return Person
+     */
+    public function setPersonalCalendarFeed(?string $personalCalendarFeed): Person
+    {
+        $this->personalCalendarFeed = $personalCalendarFeed;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $personalBackground;
+
+    /**
+     * @return null|string
+     */
+    public function getPersonalBackground(): ?string
+    {
+        return $this->personalBackground;
+    }
+
+    /**
+     * @param null|string $personalBackground
+     * @return Person
+     */
+    public function setPersonalBackground(?string $personalBackground): Person
+    {
+        $this->personalBackground = $personalBackground;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $personalTheme;
+
+    /**
+     * @return null|string
+     */
+    public function getPersonalTheme(): ?string
+    {
+        return $this->personalTheme;
+    }
+
+    /**
+     * @param null|string $personalTheme
+     * @return Person
+     */
+    public function setPersonalTheme(?string $personalTheme): Person
+    {
+        $this->personalTheme = $personalTheme;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $personalLanguage;
+
+    /**
+     * @return null|string
+     */
+    public function getPersonalLanguage(): ?string
+    {
+        return $this->personalLanguage;
+    }
+
+    /**
+     * @param null|string $personalLanguage
+     * @return Person
+     */
+    public function setPersonalLanguage(?string $personalLanguage): Person
+    {
+        $this->personalLanguage = $personalLanguage;
         return $this;
     }
 }

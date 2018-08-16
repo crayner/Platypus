@@ -17,7 +17,7 @@
   description: "The organisation Logo"
   value: ""
   role: "ROLE_REGISTRAR"
-  default_value: "bundles/platypustemplateoriginal/img/bee.png"
+  default_value: "build/static/images/bee.png"
 -
   id: 3
   type: "array"
@@ -1514,10 +1514,10 @@
   name: "background.image"
   display_name: "Background Image"
   description: "Change the background displayed for the site.  The image needs to be a minimum of 1200px width.  You can load an image of 1M size, but the smaller the size the better."
-  value: "bundles/platypustemplateoriginal/img/backgroundPage.jpg"
+  value: "overwrite/platypustemplateoriginal/img/backgroundPage.jpg"
   validators: "a:1:{i:0;s:34:\"App\\Core\\Validator\\BackgroundImage\";}"
   role: "ROLE_ADMIN"
-  default_value: "bundles/platypustemplateoriginal/img/backgroundPage.jpg"
+  default_value: "overwrite/platypustemplateoriginal/img/backgroundPage.jpg"
 -
   id: 304
   type: "string"

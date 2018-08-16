@@ -15,10 +15,20 @@
  */
 namespace App\Controller;
 
+use App\Entity\Person;
+use App\Form\PreferencesType;
+use App\Manager\PersonManager;
+use App\Manager\Settings\ThirdPartySettings;
+use App\Manager\ThemeManager;
+use App\Manager\UserManager;
+use App\Util\AssetHelper;
+use App\Util\PersonHelper;
+use App\Util\UserHelper;
 use Hillrange\Security\Exception\UserException;
 use Hillrange\Security\Form\ChangePasswordType;
 use Hillrange\Security\Util\PasswordManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -43,10 +53,18 @@ class PersonController extends Controller
      * preferences
      * @Route("/user/preferences/", name="preferences")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @param AuthenticationUtils $authUtils
+     * @param Request $request
+     * @param PasswordManager $passwordManager
+     * @param UserManager $userManager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function preferences(AuthenticationUtils $authUtils, Request $request, PasswordManager $passwordManager)
+    public function preferences(AuthenticationUtils $authUtils, Request $request, PasswordManager $passwordManager, PersonHelper $personHelper, ThemeManager $themeManager)
     {
         $user = $this->getUser();
+
+        $this->get('doctrine')->getManager()->refresh($user);
 
         $translator = $this->get('translator');
 
@@ -61,8 +79,29 @@ class PersonController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $passwordManager->saveNewPassword($user);
+            $passwordManager->saveNewPassword($user, $form->get('plainPassword')->get('first')->getData());
             $error = new UserException($translator->trans('security.password.forced.success', [], 'security'));
+        }
+
+        $settingForm = null;
+        PersonHelper::setUser($user);
+        PersonHelper::hasPerson();
+        if (PersonHelper::hasPerson())
+        {
+            $settingForm =  $this->createForm(PreferencesType::class, PersonHelper::getPerson(), ['deleteBackgroundImage' => $this->get('router')->generate('preference_delete_background', ['id' => PersonHelper::getPerson()->getId()])]);
+
+            $settingForm->handleRequest($request);
+
+            if ($settingForm->isSubmitted() && $settingForm->isValid()) {
+                $em = PersonHelper::getEntityManager();
+                $em->persist(PersonHelper::getPerson());
+                if (PersonHelper::hasStaff()){
+                    $staff = PersonHelper::getStaff();
+                    $staff->setSmartWorkflowHelp($settingForm->get('smartWorkflowHelp')->getData());
+                    $em->persist($staff);
+                }
+                $em->flush();
+            }
         }
 
         return $this->render('Person/preferences.html.twig',
@@ -70,7 +109,25 @@ class PersonController extends Controller
                 'password_form'  => $form->createView(),
                 'error' => $error,
                 'passwordManager' => $passwordManager,
+                'setting_form' => $settingForm instanceof FormInterface ? $settingForm->createView() : null,
             ]
         );
+    }
+
+    /**
+     * deletePersonalBackground
+     *
+     * @param AssetHelper $assetHelper
+     * @param PersonHelper $personHelper
+     * @param int $id
+     * @Route("/user/preference/{id}/delete_personal_background/", name="preference_delete_background")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function deletePersonalBackground(AssetHelper $assetHelper, PersonManager $manager, int $id)
+    {
+        $person = $manager->find($id);
+        AssetHelper::removeAsset($person->getPersonalBackground());
+        $person->setPersonalBackground(null);
+        return $this->redirectToRoute('preferences');
     }
 }

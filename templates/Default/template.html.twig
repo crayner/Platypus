@@ -48,7 +48,7 @@
         {% block titleContainer %}
             {% if not(headerOff is defined and headerOff) %}
                 <div class="jumbotron hideSection{{ containerThemeOverwrite }}" id="titleContent">
-                    <img src="{{ asset(getSetting('org.logo', 'bundles/' ~ getSetting('template.name', 'PlatypusTemplateOriginal')|lower ~ '/img/bee.png')) }}" alt="Busybee" id="bee-logo"/>
+                    <img src="{{ asset(getSetting('org.logo', 'build/static/images/bee.png')) }}" alt="Busybee" id="bee-logo"/>
                     <h2>{% block headerTitle %}Busybee - {{ getSetting('org.name.long') }}{% endblock headerTitle %}</h2>
                     <p class="lead">{% block headerLead %}{% endblock headerLead %}</p>
                     {% if headerNotices is not empty %}<p>{{ headerNotices|raw }}</p>{% endif %}

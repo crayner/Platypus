@@ -7,6 +7,12 @@ App\Entity\Staff:
           type: integer
           generator:
             strategy: AUTO
+    fields:
+        smartWorkflowHelp:
+            type: boolean
+            options:
+                default: 1
+            column: smart_workflow_help
     oneToOne:
         person:
             targetEntity: App\Entity\Person
