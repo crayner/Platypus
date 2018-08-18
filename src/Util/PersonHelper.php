@@ -19,6 +19,7 @@ use App\Entity\Person;
 use App\Entity\Staff;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -56,8 +57,11 @@ class PersonHelper
      *
      * @return bool
      */
-    public static function hasPerson(): bool
+    public static function hasPerson(?Person $person = null): bool
     {
+        if ($person instanceof Person)
+            self::setPerson($person);
+
         if (self::$person instanceof Person)
             return true;
 
@@ -86,8 +90,12 @@ class PersonHelper
      *
      * @param Person|null $person
      */
-    public static function setPerson(?Person $person): void
+    public static function setPerson($person): void
     {
+        if (is_int($person))
+            $person = self::getRepository(Person::class)->find($person);
+
+        self::$person = $person;
     }
 
     /**
@@ -178,8 +186,11 @@ class PersonHelper
      *
      * @return bool
      */
-    public static function hasStaff(): bool
+    public static function hasStaff(?Person $person = null): bool
     {
+        if ($person instanceof Person)
+            self::setPerson($person);
+
         if (self::$staff instanceof Staff)
             return true;
 
@@ -192,5 +203,39 @@ class PersonHelper
             return true;
 
         return false;
+    }
+
+    /**
+     * getPhoto
+     *
+     * @param int $size
+     * @param string $float
+     * @return string
+     */
+    public static function getPhoto($size = 75, $float = 'none')
+    {
+        PersonNameHelper::setPerson(self::getPerson());
+        $photo = PersonNameHelper::getFullName();
+
+        if (empty(self::getPerson()) || empty(self::getPerson()->getPhoto()))
+            self::getPerson()->setPhoto(self::getBlankPhoto());
+        if (is_string(self::getPerson()->getPhoto()) && file_exists(self::getPerson()->getPhoto()))
+        {
+            $photo = '<img class="img-thumbnail img-photo' . $size . '" title="' . $photo . '" src="/' . self::getPerson()->getPhoto() . '" width="' . $size . '" style="float: ' . $float . '" />';
+        }
+
+        return $photo;
+    }
+
+    /**
+     * getBlankPhoto
+     *
+     * @return string
+     */
+    private static function getBlankPhoto(): string
+    {
+        $photo = 'build/static/images/DefaultPerson.png';
+
+        return $photo;
     }
 }

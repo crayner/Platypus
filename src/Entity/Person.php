@@ -514,4 +514,27 @@ class Person
         $this->personalLanguage = $personalLanguage;
         return $this;
     }
+
+    /**
+     * @var string|null
+     */
+    private $photo;
+
+    /**
+     * @return null|string
+     */
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    /**
+     * @param null|string $photo
+     * @return Person
+     */
+    public function setPhoto(?string $photo): Person
+    {
+        $this->photo = $photo;
+        return $this;
+    }
 }

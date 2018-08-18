@@ -121,11 +121,6 @@ abstract class PaginationManager implements PaginationInterface
 	private $reDirect;
 
 	/**
-	 * @var string
-	 */
-	private $name = 'default';
-
-	/**
 	 * @var bool
 	 */
 	private $displaySearch = true;
@@ -207,12 +202,13 @@ abstract class PaginationManager implements PaginationInterface
 		$this->sortBy = reset($x);
 		$this->setSortByName(key($x));
 	}
+
 	/**
 	 * @return string
 	 */
 	public function getName()
 	{
-		return $this->name;
+		return strtolower(str_replace('_pagination', '', $this->name ?: 'default')) .'_pagination';
 	}
 
 	/**
@@ -256,6 +252,18 @@ abstract class PaginationManager implements PaginationInterface
 
 		return $this->result;
 	}
+
+    /**
+     * getAllResults
+     *
+     * @return array
+     */
+	private function getAllResults(): array
+    {
+        return $this->buildQuery()
+            ->getQuery()
+            ->getArrayResult();
+    }
 
     /**
      * get Total
@@ -374,7 +382,7 @@ abstract class PaginationManager implements PaginationInterface
 	{
 		$pag = empty($this->getSession()->get('pagination')) ? [] : $this->getSession()->get('pagination');
 
-		$cc = empty($pag[$this->paginationName]) ? [] : $pag[$this->paginationName];
+		$cc = empty($pag[$this->getName()]) ? [] : $pag[$this->getName()];
 
 		$cc['limit']  = $this->limit;
 		$cc['search'] = $this->search;
@@ -382,7 +390,7 @@ abstract class PaginationManager implements PaginationInterface
 		$cc['choice'] = false !== $this->reDirect ? $this->reDirect : $this->choice;
 		$cc['sortByName'] = $this->sortByName;
 
-		$pag[$this->paginationName] = $cc;
+		$pag[$this->getName()] = $cc;
 
 		$this->getSession()->set('pagination', $pag);
 
@@ -597,9 +605,9 @@ abstract class PaginationManager implements PaginationInterface
 			$this->resetPagination();
 			$last = $this->getSession()->get('pagination');
 
-			if (!empty($last[$this->paginationName]))
+			if (!empty($last[$this->getName()]))
 			{
-				$last = $last[$this->paginationName];
+				$last = $last[$this->getName()];
 				$this->setSearch($last['search']);
 				$this->form['sortByName']->setData($last['search']);
 				$this->setLimit($last['limit']);
@@ -942,7 +950,7 @@ abstract class PaginationManager implements PaginationInterface
 	 */
 	public function isDisplaySearch(): bool
 	{
-		return $this->displaySearch;
+		return $this->displaySearch ? true : false ;
 	}
 
 	/**
@@ -1027,7 +1035,7 @@ abstract class PaginationManager implements PaginationInterface
 
 	public function getIdName()
 	{
-		return strtolower($this->getName() . '_pagination');
+		return $this->getName();
 	}
 
 	/**
@@ -1185,7 +1193,7 @@ abstract class PaginationManager implements PaginationInterface
 	 * @since       27th October 2016
 	 * @return      PaginationManager
 	 */
-	protected function setQueryJoin()
+	public function setQueryJoin()
 	{
         if (empty($this->join) || !is_array($this->join)) return $this;
 		foreach ($this->join as $name => $pars)

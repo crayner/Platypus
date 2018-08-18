@@ -1,0 +1,18 @@
+{% trans_default_domain "Person" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% block title %}{{ parent() }}{{ 'person.people.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'person.people.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'person.people.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {{ pagination_script(pagination) }}
+{% endblock javascripts %}
+

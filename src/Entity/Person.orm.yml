@@ -57,6 +57,9 @@ App\Entity\Person:
             length: 10
             nullable: true
             column: personal_language
+        photo:
+            length: 150
+            nullable: true
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff

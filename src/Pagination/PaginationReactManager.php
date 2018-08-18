@@ -1,0 +1,457 @@
+<?php
+/**
+ * Created by PhpStorm.
+ *
+ * This file is part of the Busybee Project.
+ *
+ * (c) Craig Rayner <craig@craigrayner.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * User: craig
+ * Date: 18/08/2018
+ * Time: 11:22
+ */
+namespace App\Pagination;
+
+use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query;
+use Doctrine\ORM\QueryBuilder;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
+/**
+ * Class PaginationReactManager
+ * @package App\Pagination
+ */
+abstract class PaginationReactManager implements PaginationInterface
+{
+    /**
+     * @var Request
+     */
+    private $request;
+
+    /**
+     * @var QueryBuilder
+     */
+    private $query;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * PaginationReactManager constructor.
+     * @param RequestStack $request
+     */
+    public function __construct(RequestStack $request, EntityManagerInterface $entityManager)
+    {
+        $this->request = $request->getCurrentRequest();
+        $this->entityManager = $entityManager;
+    }
+    /**
+     * getDisplayProperties
+     *
+     * @return array
+     */
+    public function getDisplayProperties(): array
+    {
+        $props = [];
+
+        $props['locale'] = $this->getRequest()->get('_locale') ?: 'en';
+        $props['name'] = $this->getName();
+        $props['displaySearch'] = $this->isDisplaySearch();
+        $props['displaySort'] = $this->isDisplaySort();
+        $props['sortOptions'] = $this->getSortList();
+        $props['results'] = $this->getAllResults();
+        $props['offset'] = $this->getOffset();
+        $props['search'] = $this->getSearch() ?: '';
+        $props['limit'] = $this->getLimit();
+
+        $props['translations'] = [];
+        $props['translations'][] = 'pagination.search.label';
+        $props['translations'][] = 'pagination.search.placeholder';
+        $props['translations'][] = 'search';
+        $props['translations'][] = 'pagination.sort.label';
+        $props['translations'][] = 'pagination.limit.label';
+        $props['translations'][] = 'save';
+        $props['translations'][] = 'previous';
+        $props['translations'][] = 'next';
+        $props['translations'][] = 'pagination.figures.empty';
+        $props['translations'][] = 'pagination.figures.one';
+        $props['translations'][] = 'pagination.figures.two_plus';
+
+
+        $props['specificTranslations'] = $this->getSpecificTranslations();
+        foreach($this->getSortList() as $name)
+            $props['translations'][] = $name;
+
+        return $props;
+    }
+
+    /**
+     * @return Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->request;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return strtolower(str_replace('_pagination', '', $this->name ?: 'default')) .'_pagination';
+    }
+
+    /**
+     * isDisplaySearch
+     *
+     * @return bool
+     */
+    public function isDisplaySearch(): bool
+    {
+        if (! property_exists($this, 'displaySearch'))
+            return true;
+        return $this->displaySearch ? true : false ;
+    }
+
+    /**
+     * isDisplaySort
+     *
+     * @return bool
+     */
+    public function isDisplaySort(): bool
+    {
+        if (is_null($this->getSortList()))
+            return false;
+        if (! property_exists($this, 'displaySort'))
+            return true;
+        return $this->displaySort ? true : false ;
+    }
+
+    /**
+     * getSortList
+     *
+     * @return array
+     */
+    public function getSortList(): ?array
+    {
+        if (! property_exists($this, 'sortByList'))
+            return null;
+
+        $sortByList = [];
+        if (!empty($this->sortByList) && is_array($this->sortByList))
+            foreach ($this->sortByList as $name => $w)
+                $sortByList[$name] = $name;
+
+        return $sortByList;
+    }
+
+    /**
+     * getAllResults
+     *
+     * @return array
+     */
+    private function getAllResults(): array
+    {
+        dump($this->buildQuery()
+            ->getQuery());
+
+        return $this->buildQuery()
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    /**
+     * build Query
+     *
+     * @version    28th October 2016
+     * @since      28th October 2016
+     *
+     * @param    boolean $count
+     *
+     * @return    QueryBuilder
+     */
+    public function buildQuery($count = false): QueryBuilder
+    {
+        $this->query = $this->getRepository()->createQueryBuilder($this->getAlias());
+            $this
+                ->setQuerySelect()
+                ->setQueryJoin();
+
+        return $this->getQuery();
+    }
+
+    /**
+     * getEntityManager
+     *
+     * @return EntityManagerInterface
+     */
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->entityManager;
+    }
+
+    /**
+     * getRepository
+     *
+     * @param string|null $name
+     * @return ObjectRepository
+     */
+    public function getRepository(?string $name = null): ObjectRepository
+    {
+        return $this->getEntityManager()->getRepository($name ?: $this->getEntityName());
+    }
+
+    /**
+     * getEntityName
+     *
+     * @return string
+     */
+    public function getEntityName(): string
+    {
+        return $this->entityName;
+    }
+
+    /**
+     * getAlias
+     *
+     * @return string
+     */
+    public function getAlias(): string
+    {
+        return $this->alias;
+    }
+
+    /**
+     * @return QueryBuilder
+     */
+    public function getQuery(): QueryBuilder
+    {
+        return $this->query;
+    }
+
+
+    /**
+     * set Query Select
+     *
+     * @version     13th February 2018
+     * @since       27th October 2016
+     * @return      PaginationManager
+     */
+    protected function setQuerySelect(): PaginationInterface
+    {
+        $selectBegin = true;
+        if ($this->isFullEntity()) {
+            $this->query->select($this->getAlias() . ' AS entity');
+            $selectBegin = false;
+        }
+
+        if (empty($this->select)  || !is_array($this->select)) return $this;
+        $searchConcat = [];
+        foreach ($this->select as $name)
+        {
+            if (is_string($name)) {
+                if (strpos(strtolower($name), ' as ') !== false)
+                    $name = substr($name, 0, strpos(strtolower($name), ' as '));
+
+                if ($selectBegin){
+                    $this->query->select($name);
+                    $selectBegin = false;
+                } else
+                    $this->query->addSelect($name);
+
+                $searchConcat[] = $name;
+                $searchConcat[] = '_';
+            } elseif (is_array($name))
+            {
+                $k      = key($name);
+                if ($k == '0')
+                    $k = 'entity';
+                $concat = new Query\Expr\Func('CONCAT', $name[$k]);
+                $concat .= ' AS ' . $k;
+                $concat = str_replace(',', ',\' \',', $concat);
+                if ($selectBegin){
+                    $this->query->select($concat);
+                    $selectBegin = false;
+                } else
+                $this->query->addSelect($concat);
+                $searchConcat[] = $name[$k];
+                $searchConcat[] ='_';
+            }
+        }
+        if (! empty($searchConcat))
+        {
+            $concat = new Query\Expr\Func('CONCAT', $searchConcat);
+            $concat .= ' AS SearchString';
+            $concat = str_replace('_', '\'_\'', $concat);
+            $this->query->addSelect($concat);
+        }
+
+        return $this;
+    }
+
+    /**
+     * isFullEntity
+     *
+     * @return bool
+     */
+    protected function isFullEntity(): bool
+    {
+        if (! property_exists($this, 'fullEntity'))
+            return false;
+        return $this->fullEntity ? true : false ;
+    }
+
+    /**
+     * @var array
+     */
+    private $sessionData;
+
+    /**
+     * @return array
+     */
+    public function getSessionData(): array
+    {
+        if (empty($this->sessionData))
+        {
+            $this->sessionData = $this->getSession()->get('pagination')[$this->getName()] ?: [];
+        }
+        return $this->sessionData;
+    }
+
+    /**
+     * setSessionData
+     *
+     * @return PaginationInterface
+     * @throws \Exception
+     */
+    public function setSessionData(): PaginationInterface
+    {
+        $sessionData = [];
+        $sessionData['offset'] = $this->getOffset();
+        $sessionData['search'] = $this->getSearch();
+        $sessionData['limit'] = $this->getLimit();
+        $this->sessionData = $sessionData;
+
+        $pagination = $this->getSession()->get('pagination');
+        $pagination[$this->getName()] = $sessionData;
+        $this->getSession()->set('pagination', $pagination);
+
+        return $this;
+    }
+
+    /**
+     * @var
+     */
+    private $search;
+
+    /**
+     * getSearch
+     *
+     * @return string
+     */
+    private function getSearch(): string
+    {
+        return $this->search = $this->search ?: isset($this->getSessionData()['search']) ? $this->getSessionData()['search'] : '';
+    }
+
+    /**
+     * @param mixed $search
+     * @return PaginationInterface
+     */
+    public function setSearch($search): PaginationInterface
+    {
+        $this->search = $search;
+        return $this;
+    }
+
+    /**
+     * set Join
+     *
+     * @version     13th February 2018
+     * @since       27th October 2016
+     * @return      PaginationInterface
+     */
+    protected function setQueryJoin(): PaginationInterface
+    {
+        if (! property_exists($this, 'join'))
+            return $this;
+        if (empty($this->join) || !is_array($this->join))
+            return $this;
+        foreach ($this->join as $name => $pars)
+        {
+            $type = empty($pars['type']) ? 'join' : $pars['type'];
+            $this->query->$type($name, $pars['alias']);
+        }
+        return $this;
+    }
+
+    /**
+     * @var integer
+     */
+    private $offset;
+
+    /**
+     * getOffset
+     *
+     * @return int
+     */
+    public function getOffset(): int
+    {
+        return $this->offset = $this->offset ?: isset($this->getSessionData()['offset']) ? $this->getSessionData()['offset'] : 0;
+    }
+
+    /**
+     * getSession
+     *
+     * @return SessionInterface
+     */
+    private function getSession(): SessionInterface
+    {
+        return $this->getRequest()->getSession();
+    }
+
+    /**
+     * getLimit
+     *
+     * @return int
+     * @throws \Exception
+     */
+    private function getLimit(): int
+    {
+        if (!property_exists($this, 'limit'))
+            throw new \Exception('The limit for pagination MUST be set.');
+
+        return  isset($this->getSessionData()['limit']) ? $this->getSessionData()['limit'] : $this->limit;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransDomain(): string
+    {
+        if (! property_exists($this, 'transDomain'))
+            return 'pagination';
+        return $this->transDomain;
+    }
+
+    private function getSpecificTranslations()
+    {
+        if (property_exists($this, 'specificTranslations'))
+            $specificTranslations = $this->getSpecificTranslations;
+        else
+            $specificTranslations = [];
+
+        foreach($this->getSortList() as $name)
+            $specificTranslations[] = $name;
+
+        return $specificTranslations;
+    }
+}

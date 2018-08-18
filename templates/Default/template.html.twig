@@ -55,7 +55,7 @@
                 </div>
             {% endif %}
         {% endblock titleContainer %}
-                <div id="notificationBar"></div>
+            <div id="notificationBar"></div>
             {% if fullPage %}
                 <div class="row">
                     <main class="col-12" id="contentContainer">
@@ -63,7 +63,7 @@
                 <div class="row">
                     <main class="col-9" id="contentContainer">
             {% endif %}
-
+            {% block paginationContent %}<section id="paginationControl"></section>{% endblock paginationContent %}
             {% block flashMessages %}
                 {% include 'Default/flash.html.twig' %}
             {% endblock flashMessages %}

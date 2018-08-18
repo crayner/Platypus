@@ -21,8 +21,7 @@ Encore
     .createSharedEntry('core', './assets/js/core.js')
     .addEntry('notifications', './assets/js/notifications.js')
     .addEntry('alarm', './assets/js/alarm.js')
-    //.addEntry('page1', './assets/js/page1.js')
-    //.addEntry('page2', './assets/js/page2.js')
+    .addEntry('pagination', './assets/js/pagination.js')
 
     /*
      * FEATURE CONFIG

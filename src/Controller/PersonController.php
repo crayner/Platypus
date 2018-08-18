@@ -15,15 +15,13 @@
  */
 namespace App\Controller;
 
-use App\Entity\Person;
 use App\Form\PreferencesType;
 use App\Manager\PersonManager;
-use App\Manager\Settings\ThirdPartySettings;
 use App\Manager\ThemeManager;
 use App\Manager\UserManager;
+use App\Pagination\PersonPagination;
 use App\Util\AssetHelper;
 use App\Util\PersonHelper;
-use App\Util\UserHelper;
 use Hillrange\Security\Exception\UserException;
 use Hillrange\Security\Form\ChangePasswordType;
 use Hillrange\Security\Util\PasswordManager;
@@ -129,5 +127,25 @@ class PersonController extends Controller
         AssetHelper::removeAsset($person->getPersonalBackground());
         $person->setPersonalBackground(null);
         return $this->redirectToRoute('preferences');
+    }
+
+    /**
+     * index
+     *
+     * @param Request $request
+     * @param PersonPagination $personPagination
+     * @param PersonManager $personManager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/people/all/list/", name="manage_people")
+     * @IsGranted("ROLE_TEACHER")
+     */
+    public function index(PersonPagination $personPagination, PersonHelper $manager)
+    {
+        return $this->render('Person/list.html.twig',
+            array(
+                'pagination' => $personPagination,
+                'manager'    => $manager,
+            )
+        );
     }
 }
