@@ -2,6 +2,7 @@
 
 import React, { Component } from "react"
 import PropTypes from 'prop-types'
+import firstBy from 'thenby'
 import PaginationSearch from "./PaginationSearch";
 import PaginationSort from './PaginationSort'
 import PaginationLimit from './PaginationLimit'
@@ -13,6 +14,14 @@ export default class PaginationControl extends Component {
     constructor(props) {
         super(props)
 
+        this.state = {
+            offset: props.offset,
+            search: props.search,
+            limit: props.limit,
+            results: props.results,
+            rows: [],
+        }
+
         this.locale = props.locale
         this.name = props.name
         this.displaySearch = props.displaySearch
@@ -23,30 +32,28 @@ export default class PaginationControl extends Component {
         this.total = props.results.length
         this.offset = props.offset
         this.limit = props.limit
-        this.searchChange = true
-        this.sortChange = true
+        this.search = ''
+        var key = ''
+        for(key in this.sortOptions){
+            if(this.sortOptions.hasOwnProperty(key)){
+                this.sort = key;
+                break;
+            }
+        }
         this.pages = 0
         this.limitChange = true
         this.offsetChange = true
-
-        this.state = this.initialState(props)
+        this.sortByList = props.sortByList
+        this.rows = []
 
         this.changeLimit = this.changeLimit.bind(this)
         this.nextPage = this.nextPage.bind(this)
         this.previousPage = this.previousPage.bind(this)
+        console.log(this)
     }
 
     componentWillMount(){
         this.handlePagination()
-    }
-
-    initialState(props){
-        return {
-            offset: props.offset,
-            search: props.search,
-            limit: props.limit,
-            results: props.results
-        }
     }
 
     handlePagination(){
@@ -57,25 +64,15 @@ export default class PaginationControl extends Component {
 
         this.offset = this.calculateOffset(results)
 
-        var newState = {}
+        this.rows = results.slice(this.offset, (this.limit + this.offset))
 
-        if (this.searchChange || this.sortChange){
-            this.searchChange = false
-            this.sortChange = false
-            newState = Object.assign(newState, {results: results})
-        }
-
-        if (this.offsetChange) {
-            newState = Object.assign(newState, {offset: this.offset})
-            this.offsetChange = false
-        }
-
-        if (this.limitChange) {
-            newState = Object.assign(newState, {limit: this.limit})
-            this.limitChange = false
-        }
-
-        this.setState(newState)
+        this.setState({
+            offset: this.offset,
+            search: this.search,
+            limit: this.limit,
+            results: results,
+            rows: this.rows,
+        })
 
         this.setPaginationCache()
     }
@@ -88,7 +85,10 @@ export default class PaginationControl extends Component {
     }
 
     getSortResults(results){
-        return results
+        return results.sort(
+            firstBy('surname')
+                .thenBy('firstName')
+        )
     }
 
     calculatePages(results){
@@ -139,9 +139,6 @@ export default class PaginationControl extends Component {
     {
         var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/'
         fetchJson(path, {}, this.locale)
-            .then((data) => {
-                console.log(data)
-            })
     }
 
     nextPage(event){
@@ -197,12 +194,11 @@ export default class PaginationControl extends Component {
                         </div>
                     </div>
                 </div>
+                {console.log(this.state.rows)}
                 <PaginationTitle
                     locale={this.locale}
-                    rows={this.state.results}
+                    rows={this.state.rows}
                     translations={this.translations}
-                    limit={this.state.limit}
-                    offset={this.state.offset}
                 />
             </section>
         )
@@ -216,6 +212,7 @@ PaginationControl.propTypes = {
     displaySort: PropTypes.bool.isRequired,
     translations: PropTypes.object.isRequired,
     sortOptions: PropTypes.object.isRequired,
+    sortByList: PropTypes.object.isRequired,
     results: PropTypes.array.isRequired,
     search: PropTypes.string.isRequired,
     offset: PropTypes.number.isRequired,
@@ -225,5 +222,6 @@ PaginationControl.propTypes = {
 PaginationControl.defaultTypes = {
     locale: 'en',
     sortOptions: new Object(),
+    sortByList: new Object(),
 }
 

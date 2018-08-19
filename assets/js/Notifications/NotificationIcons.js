@@ -13,7 +13,7 @@ export default function NotificationIcons(props) {
         manageSidebarClick,
         messageCount,
         translations,
-    } = props;
+    } = props
 
     function notificationIcon()
     {

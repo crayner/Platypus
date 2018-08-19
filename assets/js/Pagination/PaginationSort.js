@@ -1,37 +1,36 @@
 'use strict';
 
-import React, { Component } from "react"
+import React from "react"
 import PropTypes from 'prop-types'
 import { translateMessage } from "../Component/MessageTranslator"
 
-export default class PaginationSort extends Component {
-    constructor(props) {
-        super(props)
+export default function PaginationSort(props) {
+    const {
+        name,
+        translations,
+        sortOptions,
+    } = props
 
-        this.name = props.name
-        this.translations = props.translations
-
+    function buildOptions() {
         var x = 0
-        this.options = Object.keys(props.sortOptions).map(key =>
-            <option value={key} key={x++}>{translateMessage(this.translations, props.sortOptions[key])}</option>
+        var options = Object.keys(sortOptions).map(key =>
+            <option value={key} key={x++}>{translateMessage(translations, sortOptions[key])}</option>
         )
+        return options
     }
 
-
-    render() {
-        return (
-            <section>
-                <label className="control-label">{translateMessage(this.translations, 'pagination.sort.label')}</label>
-                <div className="input-group input-group-sm">
-                    <select id={this.name + '_sortbyName'} name={this.name + '[sortbyName]'}
-                            className="form-inline form-control"
-                            autoComplete="off">
-                        {this.options}
-                    </select>
-                </div>
-            </section>
-        )
-    }
+    return (
+        <section>
+            <label className="control-label">{translateMessage(translations, 'pagination.sort.label')}</label>
+            <div className="input-group input-group-sm">
+                <select id={name + '_sortbyName'} name={name + '[sortbyName]'}
+                        className="form-inline form-control"
+                        autoComplete="off">
+                    {buildOptions()}
+                </select>
+            </div>
+        </section>
+    )
 }
 
 PaginationSort.propTypes = {

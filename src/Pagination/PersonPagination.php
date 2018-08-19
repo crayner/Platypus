@@ -20,17 +20,17 @@ class PersonPagination extends PaginationReactManager
 	 */
 	protected $sortByList = [
 		'person.surname.label'   => [
-			'p.surname'   => 'ASC',
-			'p.firstName' => 'ASC',
+			'surname',
+			'firstName',
 		],
 		'person.firstName.label' => [
-			'p.firstName' => 'ASC',
-			'p.surname'   => 'ASC',
+			'firstName',
+			'.surname',
 		],
 		'person.email.label'     => [
-			'p.email'     => 'ASC',
-			'p.surname'   => 'ASC',
-			'p.firstName' => 'ASC',
+			'email',
+			'surname',
+			'firstName',
 		],
 	];
 	/**
@@ -41,22 +41,14 @@ class PersonPagination extends PaginationReactManager
 	/**
 	 * @var array
 	 */
-	protected $searchList = [
-		'p.surname',
-		'p.firstName',
-		'p.email',
-	];
-
-	/**
-	 * @var array
-	 */
 	protected $select = [
-		'p.title',
+        'p.photo',
+        'p.title',
 		'p.surname',
 		'p.firstName',
         'p.email',
 		'p.id',
-		'u.id as userId',
+        'u.id AS userId',
 	];
 
 	/**
@@ -109,4 +101,18 @@ class PersonPagination extends PaginationReactManager
 	 * @var string
 	 */
 	protected $transDomain = 'Person';
+
+
+    /**
+     * getAllResults
+     *
+     * @return array
+     */
+    public function getAllResults(): array
+    {
+        return $this->buildQuery()
+            ->getQuery()
+            ->getArrayResult();
+    }
+
 }

@@ -1,26 +1,25 @@
 'use strict';
 
-import React, { Component } from "react"
+import React from "react"
 import PropTypes from 'prop-types'
 
-export default class PaginationList extends Component {
-    constructor(props) {
-        super(props)
-        this.rows = props.rows
-        this.translations = props.translations
-        this.locale = props.locale
-        this.offset = props.offset
-        this.limit = props.limit
+export default function PaginationList(props) {
+    const {
+        rows,
+        translations,
+        locale,
+    } = props
 
-        console.log(this)
+
+    function buildRows(){
+        return rows.map(function(item, i){
+            return <div className={'row'} key={item.id}>{item.surname} {item.firstName}</div>
+        })
     }
 
-
-    render() {
-        return (
-            ''
-        )
-    }
+    return (
+        buildRows()
+    )
 }
 
 
@@ -28,6 +27,4 @@ PaginationList.propTypes = {
     locale: PropTypes.string.isRequired,
     rows: PropTypes.array.isRequired,
     translations: PropTypes.object.isRequired,
-    offset: PropTypes.number.isRequired,
-    limit: PropTypes.number.isRequired,
 }

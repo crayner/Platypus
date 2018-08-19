@@ -19,4 +19,11 @@ interface PaginationInterface
 	 * @return QueryBuilder
 	 */
 	public function buildQuery($count = false): QueryBuilder;
+
+    /**
+     * getAllResults
+     *
+     * @return array
+     */
+    public function getAllResults(): array;
 }

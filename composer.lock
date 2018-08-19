@@ -1221,16 +1221,16 @@
         },
         {
             "name": "egulias/email-validator",
-            "version": "2.1.4",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/egulias/EmailValidator.git",
-                "reference": "8790f594151ca6a2010c6218e09d96df67173ad3"
+                "reference": "54859fabea8b3beecbb1a282888d5c990036b9e3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/8790f594151ca6a2010c6218e09d96df67173ad3",
-                "reference": "8790f594151ca6a2010c6218e09d96df67173ad3",
+                "url": "https://api.github.com/repos/egulias/EmailValidator/zipball/54859fabea8b3beecbb1a282888d5c990036b9e3",
+                "reference": "54859fabea8b3beecbb1a282888d5c990036b9e3",
                 "shasum": ""
             },
             "require": {
@@ -1274,7 +1274,7 @@
                 "validation",
                 "validator"
             ],
-            "time": "2018-04-10T10:11:19+00:00"
+            "time": "2018-08-16T20:49:45+00:00"
         },
         {
             "name": "friendsofsymfony/ckeditor-bundle",
@@ -1539,16 +1539,16 @@
         },
         {
             "name": "hillrange/security",
-            "version": "0.0.39",
+            "version": "0.0.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/security.git",
-                "reference": "6fdc58c8ab13e85f98beca6e640a01e7a5275739"
+                "reference": "a414ba50c904b923994db5d9e32fcf27c4a3a0f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/security/zipball/6fdc58c8ab13e85f98beca6e640a01e7a5275739",
-                "reference": "6fdc58c8ab13e85f98beca6e640a01e7a5275739",
+                "url": "https://api.github.com/repos/crayner/security/zipball/a414ba50c904b923994db5d9e32fcf27c4a3a0f5",
+                "reference": "a414ba50c904b923994db5d9e32fcf27c4a3a0f5",
                 "shasum": ""
             },
             "require": {
@@ -1600,7 +1600,7 @@
             "keywords": [
                 "security"
             ],
-            "time": "2018-08-14T03:06:16+00:00"
+            "time": "2018-08-16T05:04:45+00:00"
         },
         {
             "name": "hillrange/symfony-form",
@@ -2435,16 +2435,16 @@
         },
         {
             "name": "platypus-template/original",
-            "version": "0.0.04",
+            "version": "0.0.08",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/platypus-template-original.git",
-                "reference": "443d3858bdc8de97296bbadc340f3dfd10109fba"
+                "reference": "cab733f700120ac123436dc55344afb8cdd0f570"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/platypus-template-original/zipball/443d3858bdc8de97296bbadc340f3dfd10109fba",
-                "reference": "443d3858bdc8de97296bbadc340f3dfd10109fba",
+                "url": "https://api.github.com/repos/crayner/platypus-template-original/zipball/cab733f700120ac123436dc55344afb8cdd0f570",
+                "reference": "cab733f700120ac123436dc55344afb8cdd0f570",
                 "shasum": ""
             },
             "require": {
@@ -2482,7 +2482,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2018-06-26T06:35:36+00:00"
+            "time": "2018-08-16T05:09:25+00:00"
         },
         {
             "name": "psr/cache",

@@ -67,10 +67,12 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['displaySearch'] = $this->isDisplaySearch();
         $props['displaySort'] = $this->isDisplaySort();
         $props['sortOptions'] = $this->getSortList();
+        $props['sortByList'] = $this->getSortByList();
         $props['results'] = $this->getAllResults();
         $props['offset'] = $this->getOffset();
         $props['search'] = $this->getSearch() ?: '';
         $props['limit'] = $this->getLimit();
+        $props['columnDefinition'] = $this->getColumnDefinitions();
 
         $props['translations'] = [];
         $props['translations'][] = 'pagination.search.label';
@@ -151,21 +153,6 @@ abstract class PaginationReactManager implements PaginationInterface
                 $sortByList[$name] = $name;
 
         return $sortByList;
-    }
-
-    /**
-     * getAllResults
-     *
-     * @return array
-     */
-    private function getAllResults(): array
-    {
-        dump($this->buildQuery()
-            ->getQuery());
-
-        return $this->buildQuery()
-            ->getQuery()
-            ->getArrayResult();
     }
 
     /**
@@ -258,8 +245,9 @@ abstract class PaginationReactManager implements PaginationInterface
         foreach ($this->select as $name)
         {
             if (is_string($name)) {
+                $cname = $name;
                 if (strpos(strtolower($name), ' as ') !== false)
-                    $name = substr($name, 0, strpos(strtolower($name), ' as '));
+                    $cname = substr($name, 0, strpos(strtolower($name), ' as '));
 
                 if ($selectBegin){
                     $this->query->select($name);
@@ -267,7 +255,7 @@ abstract class PaginationReactManager implements PaginationInterface
                 } else
                     $this->query->addSelect($name);
 
-                $searchConcat[] = $name;
+                $searchConcat[] = $cname;
                 $searchConcat[] = '_';
             } elseif (is_array($name))
             {
@@ -453,5 +441,24 @@ abstract class PaginationReactManager implements PaginationInterface
             $specificTranslations[] = $name;
 
         return $specificTranslations;
+    }
+
+    /**
+     * getSortByList
+     *
+     * @return array
+     */
+    private function getSortByList(): array
+    {
+        if (!property_exists($this, 'sortByList'))
+            return [];
+        return $this->sortByList;
+    }
+
+    private function getColumnDefinitions(): array
+    {
+        if (! property_exists($this, 'columnDefinition'))
+            throw new \Exception('The Column definition is missing.');
+        return $this->columnDefinition;
     }
 }

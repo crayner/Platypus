@@ -258,7 +258,7 @@ abstract class PaginationManager implements PaginationInterface
      *
      * @return array
      */
-	private function getAllResults(): array
+	public function getAllResults(): array
     {
         return $this->buildQuery()
             ->getQuery()
