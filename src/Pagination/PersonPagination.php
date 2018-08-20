@@ -102,7 +102,6 @@ class PersonPagination extends PaginationReactManager
 	 */
 	protected $transDomain = 'Person';
 
-
     /**
      * getAllResults
      *

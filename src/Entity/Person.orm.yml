@@ -58,7 +58,7 @@ App\Entity\Person:
             nullable: true
             column: personal_language
         photo:
-            length: 150
+            type: blob
             nullable: true
     oneToMany:
         departments:

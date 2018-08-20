@@ -2,29 +2,28 @@
 
 import React from "react"
 import PropTypes from 'prop-types'
+import PaginationRow from './PaginationRow'
 
 export default function PaginationList(props) {
     const {
         rows,
         translations,
-        locale,
+        columnDefinitions,
     } = props
 
 
-    function buildRows(){
-        return rows.map(function(item, i){
-            return <div className={'row'} key={item.id}>{item.surname} {item.firstName}</div>
-        })
-    }
-
-    return (
-        buildRows()
-    )
+    return rows.map(function(item){
+        return <PaginationRow
+            item={item}
+            columnDefinitions={columnDefinitions}
+            key={item.id}
+        />
+    })
 }
 
 
 PaginationList.propTypes = {
-    locale: PropTypes.string.isRequired,
     rows: PropTypes.array.isRequired,
     translations: PropTypes.object.isRequired,
+    columnDefinitions: PropTypes.object.isRequired,
 }

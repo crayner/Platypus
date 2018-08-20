@@ -33,7 +33,9 @@ export default class PaginationControl extends Component {
         this.offset = props.offset
         this.limit = props.limit
         this.search = ''
-        var key = ''
+        this.columnDefinitions = props.columnDefinitions
+        this.headerDefinition = props.headerDefinition
+
         for(key in this.sortOptions){
             if(this.sortOptions.hasOwnProperty(key)){
                 this.sort = key;
@@ -49,7 +51,6 @@ export default class PaginationControl extends Component {
         this.changeLimit = this.changeLimit.bind(this)
         this.nextPage = this.nextPage.bind(this)
         this.previousPage = this.previousPage.bind(this)
-        console.log(this)
     }
 
     componentWillMount(){
@@ -194,11 +195,11 @@ export default class PaginationControl extends Component {
                         </div>
                     </div>
                 </div>
-                {console.log(this.state.rows)}
                 <PaginationTitle
-                    locale={this.locale}
                     rows={this.state.rows}
                     translations={this.translations}
+                    columnDefinitions={this.columnDefinitions}
+                    headerDefinition={this.headerDefinition}
                 />
             </section>
         )
@@ -217,6 +218,8 @@ PaginationControl.propTypes = {
     search: PropTypes.string.isRequired,
     offset: PropTypes.number.isRequired,
     limit: PropTypes.number.isRequired,
+    columnDefinitions: PropTypes.object.isRequired,
+    headerDefinition: PropTypes.object.isRequired,
 }
 
 PaginationControl.defaultTypes = {

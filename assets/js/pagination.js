@@ -18,6 +18,8 @@ render(
         search={window.PAGINATION_PROPS.search}
         limit={window.PAGINATION_PROPS.limit}
         pages={window.PAGINATION_PROPS.pages}
+        columnDefinitions={window.PAGINATION_PROPS.columnDefinitions}
+        headerDefinition={window.PAGINATION_PROPS.headerDefinition}
     />,
     document.getElementById('paginationControl')
 )

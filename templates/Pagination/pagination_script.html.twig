@@ -10,6 +10,7 @@
         {% set translations = translations|merge({(value): value|trans }) %}
     {% endfor %}
     {% set props = props|merge({translations: translations}) %}
+
     window.PAGINATION_PROPS = {{ props|json_encode|raw }}
 </script>
 <script src="{{ asset('build/pagination.js') }}" language="JavaScript" type="text/javascript"></script>

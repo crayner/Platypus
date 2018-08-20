@@ -15,14 +15,18 @@
  */
 namespace App\Entity;
 
-use App\Util\AssetHelper;
 use App\Util\PersonNameHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
+use Hillrange\Form\Util\FileBlob;
 use Hillrange\Security\Util\ParameterInjector;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class Person
+ * @package App\Entity
+ */
 class Person
 {
     /**
@@ -516,23 +520,23 @@ class Person
     }
 
     /**
-     * @var string|null
+     * @var FileBlob
      */
     private $photo;
 
     /**
-     * @return null|string
+     * @return FileBlob|null
      */
-    public function getPhoto(): ?string
+    public function getPhoto(): ?FileBlob
     {
         return $this->photo;
     }
 
     /**
-     * @param null|string $photo
+     * @param null|FileBlob $photo
      * @return Person
      */
-    public function setPhoto(?string $photo): Person
+    public function setPhoto(?FileBlob $photo): Person
     {
         $this->photo = $photo;
         return $this;
