@@ -102,6 +102,17 @@ class PersonPagination extends PaginationReactManager
 	 */
 	protected $transDomain = 'Person';
 
+
+    /**
+     * @var array|null
+     */
+    protected $searchDefinition = [
+        'p.title',
+        'p.surname',
+        'p.firstName',
+        'p.email',
+    ];
+
     /**
      * getAllResults
      *

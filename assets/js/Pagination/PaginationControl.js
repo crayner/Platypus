@@ -20,7 +20,7 @@ export default class PaginationControl extends Component {
             limit: props.limit,
             results: props.results,
             rows: [],
-            sort: '',
+            sort: props.sort,
         }
 
         this.locale = props.locale
@@ -33,7 +33,8 @@ export default class PaginationControl extends Component {
         this.total = props.results.length
         this.offset = props.offset
         this.limit = props.limit
-        this.search = ''
+        this.search = props.search
+        this.searchChange = true
         this.columnDefinitions = props.columnDefinitions
         this.headerDefinition = props.headerDefinition
 
@@ -54,6 +55,7 @@ export default class PaginationControl extends Component {
         this.nextPage = this.nextPage.bind(this)
         this.previousPage = this.previousPage.bind(this)
         this.changeTheSort = this.changeTheSort.bind(this)
+        this.changeTheSearch = this.changeTheSearch.bind(this)
     }
 
     componentWillMount(){
@@ -61,7 +63,7 @@ export default class PaginationControl extends Component {
     }
 
     handlePagination(){
-        var results = this.getSearchResults()
+        let results = this.getSearchResults()
         results = this.getSortResults(results)
 
         this.pages = this.calculatePages(results)
@@ -83,9 +85,18 @@ export default class PaginationControl extends Component {
     }
 
     getSearchResults(){
-        if (this.searchChange)
-            return this.allResults
+        if (this.searchChange) {
+            this.searchChange = false
 
+            if (this.search === '')
+                return this.allResults
+            if (this.search === null)
+                return this.allResults
+
+            return this.allResults.filter(row =>
+                row.SearchString.toLowerCase().includes(this.search)
+            )
+        }
         return this.state.results
     }
 
@@ -172,7 +183,7 @@ export default class PaginationControl extends Component {
 
     setPaginationCache()
     {
-        var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/'
+        var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/' + (this.search === '' ? '*' : this.search) + '/' + (this.sort === '' ? '*' : this.sort) + '/'
         fetchJson(path, {}, this.locale)
     }
 
@@ -193,6 +204,12 @@ export default class PaginationControl extends Component {
         this.handlePagination()
     }
 
+    changeTheSearch(event){
+        this.search = event.target.value.toLowerCase()
+        this.searchChange = true
+        this.handlePagination()
+    }
+
     render() {
         return (
             <section>
@@ -204,6 +221,7 @@ export default class PaginationControl extends Component {
                                     translations={this.translations}
                                     name={this.name}
                                     search={this.state.search}
+                                    changeTheSearch={this.changeTheSearch}
                                 /> : ''}
                         </div>
                         <div className="col-3 card text-right">
@@ -230,7 +248,7 @@ export default class PaginationControl extends Component {
                     <div className="row">
                         <div className="col-4 offset-8 text-right small">
                             {this.pages === 0 ? translateMessage(this.translations, 'pagination.figures.empty') : '' }
-                            {this.pages === 1 ? translateMessage(this.translations, 'pagination.figures.one') : '' }
+                            {this.pages === 1 ? (this.total === 1 ? translateMessage(this.translations, 'pagination.figures.one_page.one_record') : translateMessage(this.translations, 'pagination.figures.one_page.two_plus', {'%total%': this.total})) : '' }
                             {this.pages > 1 ? translateMessage(this.translations, 'pagination.figures.two_plus', {'%first%': this.calculateFirst(),'%last%': this.calculateLast(), '%total%': this.total, '%pages%': this.pages}) : '' }
                         </div>
                     </div>

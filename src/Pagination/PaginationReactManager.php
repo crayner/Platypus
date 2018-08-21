@@ -74,6 +74,7 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['results'] = $this->getAllResults();
         $props['offset'] = $this->getOffset();
         $props['search'] = $this->getSearch() ?: '';
+        $props['sort'] = $this->getSort() ?: '';
         $props['limit'] = $this->getLimit();
         $props['columnDefinitions'] = $this->getColumnDefinitions();
         $props['headerDefinition'] = $this->getHeaderDefinition();
@@ -88,7 +89,8 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['translations'][] = 'previous';
         $props['translations'][] = 'next';
         $props['translations'][] = 'pagination.figures.empty';
-        $props['translations'][] = 'pagination.figures.one';
+        $props['translations'][] = 'pagination.figures.one_page.one_record';
+        $props['translations'][] = 'pagination.figures.one_page.two_plus';
         $props['translations'][] = 'pagination.figures.two_plus';
 
 
@@ -122,8 +124,12 @@ abstract class PaginationReactManager implements PaginationInterface
      */
     public function isDisplaySearch(): bool
     {
+        if (! property_exists($this, 'searchDefinition') || ! is_array($this->searchDefinition) || empty($this->searchDefinition))
+            return false;
+
         if (! property_exists($this, 'displaySearch'))
             return true;
+
         return $this->displaySearch ? true : false ;
     }
 
@@ -245,22 +251,17 @@ abstract class PaginationReactManager implements PaginationInterface
         }
 
         if (empty($this->select)  || !is_array($this->select)) return $this;
-        $searchConcat = [];
+
         foreach ($this->select as $name)
         {
             if (is_string($name)) {
-                $cname = $name;
-                if (strpos(strtolower($name), ' as ') !== false)
-                    $cname = substr($name, 0, strpos(strtolower($name), ' as '));
-
                 if ($selectBegin){
                     $this->query->select($name);
                     $selectBegin = false;
                 } else
                     $this->query->addSelect($name);
 
-                $searchConcat[] = $cname;
-                $searchConcat[] = '_';
+                $searchConcat = $this->addSearchConcat($name);
             } elseif (is_array($name))
             {
                 $k      = key($name);
@@ -274,19 +275,60 @@ abstract class PaginationReactManager implements PaginationInterface
                     $selectBegin = false;
                 } else
                 $this->query->addSelect($concat);
-                $searchConcat[] = $name[$k];
-                $searchConcat[] ='_';
+                $searchConcat = $this->addSearchConcat($name[$k]);
             }
         }
         if (! empty($searchConcat))
         {
             $concat = new Query\Expr\Func('CONCAT', $searchConcat);
             $concat .= ' AS SearchString';
-            $concat = str_replace('_', '\'_\'', $concat);
+            $concat = str_replace('|', '\'|\'', $concat);
             $this->query->addSelect($concat);
         }
 
         return $this;
+    }
+
+    /**
+     * @var array|null
+     */
+    private $searchConcat;
+
+    /**
+     * addSearchConcat
+     *
+     * @param string $name
+     * @return array|null
+     */
+    private function addSearchConcat(string $name): ?array
+    {
+        if ($this->getSearchDefinition() === null)
+            return null;
+
+        if (empty($this->searchConcat))
+            $this->searchConcat = [];
+
+        if (strpos(strtolower($name), ' as ') !== false)
+            $name = substr($name, 0, strpos(strtolower($name), ' as '));
+
+        if (! in_array($name, $this->searchDefinition))
+            return $this->searchConcat;
+
+        $this->searchConcat[] = $name;
+        $this->searchConcat[] = '|';
+
+        return $this->searchConcat;
+    }
+
+    /**
+     * getSearchDefinition
+     *
+     * @return array|null
+     */
+    private function getSearchDefinition(): ?array
+    {
+        return (property_exists($this, 'searchDefinition') && is_array($this->searchDefinition) && ! empty($this->searchDefinition)) ? $this->searchDefinition : null ;
+
     }
 
     /**
@@ -329,6 +371,7 @@ abstract class PaginationReactManager implements PaginationInterface
         $sessionData = [];
         $sessionData['offset'] = $this->getOffset();
         $sessionData['search'] = $this->getSearch();
+        $sessionData['sort'] = $this->getSort();
         $sessionData['limit'] = $this->getLimit();
         $this->sessionData = $sessionData;
 
@@ -588,4 +631,20 @@ abstract class PaginationReactManager implements PaginationInterface
             'name' => 'userId',
         ],
     ];
+
+    /**
+     * @var string
+     */
+    private $sort;
+
+    /**
+     * getSearch
+     *
+     * @return string
+     */
+    private function getSort(): string
+    {
+        return $this->sort = $this->sort ?: isset($this->getSessionData()['sort']) ? $this->getSessionData()['sort'] : '';
+    }
+
 }

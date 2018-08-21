@@ -11,6 +11,7 @@ export default function PaginationSearch(props) {
         name,
         translations,
         search,
+        changeTheSearch,
     } = props
 
     return (
@@ -18,14 +19,7 @@ export default function PaginationSearch(props) {
             <label className="control-label">{translateMessage(translations, 'pagination.search.label')}</label>
             <div className="input-group input-group-sm">
                 <input type="text" id={name + '_searchData'} name={name + '[searchData]'}
-                       placeholder={translateMessage(translations, 'pagination.search.placeholder')} className="form-inline form-control" autoComplete="off" defaultValue={search} />
-                <span className="input-group-append">
-                    <button name={translateMessage(translations, 'search')} title={translateMessage(translations, 'search')} className={'btn btn-success'}>
-                        <FontAwesomeIcon
-                            icon={faSearch}
-                        />
-                    </button>
-                </span>
+                       placeholder={translateMessage(translations, 'pagination.search.placeholder')} className="form-inline form-control" onChange={changeTheSearch} autoComplete="off" defaultValue={search} />
             </div>
         </section>
     )
@@ -33,7 +27,8 @@ export default function PaginationSearch(props) {
 
 PaginationSearch.propTypes = {
     name: PropTypes.string.isRequired,
-    translations:  PropTypes.object.isRequired,
-    search:  PropTypes.string.isRequired,
+    translations: PropTypes.object.isRequired,
+    search: PropTypes.string.isRequired,
+    changeTheSearch: PropTypes.func.isRequired,
 }
 
