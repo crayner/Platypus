@@ -54,14 +54,25 @@ App\Entity\Person:
             nullable: true
             column: personal_theme
         personalLanguage:
-            length: 10
+            length: 6
             nullable: true
             column: personal_language
         photo:
             type: blob
             nullable: true
+        status:
+            length: 10
+            options:
+                default: 'full'
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff
             mappedBy: member
             cascade: [ all ]
+    manyToOne:
+        primaryRole:
+            targetEntity: App\Entity\PersonRole
+            inversedBy: people
+            joinColumn:
+                name: primary_role_id
+                referencedColumnName: id

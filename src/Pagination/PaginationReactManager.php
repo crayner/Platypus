@@ -259,9 +259,9 @@ abstract class PaginationReactManager implements PaginationInterface
 
         if (empty($this->select)  || !is_array($this->select)) return $this;
 
-        foreach ($this->select as $name)
+        foreach ($this->select as $key=>$name)
         {
-            if (is_string($name)) {
+            if ($key === intval($key)) {
                 if ($selectBegin){
                     $this->query->select($name);
                     $selectBegin = false;
@@ -269,20 +269,15 @@ abstract class PaginationReactManager implements PaginationInterface
                     $this->query->addSelect($name);
 
                 $searchConcat = $this->addSearchConcat($name);
-            } elseif (is_array($name))
-            {
-                $k      = key($name);
-                if ($k == '0')
-                    $k = 'entity';
-                $concat = new Query\Expr\Func('CONCAT', $name[$k]);
-                $concat .= ' AS ' . $k;
-                $concat = str_replace(',', ',\' \',', $concat);
+            } else {
+                $searchConcat = $this->addSearchConcat($name);
+                $select = $name . ' AS ' . $key;
                 if ($selectBegin){
-                    $this->query->select($concat);
+                    $this->query->select($select);
                     $selectBegin = false;
                 } else
-                $this->query->addSelect($concat);
-                $searchConcat = $this->addSearchConcat($name[$k]);
+                    $this->query->addSelect($select);
+
             }
         }
         if (! empty($searchConcat))
@@ -315,8 +310,15 @@ abstract class PaginationReactManager implements PaginationInterface
         if (empty($this->searchConcat))
             $this->searchConcat = [];
 
-        if (strpos(strtolower($name), ' as ') !== false)
-            $name = substr($name, 0, strpos(strtolower($name), ' as '));
+
+        if (strpos(strtoupper($name), 'CONCAT(') !== false)
+        {
+            $name = trim(str_replace(['concat(', 'CONCAT('], '', $name), ')');
+            $name = explode(',', $name);
+            foreach($name as $value)
+                $this->addSearchConcat(trim($value));
+            return $this->searchConcat;
+        }
 
         if (! in_array($name, $this->searchDefinition))
             return $this->searchConcat;
@@ -484,6 +486,12 @@ abstract class PaginationReactManager implements PaginationInterface
         return $this->transDomain;
     }
 
+    /**
+     * getSpecificTranslations
+     *
+     * @return array
+     * @throws \Exception
+     */
     private function getSpecificTranslations()
     {
         if (property_exists($this, 'specificTranslations'))
@@ -531,8 +539,14 @@ abstract class PaginationReactManager implements PaginationInterface
         if (! is_array($this->columnDefinitions))
             throw new \Exception('The Column definitions is not an array.');
 
+        $select = [];
+        foreach($this->select as $name=>$value)
+            if ($name === intval($name))
+                $select[] = $value;
+            else
+                $select[] = $name;
         $resolver = new OptionsResolver();
-        $resolver->setRequired($this->select);
+        $resolver->setRequired($select);
         $resolver->resolve($this->columnDefinitions);
 
         $columnDefinitions = [];
@@ -609,8 +623,9 @@ abstract class PaginationReactManager implements PaginationInterface
             return '';
         reset($this->sortByList);
         $key = key($this->sortByList);
+
         $this->sort = $this->sort ?: isset($this->getSessionData()['sort']) ? $this->getSessionData()['sort'] : $key;
-        dump($this->sort);
+
         return $this->sort;
     }
 

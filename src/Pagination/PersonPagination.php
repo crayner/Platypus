@@ -19,18 +19,8 @@ class PersonPagination extends PaginationReactManager
 	 * @var array
 	 */
 	protected $sortByList = [
-		'person.surname.label'   => [
-			'surname',
-			'firstName',
-		],
-		'person.firstName.label' => [
-			'firstName',
-			'surname',
-		],
-		'person.email.label'     => [
-			'email',
-			'surname',
-			'firstName',
+		'person.full_name.label' => [
+			'fullName',
 		],
 	];
 	/**
@@ -43,12 +33,11 @@ class PersonPagination extends PaginationReactManager
 	 */
 	protected $select = [
         'p.photo',
-        'p.title',
-		'p.surname',
-		'p.firstName',
-        'p.email',
+		'fullName' => "CONCAT(p.surname, ': ', p.firstName)",
 		'p.id',
-        'u.id AS userId',
+        'userId' => 'u.id',
+        'p.status',
+        'r.name',
 	];
 
 	/**
@@ -65,10 +54,10 @@ class PersonPagination extends PaginationReactManager
 				'type'  => 'leftJoin',
 				'alias' => 'u',
 			],
-//			'p.phones' => [
-//				'type' => 'leftJoin',
-//				'alias' =>'ph',
-//			],
+			'p.primaryRole' => [
+				'type' => 'leftJoin',
+				'alias' =>'r',
+			],
 		];
 
 	/**
@@ -107,10 +96,8 @@ class PersonPagination extends PaginationReactManager
      * @var array|null
      */
     protected $searchDefinition = [
-        'p.title',
         'p.surname',
         'p.firstName',
-        'p.email',
     ];
 
     /**
@@ -140,39 +127,39 @@ class PersonPagination extends PaginationReactManager
             'label' => 'person.photo.label',
             'name' => 'photo',
             'style' => 'photo',
+            'class' => 'text-center',
             'options' => [
                 'width' => '75',
                 'default' => 'build/static/images/DefaultPerson.png'
             ],
         ],
-        'p.title' => [
-            'label' => 'person.title.label',
-            'name' => 'title',
-            'translate' => 'person.title.',
-            'size' => 1,
-            'class' => 'small',
-        ],
-        'p.surname' => [
-            'label' => 'person.surname.label',
-            'name' => 'surname',
-        ],
-        'p.firstName' => [
-            'label' => 'person.firstName.label',
-            'name' => 'firstName',
-        ],
-        'p.email' => [
-            'label' => 'person.email.label',
-            'name' => 'email',
+        'fullName' => [
+            'label' => 'person.full_name.label',
+            'name' => 'fullName',
+            'size' => 3,
         ],
         'p.id' => [
             'label' => false,
             'display' => false,
             'name' => 'id',
         ],
-        'u.id AS userId' => [
+        'userId' => [
             'label' => false,
             'display' => false,
             'name' => 'userId',
+        ],
+        'p.status' => [
+            'label' => 'person.status.label',
+            'name' => 'status',
+            'size' => 1,
+            'translate' => 'person.status.',
+            'class' => 'small text-center',
+        ],
+        'r.name' => [
+            'label' => 'person.primary_role.label',
+            'name' => 'name',
+            'size' => 1,
+            'class' => 'small text-center',
         ],
     ];
 
@@ -193,6 +180,8 @@ class PersonPagination extends PaginationReactManager
 
         foreach(Person::getTitleList() as $title)
             $this->specificTranslations[] = 'person.title.' . $title;
+        foreach(Person::getStatusList() as $value)
+            $this->specificTranslations[] = 'person.status.' . $value;
         return $this;
     }
 }

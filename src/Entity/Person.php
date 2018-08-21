@@ -45,6 +45,14 @@ class Person
     /**
      * @return array
      */
+    public static function getStatusList(): array
+    {
+        return self::$statusList;
+    }
+
+    /**
+     * @return array
+     */
     public static function getGenderList(): array
     {
         return ParameterInjector::getParameter('personal.title.list');
@@ -550,6 +558,64 @@ class Person
     public function setPhoto(?FileBlob $photo): Person
     {
         $this->photo = $photo;
+        return $this;
+    }
+
+    /**
+     * @var string
+     */
+    private $status;
+
+    /**
+     * @var array
+     */
+    private static $statusList = [
+        'full','expected','left','pending'
+    ];
+
+    /**
+     * @return string
+     */
+    public function getStatus(): string
+    {
+        return $this->status = in_array($this->status, self::getStatusList()) ? $this->status : 'full' ;
+    }
+
+    /**
+     * @param string|null $status
+     * @return Person
+     */
+    public function setStatus(?string $status): Person
+    {
+        $this->status = in_array($status, self::getStatusList()) ? $status : 'full' ;
+        return $this;
+    }
+
+    /**
+     * @var PersonRole|null
+     */
+    private $primaryRole;
+
+    /**
+     * @return PersonRole|null
+     */
+    public function getPrimaryRole(): ?PersonRole
+    {
+        return $this->primaryRole;
+    }
+
+    /**
+     * @param PersonRole|null $primaryRole
+     * @param bool $add
+     * @return Person
+     */
+    public function setPrimaryRole(?PersonRole $primaryRole, bool $add = true): Person
+    {
+        if ($primaryRole instanceof PersonRole && $add)
+            $primaryRole->addPerson($this, false);
+
+        $this->primaryRole = $primaryRole;
+
         return $this;
     }
 }
