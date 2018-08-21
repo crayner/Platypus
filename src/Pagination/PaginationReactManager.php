@@ -54,10 +54,12 @@ abstract class PaginationReactManager implements PaginationInterface
         $this->request = $request->getCurrentRequest();
         $this->entityManager = $entityManager;
     }
+
     /**
      * getDisplayProperties
      *
      * @return array
+     * @throws \Exception
      */
     public function getDisplayProperties(): array
     {

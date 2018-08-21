@@ -25,7 +25,7 @@ class PersonPagination extends PaginationReactManager
 		],
 		'person.firstName.label' => [
 			'firstName',
-			'.surname',
+			'surname',
 		],
 		'person.email.label'     => [
 			'email',

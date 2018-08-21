@@ -9,6 +9,7 @@ export default function PaginationSort(props) {
         name,
         translations,
         sortOptions,
+        changeTheSort,
     } = props
 
     function buildOptions() {
@@ -25,7 +26,8 @@ export default function PaginationSort(props) {
             <div className="input-group input-group-sm">
                 <select id={name + '_sortbyName'} name={name + '[sortbyName]'}
                         className="form-inline form-control"
-                        autoComplete="off">
+                        autoComplete="off"
+                        onChange={changeTheSort}>
                     {buildOptions()}
                 </select>
             </div>
@@ -37,5 +39,6 @@ PaginationSort.propTypes = {
     name: PropTypes.string.isRequired,
     translations: PropTypes.object.isRequired,
     sortOptions: PropTypes.object.isRequired,
+    changeTheSort: PropTypes.func.isRequired,
 }
 

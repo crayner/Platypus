@@ -20,6 +20,7 @@ export default class PaginationControl extends Component {
             limit: props.limit,
             results: props.results,
             rows: [],
+            sort: '',
         }
 
         this.locale = props.locale
@@ -36,12 +37,13 @@ export default class PaginationControl extends Component {
         this.columnDefinitions = props.columnDefinitions
         this.headerDefinition = props.headerDefinition
 
-        for(key in this.sortOptions){
+        var key = ''
+        for(key in this.sortOptions)
             if(this.sortOptions.hasOwnProperty(key)){
                 this.sort = key;
                 break;
             }
-        }
+
         this.pages = 0
         this.limitChange = true
         this.offsetChange = true
@@ -51,6 +53,7 @@ export default class PaginationControl extends Component {
         this.changeLimit = this.changeLimit.bind(this)
         this.nextPage = this.nextPage.bind(this)
         this.previousPage = this.previousPage.bind(this)
+        this.changeTheSort = this.changeTheSort.bind(this)
     }
 
     componentWillMount(){
@@ -73,6 +76,7 @@ export default class PaginationControl extends Component {
             limit: this.limit,
             results: results,
             rows: this.rows,
+            sort: this.sort
         })
 
         this.setPaginationCache()
@@ -86,9 +90,39 @@ export default class PaginationControl extends Component {
     }
 
     getSortResults(results){
+        const sortCriteria = this.sortByList[this.sort]
+        const sortDepth = sortCriteria.length
+
+        if (sortDepth < 1)
+            return results
+        else if (sortDepth === 1)
+            return results.sort(
+                firstBy(sortCriteria[0])
+            )
+        else if (sortDepth === 2)
+            return results.sort(
+                firstBy(sortCriteria[0])
+                    .thenBy(sortCriteria[1])
+            )
+        else if (sortDepth === 3)
+            return results.sort(
+                firstBy(sortCriteria[0])
+                    .thenBy(sortCriteria[1])
+                    .thenBy(sortCriteria[2])
+            )
+        else if (sortDepth === 4)
+            return results.sort(
+                firstBy(sortCriteria[0])
+                    .thenBy(sortCriteria[1])
+                    .thenBy(sortCriteria[2])
+                    .thenBy(sortCriteria[3])
+            )
         return results.sort(
-            firstBy('surname')
-                .thenBy('firstName')
+            firstBy(sortCriteria[0])
+                .thenBy(sortCriteria[1])
+                .thenBy(sortCriteria[2])
+                .thenBy(sortCriteria[3])
+                .thenBy(sortCriteria[4])
         )
     }
 
@@ -154,6 +188,11 @@ export default class PaginationControl extends Component {
         this.handlePagination()
     }
 
+    changeTheSort(event){
+        this.sort = event.target.value
+        this.handlePagination()
+    }
+
     render() {
         return (
             <section>
@@ -172,6 +211,7 @@ export default class PaginationControl extends Component {
                                 <PaginationSort
                                     name={this.name}
                                     translations={this.translations}
+                                    changeTheSort={this.changeTheSort}
                                     sortOptions={this.sortOptions}
                                 /> : ''}
                         </div>
@@ -200,6 +240,7 @@ export default class PaginationControl extends Component {
                     translations={this.translations}
                     columnDefinitions={this.columnDefinitions}
                     headerDefinition={this.headerDefinition}
+                    sort={this.sort}
                 />
             </section>
         )

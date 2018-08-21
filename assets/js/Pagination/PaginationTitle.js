@@ -12,6 +12,7 @@ export default function PaginationTitle(props) {
         translations,
         columnDefinitions,
         headerDefinition,
+        sort,
     } = props;
 
     var columns = Object.keys(columnDefinitions).map(key =>
@@ -19,6 +20,7 @@ export default function PaginationTitle(props) {
             item={columnDefinitions[key]}
             key={key}
             translations={translations}
+            sort={sort}
         />
     )
 
@@ -52,5 +54,6 @@ PaginationTitle.propTypes = {
     translations: PropTypes.object.isRequired,
     columnDefinitions: PropTypes.object.isRequired,
     headerDefinition: PropTypes.object.isRequired,
+    sort: PropTypes.string.isRequired,
 }
 

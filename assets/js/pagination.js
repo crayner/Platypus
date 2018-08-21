@@ -11,7 +11,7 @@ render(
         displaySearch={window.PAGINATION_PROPS.displaySearch}
         displaySort={window.PAGINATION_PROPS.displaySort}
         sortOptions={window.PAGINATION_PROPS.sortOptions}
-        sortByList={window.PAGINATION_PROPS.sortOptions}
+        sortByList={window.PAGINATION_PROPS.sortByList}
         translations={window.PAGINATION_PROPS.translations}
         results={window.PAGINATION_PROPS.results}
         offset={window.PAGINATION_PROPS.offset}
