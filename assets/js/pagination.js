@@ -16,6 +16,9 @@ render(
         results={window.PAGINATION_PROPS.results}
         offset={window.PAGINATION_PROPS.offset}
         search={window.PAGINATION_PROPS.search}
+        sort={window.PAGINATION_PROPS.sort}
+        orderBy={window.PAGINATION_PROPS.orderBy}
+        caseSensitive={window.PAGINATION_PROPS.caseSensitive}
         limit={window.PAGINATION_PROPS.limit}
         pages={window.PAGINATION_PROPS.pages}
         columnDefinitions={window.PAGINATION_PROPS.columnDefinitions}

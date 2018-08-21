@@ -1,6 +1,6 @@
 'use strict';
 
-import React, { Component } from "react"
+import React from "react"
 import PropTypes from 'prop-types'
 import PaginationList from './PaginationList'
 import {translateMessage} from '../Component/MessageTranslator'
@@ -13,6 +13,7 @@ export default function PaginationTitle(props) {
         columnDefinitions,
         headerDefinition,
         sort,
+        orderBy,
     } = props;
 
     var columns = Object.keys(columnDefinitions).map(key =>
@@ -21,6 +22,7 @@ export default function PaginationTitle(props) {
             key={key}
             translations={translations}
             sort={sort}
+            orderBy={orderBy}
         />
     )
 
@@ -55,5 +57,6 @@ PaginationTitle.propTypes = {
     columnDefinitions: PropTypes.object.isRequired,
     headerDefinition: PropTypes.object.isRequired,
     sort: PropTypes.string.isRequired,
+    orderBy: PropTypes.number.isRequired,
 }
 

@@ -17,6 +17,7 @@ export default function PaginationList(props) {
             item={item}
             columnDefinitions={columnDefinitions}
             key={item.id}
+            translations={translations}
         />
     })
 }

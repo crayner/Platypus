@@ -29,9 +29,9 @@ class PaginationController
      * @param string $name
      * @param int $limit
      * @return JsonResponse
-     * @Route("/pagination/cache/{name}/{limit}/{offset}/{search}/{sort}/", name="pagination_cache")
+     * @Route("/pagination/cache/{name}/{limit}/{offset}/{search}/{sort}/{orderBy}/{caseSensitive}/", name="pagination_cache")
      */
-    public function setPaginationCache(Request $request, string $name, int $limit, int $offset, string $search, string $sort)
+    public function setPaginationCache(Request $request, string $name, int $limit, int $offset, string $search, string $sort, string $orderBy, bool $caseSensitive)
     {
         $session = $request->getSession();
 
@@ -45,6 +45,8 @@ class PaginationController
         $data['offset'] = $offset;
         $data['search'] = $search === '*' ? null : $search;
         $data['sort'] = $sort === '*' ? null : $sort;
+        $data['orderBy'] = $orderBy === 'ASC' ? 'ASC' : 'DESC';
+        $data['caseSensitive'] = $caseSensitive ? true : false;
 
         $pagination[$name] = $data;
 

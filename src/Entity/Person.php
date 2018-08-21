@@ -192,10 +192,13 @@ class Person
      * @var array
      */
     private static $titleList = [
-        'm',
-        'f',
-        'o',
-        'u',
+        'mr',
+        'master',
+        'mrs',
+        'miss',
+        'ms',
+        'dr',
+        'rev',
     ];
 
     /**
@@ -217,18 +220,26 @@ class Person
     }
 
     /**
-     * @var string|null
+     * @var string
      */
     private $gender;
 
-    private static $genderList = [];
+    /**
+     * @var array
+     */
+    private static $genderList = [
+        'm',
+        'f',
+        'o',
+        'u',
+    ];
 
     /**
-     * @return null|string
+     * @returnstring
      */
     public function getGender(): ?string
     {
-        return $this->gender;
+        return in_array($this->gender, self::getGenderList()) ? $this->gender : 'u';
     }
 
     /**
@@ -237,7 +248,7 @@ class Person
      */
     public function setGender(?string $gender): Person
     {
-        $this->gender = $gender;
+        $this->gender = in_array($gender, self::getGenderList()) ? $gender : 'u';
         return $this;
     }
 

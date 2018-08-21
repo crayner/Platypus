@@ -53,6 +53,9 @@ abstract class PaginationReactManager implements PaginationInterface
     {
         $this->request = $request->getCurrentRequest();
         $this->entityManager = $entityManager;
+
+        if (method_exists($this, 'setSpecificTranslations'))
+            $this->setSpecificTranslations();
     }
 
     /**
@@ -76,6 +79,8 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['search'] = $this->getSearch() ?: '';
         $props['sort'] = $this->getSort() ?: '';
         $props['limit'] = $this->getLimit();
+        $props['orderBy'] = $this->getOrderBy();
+        $props['caseSensitive'] = $this->getCaseSensitive();
         $props['columnDefinitions'] = $this->getColumnDefinitions();
         $props['headerDefinition'] = $this->getHeaderDefinition();
 
@@ -88,6 +93,8 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['translations'][] = 'save';
         $props['translations'][] = 'previous';
         $props['translations'][] = 'next';
+        $props['translations'][] = 'case_sensitive';
+        $props['translations'][] = 'order_by';
         $props['translations'][] = 'pagination.figures.empty';
         $props['translations'][] = 'pagination.figures.one_page.one_record';
         $props['translations'][] = 'pagination.figures.one_page.two_plus';
@@ -480,7 +487,7 @@ abstract class PaginationReactManager implements PaginationInterface
     private function getSpecificTranslations()
     {
         if (property_exists($this, 'specificTranslations'))
-            $specificTranslations = $this->getSpecificTranslations;
+            $specificTranslations = $this->specificTranslations;
         else
             $specificTranslations = [];
 
@@ -543,8 +550,10 @@ abstract class PaginationReactManager implements PaginationInterface
                     'help' => false,
                     'display' => true,
                     'size' => 2,
+                    'translate' => false,
                     'style' => 'text',
                     'options' => [],
+                    'class' => null,
                 ]
             );
             $definition = $resolver->resolve($definition);
@@ -585,54 +594,6 @@ abstract class PaginationReactManager implements PaginationInterface
     }
 
     /**
-     * @var array
-     */
-    protected $headerDefinition = [
-        'title' => 'person.pagination.title',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $columnDefinitions = [
-        'p.photo' => [
-            'label' => 'person.photo.label',
-            'name' => 'photo',
-            'style' => 'photo',
-            'options' => [
-                'width' => '75',
-                'default' => 'build/static/images/DefaultPerson.png'
-            ],
-        ],
-        'p.title' => [
-            'label' => 'person.title.label',
-            'name' => 'title',
-        ],
-        'p.surname' => [
-            'label' => 'person.surname.label',
-            'name' => 'surname',
-        ],
-        'p.firstName' => [
-            'label' => 'person.firstName.label',
-            'name' => 'firstName',
-        ],
-        'p.email' => [
-            'label' => 'person.email.label',
-            'name' => 'email',
-        ],
-        'p.id' => [
-            'label' => false,
-            'display' => false,
-            'name' => 'id',
-        ],
-        'u.id AS userId' => [
-            'label' => false,
-            'display' => false,
-            'name' => 'userId',
-        ],
-    ];
-
-    /**
      * @var string
      */
     private $sort;
@@ -644,7 +605,42 @@ abstract class PaginationReactManager implements PaginationInterface
      */
     private function getSort(): string
     {
-        return $this->sort = $this->sort ?: isset($this->getSessionData()['sort']) ? $this->getSessionData()['sort'] : '';
+        if (empty($this->getSortByList()))
+            return '';
+        reset($this->sortByList);
+        $key = key($this->sortByList);
+        $this->sort = $this->sort ?: isset($this->getSessionData()['sort']) ? $this->getSessionData()['sort'] : $key;
+        dump($this->sort);
+        return $this->sort;
     }
 
+    /**
+     * @var bool
+     */
+    private $orderBy;
+
+    /**
+     * getSearch
+     *
+     * @return string
+     */
+    private function getOrderBy(): string
+    {
+        return $this->orderBy = $this->orderBy ?: isset($this->getSessionData()['orderBy']) ? $this->getSessionData()['orderBy'] : 'ASC';
+    }
+
+    /**
+     * @var bool
+     */
+    private $caseSensitive;
+
+    /**
+     * getSearch
+     *
+     * @return string
+     */
+    private function getCaseSensitive(): string
+    {
+        return $this->caseSensitive = $this->caseSensitive ? true : isset($this->getSessionData()['caseSensitive']) ? $this->getSessionData()['caseSensitive'] : false;
+    }
 }

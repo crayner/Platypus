@@ -3,6 +3,8 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import { translateMessage } from "../Component/MessageTranslator"
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faSortAlphaDown, faSortAlphaUp} from '@fortawesome/free-solid-svg-icons'
 
 export default function PaginationSort(props) {
     const {
@@ -10,6 +12,9 @@ export default function PaginationSort(props) {
         translations,
         sortOptions,
         changeTheSort,
+        orderBy,
+        toggleOrderBy,
+        sort,
     } = props
 
     function buildOptions() {
@@ -27,9 +32,16 @@ export default function PaginationSort(props) {
                 <select id={name + '_sortbyName'} name={name + '[sortbyName]'}
                         className="form-inline form-control"
                         autoComplete="off"
+                        defaultValue={sort}
                         onChange={changeTheSort}>
                     {buildOptions()}
                 </select>
+                <span className="input-group-append">
+                    <button name={name + '[next]'} title={translateMessage(translations, 'order_by')} className="btn btn-info"
+                            style={{height: '31px'}} id={name + '_next'} onClick={toggleOrderBy}>
+                        <FontAwesomeIcon icon={(orderBy === 1 ? faSortAlphaDown : faSortAlphaUp)}/>
+                    </button>
+                </span>
             </div>
         </section>
     )
@@ -40,5 +52,8 @@ PaginationSort.propTypes = {
     translations: PropTypes.object.isRequired,
     sortOptions: PropTypes.object.isRequired,
     changeTheSort: PropTypes.func.isRequired,
+    toggleOrderBy: PropTypes.func.isRequired,
+    orderBy: PropTypes.number.isRequired,
+    sort: PropTypes.string.isRequired,
 }
 

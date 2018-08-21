@@ -37,13 +37,10 @@ export default class PaginationControl extends Component {
         this.searchChange = true
         this.columnDefinitions = props.columnDefinitions
         this.headerDefinition = props.headerDefinition
+        this.orderBy = props.orderBy === 'ASC' ? -1 : 1
+        this.caseSensitive = props.caseSensitive === '1' ? true : false
 
-        var key = ''
-        for(key in this.sortOptions)
-            if(this.sortOptions.hasOwnProperty(key)){
-                this.sort = key;
-                break;
-            }
+        this.sort = props.sort
 
         this.pages = 0
         this.limitChange = true
@@ -56,6 +53,8 @@ export default class PaginationControl extends Component {
         this.previousPage = this.previousPage.bind(this)
         this.changeTheSort = this.changeTheSort.bind(this)
         this.changeTheSearch = this.changeTheSearch.bind(this)
+        this.toggleOrderBy = this.toggleOrderBy.bind(this)
+        this.toggleCaseSensitive = this.toggleCaseSensitive.bind(this)
     }
 
     componentWillMount(){
@@ -78,7 +77,7 @@ export default class PaginationControl extends Component {
             limit: this.limit,
             results: results,
             rows: this.rows,
-            sort: this.sort
+            sort: this.sort,
         })
 
         this.setPaginationCache()
@@ -93,8 +92,12 @@ export default class PaginationControl extends Component {
             if (this.search === null)
                 return this.allResults
 
+            if (this.caseSensitive)
+                return this.allResults.filter(row =>
+                    row.SearchString.includes(this.search)
+                )
             return this.allResults.filter(row =>
-                row.SearchString.toLowerCase().includes(this.search)
+                row.SearchString.toLowerCase().includes(this.search.toLowerCase())
             )
         }
         return this.state.results
@@ -108,32 +111,32 @@ export default class PaginationControl extends Component {
             return results
         else if (sortDepth === 1)
             return results.sort(
-                firstBy(sortCriteria[0])
+                firstBy(sortCriteria[0], this.orderBy)
             )
         else if (sortDepth === 2)
             return results.sort(
-                firstBy(sortCriteria[0])
-                    .thenBy(sortCriteria[1])
+                firstBy(sortCriteria[0], this.orderBy)
+                    .thenBy(sortCriteria[1], this.orderBy)
             )
         else if (sortDepth === 3)
             return results.sort(
-                firstBy(sortCriteria[0])
-                    .thenBy(sortCriteria[1])
-                    .thenBy(sortCriteria[2])
+                firstBy(sortCriteria[0], this.orderBy)
+                    .thenBy(sortCriteria[1], this.orderBy)
+                    .thenBy(sortCriteria[2], this.orderBy)
             )
         else if (sortDepth === 4)
             return results.sort(
-                firstBy(sortCriteria[0])
-                    .thenBy(sortCriteria[1])
-                    .thenBy(sortCriteria[2])
-                    .thenBy(sortCriteria[3])
+                firstBy(sortCriteria[0], this.orderBy)
+                    .thenBy(sortCriteria[1], this.orderBy)
+                    .thenBy(sortCriteria[2], this.orderBy)
+                    .thenBy(sortCriteria[3], this.orderBy)
             )
         return results.sort(
-            firstBy(sortCriteria[0])
-                .thenBy(sortCriteria[1])
-                .thenBy(sortCriteria[2])
-                .thenBy(sortCriteria[3])
-                .thenBy(sortCriteria[4])
+            firstBy(sortCriteria[0], this.orderBy)
+                .thenBy(sortCriteria[1], this.orderBy)
+                .thenBy(sortCriteria[2], this.orderBy)
+                .thenBy(sortCriteria[3], this.orderBy)
+                .thenBy(sortCriteria[4], this.orderBy)
         )
     }
 
@@ -183,7 +186,7 @@ export default class PaginationControl extends Component {
 
     setPaginationCache()
     {
-        var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/' + (this.search === '' ? '*' : this.search) + '/' + (this.sort === '' ? '*' : this.sort) + '/'
+        var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/' + (this.search === '' ? '*' : this.search) + '/' + (this.sort === '' ? '*' : this.sort) + '/' + (this.orderBy === -1 ? 'ASC' : 'DESC') + '/' + (this.caseSensitive ? '1' : '0') + '/'
         fetchJson(path, {}, this.locale)
     }
 
@@ -205,7 +208,18 @@ export default class PaginationControl extends Component {
     }
 
     changeTheSearch(event){
-        this.search = event.target.value.toLowerCase()
+        this.search = event.target.value
+        this.searchChange = true
+        this.handlePagination()
+    }
+
+    toggleOrderBy(){
+        this.orderBy = this.orderBy * -1
+        this.handlePagination()
+    }
+
+    toggleCaseSensitive(){
+        this.caseSensitive = this.caseSensitive ? false : true
         this.searchChange = true
         this.handlePagination()
     }
@@ -222,6 +236,8 @@ export default class PaginationControl extends Component {
                                     name={this.name}
                                     search={this.state.search}
                                     changeTheSearch={this.changeTheSearch}
+                                    caseSensitive={this.caseSensitive}
+                                    toggleCaseSensitive={this.toggleCaseSensitive}
                                 /> : ''}
                         </div>
                         <div className="col-3 card text-right">
@@ -231,6 +247,9 @@ export default class PaginationControl extends Component {
                                     translations={this.translations}
                                     changeTheSort={this.changeTheSort}
                                     sortOptions={this.sortOptions}
+                                    orderBy={this.orderBy}
+                                    toggleOrderBy={this.toggleOrderBy}
+                                    sort={this.state.sort}
                                 /> : ''}
                         </div>
                         <div className="col-3 offset-3 card text-right">
@@ -259,6 +278,7 @@ export default class PaginationControl extends Component {
                     columnDefinitions={this.columnDefinitions}
                     headerDefinition={this.headerDefinition}
                     sort={this.sort}
+                    orderBy={this.orderBy}
                 />
             </section>
         )
@@ -275,10 +295,13 @@ PaginationControl.propTypes = {
     sortByList: PropTypes.object.isRequired,
     results: PropTypes.array.isRequired,
     search: PropTypes.string.isRequired,
+    sort: PropTypes.string.isRequired,
     offset: PropTypes.number.isRequired,
     limit: PropTypes.number.isRequired,
     columnDefinitions: PropTypes.object.isRequired,
     headerDefinition: PropTypes.object.isRequired,
+    orderBy: PropTypes.string.isRequired,
+    caseSensitive: PropTypes.string.isRequired,
 }
 
 PaginationControl.defaultTypes = {

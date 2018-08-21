@@ -125,4 +125,74 @@ class PersonPagination extends PaginationReactManager
             ->getArrayResult();
     }
 
+    /**
+     * @var array
+     */
+    protected $headerDefinition = [
+        'title' => 'person.pagination.title',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $columnDefinitions = [
+        'p.photo' => [
+            'label' => 'person.photo.label',
+            'name' => 'photo',
+            'style' => 'photo',
+            'options' => [
+                'width' => '75',
+                'default' => 'build/static/images/DefaultPerson.png'
+            ],
+        ],
+        'p.title' => [
+            'label' => 'person.title.label',
+            'name' => 'title',
+            'translate' => 'person.title.',
+            'size' => 1,
+            'class' => 'small',
+        ],
+        'p.surname' => [
+            'label' => 'person.surname.label',
+            'name' => 'surname',
+        ],
+        'p.firstName' => [
+            'label' => 'person.firstName.label',
+            'name' => 'firstName',
+        ],
+        'p.email' => [
+            'label' => 'person.email.label',
+            'name' => 'email',
+        ],
+        'p.id' => [
+            'label' => false,
+            'display' => false,
+            'name' => 'id',
+        ],
+        'u.id AS userId' => [
+            'label' => false,
+            'display' => false,
+            'name' => 'userId',
+        ],
+    ];
+
+    /**
+     * @var array|null
+     */
+    protected $specificTranslations;
+
+    /**
+     * setSpecificTranslations
+     *
+     * @return PaginationInterface
+     */
+    protected function setSpecificTranslations(): PaginationInterface
+    {
+        if (empty($this->specificTranslations))
+            $this->specificTranslations = [];
+
+        foreach(Person::getTitleList() as $title)
+            $this->specificTranslations[] = 'person.title.' . $title;
+        return $this;
+    }
 }

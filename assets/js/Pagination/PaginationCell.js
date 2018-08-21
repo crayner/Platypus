@@ -2,11 +2,13 @@
 
 import React from "react"
 import PropTypes from 'prop-types'
+import {translateMessage} from '../Component/MessageTranslator'
 
 export default function PaginationCell(props) {
     const {
         definition,
         data,
+        translations,
     } = props
 
 
@@ -15,18 +17,18 @@ export default function PaginationCell(props) {
     if (definition.display)
         if (definition.style === 'text')
             return (
-                <div className={'col-' + definition.size}>{data[definition.name]}</div>
+                <div className={definition.class + ' col-' + definition.size}>{(definition.translate === false || data[definition.name] === '' ||  data[definition.name] === null ? data[definition.name] : translateMessage(translations, definition.translate + data[definition.name]))}</div>
             )
         else if (definition.style === 'photo') {
             if (data[definition.name] === null)
                 return (
-                    <div className={'col-' + definition.size}>
+                    <div className={definition.class + ' col-' + definition.size}>
                         <img src={host + definition.options.default} width={definition.options.width} />
                     </div>
                 )
             else
                 return (
-                    <div className={'col-' + definition.size}>
+                    <div className={definition.class + ' col-' + definition.size}>
                         <img src={host + data[definition.name]} width={definition.options.width} />
                     </div>
                 )
@@ -37,4 +39,5 @@ export default function PaginationCell(props) {
 PaginationCell.propTypes = {
     definition: PropTypes.object.isRequired,
     data: PropTypes.object.isRequired,
+    translations: PropTypes.object.isRequired,
 }
