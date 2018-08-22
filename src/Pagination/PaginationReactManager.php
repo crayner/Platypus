@@ -578,7 +578,6 @@ abstract class PaginationReactManager implements PaginationInterface
                     'style' => 'text',
                     'options' => [],
                     'class' => null,
-                    'combine' => false,
                 ]
             );
             $definition = $resolver->resolve($definition);

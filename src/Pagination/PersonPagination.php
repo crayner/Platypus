@@ -35,7 +35,7 @@ class PersonPagination extends PaginationReactManager
         'p.photo',
 		'fullName' => "CONCAT(p.surname, ': ', p.firstName)",
 		'p.id',
-        'userId' => 'u.id',
+        'u.username',
         'details' => ['p.status', 'r.name AS primaryRole', 'f.name AS familyName'],
 	];
 
@@ -124,24 +124,24 @@ class PersonPagination extends PaginationReactManager
             'display' => false,
             'name' => 'id',
         ],
-        'userId' => [
-            'label' => false,
-            'display' => false,
-            'name' => 'userId',
-        ],
         'details' => [
             'label' => 'person.details.label',
             'name' => 'details',
             'size' => 2,
             'style' => 'combine',
-            'combine' => ['status', 'primaryRole', 'familyName'],
             'translate' => [
                 'status' => 'person.status.',
             ],
             'options' => [
+                'combine' => ['status', 'primaryRole', 'familyName'],
                 'join' => 'nl',
             ],
             'class' => 'text-center',
+        ],
+        'u.username' => [
+            'label' => 'person.user_name.label',
+            'name' => 'username',
+
         ],
     ];
 

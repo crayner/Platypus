@@ -11,7 +11,7 @@ export default function PaginationCombineCell(props) {
         translations,
     } = props
 
-    const content = definition.combine.map(name => getContent(name))
+    const content = definition.options.combine.map(name => getContent(name))
     const display = content.map((text, i) =>
         <span key={i}>
             {text}

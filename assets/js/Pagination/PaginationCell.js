@@ -17,12 +17,12 @@ export default function PaginationCell(props) {
     if (definition.display)
         if (definition.style === 'text')
             return (
-                <div className={definition.class + ' col-' + definition.size}>{(definition.translate === false || data[definition.name] === '' ||  data[definition.name] === null ? data[definition.name] : translateMessage(translations, definition.translate + data[definition.name]))}</div>
+                <div className={definition.class + ' card-text col-' + definition.size}>{(definition.translate === false || data[definition.name] === '' ||  data[definition.name] === null ? data[definition.name] : translateMessage(translations, definition.translate + data[definition.name]))}</div>
             )
         else if (definition.style === 'photo') {
             if (data[definition.name] === null)
                 return (
-                    <div className={definition.class + ' col-' + definition.size}>
+                    <div className={definition.class + ' card-img-top col-' + definition.size}>
                         <img src={host + definition.options.default} width={definition.options.width} />
                     </div>
                 )
@@ -34,7 +34,7 @@ export default function PaginationCell(props) {
                 )
         } else if (definition.style === 'combine') {
             return (
-                <div className={definition.class + ' col-' + definition.size}>
+                <div className={definition.class + ' card-text col-' + definition.size}>
                     <PaginationCombineCell
                         definition={definition}
                         data={data}
