@@ -630,7 +630,7 @@ abstract class PaginationReactManager implements PaginationInterface
     }
 
     /**
-     * @var bool
+     * @var string
      */
     private $orderBy;
 

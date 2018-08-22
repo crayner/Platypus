@@ -1,0 +1,64 @@
+App\Entity\FamilyPerson:
+  type: entity
+  table: family_person
+  repositoryClass: App\Repository\FamilyPersonRepository
+  uniqueConstraints:
+    family_person:
+      columns:
+        - family_id
+        - person_id
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    type:
+      length: 6
+      nullable: false
+    comment:
+      type: text
+      nullable: true
+    childDataAccess:
+      type: boolean
+      options:
+        default: '0'
+      column: child_data_access
+    contactPriority:
+      type: integer
+      options:
+        default: 1
+      column: contact_priority
+    contactCall:
+      type: boolean
+      options:
+        default: '0'
+      column: contact_call
+    contactSMS:
+      type: boolean
+      options:
+        default: '0'
+      column: contact_sms
+    contactEmail:
+      type: boolean
+      options:
+        default: '0'
+      column: contact_email
+    contactMail:
+      type: boolean
+      options:
+        default: '0'
+      column: contact_mail
+  manyToOne:
+    family:
+      targetEntity: App\Entity\Family
+      inversedBy: members
+      joinColumn:
+        name: family_id
+        referencedColumnName: id
+    person:
+      targetEntity: App\Entity\Person
+      inversedBy: families
+      joinColumn:
+        name: person_id
+        referencedColumnName: id

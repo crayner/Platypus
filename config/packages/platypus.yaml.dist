@@ -64,3 +64,12 @@ parameters:
         start_volume: 100
         next_volume: 40
         change_volume_time: 300
+    personal.title.list:
+        - mr
+        - mrs
+        - master
+        - miss
+        - ms
+        - rev
+        - dr
+        - ''

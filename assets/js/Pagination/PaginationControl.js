@@ -37,7 +37,7 @@ export default class PaginationControl extends Component {
         this.searchChange = true
         this.columnDefinitions = props.columnDefinitions
         this.headerDefinition = props.headerDefinition
-        this.orderBy = props.orderBy === 'ASC' ? -1 : 1
+        this.orderBy = props.orderBy === 'ASC' ? 1 : -1
         this.caseSensitive = props.caseSensitive === '1' ? true : false
 
         this.sort = props.sort

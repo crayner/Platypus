@@ -24,15 +24,12 @@ App\Entity\Person:
             length: 30
             column: first_name
         title:
-            length: 5
+            length: 6
         preferredName:
             length: 30
             column: preferred_name
         gender:
             length: 1
-        dob:
-            type: date
-            nullable: true
         email:
             length: 50
             nullable: true
@@ -69,6 +66,10 @@ App\Entity\Person:
             targetEntity: App\Entity\DepartmentStaff
             mappedBy: member
             cascade: [ all ]
+        families:
+            targetEntity: App\Entity\FamilyPerson
+            mappedBy: person
+            cascade: [ persist, remove ]
     manyToOne:
         primaryRole:
             targetEntity: App\Entity\PersonRole

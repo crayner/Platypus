@@ -17,6 +17,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 use Hillrange\Form\Util\CollectionInterface;
 
 /**
@@ -287,6 +288,9 @@ class PersonRole
     {
         if (empty($this->people))
             $this->people = new ArrayCollection();
+
+        if ($this->people instanceof PersistentCollection)
+            $this->people->initialize();
 
         return $this->people;
     }

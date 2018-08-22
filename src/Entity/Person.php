@@ -39,7 +39,7 @@ class Person
      */
     public static function getTitleList(): array
     {
-        return self::$titleList;
+        return ParameterInjector::getParameter('personal.title.list');
     }
 
     /**
@@ -55,7 +55,7 @@ class Person
      */
     public static function getGenderList(): array
     {
-        return ParameterInjector::getParameter('personal.title.list');
+        return self::$genderList;
     }
 
     /**
@@ -197,24 +197,11 @@ class Person
     private $title;
 
     /**
-     * @var array
+     * @return string
      */
-    private static $titleList = [
-        'mr',
-        'master',
-        'mrs',
-        'miss',
-        'ms',
-        'dr',
-        'rev',
-    ];
-
-    /**
-     * @return null|string
-     */
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
-        return $this->title;
+        return $this->title = in_array($this->title, self::getStatusList()) ? $this->title : '';
     }
 
     /**
@@ -223,7 +210,7 @@ class Person
      */
     public function setTitle(?string $title): Person
     {
-        $this->title = $title;
+        $this->title = in_array($title, self::getStatusList()) ? $title : '';
         return $this;
     }
 
@@ -261,46 +248,23 @@ class Person
     }
 
     /**
-     * @var \DateTime|null
-     */
-    private $dob;
-
-    /**
-     * @return \DateTime|null
-     */
-    public function getDob(): ?\DateTime
-    {
-        return $this->dob;
-    }
-
-    /**
-     * @param \DateTime|null $dob
-     * @return Person
-     */
-    public function setDob(?\DateTime $dob): Person
-    {
-        $this->dob = $dob;
-        return $this;
-    }
-
-    /**
-     * @var \DateTime|null
+     * @var string|null
      */
     private $email;
 
     /**
-     * @return \DateTime|null
+     * @return string|null
      */
-    public function getEmail(): ?\DateTime
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     /**
-     * @param \DateTime|null $email
+     * @param string|null $email
      * @return Person
      */
-    public function setEmail(?\DateTime $email): Person
+    public function setEmail(?string $email): Person
     {
         $this->email = $email;
         return $this;
@@ -376,7 +340,7 @@ class Person
     {
         $this->getDepartments()->removeElement($department);
 
-        if (! empty($department))
+        if (!empty($department))
             $department->setMember(null, false);
 
         return $this;
@@ -420,7 +384,7 @@ class Person
      */
     public function __toString(): string
     {
-        return $this->getId().': '.PersonNameHelper::getFullName($this);
+        return $this->getId() . ': ' . PersonNameHelper::getFullName($this);
     }
 
     /**
@@ -570,7 +534,7 @@ class Person
      * @var array
      */
     private static $statusList = [
-        'full','expected','left','pending'
+        'full', 'expected', 'left', 'pending'
     ];
 
     /**
@@ -578,7 +542,7 @@ class Person
      */
     public function getStatus(): string
     {
-        return $this->status = in_array($this->status, self::getStatusList()) ? $this->status : 'full' ;
+        return $this->status = in_array($this->status, self::getStatusList()) ? $this->status : 'full';
     }
 
     /**
@@ -587,7 +551,7 @@ class Person
      */
     public function setStatus(?string $status): Person
     {
-        $this->status = in_array($status, self::getStatusList()) ? $status : 'full' ;
+        $this->status = in_array($status, self::getStatusList()) ? $status : 'full';
         return $this;
     }
 
@@ -615,6 +579,72 @@ class Person
             $primaryRole->addPerson($this, false);
 
         $this->primaryRole = $primaryRole;
+
+        return $this;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $families;
+
+    /**
+     * @return Collection
+     */
+    public function getFamilies(): Collection
+    {
+        if (empty($this->families))
+            $this->familes = new ArrayCollection();
+
+        if ($this->families instanceof PersistentCollection)
+            $this->families->initialize();
+
+        return $this->families;
+    }
+
+    /**
+     * @param Collection $families
+     * @return Person
+     */
+    public function setFamilies(Collection $families): Person
+    {
+        $this->families = $families;
+        return $this;
+    }
+
+    /**
+     * addFamily
+     *
+     * @param FamilyPerson|null $family
+     * @param bool $add
+     * @return Person
+     */
+    public function addFamily(?FamilyPerson $family, bool $add = true): Person
+    {
+        if (empty($family) || $this->getFamilies()->contains($family))
+            return $this;
+
+        if ($add)
+            $family->setPerson($this, false);
+
+        $this->families->add($family);
+
+        return $this;
+    }
+
+    /**
+     * removeFamily
+     *
+     * @param FamilyPerson|null $family
+     * @return Person
+     */
+    public function removeFamily(?FamilyPerson $family): Person
+    {
+        if (empty($family))
+            return $this;
+
+        $family->setPerson(null);
+        $this->getFamilies()->removeElement($family);
 
         return $this;
     }
