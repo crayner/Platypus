@@ -36,8 +36,7 @@ class PersonPagination extends PaginationReactManager
 		'fullName' => "CONCAT(p.surname, ': ', p.firstName)",
 		'p.id',
         'userId' => 'u.id',
-        'p.status',
-        'r.name',
+        'details' => ['p.status', 'r.name AS primaryRole', 'f.name AS familyName'],
 	];
 
 	/**
@@ -58,39 +57,20 @@ class PersonPagination extends PaginationReactManager
 				'type' => 'leftJoin',
 				'alias' =>'r',
 			],
+            'p.families' => [
+                'type' => 'leftJoin',
+                'alias' => 'fp',
+            ],
+            'fp.family' => [
+                'type' => 'leftJoin',
+                'alias' => 'f',
+            ],
 		];
-
-	/**
-	 * @var array
-	 */
-	protected $choices = [
-		'all'     => [
-			'route'  => 'person_manage',
-			'prompt' => 'person.pagination.all',
-		],
-		'student' => [
-			'route'  => 'student_manage',
-			'prompt' => 'person.pagination.student',
-		],
-		'staff'   => [
-			'route'  => 'staff_manage',
-			'prompt' => 'person.pagination.staff',
-		],
-		'contact' => [
-			'route'  => 'contact_manage',
-			'prompt' => 'person.pagination.contact',
-		],
-		'user'    => [
-			'route'  => 'user_manage',
-			'prompt' => 'person.pagination.user',
-		],
-	];
 
 	/**
 	 * @var string
 	 */
 	protected $transDomain = 'Person';
-
 
     /**
      * @var array|null
@@ -98,6 +78,7 @@ class PersonPagination extends PaginationReactManager
     protected $searchDefinition = [
         'p.surname',
         'p.firstName',
+        'f.name',
     ];
 
     /**
@@ -148,18 +129,19 @@ class PersonPagination extends PaginationReactManager
             'display' => false,
             'name' => 'userId',
         ],
-        'p.status' => [
-            'label' => 'person.status.label',
-            'name' => 'status',
-            'size' => 1,
-            'translate' => 'person.status.',
-            'class' => 'small text-center',
-        ],
-        'r.name' => [
-            'label' => 'person.primary_role.label',
-            'name' => 'name',
-            'size' => 1,
-            'class' => 'small text-center',
+        'details' => [
+            'label' => 'person.details.label',
+            'name' => 'details',
+            'size' => 2,
+            'style' => 'combine',
+            'combine' => ['status', 'primaryRole', 'familyName'],
+            'translate' => [
+                'status' => 'person.status.',
+            ],
+            'options' => [
+                'join' => 'nl',
+            ],
+            'class' => 'text-center',
         ],
     ];
 

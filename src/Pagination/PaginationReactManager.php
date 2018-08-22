@@ -261,7 +261,17 @@ abstract class PaginationReactManager implements PaginationInterface
 
         foreach ($this->select as $key=>$name)
         {
-            if ($key === intval($key)) {
+            if (is_array($name)) {
+                foreach($name as $w) {
+                    if ($selectBegin) {
+                        $this->query->select($w);
+                        $selectBegin = false;
+                    } else
+                        $this->query->addSelect($w);
+
+                    $searchConcat = $this->addSearchConcat($w);
+                }
+            } else if ($key === intval($key)) {
                 if ($selectBegin){
                     $this->query->select($name);
                     $selectBegin = false;
@@ -568,6 +578,7 @@ abstract class PaginationReactManager implements PaginationInterface
                     'style' => 'text',
                     'options' => [],
                     'class' => null,
+                    'combine' => false,
                 ]
             );
             $definition = $resolver->resolve($definition);

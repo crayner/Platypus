@@ -186,7 +186,7 @@ export default class PaginationControl extends Component {
 
     setPaginationCache()
     {
-        var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/' + (this.search === '' ? '*' : this.search) + '/' + (this.sort === '' ? '*' : this.sort) + '/' + (this.orderBy === -1 ? 'ASC' : 'DESC') + '/' + (this.caseSensitive ? '1' : '0') + '/'
+        var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/' + (this.search === '' ? '*' : this.search) + '/' + (this.sort === '' ? '*' : this.sort) + '/' + (this.orderBy === 1 ? 'ASC' : 'DESC') + '/' + (this.caseSensitive ? '1' : '0') + '/'
         fetchJson(path, {}, this.locale)
     }
 

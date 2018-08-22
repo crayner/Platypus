@@ -15,6 +15,7 @@
  */
 namespace App\Controller;
 
+use App\Demonstration\PeopleFixtures;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -29,5 +30,23 @@ class PlatypusController extends Controller
     public function home()
     {
         return $this->render('home.html.twig');
+    }
+
+    /**
+     * test
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/test/")
+     */
+    public function test(){
+        $logger = $this->get('monolog.logger.demonstration');
+        $em = $this->getDoctrine()->getManager();
+        $section = 'People';
+        $logger->addInfo(sprintf('Section %s started.', $section));
+        $load = new PeopleFixtures();
+        $load->load($em, $logger);
+        $logger->addInfo(sprintf('Section %s completed.', $section));
+
+        return $this->redirectToRoute('home');
     }
 }

@@ -3,6 +3,7 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import {translateMessage} from '../Component/MessageTranslator'
+import PaginationCombineCell from './PaginationCombineCell'
 
 export default function PaginationCell(props) {
     const {
@@ -10,7 +11,6 @@ export default function PaginationCell(props) {
         data,
         translations,
     } = props
-
 
     const host = window.location.protocol + '//' + window.location.hostname + '/'
 
@@ -32,8 +32,18 @@ export default function PaginationCell(props) {
                         <img src={host + data[definition.name]} width={definition.options.width} />
                     </div>
                 )
+        } else if (definition.style === 'combine') {
+            return (
+                <div className={definition.class + ' col-' + definition.size}>
+                    <PaginationCombineCell
+                        definition={definition}
+                        data={data}
+                        translations={translations}
+                    />
+                </div>
+            )
         }
-    return null
+        return null
 }
 
 PaginationCell.propTypes = {
