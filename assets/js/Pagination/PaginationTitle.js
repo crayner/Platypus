@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import PaginationList from './PaginationList'
 import {translateMessage} from '../Component/MessageTranslator'
 import PaginationColumnHeader from './PaginationColumnHeader'
+import PaginationActionHeader from './PaginationActionHeader'
 
 export default function PaginationTitle(props) {
     const {
@@ -14,6 +15,8 @@ export default function PaginationTitle(props) {
         headerDefinition,
         sort,
         orderBy,
+        actions,
+        ...otherProps
     } = props;
 
     var columns = Object.keys(columnDefinitions).map(key =>
@@ -39,11 +42,17 @@ export default function PaginationTitle(props) {
                 <div className="card-body">
                     <div className="row row-header">
                         {columns}
+                        <PaginationActionHeader
+                            translations={translations}
+                            actions={actions}
+                        />
                     </div>
                     <PaginationList
                         rows={rows}
                         translations={translations}
                         columnDefinitions={columnDefinitions}
+                        actions={actions}
+                        {...otherProps}
                     />
                 </div>
             </div>
@@ -58,5 +67,5 @@ PaginationTitle.propTypes = {
     headerDefinition: PropTypes.object.isRequired,
     sort: PropTypes.string.isRequired,
     orderBy: PropTypes.number.isRequired,
+    actions:  PropTypes.object.isRequired,
 }
-

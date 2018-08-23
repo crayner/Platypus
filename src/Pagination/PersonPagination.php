@@ -36,6 +36,7 @@ class PersonPagination extends PaginationReactManager
 		'fullName' => "CONCAT(p.surname, ': ', p.firstName)",
 		'p.id',
         'u.username',
+        'userId' => 'u.id',
         'details' => ['p.status', 'r.name AS primaryRole', 'f.name AS familyName'],
 	];
 
@@ -124,10 +125,14 @@ class PersonPagination extends PaginationReactManager
             'display' => false,
             'name' => 'id',
         ],
+        'userId' => [
+            'label' => false,
+            'display' => false,
+            'name' => 'userId',
+        ],
         'details' => [
             'label' => 'person.details.label',
             'name' => 'details',
-            'size' => 2,
             'style' => 'combine',
             'translate' => [
                 'status' => 'person.status.',
@@ -166,4 +171,30 @@ class PersonPagination extends PaginationReactManager
             $this->specificTranslations[] = 'person.status.' . $value;
         return $this;
     }
+
+    /**\
+     * @var array
+     */
+    protected $actions = [
+        'size' => 3,
+        'buttons' => [
+            [
+                'label' => 'person.action.delete',
+                'url' => '/person/__id__/delete/',
+                'url_options' => [
+                    '__id__' => 'id',
+                ],
+                'type' => 'delete',
+            ],
+            [
+                'label' => 'person.action.edit',
+                'url' => '/person/__id__/edit/',
+                'url_options' => [
+                    '__id__' => 'id',
+                ],
+                'type' => 'edit',
+                'response_type' => 'redirect',
+            ],
+        ],
+    ];
 }

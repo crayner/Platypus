@@ -3,12 +3,15 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import PaginationCell from './PaginationCell'
+import PaginationActionCell from './PaginationActionCell'
 
 export default function PaginationRow(props) {
     const {
         item,
         columnDefinitions,
         translations,
+        actions,
+        ...otherProps,
     } = props
 
     var cells = Object.keys(columnDefinitions).map(key =>
@@ -24,6 +27,12 @@ export default function PaginationRow(props) {
     return (
         <div className='row row-striped'>
             {cells}
+            <PaginationActionCell
+                translations={translations}
+                actions={actions}
+                item={item}
+                {...otherProps}
+            />
         </div>
     )
 }
@@ -32,4 +41,5 @@ PaginationRow.propTypes = {
     item: PropTypes.object.isRequired,
     columnDefinitions: PropTypes.object.isRequired,
     translations: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
 }

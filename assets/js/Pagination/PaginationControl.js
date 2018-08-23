@@ -9,6 +9,8 @@ import PaginationLimit from './PaginationLimit'
 import PaginationTitle from './PaginationTitle'
 import {translateMessage} from '../Component/MessageTranslator'
 import { fetchJson } from "../Component/fetchJson";
+import {openPage} from '../Component/openPage'
+import PaginationMessages from './PaginationMessages'
 
 export default class PaginationControl extends Component {
     constructor(props) {
@@ -21,6 +23,7 @@ export default class PaginationControl extends Component {
             results: props.results,
             rows: [],
             sort: props.sort,
+            messages: new Object()
         }
 
         this.locale = props.locale
@@ -35,10 +38,12 @@ export default class PaginationControl extends Component {
         this.limit = props.limit
         this.search = props.search
         this.searchChange = true
+        this.actions = props.actions
         this.columnDefinitions = props.columnDefinitions
         this.headerDefinition = props.headerDefinition
         this.orderBy = props.orderBy === 'ASC' ? 1 : -1
         this.caseSensitive = props.caseSensitive === '1' ? true : false
+        this.messages = new Object()
 
         this.sort = props.sort
 
@@ -55,6 +60,8 @@ export default class PaginationControl extends Component {
         this.changeTheSearch = this.changeTheSearch.bind(this)
         this.toggleOrderBy = this.toggleOrderBy.bind(this)
         this.toggleCaseSensitive = this.toggleCaseSensitive.bind(this)
+        this.buttonClickAction = this.buttonClickAction.bind(this)
+        this.cancelMessage = this.cancelMessage.bind(this)
     }
 
     componentWillMount(){
@@ -71,6 +78,9 @@ export default class PaginationControl extends Component {
 
         this.rows = results.slice(this.offset, (this.limit + this.offset))
 
+        if (typeof(this.messages) !== 'object')
+            this.messages = new Object()
+
         this.setState({
             offset: this.offset,
             search: this.search,
@@ -78,8 +88,8 @@ export default class PaginationControl extends Component {
             results: results,
             rows: this.rows,
             sort: this.sort,
+            messages: this.messages
         })
-
         this.setPaginationCache()
     }
 
@@ -224,6 +234,24 @@ export default class PaginationControl extends Component {
         this.handlePagination()
     }
 
+    buttonClickAction(url,type) {
+        if (type === 'json') {
+            fetchJson(url, {}, this.locale)
+                .then((data) => {
+                    this.allResults = data['rows']
+                    this.searchChange = true
+                    this.messages = data['messages']
+                    this.handlePagination()
+                });
+        } else if (type === 'redirect')
+            openPage(url)
+    }
+
+    cancelMessage(id) {
+        this.messages.splice(id, 1)
+        this.handlePagination()
+    }
+
     render() {
         return (
             <section>
@@ -271,6 +299,11 @@ export default class PaginationControl extends Component {
                             {this.pages > 1 ? translateMessage(this.translations, 'pagination.figures.two_plus', {'%first%': this.calculateFirst(),'%last%': this.calculateLast(), '%total%': this.total, '%pages%': this.pages}) : '' }
                         </div>
                     </div>
+                    <PaginationMessages
+                        messages={this.state.messages}
+                        translations={this.translations}
+                        cancelMessage={this.cancelMessage}
+                    />
                 </div>
                 <PaginationTitle
                     rows={this.state.rows}
@@ -279,6 +312,8 @@ export default class PaginationControl extends Component {
                     headerDefinition={this.headerDefinition}
                     sort={this.sort}
                     orderBy={this.orderBy}
+                    actions={this.actions}
+                    buttonClickAction={this.buttonClickAction}
                 />
             </section>
         )
@@ -302,6 +337,7 @@ PaginationControl.propTypes = {
     headerDefinition: PropTypes.object.isRequired,
     orderBy: PropTypes.string.isRequired,
     caseSensitive: PropTypes.string.isRequired,
+    actions: PropTypes.object.isRequired,
 }
 
 PaginationControl.defaultTypes = {

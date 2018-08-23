@@ -15,6 +15,7 @@
  */
 namespace App\Pagination;
 
+use App\Manager\MessageManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
@@ -22,6 +23,7 @@ use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -46,13 +48,19 @@ abstract class PaginationReactManager implements PaginationInterface
     private $entityManager;
 
     /**
+     * @var MessageManager
+     */
+    private $messageManager;
+
+    /**
      * PaginationReactManager constructor.
      * @param RequestStack $request
      */
-    public function __construct(RequestStack $request, EntityManagerInterface $entityManager)
+    public function __construct(RequestStack $request, EntityManagerInterface $entityManager, MessageManager $messageManager)
     {
         $this->request = $request->getCurrentRequest();
         $this->entityManager = $entityManager;
+        $this->messageManager = $messageManager;
 
         if (method_exists($this, 'setSpecificTranslations'))
             $this->setSpecificTranslations();
@@ -83,6 +91,7 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['caseSensitive'] = $this->getCaseSensitive();
         $props['columnDefinitions'] = $this->getColumnDefinitions();
         $props['headerDefinition'] = $this->getHeaderDefinition();
+        $props['actions'] = $this->getActions();
 
         $props['translations'] = [];
         $props['translations'][] = 'pagination.search.label';
@@ -90,11 +99,13 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['translations'][] = 'search';
         $props['translations'][] = 'pagination.sort.label';
         $props['translations'][] = 'pagination.limit.label';
+        $props['translations'][] = 'pagination.actions';
         $props['translations'][] = 'save';
         $props['translations'][] = 'previous';
         $props['translations'][] = 'next';
         $props['translations'][] = 'case_sensitive';
         $props['translations'][] = 'order_by';
+        $props['translations'][] = 'message.close';
         $props['translations'][] = 'pagination.figures.empty';
         $props['translations'][] = 'pagination.figures.one_page.one_record';
         $props['translations'][] = 'pagination.figures.one_page.two_plus';
@@ -427,6 +438,14 @@ abstract class PaginationReactManager implements PaginationInterface
     }
 
     /**
+     * @return MessageManager
+     */
+    public function getMessageManager(): MessageManager
+    {
+        return $this->messageManager;
+    }
+
+    /**
      * set Join
      *
      * @version     13th February 2018
@@ -667,5 +686,55 @@ abstract class PaginationReactManager implements PaginationInterface
     private function getCaseSensitive(): string
     {
         return $this->caseSensitive = $this->caseSensitive ? true : isset($this->getSessionData()['caseSensitive']) ? $this->getSessionData()['caseSensitive'] : false;
+    }
+
+    /**
+     * getActions
+     *
+     * @return array
+     */
+    private function getActions(): array
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setRequired(
+            [
+                'buttons',
+            ]
+        );
+        $resolver->setAllowedTypes('buttons','array');
+        $resolver->setDefaults(
+            [
+                'label' => 'pagination.actions',
+                'size' => 2,
+                'class' => '',
+            ]
+        );
+        $this->actions = $resolver->resolve($this->actions);
+
+        foreach($this->actions['buttons'] as $q=>$button)
+        {
+            $resolver = new OptionsResolver();
+            $resolver->setRequired(
+                [
+                    'url',
+                ]
+            );
+            $resolver->setDefaults(
+                [
+                    'type' => 'miscellaneous',
+                    'label' => false,
+                    'url_options' => [],
+                    'classMerge' => '',
+                    'style' => ['float' => 'right'],
+                    'response_type' => 'json',
+                ]
+            );
+            $button = $resolver->resolve($button);
+            if (! in_array($button['response_type'], ['redirect','json']))
+                throw new InvalidOptionsException(sprintf('The response_type of \'%s\' is not valid. Accepted values are [redirect, json]', $button['response_type']));
+            $this->actions['buttons'][$q] = $button;
+        }
+
+        return $this->actions;
     }
 }

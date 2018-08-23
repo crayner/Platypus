@@ -9,6 +9,8 @@ export default function PaginationList(props) {
         rows,
         translations,
         columnDefinitions,
+        actions,
+        ...otherProps,
     } = props
 
 
@@ -18,6 +20,8 @@ export default function PaginationList(props) {
             columnDefinitions={columnDefinitions}
             key={item.id}
             translations={translations}
+            actions={actions}
+            {...otherProps}
         />
     })
 }
@@ -26,5 +30,6 @@ export default function PaginationList(props) {
 PaginationList.propTypes = {
     rows: PropTypes.array.isRequired,
     translations: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
     columnDefinitions: PropTypes.object.isRequired,
 }

@@ -23,6 +23,7 @@ render(
         pages={window.PAGINATION_PROPS.pages}
         columnDefinitions={window.PAGINATION_PROPS.columnDefinitions}
         headerDefinition={window.PAGINATION_PROPS.headerDefinition}
+        actions={window.PAGINATION_PROPS.actions}
     />,
     document.getElementById('paginationControl')
 )

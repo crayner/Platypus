@@ -428,7 +428,6 @@ class SchoolController extends Controller
         $form = $this->createForm(RollGroupType::class, $roll);
 
         $form->handleRequest($request);
-        dump($form);
 
         if ($form->isSubmitted() && $form->isValid())
         {

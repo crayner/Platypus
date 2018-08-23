@@ -35,6 +35,11 @@ class Message
      */
 	private $useRaw = false;
 
+    /**
+     * @var string
+     */
+	private $translatedMessage = '';
+
 	/**
 	 * Message constructor.
 	 */
@@ -239,5 +244,23 @@ class Message
     {
         $this->fixedMessage = $fixedMessage;
         return $this->removeOption('fixedMessage');
+    }
+
+    /**
+     * @return string
+     */
+    public function getTranslatedMessage(): string
+    {
+        return $this->translatedMessage;
+    }
+
+    /**
+     * @param string $translatedMessage
+     * @return Message
+     */
+    public function setTranslatedMessage(string $translatedMessage): Message
+    {
+        $this->translatedMessage = $translatedMessage;
+        return $this;
     }
 }

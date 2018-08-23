@@ -27,6 +27,7 @@ use Hillrange\Security\Form\ChangePasswordType;
 use Hillrange\Security\Util\PasswordManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -146,6 +147,27 @@ class PersonController extends Controller
                 'pagination' => $personPagination,
                 'manager'    => $manager,
             )
+        );
+    }
+
+    /**
+     * delete
+     *
+     * @param int $id
+     * @Route("/person/{id}/delete/", name="person_delete"))
+     */
+    public function delete(int $id, PersonPagination $personPagination, PersonManager $manager)
+    {
+        $person = $manager->find($id);
+
+        $personPagination->getMessageManager()->add('warning', 'person.delete.locked', ['%{name}' => $person->getFullName()], 'Person');
+
+        return new JsonResponse(
+            [
+                'messages' => $personPagination->getMessageManager()->serialiseTranslatedMessages($this->get('translator')),
+                'rows' => $personPagination->getAllResults(),
+            ],
+            200
         );
     }
 }

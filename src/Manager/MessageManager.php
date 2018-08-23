@@ -2,6 +2,7 @@
 namespace App\Manager;
 
 use App\Organism\Message;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class MessageManager
 {
@@ -228,5 +229,40 @@ class MessageManager
             }
         }
         return $this;
+    }
+
+    /**
+     * getTranslatedMessages
+     *
+     * @param TranslatorInterface $translator
+     * @return array
+     */
+    public function getTranslatedMessages(TranslatorInterface $translator): array
+    {
+        foreach($this->getMessages() as $message)
+            $message->setTranslatedMessage($translator->trans($message->getMessage(), $message->getOptions(), $message->getDomain()));
+
+        return $this->getMessages();
+    }
+
+    /**
+     * serialiseTranslatedMessages
+     *
+     * @param TranslatorInterface $translator
+     * @return array
+     */
+    public function serialiseTranslatedMessages(TranslatorInterface $translator): array
+    {
+        $mes = [];
+        $x = 0;
+        foreach($this->getTranslatedMessages($translator) as $message)
+        {
+            $w = [];
+            $w['level'] = $message->getLevel();
+            $w['message'] = $message->getTranslatedMessage();
+            $w['id'] = $x;
+            $mes[$x++] = $w;
+        }
+        return $mes;
     }
 }
