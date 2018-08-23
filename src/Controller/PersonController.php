@@ -155,6 +155,7 @@ class PersonController extends Controller
      *
      * @param int $id
      * @Route("/person/{id}/delete/", name="person_delete"))
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(int $id, PersonPagination $personPagination, PersonManager $manager)
     {
@@ -166,6 +167,28 @@ class PersonController extends Controller
                 'rows' => $personPagination->getAllResults(),
             ],
             200
+        );
+    }
+
+    /**
+     * edit
+     *
+     * @param PersonManager $manager
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/person/{id}/edit/", name="person_edit"))
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function edit(PersonManager $manager, $id = 'Add')
+    {
+        $entity = $manager->find($id);
+
+        dump($entity);
+        return $this->render(
+            'Person/edit.html.twig',
+            [
+
+            ]
         );
     }
 }

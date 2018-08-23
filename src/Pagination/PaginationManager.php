@@ -208,7 +208,7 @@ abstract class PaginationManager implements PaginationInterface
 	 */
 	public function getName()
 	{
-		return strtolower(str_replace('_pagination', '', $this->name ?: 'default')) .'_pagination';
+		return strtolower(str_replace('_pagination', '', $this->paginationName ?: 'default')) .'_pagination';
 	}
 
 	/**
