@@ -16,6 +16,7 @@
 namespace App\Manager\Traits;
 
 use App\Manager\MessageManager;
+use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use PhpParser\Node\Expr\Cast\Object_;
@@ -96,15 +97,16 @@ trait EntityTrait
      * delete
      *
      * @param $id
+     * @return object
      * @throws \Exception
      */
-    public function delete($id): void
+    public function delete($id): object
     {
         $entity = $this->find($id);
         if (empty($entity))
         {
             $this->getMessageManager()->add('warning', 'entity.not_found', ['%{entity}' => $this->getEntityName()], 'System');
-            return ;
+            return $entity;
         }
 
         if (method_exists($this, 'canDelete')) {
@@ -113,7 +115,7 @@ trait EntityTrait
                 $this->getEntityManager()->flush();
                 $this->getMessageManager()->add('success', 'entity.removed.success', ['%{entity}' => $this->getEntityName(), '%{name}' => $entity->__toString()], 'System');
                 $this->entity = null;
-                return;
+                return $entity;
 
             }
         } elseif (method_exists($entity, 'canDelete')) {
@@ -122,17 +124,19 @@ trait EntityTrait
                 $this->getEntityManager()->flush();
                 $this->getMessageManager()->add('success', 'entity.removed.success', ['%{entity}' => $this->getEntityName(), '%{name}' => $entity->__toString()], 'System');
                 $this->entity = null;
-                return;
+                return $entity;
             }
         } else {
             $this->getEntityManager()->remove($entity);
             $this->getEntityManager()->flush();
             $this->getMessageManager()->add('success', 'entity.removed.success', ['%{entity}' => $this->getEntityName(), '%{name}' => $entity->__toString()], 'System');
             $this->entity = null;
-            return;
+            return $entity;
 
         }
         $this->getMessageManager()->add('warning', 'entity.remove.locked', ['%{entity}' => $this->getEntityName(), '%{name}' => $entity->__toString()], 'System');
+
+        return $entity;
     }
 
     /**
@@ -196,10 +200,10 @@ trait EntityTrait
      * getRepository
      *
      * @param string $className
-     * @return EntityRepository
+     * @return ObjectRepository
      * @throws \Exception
      */
-    public function getRepository(string $className = ''): EntityRepository
+    public function getRepository(string $className = ''): ObjectRepository
     {
         $className = $className ?: $this->getEntityName();
         return $this->getEntityManager()->getRepository($className);

@@ -179,6 +179,15 @@ class PersonPagination extends PaginationReactManager
         'size' => 3,
         'buttons' => [
             [
+                'label' => 'person.action.password.change',
+                'url' => '/person/__id__/password/change/',
+                'url_options' => [
+                    '__id__' => 'id',
+                ],
+                'icon' => ['fas', 'unlock-alt'],
+                'colour' => 'light',
+            ],
+            [
                 'label' => 'person.action.delete',
                 'url' => '/person/__id__/delete/',
                 'url_options' => [

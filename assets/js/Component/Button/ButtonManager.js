@@ -4,6 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ButtonDelete from './ButtonDelete'
 import ButtonEdit from './ButtonEdit'
+import ButtonMiscellaneous from './ButtonMiscellaneous'
 
 export default function ButtonManager(props) {
     const {
@@ -25,7 +26,12 @@ export default function ButtonManager(props) {
                 {...otherProps}
             />
         )
-    return (null)
+    return (
+        <ButtonMiscellaneous
+            button={button}
+            {...otherProps}
+        />
+    )
 }
 
 ButtonManager.propTypes = {

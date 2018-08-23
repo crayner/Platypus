@@ -648,4 +648,14 @@ class Person
 
         return $this;
     }
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        return false;
+    }
 }

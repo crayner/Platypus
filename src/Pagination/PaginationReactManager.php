@@ -727,6 +727,8 @@ abstract class PaginationReactManager implements PaginationInterface
                     'classMerge' => '',
                     'style' => ['float' => 'right'],
                     'response_type' => 'json',
+                    'icon' => false,
+                    'colour' => '',
                 ]
             );
             $button = $resolver->resolve($button);

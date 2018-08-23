@@ -158,13 +158,11 @@ class PersonController extends Controller
      */
     public function delete(int $id, PersonPagination $personPagination, PersonManager $manager)
     {
-        $person = $manager->find($id);
-
-        $personPagination->getMessageManager()->add('warning', 'person.delete.locked', ['%{name}' => $person->getFullName()], 'Person');
+        $manager->delete($id);
 
         return new JsonResponse(
             [
-                'messages' => $personPagination->getMessageManager()->serialiseTranslatedMessages($this->get('translator')),
+                'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($this->get('translator')),
                 'rows' => $personPagination->getAllResults(),
             ],
             200
