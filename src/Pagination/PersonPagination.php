@@ -16,31 +16,11 @@ class PersonPagination extends PaginationReactManager
 	protected $alias = 'p';
 
 	/**
-	 * @var array
-	 */
-	protected $sortByList = [
-		'person.full_name.label' => [
-			'fullName',
-		],
-	];
-	/**
 	 * @var int
 	 */
 	protected $limit = 25;
 
-	/**
-	 * @var array
-	 */
-	protected $select = [
-        'p.photo',
-		'fullName' => ['p.surname', 'p.firstName'],
-		'p.id',
-        'u.username',
-        'userId' => 'u.id',
-        'details' => ['p.status', 'r.name AS primaryRole', 'f.name AS familyName'],
-	];
-
-	/**
+    /**
 	 * @var string
 	 */
 	protected $entityName = Person::class;
@@ -77,9 +57,9 @@ class PersonPagination extends PaginationReactManager
      * @var array|null
      */
     protected $searchDefinition = [
-        'p.surname',
-        'p.firstName',
-        'f.name',
+        'surname',
+        'firstName',
+        'familyName',
     ];
 
     /**
@@ -104,6 +84,16 @@ class PersonPagination extends PaginationReactManager
     /**
      * @var array
      */
+    protected $sortByList = [
+        'person.full_name.label' => [
+            'surname',
+            'firstName'
+        ],
+    ];
+
+    /**
+     * @var array
+     */
     protected $columnDefinitions = [
         'p.photo' => [
             'label' => 'person.photo.label',
@@ -123,6 +113,7 @@ class PersonPagination extends PaginationReactManager
             'options' => [
                 'combine' => ['surname' => [], 'firstName' => ['join' => ': ']],
             ],
+            'select' => ['p.surname', 'p.firstName'],
         ],
         'p.id' => [
             'label' => false,
@@ -133,6 +124,7 @@ class PersonPagination extends PaginationReactManager
             'label' => false,
             'display' => false,
             'name' => 'userId',
+            'select' => 'u.id',
         ],
         'details' => [
             'label' => 'person.details.label',
@@ -142,6 +134,7 @@ class PersonPagination extends PaginationReactManager
                 'combine' => ['status' => ['translate' => 'person.status.'], 'primaryRole' => ['join' => '<br />'], 'familyName' => ['join' => '<br />']],
             ],
             'class' => 'text-center',
+            'select' => ['p.status', 'r.name AS primaryRole', 'f.name AS familyName'],
         ],
         'u.username' => [
             'label' => 'person.user_name.label',

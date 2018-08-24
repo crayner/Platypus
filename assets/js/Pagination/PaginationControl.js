@@ -41,6 +41,7 @@ export default class PaginationControl extends Component {
         this.actions = props.actions
         this.columnDefinitions = props.columnDefinitions
         this.headerDefinition = props.headerDefinition
+        this.searchDefinition = props.searchDefinition
         this.orderBy = props.orderBy === 'ASC' ? 1 : -1
         this.caseSensitive = props.caseSensitive === '1' ? true : false
         this.messages = new Object()
@@ -65,6 +66,7 @@ export default class PaginationControl extends Component {
     }
 
     componentWillMount(){
+        this.buildSearchString()
         this.handlePagination()
     }
 
@@ -97,9 +99,7 @@ export default class PaginationControl extends Component {
         if (this.searchChange) {
             this.searchChange = false
 
-            if (this.search === '')
-                return this.allResults
-            if (this.search === null)
+            if (this.search === '' || this.search === null)
                 return this.allResults
 
             if (this.caseSensitive)
@@ -241,10 +241,35 @@ export default class PaginationControl extends Component {
                     this.allResults = data['rows']
                     this.searchChange = true
                     this.messages = data['messages']
+                    this.buildSearchString()
                     this.handlePagination()
                 });
         } else if (type === 'redirect')
             openPage(url)
+    }
+
+    buildSearchString(){
+        for (let key in this.allResults) {
+            let row =  this.allResults[key]
+            row.SearchString = ''
+            for(let q in this.searchDefinition) {
+                if (typeof(row[this.searchDefinition[q]]) === 'undefined')
+                {
+                    console.log(row)
+                    console.log(this.searchDefinition[q])
+                    console.error(this.searchDefinition[q] + ' was not found in the data.  Your pagination searchDefinition is not configured correctly.')
+
+                }
+                if (typeof(this.searchDefinition[q]) === 'array')
+                    for(let w in this.searchDefinition[q]) {
+                        const y = this.searchDefinition[q][w]
+                        row.SearchString = row.SearchString + y + '|'
+                    }
+                else
+                    row.SearchString = row.SearchString + row[this.searchDefinition[q]] + '|'
+            }
+            this.allResults[key] = row
+        }
     }
 
     cancelMessage(id) {

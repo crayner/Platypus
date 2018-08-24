@@ -21,6 +21,7 @@ render(
         caseSensitive={window.PAGINATION_PROPS.caseSensitive}
         limit={window.PAGINATION_PROPS.limit}
         pages={window.PAGINATION_PROPS.pages}
+        searchDefinition={window.PAGINATION_PROPS.searchDefinition}
         columnDefinitions={window.PAGINATION_PROPS.columnDefinitions}
         headerDefinition={window.PAGINATION_PROPS.headerDefinition}
         actions={window.PAGINATION_PROPS.actions}

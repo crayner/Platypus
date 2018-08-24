@@ -101,21 +101,10 @@ class RollGroupPagination extends PaginationReactManager
     /**
      * @var array
      */
-    protected $select = [
-        'name' => ['r.name', 'r.nameShort'],
-        'r.id',
-        'facilityName' => 'f.name',
-        'r.website',
-        'tutors' => false,
-    ];
-
-    /**
-     * @var array
-     */
     protected $searchDefinition = [
-        'r.name',
-        'r.nameShort',
-        't.surname',
+        'name',
+        'nameShort',
+        'tutors',
     ];
 
     /**
@@ -135,6 +124,7 @@ class RollGroupPagination extends PaginationReactManager
             ],
             'class' => 'text-center',
             'name' => 'name',
+            'select' => ['r.name', 'r.nameShort'],
             'style' => 'combine',
             'options' => [
                 'combine' => ['name' => [], 'nameShort' => ['class' => 'small text-muted', 'join' => '<br />']],
@@ -144,6 +134,7 @@ class RollGroupPagination extends PaginationReactManager
         'tutors' => [
             'label' => 'roll_group.tutors.label',
             'name' => 'tutors',
+            'select' => false,
             'size' => 4,
             'style' => 'array',
             'options' => [
@@ -153,6 +144,7 @@ class RollGroupPagination extends PaginationReactManager
         'facilityName' => [
             'label' => 'roll_group.facility.label',
             'name' => 'facilityName',
+            'select' => 'f.name',
         ],
         'r.website' => [
             'label' => 'roll_group.website.label',

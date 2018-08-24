@@ -18,7 +18,6 @@ namespace App\Pagination;
 use App\Manager\MessageManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -91,6 +90,7 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['caseSensitive'] = $this->getCaseSensitive();
         $props['columnDefinitions'] = $this->getColumnDefinitions();
         $props['headerDefinition'] = $this->getHeaderDefinition();
+        $props['searchDefinition'] = $this->getSearchDefinition();
         $props['actions'] = $this->getActions();
 
         $props['translations'] = [];
@@ -267,7 +267,7 @@ abstract class PaginationReactManager implements PaginationInterface
             $selectBegin = false;
         }
 
-        if (empty($this->select)  || !is_array($this->select)) return $this;
+        if (empty($this->getSelect())  || ! is_array($this->select)) return $this;
 
         foreach ($this->select as $key=>$name)
         {
@@ -280,8 +280,6 @@ abstract class PaginationReactManager implements PaginationInterface
                         $selectBegin = false;
                     } else
                         $this->query->addSelect($w);
-
-                    $searchConcat = $this->addSearchConcat($w);
                 }
             } else if ($key === intval($key)) {
                 if ($selectBegin){
@@ -289,10 +287,7 @@ abstract class PaginationReactManager implements PaginationInterface
                     $selectBegin = false;
                 } else
                     $this->query->addSelect($name);
-
-                $searchConcat = $this->addSearchConcat($name);
             } else {
-                $searchConcat = $this->addSearchConcat($name);
                 $select = $name . ' AS ' . $key;
                 if ($selectBegin){
                     $this->query->select($select);
@@ -302,63 +297,18 @@ abstract class PaginationReactManager implements PaginationInterface
 
             }
         }
-        if (! empty($searchConcat))
-        {
-            $concat = new Query\Expr\Func('CONCAT', $searchConcat);
-            $concat .= ' AS SearchString';
-            $concat = str_replace('|', '\'|\'', $concat);
-            $this->query->addSelect($concat);
-        }
 
         return $this;
     }
 
     /**
-     * @var array|null
-     */
-    private $searchConcat;
-
-    /**
-     * addSearchConcat
-     *
-     * @param string $name
-     * @return array|null
-     */
-    private function addSearchConcat(string $name): ?array
-    {
-        if ($this->getSearchDefinition() === null)
-            return null;
-
-        if (empty($this->searchConcat))
-            $this->searchConcat = [];
-
-
-        if (strpos(strtoupper($name), 'CONCAT(') !== false)
-        {
-            $name = trim(str_replace(['concat(', 'CONCAT('], '', $name), ')');
-            $name = explode(',', $name);
-            foreach($name as $value)
-                $this->addSearchConcat(trim($value));
-            return $this->searchConcat;
-        }
-
-        if (! in_array($name, $this->searchDefinition))
-            return $this->searchConcat;
-
-        $this->searchConcat[] = $name;
-        $this->searchConcat[] = '|';
-
-        return $this->searchConcat;
-    }
-
-    /**
      * getSearchDefinition
      *
-     * @return array|null
+     * @return array
      */
-    private function getSearchDefinition(): ?array
+    private function getSearchDefinition(): array
     {
-        return (property_exists($this, 'searchDefinition') && is_array($this->searchDefinition) && ! empty($this->searchDefinition)) ? $this->searchDefinition : null ;
+        return (property_exists($this, 'searchDefinition') && is_array($this->searchDefinition) && ! empty($this->searchDefinition)) ? $this->searchDefinition : [] ;
 
     }
 
@@ -569,17 +519,13 @@ abstract class PaginationReactManager implements PaginationInterface
      */
     private function getColumnDefinitions(): array
     {
-        if (! property_exists($this, 'columnDefinitions'))
-            throw new \Exception('The Column definitions are missing.');
-        if (! is_array($this->columnDefinitions))
-            throw new \Exception('The Column definitions is not an array.');
-
         $select = [];
-        foreach($this->select as $name=>$value)
+        foreach($this->getSelect() as $name=>$value)
             if ($name === intval($name))
                 $select[] = $value;
             else
                 $select[] = $name;
+
         $resolver = new OptionsResolver();
         $resolver->setRequired($select);
         $resolver->resolve($this->columnDefinitions);
@@ -592,6 +538,7 @@ abstract class PaginationReactManager implements PaginationInterface
                 [
                     'label',
                     'name',
+                    'select',
                 ]
             );
             $resolver->setDefaults(
@@ -608,7 +555,6 @@ abstract class PaginationReactManager implements PaginationInterface
             $definition = $resolver->resolve($definition);
             $columnDefinitions[$key] = $definition;
         }
-
 
         return $columnDefinitions;
     }
@@ -749,11 +695,46 @@ abstract class PaginationReactManager implements PaginationInterface
         return $this->actions;
     }
 
+    /**
+     * getHeaderTitle
+     *
+     * @return string
+     */
     public function getHeaderTitle(): string
     {
         if (property_exists($this, 'headerTitle'))
             return $this->headerTitle;
 
         return $this->getName() ;
+    }
+
+    /**
+     * getSelect
+     *
+     * @return array
+     */
+    public function getSelect(): array
+    {
+        if (! empty($this->select))
+            return $this->select;
+
+        if (! property_exists($this, 'columnDefinitions'))
+            throw new \Exception('The Column definitions are missing.');
+        if (! is_array($this->columnDefinitions))
+            throw new \Exception('The Column definitions is not an array.');
+
+        $this->select = [];
+
+        foreach($this->columnDefinitions as $name=>$definition)
+        {
+            if (! empty($definition['select']))
+                $this->select[$name] = $definition['select'];
+            else {
+                $this->columnDefinitions[$name]['select'] = $name;
+                $this->select[] = $name;
+            }
+        }
+
+        return $this->select;
     }
 }
