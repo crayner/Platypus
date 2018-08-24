@@ -1,0 +1,17 @@
+{% trans_default_domain pagination.transDomain %}
+
+{% extends "Default/template.html.twig" %}
+
+{% block title %}{{ parent() }}{{ (pagination.headerTitle ~ '.title')|trans }}{% endblock title %}
+{% block headerTitle %}{{ (pagination.headerTitle ~ '.title')|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ (pagination.headerTitle ~ '.description')|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ pagination_script(pagination) }}
+{% endblock javascripts %}
+

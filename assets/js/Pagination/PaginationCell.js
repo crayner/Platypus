@@ -42,8 +42,22 @@ export default function PaginationCell(props) {
                     />
                 </div>
             )
-        }
-        return null
+        } else if (definition.style === 'array') {
+            const content = data[definition.name].map((name, i) =>
+                <span key={i}>{i > 0 && definition.options.join === '<br />' ? <br />: i > 0 ? definition.options.join : ''}{name}</span>
+            )
+            return (
+                <div className={definition.class + ' col-' + definition.size}>
+                    {content}
+                </div>
+            )
+        } else
+            return (
+                <div className={definition.class + ' col-' + definition.size}>
+                    {'Content Style not defined.'}
+                </div>
+            )
+        return ''
 }
 
 PaginationCell.propTypes = {

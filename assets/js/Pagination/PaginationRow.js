@@ -14,7 +14,7 @@ export default function PaginationRow(props) {
         ...otherProps,
     } = props
 
-    var cells = Object.keys(columnDefinitions).map(key =>
+    const cells = Object.keys(columnDefinitions).map(key =>
         <PaginationCell
             definition={columnDefinitions[key]}
             key={key}

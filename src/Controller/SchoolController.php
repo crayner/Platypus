@@ -391,19 +391,14 @@ class SchoolController extends Controller
     /**
      * rollGroupManage
      *
-     * @param Request $request
      * @param RollGroupPagination $pagination
      * @param RollGroupManager $manager
      * @return Response
      * @Route("/school/roll/group/manage/", name="manage_roll_groups")
      */
-    public function rollGroupManage(Request $request, RollGroupPagination $pagination, RollGroupManager $manager)
+    public function rollGroupManage(RollGroupPagination $pagination, RollGroupManager $manager)
     {
-        $pagination->injectRequest($request);
-
-        $pagination->getDataSet();
-
-        return $this->render('School/roll_group_list.html.twig',
+        return $this->render('Pagination/list.html.twig',
             [
                 'pagination' => $pagination,
                 'manager' => $manager,

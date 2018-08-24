@@ -3,34 +3,34 @@ namespace App\Pagination;
 
 use App\Entity\RollGroup;
 use App\Util\SchoolYearHelper;
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\QueryBuilder;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class RollGroupPagination
  * @package App\Pagination
  */
-class RollGroupPagination extends PaginationManager
+class RollGroupPagination extends PaginationReactManager
 {
 	/**
 	 * @var string
 	 */
-	protected $paginationName = 'RollGroup';
+	protected $name = 'RollGroup';
 
 	/**
 	 * @var string
 	 */
 	protected $alias = 'r';
 
+    /**
+     * @var string
+     */
+    protected $entityName = RollGroup::class;
+
 	/**
 	 * @var array
 	 */
 	protected $sortByList = [
-		'roll.sort.name' => [
-			'r.name' => 'ASC',
+		'roll_group.sort.name' => [
+			'name',
 		],
 	];
 
@@ -38,27 +38,6 @@ class RollGroupPagination extends PaginationManager
 	 * @var int
 	 */
 	protected $limit = 50;
-
-	/**
-	 * @var array
-	 */
-	protected $searchList = [
-		'r.name',
-        'r.nameShort',
-        'r.website',
-        'f.name',
-	];
-
-	/**
-	 * @var array
-	 */
-	protected $select = [
-		'r.name',
-		'r.nameShort',
-        'r.id',
-        'f.name as facilityName',
-        'r.website'
-	];
 
     /**
      * @var array
@@ -83,55 +62,134 @@ class RollGroupPagination extends PaginationManager
 	/**
 	 * @var string
 	 */
-	protected $repositoryName = RollGroup::class;
-
-	/**
-	 * @var string
-	 */
 	protected $transDomain = 'School';
 
-	/**
-	 * build Query
-	 *
-	 * @version    28th October 2016
-	 * @since      28th October 2016
-	 *
-	 * @param    boolean $count
-	 *
-	 * @return    QueryBuilder
-	 */
-	public function buildQuery($count = false): QueryBuilder
-	{
-		$this->initiateQuery($count);
-		if ($count)
-			$this
-				->setQueryJoin()
-				->setSearchWhere();
-		else
-			$this
-				->setQuerySelect()
-				->setQueryJoin()
-				->setOrderBy()
-				->setSearchWhere();
+    /**
+     * getAllResults
+     *
+     * @return array
+     */
+    public function getAllResults(): array
+    {
+        $results = $this->getRepository()->findBy(['schoolYear' => SchoolYearHelper::getCurrentSchoolYear()]);
 
-        $this->getQuery()
-            ->andWhere('y = :year')
-            ->setParameter('year', SchoolYearHelper::getCurrentSchoolYear())
-        ;
+        $content = [];
 
-		return $this->getQuery();
-	}
+        foreach($results as $result)
+            {
+            $rg = [];
+            $ss = '';
+            $rg['id'] = $result->getId();
+            $rg['name'] = $result->getName();
+            $rg['nameShort'] = $result->getNameShort();
+            $ss .= $rg['name'].'|'.$rg['nameShort'].'|';
+            $rg['facilityName'] = ($result->getFacility()) ?  $result->getFacility()->getName() : '' ;
+            $rg['website'] = $result->getWebsite();
+            $tutors = [];
+            foreach($result->getTutors()->toArray() as $tutor) {
+                $tutors[] = $tutor->getSurname() . ': ' . $tutor->getFirstName();
+                $ss .= $tutor->getSurname() . '|' . $tutor->getFirstName(). '|';
+            }
+            $rg['tutors'] = $tutors;
+            $rg['SearchString'] = $ss;
+            $content[] = $rg;
+        }
+
+        return $content;
+    }
 
     /**
-     * RollGroupPagination constructor.
-     * @param EntityManagerInterface $entityManager
-     * @param RouterInterface $router
-     * @param RequestStack $requestStack
-     * @param FormFactoryInterface $formFactory
-     * @param SchoolYearHelper $helper
+     * @var array
      */
-    public function __construct(EntityManagerInterface $entityManager, RouterInterface $router, RequestStack $requestStack, FormFactoryInterface $formFactory, SchoolYearHelper $helper)
-    {
-        parent::__construct($entityManager, $router, $requestStack, $formFactory);
-    }
+    protected $select = [
+        'name' => ['r.name', 'r.nameShort'],
+        'r.id',
+        'facilityName' => 'f.name',
+        'r.website',
+        'tutors' => false,
+    ];
+
+    /**
+     * @var array
+     */
+    protected $searchDefinition = [
+        'r.name',
+        'r.nameShort',
+        't.surname',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $columnDefinitions = [
+        'name' => [
+            'label' => [
+                [
+                    'label' => 'roll_group.name.label',
+                ],
+                [
+                    'label' => 'roll_group.name_short.label',
+                    'join' => '<br />',
+                    'class' => 'small text-muted',
+                ],
+            ],
+            'class' => 'text-center',
+            'name' => 'name',
+            'style' => 'combine',
+            'options' => [
+                'combine' => ['name' => [], 'nameShort' => ['class' => 'small text-muted', 'join' => '<br />']],
+            ],
+
+        ],
+        'tutors' => [
+            'label' => 'roll_group.tutors.label',
+            'name' => 'tutors',
+            'size' => 4,
+            'style' => 'array',
+            'options' => [
+                'join' => '<br />',
+            ],
+        ],
+        'facilityName' => [
+            'label' => 'roll_group.facility.label',
+            'name' => 'facilityName',
+        ],
+        'r.website' => [
+            'label' => 'roll_group.website.label',
+            'name' => 'website',
+            'style' => 'text',
+        ],
+        'r.id' => [
+            'label' => false,
+            'name' => 'id',
+            'display' => false,
+        ],
+    ];
+
+    /**\
+     * @var array
+     */
+    protected $actions = [
+        'buttons' => [
+            [
+                'label' => 'school.roll_group.delete.title',
+                'url' => '/school/roll/group/__id__/delete/',
+                'url_options' => [
+                    '__id__' => 'id',
+                ],
+                'type' => 'delete',
+                'classMerge' => 'btn-sm',
+            ],
+            [
+                'label' => 'school.roll_group.edit.title',
+                'url' => '/school/roll/group/__id__/edit/',
+                'url_options' => [
+                    '__id__' => 'id',
+                ],
+                'type' => 'edit',
+                'response_type' => 'redirect',
+                'classMerge' => 'btn-sm',
+            ],
+        ],
+    ];
 }

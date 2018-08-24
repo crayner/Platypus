@@ -3,6 +3,7 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import {translateMessage} from '../Component/MessageTranslator'
+import ContentSpan from './ContentSpan'
 
 export default function PaginationCombineCell(props) {
     const {
@@ -11,24 +12,36 @@ export default function PaginationCombineCell(props) {
         translations,
     } = props
 
-    const content = definition.options.combine.map(name => getContent(name))
-    const display = content.map((text, i) =>
-        <span key={i}>
-            {text}
-            {definition.options.join === 'nl' ? <br/> : definition.options.join}
-        </span>
+    const content = Object.keys(definition.options.combine).map(name => getContentDetails(name))
+    let xxx = Object.keys(content).map(key => content[key])
+
+    const display = xxx.map((content, key) =>
+        <ContentSpan
+            content={content}
+            key={key}
+        />
     )
 
-    function getContent(name)
+    function getContentDetails(name)
     {
-        if (typeof definition.translate[name] !== 'undefined')
-            return translateMessage(translations, definition.translate[name] + data[name])
-        return data[name];
+        let content = {}
+
+        content['options'] = definition.options.combine[name]
+
+        if (typeof(content['options'].translate) === 'string')
+            content['content'] = translateMessage(translations, content['options'].translate + data[name])
+        else
+            content['content'] = data[name];
+
+        return content
     }
 
-    return (
-        <section>{display}</section>
-    )
+    return xxx.map(function(content, key) {
+        return <ContentSpan
+            content={content}
+            key={key}
+        />
+    })
 
 }
 

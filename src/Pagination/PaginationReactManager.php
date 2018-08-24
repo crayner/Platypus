@@ -80,8 +80,8 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['name'] = $this->getName();
         $props['displaySearch'] = $this->isDisplaySearch();
         $props['displaySort'] = $this->isDisplaySort();
-        $props['sortOptions'] = $this->getSortList();
         $props['sortByList'] = $this->getSortByList();
+        $props['sortOptions'] = $this->getSortList();
         $props['results'] = $this->getAllResults();
         $props['offset'] = $this->getOffset();
         $props['search'] = $this->getSearch() ?: '';
@@ -110,7 +110,6 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['translations'][] = 'pagination.figures.one_page.one_record';
         $props['translations'][] = 'pagination.figures.one_page.two_plus';
         $props['translations'][] = 'pagination.figures.two_plus';
-
 
         $props['specificTranslations'] = $this->getSpecificTranslations();
         foreach($this->getSortList() as $name)
@@ -272,6 +271,8 @@ abstract class PaginationReactManager implements PaginationInterface
 
         foreach ($this->select as $key=>$name)
         {
+            if ($name === false)
+                continue;
             if (is_array($name)) {
                 foreach($name as $w) {
                     if ($selectBegin) {
@@ -385,7 +386,8 @@ abstract class PaginationReactManager implements PaginationInterface
     {
         if (empty($this->sessionData))
         {
-            $this->sessionData = $this->getSession()->get('pagination')[$this->getName()] ?: [];
+            $pagination = $this->getSession()->get('pagination');
+            $this->sessionData = ! empty($pagination[$this->getName()]) ? $pagination[$this->getName()] : [];
         }
         return $this->sessionData;
     }
@@ -533,7 +535,11 @@ abstract class PaginationReactManager implements PaginationInterface
 
         foreach($this->getColumnDefinitions() as $definition)
             if ($definition['label'] !== false)
-                $specificTranslations[] = $definition['label'];
+                if (is_array($definition['label']))
+                    foreach($definition['label'] as $heading)
+                        $specificTranslations[] = $heading['label'];
+                else
+                    $specificTranslations[] = $definition['label'];
 
         $specificTranslations[] = $this->getHeaderDefinition()['title'];
 
@@ -615,10 +621,11 @@ abstract class PaginationReactManager implements PaginationInterface
      */
     private function getHeaderDefinition(): array
     {
-        if (! property_exists($this, 'headerDefinition'))
-            throw new \Exception('The header definition is missing.');
-        if (! is_array($this->headerDefinition))
-            throw new \Exception('The header definition is not an array.');
+        if (! property_exists($this, 'headerDefinition') || ! is_array($this->headerDefinition))
+            return [
+                'title' => $this->getHeaderTitle().'.title',
+                'paragraph' => false
+            ];
 
         $resolver = new OptionsResolver();
         $resolver->setRequired(
@@ -652,8 +659,10 @@ abstract class PaginationReactManager implements PaginationInterface
             return '';
         reset($this->sortByList);
         $key = key($this->sortByList);
-
         $this->sort = $this->sort ?: isset($this->getSessionData()['sort']) ? $this->getSessionData()['sort'] : $key;
+
+        if (empty($this->sortByList[$this->sort]))
+            $this->sort = $key;
 
         return $this->sort;
     }
@@ -738,5 +747,13 @@ abstract class PaginationReactManager implements PaginationInterface
         }
 
         return $this->actions;
+    }
+
+    public function getHeaderTitle(): string
+    {
+        if (property_exists($this, 'headerTitle'))
+            return $this->headerTitle;
+
+        return $this->getName() ;
     }
 }

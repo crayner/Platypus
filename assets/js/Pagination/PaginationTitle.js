@@ -37,7 +37,7 @@ export default function PaginationTitle(props) {
                         <span className="p-6">{translateMessage(translations, headerDefinition.title)}</span>
                         <span className="p-6"></span>
                     </h3>
-                    <p>{headerDefinition.paragraph ? translateMessage(translations, headerDefinition.paragraph) : ''}</p>
+                    <p>{headerDefinition.paragraph ? translateMessage(translations, headerDefinition.paragraph) : '' }</p>
                 </div>
                 <div className="card-body">
                     <div className="row row-header">

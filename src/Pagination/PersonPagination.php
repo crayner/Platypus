@@ -33,7 +33,7 @@ class PersonPagination extends PaginationReactManager
 	 */
 	protected $select = [
         'p.photo',
-		'fullName' => "CONCAT(p.surname, ': ', p.firstName)",
+		'fullName' => ['p.surname', 'p.firstName'],
 		'p.id',
         'u.username',
         'userId' => 'u.id',
@@ -119,6 +119,10 @@ class PersonPagination extends PaginationReactManager
             'label' => 'person.full_name.label',
             'name' => 'fullName',
             'size' => 3,
+            'style' => 'combine',
+            'options' => [
+                'combine' => ['surname' => [], 'firstName' => ['join' => ': ']],
+            ],
         ],
         'p.id' => [
             'label' => false,
@@ -134,12 +138,8 @@ class PersonPagination extends PaginationReactManager
             'label' => 'person.details.label',
             'name' => 'details',
             'style' => 'combine',
-            'translate' => [
-                'status' => 'person.status.',
-            ],
             'options' => [
-                'combine' => ['status', 'primaryRole', 'familyName'],
-                'join' => 'nl',
+                'combine' => ['status' => ['translate' => 'person.status.'], 'primaryRole' => ['join' => '<br />'], 'familyName' => ['join' => '<br />']],
             ],
             'class' => 'text-center',
         ],
@@ -169,6 +169,10 @@ class PersonPagination extends PaginationReactManager
             $this->specificTranslations[] = 'person.title.' . $title;
         foreach(Person::getStatusList() as $value)
             $this->specificTranslations[] = 'person.status.' . $value;
+        $this->specificTranslations[] = 'person.action.edit';
+        $this->specificTranslations[] = 'person.action.delete';
+        $this->specificTranslations[] = 'person.action.password.change' ;
+
         return $this;
     }
 

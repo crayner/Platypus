@@ -37,8 +37,7 @@ class PaginationController
 
         $pagination = $session->get('pagination');
 
-        $data = $pagination[$name] ?: [];
-
+        $data = ! empty($pagination[$name]) ? $pagination[$name] : [];
 
         $pagination[$name] = [];
         $data['limit'] = $limit;

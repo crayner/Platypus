@@ -7,7 +7,7 @@
         {% set translations = translations|merge({(value): value|trans({}, 'Pagination')}) %}
     {% endfor %}
     {% for value in props['specificTranslations'] %}
-        {% set translations = translations|merge({(value): value|trans }) %}
+        {% set translations = translations|merge({(value): value|trans })|raw %}
     {% endfor %}
     {% set props = props|merge({translations: translations}) %}
     window.PAGINATION_PROPS = {{ props|json_encode|raw }}
