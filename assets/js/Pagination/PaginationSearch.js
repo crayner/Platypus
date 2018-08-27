@@ -2,8 +2,6 @@
 
 import React from "react"
 import PropTypes from 'prop-types'
-import {faSearch, faSortAlphaDown, faSortAlphaUp} from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { translateMessage } from "../Component/MessageTranslator"
 
 export default function PaginationSearch(props) {

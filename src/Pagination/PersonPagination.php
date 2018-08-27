@@ -203,4 +203,54 @@ class PersonPagination extends PaginationReactManager
             ],
         ],
     ];
+
+    /**
+     * @var array
+     */
+    protected $filter = [
+        [
+            'group_style' => 'one_only',
+            'name' => 'role',
+            'label' => 'person_pagination.filter.group.role',
+            'fields' => [
+                [
+                    'name' => 'role::student',
+                    'value' => ['Student'],
+                    'field' => 'primaryRole',
+                    'label' => 'person_pagination.filter.role.student',
+                ],
+                [
+                    'name' => 'role::parent',
+                    'value' => ['Parent'],
+                    'field' => 'primaryRole',
+                    'label' => 'person_pagination.filter.role.parent',
+                ],
+                [
+                    'name' => 'role::staff',
+                    'value' => ['Staff','Administrator'],
+                    'field' => 'primaryRole',
+                    'label' => 'person_pagination.filter.role.staff',
+                ],
+            ],
+        ],
+        [
+            'group_style' => 'one_only',
+            'name' => 'status',
+            'label' => 'person_pagination.filter.group.status',
+            'fields' => [
+                [
+                    'name' => 'status::full',
+                    'value' => ['full'],
+                    'field' => 'status',
+                    'label' => 'person_pagination.filter.status.full',
+                ],
+                [
+                    'name' => 'status::left',
+                    'value' => ['left'],
+                    'field' => 'status',
+                    'label' => 'person_pagination.filter.status.left',
+                ],
+            ],
+        ],
+    ];
 }

@@ -11,6 +11,8 @@ import {translateMessage} from '../Component/MessageTranslator'
 import { fetchJson } from "../Component/fetchJson";
 import {openPage} from '../Component/openPage'
 import PaginationMessages from './PaginationMessages'
+import PaginationFilter from './PaginationFilter'
+import PaginationFilterNotices from './PaginationFilterNotices'
 
 export default class PaginationControl extends Component {
     constructor(props) {
@@ -23,13 +25,16 @@ export default class PaginationControl extends Component {
             results: props.results,
             rows: [],
             sort: props.sort,
-            messages: new Object()
+            messages: new Object(),
+            filterValue: [],
         }
 
         this.locale = props.locale
         this.name = props.name
         this.displaySearch = props.displaySearch
         this.displaySort = props.displaySort
+        this.displayFilter = props.displayFilter
+        this.filter = props.filter
         this.sortOptions = props.sortOptions
         this.translations = props.translations
         this.allResults = props.results
@@ -45,12 +50,13 @@ export default class PaginationControl extends Component {
         this.orderBy = props.orderBy === 'ASC' ? 1 : -1
         this.caseSensitive = props.caseSensitive === '1' ? true : false
         this.messages = new Object()
+        this.filterValue = props.filterValue
+
+        this.filterLabels = this.createFilterLabels(this.filter)
 
         this.sort = props.sort
 
         this.pages = 0
-        this.limitChange = true
-        this.offsetChange = true
         this.sortByList = props.sortByList
         this.rows = []
 
@@ -63,6 +69,8 @@ export default class PaginationControl extends Component {
         this.toggleCaseSensitive = this.toggleCaseSensitive.bind(this)
         this.buttonClickAction = this.buttonClickAction.bind(this)
         this.cancelMessage = this.cancelMessage.bind(this)
+        this.clearFilter = this.clearFilter.bind(this)
+        this.changeFilterValue = this.changeFilterValue.bind(this)
     }
 
     componentWillMount(){
@@ -90,7 +98,8 @@ export default class PaginationControl extends Component {
             results: results,
             rows: this.rows,
             sort: this.sort,
-            messages: this.messages
+            messages: this.messages,
+            filterValue: this.filterValue,
         })
         this.setPaginationCache()
     }
@@ -99,16 +108,20 @@ export default class PaginationControl extends Component {
         if (this.searchChange) {
             this.searchChange = false
 
-            if (this.search === '' || this.search === null)
-                return this.allResults
+            let results
+            if (!(this.search === '' || this.search === null)) {
+                if (this.caseSensitive)
+                    results = this.allResults.filter(row =>
+                        row.SearchString.includes(this.search)
+                    )
+                else
+                    results = this.allResults.filter(row =>
+                        row.SearchString.toLowerCase().includes(this.search.toLowerCase())
+                    )
+            } else
+                results = this.allResults
 
-            if (this.caseSensitive)
-                return this.allResults.filter(row =>
-                    row.SearchString.includes(this.search)
-                )
-            return this.allResults.filter(row =>
-                row.SearchString.toLowerCase().includes(this.search.toLowerCase())
-            )
+            return this.filterResults(results)
         }
         return this.state.results
     }
@@ -196,7 +209,11 @@ export default class PaginationControl extends Component {
 
     setPaginationCache()
     {
-        var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/' + (this.search === '' ? '*' : this.search) + '/' + (this.sort === '' ? '*' : this.sort) + '/' + (this.orderBy === 1 ? 'ASC' : 'DESC') + '/' + (this.caseSensitive ? '1' : '0') + '/'
+        if (this.filterValue[0] === '[object Object]')
+            this.filterValue = []
+        const filter = new Buffer(JSON.stringify(this.filterValue)).toString('base64')
+
+        var path = '/pagination/cache/' + this.name + '/' + this.limit + '/' + this.offset + '/' + (this.search === '' ? '*' : this.search) + '/' + (this.sort === '' ? '*' : this.sort) + '/' + (this.orderBy === 1 ? 'ASC' : 'DESC') + '/' + (this.caseSensitive ? '1' : '0') + '/' + filter + '/'
         fetchJson(path, {}, this.locale)
     }
 
@@ -204,6 +221,18 @@ export default class PaginationControl extends Component {
         this.offset = this.offset + this.limit
         this.offsetChange = true
         this.handlePagination()
+    }
+
+    createFilterLabels(filter){
+        let labels = new Object()
+        let i, k
+        for(i=0; i < filter.length; i++) {
+            for (k = 0; k < filter[i]['fields'].length; k++) {
+                const field = filter[i]['fields'][k]
+                labels[field['name']] = field['label']
+            }
+        }
+        return labels
     }
 
     previousPage(event){
@@ -277,11 +306,88 @@ export default class PaginationControl extends Component {
         this.handlePagination()
     }
 
+    clearFilter(){
+        this.filterValue = []
+        this.searchChange = true
+        this.handlePagination()
+    }
+
+    changeFilterValue(event) {
+        const val = event.target.value
+        const value = val.split('::')
+        const group = value[0]
+        const definition = this.getFilterDefinition(group)
+
+        let result
+        if (definition['group_style'] === 'one_only')
+            result = this.filterValue.filter(filter => filter.includes(group + '::') === false )
+        else
+            result = this.filterValue.filter(filter => filter.includes(val) === false )
+
+        result.push(val)
+        this.filterValue = result
+        this.searchChange = true
+        this.handlePagination()
+    }
+
+    getFilterDefinition(group) {
+        let i
+        for(i=0; i < this.filter.length; i++)
+            if (this.filter[i].name === group)
+                return this.filter[i]
+        console.error('The filter definition was not found.')
+    }
+
+    filterResults(results){
+        let i
+        let where = {}
+        for(i=0; i < this.filterValue.length; i++){
+            const val = this.filterValue[i]
+            const value = val.split('::')
+            const group = value[0]
+            let definition = this.getFilterDefinition(group)
+            let o
+            for(o=0; o < definition['fields'].length; o++){
+                if (definition['fields'][o]['name'] === val)
+                {
+                    if (typeof(where[definition['fields'][o]['field']]) === 'undefined')
+                        where[definition['fields'][o]['field']] = []
+                    where[definition['fields'][o]['field']].push(definition['fields'][o]['value'])
+                }
+            }
+        }
+        for(let name in where) {
+            const values = where[name][0]
+            const rows = results.filter(function(row) {
+                let i
+                for(i=0; i < values.length; i++) {
+                    if (row[name] === values[i])
+                        return row
+                }
+            })
+
+            results = rows
+        }
+
+        return results
+    }
+
     render() {
         return (
             <section>
                 <div className="container-fluid card card-dark" style={{padding: '0 15px 5px'}}>
                     <div className="row">
+                        {this.displayFilter ?
+                            <div className="col-3 card text-right">
+                                <PaginationFilter
+                                    name={this.name}
+                                    translations={this.translations}
+                                    filter={this.filter}
+                                    clearFilter={this.clearFilter}
+                                    changeFilterValue={this.changeFilterValue}
+                                />
+                            </div>
+                            : ''}
                         <div className="col-3 card text-right">
                             {this.displaySearch ?
                                 <PaginationSearch
@@ -305,7 +411,7 @@ export default class PaginationControl extends Component {
                                     sort={this.state.sort}
                                 /> : ''}
                         </div>
-                        <div className="col-3 offset-3 card text-right">
+                        <div className={this.displayFilter ? 'col-3 card text-right' : 'col-3 offset-3 card text-right'}>
                             {this.displaySort ?
                                 <PaginationLimit
                                     name={this.name}
@@ -318,7 +424,14 @@ export default class PaginationControl extends Component {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-4 offset-8 text-right small">
+                        <div className="col-8 small">
+                            <PaginationFilterNotices
+                                translations={this.translations}
+                                filterValue={this.state.filterValue}
+                                filterLabels={this.filterLabels}
+                            />
+                        </div>
+                        <div className="col-4 text-right small">
                             {this.pages === 0 ? translateMessage(this.translations, 'pagination.figures.empty') : '' }
                             {this.pages === 1 ? (this.total === 1 ? translateMessage(this.translations, 'pagination.figures.one_page.one_record') : translateMessage(this.translations, 'pagination.figures.one_page.two_plus', {'%total%': this.total})) : '' }
                             {this.pages > 1 ? translateMessage(this.translations, 'pagination.figures.two_plus', {'%first%': this.calculateFirst(),'%last%': this.calculateLast(), '%total%': this.total, '%pages%': this.pages}) : '' }
@@ -350,6 +463,9 @@ PaginationControl.propTypes = {
     name: PropTypes.string.isRequired,
     displaySearch: PropTypes.bool.isRequired,
     displaySort: PropTypes.bool.isRequired,
+    displayFilter: PropTypes.bool.isRequired,
+    filterValue: PropTypes.array.isRequired,
+    filter: PropTypes.array.isRequired,
     translations: PropTypes.object.isRequired,
     sortOptions: PropTypes.object.isRequired,
     sortByList: PropTypes.object.isRequired,
@@ -369,5 +485,6 @@ PaginationControl.defaultTypes = {
     locale: 'en',
     sortOptions: new Object(),
     sortByList: new Object(),
+    filter: new Object(),
 }
 

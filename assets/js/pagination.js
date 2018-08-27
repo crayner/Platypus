@@ -10,6 +10,9 @@ render(
         name={window.PAGINATION_PROPS.name}
         displaySearch={window.PAGINATION_PROPS.displaySearch}
         displaySort={window.PAGINATION_PROPS.displaySort}
+        displayFilter={window.PAGINATION_PROPS.displayFilter}
+        filter={window.PAGINATION_PROPS.filter}
+        filterValue={window.PAGINATION_PROPS.filterValue}
         sortOptions={window.PAGINATION_PROPS.sortOptions}
         sortByList={window.PAGINATION_PROPS.sortByList}
         translations={window.PAGINATION_PROPS.translations}

@@ -79,6 +79,8 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['name'] = $this->getName();
         $props['displaySearch'] = $this->isDisplaySearch();
         $props['displaySort'] = $this->isDisplaySort();
+        $props['displayFilter'] = $this->isDisplayFilter();
+        $props['filter'] = $this->getFilter();
         $props['sortByList'] = $this->getSortByList();
         $props['sortOptions'] = $this->getSortList();
         $props['results'] = $this->getAllResults();
@@ -92,10 +94,15 @@ abstract class PaginationReactManager implements PaginationInterface
         $props['headerDefinition'] = $this->getHeaderDefinition();
         $props['searchDefinition'] = $this->getSearchDefinition();
         $props['actions'] = $this->getActions();
+        $props['filterValue'] = $this->getFilterValue();
 
         $props['translations'] = [];
         $props['translations'][] = 'pagination.search.label';
         $props['translations'][] = 'pagination.search.placeholder';
+        $props['translations'][] = 'pagination.filter.label';
+        $props['translations'][] = 'pagination.filter.placeholder';
+        $props['translations'][] = 'pagination.filter.clear';
+        $props['translations'][] = 'pagination.filter.by';
         $props['translations'][] = 'search';
         $props['translations'][] = 'pagination.sort.label';
         $props['translations'][] = 'pagination.limit.label';
@@ -355,6 +362,7 @@ abstract class PaginationReactManager implements PaginationInterface
         $sessionData['search'] = $this->getSearch();
         $sessionData['sort'] = $this->getSort();
         $sessionData['limit'] = $this->getLimit();
+        $sessionData['filterValue'] = $this->getFilterValue();
         $this->sessionData = $sessionData;
 
         $pagination = $this->getSession()->get('pagination');
@@ -377,6 +385,21 @@ abstract class PaginationReactManager implements PaginationInterface
     private function getSearch(): string
     {
         return $this->search = $this->search ?: isset($this->getSessionData()['search']) ? $this->getSessionData()['search'] : '';
+    }
+
+    /**
+     * @var array
+     */
+    private $filterValue = [];
+
+    /**
+     * getSearch
+     *
+     * @return array
+     */
+    private function getFilterValue(): array
+    {
+        return $this->filterValue = $this->filterValue ?: isset($this->getSessionData()['filterValue']) ? $this->getSessionData()['filterValue'] : [];
     }
 
     /**
@@ -495,6 +518,12 @@ abstract class PaginationReactManager implements PaginationInterface
 
         if ($this->getHeaderDefinition()['paragraph'] !== false)
             $specificTranslations[] = $this->getHeaderDefinition()['paragraph'];
+
+        foreach($this->getFilter() as $group) {
+            $specificTranslations[] = $group['label'];
+            foreach ($group['fields'] as $filter)
+                $specificTranslations[] = $filter['label'];
+        }
 
         return $specificTranslations;
     }
@@ -736,5 +765,80 @@ abstract class PaginationReactManager implements PaginationInterface
         }
 
         return $this->select;
+    }
+
+    /**
+     * @var bool
+     */
+    private $displayFilter = false;
+
+    /**
+     * isDisplayFilter
+     *
+     * @return bool
+     */
+    private function isDisplayFilter(): bool
+    {
+        if (empty($this->getFilter()))
+            return $this->displayFilter =false;
+
+        return $this->displayFilter = true;
+    }
+
+    /**
+     * getFilter
+     *
+     * @return array
+     */
+    protected function getFilter(): array
+    {
+        if (! property_exists($this, 'filter'))
+            return [];
+        if (! is_array($this->filter))
+            return [];
+
+        foreach($this->filter as $q=>$filter)
+        {
+            $resolver = new OptionsResolver();
+
+            $resolver->setRequired(
+                [
+                    'group_style',
+                    'name',
+                    'fields',
+                    'label',
+                ]
+            );
+            $resolver->setAllowedTypes('group_style',  'string');
+            $resolver->setAllowedTypes('name',  'string');
+            $resolver->setAllowedTypes('fields',  'array');
+            $groupStyles = ['one_only', 'multiple'];
+            if (! in_array($filter['group_style'], $groupStyles))
+                throw new InvalidOptionsException(sprintf('The option "group_style" with value "%s" is expected to be of value "%s".',
+                    $filter['group_style'],
+                    implode('" or "', $groupStyles)));
+
+            $resolver->resolve($filter);
+
+            foreach($filter['fields'] as $f=>$field){
+                $resolver = new OptionsResolver();
+                $resolver->setRequired(
+                    [
+                        'name',
+                        'value',
+                        'field',
+                        'label',
+                    ]
+                );
+                $resolver->setAllowedTypes('name',  'string');
+                $resolver->setAllowedTypes('value',  'array');
+                $resolver->setAllowedTypes('label',  'string');
+                $resolver->setAllowedTypes('field',  'string');
+
+                $resolver->resolve($field);
+            }
+        }
+
+        return $this->filter;
     }
 }
