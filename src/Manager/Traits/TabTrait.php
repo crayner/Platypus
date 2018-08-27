@@ -1,6 +1,9 @@
 <?php
 namespace App\Manager\Traits;
 
+use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+
 trait TabTrait
 {
     /**
@@ -29,4 +32,37 @@ trait TabTrait
         throw new \InvalidArgumentException('The arguments passed to the tab display test must be an array = [method => name, with => [parameterArray]] or a string of methodName.');
     }
 
+    /**
+     * getTabs
+     *
+     * @return array
+     */
+    public function getTabs(): array
+    {
+        if (! property_exists($this, 'tabs'))
+            throw new InvalidOptionsException('The class \''.get_class($this).'\' must define \'$tabs\' as an array');
+        if (! is_array($this->tabs))
+            throw new InvalidOptionsException('The class \''.get_class($this).'\' must define \'$tabs\' as an array');
+
+
+        foreach($this->tabs as $q=>$tab) {
+            $resolver = new OptionsResolver();
+            $resolver->setRequired(
+                [
+                    'include',
+                    'label',
+                    'message',
+                    'name',
+                ]
+            );
+            $resolver->setDefaults(
+                [
+                    'display' => true,
+                    'translation' => false,
+                ]
+            );
+            $this->tabs[$q] = $resolver->resolve($tab);
+        }
+        return $this->tabs;
+    }
 }

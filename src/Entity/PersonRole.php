@@ -81,7 +81,7 @@ class PersonRole
     /**
      * @var array
      */
-    private static $categoryList = ['staff','student','parent','other'];
+    private static $categoryList = ['administrator','parent','student','support_staff','teacher'];
 
     /**
      * @return string
@@ -340,5 +340,15 @@ class PersonRole
         $person->setPrimaryRole(null);
 
         return $this;
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getCategory();
     }
 }

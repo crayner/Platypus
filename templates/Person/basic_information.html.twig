@@ -1,0 +1,37 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'basic.information.title', name: getFullName(),  transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+<div class="row">
+    <div class="col-2 card">
+        {{ form_row(form.title) }}
+    </div>
+    <div class="col-5 card">
+        {{ form_row(form.surname) }}
+    </div>
+    <div class="col-5 card">
+        {{ form_row(form.firstName) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-2 card">
+        {{ form_row(form.gender) }}
+    </div>
+    <div class="col-5 card">
+        {{ form_row(form.preferredName) }}
+    </div>
+    <div class="col-5 card">
+        {{ form_row(form.officialName) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-4 card">
+        {{ form_row(form.dob) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.nameInCharacters) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.photo) }}
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}

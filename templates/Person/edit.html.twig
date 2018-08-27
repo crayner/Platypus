@@ -1,1 +1,25 @@
-{% dump %}
+{% trans_default_domain "Person" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ parent() }}{{ 'person.edit.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'person.edit.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'person.edit.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ form_start(form) }}
+    {% set h3Content = saveButton() %}
+    {% include 'Default/tabs.html.twig' with {translation: 'School', tabManager: manager} %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {% set route = 'person_edit' %}
+    {% include 'Script/formTabSubmitScript.html.twig' %}
+{% endblock javascripts %}

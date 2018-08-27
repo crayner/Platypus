@@ -7,8 +7,9 @@
 <div id="formTabs">
     <ul class="nav nav-pills" role="tablist">
         {% set active = ' active' %}
-        {% for name,tab in getTabs() %}
-            {% if tab.display is not defined or tabManager.display(tab.display) %}
+        {% for tab in getTabs() %}
+            {% set name = tab.name %}
+            {% if tab.display is same as(true) or tabManager.display(tab.display) %}
                 {% if tab.translation is defined %}{% set translation = tab.translation %}{% endif %}
                 {% set disabled = '' %}
                 {% set label_params = tab.label_params|default({}) %}
@@ -21,8 +22,9 @@
     </ul>
     {% set active = ' active' %}
     <div class="tab-content">
-        {% for name,tab in getTabs() %}
-            {% if tab.display is not defined or tabManager.display(tab.display) %}
+        {% for tab in getTabs() %}
+            {% set name = tab.name %}
+            {% if tab.display is same as(true) or tabManager.display(tab.display) %}
                 {% if tab.translation is defined %}{% set translation = tab.translation %}{% endif %}
                 <div class="tab-pane{{ active }}" id="{{ safeName(name) }}">
                     {% if tab.message is defined %}

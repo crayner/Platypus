@@ -297,5 +297,7 @@ People Admin:
             route: manage_people
             parameters: {}
             transDomain: Person
+    hidden:
+        - person_edit
 ';
 }

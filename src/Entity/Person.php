@@ -230,7 +230,7 @@ class Person
     ];
 
     /**
-     * @returnstring
+     * @return string
      */
     public function getGender(): ?string
     {
@@ -375,6 +375,7 @@ class Person
     public function __construct()
     {
         $this->receiveNotificationEmails = true;
+        $this->gender = 'u';
     }
 
     /**
@@ -503,23 +504,23 @@ class Person
     }
 
     /**
-     * @var FileBlob
+     * @var string|null
      */
     private $photo;
 
     /**
-     * @return FileBlob|null
+     * @return string|null
      */
-    public function getPhoto(): ?FileBlob
+    public function getPhoto(): ?string
     {
         return $this->photo;
     }
 
     /**
-     * @param null|FileBlob $photo
+     * @param null|string $photo
      * @return Person
      */
-    public function setPhoto(?FileBlob $photo): Person
+    public function setPhoto(?string $photo): Person
     {
         $this->photo = $photo;
         return $this;
@@ -657,5 +658,81 @@ class Person
     public function canDelete(): bool
     {
         return false;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $nameInCharacters;
+
+    /**
+     * @return null|string
+     */
+    public function getNameInCharacters(): ?string
+    {
+        return $this->nameInCharacters;
+    }
+
+    /**
+     * @param null|string $nameInCharacters
+     * @return Person
+     */
+    public function setNameInCharacters(?string $nameInCharacters): Person
+    {
+        $this->nameInCharacters = $nameInCharacters;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime|null
+     */
+    private $dob;
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDob(): ?\DateTime
+    {
+        return $this->dob;
+    }
+
+    /**
+     * @param \DateTime|null $dob
+     * @return Person
+     */
+    public function setDob(?\DateTime $dob): Person
+    {
+        $this->dob = $dob;
+        return $this;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $secondaryRoles;
+
+    /**
+     * @return Collection
+     */
+    public function getSecondaryRoles(): Collection
+    {
+        if (empty($this->secondaryRoles))
+            $this->secondaryRoles = new ArrayCollection();
+
+        if ($this->secondaryRoles instanceof PersistentCollection)
+            $this->secondaryRoles->initialize();
+
+        return $this->secondaryRoles;
+    }
+
+    /**
+     * @param Collection $secondaryRoles
+     * @return Person
+     */
+    public function setSecondaryRoles($secondaryRoles): Person
+    {
+        $this->secondaryRoles = is_array($secondaryRoles) ? new ArrayCollection($secondaryRoles) : $secondaryRoles ;
+
+        return $this;
     }
 }

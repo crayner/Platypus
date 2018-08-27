@@ -1,0 +1,38 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'system.access.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+<div class="row">
+    <div class="col-4 card">
+        {{ form_row(form.primaryRole, {value: transformData(form.primaryRole)}) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.secondaryRoles) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.status) }}
+    </div>
+</div>
+<div class="row">
+    {% set user = form.vars.value.user %}
+    {% set canLogin = true %}
+    {% set username = '' %}
+    {% if user is same as(null) %}
+        {% set canLogin = false %}
+    {% else %}
+        {% set username = user.username %}
+    {% endif %}
+    <div class="col-4 card">
+        {{ form_row(form.canLogin, {value: canLogin}) }}
+    </div>
+    {% if user is not same as(null) %}
+    <div class="col-4 card">
+        {{ form_row(form.forcePasswordReset, {value: user.expired}) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.username, {value: username}) }}
+    </div>
+    {% endif %}
+    {% do form.username.setRendered %}
+    {% do form.forcePasswordReset.setRendered %}
+</div>
+{% include 'Default/panelEnd.html.twig' %}

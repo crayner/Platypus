@@ -28,6 +28,13 @@ App\Entity\Person:
         preferredName:
             length: 30
             column: preferred_name
+        officialName:
+            length: 150
+            column: official_name
+        nameInCharacters:
+            length: 20
+            column: name_in_characters
+            nullable: true
         gender:
             length: 1
         email:
@@ -55,12 +62,15 @@ App\Entity\Person:
             nullable: true
             column: personal_language
         photo:
-            type: blob
+            length: 150
             nullable: true
         status:
             length: 10
             options:
                 default: 'full'
+        dob:
+            type: datetime
+            nullable: true
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff
@@ -77,3 +87,14 @@ App\Entity\Person:
             joinColumn:
                 name: primary_role_id
                 referencedColumnName: id
+    manyToMany:
+        secondaryRoles:
+            targetEntity: App\Entity\PersonRole
+            joinTable:
+                name: person_secondary_roles
+                joinColumns:
+                    role_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    person_id:
+                        referencedColumnName: id

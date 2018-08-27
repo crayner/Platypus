@@ -16,7 +16,10 @@
 namespace App\Controller;
 
 use App\Form\PreferencesType;
+use App\Form\Type\PersonType;
 use App\Manager\PersonManager;
+use App\Manager\PersonRoleManager;
+use App\Manager\StaticManager;
 use App\Manager\ThemeManager;
 use App\Manager\UserManager;
 use App\Pagination\PersonPagination;
@@ -174,21 +177,48 @@ class PersonController extends Controller
      * edit
      *
      * @param PersonManager $manager
+     * @param Request $request
      * @param string $id
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      * @Route("/person/{id}/edit/", name="person_edit"))
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(PersonManager $manager, $id = 'Add')
+    public function edit(PersonManager $manager, Request $request,  $id = 'Add')
     {
         $entity = $manager->find($id);
 
-        dump($entity);
+        $form = $this->createForm(PersonType::class, $entity, ['deletePhoto' => $this->generateUrl('delete_personal_photo', ['id' => $id])]);
+
+        $manager->getTabs();
+
+        $form->handleRequest($request);
+
         return $this->render(
             'Person/edit.html.twig',
             [
-
+                'form' => $form->createView(),
+                'manager' => $manager,
             ]
         );
+    }
+
+    /**
+     * deletePersonalPhoto
+     *
+     * @Route("/person/{id}/delete_personal_photo/", name="delete_personal_photo")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @param AssetHelper $assetHelper
+     * @param PersonManager $manager
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
+     */
+    public function deletePersonalPhoto(AssetHelper $assetHelper, PersonManager $manager, int $id)
+    {
+        $person = $manager->find($id);
+        AssetHelper::removeAsset($person->getPhoto());
+        $person->setPhoto(null);
+        return $this->redirectToRoute('person_edit', ['id' => $id]);
     }
 }

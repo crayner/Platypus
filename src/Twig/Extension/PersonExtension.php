@@ -47,6 +47,7 @@ class PersonExtension extends AbstractExtension
     {
         return [
             new \Twig_SimpleFunction('getStaffList', [$this->personManager, 'getStaffList']),
+            new \Twig_SimpleFunction('getFullName', [$this->personManager, 'getFullName']),
         ];
     }
 

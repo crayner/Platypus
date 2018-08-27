@@ -2,3 +2,18 @@ App\Entity\Person:
     properties:
         personalBackground:
             - App\Validator\BackgroundImage: ~
+        photo:
+            - Image:
+                maxRatio: 0.95
+                minRatio: 0.625
+                allowLandscape: false
+                allowSquare: false
+                maxSize: 750k
+        officialName:
+            - NotBlank: ~
+        preferredName:
+            - NotBlank: ~
+        surname:
+            - NotBlank: ~
+        firstName:
+            - NotBlank: ~
