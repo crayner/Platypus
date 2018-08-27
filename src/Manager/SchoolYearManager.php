@@ -4,7 +4,7 @@ namespace App\Manager;
 use App\Entity\SchoolYear;
 use App\Entity\SchoolYearSpecialDay;
 use App\Entity\SchoolYearTerm;
-use App\Manager\Interfaces\TabManagerInterface;
+use App\Manager\Traits\EntityTrait;
 use App\Repository\SchoolYearRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Driver\PDOException;
@@ -14,14 +14,20 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class SchoolYearManager
  * @package App\Manager
  */
-class SchoolYearManager implements TabManagerInterface
+class SchoolYearManager extends TabManager
 {
+    use EntityTrait;
+
+    /**
+     * @var string
+     */
+    private $entityName = SchoolYear::class;
+
 	/**
 	 * @var EntityManagerInterface
 	 */
@@ -41,11 +47,6 @@ class SchoolYearManager implements TabManagerInterface
 	 * @var Year
 	 */
 	private $year;
-
-	/**
-	 * @var  SchoolYear
-	 */
-	private $schoolYear;
 
     /**
      * @var MessageManager
@@ -137,7 +138,7 @@ class SchoolYearManager implements TabManagerInterface
      */
     public function getSchoolYear(): ?SchoolYear
     {
-        return $this->schoolYear;
+        return $this->getEntity();
     }
 
     /**
@@ -250,36 +251,32 @@ class SchoolYearManager implements TabManagerInterface
 		return $this->getEntityManager()->getRepository(SchoolYear::class);
 	}
 
-	/**
-	 * @return array
-	 */
-	public function getTabs(): array
-	{
-		return Yaml::parse("
-schoolYear:
-    label: school_year.details.tab
-    include: SchoolYear/school_year_tab.html.twig
-    message: schoolYearMessage
-    translation: SchoolYear
-terms:
-    label: school_year.terms.tab
-    include: SchoolYear/terms.html.twig
-    message: termMessage
-    translation: SchoolYear
-specialDays:
-    label: school_year.specialDays.tab
-    include: SchoolYear/special_days.html.twig
-    message: specialDayMessage
-    translation: SchoolYear
-");
-		/*
-		 * calendarGrades:
-    label: schoolDay.calendar_grades.tab
-    include: SchoolYear/calendar_grades.html.twig
-    message: calendarGradeMessage
-    translation: SchoolYear
-		 */
-	}
+    /**
+     * @var array
+     */
+	protected $tabs = [
+        [
+            'name' => 'schoolYear',
+            'label' => 'school_year.details.tab',
+            'include' => 'SchoolYear/school_year_tab.html.twig',
+            'message' => 'schoolYearMessage',
+            'translation' => 'SchoolYear',
+        ],
+        [
+            'name' => 'terms',
+            'label' => 'school_year.terms.tab',
+            'include' => 'SchoolYear/terms.html.twig',
+            'message' => 'termMessage',
+            'translation' => 'SchoolYear',
+        ],
+        [
+            'name' => 'specialDays',
+            'label' => 'school_year.specialDays.tab',
+            'include' => 'SchoolYear/special_days.html.twig',
+            'message' => 'specialDayMessage',
+            'translation' => 'SchoolYear',
+        ],
+    ];
 
 	/**
 	 * @param SchoolYear $schoolYear
@@ -479,22 +476,6 @@ specialDays:
     }
 
     /**
-     * @param $id
-     * @return SchoolYear|null
-     */
-    public function find($id): ?SchoolYear
-    {
-        if ($id === 'Add')
-            $this->schoolYear = new SchoolYear();
-        if (empty($id))
-            $this->schoolYear = null;
-        if (intval($id) > 0)
-            $this->schoolYear = $this->getEntityManager()->getRepository(SchoolYear::class)->find($id);
-
-        return $this->getSchoolYear();
-    }
-
-    /**
      * @param $cid
      */
     public function removeTerm($cid)
@@ -635,5 +616,35 @@ specialDays:
                 return $grade->getSchoolYearGrade();
 
         return null;
+    }
+
+    /**
+     * findLast
+     *
+     * @return SchoolYear
+     * @throws \Exception
+     */
+    public function findLast(SchoolYear $schoolYear): SchoolYear
+    {
+        $lastYear = $this->getRepository()->createQueryBuilder('y')
+            ->orderBy('y.lastDay', 'DESC')
+            ->setMaxResults( 1 )
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        if ($lastYear === null)
+            return $schoolYear;
+
+        $interval = new \DateInterval('P1Y');
+        $schoolYear->setFirstDay(date_add($lastYear->getFirstDay(), $interval));
+        $schoolYear->setLastDay(date_add($lastYear->getLastDay(), $interval));
+        $schoolYear->setSequence($lastYear->getSequence() + 1);
+        if ($schoolYear->getFirstDay()->format('Y') !== $schoolYear->getLastDay()->format('Y'))
+            $schoolYear->setName($schoolYear->getFirstDay()->format('Y') . '-' . $schoolYear->getLastDay()->format('Y'));
+        else
+            $schoolYear->setName($schoolYear->getFirstDay()->format('Y'));
+dump($schoolYear);
+        return $schoolYear;
     }
 }

@@ -144,14 +144,14 @@ class SchoolYear extends SchoolYearExtension
     }
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $firstDay;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getFirstDay(): \DateTime
+    public function getFirstDay(): ?\DateTime
     {
         return $this->firstDay;
     }
@@ -160,30 +160,30 @@ class SchoolYear extends SchoolYearExtension
      * @param \DateTime $firstDay
      * @return SchoolYear
      */
-    public function setFirstDay(\DateTime $firstDay): SchoolYear
+    public function setFirstDay(?\DateTime $firstDay): SchoolYear
     {
         $this->firstDay = $firstDay;
         return $this;
     }
 
     /**
-     * @var \DateTime
+     * @var \DateTime|null
      */
     private $lastDay;
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getLastDay(): \DateTime
+    public function getLastDay(): ?\DateTime
     {
         return $this->lastDay;
     }
 
     /**
-     * @param \DateTime $lastDay
+     * @param \DateTime|null $lastDay
      * @return SchoolYear
      */
-    public function setLastDay(\DateTime $lastDay): SchoolYear
+    public function setLastDay(?\DateTime $lastDay): SchoolYear
     {
         $this->lastDay = $lastDay;
         return $this;

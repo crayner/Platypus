@@ -12,6 +12,7 @@ use Hillrange\Form\Type\DateType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -44,12 +45,13 @@ class SchoolYearType extends AbstractType
 					'help' => 'school_year.name.help',
 				]
 			)
-			->add('firstDay', DateType::class,
-				[
-					'label' => 'school_year.firstDay.label',
-					'help' => 'school_year.firstDay.help',
-				]
-			)
+            ->add('firstDay', DateType::class,
+                [
+                    'label' => 'school_year.firstDay.label',
+                    'help' => 'school_year.firstDay.help',
+                ]
+            )
+            ->add('sequence', HiddenType::class)
 			->add('lastDay', DateType::class,
 				array(
 					'label'       => 'school_year.lastDay.label',

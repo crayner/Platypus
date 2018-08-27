@@ -71,10 +71,10 @@ class SchoolYearController extends Controller
      * @param FlashBagManager $flashBagManager
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function edit($id, $tabName = 'schoolyear', Request $request,
+    public function edit($id, Request $request,
                          SchoolYearManager $schoolYearManager,
                          EntityManagerInterface $em, MessageManager $messageManager,
-                         FlashBagManager $flashBagManager)
+                         FlashBagManager $flashBagManager, $tabName = 'schoolyear')
     {
         if ($id === 'current')
         {
@@ -83,7 +83,7 @@ class SchoolYearController extends Controller
             return $this->redirectToRoute('school_year_edit', ['id' => $schoolYear->getId(), 'tabName' => $tabName]);
         }
 
-        $schoolYear = $id === 'Add' ? new SchoolYear() : $schoolYearManager->getSchoolYearRepository()->find($id);
+        $schoolYear = $id === 'Add' ? new SchoolYear() : $schoolYearManager->find($id);
 
         $form = $this->createForm(SchoolYearType::class, $schoolYear);
 
@@ -112,8 +112,13 @@ class SchoolYearController extends Controller
             $em->refresh($schoolYear);
 
             $form = $this->createForm(SchoolYearType::class, $schoolYear);
-        } else
+        } else if ($id !== 'Add')
             $em->refresh($schoolYear);
+        else if ($id === 'Add') {
+            $schoolYear = $schoolYearManager->findLast($schoolYear);
+            dump($schoolYear);
+            $form = $this->createForm(SchoolYearType::class, $schoolYear);
+        }
 
         /*
             The calendar must be refreshed as the calendar will be written by the page loader from the cache
