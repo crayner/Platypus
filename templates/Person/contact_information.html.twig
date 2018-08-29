@@ -1,0 +1,30 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'contact.information.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+
+<div class="row">
+    <div class="col-4">
+        <div class="row">
+            <div class="col-12 card">
+                {{ form_row(form.email) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 card">
+                {{ form_row(form.emailAlternate) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 card">
+            </div>
+        </div>
+        <div id="phoneContent">
+        </div>
+
+    </div>
+    <div class="col-8">
+        <div id="addressContent">
+        </div>
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}

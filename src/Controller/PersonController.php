@@ -17,6 +17,7 @@ namespace App\Controller;
 
 use App\Form\PreferencesType;
 use App\Form\Type\PersonType;
+use App\Manager\AddressManager;
 use App\Manager\PersonManager;
 use App\Manager\PersonRoleManager;
 use App\Manager\StaticManager;
@@ -181,10 +182,10 @@ class PersonController extends Controller
      * @param string $id
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
-     * @Route("/person/{id}/edit/", name="person_edit"))
+     * @Route("/person/{id}/edit/{tabName}", name="person_edit"))
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(PersonManager $manager, Request $request,  $id = 'Add')
+    public function edit(PersonManager $manager, Request $request, AddressManager $addressManager, $id = 'Add', $tabName = 'basic.information')
     {
         $entity = $manager->find($id);
 
@@ -194,11 +195,19 @@ class PersonController extends Controller
 
         $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            dump($form);
+            dump($entity);
+        }
+
         return $this->render(
             'Person/edit.html.twig',
             [
                 'form' => $form->createView(),
+                'fullForm' => $form,
                 'manager' => $manager,
+                'addressManager' => $addressManager,
             ]
         );
     }

@@ -43,3 +43,16 @@ App\Entity\Family:
       targetEntity: App\Entity\FamilyPerson
       mappedBy: family
       cascade: [ persist, remove ]
+  manyToMany:
+    addresses:
+      targetEntity: App\Entity\Address
+      nullable: true
+      cascade: [ persist ]
+      joinTable:
+        name: family_address
+        joinColumns:
+          family_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          address_id:
+            referencedColumnName: id

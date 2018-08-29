@@ -337,4 +337,62 @@ class Family
         $this->familySync = $familySync;
         return $this;
     }
+
+    /**
+     * @var Collection|null
+     */
+    private $addresses;
+
+    /**
+     * @return Collection
+     */
+    public function getAddresses(): Collection
+    {
+        if (empty($this->addresses))
+            $this->addresses = new ArrayCollection();
+
+        if ($this->addresses instanceof PersistentCollection)
+            $this->addresses->initialize();
+
+        return $this->addresses;
+    }
+
+    /**
+     * @param Collection|null $addresses
+     * @return Family
+     */
+    public function setAddresses(?Collection $addresses): Family
+    {
+        $this->addresses = $addresses;
+        return $this;
+    }
+
+    /**
+     * addAddress
+     *
+     * @param Address|null $address
+     * @return Family
+     */
+    public function addAddress(?Address $address): Family
+    {
+        if (empty($address) || $this->getAddresses()->contains($address))
+            return $this;
+
+        $this->addresses->add($address);
+
+        return $this;
+    }
+
+    /**
+     * removeAddress
+     *
+     * @param Address|null $address
+     * @return Family
+     */
+    public function removeAddress(?Address $address): Family
+    {
+        $this->addresses->removeElement($address);
+
+        return $this;
+    }
 }

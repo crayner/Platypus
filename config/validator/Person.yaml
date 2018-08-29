@@ -17,3 +17,11 @@ App\Entity\Person:
             - NotBlank: ~
         firstName:
             - NotBlank: ~
+        email:
+            - Email: ~
+            - App\Validator\PersonEmail:
+                errorPath: email
+        emailAlternate:
+            - Email: ~
+            - App\Validator\PersonEmail:
+                errorPath: emailAlternate

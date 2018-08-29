@@ -17,6 +17,7 @@ namespace App\Form\Type;
 
 use App\Entity\Person;
 use App\Entity\PersonRole;
+use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\DateType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\EnumType;
@@ -24,6 +25,7 @@ use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -153,6 +155,18 @@ class PersonType extends AbstractType
                     'mapped' => false,
                 ]
             )
+            ->add('email', EmailType::class,
+                [
+                    'label' => 'person.email.label',
+                    'required' => false,
+                ]
+            )
+            ->add('emailAlternate', EmailType::class,
+                [
+                    'label' => 'person.email.label',
+                    'required' => false,
+                ]
+            )
         ;
     }
 
@@ -170,6 +184,7 @@ class PersonType extends AbstractType
                 'attr' => [
                     'noValidate' => true,
                 ],
+                'allow_extra_fields' => true,
             ]
         );
         $resolver->setRequired(

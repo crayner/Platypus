@@ -50,6 +50,13 @@ class PersonManager extends TabManager
             'message' => 'systemAccessMessage',
             'translation' => 'Person',
         ],
+        [
+            'name' => 'contact.information',
+            'label' => 'contact.information.tab',
+            'include' => 'Person/contact_information.html.twig',
+            'message' => 'contactInformationMessage',
+            'translation' => 'Person',
+        ],
     ];
 
     /**

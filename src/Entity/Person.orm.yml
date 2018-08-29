@@ -40,6 +40,10 @@ App\Entity\Person:
         email:
             length: 50
             nullable: true
+        emailAlternate:
+            length: 50
+            nullable: true
+            column: email_alternate
         receiveNotificationEmails:
             type: boolean
             options:
@@ -97,4 +101,16 @@ App\Entity\Person:
                         referencedColumnName: id
                 inverseJoinColumns:
                     person_id:
+                        referencedColumnName: id
+        addresses:
+            targetEntity: App\Entity\Address
+            nullable: true
+            cascade: [ persist ]
+            joinTable:
+                name: person_address
+                joinColumns:
+                    person_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    address_id:
                         referencedColumnName: id

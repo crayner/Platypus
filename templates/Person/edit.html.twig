@@ -3,6 +3,8 @@
 {% extends "Default/template.html.twig" %}
 
 {% form_theme form
+    'Address/choose_address_collection.html.twig'
+    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
     '@HillrangeForm/FormTheme/bootstrap.html.twig'
 %}
 
@@ -12,6 +14,7 @@
 
 {% block contentContainer %}
     {{ form_start(form) }}
+    {{ all_form_errors(fullForm) }}
     {% set h3Content = saveButton() %}
     {% include 'Default/tabs.html.twig' with {translation: 'School', tabManager: manager} %}
     {{ form_end(form) }}
@@ -22,4 +25,16 @@
     {{ toggle_script() }}
     {% set route = 'person_edit' %}
     {% include 'Script/formTabSubmitScript.html.twig' %}
+
+    {% set translations = translations|default({}) %}
+    {% for tx in addressManager.translations %}
+        {% set translations = translations|merge({(tx): (tx|trans({}, 'Address')) }) %}
+    {% endfor %}
+    {% set addressProps = {translations: translations, locale: app.request.get('_locale'), parentClass: 'Person', id: app.request.get('id')} %}
+
+    <script>
+        window.ADDRESS_PROPS = {{ addressProps|json_encode|raw }}
+    </script>
+    <script src="{{ asset('build/address.js') }}" language="JavaScript" type="text/javascript"></script>
+    <script src="{{ asset('build/phone.js') }}" language="JavaScript" type="text/javascript"></script>
 {% endblock javascripts %}

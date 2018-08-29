@@ -66,7 +66,7 @@ class FormErrorsExtension extends AbstractExtension
 	 *
 	 * @return string
 	 */
-	public function getFormErrors(FormInterface $form, $tag = 'li', $class = "alert alert-danger alert-dismissable show hide", $noErrorMessage = 'form.submit.success', $noErrorClass = 'alert alert-success alert-dismissable show hide', $transDomain = 'System')
+	public function getFormErrors(FormInterface $form, $tag = 'div', $class = "alert alert-danger alert-dismissable show hide", $noErrorMessage = 'form.submit.success', $noErrorClass = 'alert alert-success alert-dismissable show hide', $transDomain = 'System')
 	{
 		if (!$form->isSubmitted()) return '<div id="formErrorMessages"></div>';
 

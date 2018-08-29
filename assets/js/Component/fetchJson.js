@@ -1,4 +1,5 @@
 'use strict';
+
 export function fetchJson(url, options, locale) {
 
     var headers = {}

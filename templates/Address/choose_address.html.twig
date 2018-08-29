@@ -1,0 +1,6 @@
+{% trans_default_domain "Address" %}
+
+{% set h3Content = '' %}
+{% include 'Default/panelStart.html.twig' with {header: 'select.address.label', transDomain: 'Address', panelParagraph: 'select.address.help', colour: 'primary'} %}
+    {{ collection_widget(form) }}
+{% include 'Default/panelEnd.html.twig' %}

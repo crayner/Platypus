@@ -4,7 +4,6 @@ import React from "react"
 import PropTypes from 'prop-types'
 import ButtonManager from '../Component/Button/ButtonManager'
 
-
 export default function PaginationActionCell(props) {
     const {
         actions,

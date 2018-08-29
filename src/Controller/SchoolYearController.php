@@ -116,7 +116,6 @@ class SchoolYearController extends Controller
             $em->refresh($schoolYear);
         else if ($id === 'Add') {
             $schoolYear = $schoolYearManager->findLast($schoolYear);
-            dump($schoolYear);
             $form = $this->createForm(SchoolYearType::class, $schoolYear);
         }
 

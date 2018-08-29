@@ -1,0 +1,15 @@
+{% trans_default_domain "Address" %}
+
+{% block address_choice_label %}{% endblock %}
+{% block address_choice_errors %}{% endblock %}
+
+{% block address_choice_widget %}
+    <div class="row row-striped">
+        <div class="col-8 card">
+            {{ form_widget(form.address) }}
+        </div>
+        <div class="col-4 card collection-actions">
+
+        </div>
+    </div>
+{% endblock address_choice_widget %}

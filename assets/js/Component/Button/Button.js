@@ -27,8 +27,12 @@ export default function Button(props) {
     if (typeof(button.style) !== 'object')
         button.style = new Object()
 
+    if (button.type === '' || typeof(button.type) === 'undefined')
+        button.type = 'button'
+
+
     return (
-        <button className={className} onClick={() => { buttonClickAction(url, button.response_type)}} style={button.style} title={translateMessage(translations, button.label)}>
+        <button type={button.type} className={className} onClick={() => { buttonClickAction(url, button.response_type)}} style={button.style} title={translateMessage(translations, button.label)}>
             {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ? <FontAwesomeIcon icon={button.icon} /> : null}
         </button>
     )

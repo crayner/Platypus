@@ -735,4 +735,85 @@ class Person
 
         return $this;
     }
+
+    /**
+     * @var string|null
+     */
+    private $emailAlternate;
+
+    /**
+     * @return null|string
+     */
+    public function getEmailAlternate(): ?string
+    {
+        return $this->emailAlternate;
+    }
+
+    /**
+     * @param null|string $emailAlternate
+     * @return Person
+     */
+    public function setEmailAlternate(?string $emailAlternate): Person
+    {
+        $this->emailAlternate = $emailAlternate;
+        return $this;
+    }
+
+    /**
+     * @var Collection|null
+     */
+    private $addresses;
+
+    /**
+     * @return Collection
+     */
+    public function getAddresses(): Collection
+    {
+        if (empty($this->addresses))
+            $this->addresses = new ArrayCollection();
+
+        if ($this->addresses instanceof PersistentCollection)
+            $this->addresses->initialize();
+
+        return $this->addresses;
+    }
+
+    /**
+     * @param Collection|null $addresses
+     * @return Person
+     */
+    public function setAddresses(?Collection $addresses): Person
+    {
+        $this->addresses = $addresses;
+        return $this;
+    }
+
+    /**
+     * addAddress
+     *
+     * @param Address|null $address
+     * @return Person
+     */
+    public function addAddress(?Address $address): Person
+    {
+        if (empty($address) || $this->getAddresses()->contains($address))
+            return $this;
+
+        $this->addresses->add($address);
+
+        return $this;
+    }
+
+    /**
+     * removeAddress
+     *
+     * @param Address|null $address
+     * @return Person
+     */
+    public function removeAddress(?Address $address): Person
+    {
+        $this->addresses->removeElement($address);
+
+        return $this;
+    }
 }
