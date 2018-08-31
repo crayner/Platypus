@@ -26,6 +26,17 @@ class Address
 	 */
 	private $buildingType;
 
+    /**
+     * @var
+     */
+	private static $buildingTypeList = [
+        '',
+        'flat',
+        'unit',
+        'apt',
+        'thse',
+    ];
+
 	/**
 	 * @var string
 	 */
@@ -41,7 +52,23 @@ class Address
 	 */
 	private $locality;
 
-	/**
+    /**
+     * @return mixed
+     */
+    public static function getBuildingTypeList()
+    {
+        return self::$buildingTypeList;
+    }
+
+    /**
+     * @param mixed $buildingTypeList
+     */
+    public static function setBuildingTypeList($buildingTypeList): void
+    {
+        self::$buildingTypeList = $buildingTypeList;
+    }
+
+    /**
 	 * Get id
 	 *
 	 * @return integer

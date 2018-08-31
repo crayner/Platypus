@@ -16,6 +16,7 @@
 namespace App\Controller;
 
 use App\Manager\AddressManager;
+use App\Manager\LocalityManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,6 +60,7 @@ class AddressController
      */
     public function attachAddress(int $entity_id, int $id, string $parentEntity, AddressManager $manager, TranslatorInterface $translator)
     {
+
         $messages = $manager->attachAddressToParentEntity($id, $parentEntity, $entity_id)->getMessageManager()->serialiseTranslatedMessages($translator);
         return new JsonResponse(
             [
@@ -91,6 +93,7 @@ class AddressController
             200
         );
     }
+
     /**
      * removeAddress
      *
@@ -113,4 +116,70 @@ class AddressController
         );
     }
 
+    /**
+     * grabLocality
+     *
+     * @param int $id
+     * @param LocalityManager $manager
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/locality/{id}/grab/", name="grab_locality")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function grabLocality(int $id, LocalityManager $manager)
+    {
+        return new JsonResponse(
+            [
+                'locality' => $manager->find($id)->toArray(),
+            ],
+            200
+        );
+    }
+
+    /**
+     * saveLocality
+     *
+     * @param $locality
+     * @param AddressManager $manager
+     * @return JsonResponse
+     * @Route("/locality/{locality}/save/", name="save_locality")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function saveLocality($locality, AddressManager $manager, TranslatorInterface $translator)
+    {
+
+        $locality = json_decode(base64_decode($locality));
+
+        $entity = $manager->findLocality($locality->id ?: 'Add');
+        $entity->setName($locality->name);
+        $entity->setCountry($locality->country);
+        $entity->setTerritory($locality->territory);
+        $entity->setPostCode($locality->postCode);
+        $manager->saveLocality($entity);
+        return new JsonResponse(
+            [
+                'status' => $manager->getMessageManager()->getStatus(),
+                'locality' => $entity->toArray(),
+                'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($translator),
+            ],
+            200
+        );
+    }
+    /**
+     * grabAllAddresses
+     *
+     * @param AddressManager $manager
+     * @return JsonResponse
+     * @Route("/locality/grab/list/", name="locality_list_grab")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function grabAllLocalities(AddressManager $manager)
+    {
+        return new JsonResponse(
+            [
+                'data' => $manager->getLocalityList(),
+            ],
+            200
+        );
+    }
 }

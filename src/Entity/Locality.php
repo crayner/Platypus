@@ -60,7 +60,7 @@ class Locality
 	 *
 	 * @return string
 	 */
-	public function getName()
+	public function getName(): ?string
 	{
 		return $this->name;
 	}
@@ -72,9 +72,9 @@ class Locality
 	 *
 	 * @return Locality
 	 */
-	public function setName($name)
+	public function setName(?string $name): Locality
 	{
-		$this->name = $name;
+		$this->name = strtoupper($name);
 
 		return $this;
 	}
@@ -84,7 +84,7 @@ class Locality
 	 *
 	 * @return string
 	 */
-	public function getTerritory()
+	public function getTerritory(): ?string
 	{
 		return $this->territory;
 	}
@@ -96,7 +96,7 @@ class Locality
 	 *
 	 * @return Locality
 	 */
-	public function setTerritory($territory)
+	public function setTerritory($territory): Locality
 	{
 		$this->territory = $territory;
 
@@ -108,7 +108,7 @@ class Locality
 	 *
 	 * @return string
 	 */
-	public function getPostCode()
+	public function getPostCode(): ?string
 	{
 		return $this->postCode;
 	}
@@ -120,7 +120,7 @@ class Locality
 	 *
 	 * @return Locality
 	 */
-	public function setPostCode($postCode)
+	public function setPostCode($postCode): Locality
 	{
 		$this->postCode = $postCode;
 
@@ -132,7 +132,7 @@ class Locality
 	 *
 	 * @return string
 	 */
-	public function getCountry()
+	public function getCountry(): ?string
 	{
 		return $this->country;
 	}
@@ -144,10 +144,26 @@ class Locality
 	 *
 	 * @return Locality
 	 */
-	public function setCountry($country)
+	public function setCountry($country): Locality
 	{
 		$this->country = $country;
 
 		return $this;
 	}
+
+    /**
+     * toArray
+     *
+     * @return array
+     */
+	public function toArray(): array
+    {
+        return [
+            'name' => $this->getName(),
+            'territory' => $this->getTerritory(),
+            'postCode' => $this->getPostCode(),
+            'country' => $this->getCountry(),
+            'id' => $this->getId(),
+        ];
+    }
 }

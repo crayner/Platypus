@@ -6,6 +6,7 @@ import {translateMessage} from '../Component/MessageTranslator'
 import Parser from 'html-react-parser';
 import AddressCollection from './AddressCollection'
 import {fetchJson} from '../Component/fetchJson'
+import AddressEdit from './AddressEdit'
 
 export default class AddressControl extends Component {
     constructor(props) {
@@ -21,6 +22,8 @@ export default class AddressControl extends Component {
             suggestions: [],
             messages: [],
             search: '',
+            currentAddress: null,
+            currentLocality: null,
         }
 
         this.attached = []
@@ -32,9 +35,19 @@ export default class AddressControl extends Component {
         this.removeAddress = this.removeAddress.bind(this)
         this.addAddress = this.addAddress.bind(this)
         this.cancelMessage = this.cancelMessage.bind(this)
+        this.newAddress = this.newAddress.bind(this)
+        this.editLocality = this.editLocality.bind(this)
+        this.changeCountry = this.changeCountry.bind(this)
+        this.changeRegion = this.changeRegion.bind(this)
+        this.saveLocality = this.saveLocality.bind(this)
+        this.exitLocality = this.exitLocality.bind(this)
 
         this.allAddresses = []
 
+        this.addressData = {}
+        this.buildingTypeList = this.props.buildingTypeList
+        this.localityList = this.props.localityList
+        this.currentLocality = null
     }
 
     componentWillMount(){
@@ -78,6 +91,7 @@ export default class AddressControl extends Component {
             suggestions: this.suggestions,
             messages: this.messages,
             search: this.search,
+            currentLocality: this.currentLocality
        })
     }
 
@@ -115,11 +129,19 @@ export default class AddressControl extends Component {
             })
     }
 
+    newAddress(){
+        this.addressData = {}
+        this.setState({
+            currentAddress: 'Add'
+        })
+    }
+
     addAddress(event){
         let value = event.target
 
         const id = value.getAttribute('value')
-
+        console.log(value)
+        console.log(id)
         let path = '/address/{id}/attach/{parentEntity}/{entity_id}/'
 
         path = path.replace('{id}', id)
@@ -136,6 +158,71 @@ export default class AddressControl extends Component {
             })
     }
 
+    editLocality(){
+        const object = document.getElementById('address_locality')
+        const value = object[object.selectedIndex].value;
+
+        if (parseInt(value) == value) {
+            let path = '/locality/{id}/grab/'
+            path = path.replace('{id}', value)
+
+            fetchJson(path, {}, this.locale)
+                .then(data => {
+                    this.currentLocality = data.locality
+                    this.handleAddress()
+                })
+        } else {
+            this.currentLocality = {
+                name: '',
+                country: '',
+                id: 0,
+                territory: '',
+                postCode: '',
+            }
+            this.handleAddress()
+        }
+    }
+
+    changeCountry(val){
+        this.currentLocality.country = val
+        this.handleAddress()
+    }
+
+    changeRegion(val){
+        this.currentLocality.territory = val
+        this.handleAddress()
+    }
+
+    exitLocality(){
+        this.currentLocality = null
+        this.handleAddress()
+    }
+
+    saveLocality(){
+        this.currentLocality.postCode = window.document.getElementById('locality_postCode').value
+        this.currentLocality.name = window.document.getElementById('locality_name').value
+
+        const xxx = new Buffer(JSON.stringify(this.currentLocality)).toString('base64')
+
+        let path = '/locality/{locality}/save/'
+            .replace('{locality}', xxx)
+
+        fetchJson(path, {}, this.locale )
+            .then(data => {
+                this.currentLocality = data.locality
+                this.messages = data.messages
+                if (data.status === 'default') {
+                    this.currentLocality = null
+                    fetchJson('/locality/grab/list/', {}, this.locale)
+                        .then(data => {
+                            this.localityList = data.data
+                            this.handleAddress()
+                        })
+                } else
+                    this.handleAddress()
+            })
+    }
+
     render() {
         if (this.id === 'Add')
             return (
@@ -146,6 +233,22 @@ export default class AddressControl extends Component {
                     </div>
                 </div>
             )
+        if (this.state.currentAddress !== null){
+            return ( <AddressEdit
+                translations={this.translations}
+                addressData={this.addressData}
+                buildingTypeList={this.buildingTypeList}
+                localityList={this.localityList}
+                editLocality={this.editLocality}
+                currentLocality={this.state.currentLocality}
+                changeCountry={this.changeCountry}
+                changeRegion={this.changeRegion}
+                saveLocality={this.saveLocality}
+                exitLocality={this.exitLocality}
+                messages={this.state.messages}
+                cancelMessage={this.cancelMessage}
+        /> )
+        }
         return (
             <div className="card card-primary">
                 <div className="card-header">
@@ -165,6 +268,7 @@ export default class AddressControl extends Component {
                         id={this.id}
                         inputSearch={this.search}
                         removeAddress={this.removeAddress}
+                        newAddress={this.newAddress}
                 />
                 </div>
             </div>
@@ -178,6 +282,7 @@ AddressControl.propTypes = {
     translations: PropTypes.object.isRequired,
     id: PropTypes.string.isRequired,
     parentClass: PropTypes.string.isRequired,
+    buildingTypeList: PropTypes.array.isRequired,
 }
 
 AddressControl.defaultTypes = {

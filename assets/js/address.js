@@ -10,6 +10,8 @@ render(
         translations={window.ADDRESS_PROPS.translations}
         parentClass={window.ADDRESS_PROPS.parentClass}
         id={window.ADDRESS_PROPS.id}
+        buildingTypeList={window.ADDRESS_PROPS.buildingTypeList}
+        localityList={window.ADDRESS_PROPS.localityList}
     />,
     document.getElementById('addressContent')
 )

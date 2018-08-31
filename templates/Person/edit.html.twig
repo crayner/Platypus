@@ -30,7 +30,11 @@
     {% for tx in addressManager.translations %}
         {% set translations = translations|merge({(tx): (tx|trans({}, 'Address')) }) %}
     {% endfor %}
+    {% for tx in formTranslations() %}
+        {% set translations = translations|merge({(tx): (tx|trans({}, 'FormTheme')) }) %}
+    {% endfor %}
     {% set addressProps = {translations: translations, locale: app.request.get('_locale'), parentClass: 'Person', id: app.request.get('id')} %}
+    {% set addressProps = addressProps|merge(addressManager.addressProperties) %}
 
     <script>
         window.ADDRESS_PROPS = {{ addressProps|json_encode|raw }}

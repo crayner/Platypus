@@ -6,8 +6,7 @@ import {translateMessage} from '../Component/MessageTranslator'
 import Messages from '../Component/Messages/Messages'
 import ButtonDelete from '../Component/Button/ButtonDelete'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink } from '@fortawesome/free-solid-svg-icons'
-
+import { faLink, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 
 export default function AddressCollection(props) {
     const {
@@ -21,11 +20,17 @@ export default function AddressCollection(props) {
         parentClass,
         removeAddress,
         inputSearch,
+        newAddress
     } = props
 
     let search = ''
     
-    const options = suggestions.map(address => <div className='possibleAddress' key={address.id} value={address.id} onClick={addAddress}>{address.label}</div>)
+    const options = suggestions.map(address =>
+        <div className='row row-striped' key={address.id} value={address.id} onClick={addAddress}>
+            <div className='col-10 offset-1 possibleAddress' value={address.id} >
+                {address.label}
+            </div>
+        </div>)
 
     const attachedAddresses = attached.map(address => {
         let button = {
@@ -59,7 +64,7 @@ export default function AddressCollection(props) {
                 translations={translations}
                 cancelMessage={cancelMessage}
             />
-            <div className="form-group">
+            <div className="input-group input-group-sm">
                 <input
                     placeholder={translateMessage(translations, 'address.search.placeholder')}
                     ref={input => search = input}
@@ -67,10 +72,14 @@ export default function AddressCollection(props) {
                     value={inputSearch}
                     className='form-control'
                 />
-                <div className='small' style={{maxHeight: '200px', overflowY: 'scroll', cursor: 'pointer'}}>
-                    {options}
-                </div>
+                <span className='input-group-append'>
+                    <button className='btn btn-success' type={'button'} onClick={() => newAddress()} title={translateMessage(translations, 'address.button.add')}><FontAwesomeIcon icon={faPlusCircle}/></button>
+                </span>
             </div>
+            <div className='small' style={{maxHeight: '200px', overflowY: 'scroll', cursor: 'pointer'}}>
+                {options}
+            </div>
+
             {attachedAddresses}
         </div>
     )
@@ -82,6 +91,7 @@ AddressCollection.propTypes = {
     addressSuggestions: PropTypes.func.isRequired,
     addAddress: PropTypes.func.isRequired,
     removeAddress: PropTypes.func.isRequired,
+    newAddress: PropTypes.func.isRequired,
     cancelMessage: PropTypes.func.isRequired,
     parentClass: PropTypes.string.isRequired,
     inputSearch: PropTypes.string.isRequired,
