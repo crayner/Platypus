@@ -10,8 +10,8 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 31/08/2018
- * Time: 14:06
+ * Date: 1/09/2018
+ * Time: 10:13
  */
 namespace App\Validator\Constraints;
 
@@ -20,10 +20,10 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
 /**
- * Class LocalityValidator
+ * Class AddressValidator
  * @package App\Validator\Constraints
  */
-class LocalityValidator extends ConstraintValidator
+class AddressValidator extends ConstraintValidator
 {
     /**
      * validate
@@ -33,12 +33,12 @@ class LocalityValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (empty($value->getName()))
-            $this->context->buildViolation('locality.name.empty')
+        if (empty($value->getStreetName()))
+            $this->context->buildViolation('address.street_name.empty')
                 ->setTranslationDomain('Address')
                 ->addViolation();
-        if (empty($value->getCountry()))
-            $this->context->buildViolation('locality.country.empty')
+        if (empty($value->getLocality()))
+            $this->context->buildViolation('address.locality.empty')
                 ->setTranslationDomain('Address')
                 ->addViolation();
 
@@ -46,13 +46,18 @@ class LocalityValidator extends ConstraintValidator
 
         if (empty($rule))
         {
-            return;
+            return ;
         }
 
         $resolver = new OptionsResolver();
-        $resolver->setRequired([
-            'postCode',
-            'territory',
+        $resolver->setDefaults([
+            'streetName' => [],
+            'streetNumber' => [],
+            'propertyName' => [],
+            'buildingType' => [],
+            'buildingNumber' => [],
+            'locality' => [],
+            'postCode' => [],
         ]);
 
         $rule = $resolver->resolve($rule);
@@ -68,15 +73,17 @@ class LocalityValidator extends ConstraintValidator
             $method = 'get' . ucfirst($name);
 
             if ($details['required'] && empty($value->$method()))
-                $this->context->buildViolation('locality.'.$name.'.empty')
+                $this->context->buildViolation('address.'.$name.'.empty')
                     ->setTranslationDomain('Address')
                     ->addViolation();
 
             if (!empty($value->$method()) && $details['regex'] && preg_match($details['regex'], $value->$method()) !== 1)
-                $this->context->buildViolation('locality.'.$name.'.not_valid')
+                $this->context->buildViolation('address.'.$name.'.not_valid')
                     ->setTranslationDomain('Address')
                     ->addViolation();
 
         }
+
+        return ;
     }
 }

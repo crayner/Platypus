@@ -6,7 +6,7 @@ import {translateMessage} from '../Component/MessageTranslator'
 import Messages from '../Component/Messages/Messages'
 import ButtonDelete from '../Component/Button/ButtonDelete'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLink, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
+import { faLink, faPlusCircle, faEdit } from '@fortawesome/free-solid-svg-icons'
 
 export default function AddressCollection(props) {
     const {
@@ -20,13 +20,14 @@ export default function AddressCollection(props) {
         parentClass,
         removeAddress,
         inputSearch,
-        newAddress
+        newAddress,
+        editAddress,
     } = props
 
     let search = ''
     
     const options = suggestions.map(address =>
-        <div className='row row-striped' key={address.id} value={address.id} onClick={addAddress}>
+        <div className='row row-striped' key={address.id} onClick={() => addAddress(address.id)}>
             <div className='col-10 offset-1 possibleAddress' value={address.id} >
                 {address.label}
             </div>
@@ -44,15 +45,20 @@ export default function AddressCollection(props) {
         url = url.replace('{parentClass}', parentClass)
 
         return (
-            <div className='row row-striped' key={address.id}>
-                <div className='col-8'>{address.label}</div>
-                <div className='col-4'>{parentClass === address.parent ? (
-                    <ButtonDelete
-                        button={button}
-                        url={url}
-                        buttonClickAction={removeAddress}
-                        translations={translations}
-                    />) : <div className='btn-light btn-sm text-right'><FontAwesomeIcon icon={faLink} /></div> }</div>
+            <div className='row row-striped small' key={address.id}>
+                <div className='col-9'>{address.label}</div>
+                <div className='col-3'>
+                    <span>{parentClass === address.parent ? (
+                        <ButtonDelete
+                            button={button}
+                            url={url}
+                            buttonClickAction={removeAddress}
+                            translations={translations}
+                            style={{float: 'right'}}
+                        />) : <div className='btn btn-light btn-sm' style={{float: 'right'}}><FontAwesomeIcon icon={faLink} fixedWidth={true} /></div> }
+                        <button type={'button'} title={translateMessage(translations, 'address.button.edit')} className={'btn btn-primary btn-sm'} style={{float: 'right'}} onClick={() => editAddress(address.id)}><FontAwesomeIcon icon={faEdit} fixedWidth={true} /></button>
+                    </span>
+                </div>
             </div>
         )
     })
@@ -73,7 +79,7 @@ export default function AddressCollection(props) {
                     className='form-control'
                 />
                 <span className='input-group-append'>
-                    <button className='btn btn-success' type={'button'} onClick={() => newAddress()} title={translateMessage(translations, 'address.button.add')}><FontAwesomeIcon icon={faPlusCircle}/></button>
+                    <button className='btn btn-success' type={'button'} onClick={() => newAddress()} title={translateMessage(translations, 'address.button.add')}><FontAwesomeIcon icon={faPlusCircle} fixedWidth={true} /></button>
                 </span>
             </div>
             <div className='small' style={{maxHeight: '200px', overflowY: 'scroll', cursor: 'pointer'}}>
@@ -95,4 +101,5 @@ AddressCollection.propTypes = {
     cancelMessage: PropTypes.func.isRequired,
     parentClass: PropTypes.string.isRequired,
     inputSearch: PropTypes.string.isRequired,
+    editAddress: PropTypes.func.isRequired,
 }

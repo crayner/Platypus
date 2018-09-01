@@ -67,6 +67,11 @@ class AddressManager
         'locality.territory.placeholder',
         'locality.button.save',
         'locality.button.exit',
+        'address.button.edit',
+        'address.button.exit',
+        'address.post_code.help',
+        'address.post_code.label',
+        'address.edit.help',
     ];
 
     /**
@@ -422,10 +427,10 @@ class AddressManager
      * findLocality
      *
      * @param $id
-     * @return Locality
+     * @return Locality|null
      * @throws \Exception
      */
-    public function findLocality($id): Locality
+    public function findLocality($id): ?Locality
     {
         return $this->getLocalityManager()->find($id);
     }
@@ -456,5 +461,54 @@ class AddressManager
     public function getValidator(): ValidatorInterface
     {
         return $this->validator;
+    }
+
+    /**
+     * save
+     *
+     * @param Address $entity
+     * @return AddressManager
+     */
+    public function save(Address $entity): AddressManager
+    {
+        $country = $entity->getLocality() instanceof Locality ? $entity->getLocality()->getCountry() : '';
+        $errors = $this->getValidator()->validate(
+            $entity,
+            new \App\Validator\Address(['rule' => $this->getCountryValidationRule($country)])
+        );
+
+        foreach($errors as $error)
+            $this->getMessageManager()->add('danger', $error->getMessage());
+
+        if ($errors->count() === 0)
+            $this->setEntity($entity)->saveEntity();
+
+        return $this;
+    }
+
+    /**
+     * getCountryValidationRule
+     *
+     * @param string $country
+     * @return array
+     */
+    private function getCountryValidationRule(string $country): array
+    {
+        $rules = [
+            'AU' => [
+                'streetName' => [
+                    'required' => true,
+                    'regex' => false,  // a regex ...
+                ],
+                'postCode' => [
+                    'regex' => '/^$/' // must be empty
+                ],
+                'locality' => [
+                    'required' => true,
+                ],
+            ],
+        ];
+
+        return empty($rules[strtoupper($country)]) ? [] : $rules[strtoupper($country)];
     }
 }

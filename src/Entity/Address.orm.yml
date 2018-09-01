@@ -49,3 +49,8 @@ App\Entity\Address:
                 name: locality_id
                 referencedColumnName: id
                 nullable: false
+    lifecycleCallbacks:
+        prePersist:
+            - checkAddress
+        preUpdate:
+            - checkAddress

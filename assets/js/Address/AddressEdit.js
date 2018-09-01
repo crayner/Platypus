@@ -7,7 +7,8 @@ import BootstrapInput from '../Form/BootstrapInput'
 import BootstrapSelect from '../Form/BootstrapSelect'
 import firstBy from 'thenby'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit } from '@fortawesome/free-regular-svg-icons'
+import {faEdit, faSave, faWindowClose} from '@fortawesome/free-regular-svg-icons'
+import {faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 import LocalityEdit from './LocalityEdit'
 import Messages from '../Component/Messages/Messages'
 
@@ -15,7 +16,6 @@ import Messages from '../Component/Messages/Messages'
 export default function AddressEdit(props) {
     const {
         translations,
-        addressData,
         buildingTypeList,
         localityList,
         editLocality,
@@ -26,6 +26,10 @@ export default function AddressEdit(props) {
         exitLocality,
         messages,
         cancelMessage,
+        exitAddress,
+        currentAddress,
+        saveAddress,
+        newAddress,
     } = props
 
 
@@ -50,9 +54,16 @@ export default function AddressEdit(props) {
         />
 
     return (
-        <div className="card card-success">
+        <div className="card card-success" key={currentAddress.id}>
             <div className="card-header">
-                <h4 className="card-title d-flex mb-12 justify-content-between">{translateMessage(translations, 'address.edit.header')}</h4>
+                <h4 className="card-title d-flex mb-12 justify-content-between">{translateMessage(translations, 'address.edit.header')}
+                    <span><button type={'button'} className={'btn btn-warning'} style={{float: 'right'}} onClick={() => exitAddress()} title={translateMessage(translations, 'address.button.exit')}><FontAwesomeIcon icon={faWindowClose}/></button>
+                        {parseInt(currentAddress.id) > 0 ?
+                        <button type={'button'} className={'btn btn-primary'} style={{float: 'right'}} title={translateMessage(translations, 'address.button.add')} onClick={() => newAddress()}><FontAwesomeIcon icon={faPlusCircle}/></button> : '' }
+                        <button type={'button'} className={'btn btn-success'} style={{float: 'right'}} title={translateMessage(translations, 'address.button.save')} onClick={() => saveAddress()}><FontAwesomeIcon icon={faSave}/></button>
+                    </span>
+                </h4>
+                <p>{translateMessage(translations, 'address.edit.help')}</p>
             </div>
             <div className="card-body">
                 <Messages
@@ -62,11 +73,13 @@ export default function AddressEdit(props) {
                 />
                 <div className='row'>
                     <div className='col-12 card'>
+                        <input type={'hidden'} defaultValue={currentAddress.id} id={'address_id'} name={'address[id]'} />
                         <BootstrapInput
                             translations={translations}
                             name={"address[propertyName]"}
                             autoComplete={"property_name"}
                             label={'address.property_name.label'}
+                            value={currentAddress.propertyName}
                         />
                     </div>
                 </div>
@@ -76,14 +89,19 @@ export default function AddressEdit(props) {
                             translations={translations}
                             optionList={btList}
                             name={'address[buildingType]'}
+                            autoComplete={"building_type"}
                             label={'address.building_type.label'}
+                            value={currentAddress.buildingType}
                         />
                     </div>
                     <div className='col-4 card'>
                         <BootstrapInput
                             translations={translations}
                             name={'address[buildingNumber]'}
+                            autoComplete={"building_number"}
                             label={'address.building_number.label'}
+                            value={currentAddress.buildingNumber}
+
                         />
                     </div>
                     <div className='col-4 card'>
@@ -91,16 +109,30 @@ export default function AddressEdit(props) {
                             translations={translations}
                             name={'address[streetNumber]'}
                             label={'address.street_number.label'}
+                            autoComplete={"street_number"}
+                            value={currentAddress.streetNumber}
                         />
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-12 card'>
+                    <div className='col-8 card'>
                         <BootstrapInput
                             translations={translations}
                             name={'address[streetName]'}
                             label={'address.street_name.label'}
+                            autoComplete={"street_name"}
                             required={true}
+                            value={currentAddress.streetName}
+                        />
+                    </div>
+                    <div className='col-4 card'>
+                        <BootstrapInput
+                            translations={translations}
+                            name={'address[postCode]'}
+                            label={'address.post_code.label'}
+                            required={true}
+                            value={currentAddress.postCode}
+                            help={'address.post_code.help'}
                         />
                     </div>
                 </div>
@@ -115,10 +147,11 @@ export default function AddressEdit(props) {
                             required={true}
                             help={'address.locality.help'}
                             placeholder={'address.locality.placeholder'}
+                            value={currentAddress.locality}
                         />
                     </div>
                     <div className='col-2 card'>
-                        <button type={'button'} className={'btn btn-primary'} title={translateMessage(translations, 'locality.button.edit')} onClick={() => editLocality()}><FontAwesomeIcon icon={faEdit}/></button>
+                        <button type={'button'} className={'btn btn-primary'} title={translateMessage(translations, 'locality.button.edit')} onClick={() => editLocality()}><FontAwesomeIcon icon={faEdit} fixedWidth={true} /></button>
                     </div>
                 </div>
                 <div className='row'>
@@ -133,7 +166,7 @@ export default function AddressEdit(props) {
 
 AddressEdit.propTypes = {
     translations: PropTypes.object.isRequired,
-    addressData: PropTypes.object.isRequired,
+    currentAddress: PropTypes.object.isRequired,
     buildingTypeList: PropTypes.array.isRequired,
     messages: PropTypes.oneOfType([
         PropTypes.array,
@@ -149,7 +182,10 @@ AddressEdit.propTypes = {
     changeRegion: PropTypes.func.isRequired,
     saveLocality: PropTypes.func.isRequired,
     exitLocality: PropTypes.func.isRequired,
+    exitAddress: PropTypes.func.isRequired,
     cancelMessage: PropTypes.func.isRequired,
+    saveAddress: PropTypes.func.isRequired,
+    newAddress: PropTypes.func.isRequired,
 }
 
 AddressEdit.defaultTypes = {

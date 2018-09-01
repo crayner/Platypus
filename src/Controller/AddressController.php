@@ -165,6 +165,7 @@ class AddressController
             200
         );
     }
+    
     /**
      * grabAllAddresses
      *
@@ -178,6 +179,58 @@ class AddressController
         return new JsonResponse(
             [
                 'data' => $manager->getLocalityList(),
+            ],
+            200
+        );
+    }
+
+    /**
+     * grabAddress
+     *
+     * @param int $id
+     * @param AddressManager $manager
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/address/{id}/grab/", name="grab_address")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function grabAddress(int $id, AddressManager $manager)
+    {
+        return new JsonResponse(
+            [
+                'address' => $manager->find($id)->toArray(),
+            ],
+            200
+        );
+    }
+
+    /**
+     * saveLocality
+     *
+     * @param $locality
+     * @param AddressManager $manager
+     * @return JsonResponse
+     * @Route("/address/{address}/save/", name="save_address")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function saveAddress($address, AddressManager $manager, TranslatorInterface $translator)
+    {
+        $address = json_decode(base64_decode($address));
+
+        $entity = $manager->find($address->id ?: 'Add');
+        $entity->setBuildingType($address->buildingType);
+        $entity->setBuildingNumber($address->buildingType);
+        $entity->setStreetName($address->streetName);
+        $entity->setStreetNumber($address->streetNumber);
+        $entity->setPostCode($address->postCode);
+        $entity->setPropertyName($address->propertyName);
+        $entity->setLocality($manager->findLocality($address->locality));
+        $manager->save($entity);
+        return new JsonResponse(
+            [
+                'status' => $manager->getMessageManager()->getStatus(),
+                'address' => $entity->toArray(),
+                'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($translator),
             ],
             200
         );

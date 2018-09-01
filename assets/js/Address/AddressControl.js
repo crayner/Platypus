@@ -37,17 +37,20 @@ export default class AddressControl extends Component {
         this.cancelMessage = this.cancelMessage.bind(this)
         this.newAddress = this.newAddress.bind(this)
         this.editLocality = this.editLocality.bind(this)
+        this.editAddress = this.editAddress.bind(this)
         this.changeCountry = this.changeCountry.bind(this)
         this.changeRegion = this.changeRegion.bind(this)
         this.saveLocality = this.saveLocality.bind(this)
         this.exitLocality = this.exitLocality.bind(this)
+        this.exitAddress = this.exitAddress.bind(this)
+        this.saveAddress = this.saveAddress.bind(this)
 
         this.allAddresses = []
 
-        this.addressData = {}
         this.buildingTypeList = this.props.buildingTypeList
         this.localityList = this.props.localityList
         this.currentLocality = null
+        this.currentAddress = null
     }
 
     componentWillMount(){
@@ -91,7 +94,8 @@ export default class AddressControl extends Component {
             suggestions: this.suggestions,
             messages: this.messages,
             search: this.search,
-            currentLocality: this.currentLocality
+            currentLocality: this.currentLocality,
+            currentAddress: this.currentAddress,
        })
     }
 
@@ -130,18 +134,20 @@ export default class AddressControl extends Component {
     }
 
     newAddress(){
-        this.addressData = {}
-        this.setState({
-            currentAddress: 'Add'
-        })
+        this.currentAddress = {
+            id: 0,
+            streetName: '',
+            buildingType: '',
+            buildingNumber: '',
+            streetNumber: '',
+            propertyName: '',
+            postCode: '',
+            locality: '',
+        }
+        this.handleAddress()
     }
 
-    addAddress(event){
-        let value = event.target
-
-        const id = value.getAttribute('value')
-        console.log(value)
-        console.log(id)
+    addAddress(id){
         let path = '/address/{id}/attach/{parentEntity}/{entity_id}/'
 
         path = path.replace('{id}', id)
@@ -183,6 +189,16 @@ export default class AddressControl extends Component {
         }
     }
 
+    editAddress(val){
+        let path = '/address/{id}/grab/'
+        path = path.replace('{id}', val)
+        fetchJson(path, {}, this.locale)
+            .then(data => {
+                this.currentAddress = data.address
+                this.handleAddress()
+            })
+    }
+
     changeCountry(val){
         this.currentLocality.country = val
         this.handleAddress()
@@ -195,6 +211,11 @@ export default class AddressControl extends Component {
 
     exitLocality(){
         this.currentLocality = null
+        this.handleAddress()
+    }
+
+    exitAddress(){
+        this.currentAddress = null
         this.handleAddress()
     }
 
@@ -223,6 +244,36 @@ export default class AddressControl extends Component {
             })
     }
 
+    saveAddress(){
+        this.currentAddress.postCode = window.document.getElementById('address_postCode').value
+        this.currentAddress.streetName = window.document.getElementById('address_streetName').value
+        this.currentAddress.streetNumber = window.document.getElementById('address_streetNumber').value
+        this.currentAddress.propertyName = window.document.getElementById('address_propertyName').value
+        this.currentAddress.buildingNumber = window.document.getElementById('address_buildingNumber').value
+        let x = window.document.getElementById('address_buildingType')
+        this.currentAddress.buildingType = x.options[x.selectedIndex].value;
+        this.currentAddress.id = window.document.getElementById('address_id').value
+        let y = window.document.getElementById('address_locality')
+        this.currentAddress.locality = y.options[y.selectedIndex].value;
+
+        const xxx = new Buffer(JSON.stringify(this.currentAddress)).toString('base64')
+
+        let path = '/address/{address}/save/'
+            .replace('{address}', xxx)
+
+        fetchJson(path, {}, this.locale )
+            .then(data => {
+                this.currentAddress = data.address
+                this.messages = data.messages
+                if (data.status === 'default') {
+                    this.currentAddress = null
+                    this.grabAllAddress()
+                    this.grabAttachedAddresses()
+                } else
+                    this.handleAddress()
+            })
+    }
+
     render() {
         if (this.id === 'Add')
             return (
@@ -233,22 +284,27 @@ export default class AddressControl extends Component {
                     </div>
                 </div>
             )
+
         if (this.state.currentAddress !== null){
             return ( <AddressEdit
                 translations={this.translations}
-                addressData={this.addressData}
                 buildingTypeList={this.buildingTypeList}
                 localityList={this.localityList}
                 editLocality={this.editLocality}
                 currentLocality={this.state.currentLocality}
+                currentAddress={this.state.currentAddress}
                 changeCountry={this.changeCountry}
                 changeRegion={this.changeRegion}
                 saveLocality={this.saveLocality}
                 exitLocality={this.exitLocality}
+                exitAddress={this.exitAddress}
                 messages={this.state.messages}
                 cancelMessage={this.cancelMessage}
+                saveAddress={this.saveAddress}
+                newAddress={this.newAddress}
         /> )
         }
+
         return (
             <div className="card card-primary">
                 <div className="card-header">
@@ -269,6 +325,7 @@ export default class AddressControl extends Component {
                         inputSearch={this.search}
                         removeAddress={this.removeAddress}
                         newAddress={this.newAddress}
+                        editAddress={this.editAddress}
                 />
                 </div>
             </div>

@@ -33,7 +33,7 @@ export default function Button(props) {
 
     return (
         <button type={button.type} className={className} onClick={() => { buttonClickAction(url, button.response_type)}} style={button.style} title={translateMessage(translations, button.label)}>
-            {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ? <FontAwesomeIcon icon={button.icon} /> : null}
+            {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ? <FontAwesomeIcon icon={button.icon} fixedWidth={true} /> : null}
         </button>
     )
 }

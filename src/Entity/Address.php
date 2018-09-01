@@ -109,7 +109,7 @@ class Address
 	 */
 	public function getStreetName()
 	{
-		return $this->streetName;
+        return $this->streetName;
 	}
 
 	/**
@@ -121,7 +121,7 @@ class Address
 	 */
 	public function setStreetName($streetName)
 	{
-		$this->streetName = $streetName;
+        $this->streetName = $streetName;
 
 		return $this;
 	}
@@ -288,6 +288,40 @@ class Address
     public function setPostCode(?string $postCode): Address
     {
         $this->postCode = $postCode;
+        return $this;
+    }
+
+    /**
+     * toArray
+     *
+     * @return array
+     */
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'propertyName' => $this->getPropertyName(),
+            'streetName' => $this->getStreetName(),
+            'streetNumber' => $this->getStreetNumber(),
+            'buildingNumber' => $this->getBuildingNumber(),
+            'buildingType' => $this->getBuildingType(),
+            'postCode' => $this->getPostCode(),
+            'locality' => $this->getLocality() instanceof Locality ? $this->getLocality()->getId(): 0,
+        ];
+    }
+
+    /**
+     * checkAddress
+     *
+     * @return Address
+     */
+    public function checkAddress(): Address
+    {
+        if (intval($this->getStreetName()) > 0 && empty($this->getStreetNumber())) {
+            $num = trim(mb_substr($this->getStreetName(), 0, mb_strpos($this->getStreetName(), ' ')));
+            $this->setStreetName(trim(mb_substr($this->getStreetName(), mb_strlen($num))));
+            $this->setStreetNumber($num);
+        }
         return $this;
     }
 }
