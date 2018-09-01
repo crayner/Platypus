@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d0819b227eebdd89187196ed603548b3",
+    "content-hash": "8809fb86c6ea15256d8f20b76bbebbc0",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1605,16 +1605,16 @@
         },
         {
             "name": "hillrange/symfony-form",
-            "version": "0.1.93",
+            "version": "0.1.94",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/symfony-form.git",
-                "reference": "063300bff30524f0135517fd2d8b8dd21f85a552"
+                "reference": "c6fe2c2b6e54518d0e26ef0bac56c82b4884523d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/063300bff30524f0135517fd2d8b8dd21f85a552",
-                "reference": "063300bff30524f0135517fd2d8b8dd21f85a552",
+                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/c6fe2c2b6e54518d0e26ef0bac56c82b4884523d",
+                "reference": "c6fe2c2b6e54518d0e26ef0bac56c82b4884523d",
                 "shasum": ""
             },
             "require": {
@@ -1658,7 +1658,7 @@
             "keywords": [
                 "form"
             ],
-            "time": "2018-08-27T23:50:15+00:00"
+            "time": "2018-08-31T06:07:49+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -2436,16 +2436,16 @@
         },
         {
             "name": "platypus-template/original",
-            "version": "0.0.08",
+            "version": "0.0.09",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/platypus-template-original.git",
-                "reference": "cab733f700120ac123436dc55344afb8cdd0f570"
+                "reference": "eb1b922c45a363e57f4b9da26ce2d3997fd3f754"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/platypus-template-original/zipball/cab733f700120ac123436dc55344afb8cdd0f570",
-                "reference": "cab733f700120ac123436dc55344afb8cdd0f570",
+                "url": "https://api.github.com/repos/crayner/platypus-template-original/zipball/eb1b922c45a363e57f4b9da26ce2d3997fd3f754",
+                "reference": "eb1b922c45a363e57f4b9da26ce2d3997fd3f754",
                 "shasum": ""
             },
             "require": {
@@ -2483,7 +2483,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2018-08-16T05:09:25+00:00"
+            "time": "2018-08-31T06:05:38+00:00"
         },
         {
             "name": "psr/cache",
@@ -4933,16 +4933,16 @@
         },
         {
             "name": "symfony/swiftmailer-bundle",
-            "version": "v3.2.2",
+            "version": "v3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/swiftmailer-bundle.git",
-                "reference": "f1ba0552a9cd4df0191a58845fbd5541cf9eda2d"
+                "reference": "7bd5de67552ee3f7e04df89d662d41eba346dc83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/f1ba0552a9cd4df0191a58845fbd5541cf9eda2d",
-                "reference": "f1ba0552a9cd4df0191a58845fbd5541cf9eda2d",
+                "url": "https://api.github.com/repos/symfony/swiftmailer-bundle/zipball/7bd5de67552ee3f7e04df89d662d41eba346dc83",
+                "reference": "7bd5de67552ee3f7e04df89d662d41eba346dc83",
                 "shasum": ""
             },
             "require": {
@@ -4991,7 +4991,7 @@
             ],
             "description": "Symfony SwiftmailerBundle",
             "homepage": "http://symfony.com",
-            "time": "2018-04-03T16:29:41+00:00"
+            "time": "2018-08-29T08:49:17+00:00"
         },
         {
             "name": "symfony/templating",
@@ -5939,16 +5939,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.6.0",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "a1b0d9ff35219ec36c44fcc6213056cc339a1cf8"
+                "reference": "22a9bf33868f0fed6cab013fe5231e8485d15e20"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/a1b0d9ff35219ec36c44fcc6213056cc339a1cf8",
-                "reference": "a1b0d9ff35219ec36c44fcc6213056cc339a1cf8",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/22a9bf33868f0fed6cab013fe5231e8485d15e20",
+                "reference": "22a9bf33868f0fed6cab013fe5231e8485d15e20",
                 "shasum": ""
             },
             "require": {
@@ -5969,7 +5969,8 @@
                 "doctrine/orm": "^2.3",
                 "friendsofphp/php-cs-fixer": "^2.8",
                 "symfony/phpunit-bridge": "^3.4|^4.0",
-                "symfony/process": "^3.4|^4.0"
+                "symfony/process": "^3.4|^4.0",
+                "symfony/yaml": "^3.4|^4.0"
             },
             "type": "symfony-bundle",
             "extra": {
@@ -6000,7 +6001,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2018-08-07T16:05:09+00:00"
+            "time": "2018-08-30T01:08:06+00:00"
         }
     ],
     "aliases": [],
