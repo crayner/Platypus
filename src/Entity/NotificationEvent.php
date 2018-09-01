@@ -107,7 +107,7 @@ class NotificationEvent
      * @param null|string $type
      * @return NotificationType
      */
-    public function setType(?string $type): NotificationType
+    public function setType(?string $type): NotificationEvent
     {
         $this->type = $type;
         return $this;
@@ -160,52 +160,6 @@ class NotificationEvent
     }
 
     /**
-     * @var null|Module
-     */
-    private $module;
-
-    /**
-     * @return Module|null
-     */
-    public function getModule(): ?Module
-    {
-        return $this->module;
-    }
-
-    /**
-     * @param Module|null $module
-     * @return NotificationEvent
-     */
-    public function setModule(?Module $module): NotificationEvent
-    {
-        $this->module = $module;
-        return $this;
-    }
-
-    /**
-     * @var null|Action
-     */
-    private $action;
-
-    /**
-     * @return Action|null
-     */
-    public function getAction(): ?Action
-    {
-        return $this->action;
-    }
-
-    /**
-     * @param Action|null $action
-     * @return NotificationEvent
-     */
-    public function setAction(?Action $action): NotificationEvent
-    {
-        $this->action = $action;
-        return $this;
-    }
-
-    /**
      * NotificationEvent constructor.
      */
     public function __construct()
@@ -221,7 +175,7 @@ class NotificationEvent
      */
     public function __toString(): string
     {
-        return $this->getModule()->getName().'/'.$this->getEvent();
+        return 'Notification Event ' . $this->getId(); // Todo
     }
 
     /**

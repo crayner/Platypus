@@ -2,6 +2,7 @@ parameters:
     locale: en
     session_name: 'platypus_session'
     encoder.cost: 15
+    idle_timeout: 15
     security.hierarchy.roles:
         ROLE_USER: ~
         ROLE_ALLOWED_TO_SWITCH: ~
