@@ -25,11 +25,6 @@ use Symfony\Component\Validator\Constraint;
 class Address extends Constraint
 {
     /**
-     * @var string
-     */
-    public $rule;
-
-    /**
      * validatedBy
      *
      * @return string
@@ -47,17 +42,5 @@ class Address extends Constraint
     public function getTargets()
     {
         return Constraint::CLASS_CONSTRAINT;
-    }
-
-    /**
-     * getRequiredOptions
-     *
-     * @return array
-     */
-    public function getRequiredOptions()
-    {
-        return [
-            'rule'
-        ];
     }
 }

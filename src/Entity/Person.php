@@ -816,4 +816,66 @@ class Person
 
         return $this;
     }
+
+    /**
+     * @var Collection|null
+     */
+    private $phones;
+
+    /**
+     * getPhones
+     *
+     * @return Collection
+     */
+    public function getPhones(): Collection
+    {
+        if (empty($this->phones))
+            $this->phones = new ArrayCollection();
+
+        if ($this->phones instanceof PersistentCollection)
+            $this->phones->initialize();
+
+        return $this->phones;
+    }
+
+    /**
+     * setPhones
+     *
+     * @param Collection|null $phones
+     * @return Person
+     */
+    public function setPhones(?Collection $phones): Person
+    {
+        $this->phones = $phones;
+        return $this;
+    }
+
+    /**
+     * addPhone
+     *
+     * @param Phone|null $phone
+     * @return Person
+     */
+    public function addPhone(?Phone $phone): Person
+    {
+        if (empty($phone) || $this->getPhones()->contains($phone))
+            return $this;
+
+        $this->phones->add($phone);
+
+        return $this;
+    }
+
+    /**
+     * removePhone
+     *
+     * @param Phone|null $phone
+     * @return Person
+     */
+    public function removePhone(?Phone $phone): Person
+    {
+        $this->phones->removeElement($phone);
+
+        return $this;
+    }
 }

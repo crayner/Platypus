@@ -7,7 +7,6 @@ import {translateMessage} from '../Component/MessageTranslator'
 export default function BootstrapSelect(props) {
     const {
         translations,
-        type,
         name,
         auto_complete,
         input_class,
@@ -20,18 +19,20 @@ export default function BootstrapSelect(props) {
         translate,
         placeholder,
         help,
+        onChange,
+        onClick,
     } = props
 
     let id = name.replace('[', '_')
     id = id.replace(']', '')
 
     const options = optionList.map((option, key) => {
-        return (<option value={option['type']} key={key}>{translate ? translateMessage(translations, option['label']) : option['label']}</option>)})
+        return (<option value={option['type']} key={key} onClick={onClick}>{translate ? translateMessage(translations, option['label']) : option['label']}</option>)})
 
     return (
         <div className={(div_class !== '' ? ' ' + div_class : div_class) + "form-group"}>
-            <select type={type} id={id} name={name} autoComplete={auto_complete} className={(input_class !== '' ? ' ' + input_class : input_class) + "form-control"}
-                    defaultValue={value ? value : ''} required={required}>
+            <select id={id} name={name} autoComplete={auto_complete} className={(input_class !== '' ? ' ' + input_class : input_class) + "form-control"}
+                    defaultValue={value ? value : ''} required={required} onChange={onChange}>
                 {placeholder !== false ? <option>{translateMessage(translations, placeholder)}</option>: ''}
                 {options}
             </select>
@@ -46,7 +47,6 @@ export default function BootstrapSelect(props) {
 
 BootstrapSelect.propTypes = {
     translations: PropTypes.object.isRequired,
-    type: PropTypes.string,
     name: PropTypes.string.isRequired,
     auto_complete: PropTypes.string,
     input_classe: PropTypes.string,
@@ -66,11 +66,12 @@ BootstrapSelect.propTypes = {
         PropTypes.bool,
     ]),
     optionList: PropTypes.array.isRequired,
+    onChange: PropTypes.func,
+    onClick: PropTypes.func,
     translate: PropTypes.bool,
 }
 
 BootstrapSelect.defaultProps = {
-    type: 'text',
     auto_complete: 'off',
     input_class: '',
     label_class: '',
@@ -80,4 +81,6 @@ BootstrapSelect.defaultProps = {
     translate: true,
     placeholder: false,
     help: false,
+    onChange: function(){},
+    onClick: function(){},
 }

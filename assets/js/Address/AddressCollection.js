@@ -28,7 +28,7 @@ export default function AddressCollection(props) {
     
     const options = suggestions.map(address =>
         <div className='row row-striped' key={address.id} onClick={() => addAddress(address.id)}>
-            <div className='col-10 offset-1 possibleAddress' value={address.id} >
+            <div className='col-10 offset-1 possibleAddress'>
                 {address.label}
             </div>
         </div>)
@@ -65,28 +65,48 @@ export default function AddressCollection(props) {
 
     return (
         <div>
-            <Messages
-                messages={messages}
-                translations={translations}
-                cancelMessage={cancelMessage}
-            />
-            <div className="input-group input-group-sm">
-                <input
-                    placeholder={translateMessage(translations, 'address.search.placeholder')}
-                    ref={input => search = input}
-                    onChange={addressSuggestions}
-                    value={inputSearch}
-                    className='form-control'
-                />
-                <span className='input-group-append'>
-                    <button className='btn btn-success' type={'button'} onClick={() => newAddress()} title={translateMessage(translations, 'address.button.add')}><FontAwesomeIcon icon={faPlusCircle} fixedWidth={true} /></button>
-                </span>
+            <div className='row'>
+                <div className='col-12'>
+                    <Messages
+                        messages={messages}
+                        translations={translations}
+                        cancelMessage={cancelMessage}
+                    />
+                </div>
             </div>
-            <div className='small' style={{maxHeight: '200px', overflowY: 'scroll', cursor: 'pointer'}}>
-                {options}
+            <div className='row'>
+                <div className='col-12 text-justify'>
+                    <div className="input-group input-group-sm">
+                        <input
+                            placeholder={translateMessage(translations, 'address.search.placeholder')}
+                            ref={input => search = input}
+                            onChange={addressSuggestions}
+                            value={inputSearch}
+                            className='form-control'
+                        />
+                        <span className='input-group-append'>
+                            <button className='btn btn-success' type={'button'} onClick={() => newAddress()} title={translateMessage(translations, 'address.button.add')}><FontAwesomeIcon icon={faPlusCircle} fixedWidth={true} /></button>
+                        </span>
+                    </div>
+                </div>
             </div>
-
-            {attachedAddresses}
+            <div className='row'>
+                <div className='col-12'>
+                    <div className='small' style={{maxHeight: '200px', overflowY: 'scroll', cursor: 'pointer'}}>
+                        {options}
+                    </div>
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col-12'>
+                    {attachedAddresses}
+                </div>
+            </div>
+            <div className='row'>
+                <div className='col-12 text-justify'>
+                    <p className={'alert alert-info'}>{translateMessage(translations, 'address.edit.content')}</p>
+                </div>
+            </div>
         </div>
     )
 }

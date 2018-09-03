@@ -18,6 +18,8 @@ export default function BootstrapInput(props) {
         placeholder,
         required,
         help,
+        onChange,
+        onClick,
     } = props
 
     let id = name.replace('[', '_')
@@ -27,7 +29,7 @@ export default function BootstrapInput(props) {
         <div className={(div_class !== '' ? ' ' + div_class : div_class) + "form-group"}>
             <input type={type} id={id} name={name} autoComplete={auto_complete}
                    className={(input_class !== '' ? input_class + ' ' : input_class) + "form-control"} defaultValue={value ? value : ''}
-                   placeholder={placeholder ? placeholder : ''} required={required} />
+                   placeholder={placeholder ? placeholder : ''} required={required} onChange={onChange} onClick={onClick} />
             {label !== false ?
                 (<label className={"form-control-label" + (label_class? ' ' + label_class : '')} htmlFor={id}>{translateMessage(translations, label)}</label>) : ''}
             {required ? <span className="field-required"> {translateMessage(translations, 'form.required')} </span> : ''}
@@ -36,6 +38,7 @@ export default function BootstrapInput(props) {
 
     )
 }
+
 
 BootstrapInput.propTypes = {
     translations: PropTypes.object.isRequired,
@@ -53,6 +56,8 @@ BootstrapInput.propTypes = {
         PropTypes.string,
         PropTypes.bool,
     ]),
+    onChange: PropTypes.func,
+    onClick: PropTypes.func,
     required: PropTypes.bool,
 }
 
@@ -65,4 +70,6 @@ BootstrapInput.defaultProps = {
     label: false,
     required: false,
     help: false,
+    onChange: function(){},
+    onClick: function(){},
 }

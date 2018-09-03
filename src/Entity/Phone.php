@@ -26,7 +26,15 @@ class Phone
 	 */
 	private $countryCode;
 
-	/**
+    /**
+     * @return array
+     */
+    public static function getPhoneTypeList(): array
+    {
+        return self::$phoneTypeList;
+    }
+
+    /**
 	 * Get id
 	 *
 	 * @return integer
@@ -46,14 +54,24 @@ class Phone
         return $this;
     }
 
+    /**
+     * @var array
+     */
+    private static $phoneTypeList = [
+        '',
+        'home',
+        'mobile',
+        'work',
+        'fax',
+    ];
 	/**
 	 * Get phoneType
 	 *
 	 * @return string
 	 */
-	public function getPhoneType()
+	public function getPhoneType(): ?string
 	{
-		return $this->phoneType;
+		return $this->phoneType = in_array($this->phoneType, self::$phoneTypeList) ? $this->phoneType : '';
 	}
 
 	/**
@@ -63,9 +81,9 @@ class Phone
 	 *
 	 * @return Phone
 	 */
-	public function setPhoneType($phoneType)
+	public function setPhoneType(?string $phoneType): Phone
 	{
-		$this->phoneType = $phoneType;
+		$this->phoneType = in_array($phoneType, self::$phoneTypeList) ? $phoneType : '';;
 
 		return $this;
 	}
@@ -75,7 +93,7 @@ class Phone
 	 *
 	 * @return string
 	 */
-	public function getPhoneNumber()
+	public function getPhoneNumber(): ?string
 	{
 		return $this->phoneNumber;
 	}
@@ -87,7 +105,7 @@ class Phone
 	 *
 	 * @return Phone
 	 */
-	public function setPhoneNumber($phoneNumber)
+	public function setPhoneNumber($phoneNumber): Phone
 	{
 		$this->phoneNumber = $phoneNumber;
 
@@ -99,9 +117,9 @@ class Phone
 	 *
 	 * @return string
 	 */
-	public function getCountryCode()
+	public function getCountryCode(): ?string
 	{
-		return $this->countryCode;
+		return strtoupper($this->countryCode);
 	}
 
 	/**
@@ -111,10 +129,35 @@ class Phone
 	 *
 	 * @return Phone
 	 */
-	public function setCountryCode($countryCode)
+	public function setCountryCode(?string $countryCode): Phone
 	{
-		$this->countryCode = $countryCode;
+		$this->countryCode = strtoupper($countryCode);
 
 		return $this;
 	}
+
+    /**
+     * toArray
+     *
+     * @return array
+     */
+	public function toArray(): array
+    {
+        $phone = [];
+        $phone['id'] = $this->getId();
+        $phone['country'] = $this->getCountryCode();
+        $phone['phone'] = $this->getPhoneNumber();
+        $phone['type'] = $this->getPhoneType();
+        return $phone;
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return '('.$this->getId().') ' . $this->getCountryCode() . ' ' . $this->getPhoneNumber();
+    }
 }

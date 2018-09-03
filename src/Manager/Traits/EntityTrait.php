@@ -84,7 +84,7 @@ trait EntityTrait
      * @return null|object
      * @throws \Exception
      */
-    public function find($id): ?object
+    public function find($id)
     {
         if ($id === 'Add')
             $this->entity = new $this->entityName();
@@ -100,7 +100,7 @@ trait EntityTrait
      * @return object
      * @throws \Exception
      */
-    public function delete($id): object
+    public function delete($id)
     {
         $entity = $this->find($id);
         if (empty($entity))
@@ -163,10 +163,10 @@ trait EntityTrait
     }
 
     /**
-     * @param Object $entity
+     * @param DoctrineEntity $entity
      * @return EntityTrait
      */
-    public function setEntity(object $entity): Object
+    public function setEntity($entity)
     {
         $this->entity = $entity;
         return $this;
@@ -189,7 +189,7 @@ trait EntityTrait
      *
      * @return Object
      */
-    public function saveEntity(): Object
+    public function saveEntity()
     {
         $this->getEntityManager()->persist($this->getEntity());
         $this->getEntityManager()->flush();

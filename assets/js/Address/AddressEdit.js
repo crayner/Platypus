@@ -12,7 +12,6 @@ import {faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 import LocalityEdit from './LocalityEdit'
 import Messages from '../Component/Messages/Messages'
 
-
 export default function AddressEdit(props) {
     const {
         translations,
@@ -152,11 +151,6 @@ export default function AddressEdit(props) {
                     </div>
                     <div className='col-2 card'>
                         <button type={'button'} className={'btn btn-primary'} title={translateMessage(translations, 'locality.button.edit')} onClick={() => editLocality()}><FontAwesomeIcon icon={faEdit} fixedWidth={true} /></button>
-                    </div>
-                </div>
-                <div className='row'>
-                    <div className='col-12 text-justify'>
-                        <p className={'alert alert-success'}>{translateMessage(translations, 'address.edit.content')}</p>
                     </div>
                 </div>
             </div>

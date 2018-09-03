@@ -159,7 +159,7 @@ class UserManager
      */
     public function isStaff(): bool
     {
-        if (! $this->hasPerson())
+        if ($this->getUser() === 'anon.' || ! $this->hasPerson())
             return false;
         return true;
     }

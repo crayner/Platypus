@@ -87,9 +87,9 @@ class ThemeManager
     /**
      * getCurrentThemeName
      *
-     * @return null|ThemeVersionHelper
+     * @return null|\App\Manager\Interfaces\ThemeVersionHelper
      */
-    public static function getCurrentTheme($default = false): ?Object
+    public static function getCurrentTheme(bool $default = false): ?\App\Manager\Interfaces\ThemeVersionHelper
     {
         $themeName = self::$settingManager->get('current.theme', 'PlatypusTemplateOriginal');
 
@@ -111,10 +111,10 @@ class ThemeManager
     /**
      * isValidHelper
      *
-     * @param object $helper
+     * @param \object $helper
      * @return bool
      */
-    private static function isValidHelper(object $helper): bool
+    private static function isValidHelper($helper): bool
     {
         if (! $helper instanceof \App\Manager\Interfaces\ThemeVersionHelper)
             return false;

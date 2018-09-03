@@ -20,6 +20,7 @@ use App\Form\Type\PersonType;
 use App\Manager\AddressManager;
 use App\Manager\PersonManager;
 use App\Manager\PersonRoleManager;
+use App\Manager\PhoneManager;
 use App\Manager\StaticManager;
 use App\Manager\ThemeManager;
 use App\Manager\UserManager;
@@ -179,13 +180,16 @@ class PersonController extends Controller
      *
      * @param PersonManager $manager
      * @param Request $request
+     * @param AddressManager $addressManager
+     * @param PhoneManager $phoneManager
      * @param string $id
+     * @param string $tabName
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/person/{id}/edit/{tabName}", name="person_edit"))
      * @IsGranted("ROLE_ADMIN")
      */
-    public function edit(PersonManager $manager, Request $request, AddressManager $addressManager, $id = 'Add', $tabName = 'basic.information')
+    public function edit(PersonManager $manager, Request $request, AddressManager $addressManager, PhoneManager $phoneManager, $id = 'Add', $tabName = 'basic.information')
     {
         $entity = $manager->find($id);
 
@@ -208,6 +212,7 @@ class PersonController extends Controller
                 'fullForm' => $form,
                 'manager' => $manager,
                 'addressManager' => $addressManager,
+                'phoneManager' => $phoneManager,
             ]
         );
     }

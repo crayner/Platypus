@@ -269,6 +269,7 @@ export default class AddressControl extends Component {
                     this.currentAddress = null
                     this.grabAllAddress()
                     this.grabAttachedAddresses()
+                    this.handleAddress()
                 } else
                     this.handleAddress()
             })

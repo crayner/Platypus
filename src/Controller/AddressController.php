@@ -38,7 +38,6 @@ class AddressController
      */
     public function grabAllAddresses(AddressManager $manager)
     {
-        $manager->grabAllAddresses();
         return new JsonResponse(
             [
                 'data' => $manager->grabAllAddresses(),
@@ -101,7 +100,9 @@ class AddressController
      * @param int $id
      * @param string $parentEntity
      * @param AddressManager $manager
+     * @param TranslatorInterface $translator
      * @return JsonResponse
+     * @throws \Exception
      * @Route("/address/{id}/remove/{parentEntity}/{entity_id}/", name="address_remove")
      * @IsGranted("ROLE_ADMIN")
      */
@@ -205,15 +206,17 @@ class AddressController
     }
 
     /**
-     * saveLocality
+     * saveAddress
      *
-     * @param $locality
+     * @param $address
      * @param AddressManager $manager
+     * @param TranslatorInterface $translator
      * @return JsonResponse
+     * @throws \Exception
      * @Route("/address/{address}/save/", name="save_address")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function saveAddress($address, AddressManager $manager, TranslatorInterface $translator)
+    public function saveAddress(string $address, AddressManager $manager, TranslatorInterface $translator)
     {
         $address = json_decode(base64_decode($address));
 

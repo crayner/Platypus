@@ -16,10 +16,11 @@
 namespace App\Listener;
 
 use App\Manager\InstallationManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Doctrine\DBAL\Exception\TableNotFoundException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 class InstallSubscriber implements EventSubscriberInterface
@@ -38,6 +39,7 @@ class InstallSubscriber implements EventSubscriberInterface
     {
         return [
             KernelEvents::REQUEST => ['installationCheck', 4],
+            KernelEvents::EXCEPTION => ['exceptionCheck', 8],
         ];
     }
 
@@ -50,43 +52,19 @@ class InstallSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * @var GetResponseEvent
+     */
+    private $event;
+
+    /**
      * installationCheck
      *
      * @param GetResponseEvent $event
      */
     public function installationCheck(GetResponseEvent $event)
     {
-        self::$installing = false;
-        if (! $event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
-                [
-                    // Route that Install
-                    'installer_start',
-                    'installer_database_settings',
-                    'installer_database_create',
-                    'load_demonstration_data',
-                    'installer_update',
-                    'blank',
-                ]
-            )
-        ) {
-            if ($event->getRequest()->hasSession())
-                $event->getRequest()->getSession()->remove('settings');
-            self::$installing = true;
-            return;
-        }
-
-        if (! $event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
-                [
-                    // Ignore these routes
-                    'section_menu_display',
-                ]
-            )
-        ) return;
-
-        // Ignore the profiler and wdt
-        if (strpos($event->getRequest()->get('_route'), '_') === 0)
-            return;
-
+        if ($this->isInstallingRoute($event))
+            return ;
 
         $doFullCheck = true;
         if ($event->getRequest()->hasSession()) {
@@ -122,6 +100,7 @@ class InstallSubscriber implements EventSubscriberInterface
 
         }
 
+        $this->event = $event;
         return ;
     }
 
@@ -133,7 +112,6 @@ class InstallSubscriber implements EventSubscriberInterface
     /**
      * InstallSubscriber constructor.
      * @param InstallationManager $installationManager
-     * @param ContainerInterface $container
      */
     public function __construct(InstallationManager $installationManager)
     {
@@ -141,10 +119,76 @@ class InstallSubscriber implements EventSubscriberInterface
     }
 
     /**
+     * getInstallationManager
+     *
      * @return InstallationManager
      */
     public function getInstallationManager(): InstallationManager
     {
         return $this->installationManager;
+    }
+
+    /**
+     * exceptionCheck
+     *
+     * @param GetResponseForExceptionEvent $event
+     */
+    public function exceptionCheck(GetResponseForExceptionEvent $event)
+    {
+        if ($this->isInstallingRoute($event))
+            return ;
+
+        $ex = $event->getException();
+
+        while (! is_null($ex))
+        {
+            $ex = $ex->getPrevious();
+            if ($ex instanceof TableNotFoundException) {
+                $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_start'));
+                $event->setResponse($response);
+            }
+        }
+    }
+
+    /**
+     * isInstalling
+     *
+     * @param GetResponseEvent $event
+     * @return bool
+     */
+    private function isInstallingRoute(GetResponseEvent $event) : bool
+    {
+        self::$installing = false;
+        if (! $event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
+                [
+                    // Route that Install
+                    'installer_start',
+                    'installer_database_settings',
+                    'installer_database_create',
+                    'load_demonstration_data',
+                    'installer_update',
+                    'blank',
+                ]
+            )
+        ) {
+            if ($event->getRequest()->hasSession())
+                $event->getRequest()->getSession()->remove('settings');
+            self::$installing = true;
+            return true;
+        }
+
+        if (!$event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
+                [
+                    // Ignore these routes
+                    'section_menu_display',
+                ]
+            )
+        ) return true;
+
+        // Ignore the profiler and wdt
+        if (strpos($event->getRequest()->get('_route'), '_') === 0)
+            return true;
+
+        return false;
     }
 }

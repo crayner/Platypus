@@ -3,6 +3,7 @@ namespace App\Form;
 
 use App\Manager\SettingManager;
 use App\Validator\GoogleOAuth;
+use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
 use App\Organism\User;
 use Hillrange\Security\Validator\Password;
@@ -116,13 +117,14 @@ class InstallUserType extends AbstractType
                     ],
                 ]
             )
-            ->add('title', SettingChoiceType::class,
+            ->add('title', EnumType::class,
                 [
                     'label' => 'person.honorific.label',
                     'translation_domain' => 'Person',
-                    'setting_name' => 'person.title.list',
                     'placeholder' => 'person.honorific.placeholder',
                     'required' => false,
+                    'choice_translation_domain' => 'Person',
+                    'choice_list_prefix' => 'person.title',
                 ]
             )
             ->add('currency', CurrencyType::class,

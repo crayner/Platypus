@@ -33,21 +33,10 @@ class AddressValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (empty($value->getStreetName()))
-            $this->context->buildViolation('address.street_name.empty')
-                ->setTranslationDomain('Address')
-                ->addViolation();
-        if (empty($value->getLocality()))
-            $this->context->buildViolation('address.locality.empty')
-                ->setTranslationDomain('Address')
-                ->addViolation();
-
-        $rule = $constraint->rule;
+        $rule = $this->getCountryValidationRule($value->getLocality()->getCountry());
 
         if (empty($rule))
-        {
             return ;
-        }
 
         $resolver = new OptionsResolver();
         $resolver->setDefaults([
@@ -85,5 +74,31 @@ class AddressValidator extends ConstraintValidator
         }
 
         return ;
+    }
+
+    /**
+     * getCountryValidationRule
+     *
+     * @param string $country
+     * @return array
+     */
+    private function getCountryValidationRule(string $country): array
+    {
+        $rules = [
+            'AU' => [
+                'streetName' => [
+                    'required' => true,
+                    'regex' => false,  // a regex ...
+                ],
+                'postCode' => [
+                    'regex' => '/^$/' // must be empty
+                ],
+                'locality' => [
+                    'required' => true,
+                ],
+            ],
+        ];
+
+        return empty($rules[strtoupper($country)]) ? [] : $rules[strtoupper($country)];
     }
 }

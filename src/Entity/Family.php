@@ -395,4 +395,66 @@ class Family
 
         return $this;
     }
+
+    /**
+     * @var Collection|null
+     */
+    private $phones;
+
+    /**
+     * getPhones
+     *
+     * @return Collection
+     */
+    public function getPhones(): Collection
+    {
+        if (empty($this->phones))
+            $this->phones = new ArrayCollection();
+
+        if ($this->phones instanceof PersistentCollection)
+            $this->phones->initialize();
+
+        return $this->phones;
+    }
+
+    /**
+     * setPhones
+     *
+     * @param Collection|null $phones
+     * @return Family
+     */
+    public function setPhones(?Collection $phones): Family
+    {
+        $this->phones = $phones;
+        return $this;
+    }
+
+    /**
+     * addPhone
+     *
+     * @param Phone|null $phone
+     * @return Family
+     */
+    public function addPhone(?Phone $phone): Family
+    {
+        if (empty($phone) || $this->getPhones()->contains($phone))
+            return $this;
+
+        $this->phones->add($phone);
+
+        return $this;
+    }
+
+    /**
+     * removePhone
+     *
+     * @param Phone|null $phone
+     * @return Family
+     */
+    public function removePhone(?Phone $phone): Family
+    {
+        $this->phones->removeElement($phone);
+
+        return $this;
+    }
 }

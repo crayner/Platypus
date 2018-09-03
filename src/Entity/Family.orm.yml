@@ -1,58 +1,70 @@
 App\Entity\Family:
-  type: entity
-  table: family
-  repositoryClass: App\Repository\FamilyRepository
-  id:
+    type: entity
+    table: family
+    repositoryClass: App\Repository\FamilyRepository
     id:
-      type: integer
-      generator:
-        strategy: AUTO
-  fields:
-    name:
-      length: 100
-      nullable: false
-    nameAddress:
-      length: 100
-      options:
-        comment: 'The formal name to be used for addressing the family (e.g. Mr. & Mrs. Smith)'
-      column: name_address
-    homeAddress:
-      type: text
-      column: home_address
-    homeAddressDistrict:
-      length: 255
-      column: home_address_district
-    homeAddressCountry:
-      length: 255
-      column: home_address_country
-    status:
-      length: 10
-    languageHomePrimary:
-      length: 30
-      column: language_home_primary
-    languageHomeSecondary:
-      length: 30
-      nullable: true
-      column: language_home_secondary
-    familySync:
-      length: 50
-      nullable: true
-      column: family_sync
-  oneToMany:
-    members:
-      targetEntity: App\Entity\FamilyPerson
-      mappedBy: family
-      cascade: [ persist, remove ]
-  manyToMany:
-    addresses:
-      targetEntity: App\Entity\Address
-      nullable: true
-      cascade: [ persist ]
-      joinTable:
-        name: family_address
-        joinColumns:
-          family_id:
-            referencedColumnName: id
-        inverseJoinColumns:
-          address_id:
-            referencedColumnName: id
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 100
+            nullable: false
+        nameAddress:
+            length: 100
+            options:
+                comment: 'The formal name to be used for addressing the family (e.g. Mr. & Mrs. Smith)'
+            column: name_address
+        homeAddress:
+            type: text
+            column: home_address
+        homeAddressDistrict:
+            length: 255
+            column: home_address_district
+        homeAddressCountry:
+            length: 255
+            column: home_address_country
+        status:
+            length: 10
+        languageHomePrimary:
+            length: 30
+            column: language_home_primary
+        languageHomeSecondary:
+            length: 30
+            nullable: true
+            column: language_home_secondary
+        familySync:
+            length: 50
+            nullable: true
+            column: family_sync
+    oneToMany:
+        members:
+            targetEntity: App\Entity\FamilyPerson
+            mappedBy: family
+            cascade: [ persist, remove ]
+    manyToMany:
+        addresses:
+            targetEntity: App\Entity\Address
+            nullable: true
+            cascade: [ persist ]
+            joinTable:
+                name: family_address
+                joinColumns:
+                    family_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    address_id:
+                        referencedColumnName: id
+        phones:
+            targetEntity: App\Entity\Phone
+            nullable: true
+            cascade: [ persist ]
+            joinTable:
+                name: family_phone
+                joinColumns:
+                    family_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    phone_id:
+                        referencedColumnName: id

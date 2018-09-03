@@ -1,6 +1,8 @@
 <?php
 namespace App\Organism;
 
+use Hillrange\Security\Util\ParameterInjector;
+
 class User
 {
 	/**
@@ -37,6 +39,14 @@ class User
 	 * @var integer
 	 */
 	private $passwordMinLength;
+
+    /**
+     * @return array
+     */
+    public static function getTitleList(): array
+    {
+        return ParameterInjector::getParameter('personal.title.list');
+    }
 
 	/**
 	 * @return string

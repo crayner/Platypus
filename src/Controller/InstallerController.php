@@ -105,21 +105,22 @@ class InstallerController extends Controller
     }
 
     /**
-     * Create Database
+     * createDatabase
      *
-     * @Route("/installer/database/create/{appEnv}/", name="installer_database_create")
-     * @param string $appEnv
      * @param InstallationManager $installationManager
      * @param Request $request
      * @param KernelInterface $kernel
      * @param EntityManagerInterface $entityManager
      * @param SettingManager $settingManager
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param string $appEnv
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Doctrine\DBAL\DBALException
+     * @throws \Doctrine\ORM\ORMException
+     * @Route("/installer/database/create/{appEnv}/", name="installer_database_create")
      */
-    public function createDatabase($appEnv = 'ignore', InstallationManager $installationManager,
+    public function createDatabase(InstallationManager $installationManager,
                                    Request $request, KernelInterface $kernel,
-                                   EntityManagerInterface $entityManager, SettingManager $settingManager)
+                                   EntityManagerInterface $entityManager, SettingManager $settingManager, $appEnv = 'ignore')
     {
         $installationManager->setStep(2);
 

@@ -114,3 +114,15 @@ App\Entity\Person:
                 inverseJoinColumns:
                     address_id:
                         referencedColumnName: id
+        phones:
+            targetEntity: App\Entity\Phone
+            nullable: true
+            cascade: [ persist ]
+            joinTable:
+                name: person_phone
+                joinColumns:
+                    person_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    phone_id:
+                        referencedColumnName: id
