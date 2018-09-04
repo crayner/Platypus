@@ -10,6 +10,7 @@ use App\People\Util\PersonManager;
 use App\Util\UserHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Security\Entity\User;
+use Hillrange\Security\Util\ParameterInjector;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -43,18 +44,24 @@ class UserManager
     private $tokenStorage;
 
     /**
+     * @var bool
+     */
+    private $validDatabase = false;
+
+    /**
      * UserManager constructor.
      *
      * @param TokenStorageInterface $tokenStorage
      * @param EntityManagerInterface $entityManager
      * @param MessageManager $messageManager
      */
-	public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, MessageManager $messageManager)
+	public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, MessageManager $messageManager, ParameterInjector $injector)
     {
         $this->entityManager = $entityManager;
         $this->messageManager = $messageManager;
         self::$entityRepository = $entityManager->getRepository($this->entityName);
 		$this->tokenStorage = $tokenStorage;
+		dump($injector::getParameter('database_url'));
 		$this->getUser();
 	}
 
