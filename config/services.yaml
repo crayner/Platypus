@@ -30,7 +30,7 @@ services:
         decorates: 'translator'
         arguments:
             - '@app.manager.translation_manager.inner'
-            - '@doctrine.orm.default_entity_manager'
+            - '@App\Manager\StringReplacementManager'
             - '@App\Manager\SettingManager'
             - '@monolog.logger.translation'
         public: false

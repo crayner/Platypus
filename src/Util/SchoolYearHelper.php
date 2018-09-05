@@ -16,8 +16,8 @@
 namespace App\Util;
 
 use App\Entity\SchoolYear;
+use App\Manager\SchoolYearManager;
 use App\Repository\SchoolYearRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -33,12 +33,14 @@ class SchoolYearHelper
 
     /**
      * SchoolYearHelper constructor.
-     * @param EntityManagerInterface $entityManager
+     *
+     * @param SchoolYearManager $manager
      * @param UserHelper $userHelper
+     * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, UserHelper $userHelper)
+    public function __construct(SchoolYearManager $manager, UserHelper $userHelper)
     {
-        self::$schoolYearRepository = $entityManager->getRepository(SchoolYear::class);
+        self::$schoolYearRepository = $manager->getRepository(SchoolYear::class);
     }
 
     /**

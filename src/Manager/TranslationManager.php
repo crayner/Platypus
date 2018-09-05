@@ -5,8 +5,7 @@ use App\Entity\StringReplacement;
 use App\Repository\StringReplacementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Exception\ConnectionException;
-use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Node\Expr\Instanceof_;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Translation\Loader\XliffFileLoader;
@@ -168,9 +167,9 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
     private $translateRepository;
 
     /**
-     * @var EntityManagerInterface
+     * @var StringReplacementManager
      */
-    private $entityManager;
+    private $stringReplacementManager;
 
     /**
      * @var SettingManager
@@ -186,20 +185,17 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
      * TranslationManager constructor.
      *
      * @param TranslatorInterface $translator
-     * @param EntityManagerInterface $entityManager
+     * @param StringReplacementManager $manager
      * @param SettingManager $settingManager
      * @param LoggerInterface $logger
+     * @throws \Exception
      */
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager, SettingManager $settingManager, LoggerInterface $logger)
+    public function __construct(TranslatorInterface $translator, StringReplacementManager $manager, SettingManager $settingManager, LoggerInterface $logger)
     {
         $this->settingManager = $settingManager;
-        try {
-            $this->translateRepository = $entityManager->getRepository(StringReplacement::class);
-        } catch (ConnectionException $e) {
-            //Ignore
-        }
-        $this->entityManager = $entityManager;
+        $this->translateRepository = $manager->getRepository();
         $this->logger = $logger;
+        $this->stringReplacementManager = $manager;
 
         $translator->addLoader('xlf', new XliffFileLoader());
         $this->translator = $translator;
@@ -211,7 +207,11 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
     private $strings;
 
     /**
+     * getStrings
+     *
+     * @param bool $refresh
      * @return Collection|null
+     * @throws \Exception
      */
     public function getStrings($refresh = false): ?Collection
     {
@@ -220,10 +220,10 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
         else
             return $this->strings;
 
-        if (empty($this->strings) || $refresh)
-            $this->strings = new ArrayCollection($this->entityManager->getRepository(StringReplacement::class)->findBy([],['priority' => 'DESC', 'original' => 'ASC']));
+        if ((empty($this->strings) || $refresh) && $this->stringReplacementManager->isValidEntityManager())
+            $this->strings = new ArrayCollection($this->stringReplacementManager->getRepository()->findBy([],['priority' => 'DESC', 'original' => 'ASC']));
         else
-            return $this->strings;
+            return $this->strings = $this->strings instanceof ArrayCollection ?: new ArrayCollection();
 
         $this->getSession()->set('stringReplacement', $this->strings);
 
@@ -270,14 +270,6 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
         $this->getStrings()->removeElement($translate);
 
         return $this;
-    }
-
-    /**
-     * @return EntityManagerInterface
-     */
-    public function getEntityManager(): EntityManagerInterface
-    {
-        return $this->entityManager;
     }
 
     /**

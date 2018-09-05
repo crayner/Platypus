@@ -216,7 +216,12 @@ trait EntityTrait
         return $this->getEntityManager()->getRepository($className);
     }
 
-    private function isValidEntityManager(): bool
+    /**
+     * isValidEntityManager
+     *
+     * @return bool
+     */
+    public function isValidEntityManager(): bool
     {
         if (empty($this->getEntityManager()->getConnection()->getParams()['dbname']))
             return false;

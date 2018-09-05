@@ -2,9 +2,6 @@ App\Entity\Address:
     constraints:
         - App\Validator\Address:
     properties:
-        country:
-            - NotBlank: ~
-            - Country: ~
         locality:
             - NotBlank: ~
             - Valid: ~

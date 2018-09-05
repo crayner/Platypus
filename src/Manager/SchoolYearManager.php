@@ -248,7 +248,7 @@ class SchoolYearManager extends TabManager
 	 */
 	public function getSchoolYearRepository(): SchoolYearRepository
 	{
-		return $this->getEntityManager()->getRepository(SchoolYear::class);
+		return $this->getRepository();
 	}
 
     /**
