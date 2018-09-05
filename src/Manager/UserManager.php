@@ -61,7 +61,8 @@ class UserManager
         $this->messageManager = $messageManager;
         self::$entityRepository = $entityManager->getRepository($this->entityName);
 		$this->tokenStorage = $tokenStorage;
-		dump($injector::getParameter('database_url'));
+		if ($injector::hasParameter('database_url') && $injector::getParameter('database_url') !== 'mysql://db_user:db_password@127.0.0.1:3306/db_name')
+		    $this->validDatabase = true;
 		$this->getUser();
 	}
 
@@ -100,7 +101,7 @@ class UserManager
      */
     public function getUser()
     {
-        if (! $this->user)
+        if (! $this->user && $this->validDatabase)
         {
             if ($this->tokenStorage->getToken())
                 $this->user = $this->tokenStorage->getToken()->getUser();
