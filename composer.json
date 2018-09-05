@@ -65,7 +65,8 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+            "application:install --relative --symlink ": "symfony-cmd",
+            "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "php -r \"copy('config/packages/platypus.yaml.dist', 'config/packages/platypus.yaml');\"",
