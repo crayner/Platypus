@@ -19,6 +19,7 @@ use App\Manager\MessageManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Hillrange\Security\Util\ParameterInjector;
 use PhpParser\Node\Expr\Cast\Object_;
 
 /**
@@ -51,12 +52,13 @@ trait EntityTrait
      * EntityTrait constructor.
      * @param EntityManagerInterface $entityManager
      * @param MessageManager $messageManager
+     * @throws \Exception
      */
     public function __construct(EntityManagerInterface $entityManager, MessageManager $messageManager)
     {
         $this->entityManager = $entityManager;
         $this->messageManager = $messageManager;
-        self::$entityRepository = $entityManager->getRepository($this->entityName);
+        self::$entityRepository = $this->getRepository();
     }
 
     /**
@@ -81,15 +83,18 @@ trait EntityTrait
      * find
      *
      * @param $id
-     * @return null|object
+     * @return Object
      * @throws \Exception
      */
     public function find($id)
     {
+        $this->entity = null;
         if ($id === 'Add')
             $this->entity = new $this->entityName();
-        else
-            $this->entity = $this->getEntityManager()->getRepository($this->getEntityName())->find($id);
+        else {
+            if ($this->getRepository() !== null)
+                $this->entity = $this->getRepository()->find($id);
+        }
         return $this->entity;
     }
 
@@ -200,12 +205,21 @@ trait EntityTrait
      * getRepository
      *
      * @param string $className
-     * @return ObjectRepository
+     * @return ObjectRepository|null
      * @throws \Exception
      */
-    public function getRepository(string $className = ''): ObjectRepository
+    public function getRepository(?string $className = ''): ?ObjectRepository
     {
+        if (! $this->isValidEntityManager())
+            return null;
         $className = $className ?: $this->getEntityName();
         return $this->getEntityManager()->getRepository($className);
+    }
+
+    private function isValidEntityManager(): bool
+    {
+        if (empty($this->getEntityManager()->getConnection()->getParams()['dbname']))
+            return false;
+        return true;
     }
 }

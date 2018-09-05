@@ -1,6 +1,3 @@
-parameters:
-    database_url: '%env(DATABASE_URL)'
-
 doctrine:
     dbal:
         default_connection: default

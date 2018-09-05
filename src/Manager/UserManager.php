@@ -10,7 +10,6 @@ use App\People\Util\PersonManager;
 use App\Util\UserHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Security\Entity\User;
-use Hillrange\Security\Util\ParameterInjector;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -44,25 +43,19 @@ class UserManager
     private $tokenStorage;
 
     /**
-     * @var bool
-     */
-    private $validDatabase = false;
-
-    /**
      * UserManager constructor.
      *
      * @param TokenStorageInterface $tokenStorage
      * @param EntityManagerInterface $entityManager
      * @param MessageManager $messageManager
+     * @throws \Exception
      */
-	public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, MessageManager $messageManager, ParameterInjector $injector)
+	public function __construct(TokenStorageInterface $tokenStorage, EntityManagerInterface $entityManager, MessageManager $messageManager)
     {
         $this->entityManager = $entityManager;
         $this->messageManager = $messageManager;
-        self::$entityRepository = $entityManager->getRepository($this->entityName);
 		$this->tokenStorage = $tokenStorage;
-		if ($injector::hasParameter('database_url') && $injector::getParameter('database_url') !== 'mysql://db_user:db_password@127.0.0.1:3306/db_name')
-		    $this->validDatabase = true;
+	    self::$entityRepository = $this->getRepository();
 		$this->getUser();
 	}
 
@@ -101,7 +94,7 @@ class UserManager
      */
     public function getUser()
     {
-        if (! $this->user && $this->validDatabase)
+        if (! $this->user)
         {
             if ($this->tokenStorage->getToken())
                 $this->user = $this->tokenStorage->getToken()->getUser();
@@ -124,11 +117,11 @@ class UserManager
      * getPerson
      *
      * @return Person|null
-     * @throws \Doctrine\ORM\ORMException
+     * @throws \Exception
      */
     public function getPerson(): ?Person
     {
-        if (empty($this->person))
+        if (empty($this->person) && $this->isValidEntityManager())
             $this->person = $this->getRepository(Person::class)->findOneByUser($this->getUser());
 
         return $this->person;
