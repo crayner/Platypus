@@ -212,7 +212,7 @@ trait EntityTrait
      */
     public function getRepository(?string $className = ''): ?ObjectRepository
     {
-        if (! $this->isValidEntityManager()) {
+        if ($this->isValidEntityManager()) {
             $className = $className ?: $this->getEntityName();
             return $this->getEntityManager()->getRepository($className);
         }
@@ -226,9 +226,7 @@ trait EntityTrait
      */
     public function isValidEntityManager(): bool
     {
-        if (InstallSubscriber::isInstalling())
-            return false;
-        if (empty($this->getEntityManager()->getConnection()->getParams()['dbname']))
+        if (InstallSubscriber::isInstalling() || empty($this->getEntityManager()->getConnection()->getParams()['dbname']))
             return false;
         return true;
     }
