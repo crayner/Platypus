@@ -15,6 +15,8 @@
  */
 namespace App\Manager\Traits;
 
+use App\Listener\InstallSubscriber;
+use App\Manager\InstallationManager;
 use App\Manager\MessageManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -210,10 +212,11 @@ trait EntityTrait
      */
     public function getRepository(?string $className = ''): ?ObjectRepository
     {
-        if (! $this->isValidEntityManager())
-            return null;
-        $className = $className ?: $this->getEntityName();
-        return $this->getEntityManager()->getRepository($className);
+        if (! $this->isValidEntityManager()) {
+            $className = $className ?: $this->getEntityName();
+            return $this->getEntityManager()->getRepository($className);
+        }
+        return null;
     }
 
     /**
@@ -223,6 +226,8 @@ trait EntityTrait
      */
     public function isValidEntityManager(): bool
     {
+        if (InstallSubscriber::isInstalling())
+            return false;
         if (empty($this->getEntityManager()->getConnection()->getParams()['dbname']))
             return false;
         return true;

@@ -158,7 +158,6 @@ class InstallSubscriber implements EventSubscriberInterface
      */
     private function isInstallingRoute(GetResponseEvent $event) : bool
     {
-        self::$installing = false;
         if (! $event->isMasterRequest() || in_array($event->getRequest()->get('_route'),
                 [
                     // Route that Install
