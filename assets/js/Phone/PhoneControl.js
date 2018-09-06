@@ -11,6 +11,7 @@ import {faPlusCircle} from '@fortawesome/free-solid-svg-icons'
 import Messages from '../Component/Messages/Messages'
 import PhoneAttachedList from './PhoneAttachedList'
 import PhoneFormRender from './PhoneFormRender'
+import Parser from 'html-react-parser'
 
 export default class PhoneControl extends Component {
     constructor(props) {
@@ -266,57 +267,63 @@ export default class PhoneControl extends Component {
             </div>)
 
         return (
-            <div>
-                {this.state.messages.length > 0 ?
-                <div className='row'>
-                    <div className='col-12'>
-                        <Messages
-                            messages={this.state.messages}
-                            translations={this.translations}
-                            cancelMessage={this.cancelMessage}
-                        />
-                    </div>
-                </div> : ''}
-                <div className='row'>
-                    <div className='col-12'>
-                        <div className="input-group input-group-sm">
-                            <input
-                                placeholder={translateMessage(this.translations, 'phone.search.placeholder')}
-                                onChange={this.phoneSuggestions}
-                                type={'text'}
-                                value={this.state.phone}
-                                className='form-control'
-                                autoComplete={'off-tel'}
-                            />
-                            <span className='input-group-append'>
-                            <button className='btn btn-success' type={'button'} onClick={() => this.newPhone()} title={translateMessage(this.translations, 'phone.button.add')}>
-                                <FontAwesomeIcon icon={faPlusCircle} fixedWidth={true} />
-                            </button>
-                        </span>
-                        </div>
-                    </div>
+            <div className="card card-primary">
+                <div className="card-header">
+                    <h4 className="card-title d-flex mb-12 justify-content-between">{translateMessage(this.translations, 'phone.help.header')}</h4>
+                    {Parser(translateMessage(this.translations, 'phone.help.content'))}
                 </div>
-                {this.state.suggestions.length > 0 ?
-                <div className='row'>
-                    <div className='col-12'>
-                        <div className='small' style={{maxHeight: '200px', overflowY: 'scroll', cursor: 'pointer'}}>
-                            {options}
+                <div className="card-body">
+                    {this.state.messages.length > 0 ?
+                    <div className='row'>
+                        <div className='col-12'>
+                            <Messages
+                                messages={this.state.messages}
+                                translations={this.translations}
+                                cancelMessage={this.cancelMessage}
+                            />
+                        </div>
+                    </div> : ''}
+                    <div className='row'>
+                        <div className='col-12'>
+                            <div className="input-group input-group-sm">
+                                <input
+                                    placeholder={translateMessage(this.translations, 'phone.search.placeholder')}
+                                    onChange={this.phoneSuggestions}
+                                    type={'text'}
+                                    value={this.state.phone}
+                                    className='form-control'
+                                    autoComplete={'off-tel'}
+                                />
+                                <span className='input-group-append'>
+                                <button className='btn btn-success' type={'button'} onClick={() => this.newPhone()} title={translateMessage(this.translations, 'phone.button.add')}>
+                                    <FontAwesomeIcon icon={faPlusCircle} fixedWidth={true} />
+                                </button>
+                            </span>
+                            </div>
                         </div>
                     </div>
-                </div> : '' }
-                {this.state.attachedPhoneList.length > 0 ?
-                <div className='row'>
-                    <div className='col-12'>
-                        <PhoneAttachedList
-                            translations={this.translations}
-                            list={this.state.attachedPhoneList}
-                            parentClass={this.parentClass}
-                            removePhone={this.removePhone}
-                            editPhone={this.editPhone}
-                        />
-                    </div>
-                </div> : '' }
+                    {this.state.suggestions.length > 0 ?
+                    <div className='row'>
+                        <div className='col-12'>
+                            <div className='small' style={{maxHeight: '200px', overflowY: 'scroll', overflowX: 'hidden', cursor: 'pointer'}}>
+                                {options}
+                            </div>
+                        </div>
+                    </div> : '' }
+                    {this.state.attachedPhoneList.length > 0 ?
+                    <div className='row'>
+                        <div className='col-12'>
+                            <PhoneAttachedList
+                                translations={this.translations}
+                                list={this.state.attachedPhoneList}
+                                parentClass={this.parentClass}
+                                removePhone={this.removePhone}
+                                editPhone={this.editPhone}
+                            />
+                        </div>
+                    </div> : '' }
 
+                </div>
             </div>
         )
     }

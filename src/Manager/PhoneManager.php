@@ -51,6 +51,8 @@ class PhoneManager
         'phone.edit.header',
         'phone.button.exit',
         'phone.edit.help',
+        'phone.help.header',
+        'phone.help.content',
     ];
 
     /**

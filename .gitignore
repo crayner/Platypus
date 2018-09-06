@@ -16,3 +16,4 @@ yarn-error.log
 !/vendor/hillrange/*
 #Remove Settings from
 platypus.yaml
+/public/uploads/
