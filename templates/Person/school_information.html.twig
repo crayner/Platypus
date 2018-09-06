@@ -1,0 +1,31 @@
+{% trans_default_domain 'Person' %}
+
+{% if hiddenRender is defined %}
+    {% do form.lastSchool.setRendered %}
+    {% do form.dateStart.setRendered %}
+    {% do form.dateEnd.setRendered %}
+    {% do form.graduationYear.setRendered %}
+    {% do form.nextSchool.setRendered %}
+    {% do form.departureReason.setRendered %}
+{% else %}
+
+    {% include 'Default/panelStart.html.twig' with {header: 'school.information.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.lastSchool) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.graduationYear, {value: transformData(form.graduationYear)}) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.dateStart) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.dateEnd) }}
+            </div>
+        </div>
+    {% include 'Default/panelEnd.html.twig' %}
+{% endif %}

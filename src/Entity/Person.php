@@ -878,4 +878,154 @@ class Person
 
         return $this;
     }
+
+    /**
+     * @var string|null
+     */
+    private $lastSchool;
+
+    /**
+     * getLastSchool
+     *
+     * @return null|string
+     */
+    public function getLastSchool(): ?string
+    {
+        return $this->lastSchool;
+    }
+
+    /**
+     * setLastSchool
+     *
+     * @param null|string $lastSchool
+     * @return Person
+     */
+    public function setLastSchool(?string $lastSchool): Person
+    {
+        $this->lastSchool = $lastSchool;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime|null
+     */
+    private $dateStart;
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateStart(): ?\DateTime
+    {
+        return $this->dateStart;
+    }
+
+    /**
+     * @param \DateTime|null $dateStart
+     * @return Person
+     */
+    public function setDateStart(?\DateTime $dateStart): Person
+    {
+        $this->dateStart = $dateStart;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime|null
+     */
+    private $dateEnd;
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateEnd(): ?\DateTime
+    {
+        return $this->dateEnd;
+    }
+
+    /**
+     * @param \DateTime|null $dateEnd
+     * @return Person
+     */
+    public function setDateEnd(?\DateTime $dateEnd): Person
+    {
+        $this->dateEnd = $dateEnd;
+        return $this;
+    }
+
+    /**
+     * @var SchoolYear|null
+     */
+    private $graduationYear;
+
+    /**
+     * @return SchoolYear|null
+     */
+    public function getGraduationYear(): ?SchoolYear
+    {
+        return $this->graduationYear;
+    }
+
+    /**
+     * @param SchoolYear|null $graduationYear
+     * @return Person
+     */
+    public function setGraduationYear(?SchoolYear $graduationYear): Person
+    {
+        $this->graduationYear = $graduationYear;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $nextSchool;
+
+    /**
+     * getNextSchool
+     *
+     * @return null|string
+     */
+    public function getNextSchool(): ?string
+    {
+        return $this->nextSchool;
+    }
+
+    /**
+     * setNextSchool
+     *
+     * @param null|string $nextSchool
+     * @return Person
+     */
+    public function setNextSchool(?string $nextSchool): Person
+    {
+        $this->nextSchool = $nextSchool;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $departureReason;
+
+    /**
+     * getDepartureReason
+     *
+     * @return null|string
+     */
+    public function getDepartureReason(): ?string
+    {
+        return $this->departureReason;
+    }
+
+    /**
+     * setDepartureReason
+     *
+     * @param null|string $departureReason
+     * @return Person
+     */
+    public function setDepartureReason(?string $departureReason): Person
+    {
+        $this->departureReason = $departureReason;
+        return $this;
+    }
 }

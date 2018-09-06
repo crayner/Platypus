@@ -75,6 +75,26 @@ App\Entity\Person:
         dob:
             type: datetime
             nullable: true
+        lastSchool:
+            length: 100
+            column: last_school
+            nullable: true
+        dateStart:
+            type: date
+            column: date_start
+            nullable: true
+        dateEnd:
+            type: date
+            column: date_end
+            nullable: true
+        nextSchool:
+            length: 100
+            column: next_school
+            nullable: true
+        departureReason:
+            length: 50
+            column: departure_reason
+            nullable: true
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff
@@ -91,6 +111,12 @@ App\Entity\Person:
             joinColumn:
                 name: primary_role_id
                 referencedColumnName: id
+        graduationYear:
+            targetEntity: App\Entity\SchoolYear
+            joinColumn:
+                name: graduation_school_year_id
+                referencedColumnName: id
+                nullable: true
     manyToMany:
         secondaryRoles:
             targetEntity: App\Entity\PersonRole

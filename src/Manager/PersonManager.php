@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 use App\Entity\Person;
+use App\Entity\PersonRole;
 use App\Manager\Traits\EntityTrait;
 use App\Util\PersonNameHelper;
 
@@ -57,6 +58,14 @@ class PersonManager extends TabManager
             'message' => 'contactInformationMessage',
             'translation' => 'Person',
         ],
+        [
+            'name' => 'school.information',
+            'label' => 'school.information.tab',
+            'include' => 'Person/school_information.html.twig',
+            'message' => 'schoolInformationMessage',
+            'translation' => 'Person',
+            'display' => 'isStudent',
+        ],
     ];
 
     /**
@@ -68,5 +77,24 @@ class PersonManager extends TabManager
     public function getFullName(array $options = []): string
     {
         return PersonNameHelper::getFullName($this->getEntity(), $options);
+    }
+
+    /**
+     * isStudent
+     *
+     * @return bool
+     */
+    public function isStudent(?Person $person = null): bool
+    {
+        if (empty($person))
+            $person = $this->getEntity();
+        if (! $person instanceof Person )
+            return false;
+        $role = $person->getPrimaryRole();
+        if (! $role instanceof PersonRole)
+            return false;
+        if ($role->getCategory() === 'student')
+            return true;
+        return false;
     }
 }

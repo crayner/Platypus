@@ -76,7 +76,7 @@ class PersonRole
     /**
      * @var string
      */
-    private $category = 'staff';
+    private $category;
 
     /**
      * @var array
@@ -88,6 +88,7 @@ class PersonRole
      */
     public function getCategory(): string
     {
+        $this->category = strtolower($this->category);
         return in_array($this->category, self::getCategoryList()) ? $this->category : 'staff';
     }
 
@@ -97,6 +98,7 @@ class PersonRole
      */
     public function setCategory(?string $category): PersonRole
     {
+        $category = strtolower($category);
         $this->category = in_array($category, self::getCategoryList()) ? $category : 'staff';
         return $this;
     }
@@ -173,7 +175,7 @@ class PersonRole
     /**
      * @var string
      */
-    private $type = 'core';
+    private $type;
 
     /**
      * @var array

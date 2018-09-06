@@ -17,6 +17,7 @@ namespace App\Form\Type;
 
 use App\Entity\Person;
 use App\Entity\PersonRole;
+use App\Entity\SchoolYear;
 use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\DateType;
 use Hillrange\Form\Type\EntityType;
@@ -165,6 +166,44 @@ class PersonType extends AbstractType
                 [
                     'label' => 'person.email.label',
                     'required' => false,
+                ]
+            )
+            ->add('lastSchool', TextType::class,
+                [
+                    'label'       => 'person.last_school.label',
+                ]
+            )
+            ->add('nextSchool', TextType::class,
+                [
+                    'label'       => 'person.next_school.label',
+                ]
+            )
+            ->add('departureReason', TextType::class,
+                [
+                    'label'       => 'person.departure_reason.label',
+                ]
+            )
+            ->add('dateStart', DateType::class,
+                [
+                    'label'       => 'person.date_start.label',
+                    'help'       => 'person.date_start.help',
+                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
+                ]
+            )
+            ->add('dateEnd', DateType::class,
+                [
+                    'label'       => 'person.date_end.label',
+                    'help'       => 'person.date_end.help',
+                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
+                ]
+            )
+            ->add('graduationYear', EntityType::class,
+                [
+                    'label'       => 'person.graduation_year.label',
+                    'help'       => 'person.graduation_year.help',
+                    'placeholder'       => 'person.graduation_year.placeholder',
+                    'class' => SchoolYear::class,
+                    'choice_label' => 'name',
                 ]
             )
         ;
