@@ -5,12 +5,6 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-/.idea/
-!/vendor/hillrange/*
-node_modules
-#Remove Settings from
-platypus.yaml
-
 ###> symfony/webpack-encore-pack ###
 /node_modules/
 /public/build/
@@ -18,4 +12,7 @@ npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-pack ###
 
-/src/Demonstration/Gibbon/
+/.idea/
+!/vendor/hillrange/*
+#Remove Settings from
+platypus.yaml

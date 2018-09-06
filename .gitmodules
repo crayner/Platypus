@@ -7,3 +7,6 @@
 [submodule "vendor/hillrange/security"]
 	path = vendor/hillrange/security
 	url = https://github.com/crayner/security.git
+[submodule "vendor/platypus-template/original"]
+	path = vendor/platypus-template/original
+	url = https://github.com/crayner/platypus-template-original.git
