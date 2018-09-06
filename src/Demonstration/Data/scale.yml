@@ -5,106 +5,106 @@
   id: 1
   name: "International Baccalaureate"
   name_short: "IB"
-  usage: "7 (highest) to 1 (lowest)"
+  usage_details: "7 (highest) to 1 (lowest)"
   active: 0
-  numeric: 1
+  is_numeric: 1
 -
   id: 2
   name: "International Baccalaureate EE"
   name_short: "IBEE"
-  usage: "A (highest) to E (lowest)"
+  usage_details: "A (highest) to E (lowest)"
   active: 0
-  numeric: 0
+  is_numeric: 0
 -
   id: 3
   name: "United Kingdom GCSE/iGCSE"
   name_short: "GCSE"
-  usage: "A* (highest) to U (lowest)"
+  usage_details: "A* (highest) to U (lowest)"
   active: 1
-  numeric: 0
+  is_numeric: 0
 -
   id: 4
   name: "Percentage"
   name_short: "%"
-  usage: "100 (highest) to 0 (lowest)"
+  usage_details: "100 (highest) to 0 (lowest)"
   active: 1
-  numeric: 1
+  is_numeric: 1
   lowest_acceptable: 72
 -
   id: 5
   name: "Full Letter Grade"
   name_short: "FLG"
-  usage: "A+ (highest) to F (lowest)"
+  usage_details: "A+ (highest) to F (lowest)"
   active: 0
-  numeric: 0
+  is_numeric: 0
 -
   id: 6
   name: "Simple Letter Grade"
   name_short: "SLG"
-  usage: "A (highest) to F (lowest)"
+  usage_details: "A (highest) to F (lowest)"
   active: 0
-  numeric: 0
+  is_numeric: 0
 -
   id: 7
   name: "International College HK"
   name_short: "ICHK"
-  usage: "7 (highest) to 1 (lowest)"
+  usage_details: "7 (highest) to 1 (lowest)"
   active: 1
-  numeric: 1
+  is_numeric: 1
   lowest_acceptable: 148
 -
   id: 9
   name: "Completion"
   name_short: "Comp"
-  usage: "Has task has been completed?"
+  usage_details: "Has task has been completed?"
   active: 1
-  numeric: 0
+  is_numeric: 0
   lowest_acceptable: 152
 -
   id: 10
   name: "Cognitive Abilities Test"
   name_short: "CAT"
-  usage: "140 (highest) to 60 (lowest)"
+  usage_details: "140 (highest) to 60 (lowest)"
   active: 1
-  numeric: 1
+  is_numeric: 1
   lowest_acceptable: 202
 -
   id: 11
   name: "UK National Curriculum KS3"
   name_short: "KS3"
-  usage: "8A (highest) to B3 (lowest)"
+  usage_details: "8A (highest) to B3 (lowest)"
   active: 1
-  numeric: 0
+  is_numeric: 0
   lowest_acceptable: 257
 -
   id: 12
   name: "United Kingdom GCSE/iGCSE Predicted"
   name_short: "GPrd"
-  usage: "8A (highest) to B3 (lowest)"
+  usage_details: "8A (highest) to B3 (lowest)"
   active: 1
-  numeric: 0
+  is_numeric: 0
 -
   id: 13
   name: "IB Diploma (Subject)"
   name_short: "IBDS"
-  usage: "7 (highest) to 1 (lowest)"
+  usage_details: "7 (highest) to 1 (lowest)"
   active: 1
-  numeric: 1
+  is_numeric: 1
   lowest_acceptable: 276
 -
   id: 14
   name: "IB Diploma (Total)"
   name_short: "IBDT"
-  usage: "45 (highest) to 0"
+  usage_details: "45 (highest) to 0"
   active: 1
-  numeric: 1
+  is_numeric: 1
   lowest_acceptable: 301
 -
   id: 15
   name: "UK National Curriculum KS3 Simplified"
   name_short: "KS3S"
-  usage: "Level 8 (highest) to Level 3 (lowest)"
+  usage_details: "Level 8 (highest) to Level 3 (lowest)"
   active: 1
-  numeric: 0
+  is_numeric: 0
   lowest_acceptable: 328
 ...

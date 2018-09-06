@@ -223,7 +223,7 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
         if ((empty($this->strings) || $refresh) && $this->stringReplacementManager->isValidEntityManager())
             $this->strings = new ArrayCollection($this->stringReplacementManager->getRepository()->findBy([],['priority' => 'DESC', 'original' => 'ASC']));
         else
-            return $this->strings = $this->strings instanceof ArrayCollection ?: new ArrayCollection();
+            return $this->strings = $this->strings instanceof ArrayCollection ? $this->strings : new ArrayCollection();
 
         $this->getSession()->set('stringReplacement', $this->strings);
 

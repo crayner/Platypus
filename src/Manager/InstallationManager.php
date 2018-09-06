@@ -544,6 +544,7 @@ class InstallationManager
         $user->setExpired(false);
         $user->setCredentialsExpired(false);
         $user->setEnabled(true);
+        $user->setLastLogin(new \DateTime('now'));
         $user->setDirectroles(['ROLE_SYSTEM_ADMIN']);
         $password = $this->passwordManager->encodePassword($user, $data['_password']);
         $user->setPassword($password);
