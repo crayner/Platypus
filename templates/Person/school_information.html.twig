@@ -8,9 +8,7 @@
     {% do form.nextSchool.setRendered %}
     {% do form.departureReason.setRendered %}
 {% else %}
-
     {% include 'Default/panelStart.html.twig' with {header: 'school.information.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
-
         <div class="row">
             <div class="col-6 card">
                 {{ form_row(form.lastSchool) }}
@@ -25,6 +23,14 @@
             </div>
             <div class="col-6 card">
                 {{ form_row(form.dateEnd) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.nextSchool) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.departureReason) }}
             </div>
         </div>
     {% include 'Default/panelEnd.html.twig' %}

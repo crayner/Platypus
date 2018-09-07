@@ -1540,16 +1540,16 @@
         },
         {
             "name": "hillrange/security",
-            "version": "0.0.42",
+            "version": "0.0.43",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/security.git",
-                "reference": "6b06453f5a3a5fb7652b1f63e625f417262aa781"
+                "reference": "35e7f6a47818255ca9688b3aea757580c58adae5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/security/zipball/6b06453f5a3a5fb7652b1f63e625f417262aa781",
-                "reference": "6b06453f5a3a5fb7652b1f63e625f417262aa781",
+                "url": "https://api.github.com/repos/crayner/security/zipball/35e7f6a47818255ca9688b3aea757580c58adae5",
+                "reference": "35e7f6a47818255ca9688b3aea757580c58adae5",
                 "shasum": ""
             },
             "require": {
@@ -1601,20 +1601,20 @@
             "keywords": [
                 "security"
             ],
-            "time": "2018-08-27T23:46:47+00:00"
+            "time": "2018-09-05T23:56:20+00:00"
         },
         {
             "name": "hillrange/symfony-form",
-            "version": "0.1.94",
+            "version": "0.1.95",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/symfony-form.git",
-                "reference": "c6fe2c2b6e54518d0e26ef0bac56c82b4884523d"
+                "reference": "3d2dd96075625f7799eac0e2982f97e9b1e38c23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/c6fe2c2b6e54518d0e26ef0bac56c82b4884523d",
-                "reference": "c6fe2c2b6e54518d0e26ef0bac56c82b4884523d",
+                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/3d2dd96075625f7799eac0e2982f97e9b1e38c23",
+                "reference": "3d2dd96075625f7799eac0e2982f97e9b1e38c23",
                 "shasum": ""
             },
             "require": {
@@ -1658,7 +1658,7 @@
             "keywords": [
                 "form"
             ],
-            "time": "2018-08-31T06:07:49+00:00"
+            "time": "2018-09-06T23:32:26+00:00"
         },
         {
             "name": "jdorn/sql-formatter",

@@ -95,6 +95,34 @@ App\Entity\Person:
             length: 50
             column: departure_reason
             nullable: true
+        languageFirst:
+            length: 30
+            column: language_first
+            nullable: true
+        languageSecond:
+            length: 30
+            column: language_second
+            nullable: true
+        languageThird:
+            length: 30
+            column: language_third
+            nullable: true
+        countryOfBirth:
+            length: 30
+            column: country_of_birth
+            nullable: true
+        birthCertificateScan:
+            length: 150
+            column: birth_certificate_scan
+            nullable: true
+        ethnicity:
+            type: string
+            length: 32
+            nullable: true
+        religion:
+            type: string
+            length: 16
+            nullable: true
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff

@@ -66,6 +66,13 @@ class PersonManager extends TabManager
             'translation' => 'Person',
             'display' => 'isStudent',
         ],
+        [
+            'name' => 'background.information',
+            'label' => 'background.information.tab',
+            'include' => 'Person/background_information.html.twig',
+            'message' => 'backgroundInformationMessage',
+            'translation' => 'Person',
+        ],
     ];
 
     /**

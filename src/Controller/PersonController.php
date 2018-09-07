@@ -19,9 +19,7 @@ use App\Form\PreferencesType;
 use App\Form\Type\PersonType;
 use App\Manager\AddressManager;
 use App\Manager\PersonManager;
-use App\Manager\PersonRoleManager;
 use App\Manager\PhoneManager;
-use App\Manager\StaticManager;
 use App\Manager\ThemeManager;
 use App\Manager\UserManager;
 use App\Pagination\PersonPagination;
@@ -119,23 +117,6 @@ class PersonController extends Controller
     }
 
     /**
-     * deletePersonalBackground
-     *
-     * @param AssetHelper $assetHelper
-     * @param PersonHelper $personHelper
-     * @param int $id
-     * @Route("/user/preference/{id}/delete_personal_background/", name="preference_delete_background")
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
-     */
-    public function deletePersonalBackground(AssetHelper $assetHelper, PersonManager $manager, int $id)
-    {
-        $person = $manager->find($id);
-        AssetHelper::removeAsset($person->getPersonalBackground());
-        $person->setPersonalBackground(null);
-        return $this->redirectToRoute('preferences');
-    }
-
-    /**
      * index
      *
      * @param Request $request
@@ -193,7 +174,7 @@ class PersonController extends Controller
     {
         $entity = $manager->find($id);
 
-        $form = $this->createForm(PersonType::class, $entity, ['deletePhoto' => $this->generateUrl('delete_personal_photo', ['id' => $id])]);
+        $form = $this->createForm(PersonType::class, $entity);
 
         $manager->getTabs();
 
@@ -218,21 +199,41 @@ class PersonController extends Controller
     }
 
     /**
-     * deletePersonalPhoto
+     * deletePersonalBackground
      *
-     * @Route("/person/{id}/delete_personal_photo/", name="delete_personal_photo")
+     * @param AssetHelper $assetHelper
+     * @param PersonHelper $personHelper
+     * @param int $id
+     * @Route("/user/preference/{id}/delete_personal_background/", name="preference_delete_background")
      * @IsGranted("IS_AUTHENTICATED_FULLY")
+     */
+    public function deletePersonalBackground(AssetHelper $assetHelper, PersonManager $manager, int $id)
+    {
+        $person = $manager->find($id);
+        AssetHelper::removeAsset($person->getPersonalBackground());
+        $person->setPersonalBackground(null);
+        return $this->redirectToRoute('preferences');
+    }
+
+    /**
+     * deletePersonalImage
+     *
+     * @param AssetHelper $assetHelper
      * @param AssetHelper $assetHelper
      * @param PersonManager $manager
+     * @param string $getImageMethod
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
+     * @Route("/person/{id}/image/{getImageMethod}/delete/{tabName}", name="personal_image_remover")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
-    public function deletePersonalPhoto(AssetHelper $assetHelper, PersonManager $manager, int $id)
+    public function removePersonalImage(AssetHelper $assetHelper, PersonManager $manager, string $getImageMethod, int $id, string $tabName = 'basic.information')
     {
         $person = $manager->find($id);
-        AssetHelper::removeAsset($person->getPhoto());
-        $person->setPhoto(null);
-        return $this->redirectToRoute('person_edit', ['id' => $id]);
+        AssetHelper::removeAsset($person->$getImageMethod());
+        $setImageMethod = 's'.mb_substr($getImageMethod, 1);
+        $person->$setImageMethod(null);
+        return $this->redirectToRoute('person_edit', ['id' => $id, 'tabName' => $tabName]);
     }
 }

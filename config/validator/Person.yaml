@@ -25,3 +25,5 @@ App\Entity\Person:
             - Email: ~
             - App\Validator\PersonEmail:
                 errorPath: emailAlternate
+        birthCertificateScan:
+            - App\Validator\Document: ~

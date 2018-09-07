@@ -18,15 +18,18 @@ namespace App\Form\Type;
 use App\Entity\Person;
 use App\Entity\PersonRole;
 use App\Entity\SchoolYear;
-use Hillrange\Form\Type\CollectionType;
+use App\Form\SettingChoiceType;
 use Hillrange\Form\Type\DateType;
+use Hillrange\Form\Type\DocumentType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -107,7 +110,7 @@ class PersonType extends AbstractType
                     'help'       => 'person.photo.help',
                     'label'       => 'person.photo.label',
                     'required'    => false,
-                    'deletePhoto' => $options['deletePhoto'],
+                    'deletePhoto' => ['personal_image_remover', ['id' => $options['data']->getId(), 'getImageMethod' => 'getPhoto', 'tabName' => 'basic.information']],
                     'fileName'    => 'person_' . $options['data']->getId(),
                 ]
             )
@@ -171,20 +174,24 @@ class PersonType extends AbstractType
             ->add('lastSchool', TextType::class,
                 [
                     'label'       => 'person.last_school.label',
+                    'required' => false,
                 ]
             )
             ->add('nextSchool', TextType::class,
                 [
                     'label'       => 'person.next_school.label',
+                    'required' => false,
                 ]
             )
             ->add('departureReason', TextType::class,
                 [
                     'label'       => 'person.departure_reason.label',
+                    'required' => false,
                 ]
             )
             ->add('dateStart', DateType::class,
                 [
+                    'required' => false,
                     'label'       => 'person.date_start.label',
                     'help'       => 'person.date_start.help',
                     'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
@@ -194,6 +201,7 @@ class PersonType extends AbstractType
                 [
                     'label'       => 'person.date_end.label',
                     'help'       => 'person.date_end.help',
+                    'required' => false,
                     'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
                 ]
             )
@@ -204,7 +212,66 @@ class PersonType extends AbstractType
                     'placeholder'       => 'person.graduation_year.placeholder',
                     'class' => SchoolYear::class,
                     'choice_label' => 'name',
+                    'required' => false,
                 ]
+            )
+            ->add('languageFirst', LanguageType::class,
+                [
+                    'label'       => 'person.language_first.label',
+                    'placeholder'       => 'person.language_first.placeholder',
+                    'required' => false,
+                ]
+            )
+            ->add('languageSecond', LanguageType::class,
+                [
+                    'label'       => 'person.language_second.label',
+                    'placeholder'       => 'person.language_second.placeholder',
+                    'required' => false,
+                ]
+            )
+            ->add('languageThird', LanguageType::class,
+                [
+                    'label'       => 'person.language_third.label',
+                    'placeholder'       => 'person.language_third.placeholder',
+                    'required' => false,
+                ]
+            )
+            ->add('countryOfBirth', CountryType::class,
+                [
+                    'label'       => 'person.country_birth.label',
+                    'placeholder'       => 'person.country_birth.placeholder',
+                    'required' => false,
+                ]
+            )
+            ->add('birthCertificateScan', DocumentType::class,
+                [
+                    'label'       => 'person.birth_certificate_scan.label',
+                    'help'       => 'person.birth_certificate_scan.help',
+                    'required' => false,
+                    'fileName' => $options['data']->getShortName().'_bc',
+                    'deletePhoto' => ['personal_image_remover', ['id' => $options['data']->getId(), 'getImageMethod' => 'getBirthCertificateScan', 'tabName' => 'background.information']],
+                ]
+            )
+            ->add('ethnicity', SettingChoiceType::class,
+                array(
+                    'label'        => 'student.ethnicity.label',
+                    'placeholder'  => 'student.ethnicity.placeholder',
+                    'required'     => false,
+                    'setting_name' => 'ethnicity.list',
+                    'translation_domain' => 'Person',
+                    'translation_prefix' => false,
+                )
+            )
+            ->add('religion', SettingChoiceType::class,
+                array(
+                    'label'        => 'student.religion.label',
+                    'placeholder'  => 'student.religion.placeholder',
+                    'required'     => false,
+                    'setting_name' => 'religion.list',
+                    'translation_prefix'    => false,
+                    'strict_validation' => false,
+                    'translation_domain' => 'Person',
+                )
             )
         ;
     }
@@ -224,11 +291,6 @@ class PersonType extends AbstractType
                     'noValidate' => true,
                 ],
                 'allow_extra_fields' => true,
-            ]
-        );
-        $resolver->setRequired(
-            [
-                'deletePhoto',
             ]
         );
     }

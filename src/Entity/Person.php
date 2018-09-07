@@ -1028,4 +1028,207 @@ class Person
         $this->departureReason = $departureReason;
         return $this;
     }
+
+    /**
+     * @var string|null
+     */
+    private $languageFirst;
+
+    /**
+     * getLanguageFirst
+     *
+     * @return null|string
+     */
+    public function getLanguageFirst(): ?string
+    {
+        return $this->languageFirst;
+    }
+
+    /**
+     * setLanguageFirst
+     *
+     * @param null|string $languageFirst
+     * @return Person
+     */
+    public function setLanguageFirst(?string $languageFirst): Person
+    {
+        $this->languageFirst = $languageFirst;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $languageSecond;
+
+    /**
+     * getLanguageSecond
+     *
+     * @return null|string
+     */
+    public function getLanguageSecond(): ?string
+    {
+        return $this->languageSecond;
+    }
+
+    /**
+     * setLanguageSecond
+     *
+     * @param null|string $languageSecond
+     * @return Person
+     */
+    public function setLanguageSecond(?string $languageSecond): Person
+    {
+        $this->languageSecond = $languageSecond;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $languageThird;
+
+    /**
+     * getLanguageThird
+     *
+     * @return null|string
+     */
+    public function getLanguageThird(): ?string
+    {
+        return $this->languageThird;
+    }
+
+    /**
+     * setLanguageThird
+     *
+     * @param null|string $languageThird
+     * @return Person
+     */
+    public function setLanguageThird(?string $languageThird): Person
+    {
+        $this->languageThird = $languageThird;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $countryOfBirth;
+
+    /**
+     * getCountryOfBirth
+     *
+     * @return null|string
+     */
+    public function getCountryOfBirth(): ?string
+    {
+        return $this->countryOfBirth;
+    }
+
+    /**
+     * setCountryOfBirth
+     *
+     * @param null|string $countryOfBirth
+     * @return Person
+     */
+    public function setCountryOfBirth(?string $countryOfBirth): Person
+    {
+        $this->countryOfBirth = $countryOfBirth;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $birthCertificateScan;
+
+    /**
+     * getBirthCertificateScan
+     *
+     * @return null|string
+     */
+    public function getBirthCertificateScan(): ?string
+    {
+        return $this->birthCertificateScan;
+    }
+
+    /**
+     * setBirthCertificateScan
+     *
+     * @param null|string $birthCertificateScan
+     * @return Person
+     */
+    public function setBirthCertificateScan(?string $birthCertificateScan): Person
+    {
+        $this->birthCertificateScan = $birthCertificateScan;
+        return $this;
+    }
+
+    /**
+     * getShortName
+     *
+     * @return string
+     */
+    public function getShortName(): string
+    {
+        $name = trim(mb_substr($this->getSurname(), 0, 3));
+        $fn = explode($this->getFirstName(), ' ');
+        foreach($fn as $n)
+            $name .= mb_substr($n, 0, 1);
+        return trim($name);
+    }
+
+    /**
+     * @var string|null
+     */
+    private $ethnicity;
+
+    /**
+     * getEthnicity
+     *
+     * @return null|string
+     */
+    public function getEthnicity(): ?string
+    {
+        return $this->ethnicity;
+    }
+
+    /**
+     * setEthnicity
+     *
+     * @param null|string $ethnicity
+     * @return Person
+     */
+    public function setEthnicity(?string $ethnicity): Person
+    {
+        $this->ethnicity = $ethnicity;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $religion;
+
+    /**
+     * getReligion
+     *
+     * @return null|string
+     */
+    public function getReligion(): ?string
+    {
+        return $this->religion;
+    }
+
+    /**
+     * setReligion
+     *
+     * @param null|string $religion
+     * @return Person
+     */
+    public function setReligion(?string $religion): Person
+    {
+        $this->religion = $religion;
+        return $this;
+    }
 }
