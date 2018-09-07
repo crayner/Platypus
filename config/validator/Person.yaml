@@ -26,23 +26,23 @@ App\Entity\Person:
             - App\Validator\PersonEmail:
                 errorPath: emailAlternate
         birthCertificateScan:
-            - App\Validator\Document: ~
+            - App\Validator\Document:
                   allowSquare: true
-                  allowProtrait: true
+                  allowPortrait: true
                   allowLandscape: true
                   minRatio: 0.707
                   maxRatio: 1.414
         citizenship1PassportScan:
             - App\Validator\Document:
                 allowSquare: true
-                allowProtrait: true
+                allowPortrait: true
                 allowLandscape: true
                 minRatio: 0.707
                 maxRatio: 1.414
         nationalIDCardScan:
             - App\Validator\Document:
                   allowSquare: true
-                  allowProtrait: true
+                  allowPortrait: true
                   allowLandscape: true
                   minRatio: 0.707
                   maxRatio: 1.414
