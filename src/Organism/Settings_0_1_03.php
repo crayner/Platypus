@@ -209,6 +209,22 @@ religion.list:
     role: ROLE_ADMIN
     defaultValue: {  }
     translateChoice: null
+person.residency_status:
+    type: array
+    name: person.residency_status
+    displayName: 'Residency Status'
+    description: 'List of residency status available in system.'
+    value:
+        - citizen
+        - permanent
+        - temporary
+        - visitor
+        - work
+    choice: null
+    validators: null
+    role: ROLE_ADMIN
+    defaultValue: {  }
+    translateChoice: null
 LLL;
 	}
 

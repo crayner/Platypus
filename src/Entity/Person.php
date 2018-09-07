@@ -1231,4 +1231,211 @@ class Person
         $this->religion = $religion;
         return $this;
     }
+
+    /**
+     * @var string|null
+     */
+    private $citizenship1;
+
+    /**
+     * @return null|string
+     */
+    public function getCitizenship1(): ?string
+    {
+        return $this->citizenship1;
+    }
+
+    /**
+     * @param null|string $citizenship1
+     * @return Person
+     */
+    public function setCitizenship1(?string $citizenship1): Person
+    {
+        $this->citizenship1 = $citizenship1;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $citizenship1Passport;
+
+    /**
+     * @return null|string
+     */
+    public function getCitizenship1Passport(): ?string
+    {
+        return $this->citizenship1Passport;
+    }
+
+    /**
+     * @param null|string $citizenship1Passport
+     * @return Person
+     */
+    public function setCitizenship1Passport(?string $citizenship1Passport): Person
+    {
+        $this->citizenship1Passport = $citizenship1Passport;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $citizenship1PassportScan;
+
+    /**
+     * @return null|string
+     */
+    public function getCitizenship1PassportScan(): ?string
+    {
+        return $this->citizenship1PassportScan;
+    }
+
+    /**
+     * @param null|string $citizenship1PassportScan
+     * @return Person
+     */
+    public function setCitizenship1PassportScan(?string $citizenship1PassportScan): Person
+    {
+        $this->citizenship1PassportScan = $citizenship1PassportScan;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $citizenship2;
+
+    /**
+     * @return null|string
+     */
+    public function getCitizenship2(): ?string
+    {
+        return $this->citizenship2;
+    }
+
+    /**
+     * @param null|string $citizenship2
+     * @return Person
+     */
+    public function setCitizenship2(?string $citizenship2): Person
+    {
+        $this->citizenship2 = $citizenship2;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $citizenship2Passport;
+
+    /**
+     * @return null|string
+     */
+    public function getCitizenship2Passport(): ?string
+    {
+        return $this->citizenship2Passport;
+    }
+
+    /**
+     * @param null|string $citizenship2Passport
+     * @return Person
+     */
+    public function setCitizenship2Passport(?string $citizenship2Passport): Person
+    {
+        $this->citizenship2Passport = $citizenship2Passport;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $nationalIDCard;
+
+    /**
+     * @return null|string
+     */
+    public function getNationalIDCard(): ?string
+    {
+        return $this->nationalIDCard;
+    }
+
+    /**
+     * @param null|string $nationalIDCard
+     * @return Person
+     */
+    public function setNationalIDCard(?string $nationalIDCard): Person
+    {
+        $this->nationalIDCard = $nationalIDCard;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $nationalIDCardScan;
+
+    /**
+     * @return null|string
+     */
+    public function getNationalIDCardScan(): ?string
+    {
+        return $this->nationalIDCardScan;
+    }
+
+    /**
+     * @param null|string $nationalIDCardScan
+     * @return Person
+     */
+    public function setNationalIDCardScan(?string $nationalIDCardScan): Person
+    {
+        $this->nationalIDCardScan = $nationalIDCardScan;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $residencyStatus;
+
+    /**
+     * @return null|string
+     */
+    public function getResidencyStatus(): ?string
+    {
+        return $this->residencyStatus;
+    }
+
+    /**
+     * @param null|string $residencyStatus
+     * @return Person
+     */
+    public function setResidencyStatus(?string $residencyStatus): Person
+    {
+        $this->residencyStatus = $residencyStatus;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime|null
+     */
+    private $visaExpiryDate;
+
+    /**
+     * @return null|\DateTime
+     */
+    public function getVisaExpiryDate(): ?\DateTime
+    {
+        return $this->visaExpiryDate;
+    }
+
+    /**
+     * @param null|\DateTime $visaExpiryDate
+     * @return Person
+     */
+    public function setVisaExpiryDate(?\DateTime $visaExpiryDate): Person
+    {
+        $this->visaExpiryDate = $visaExpiryDate;
+        return $this;
+    }
 }

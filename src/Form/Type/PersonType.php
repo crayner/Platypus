@@ -26,11 +26,13 @@ use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
+use Hillrange\Security\Util\ParameterInjector;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -273,6 +275,72 @@ class PersonType extends AbstractType
                     'translation_domain' => 'Person',
                 )
             )
+            ->add('citizenship1', CountryType::class,
+                array(
+                    'label'        => 'person.citizenship_1.label',
+                    'placeholder'  => 'person.citizenship.placeholder',
+                    'required'     => false,
+                )
+            )
+            ->add('citizenship1Passport', TextType::class,
+                array(
+                    'label'        => 'person.citizenshipship_1_passport.label',
+                    'required'     => false,
+                )
+            )
+            ->add('citizenship1PassportScan', DocumentType::class,
+                array(
+                    'label'        => 'person.citizenship_1_passport_scan.label',
+                    'help'        => 'person.citizenship_1_passport_scan.help',
+                    'required'     => false,
+                    'fileName' => $options['data']->getShortName().'_ps',
+                    'deletePhoto' => ['personal_image_remover', ['id' => $options['data']->getId(), 'getImageMethod' => 'getCitizenship1PassportScan', 'tabName' => 'background.information']],
+                )
+            )
+            ->add('citizenship2', CountryType::class,
+                array(
+                    'label'        => 'person.citizenship_2.label',
+                    'placeholder'  => 'person.citizenship.placeholder',
+                    'required'     => false,
+                )
+            )
+            ->add('citizenship2Passport', TextType::class,
+                array(
+                    'label'        => 'person.citizenship_2_passport.label',
+                    'required'     => false,
+                )
+            )
+            ->add('nationalIDCard', TextType::class,
+                array(
+                    'label'        => ['person.national_id_card.label', ['%{national}' => $this->country]],
+                    'required'     => false,
+                )
+            )
+            ->add('nationalIDCardScan', DocumentType::class,
+                array(
+                    'label'        => ['person.national_id_card_scan.label', ['%{national}' => $this->country]],
+                    'help'        => 'person.national_id_card_scan.help',
+                    'required'     => false,
+                    'fileName' => $options['data']->getShortName().'_n_id',
+                    'deletePhoto' => ['personal_image_remover', ['id' => $options['data']->getId(), 'getImageMethod' => 'getNationalIDCardScan', 'tabName' => 'background.information']],
+                )
+            )
+            ->add('residencyStatus', SettingChoiceType::class,
+                [
+                    'label'        => ['person.residency_status.label', ['%{national}' => $this->country]],
+                    'placeholder'  => 'person.residency_status.placeholder',
+                    'required'     => false,
+                    'setting_name' => 'person.residency_status',
+                    'translation_domain' => 'Person',
+                ]
+            )
+            ->add('visaExpiryDate', DateType::class,
+                array(
+                    'label'        => ['person.visa_expiry_date.label', ['%{national}' => $this->country]],
+                    'help'  => 'person.visa_expiry_date.help',
+                    'required'     => false,
+                )
+            )
         ;
     }
 
@@ -305,4 +373,18 @@ class PersonType extends AbstractType
         return 'person';
     }
 
+    /**
+     * @var null|string
+     */
+    private $country;
+
+    /**
+     * PersonType constructor.
+     * @param ParameterInjector $injector
+     */
+    public function __construct(ParameterInjector $injector)
+    {
+        $country = $injector->getParameter('country');
+        $this->country = Intl::getRegionBundle()->getCountryName($country);
+    }
 }

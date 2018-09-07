@@ -25,11 +25,40 @@
 </div>
 <div class="row">
     <div class="col-4 card">
+        {{ form_row(form.citizenship1) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.citizenship1Passport) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.citizenship1PassportScan) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-4 card">
+        {{ form_row(form.citizenship2) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.citizenship2Passport) }}
+    </div>
+    <div class="col-4 card">
         {{ form_row(form.religion) }}
     </div>
+</div>
+<div class="row">
     <div class="col-4 card">
+        {{ form_row(form.nationalIDCard) }}
     </div>
     <div class="col-4 card">
+        {{ form_row(form.nationalIDCardScan) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.residencyStatus) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-4 offset-8 card">
+        {{ form_row(form.visaExpiryDate) }}
     </div>
 </div>
 {% include 'Default/panelEnd.html.twig' %}

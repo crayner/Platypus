@@ -123,6 +123,41 @@ App\Entity\Person:
             type: string
             length: 16
             nullable: true
+        citizenship1:
+            type: string
+            length: 16
+            nullable: true
+        citizenship1Passport:
+            type: string
+            length: 16
+            nullable: true
+        citizenship1PassportScan:
+            type: string
+            length: '150'
+            nullable: true
+        citizenship2:
+            type: string
+            length: 16
+            nullable: true
+        citizenship2Passport:
+            type: string
+            length: 16
+            nullable: true
+        nationalIDCard:
+            type: string
+            length: 32
+            nullable: true
+        nationalIDCardScan:
+            type: string
+            length: '150'
+            nullable: true
+        residencyStatus:
+            type: string
+            length: 32
+            nullable: true
+        visaExpiryDate:
+            type: date
+            nullable: true
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff
