@@ -17,9 +17,12 @@
                 <div class="col-4 card">
                     {{ form_row(form.lockerNumber) }}
                 </div>
-                <div class="col-4 card">
-                    {{ form_row(form.transport) }}
-                </div>
+            <div class="col-4 card">
+                {{ form_row(form.transport) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_row(form.transportNotes) }}
+            </div>
         </div>
     {% endif %}
 {% include 'Default/panelEnd.html.twig' %}

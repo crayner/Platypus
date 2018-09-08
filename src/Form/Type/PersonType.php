@@ -32,6 +32,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -435,6 +436,21 @@ class PersonType extends AbstractType
                     'class' => SchoolYear::class,
                     'choice_label' => 'name',
                     'required' => false,
+                ]
+            )
+            ->add('transport', TextType::class,
+                [
+                    'label'       => 'person.transport.label',
+                    'required' => false,
+                ]
+            )
+            ->add('transportNotes', TextareaType::class,
+                [
+                    'label'       => 'person.transport_notes.label',
+                    'required' => false,
+                    'attr' => [
+                        'rows' => 5,
+                    ],
                 ]
             )
         ;
