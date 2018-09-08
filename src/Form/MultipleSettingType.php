@@ -144,6 +144,10 @@ class MultipleSettingType extends AbstractType
                     $formType = HiddenType::class;
                     $additional = $data->getEntityOptions() ?: [];
                     break;
+                case 'text':
+                    $formType = TextareaType::class;
+                    $attr = ['rows' => '5',];
+                    break;
                 default:
                     $formType = TextType::class;
             }

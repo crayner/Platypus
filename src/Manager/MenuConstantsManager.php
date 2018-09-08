@@ -227,7 +227,6 @@ School Admin:
             transDomain: SchoolYear 
     hidden:
         - school_year_edit
-        - multiple_settings_manage
         - roll_group_edit
         - department_edit
         - scale_edit
@@ -291,6 +290,13 @@ System Admin:
         - edit_notification_event
 People Admin:
     people_management:
+        personnel_settings:
+            label: personnel_settings
+            role: ROLE_SYSTEM_ADMIN
+            route: manage_settings
+            parameters: 
+                name: Personnel
+            transDomain: Person
         manage_people:
             label: manage_people_label
             role: ROLE_SYSTEM_ADMIN

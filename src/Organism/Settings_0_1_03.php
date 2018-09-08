@@ -23,10 +23,10 @@ ethnicity.list:
         'Not stated': '0001'
         Eurasian: '0901'
         Asian: '0902'
-        'African, so decribed': '0903'
-        'European, so decribed': '0904'
-        'Caucasian, so decribed': '0905'
-        'Creole, so decribed': '0906'
+        'African, so described': '0903'
+        'European, so described': '0904'
+        'Caucasian, so described': '0905'
+        'Creole, so described': '0906'
         Oceanian: '1000'
         'Australian Peoples': '1100'
         'New Zealand Peoples': '1200'
@@ -66,7 +66,7 @@ ethnicity.list:
     validators: null
     role: null
     defaultValue: {  }
-    translateChoice: null
+    translateChoice: Person
 religion.list:
     type: array
     name: religion.list
@@ -208,7 +208,7 @@ religion.list:
     validators: null
     role: ROLE_ADMIN
     defaultValue: {  }
-    translateChoice: null
+    translateChoice: Person
 person.residency_status:
     type: array
     name: person.residency_status
@@ -224,7 +224,18 @@ person.residency_status:
     validators: null
     role: ROLE_ADMIN
     defaultValue: {  }
-    translateChoice: null
+    translateChoice: Person
+departure.reasons:
+    type: array
+    name: departure.reasons
+    displayName: 'Departure Reasons'
+    description: 'List of Departure Reasons.'
+    value: {}
+    choice: null
+    validators: null
+    role: ROLE_ADMIN
+    defaultValue: {}
+    translateChoice: Person
 LLL;
 	}
 
