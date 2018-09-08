@@ -13,25 +13,18 @@
     </div>
 </div>
 <div class="row">
-    {% set user = form.vars.value.user %}
-    {% set canLogin = true %}
-    {% set username = '' %}
-    {% if user is same as(null) %}
-        {% set canLogin = false %}
-    {% else %}
-        {% set username = user.username %}
-    {% endif %}
+    {% set canLogin = manager.isUser %}
+    {% set canLoginParams = {value: canLogin, disabled: (not manager.canbeUser)} %}
+    {% dump(canLoginParams) %}
     <div class="col-4 card">
-        {{ form_row(form.canLogin, {value: canLogin}) }}
-    </div>
-    {% if user is not same as(null) %}
-    <div class="col-4 card">
-        {{ form_row(form.forcePasswordReset, {value: user.expired}) }}
+        {{ form_row(form.canLogin, canLoginParams) }}
     </div>
     <div class="col-4 card">
-        {{ form_row(form.username, {value: username}) }}
+        {{ form_row(form.forcePasswordReset, {disabled: (not manager.isUser)}) }}
     </div>
-    {% endif %}
+    <div class="col-4 card">
+        {{ form_row(form.username, {disabled: (not manager.isUser)}) }}
+    </div>
     {% do form.username.setRendered %}
     {% do form.forcePasswordReset.setRendered %}
 </div>

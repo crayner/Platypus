@@ -1,6 +1,7 @@
 {% trans_default_domain 'Person' %}
 
 {% include 'Default/panelStart.html.twig' with {header: 'school.information.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+{% if manager.isStudent %}
     <div class="row">
         <div class="col-6 card">
             {{ form_row(form.lastSchool) }}
@@ -25,4 +26,44 @@
             {{ form_row(form.departureReason) }}
         </div>
     </div>
+{% endif %}
+
+{% if manager.isStaff %}
+    <div class="row">
+        <div class="col-6 card">
+            {{ form_row(form.lastSchool) }}
+        </div>
+        <div class="col-6 card">
+            {{ form_row(form.nextSchool) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 card">
+            {{ form_row(form.dateStart) }}
+        </div>
+        <div class="col-6 card">
+            {{ form_row(form.dateEnd) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6 offset-6 card">
+            {{ form_row(form.departureReason) }}
+        </div>
+    </div>
+{% endif %}
+
+
+{% if not manager.isStaff and manager.isParent %}
+    <div class="row">
+        <div class="col-6 card">
+            {{ form_row(form.dateStart) }}
+        </div>
+        <div class="col-6 card">
+            {{ form_row(form.dateEnd) }}
+        </div>
+    </div>
+{% endif %}
+
+
+
 {% include 'Default/panelEnd.html.twig' %}

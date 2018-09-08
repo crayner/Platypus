@@ -1576,4 +1576,161 @@ class Person
         $this->transportNotes = $transportNotes;
         return $this;
     }
+
+    /**
+     * @var boolean
+     */
+    private $canLogin;
+
+    /**
+     * isCanLogin
+     *
+     * @return bool
+     */
+    public function isCanLogin(){
+        if ($this->getUser() instanceof UserInterface)
+            return $this->canLogin = true;
+        return $this->canLogin = false;
+    }
+
+    /**
+     * setCanLogin
+     *
+     * @return Person
+     */
+    public function setCanLogin(?bool $canLogin): Person
+    {
+        $this->canLogin = $canLogin ? true : false;
+        return $this;
+    }
+
+    /**
+     * @var boolean
+     */
+    private $forcePasswordReset;
+
+    /**
+     * @return bool
+     */
+    public function isForcePasswordReset(): bool
+    {
+        if (! $this->isCanLogin())
+            return $this->forcePasswordReset = false;
+        $this->forcePasswordReset = $this->getUser()->isCredentialsExpired() ;
+        return $this->forcePasswordReset;
+    }
+
+    /**
+     * @param bool $forcePasswordReset
+     * @return Person
+     */
+    public function setForcePasswordReset(bool $forcePasswordReset): Person
+    {
+        if ($this->isCanLogin()) {
+            $this->getUser()->setCredentialsExpired($forcePasswordReset);
+            $this->forcePasswordReset = $this->getUser()->isCredentialsExpired();
+        }
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $username;
+
+    /**
+     * @return null|string
+     */
+    public function getUsername(): ?string
+    {
+        if ($this->isCanLogin())
+            $this->username = $this->getUser()->getUsername();
+
+        return $this->username;
+    }
+
+    /**
+     * @param null|string $username
+     * @return Person
+     */
+    public function setUsername(?string $username): Person
+    {
+        if ($this->isCanLogin()) {
+            if (empty($username))
+                $username = $this->getEmail();
+            $this->getUser()->setUsername($username);
+            $this->getUser()->setUsernameCanonical($username);
+        }
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $profession;
+
+    /**
+     * @return null|string
+     */
+    public function getProfession(): ?string
+    {
+        return $this->profession;
+    }
+
+    /**
+     * @param null|string $profession
+     * @return Person
+     */
+    public function setProfession(?string $profession): Person
+    {
+        $this->profession = $profession;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $employer;
+
+    /**
+     * @return null|string
+     */
+    public function getEmployer(): ?string
+    {
+        return $this->employer;
+    }
+
+    /**
+     * @param null|string $employer
+     * @return Person
+     */
+    public function setEmployer(?string $employer): Person
+    {
+        $this->employer = $employer;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $jobTitle;
+
+    /**
+     * @return null|string
+     */
+    public function getJobTitle(): ?string
+    {
+        return $this->jobTitle;
+    }
+
+    /**
+     * @param null|string $jobTitle
+     * @return Person
+     */
+    public function setJobTitle(?string $jobTitle): Person
+    {
+        $this->jobTitle = $jobTitle;
+        return $this;
+    }
 }

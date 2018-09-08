@@ -644,7 +644,7 @@ class SchoolYearManager extends TabManager
             $schoolYear->setName($schoolYear->getFirstDay()->format('Y') . '-' . $schoolYear->getLastDay()->format('Y'));
         else
             $schoolYear->setName($schoolYear->getFirstDay()->format('Y'));
-dump($schoolYear);
+
         return $schoolYear;
     }
 }

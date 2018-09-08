@@ -1,7 +1,37 @@
 {% trans_default_domain 'Person' %}
 
 {% include 'Default/panelStart.html.twig' with {header: 'miscellaneous.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+
+
     {% if manager.isStudent %}
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.house, {value: transformData(form.house)}) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.vehicleRegistration) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.studentIdentifier) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.lockerNumber) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.transport) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.transportNotes) }}
+            </div>
+        </div>
+    {% endif %}
+
+
+    {% if manager.isStaff %}
         <div class="row">
             <div class="col-4 card">
                 {{ form_row(form.house, {value: transformData(form.house)}) }}
@@ -9,20 +39,32 @@
             <div class="col-4 card">
                 {{ form_row(form.vehicleRegistration) }}
             </div>
-                <div class="col-4 card">
-                    {{ form_row(form.studentIdentifier) }}
-                </div>
+            <div class="col-4 card">
+                {{ form_row(form.lockerNumber) }}
+            </div>
         </div>
         <div class="row">
-                <div class="col-4 card">
-                    {{ form_row(form.lockerNumber) }}
-                </div>
-            <div class="col-4 card">
+            <div class="col-6 card">
                 {{ form_row(form.transport) }}
             </div>
-            <div class="col-4 card">
+            <div class="col-6 card">
                 {{ form_row(form.transportNotes) }}
             </div>
         </div>
     {% endif %}
+
+
+
+    {% if not manager.isStaff and manager.isParent %}
+        <div class="row">
+            <div class="col-6 card">
+            {{ form_row(form.house, {value: transformData(form.house)}) }}
+            </div>
+            <div class="col-6 card">
+            {{ form_row(form.vehicleRegistration) }}
+            </div>
+        </div>
+    {% endif %}
+
+
 {% include 'Default/panelEnd.html.twig' %}

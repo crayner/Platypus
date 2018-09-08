@@ -142,27 +142,6 @@ class PersonType extends AbstractType
                     'label'       => 'person.status.label',
                 ]
             )
-            ->add('canLogin', ToggleType::class,
-                [
-                    'help'       => 'person.can_login.help',
-                    'label'       => 'person.can_login.label',
-                    'mapped' => false,
-                ]
-            )
-            ->add('forcePasswordReset', ToggleType::class,
-                [
-                    'help'       => 'person.force_password_reset.help',
-                    'label'       => 'person.force_password_reset.label',
-                    'mapped' => false,
-                ]
-            )
-            ->add('username', TextType::class,
-                [
-                    'help'       => 'person.username.help',
-                    'label'       => 'person.username.label',
-                    'mapped' => false,
-                ]
-            )
             ->add('email', EmailType::class,
                 [
                     'label' => 'person.email.label',
@@ -320,6 +299,9 @@ class PersonType extends AbstractType
             $this->buildStudentForm($builder, $options);
         if ($options['manager']->isStaff())
             $this->buildStaffForm($builder, $options);
+        if ($options['manager']->isParent())
+            $this->buildParentForm($builder, $options);
+        $this->buildUserForm($builder, $options);
 
     }
 
@@ -472,7 +454,130 @@ class PersonType extends AbstractType
                     'required'     => false,
                 )
             )
+            ->add('lastSchool', TextType::class,
+                [
+                    'label'       => 'person.last_school.label',
+                    'required' => false,
+                ]
+            )
+            ->add('nextSchool', TextType::class,
+                [
+                    'label'       => 'person.next_school.label',
+                    'required' => false,
+                ]
+            )
+            ->add('departureReason', TextType::class,
+                [
+                    'label'       => 'person.departure_reason.label',
+                    'required' => false,
+                ]
+            )
+            ->add('dateStart', DateType::class,
+                [
+                    'required' => false,
+                    'label'       => 'person.date_start.label',
+                    'help'       => 'staff.date_start.help',
+                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
+                ]
+            )
+            ->add('dateEnd', DateType::class,
+                [
+                    'label'       => 'person.date_end.label',
+                    'help'       => 'staff.date_end.help',
+                    'required' => false,
+                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
+                ]
+            )
+            ->add('transport', TextType::class,
+                [
+                    'label'       => 'person.transport.label',
+                    'required' => false,
+                ]
+            )
+            ->add('transportNotes', TextareaType::class,
+                [
+                    'label'       => 'person.transport_notes.label',
+                    'required' => false,
+                    'attr' => [
+                        'rows' => 5,
+                    ],
+                ]
+            )
         ;
     }
 
+    /**
+     * buildUserForm
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildUserForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('canLogin', ToggleType::class,
+                [
+                    'label'       => 'person.can_login.label',
+                ]
+            )
+            ->add('forcePasswordReset', ToggleType::class,
+                [
+                    'help'       => 'person.force_password_reset.help',
+                    'label'       => 'person.force_password_reset.label',
+                ]
+            )
+            ->add('username', TextType::class,
+                [
+                    'help'       => 'person.username.help',
+                    'label'       => 'person.username.label',
+                ]
+            )
+        ;
+    }
+
+    /**
+     * buildParentForm
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildParentForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('profession', TextType::class,
+                array(
+                    'label'        => 'person.profession.label',
+                    'required'     => false,
+                )
+            )
+            ->add('employer', TextType::class,
+                array(
+                    'label'        => 'person.employer.label',
+                    'required'     => false,
+                )
+            )
+            ->add('jobTitle', TextType::class,
+                array(
+                    'label'        => 'person.job_title.label',
+                    'required'     => false,
+                )
+            )
+            ->add('dateStart', DateType::class,
+                [
+                    'required' => false,
+                    'label'       => 'person.date_start.label',
+                    'help'       => 'parent.date_start.help',
+                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
+                ]
+            )
+            ->add('dateEnd', DateType::class,
+                [
+                    'label'       => 'person.date_end.label',
+                    'help'       => 'parent.date_end.help',
+                    'required' => false,
+                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
+                ]
+            )
+        ;
+    }
 }

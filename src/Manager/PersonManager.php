@@ -19,6 +19,8 @@ use App\Entity\Person;
 use App\Entity\PersonRole;
 use App\Manager\Traits\EntityTrait;
 use App\Util\PersonNameHelper;
+use Hillrange\Security\Entity\User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class PersonManager
@@ -64,7 +66,6 @@ class PersonManager extends TabManager
             'include' => 'Person/school_information.html.twig',
             'message' => 'schoolInformationMessage',
             'translation' => 'Person',
-            'display' => 'isStudent',
         ],
         [
             'name' => 'background.information',
@@ -72,6 +73,14 @@ class PersonManager extends TabManager
             'include' => 'Person/background_information.html.twig',
             'message' => 'backgroundInformationMessage',
             'translation' => 'Person',
+        ],
+        [
+            'name' => 'employment',
+            'label' => 'employment.tab',
+            'include' => 'Person/employment.html.twig',
+            'message' => 'employmentInformationMessage',
+            'translation' => 'Person',
+            'display' => 'isParent',
         ],
         [
             'name' => 'miscellaneous',
@@ -125,13 +134,73 @@ class PersonManager extends TabManager
         if (! $person instanceof Person )
             return false;
         $role = $person->getPrimaryRole();
-        dump($role);
-        dump($role->getCategory());
-
         if (! $role instanceof PersonRole)
             return false;
         if (in_array($role->getCategory(), ['administrator','support_staff','teacher','staff']))
             return true;
+        return false;
+    }
+
+    /**
+     * isUser
+     *
+     * @param Person|null $person
+     * @return bool
+     */
+    public function isUser(?Person $person = null): bool
+    {
+        if (empty($person))
+            $person = $this->getEntity();
+        if (! $person instanceof Person )
+            return false;
+        return $person->isCanLogin();
+    }
+
+    /**
+     * canBeUser
+     *
+     * @param Person|null $person
+     * @return bool
+     */
+    public function canBeUser(?Person $person = null): bool
+    {
+        if ($this->isUser())
+            return true;
+        if (empty($person))
+            $person = $this->getEntity();
+        if (! $person instanceof Person )
+            return false;
+        if (empty($person->getEmail()))
+            return false;
+        $count = $this->getRepository(User::class)->findByEmailCanonical($person->getEmail());
+        if (empty($count))
+            return true;
+
+        return false;
+    }
+
+    /**
+     * isParent
+     *
+     * @param Person|null $person
+     * @return bool
+     */
+    public function isParent(?Person $person = null): bool
+    {
+        if (empty($person))
+            $person = $this->getEntity();
+        if (! $person instanceof Person )
+            return false;
+        $role = $person->getPrimaryRole();
+        if (! $role instanceof PersonRole)
+            return false;
+        if (in_array($role->getCategory(), ['parent']))
+            return true;
+
+        foreach($person->getSecondaryRoles() as $role)
+            if (in_array($role->getCategory(), ['parent']))
+                return true;
+
         return false;
     }
 }

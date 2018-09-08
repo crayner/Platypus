@@ -175,6 +175,17 @@ App\Entity\Person:
         transportNotes:
             type: text
             column: transport_notes
+            nullable: true
+        profession:
+            length: 30
+            nullable: true
+        employer:
+            length: 30
+            nullable: true
+        jobTitle:
+            length: 30
+            nullable: true
+            column: job_title
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff
