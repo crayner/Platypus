@@ -1,0 +1,25 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'miscellaneous.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+    {% if manager.isStudent %}
+        <div class="row">
+            <div class="col-4 card">
+                {{ form_row(form.house, {value: transformData(form.house)}) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_row(form.vehicleRegistration) }}
+            </div>
+                <div class="col-4 card">
+                    {{ form_row(form.studentIdentifier) }}
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-4 card">
+                    {{ form_row(form.lockerNumber) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.transport) }}
+                </div>
+        </div>
+    {% endif %}
+{% include 'Default/panelEnd.html.twig' %}

@@ -174,7 +174,7 @@ class PersonController extends Controller
     {
         $entity = $manager->find($id);
 
-        $form = $this->createForm(PersonType::class, $entity);
+        $form = $this->createForm(PersonType::class, $entity, ['manager' => $manager]);
 
         $manager->getTabs();
 

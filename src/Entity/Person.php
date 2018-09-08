@@ -1438,4 +1438,142 @@ class Person
         $this->visaExpiryDate = $visaExpiryDate;
         return $this;
     }
+
+    /**
+     * @var House|null
+     */
+    private $house;
+
+    /**
+     * @return House|null
+     */
+    public function getHouse(): ?House
+    {
+        return $this->house;
+    }
+
+    /**
+     * @param House|null $house
+     * @return Person
+     */
+    public function setHouse(?House $house): Person
+    {
+        $this->house = $house;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $vehicleRegistration;
+
+    /**
+     * @return null|string
+     */
+    public function getVehicleRegistration(): ?string
+    {
+        return $this->vehicleRegistration;
+    }
+
+    /**
+     * @param null|string $vehicleRegistration
+     * @return Person
+     */
+    public function setVehicleRegistration(?string $vehicleRegistration): Person
+    {
+        $this->vehicleRegistration = $vehicleRegistration;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $studentIdentifier;
+
+    /**
+     * @return null|string
+     */
+    public function getStudentIdentifier(): ?string
+    {
+        return $this->studentIdentifier;
+    }
+
+    /**
+     * @param null|string $studentIdentifier
+     * @return Person
+     */
+    public function setStudentIdentifier(?string $studentIdentifier): Person
+    {
+        $this->studentIdentifier = $studentIdentifier;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $lockerNumber;
+
+    /**
+     * @return null|string
+     */
+    public function getLockerNumber(): ?string
+    {
+        return $this->lockerNumber;
+    }
+
+    /**
+     * @param null|string $lockerNumber
+     * @return Person
+     */
+    public function setLockerNumber(?string $lockerNumber): Person
+    {
+        $this->lockerNumber = $lockerNumber;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $transport;
+
+    /**
+     * @return null|string
+     */
+    public function getTransport(): ?string
+    {
+        return $this->transport;
+    }
+
+    /**
+     * @param null|string $transport
+     * @return Person
+     */
+    public function setTransport(?string $transport): Person
+    {
+        $this->transport = $transport;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $transportNotes;
+
+    /**
+     * @return null|string
+     */
+    public function getTransportNotes(): ?string
+    {
+        return $this->transportNotes;
+    }
+
+    /**
+     * @param null|string $transportNotes
+     * @return Person
+     */
+    public function setTransportNotes(?string $transportNotes): Person
+    {
+        $this->transportNotes = $transportNotes;
+        return $this;
+    }
 }

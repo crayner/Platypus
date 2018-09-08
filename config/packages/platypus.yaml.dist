@@ -74,3 +74,6 @@ parameters:
         - rev
         - dr
         - ''
+    demonstrator: false
+	country: AU
+    timezone: Australia/Sydney

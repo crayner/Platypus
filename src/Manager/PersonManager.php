@@ -73,6 +73,13 @@ class PersonManager extends TabManager
             'message' => 'backgroundInformationMessage',
             'translation' => 'Person',
         ],
+        [
+            'name' => 'miscellaneous',
+            'label' => 'miscellaneous.tab',
+            'include' => 'Person/miscellaneous.html.twig',
+            'message' => 'miscellaneousInformationMessage',
+            'translation' => 'Person',
+        ],
     ];
 
     /**
@@ -101,6 +108,29 @@ class PersonManager extends TabManager
         if (! $role instanceof PersonRole)
             return false;
         if ($role->getCategory() === 'student')
+            return true;
+        return false;
+    }
+
+    /**
+     * isStaff
+     *
+     * @param Person|null $person
+     * @return bool
+     */
+    public function isStaff(?Person $person = null): bool
+    {
+        if (empty($person))
+            $person = $this->getEntity();
+        if (! $person instanceof Person )
+            return false;
+        $role = $person->getPrimaryRole();
+        dump($role);
+        dump($role->getCategory());
+
+        if (! $role instanceof PersonRole)
+            return false;
+        if (in_array($role->getCategory(), ['administrator','support_staff','teacher','staff']))
             return true;
         return false;
     }

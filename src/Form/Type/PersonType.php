@@ -15,6 +15,7 @@
  */
 namespace App\Form\Type;
 
+use App\Entity\House;
 use App\Entity\Person;
 use App\Entity\PersonRole;
 use App\Entity\SchoolYear;
@@ -173,50 +174,6 @@ class PersonType extends AbstractType
                     'required' => false,
                 ]
             )
-            ->add('lastSchool', TextType::class,
-                [
-                    'label'       => 'person.last_school.label',
-                    'required' => false,
-                ]
-            )
-            ->add('nextSchool', TextType::class,
-                [
-                    'label'       => 'person.next_school.label',
-                    'required' => false,
-                ]
-            )
-            ->add('departureReason', TextType::class,
-                [
-                    'label'       => 'person.departure_reason.label',
-                    'required' => false,
-                ]
-            )
-            ->add('dateStart', DateType::class,
-                [
-                    'required' => false,
-                    'label'       => 'person.date_start.label',
-                    'help'       => 'person.date_start.help',
-                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
-                ]
-            )
-            ->add('dateEnd', DateType::class,
-                [
-                    'label'       => 'person.date_end.label',
-                    'help'       => 'person.date_end.help',
-                    'required' => false,
-                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
-                ]
-            )
-            ->add('graduationYear', EntityType::class,
-                [
-                    'label'       => 'person.graduation_year.label',
-                    'help'       => 'person.graduation_year.help',
-                    'placeholder'       => 'person.graduation_year.placeholder',
-                    'class' => SchoolYear::class,
-                    'choice_label' => 'name',
-                    'required' => false,
-                ]
-            )
             ->add('languageFirst', LanguageType::class,
                 [
                     'label'       => 'person.language_first.label',
@@ -341,7 +298,28 @@ class PersonType extends AbstractType
                     'required'     => false,
                 )
             )
+            ->add('house', EntityType::class,
+                [
+                    'label'       => 'person.house.label',
+                    'placeholder'       => 'person.house.placeholder',
+                    'class' => House::class,
+                    'choice_label' => 'name',
+                    'required' => false,
+                ]
+            )
+            ->add('vehicleRegistration', TextType::class,
+                array(
+                    'label'        => 'person.vehicle_registration.label',
+                    'required'     => false,
+                )
+            )
         ;
+
+        if ($options['manager']->isStudent())
+            $this->buildStudentForm($builder, $options);
+        if ($options['manager']->isStaff())
+            $this->buildStaffForm($builder, $options);
+
     }
 
     /**
@@ -359,6 +337,11 @@ class PersonType extends AbstractType
                     'noValidate' => true,
                 ],
                 'allow_extra_fields' => true,
+            ]
+        );
+        $resolver->setRequired(
+            [
+                'manager',
             ]
         );
     }
@@ -387,4 +370,93 @@ class PersonType extends AbstractType
         $country = $injector->getParameter('country');
         $this->country = Intl::getRegionBundle()->getCountryName($country);
     }
+
+    /**
+     * buildStudentForm
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildStudentForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('studentIdentifier', TextType::class,
+                array(
+                    'label'        => 'person.student_identifier.label',
+                    'help'        => 'person.student_identifier.help',
+                    'required'     => false,
+                )
+            )
+            ->add('lockerNumber', TextType::class,
+                array(
+                    'label'        => 'person.locker_number.label',
+                    'required'     => false,
+                )
+            )
+            ->add('lastSchool', TextType::class,
+                [
+                    'label'       => 'person.last_school.label',
+                    'required' => false,
+                ]
+            )
+            ->add('nextSchool', TextType::class,
+                [
+                    'label'       => 'person.next_school.label',
+                    'required' => false,
+                ]
+            )
+            ->add('departureReason', TextType::class,
+                [
+                    'label'       => 'person.departure_reason.label',
+                    'required' => false,
+                ]
+            )
+            ->add('dateStart', DateType::class,
+                [
+                    'required' => false,
+                    'label'       => 'person.date_start.label',
+                    'help'       => 'person.date_start.help',
+                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
+                ]
+            )
+            ->add('dateEnd', DateType::class,
+                [
+                    'label'       => 'person.date_end.label',
+                    'help'       => 'person.date_end.help',
+                    'required' => false,
+                    'years' => range(date('Y', strtotime('-4 years')),date('Y', strtotime('-20 years')), -1),
+                ]
+            )
+            ->add('graduationYear', EntityType::class,
+                [
+                    'label'       => 'person.graduation_year.label',
+                    'help'       => 'person.graduation_year.help',
+                    'placeholder'       => 'person.graduation_year.placeholder',
+                    'class' => SchoolYear::class,
+                    'choice_label' => 'name',
+                    'required' => false,
+                ]
+            )
+        ;
+    }
+
+    /**
+     * buildStaffForm
+     *
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    private function buildStaffForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+
+            ->add('lockerNumber', TextType::class,
+                array(
+                    'label'        => 'person.locker_number.label',
+                    'required'     => false,
+                )
+            )
+        ;
+    }
+
 }

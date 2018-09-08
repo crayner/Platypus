@@ -158,6 +158,23 @@ App\Entity\Person:
         visaExpiryDate:
             type: date
             nullable: true
+        vehicleRegistration:
+            length: 20
+            nullable: true
+            column: vehicle_registration
+        studentIdentifier:
+            length: 20
+            nullable: true
+            column: student_identifier
+        lockerNumber:
+            length: 20
+            nullable: true
+            column: locker_number
+        transport:
+            nullable: true
+        transportNotes:
+            type: text
+            column: transport_notes
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff
@@ -178,6 +195,12 @@ App\Entity\Person:
             targetEntity: App\Entity\SchoolYear
             joinColumn:
                 name: graduation_school_year_id
+                referencedColumnName: id
+                nullable: true
+        house:
+            targetEntity: App\Entity\House
+            joinColumn:
+                name: house_id
                 referencedColumnName: id
                 nullable: true
     manyToMany:

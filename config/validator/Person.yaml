@@ -1,4 +1,7 @@
 App\Entity\Person:
+    constraints:
+        - Hillrange\Form\Validator\UniqueOrBlank:
+            fields: ['student_identifier']
     properties:
         personalBackground:
             - App\Validator\BackgroundImage: ~
