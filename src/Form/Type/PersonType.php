@@ -20,6 +20,7 @@ use App\Entity\Person;
 use App\Entity\PersonRole;
 use App\Entity\SchoolYear;
 use App\Form\SettingChoiceType;
+use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\DateType;
 use Hillrange\Form\Type\DocumentType;
 use Hillrange\Form\Type\EntityType;
@@ -33,6 +34,7 @@ use Symfony\Component\Form\Extension\Core\Type\CountryType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Intl\Intl;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -293,6 +295,12 @@ class PersonType extends AbstractType
                     'required'     => false,
                 )
             )
+            ->add('website', UrlType::class,
+                array(
+                    'label'        => 'person.website.label',
+                    'required'     => false,
+                )
+            )
         ;
 
         if ($options['manager']->isStudent())
@@ -417,6 +425,10 @@ class PersonType extends AbstractType
                     'placeholder'       => 'person.graduation_year.placeholder',
                     'class' => SchoolYear::class,
                     'choice_label' => 'name',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('s')
+                            ->orderBy('s.firstDay', 'DESC');
+                    },
                     'required' => false,
                 ]
             )

@@ -3,7 +3,7 @@
 {% include 'Default/panelStart.html.twig' with {header: 'contact.information.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
 
 <div class="row">
-    <div class="col-4">
+    <div class="col-5">
         <div class="row">
             <div class="col-12 card">
                 {{ form_row(form.email) }}
@@ -16,13 +16,14 @@
         </div>
         <div class="row">
             <div class="col-12 card">
+                {{ form_row(form.website) }}
             </div>
         </div>
         <div id="phoneContent">
         </div>
 
     </div>
-    <div class="col-8">
+    <div class="col-7">
         <div id="addressContent">
         </div>
     </div>

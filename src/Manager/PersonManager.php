@@ -200,7 +200,6 @@ class PersonManager extends TabManager
         foreach($person->getSecondaryRoles() as $role)
             if (in_array($role->getCategory(), ['parent']))
                 return true;
-
         return false;
     }
 }

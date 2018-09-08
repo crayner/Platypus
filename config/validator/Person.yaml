@@ -49,3 +49,5 @@ App\Entity\Person:
                   allowLandscape: true
                   minRatio: 0.707
                   maxRatio: 1.414
+        website:
+            - Url: ~

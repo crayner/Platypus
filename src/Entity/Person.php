@@ -1733,4 +1733,27 @@ class Person
         $this->jobTitle = $jobTitle;
         return $this;
     }
+
+    /**
+     * @var string|null
+     */
+    private $website;
+
+    /**
+     * @return null|string
+     */
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    /**
+     * @param null|string $website
+     * @return Person
+     */
+    public function setWebsite(?string $website): Person
+    {
+        $this->website = $website;
+        return $this;
+    }
 }

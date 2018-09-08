@@ -182,8 +182,8 @@ class PersonController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            dump($form);
-            dump($entity);
+            $manager->getEntityManager()->persist($entity);
+            $manager->getEntityManager()->flush();
         }
 
         return $this->render(

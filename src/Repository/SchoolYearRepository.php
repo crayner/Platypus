@@ -28,4 +28,29 @@ class SchoolYearRepository extends ServiceEntityRepository
 
         }
     }
+
+    /**
+     * findBy
+     *
+     * @param array $criteria
+     * @param array $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return array
+     */
+    public function findBy(array $criteria, ?array $orderBy = ['firstDay' => 'DESC'], $limit = null, $offset = null)
+    {
+        return parent::findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * Finds all entities in the repository.
+     *
+     * @return array The entities.
+     */
+    public function findAll()
+    {
+        return $this->findBy([], ['firstDay' => 'DESC']);
+    }
+
 }

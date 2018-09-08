@@ -15,7 +15,6 @@
 <div class="row">
     {% set canLogin = manager.isUser %}
     {% set canLoginParams = {value: canLogin, disabled: (not manager.canbeUser)} %}
-    {% dump(canLoginParams) %}
     <div class="col-4 card">
         {{ form_row(form.canLogin, canLoginParams) }}
     </div>
