@@ -46,13 +46,13 @@ class MenuManager extends MenuConstantsManager
 	 */
 	private $container;
 
-	/**
-	 * MenuManager constructor.
-	 *
-	 * @param PageManager                   $pageManager
-	 * @param AuthorizationCheckerInterface $authChecker
-	 * @param RouterManager                 $routerManager
-	 */
+    /**
+     * MenuManager constructor.
+     * @param PageManager $pageManager
+     * @param AuthorizationCheckerInterface $authChecker
+     * @param RouterManager $routerManager
+     * @param ContainerInterface $container
+     */
 	public function __construct(PageManager $pageManager, AuthorizationCheckerInterface $authChecker, RouterManager $routerManager, ContainerInterface $container)
 	{
 		$this->pageManager = $pageManager;
@@ -237,14 +237,12 @@ class MenuManager extends MenuConstantsManager
 		return $roles;
 	}
 
-	/**
-	 * test Menu Item
-	 *
-	 * @param string $test
-	 *
-	 * @return bool
-	 * @throws InvalidArgumentException
-	 */
+    /**
+     * testMenuItem
+     *
+     * @param $test
+     * @return bool
+     */
 	public function testMenuItem($test)
 	{
 		$test['default1'] = isset($test['default1']) ? $test['default1'] : null;
