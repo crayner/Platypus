@@ -38,7 +38,7 @@ class InstallationManager
     public static $systemRequirements = [
         'php' 			=> '7.1.0',
         'mysql' 		=> '5.7',
-        'extensions' 	=> ['gettext', 'mbstring', 'curl', 'zip', 'xml', 'gd'],
+        'extensions' 	=> ['gettext', 'mbstring', 'curl', 'zip', 'xml', 'gd', 'intl'],
         'settings' 		=> [
             ['max_input_vars', '>=', 5000],
             ['max_file_uploads', '>=', 20],

@@ -19,9 +19,15 @@
                 {% set target = data['target']['name']|default('_self') %}
                 {% set options = data['target']['options']|default('') %}
                 {% set transDomain = data['transDomain']|default('System') %}
+                {% set path_parameters = {} %}
+                {% for name,value in data['parameters'] %}
+                    {% if value is not same as('%') %}
+                        {% set path_parameters = path_parameters|merge({(name): value}) %}
+                    {% endif %}
+                {% endfor %}
                 <div class="{{ data['linkClass'] }}">{{ miscButton({class: 'btn btn-link btn-sm', title: data['label'],
                         transDomain: transDomain, prompt: data['label'], style: 'float: left;',
-                        windowOpen: {route: path(data['route'], data['parameters']), target: target, params: options}})|raw }}</div>
+                        windowOpen: {route: path(data['route'], path_parameters), target: target, params: options}})|raw }}</div>
             {% else %}
                 <div class="{{ data['linkClass'] }}"
                      style="font-size: 12px; padding: 0 4px; margin: 0; color: #337ab7;">{{ 'system.route.missing'|trans({'%{route}': data['route']}) }}</div>

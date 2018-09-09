@@ -1,0 +1,104 @@
+{% trans_default_domain "Person" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ parent() }}{{ 'person.field.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'person.field.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'person.field.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ form_start(form) }}
+    {{ all_form_errors(fullForm) }}
+
+
+    <div class="card card-dark">
+        <div class="card-header">
+            <h3 class="card-title d-flex mb-12 justify-content-between">
+                <span class="p-6">
+                    {{ 'person.field.title'|trans }}
+                </span>
+                <span class="p-6">
+                    <div class="input-group input-group-sm">
+                        {{ form_widget(form.fieldList, {value: app.request.get('id')}) }}
+                        <span class="input-group-append">
+                            {{ saveButton()|raw }}
+                        </span>
+                    </div>
+                </span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8 card">
+                    <div class="row">
+                        <div class="col-8 card">
+                            {{ form_row(form.name) }}
+                        </div>
+                        <div class="col-4 card">
+                            {{ form_row(form.active) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-8 card">
+                            {{ form_row(form.type) }}
+                        </div>
+                        <div class="col-4 card">
+                            {{ form_row(form.required) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.description) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 card">
+                    {{ form_row(form.forStudent) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.forStaff) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.forParent) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 card">
+                    {{ form_row(form.forOther) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.forDataUpdater) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.forApplicationForm) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 offset-8 card">
+                    {{ form_row(form.forPublicRegistration) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    <script type="text/javascript" language="JavaScript">
+        function loadPersonField() {
+            var xxx = document.getElementById('person_field_fieldList')
+            var value = xxx.options[xxx.selectedIndex].value
+            var path = '{{ path('manage_custom_fields', {id: '__id__'}) }}'
+            if (value === '' || value === null)
+                value = 'Add'
+            path = path.replace('__id__', value)
+            window.open(path, '_self')
+        }
+    </script>
+{% endblock javascripts %}

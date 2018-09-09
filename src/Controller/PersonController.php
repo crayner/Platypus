@@ -16,8 +16,10 @@
 namespace App\Controller;
 
 use App\Form\PreferencesType;
+use App\Form\Type\PersonFieldType;
 use App\Form\Type\PersonType;
 use App\Manager\AddressManager;
+use App\Manager\PersonFieldManager;
 use App\Manager\PersonManager;
 use App\Manager\PhoneManager;
 use App\Manager\ThemeManager;
@@ -235,5 +237,36 @@ class PersonController extends Controller
         $setImageMethod = 's'.mb_substr($getImageMethod, 1);
         $person->$setImageMethod(null);
         return $this->redirectToRoute('person_edit', ['id' => $id, 'tabName' => $tabName]);
+    }
+
+    /**
+     * manageCustomFields
+     *
+     * @param PersonFieldManager $manager
+     * @param Request $request
+     * @param int $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     * @Route("/person/custom/field/{id}/manage/", name="manage_custom_fields")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function manageCustomFields(PersonFieldManager $manager, Request $request, $id = 0)
+    {
+        $entity = $manager->find($id ?: 'Add');
+        dump($request);
+        $form = $this->createForm(PersonFieldType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+            $manager->saveEntity();
+
+        return $this->render('Person/custom_fields.html.twig',
+            array(
+                'manager'    => $manager,
+                'fullForm' => $form,
+                'form' => $form->createView(),
+            )
+        );
     }
 }

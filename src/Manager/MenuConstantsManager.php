@@ -317,6 +317,13 @@ System Admin:
                 id: "%"
 People Admin:
     people_management:
+        manage_custom_fields:
+            label: manage_custom_fields
+            role: ROLE_SYSTEM_ADMIN
+            route: manage_custom_fields
+            parameters: 
+                id: "%"
+            transDomain: Person
         personnel_settings:
             label: personnel_settings
             role: ROLE_SYSTEM_ADMIN

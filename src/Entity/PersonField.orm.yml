@@ -1,0 +1,68 @@
+App\Entity\PersonField:
+    type: entity
+    table: person_field
+    repositoryClass: App\Repository\PersonFieldRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 50
+            unique: true
+        active:
+            type: boolean
+            column: active_field
+            options:
+                default: '1'
+        description:
+            nullable: true
+        type:
+            column: field_type
+            length: 20
+        options:
+            type: array
+            column: field_options
+            options:
+                comment: Field length for varchar, rows for text, list for select/checkbox as an array.
+        required:
+            type: boolean
+            options:
+                default: '0'
+        forStudent:
+            type: boolean
+            options:
+                default: '0'
+            column: for_student
+        forStaff:
+            type: boolean
+            options:
+                default: '0'
+            column: for_staff
+        forParent:
+            type: boolean
+            options:
+                default: '0'
+            column: for_parent
+        forOther:
+            type: boolean
+            options:
+                default: '0'
+            column: for_other
+        forApplicationForm:
+            type: boolean
+            options:
+                default: '0'
+            column: for_application_form
+        forDataUpdater:
+            type: boolean
+            options:
+                default: '0'
+            column: for_data_updater
+        forPublicRegistration:
+            type: boolean
+            options:
+                default: '0'
+            column: for_public_registration
+
