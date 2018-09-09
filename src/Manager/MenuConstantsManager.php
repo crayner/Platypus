@@ -226,12 +226,33 @@ School Admin:
                 tabName: terms
             transDomain: SchoolYear 
     hidden:
-        - school_year_edit
-        - roll_group_edit
-        - department_edit
-        - scale_edit
-        - external_assessment_edit
-        - external_assessment_field_edit
+        school_year_edit:
+            route: school_year_edit
+            parameters:
+                id: "%"
+                tabName: "%"
+        roll_group_edit:
+            route: roll_group_edit
+            parameters:
+                id: "%"
+                closeWindow: "%"
+        department_edit:
+            route: department_edit
+            parameters:
+                id: "%"
+                tabName: "%"
+        scale_edit:
+            route: scale_edit
+            parameters:
+                id: "%"
+                closeWindow: "%"
+                tabName: "%"
+        external_assessment_edit:
+            route: external_assessment_edit
+            parameters:
+                id: "%"
+                closeWindow: "%"
+                tabName: "%"
 System Admin:
     alarm:
         manage_alarm:
@@ -286,8 +307,14 @@ System Admin:
             parameters: {}
             transDomain: System
     hidden:
-        - edit_string_replacement
-        - edit_notification_event
+        edit_string_replacement:
+            route: edit_string_replacement
+            parameters:
+                id: "%"
+        edit_notification_event:
+            route: edit_notification_event
+            parameters:
+                id: "%"
 People Admin:
     people_management:
         personnel_settings:
@@ -304,6 +331,10 @@ People Admin:
             parameters: {}
             transDomain: Person
     hidden:
-        - person_edit
+        person_edit:
+            route: person_edit
+            parameters:
+                id: "%"
+                tabName: "%"
 ';
 }

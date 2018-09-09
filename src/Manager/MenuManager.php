@@ -316,19 +316,36 @@ class MenuManager extends MenuConstantsManager
 		return false;
 	}
 
-	/**
-	 * @return array
-	 */
+    /**
+     * matchCurrentRoute
+     *
+     * @param array $sections
+     * @return array
+     */
+	private function matchCurrentRoute(array $sections): array
+    {
+        foreach($sections as $sectionName=>$section) {
+            foreach ($section as $subMenu) {
+                foreach ($subMenu as $menuItem) {
+                    if ($this->isCurrentRoute($menuItem)) {
+                        $menuItem['section'] = $sectionName;
+                        return $menuItem;
+                    }
+                }
+            }
+        }
+        return [];
+    }
+
+    /**
+     * getSection
+     *
+     * @return array|mixed
+     */
 	public function getSection()
 	{
 		$sections = $this->getSections();
-
-		$routes = $this->getSectionRoutes($sections);
-
-		$currentRoute = $this->routerManager->getCurrentRoute();
-
-		$route = isset($routes[$currentRoute]) ? $routes[$currentRoute] : [];
-
+		$route = $this->matchCurrentRoute($sections);
 		if (empty($route))
 			return [];
 
@@ -403,21 +420,27 @@ class MenuManager extends MenuConstantsManager
 					foreach ($data as $x)
 					{
 						$key                     = $x['route'];
-						$routes[$key]['section'] = $name;
-						$routes[$key]['header']  = $headName;
-						$routes[$key]['parameters']  = empty($x['parameters']) ? [] : $x['parameters'];
+						$route = [];
+						$route['section'] = $name;
+						$route['header']  = $headName;
+						$route['parameters']  = empty($x['parameters']) ? [] : $x['parameters'];
+						$routes[$key][] = $route;
 					}
 				}
 				else
 				{
 					foreach ($data as $key)
 					{
-						$routes[$key]['section'] = $name;
-						$routes[$key]['header']  = $headName;
+					    $route = [];
+					    $route['section'] = $name;
+						$route['header']  = $headName;
+						$route['parameters'] = [];
+                        $routes[$key][] = $route;
 					}
 				}
 
 		}
+
 		return $routes;
 	}
 
@@ -469,7 +492,7 @@ class MenuManager extends MenuConstantsManager
             unset($currentRouteParams['_locale']);
 
         foreach($r['parameters'] as $name=>$value)
-            if (isset($currentRouteParams[$name]) && $currentRouteParams[$name] === $value)
+            if (isset($currentRouteParams[$name]) && ($currentRouteParams[$name] === $value || $value === '%'))
                 unset($currentRouteParams[$name]);
 
         if (empty($currentRouteParams))
