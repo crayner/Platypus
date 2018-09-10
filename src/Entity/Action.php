@@ -234,4 +234,16 @@ class Action
         $this->groupBy = $groupBy;
         return $this;
     }
+
+    /**
+     * cleanSecondaryRoles
+     *
+     * @return Action
+     */
+    public function cleanSecondaryRoles(): Action
+    {
+        if ($this->getPersonRoles()->contains($this->getRole()))
+            $this->removePersonRole($this->getRole());
+        return $this;
+    }
 }

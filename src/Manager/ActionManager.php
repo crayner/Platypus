@@ -17,6 +17,7 @@ namespace App\Manager;
 
 use App\Entity\Action;
 use App\Manager\Traits\EntityTrait;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ActionManager
 {
@@ -26,4 +27,58 @@ class ActionManager
      * @var string
      */
     private $entityName = Action::class;
+
+    /**
+     * getList
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function getList(): array
+    {
+        return $this->getRepository()->createQueryBuilder('a')
+            ->orderBy('a.groupBy', 'ASC')
+            ->addOrderBy('a.name', 'ASC')
+            ->getQuery()
+            ->getArrayResult();
+    }
+
+    /**
+     * parseRouteParams
+     *
+     * @param array $params
+     * @return array
+     */
+    public function parseRouteParams(array $params): array
+    {
+        $results = [];
+        foreach($params as $param)
+        {
+            $resolver = new OptionsResolver();
+            $resolver->setRequired(['name','value']);
+            $resolver->resolve($param);
+            $results[$param['name']] = $param['value'];
+        }
+        return $results;
+    }
+
+    /**
+     * parseRouteParams
+     *
+     * @param array $params
+     * @return array
+     */
+    public function dumpRouteParams(): array
+    {
+        $results = [];
+        foreach($this->getEntity()->getRouteParams() as $name=>$value)
+        {
+            $result = [];
+            $result['name'] = $name;
+            $result['value'] = $value;
+            $results[] = $result;
+        }
+        return $results;
+    }
+
 }

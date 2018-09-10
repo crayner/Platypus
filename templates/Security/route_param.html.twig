@@ -1,0 +1,12 @@
+{% trans_default_domain "SchoolYear" %}
+
+{% block action_route_param_label %}{% endblock %}
+{% block action_route_param_errors %}{% endblock %}
+
+{% block action_route_param_widget %}
+    <div class="row small">
+        <div class="col-5">{{ form_widget(form.name) }}</div>
+        <div class="col-5">{{ form_widget(form.value) }}</div>
+        <div class="col-2 collection-actions"></div>
+    </div>
+{% endblock action_route_param_widget %}

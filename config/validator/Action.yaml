@@ -13,4 +13,5 @@ App\Entity\Action:
             -   Length:
                     max: 50
         role:
-            -   NotBlank: ~
+            - NotBlank: ~
+            - Valid: ~

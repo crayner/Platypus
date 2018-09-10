@@ -15,7 +15,9 @@
  */
 namespace App\Controller;
 
+use App\Form\Type\ActionType;
 use App\Form\Type\PersonRoleType;
+use App\Manager\ActionManager;
 use App\Manager\PersonRoleManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -49,6 +51,59 @@ class SecurityController extends Controller
             $manager->saveEntity();
 
         return $this->render('Security/manage_roles.html.twig',
+            array(
+                'manager'    => $manager,
+                'fullForm' => $form,
+                'form' => $form->createView(),
+            )
+        );
+    }
+
+    /**
+     * managePermissions
+     *
+     * @param ActionManager $manager
+     * @param string $groupBy
+     * @Route("/person/security/permissions/manage/", name="manage_permissions")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function managePermissions(ActionManager $manager, string $groupBy = '%')
+    {
+        $actions = $manager->getList();
+        return $this->render('Security/permissions.html.twig',
+            array(
+                'manager'    => $manager,
+                'actions' => $actions,
+            )
+        );
+    }
+
+    /**
+     * createEditPermission
+     *
+     * @param ActionManager $manager
+     * @param Request $request
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     * @Route("/security/permission/{id}/edit/", name="create_edit_permission")
+     * @IsGranted("ROLE_SYSTEM_ADMIN")
+     */
+    public function createEditPermission(ActionManager $manager, Request $request, $id = '0')
+    {
+        $entity = $manager->find($id ?: 'Add');
+        $entity->setRouteParams($manager->dumpRouteParams());
+        $form = $this->createForm(ActionType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $manager->getEntity()->setRouteParams($manager->parseRouteParams($request->request->get('action_permission')['routeParams']));
+            dump($manager->getEntity());
+            $manager->saveEntity();
+        }
+
+        return $this->render('Security/create_edit_permission.html.twig',
             array(
                 'manager'    => $manager,
                 'fullForm' => $form,

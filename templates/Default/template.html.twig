@@ -4,6 +4,7 @@
 
 {% set fullPage = fullPage|default(false) %}
 {% set alwaysFullPage = false %}
+{% if fullPage %}{% set alwaysFullPage = true %}{% endif %}
 {% set headerOff = headerOff|default(false) %}
 {% set templateName = getThemeName() %}
 

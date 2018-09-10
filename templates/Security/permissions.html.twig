@@ -1,0 +1,22 @@
+{% set transDomain = 'Security' %}
+{% trans_default_domain transDomain %}
+
+{% extends "Default/template.html.twig" %}
+
+{% block title %}{{ parent() }}{{ 'action.permissions.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'action.permissions.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'action.permissions.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% set h3Content = addButton({windowOpen: {route: path('create_edit_permission', {id: 'Add'}), target: 'CreatEditPermission', params: 'width=1200,height=900'}}) %}
+    {% set header = 'action.permissions.title' %}
+    {% set transDomain = 'Security' %}
+    {% include 'Default/panelStart.html.twig' %}
+    {{ dump() }}
+    {% include 'Default/panelEnd.html.twig' %}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+{% endblock javascripts %}

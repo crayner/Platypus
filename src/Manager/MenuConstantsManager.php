@@ -317,16 +317,22 @@ System Admin:
                 id: "%"
 People Admin:
     people_management:
+        manage_permissions:
+            label: manage_permissions
+            role: ROLE_ADMIN
+            route: manage_permissions
+            parameters: {}
+            transDomain: Security
         manage_roles:
             label: manage_roles
-            role: ROLE_SYSTEM_ADMIN
+            role: ROLE_ADMIN
             route: manage_roles
             parameters: 
                 id: "%"
             transDomain: Security
         manage_custom_fields:
             label: manage_custom_fields
-            role: ROLE_SYSTEM_ADMIN
+            role: ROLE_ADMIN
             route: manage_custom_fields
             parameters: 
                 id: "%"

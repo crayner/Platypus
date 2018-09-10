@@ -40,3 +40,8 @@ App\Entity\Action:
                     person_role_id:
                         referencedColumnName: id
                         nullable: false
+    lifecycleCallbacks:
+        prePersist:
+            - cleanSecondaryRoles
+        preUpdate:
+            - cleanSecondaryRoles
