@@ -1,0 +1,16 @@
+App\Entity\Action:
+    properties:
+        name:
+            -   NotBlank: ~
+            -   Length:
+                    max: 100
+        route:
+            -   NotBlank: ~
+            -   Length:
+                    max: 100
+        groupBy:
+            -   NotBlank: ~
+            -   Length:
+                    max: 50
+        role:
+            -   NotBlank: ~

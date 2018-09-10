@@ -38,6 +38,7 @@ use App\Repository\SettingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -54,7 +55,7 @@ class SettingController extends Controller
      * @Route("/setting/{name}/edit/{closeWindow}", name="setting_edit_name")
      * @IsGranted("ROLE_SYSTEM_ADMIN")
      */
-    public function editName($name, $closeWindow = null, Request $request, SettingRepository $settingRepository)
+    public function editName($name, Request $request, SettingRepository $settingRepository, $closeWindow = null)
     {
         $setting = null;
         $original = $name;
@@ -196,7 +197,7 @@ class SettingController extends Controller
      * @param SettingManager $sm
      * @return Response
      * @Route("/setting/{name}/manage/", name="manage_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function manageSettings(string $name, Request $request, SettingManager $sm)
     {

@@ -1,0 +1,42 @@
+App\Entity\Action:
+    type: entity
+    table: action
+    repositoryClass: App\Repository\ActionRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 100
+        groupBy:
+            length: 50
+            column: group_by
+        route:
+            length: 100
+        routeParams:
+            type: json_array
+            column: route_params
+    manyToOne:
+        role:
+            targetEntity: App\Entity\PersonRole
+            orderBy: { 'name': 'ASC' }
+            joinColumn:
+                name: person_role_id
+                referencedColumnName: id
+                nullable: false
+    manyToMany:
+        personRoles:
+            targetEntity: App\Entity\PersonRole
+            orderBy: { 'name': 'ASC' }
+            joinTable:
+                name: action_person_role
+                joinColumns:
+                    action_id:
+                        referencedColumnName: id
+                        nullable: false
+                inverseJoinColumns:
+                    person_role_id:
+                        referencedColumnName: id
+                        nullable: false
