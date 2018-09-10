@@ -1,48 +1,49 @@
 App\Entity\PersonRole:
-  type: entity
-  table: person_role
-  repositoryClass: App\Repository\PersonRoleRepository
-  id:
+    type: entity
+    table: person_role
+    repositoryClass: App\Repository\PersonRoleRepository
     id:
-      type: integer
-      generator:
-        strategy: AUTO
-  fields:
-    category:
-      length: 10
-      nullable: false
-    name:
-      length: 20
-      nullable: false
-    nameShort:
-      length: 4
-      nullable: false
-      column: name_short
-    description:
-      length: 60
-      nullable: false
-    type:
-      length: 10
-      nullable: false
-      options:
-        default: 'core'
-    futureYearsLogin:
-      type: boolean
-      options:
-        default: '1'
-      column: future_years_login
-    pastYearsLogin:
-      type: boolean
-      options:
-        default: '1'
-      column: past_years_login
-    restriction:
-      length: 10
-      nullable: false
-      options:
-        default: 'none'
-  oneToMany:
-    people:
-      targetEntity: App\Entity\Person
-      mappedBy: primaryRole
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        category:
+            length: 10
+            nullable: false
+        name:
+            length: 20
+            nullable: false
+        nameShort:
+            length: 4
+            nullable: false
+            column: name_short
+        description:
+            length: 60
+            nullable: false
+        type:
+            length: 10
+            nullable: false
+            column: role_type
+            options:
+                default: 'core'
+        futureYearsLogin:
+            type: boolean
+            options:
+                default: '1'
+            column: future_years_login
+        pastYearsLogin:
+            type: boolean
+            options:
+                default: '1'
+            column: past_years_login
+        restriction:
+            length: 10
+            nullable: false
+            options:
+                default: 'none'
+    oneToMany:
+        people:
+            targetEntity: App\Entity\Person
+            mappedBy: primaryRole
 

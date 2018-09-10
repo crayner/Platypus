@@ -18,7 +18,6 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
-use Hillrange\Form\Util\CollectionInterface;
 
 /**
  * Class PersonRole
@@ -26,6 +25,16 @@ use Hillrange\Form\Util\CollectionInterface;
  */
 class PersonRole
 {
+    /**
+     * PersonRole constructor.
+     */
+    public function __construct()
+    {
+        $this->setFutureYearsLogin(true);
+        $this->setPastYearsLogin(true);
+        $this->setType('additional');
+    }
+
     /**
      * @var integer|null
      */
@@ -81,7 +90,7 @@ class PersonRole
     /**
      * @var array
      */
-    private static $categoryList = ['administrator','parent','student','support_staff','teacher'];
+    private static $categoryList = ['staff', 'student', 'parent', 'other'];
 
     /**
      * @return string

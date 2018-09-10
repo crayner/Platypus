@@ -90,7 +90,7 @@ trait EntityTrait
      */
     public function find($id)
     {
-        $this->entity = null;dump($id);
+        $this->entity = null;
         if ($id === 'Add')
             $this->entity = new $this->entityName();
         else {

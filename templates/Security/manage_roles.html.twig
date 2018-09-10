@@ -1,0 +1,88 @@
+{% trans_default_domain "Person" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ parent() }}{{ 'person.role.title'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'person.role.title'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'person.role.description'|trans }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ form_start(form) }}
+    {{ all_form_errors(fullForm) }}
+
+
+    <div class="card card-dark">
+        <div class="card-header">
+            <h3 class="card-title d-flex mb-12 justify-content-between">
+                <span class="p-6">
+                    {{ 'person.role.title'|trans }}
+                </span>
+                <span class="p-6">
+                    <div class="input-group input-group-sm">
+                        {{ form_widget(form.roleList, {value: app.request.get('id')}) }}
+                        <span class="input-group-append">
+                            {{ saveButton()|raw }}
+                        </span>
+                    </div>
+                </span>
+            </h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8 card">
+                    <div class="row">
+                        <div class="col-6 card">
+                            {{ form_row(form.category) }}
+                        </div>
+                        <div class="col-6 card">
+                            {{ form_row(form.name) }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 card">
+                            {{ form_row(form.nameShort) }}
+                        </div>
+                        <div class="col-6 card">
+                            {{ form_row(form.type) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.description) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 card">
+                    {{ form_row(form.pastYearsLogin) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.futureYearsLogin) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.restriction) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    <script type="text/javascript" language="JavaScript">
+        function loadPersonRole() {
+            var xxx = document.getElementById('person_role_roleList')
+            var value = xxx.options[xxx.selectedIndex].value
+            var path = '{{ path('manage_roles', {id: '__id__'}) }}'
+            if (value === '' || value === null)
+                value = 'Add'
+            path = path.replace('__id__', value)
+            window.open(path, '_self')
+        }
+    </script>
+{% endblock javascripts %}

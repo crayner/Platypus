@@ -252,9 +252,7 @@ class PersonController extends Controller
      */
     public function manageCustomFields(PersonFieldManager $manager, Request $request, $id = 0)
     {
-        $entity = $manager->find($id ?: 'Add');
-        dump($request);
-        $form = $this->createForm(PersonFieldType::class, $entity);
+        $form = $this->createForm(PersonFieldType::class, $manager->find($id ?: 'Add'));
 
         $form->handleRequest($request);
 
