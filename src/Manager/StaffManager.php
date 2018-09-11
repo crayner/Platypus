@@ -68,7 +68,7 @@ class StaffManager
             $query->leftJoin($name, $alias);
 
         $results = $query->getQuery()->getArrayResult();
-dump($results);
+
         return $results;
     }
 
@@ -83,19 +83,14 @@ dump($results);
     /**
      * getStaffListChoice
      *
-     * @param array|null $select
-     * @param null|string $where
-     * @param array|null $order
-     * @param array|null $join
      * @return array
      */
-    public static function getStaffListChoice(array $select = ['s','p'], string $where = '', array $order = [], array $join = []): array
+    public static function getStaffListChoice(): array
     {
         $result = [];
-        dump($select);
-        foreach(self::getStaffList($select, $where, $order, $join) as $staff)
+        foreach(self::getStaffList(['s','p'], '', ['p.surname' => 'ASC', 'p.preferredName' => 'ASC']) as $staff)
             $result[$staff['person']['surname'].': '.$staff['person']['preferredName']] = $staff['id'];
- dump($result);
+
         return $result;
     }
 }

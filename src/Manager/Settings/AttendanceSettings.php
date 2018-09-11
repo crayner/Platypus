@@ -245,10 +245,10 @@ class AttendanceSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setType('choice')
             ->__set('displayName', 'Additional Users to Notify')
+            ->__set('choice', array_flip(StaffManager::getStaffListChoice()))
             ->__set('description', 'Send the school-wide daily attendance report to additional users. Restricted to roles with permission to access Roll Groups Not Registered or Classes Not Registered.<br/>Use Control, Command and/or Shift to select multiple');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
-                ->__set('choice', array_flip(StaffManager::getStaffListChoice(['s','p'], '', ['p.surname' => 'ASC', 'p.firstName' => 'ASC'])))
                 ->setValidators(null)
                 ->setDefaultValue(true)
                 ->__set('translateChoice', null);
