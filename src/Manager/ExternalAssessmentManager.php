@@ -173,32 +173,33 @@ class ExternalAssessmentManager extends TabManager
     }
 
     /**
-     * getTabs
-     *
-     * @return array
+     * @var array
      */
-    public function getTabs(): array
-    {
-        return Yaml::parse("
-details:
-    label: external_assessment.details.tab
-    include: School/external_assessment_details.html.twig
-    message: externalAssessmentDetailsMessage
-    translation: School
-fields:
-    label: external_assessment.fields.tab
-    include: School/external_assessment_field_list.html.twig
-    message: externalAssessmentFieldsMessage
-    translation: School
-    display: hasFields
-categories:
-    label: external_assessment.categories.tab
-    include: School/external_assessment_category_manage.html.twig
-    message: externalAssessmentFieldsMessage
-    translation: School
-    display: hasFields
-");
-    }
+    protected $tabs = [
+            [
+                'label' => 'external_assessment.details.tab',
+                'name' => 'details',
+                'include' => 'School/external_assessment_details.html.twig',
+                'message' => 'externalAssessmentDetailsMessage',
+                'translation' => 'School',
+            ],
+            [
+                'label' => 'external_assessment.fields.tab',
+                'include' => 'School/external_assessment_field_list.html.twig',
+                'message' => 'externalAssessmentFieldsMessage',
+                'translation' => 'School',
+                'display' => 'hasFields',
+                'name' => 'fields',
+            ],
+            [
+                'label' => 'external_assessment.categories.tab',
+                'include' => 'School/external_assessment_category_manage.html.twig',
+                'message' => 'externalAssessmentFieldsMessage',
+                'translation' => 'School',
+                'display' => 'hasFields',
+                'name' => 'categories',
+            ],
+        ];
 
     /**
      * canDelete
