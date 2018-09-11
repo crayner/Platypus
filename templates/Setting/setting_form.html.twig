@@ -4,6 +4,7 @@
 {% block multiple_settings_errors %}{% endblock %}
 
 {% block multiple_settings_widget %}
+    {% dump(form) %}
     {% spaceless %}
         {% set columnA = '6' %}
         {% set columnB = '6' %}
@@ -50,7 +51,7 @@
                 {{ form_errors(form.value) }}
             </div>
             <div class="col-{{ columnB }} card">
-                <div>
+                <div{% if form.vars.value is not empty and form.vars.value.type is same as('multiChoice') %} style="min-height: {{ 22.5 * form.vars.value.setting.choice|length }}px;"{% endif %}>
                 {{ form_widget(form.value, {div_class: toggleClass|default('')}) }}
                 </div>
             </div>
