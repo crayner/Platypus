@@ -51,10 +51,10 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setType('choice')
             ->__set('displayName', 'Staff Dashboard Default Tab')
+            ->__set('choice', ['','planner'])
             ->__set('description', 'The default landing tab for the staff dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', [',planner'])
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', 'Setting')
@@ -68,10 +68,10 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setType('choice')
             ->__set('displayName', 'Student Dashboard Default Tab')
+            ->__set('choice', ['','planner'])
             ->__set('description', 'The default landing tab for the student dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', [',planner'])
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', 'Setting')
@@ -85,10 +85,10 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setType('choice')
             ->__set('displayName', 'Parent Dashboard Default Tab')
+            ->__set('choice', ['','learning_overview','timetable','activities'])
             ->__set('description', 'The default landing tab for the parent dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', [',learning_overview,timetable,activities'])
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', 'Setting')
