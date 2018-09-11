@@ -15,7 +15,9 @@
  */
 namespace App\Manager\Settings;
 
+use App\Manager\AttendanceCodeManager;
 use App\Manager\SettingManager;
+use App\Manager\StaffManager;
 use App\Validator\Yaml;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -133,10 +135,10 @@ class AttendanceSettings implements SettingCreationInterface
             ->__set('description', 'The default selection for attendance type when taking Roll Group attendance.');
         if (empty($setting->getValue())) {
             $setting->setValue('Present')
-                ->__set('choice', ['method' => 'App\Manager\AttendanceCodeManager::getActiveAttendanceCodeList'])
+                ->__set('choice', AttendanceCodeManager::getActiveAttendanceCodeList())
                 ->setValidators(null)
                 ->setDefaultValue('Present')
-                ->__set('translateChoice', 'School');
+                ->__set('translateChoice', null);
         }
         $settings[] = $setting;
 
@@ -149,10 +151,10 @@ class AttendanceSettings implements SettingCreationInterface
             ->__set('description', 'The default selection for attendance type when taking Class attendance.');
         if (empty($setting->getValue())) {
             $setting->setValue('Present')
-                ->__set('choice', ['method' => 'App\Manager\AttendanceCodeManager::getActiveAttendanceCodeList'])
+                ->__set('choice', AttendanceCodeManager::getActiveAttendanceCodeList())
                 ->setValidators(null)
                 ->setDefaultValue('Present')
-                ->__set('translateChoice', 'School');
+                ->__set('translateChoice', null);
         }
         $settings[] = $setting;
 
@@ -246,10 +248,10 @@ class AttendanceSettings implements SettingCreationInterface
             ->__set('description', 'Send the school-wide daily attendance report to additional users. Restricted to roles with permission to access Roll Groups Not Registered or Classes Not Registered.<br/>Use Control, Command and/or Shift to select multiple');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
-                ->__set('choice', ['do this list..,  Needs Staff table defined.'])
+                ->__set('choice', array_flip(StaffManager::getStaffListChoice(['s','p'], '', ['p.surname' => 'ASC', 'p.firstName' => 'ASC'])))
                 ->setValidators(null)
                 ->setDefaultValue(true)
-                ->__set('translateChoice', 'School');
+                ->__set('translateChoice', null);
         }
         $settings[] = $setting;
 

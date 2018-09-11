@@ -130,7 +130,7 @@ class AttendanceCodeManager
         $x = self::$repository->findBy(['active' => true], ['sequence' => 'ASC']);
         $result = [];
         foreach($x as $entity)
-            $result[$entity->getName()] = $entity->getId();
+            $result[$entity->getId()] = $entity->getName();
 
         return $result;
     }

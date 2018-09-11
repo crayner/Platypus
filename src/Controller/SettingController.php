@@ -95,10 +95,18 @@ class SettingController extends Controller
     }
 
     /**
-     * manage Multiple Settings
+     * manageMultipleSettings
      *
      * @param Request $request
-     * @return Response
+     * @param MultipleSettingManager $multipleSettingManager
+     * @param SettingManager $settingManager
+     * @param FlashBagManager $flashBagManager
+     * @param ExternalAssessmentManager $eam
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
      * @Route("/setting/manage/multiple/", name="multiple_settings_manage")
      */
     public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager, FlashBagManager $flashBagManager, ExternalAssessmentManager $eam)
