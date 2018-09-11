@@ -39,8 +39,12 @@ class StaffManager
     }
 
     /**
-     * staffList
+     * getStaffList
      *
+     * @param array|null $select
+     * @param null|string $where
+     * @param array|null $order
+     * @param array|null $join
      * @return array
      */
     public static function getStaffList(array $select = ['s','p'], string $where = '', array $order = [], array $join = []): array
@@ -48,8 +52,11 @@ class StaffManager
         $query = self::getEntityManager()->getRepository(Staff::class)->createQueryBuilder('s')
             ->leftJoin('s.person', 'p')
             ->select($select);
-        if (! empty($where))
+        if (! empty($where)) {
             $query->where($where);
+            $query->andWhere('p.id IS NOT NULL');
+        } else
+            $query->where('p.id IS NOT NULL');
         $x=0;
         foreach($order as $name=>$direction)
             if ($x++ === 0)
@@ -61,7 +68,7 @@ class StaffManager
             $query->leftJoin($name, $alias);
 
         $results = $query->getQuery()->getArrayResult();
-
+dump($results);
         return $results;
     }
 
@@ -71,5 +78,24 @@ class StaffManager
     public static function getEntityManager(): EntityManagerInterface
     {
         return self::$entityManager;
+    }
+
+    /**
+     * getStaffListChoice
+     *
+     * @param array|null $select
+     * @param null|string $where
+     * @param array|null $order
+     * @param array|null $join
+     * @return array
+     */
+    public static function getStaffListChoice(array $select = ['s','p'], string $where = '', array $order = [], array $join = []): array
+    {
+        $result = [];
+        dump($select);
+        foreach(self::getStaffList($select, $where, $order, $join) as $staff)
+            $result[$staff['person']['surname'].': '.$staff['person']['preferredName']] = $staff['id'];
+ dump($result);
+        return $result;
     }
 }

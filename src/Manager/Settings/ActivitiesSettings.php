@@ -116,7 +116,7 @@ class ActivitiesSettings implements SettingCreationInterface
             ->__set('description', 'Payment system');
         if (empty($setting->getValue())) {
             $setting->setValue('per_activity')
-                ->__set('choice', ['none, single, per_activity, single_per_activity'])
+                ->__set('choice', ['none', 'single', 'per_activity', 'single_per_activity'])
                 ->setValidators(
                     [
                         new NotBlank(),
@@ -136,7 +136,7 @@ class ActivitiesSettings implements SettingCreationInterface
             ->__set('description', 'Enrolment process type');
         if (empty($setting->getValue())) {
             $setting->setValue('competitive')
-                ->__set('choice', ['competitive, selection'])
+                ->__set('choice', ['competitive', 'selection'])
                 ->setValidators(
                     [
                         new NotBlank(),
