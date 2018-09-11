@@ -23,6 +23,7 @@ use App\Manager\StudentNoteCategoryManager;
 use App\Organism\StudentNoteCategories;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -55,13 +56,18 @@ class StudentController extends Controller
     }
 
     /**
-     * Student Settings
+     * studentSettings
      *
      * @param Request $request
      * @param SettingManager $sm
+     * @param MultipleSettingManager $multipleSettingManager
      * @return Response
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
      * @Route("/setting/student/management/", name="manage_student_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function studentSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
     {

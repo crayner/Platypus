@@ -27,7 +27,7 @@
                         {{ 'action'|trans({}, 'System') }}
                     </div>
                     {% for role in roles %}
-                    <div class="col-1">
+                    <div class="col-1 text-center">
                         {{ role.nameShort }}
                     </div>
                     {% endfor %}
@@ -49,15 +49,15 @@
                     {% endfor %}
                     {% set buttonID = actionGroup ~ '|' ~ role.nameShort ~ "|" ~ action.id %}
                     {% if xx is same as ('') %}
-                        <div class="col-1">
+                        <div class="col-1 text-center">
                             {% if role.category in action.allowedCategories %}
-                                {{ onOffButton({mergeClass: 'btn-sm changePermission', id: buttonID, name: buttonID, value: false})|raw }}
+                                {{ onOffButton({style: '', mergeClass: 'btn-sm changePermission', id: buttonID, name: buttonID, value: false})|raw }}
                             {% endif %}
                         </div>
                     {% else %}
-                        <div class="col-1">
+                        <div class="col-1 text-center">
                             {% if role.category in action.allowedCategories %}
-                                {{ onOffButton({mergeClass: 'btn-sm changePermission', id: buttonID, name: buttonID, value: true, disabled: (action.nameShort is same as (role.nameShort) ? true : false) })|raw }}
+                                {{ onOffButton({style: '', mergeClass: 'btn-sm changePermission', id: buttonID, name: buttonID, value: true, disabled: (action.nameShort is same as (role.nameShort) ? true : false) })|raw }}
                             {% endif %}
                         </div>
                     {% endif %}

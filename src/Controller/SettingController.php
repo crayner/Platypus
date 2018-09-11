@@ -128,13 +128,18 @@ class SettingController extends Controller
     }
 
     /**
-     * Individual Need Settings
+     * individualNeedSettings
      *
      * @param Request $request
      * @param SettingManager $sm
+     * @param MultipleSettingManager $multipleSettingManager
      * @return Response
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
      * @Route("/setting/individual/need/manage/", name="manage_individual_need_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function individualNeedSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
     {
@@ -207,13 +212,13 @@ class SettingController extends Controller
     }
 
     /**
-     * Alert Levels Manage
+     * alertLevels
      *
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
      * @Route("/setting/alert/level/manage/", name="manage_alert_levels")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function alertLevels(Request $request, EntityManagerInterface $entityManager)
     {
@@ -241,13 +246,13 @@ class SettingController extends Controller
     }
 
     /**
-     * File Extension Manage
+     * fileExtensions
      *
      * @param Request $request
      * @param EntityManagerInterface $entityManager
      * @return Response
      * @Route("/setting/file/extension/manage/", name="manage_file_extensions")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function fileExtensions(Request $request, EntityManagerInterface $entityManager)
     {
@@ -294,10 +299,8 @@ class SettingController extends Controller
     }
 
     /**
-     * Alert Levels Manage
+     * formalAssessments
      *
-     * @Route("/setting/formal/assessment/manage/", name="manage_formal_assessments")
-     * @IsGranted("ROLE_PRINCIPAL")
      * @param Request $request
      * @param ExternalAssessmentManager $externalAssessmentManager
      * @param MultipleSettingManager $multipleSettingManager
@@ -306,6 +309,8 @@ class SettingController extends Controller
      * @throws \Throwable
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Syntax
+     * @Route("/setting/formal/assessment/manage/", name="manage_formal_assessments")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function formalAssessments(Request $request, ExternalAssessmentManager $externalAssessmentManager, MultipleSettingManager $multipleSettingManager)
     {

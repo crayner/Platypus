@@ -26,6 +26,7 @@ use App\Manager\SettingManager;
 use App\Util\UserHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -37,7 +38,11 @@ class SchoolYearController extends Controller
 
     /**
      * schoolYearManage
+     *
+     * @param SchoolYearManager $schoolYearManager
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/school/year/manage/", name="school_year_manage")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function schoolYearManage(SchoolYearManager $schoolYearManager)
     {
@@ -61,15 +66,19 @@ class SchoolYearController extends Controller
     }
 
     /**
-     * @Route("/school/year/{id}/edit/{tabName}/", name="school_year_edit")
-     * @IsGranted("ROLE_REGISTRAR")
+     * edit
+     *
      * @param $id
      * @param Request $request
      * @param SchoolYearManager $schoolYearManager
      * @param EntityManagerInterface $em
      * @param MessageManager $messageManager
      * @param FlashBagManager $flashBagManager
+     * @param string $tabName
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     * @Route("/school/year/{id}/edit/{tabName}/", name="school_year_edit")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function edit($id, Request $request,
                          SchoolYearManager $schoolYearManager,

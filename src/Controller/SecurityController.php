@@ -98,7 +98,6 @@ class SecurityController extends Controller
 
         $form->handleRequest($request);
 
-        dump($manager->getEntity());
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->saveEntity();
         }

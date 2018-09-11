@@ -58,8 +58,9 @@ class ActionManager
     }
 
     /**
-     * getAllRoles
+     * getAllExistingRoles
      *
+     * @param int $id
      * @return array
      * @throws \Exception
      */

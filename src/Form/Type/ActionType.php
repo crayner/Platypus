@@ -22,7 +22,6 @@ use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
-use Hillrange\Form\Validator\Enum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -45,7 +44,7 @@ class ActionType extends AbstractType
     {
         $rp = 'not defined';
         $route = $this->router->getRouteCollection()->get($options['data']->getRoute());
-        if ($route instanceof Route || !empty($route->getPath())) {
+        if ($route instanceof Route && !empty($route->getPath())) {
             $matches = [];
             preg_match_all('#\{[0-9A-Za-z_]*\}#', $route->getPath(), $matches);
             dump($matches[0]);

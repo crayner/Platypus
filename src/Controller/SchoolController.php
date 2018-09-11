@@ -63,6 +63,7 @@ use App\Pagination\ScalePagination;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -75,7 +76,10 @@ class SchoolController extends Controller
      * daysOfWeek
      *
      * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
      * @Route("/school/year/days/of/week/", name="days_of_week_manage")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function daysOfWeek(Request $request, EntityManagerInterface $entityManager)
     {
@@ -104,12 +108,14 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/houses/manage/", name="houses_edit")
-     * @IsGranted("ROLE_REGISTRAR")
+     * editHouses
+     *
      * @param Request $request
      * @param HouseManager $houseManager
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @IsGranted("ROLE_REGISTRAR")
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     * @Route("/school/houses/manage/", name="houses_edit")
+     * @Security("is_granted('ROLE_ADMIN', request)")
      */
     public function editHouses(Request $request, HouseManager $houseManager, EntityManagerInterface $entityManager)
     {
@@ -168,9 +174,9 @@ class SchoolController extends Controller
      *
      * @param Request $request
      * @param CollectionManager $collectionManager
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return Response
      * @Route("/school/year/groups/manage/", name="year_groups_manage")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function editYearGroups(Request $request, CollectionManager $collectionManager)
     {
@@ -226,8 +232,8 @@ class SchoolController extends Controller
 
 
     /**
-     * @Route("/school/attendance/settings/manage/", name="manage_attendance_settings")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * attendanceSettings
+     *
      * @param Request $request
      * @param SettingManager $sm
      * @param MultipleSettingManager $multipleSettingManager
@@ -237,6 +243,8 @@ class SchoolController extends Controller
      * @throws \Throwable
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Syntax
+     * @Route("/school/attendance/settings/manage/", name="manage_attendance_settings")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function attendanceSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager, AttendanceCodeManager $manager)
     {
@@ -290,12 +298,13 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/facility/list/", name="manage_facilities")
-     * @IsGranted("ROLE_REGISTRAR")
-     * @param Request         $request
-     * @param FacilityPagination $pagination
+     * facilityList
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param Request $request
+     * @param FacilityPagination $pagination
+     * @return Response
+     * @Route("/school/facility/list/", name="manage_facilities")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function facilityList(Request $request, FacilityPagination $pagination)
     {
@@ -395,6 +404,7 @@ class SchoolController extends Controller
      * @param RollGroupManager $manager
      * @return Response
      * @Route("/school/roll/group/manage/", name="manage_roll_groups")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function rollGroupManage(RollGroupPagination $pagination, RollGroupManager $manager)
     {
@@ -475,7 +485,7 @@ class SchoolController extends Controller
     }
 
     /**
-     * Department Manage
+     * departmentSettings
      *
      * @param Request $request
      * @param DepartmentPagination $pagination
@@ -488,6 +498,7 @@ class SchoolController extends Controller
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Syntax
      * @Route("/school/departments/manage/", name="manage_departments")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function departmentSettings(Request $request, DepartmentPagination $pagination, DepartmentManager $manager,
                                        MultipleSettingManager $multipleSettingManager,  SettingManager $sm)
@@ -672,12 +683,12 @@ class SchoolController extends Controller
     /**
      * scaleManage
      *
-     * @Route("/school/scale/manage/", name="manage_scales")
-     * @IsGranted("ROLE_PRINCIPAL")
      * @param Request $request
      * @param ScalePagination $pagination
      * @param ScaleManager $manager
      * @return Response
+     * @Route("/school/scale/manage/", name="manage_scales")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function scaleManage(Request $request, ScalePagination $pagination, ScaleManager $manager)
     {
@@ -769,8 +780,11 @@ class SchoolController extends Controller
     /**
      * manageExternalAssessments
      *
+     * @param Request $request
+     * @param ExternalAssessmentPagination $pagination
+     * @return Response
      * @Route("/school/manage/external/assessments", name="manage_external_assessments")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function manageExternalAssessments(Request $request, ExternalAssessmentPagination $pagination)
     {

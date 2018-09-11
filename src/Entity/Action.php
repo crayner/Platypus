@@ -273,4 +273,15 @@ class Action
         $this->allowedCategories = $allowedCategories ?: [];
         return $this;
     }
+
+    /**
+     * @param array $groupByList
+     */
+    public function getVoterRouteParams(): array
+    {
+        $result = [];
+        foreach($this->getRouteParams() as $param)
+            $result[$param['name']] = $param['value'];
+        return $result;
+    }
 }

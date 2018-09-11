@@ -100,10 +100,8 @@ class ActionVoter implements VoterInterface
      */
     private function isAllowed(Action $action, TokenInterface $token, array $routeParams): bool
     {
-        $diff = array_diff($routeParams, $action->getRouteParams());
+        $diff = array_diff($routeParams, $action->getVoterRouteParams());
         if (count($diff) === 1 && isset($diff['_locale'])) {
-            if ($this->decisionManager->decide($token, [$action->getRole()]))
-                return true;
             if ($this->decisionManager->decide($token, $this->getRoles($action)))
                 return true;
         }
@@ -119,9 +117,12 @@ class ActionVoter implements VoterInterface
     private function getRoles(Action $action): array
     {
         $roles = [];
-        foreach($action->getPersonRoles() as $personRole)
+        foreach($this->actionManager->getAllExistingRoles($action->getId()) as $personRole)
         {
             switch ($personRole->getNameShort()) {
+                case 'Reg':
+                    $roles[] = 'ROLE_REGISTRAR';
+                    break;
                 case 'Adm':
                     $roles[] = 'ROLE_ADMIN';
                     break;
@@ -139,7 +140,7 @@ class ActionVoter implements VoterInterface
                     break;
             }
         }
-        dump($roles);
+
         return $roles;
     }
 }

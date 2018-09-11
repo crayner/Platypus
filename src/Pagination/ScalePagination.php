@@ -26,7 +26,7 @@ class ScalePagination extends PaginationManager
     /**
      * @var string
      */
-    protected $name = 'Scale';
+    protected $paginationName = 'Scale';
 
     /**
      * @var string
