@@ -18,6 +18,9 @@ App\Entity\Action:
         routeParams:
             type: json_array
             column: route_params
+        allowedCategories:
+            type: json_array
+            column: allowed_categories
     manyToOne:
         role:
             targetEntity: App\Entity\PersonRole

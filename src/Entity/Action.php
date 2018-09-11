@@ -246,4 +246,31 @@ class Action
             $this->removePersonRole($this->getRole());
         return $this;
     }
+
+    /**
+     * @var array|null
+     */
+    private $allowedCategories;
+
+    /**
+     * getAllowedCategories
+     *
+     * @return array
+     */
+    public function getAllowedCategories(): array
+    {
+        return $this->allowedCategories ?: [];
+    }
+
+    /**
+     * setAllowedCategories
+     *
+     * @param array|null $allowedCategories
+     * @return Action
+     */
+    public function setAllowedCategories(?array $allowedCategories): Action
+    {
+        $this->allowedCategories = $allowedCategories ?: [];
+        return $this;
+    }
 }

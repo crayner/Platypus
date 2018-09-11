@@ -15,9 +15,11 @@
  */
 namespace App\Form\Type;
 
+use App\Organism\ActionRouteParam;
 use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class ActionRouteParamType
@@ -33,13 +35,20 @@ class ActionRouteParamType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        dump($options);
         $builder
             ->add('name', TextType::class,
-                ['mapped' => false,]
+                [
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
+                ]
             )
             ->add('value', TextType::class,
-                ['mapped' => false,]
+                [
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
+                ]
             );
     }
 
@@ -51,5 +60,15 @@ class ActionRouteParamType extends AbstractType
     public function getBlockPrefix()
     {
         return 'action_route_param';
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(
+            [
+                'translation_domain' => 'Security',
+                'data_class' => ActionRouteParam::class,
+            ]
+        );
     }
 }

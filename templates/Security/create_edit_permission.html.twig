@@ -31,21 +31,30 @@
     </div>
     <div class="row">
         <div class="col-6 card">
-            {{ form_row(form.route) }}
+            <div class="row">
+                <div class="col-12">
+                    {{ form_row(form.route) }}
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-12">
+                    {{ form_row(form.role, {value: transformData(form.role)}) }}
+                </div>
+            </div>
         </div>
         <div class="col-6 card">
-            <div class="row row-header small">
+            <div class="row row-header">
                 <div class="col-5">{{ 'action.route_param.name.label'|trans }}</div>
                 <div class="col-5">{{ 'action.route_param.value.label'|trans }}</div>
                 <div class="col-2">{{ 'actions'|trans({}, 'System') }}</div>
             </div>
-            {% dump(form.routeParams) %}
             {{ collection_row(form.routeParams) }}
         </div>
     </div>
     <div class="row">
         <div class="col-6 card">
-            {{ form_row(form.role, {value: transformData(form.role)}) }}
+            {{ form_row(form.allowedCategories) }}
         </div>
         <div class="col-6 card">
             {{ form_row(form.personRoles) }}

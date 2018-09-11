@@ -21,8 +21,10 @@ use App\Manager\ActionManager;
 use App\Manager\PersonRoleManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class SecurityController
@@ -72,7 +74,7 @@ class SecurityController extends Controller
         $actions = $manager->getList();
         return $this->render('Security/permissions.html.twig',
             array(
-                'manager'    => $manager,
+                'manager' => $manager,
                 'actions' => $actions,
             )
         );
@@ -92,14 +94,12 @@ class SecurityController extends Controller
     public function createEditPermission(ActionManager $manager, Request $request, $id = '0')
     {
         $entity = $manager->find($id ?: 'Add');
-        $entity->setRouteParams($manager->dumpRouteParams());
         $form = $this->createForm(ActionType::class, $entity);
 
         $form->handleRequest($request);
 
+        dump($manager->getEntity());
         if ($form->isSubmitted() && $form->isValid()) {
-            $manager->getEntity()->setRouteParams($manager->parseRouteParams($request->request->get('action_permission')['routeParams']));
-            dump($manager->getEntity());
             $manager->saveEntity();
         }
 
@@ -110,5 +110,30 @@ class SecurityController extends Controller
                 'form' => $form->createView(),
             )
         );
+    }
+
+    /**
+     * changePermission
+     *
+     * @param ActionManager $manager
+     * @param int $id
+     * @param string $role
+     * @param TranslatorInterface $translator
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/action/{id}/permission/{role}/toggle/", name="toggle_action_permission")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function changePermission(ActionManager $manager, int $id, string $role, TranslatorInterface $translator)
+    {
+        $manager->find($id);
+
+        $manager->togglePermission($role);
+
+        return new JsonResponse(
+            [
+                'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($translator),
+            ],
+            200);
     }
 }

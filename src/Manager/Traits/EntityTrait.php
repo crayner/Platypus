@@ -164,8 +164,10 @@ trait EntityTrait
      *
      * @return null|object
      */
-    public function getEntity(): ?object
+    public function getEntity($entity = null): ?object
     {
+        if ($entity instanceof $this->entityName)
+            $this->setEntity($entity);
         return $this->entity;
     }
 

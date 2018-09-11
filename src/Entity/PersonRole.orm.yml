@@ -14,10 +14,12 @@ App\Entity\PersonRole:
         name:
             length: 20
             nullable: false
+            unique: true
         nameShort:
             length: 4
             nullable: false
             column: name_short
+            unique: true
         description:
             length: 60
             nullable: false

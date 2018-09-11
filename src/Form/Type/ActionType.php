@@ -17,14 +17,17 @@ namespace App\Form\Type;
 
 use App\Entity\Action;
 use App\Entity\PersonRole;
-use Doctrine\Common\Collections\ArrayCollection;
+use App\Form\Transformer\ActionRouteParamTransformer;
 use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
+use Hillrange\Form\Validator\Enum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * Class ActionType
@@ -40,6 +43,15 @@ class ActionType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $rp = 'not defined';
+        $route = $this->router->getRouteCollection()->get($options['data']->getRoute());
+        if ($route instanceof Route || !empty($route->getPath())) {
+            $matches = [];
+            preg_match_all('#\{[0-9A-Za-z_]*\}#', $route->getPath(), $matches);
+            dump($matches[0]);
+            $rp = implode(',',$matches[0]);
+            $rp = trim(str_replace(['_locale','{','}'], '', $rp), ', ');
+        }
         $builder
             ->add('name', TextType::class,
                 [
@@ -62,11 +74,11 @@ class ActionType extends AbstractType
                 [
                     'label' => 'action.route_params.label',
                     'help' => 'action.route_params.help',
+                    'help_params' => ['%{parameters}' => $rp, '%{route}' => $options['data']->getRoute()],
                     'allow_add' => true,
                     'allow_delete' => true,
                     'entry_type' => ActionRouteParamType::class,
                     'button_merge_class' => 'btn-sm',
-                    'data' => new ArrayCollection($options['data']->getRouteParams())
                 ]
             )
             ->add('role', EntityType::class,
@@ -88,7 +100,20 @@ class ActionType extends AbstractType
                     'required' => false,
                 ]
             )
+            ->add('allowedCategories', EnumType::class,
+                [
+                    'label' => 'action.allowed_categories.label',
+                    'help' => 'action.allowed_categories.help',
+                    'multiple' => true,
+                    'choice_list_class' => PersonRole::class,
+                    'choice_list_method' => 'getCategoryList',
+                    'choice_list_prefix' => 'personrole.category',
+                    'choice_translation_domain' => 'Person',
+                ]
+            )
         ;
+
+        $builder->get('routeParams')->addModelTransformer(new ActionRouteParamTransformer());
     }
 
     /**
@@ -114,5 +139,19 @@ class ActionType extends AbstractType
     public function getBlockPrefix()
     {
         return 'action_permission';
+    }
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * ActionType constructor.
+     * @param RouterInterface $router
+     */
+    public function __construct(RouterInterface $router)
+    {
+        $this->router = $router;
     }
 }

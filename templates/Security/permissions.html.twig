@@ -8,15 +8,106 @@
 {% block headerLead %}{{ 'action.permissions.description'|trans }}{% endblock headerLead %}
 
 {% block contentContainer %}
-    {% set h3Content = addButton({windowOpen: {route: path('create_edit_permission', {id: 'Add'}), target: 'CreatEditPermission', params: 'width=1200,height=900'}}) %}
+    {% if app.request.server.get('APP_ENV') is same as ('dev') %}
+        {% set h3Content = addButton({windowOpen: {route: path('create_edit_permission', {id: 'Add'}), target: 'CreatEditPermission', params: 'width=1000,height=750'}}) %}
+    {% endif %}
     {% set header = 'action.permissions.title' %}
     {% set transDomain = 'Security' %}
     {% include 'Default/panelStart.html.twig' %}
-    {{ dump() }}
+        {% set actionGroup = '' %}
+        {% set roles = manager.allRoles %}
+        {% set col_x = 12 - roles|length %}
+        {% for action in actions %}
+            {% if action['groupBy'] is not same as(actionGroup) %}
+                {% set actionGroup = action['groupBy'] %}
+                <h4>{{ ('action.group_by.' ~ actionGroup)|trans }}</h4>
+                <div class="{{ actionGroup }}Message"></div>
+                <div class="row row-header small">
+                    <div class="col-{{ col_x }}">
+                        {{ 'action'|trans({}, 'System') }}
+                    </div>
+                    {% for role in roles %}
+                    <div class="col-1">
+                        {{ role.nameShort }}
+                    </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="row row-striped">
+                <div class="col-{{ col_x }}">
+                    {{ action.name }}
+                    {% if app.request.server.get('APP_ENV') is same as ('dev') %}
+                        {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('create_edit_permission', {id: action.id}), target: 'CreatEditPermission', params: 'width=1000,height=750'}})|raw }}
+                    {% endif %}
+                </div>
+                {% for role in roles %}
+                    {% set xx = '' %}
+                    {% for existingRole in manager.allExistingRoles(action.id) %}
+                        {% if role.nameShort is same as(existingRole.nameShort) %}
+                            {% set xx = existingRole %}
+                        {% endif %}
+                    {% endfor %}
+                    {% set buttonID = actionGroup ~ '|' ~ role.nameShort ~ "|" ~ action.id %}
+                    {% if xx is same as ('') %}
+                        <div class="col-1">
+                            {% if role.category in action.allowedCategories %}
+                                {{ onOffButton({mergeClass: 'btn-sm changePermission', id: buttonID, name: buttonID, value: false})|raw }}
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div class="col-1">
+                            {% if role.category in action.allowedCategories %}
+                                {{ onOffButton({mergeClass: 'btn-sm changePermission', id: buttonID, name: buttonID, value: true, disabled: (action.nameShort is same as (role.nameShort) ? true : false) })|raw }}
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+        {% endfor %}
     {% include 'Default/panelEnd.html.twig' %}
 {% endblock contentContainer %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ toggle_script() }}
+    <script type="text/javascript" language="JavaScript"><!-- changePermission -->
+        $(".changePermission").click(function(event) {
+            var name = event.currentTarget.name;
+            var button = name.split('|')
+            var messageTarget = button[0] + 'Message'
+            var path = '{{ path('toggle_action_permission', {id: '__id__', role: '__role__'}) }}'
+            path = path.replace('__id__', button[2]).replace('__role__', button[1])
+            $.ajax({
+                url: path,
+                type: "POST",
+                success: function (data) {
+                    button = $("button[name='"+name+"']")
+                    var icon = button.children('svg')
+                    icon.toggleClass('fa-thumbs-up fa-thumbs-down')
+                    button.toggleClass('btn-success btn-danger')
+
+                    var message = '<div class="alert alert-__level__ alert-dismissable show hide">__message__<button title="{{ 'Close Message'|trans({}, 'System') }}" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" class="far fa-times-circle"></span></button></div>';
+
+                    var messages = ''
+                    var mess = ''
+                    for(key in data.messages)
+                    {
+                        mess = data.messages[key]
+                        messages = messages + message
+                        messages = messages.replace('__level__', mess['level']).replace('__message__', mess['message'])
+                    }
+                    messages = $('.' + messageTarget).html() + messages
+                    $('.' + messageTarget).html(messages)
+                },
+                error: function (req, status, err) {
+                    var message = '<div class="alert alert-danger alert-dismissable show hide">__message__<button title="{{ 'Close Message'|trans({}, 'System') }}" type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true" class="far fa-times-circle"></span></button></div>';
+                    message = message.replace('__message__', err);
+                    messages = $('.' + messageTarget).html() + message
+                    $('.' + messageTarget).html(messages)
+                }
+            });
+        })
+
+    </script>
 {% endblock javascripts %}
