@@ -541,7 +541,7 @@ class SchoolController extends Controller
      * @Route("/school/department/{id}/edit/{tabName}/", name="department_edit")
      * @IsGranted("ROLE_PRINCIPAL")
      */
-    public function edit($id, $tabName = 'department_details', Request $request, FlashBagManager $flashBagManager, DepartmentManager $departmentManager)
+    public function edit($id, Request $request, FlashBagManager $flashBagManager, DepartmentManager $departmentManager, $tabName = 'department_details')
     {
         $entity = $departmentManager->findDepartment($id);
 

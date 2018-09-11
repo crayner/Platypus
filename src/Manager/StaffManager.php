@@ -89,7 +89,7 @@ class StaffManager
     {
         $result = [];
         foreach(self::getStaffList(['s','p'], '', ['p.surname' => 'ASC', 'p.preferredName' => 'ASC']) as $staff)
-            $result[$staff['person']['surname'].': '.$staff['person']['preferredName']] = $staff['id'];
+            $result[$staff['person']['surname'].': '.$staff['person']['preferredName']] = $staff['person']['id'];
 
         return $result;
     }

@@ -52,26 +52,25 @@ class DepartmentManager extends TabManager
     }
 
     /**
-     * getTabs
-     *
-     * @return array
+     * @var array 
      */
-    public function getTabs(): array
-    {
-        return Yaml::parse("
-department_details:
-    label: department.details.tab
-    include: School/department_details.html.twig
-    message: departmentDetailsMessage
-    translation: School
-department_tutor_collection:
-    label: department.staff.tab
-    include: School/department_staff.html.twig
-    message: departmentStaffMessage
-    translation: School
-    display: hasMembers
-");
-    }
+    protected $tabs = [
+        [
+            'name' => 'department_details',
+            'label' => 'department.details.tab',
+            'include' => 'School/department_details.html.twig',
+            'message' => 'departmentDetailsMessage',
+            'translation' => 'School',
+        ],
+        [
+            'name' => 'department_tutor_collection',
+            'label' => 'department.staff.tab',
+            'include' => 'School/department_staff.html.twig',
+            'message' => 'departmentStaffMessage',
+            'translation' => 'School',
+            'display' => 'hasMembers',
+        ],
+    ];
 
     /**
      * hasMembers
