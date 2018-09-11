@@ -133,7 +133,7 @@ class MessengerSettings implements SettingCreationInterface
             ->__set('description', 'Should the message bubble be regular or wide?');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', ['regular, wide'])
+                ->__set('choice', ['regular', 'wide'])
                 ->setValidators(null)
                 ->setDefaultValue(null)
                 ->__set('translateChoice', 'Setting')
