@@ -35,7 +35,7 @@ class VersionManager
         'php' 			=> '7.2',
         'mysql' 		=> '5.7',
         'mariadb' 		=> '10.2',
-        'extensions' 	=> ['gettext', 'mbstring', 'curl', 'zip', 'xml', 'gd'],
+        'extensions' 	=> ['curl', 'gd', 'gettext', 'intl', 'mbstring', 'xml', 'zip'],
         'settings' 		=> [
             ['max_input_vars', '>=', 5000],
             ['max_file_uploads', '>=', 20],

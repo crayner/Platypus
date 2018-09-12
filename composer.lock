@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9b6200caf34f886c777e11ac2b4069f4",
+    "content-hash": "bfa71c84d3d6575ac89eb3b755da6e60",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1605,16 +1605,16 @@
         },
         {
             "name": "hillrange/symfony-form",
-            "version": "0.1.98",
+            "version": "0.2.00",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/symfony-form.git",
-                "reference": "a4f542c9c6ae4e8a39a991ecddb1d3a628e0a9ea"
+                "reference": "20696f2eb9f2aa068d1197059a0e1241db5137a7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/a4f542c9c6ae4e8a39a991ecddb1d3a628e0a9ea",
-                "reference": "a4f542c9c6ae4e8a39a991ecddb1d3a628e0a9ea",
+                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/20696f2eb9f2aa068d1197059a0e1241db5137a7",
+                "reference": "20696f2eb9f2aa068d1197059a0e1241db5137a7",
                 "shasum": ""
             },
             "require": {
@@ -1658,7 +1658,7 @@
             "keywords": [
                 "form"
             ],
-            "time": "2018-09-07T04:47:26+00:00"
+            "time": "2018-09-11T03:33:26+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1712,16 +1712,16 @@
         },
         {
             "name": "knpuniversity/oauth2-client-bundle",
-            "version": "v1.21.0",
+            "version": "v1.22.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knpuniversity/oauth2-client-bundle.git",
-                "reference": "41990df63e9d663b4c1bf7918cc9dcfa5475e068"
+                "reference": "a7faba0303b55ec2a3b7387d434704e866162aa7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knpuniversity/oauth2-client-bundle/zipball/41990df63e9d663b4c1bf7918cc9dcfa5475e068",
-                "reference": "41990df63e9d663b4c1bf7918cc9dcfa5475e068",
+                "url": "https://api.github.com/repos/knpuniversity/oauth2-client-bundle/zipball/a7faba0303b55ec2a3b7387d434704e866162aa7",
+                "reference": "a7faba0303b55ec2a3b7387d434704e866162aa7",
                 "shasum": ""
             },
             "require": {
@@ -1734,7 +1734,7 @@
             },
             "require-dev": {
                 "league/oauth2-facebook": "^1.1|^2.0",
-                "phpunit/phpunit": "^4.8",
+                "phpunit/phpunit": "^4.8.36",
                 "symfony/security-guard": "^2.8|^3.0"
             },
             "suggest": {
@@ -1762,7 +1762,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2018-08-24T20:49:40+00:00"
+            "time": "2018-09-10T16:37:37+00:00"
         },
         {
             "name": "league/oauth2-client",
@@ -2436,16 +2436,16 @@
         },
         {
             "name": "platypus-template/original",
-            "version": "0.0.09",
+            "version": "0.0.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/platypus-template-original.git",
-                "reference": "eb1b922c45a363e57f4b9da26ce2d3997fd3f754"
+                "reference": "5ce01d762677e27115de3a25b082dc875ca0783d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/platypus-template-original/zipball/eb1b922c45a363e57f4b9da26ce2d3997fd3f754",
-                "reference": "eb1b922c45a363e57f4b9da26ce2d3997fd3f754",
+                "url": "https://api.github.com/repos/crayner/platypus-template-original/zipball/5ce01d762677e27115de3a25b082dc875ca0783d",
+                "reference": "5ce01d762677e27115de3a25b082dc875ca0783d",
                 "shasum": ""
             },
             "require": {
@@ -2483,7 +2483,7 @@
             "keywords": [
                 "template"
             ],
-            "time": "2018-08-31T06:05:38+00:00"
+            "time": "2018-09-11T03:17:07+00:00"
         },
         {
             "name": "psr/cache",
@@ -2798,16 +2798,16 @@
         },
         {
             "name": "swiftmailer/swiftmailer",
-            "version": "v6.1.2",
+            "version": "v6.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8"
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
-                "reference": "7d760881d266d63c5e7a1155cbcf2ac656a31ca8",
+                "url": "https://api.github.com/repos/swiftmailer/swiftmailer/zipball/8ddcb66ac10c392d3beb54829eef8ac1438595f4",
+                "reference": "8ddcb66ac10c392d3beb54829eef8ac1438595f4",
                 "shasum": ""
             },
             "require": {
@@ -2853,7 +2853,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2018-07-13T07:04:35+00:00"
+            "time": "2018-09-11T07:12:52+00:00"
         },
         {
             "name": "symfony/asset",

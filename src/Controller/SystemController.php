@@ -61,7 +61,7 @@ class SystemController extends Controller
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Syntax
      * @Route("/system/settings/manage/", name="manage_system_settings")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function systemSettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager, ScaleManager $scaleManager)
     {
@@ -103,7 +103,7 @@ class SystemController extends Controller
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Syntax
      * @Route("/system/third_party/settings/", name="third_party_settings")
-     * @IsGranted("ROLE_SYSTEM_ADMIN")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function thirdPartySettings(Request $request, SettingManager $sm, MultipleSettingManager $multipleSettingManager)
     {
@@ -144,7 +144,7 @@ class SystemController extends Controller
      * @param StringReplacementManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/system/string_replacement/manage/", name="manage_string_replacement")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function stringReplacementManage(Request $request, StringReplacementPagination $pagination, StringReplacementManager $manager)
     {
@@ -167,7 +167,7 @@ class SystemController extends Controller
      * @param StringReplacementManager $manager
      * @param mixed $id
      * @Route("/system/string_replacement/{id}/edit/", name="edit_string_replacement")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function stringReplacementEdit(Request $request, StringReplacementManager $manager, $id = 'Add')
     {
@@ -205,7 +205,7 @@ class SystemController extends Controller
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/system/string_replacement/{id}/delete/", name="delete_string_replacement")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function stringReplacementDelete(StringReplacementManager $manager, int $id, FlashBagManager $flashBagManager)
     {
@@ -282,11 +282,12 @@ class SystemController extends Controller
     /**
      * systemCheck
      *
-     * @Route("/system/check/", name="system_check")
-     * @IsGranted("ROLE_SYSTEM_ADMIN")
      * @param VersionManager $manager
      * @param EntityManagerInterface $em
+     * @param SettingManager $sm
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/system/check/", name="system_check")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function systemCheck(VersionManager $manager, EntityManagerInterface $em, SettingManager $sm)
     {
@@ -300,12 +301,12 @@ class SystemController extends Controller
     }
 
     /**
-     * themeManage
+     * themesManage
      *
-     * @Route("/system/themes/manage/", name="manage_themes")
-     * @IsGranted("ROLE_SYSTEM_ADMIN")
      * @param ThemeManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/system/themes/manage/", name="manage_themes")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function themesManage(ThemeManager $manager)
     {
@@ -325,7 +326,7 @@ class SystemController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/system/alarm/manage/", name="manage_alarm")
-     * @IsGranted("ROLE_STAFF")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function alarmAction(SettingManager $sm, AlarmManager $manager, Request $request, UploadFileManager $fileManager, $id = 'Add')
     {
