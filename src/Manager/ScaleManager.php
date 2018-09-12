@@ -40,25 +40,24 @@ class ScaleManager extends TabManager
     private $transDomain = 'System';
 
     /**
-     * getTabs
-     *
-     * @return array
+     * @var array
      */
-    public function getTabs(): array
-    {
-        return Yaml::parse("
-scale_details:
-    label: scale.details.tab
-    include: School/scale_details.html.twig
-    message: scaleDetailsMessage
-    translation: School
-scale_grade_collection:
-    label: scale.grades.tab
-    include: School/scale_grade_collection.html.twig
-    message: ScaleFieldsMessage
-    translation: School
-");
-    }
+    protected $tabs = [
+        [
+            'name' => 'scale_details',
+            'label' => 'scale.details.tab',
+            'include' => 'School/scale_details.html.twig',
+            'message' => 'scaleDetailsMessage',
+            'translation' => 'School',
+        ],
+        [
+            'name' => 'scale_grade_collection',
+            'label' => 'scale.grades.tab',
+            'include' => 'School/scale_grade_collection.html.twig',
+            'message' => 'ScaleFieldsMessage',
+            'translation' => 'School',
+        ],
+    ];
 
     /**
      * findGrades
