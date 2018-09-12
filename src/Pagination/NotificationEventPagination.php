@@ -39,7 +39,6 @@ class NotificationEventPagination extends PaginationManager
      */
     protected $sortByList = [
         'string.original.sort' => [
-            'm.name' => 'ASC',
             'n.event' => 'ASC',
         ],
     ];
@@ -58,7 +57,6 @@ class NotificationEventPagination extends PaginationManager
      * @var array
      */
     protected $select = [
-        'm.name as moduleName',
         'n.event',
         'n.active',
         'n.id',
@@ -69,10 +67,6 @@ class NotificationEventPagination extends PaginationManager
      * @var array
      */
     protected $join = [
-        'n.module' => [
-            'type' => 'leftJoin',
-            'alias' => 'm',
-        ],
         'n.notificationListeners' => [
             'type' => 'leftJoin',
             'alias' => 'l',
@@ -118,11 +112,6 @@ class NotificationEventPagination extends PaginationManager
                 ->setQueryJoin()
                 ->setOrderBy()
                 ->setSearchWhere();
-
-        $this->getQuery()
-            ->andWhere('m.active = :active')
-            ->setParameter('active', true)
-            ->groupBy('n.id');
 
         return $this->getQuery();
     }

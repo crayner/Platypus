@@ -35,6 +35,7 @@ class Action
      */
     public static function getGroupByList(): array
     {
+        sort(self::$groupByList);
         return self::$groupByList;
     }
 
@@ -215,6 +216,7 @@ class Action
      */
     private static $groupByList = [
         'school_admin',
+        'system_admin',
     ];
 
     /**

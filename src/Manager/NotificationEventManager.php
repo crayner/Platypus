@@ -28,27 +28,23 @@ class NotificationEventManager extends TabManager
      */
     private $entityName = NotificationEvent::class;
 
-    /**
-     * getTabs
-     *
-     * @return array
-     */
-    public function getTabs(): array
-    {
-        return Yaml::parse("
-details:
-    label: notification_event.details.tab
-    include: System/notification_event_details.html.twig
-    message: notificationEventDetailsMessage
-    translation: System
-listeners:
-    label: notification_event.listener.tab
-    include: System/notification_event_listener_list.html.twig
-    message: otificationEventListenersMessage
-    translation: System
-    display: hasDetails
-");
-    }
+    protected $tabs = [
+        [
+            'name' => 'details',
+            'label' => 'notification_event.details.tab',
+            'include' => 'System/notification_event_details.html.twig',
+            'message' => 'notificationEventDetailsMessage',
+            'translation' => 'System',
+        ],    
+        [
+            'name' => 'listeners',
+            'label' => 'notification_event.listener.tab',
+            'include' => 'System/notification_event_listener_list.html.twig',
+            'message' => 'notificationEventListenersMessage',
+            'translation' => 'System',
+            'display' => 'hasDetails',
+        ],
+    ];
 
     /**
      * hasDetails

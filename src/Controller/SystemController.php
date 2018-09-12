@@ -37,6 +37,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Util\ScriptManager;
 use Hillrange\Form\Util\UploadFileManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
@@ -225,7 +226,7 @@ class SystemController extends Controller
      * @param StringReplacementManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/system/notification_events/manage/", name="manage_notification_events")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function notificationEventManage(Request $request, NotificationEventPagination $pagination, StringReplacementManager $manager)
     {
