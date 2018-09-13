@@ -20,6 +20,7 @@ use App\Form\Type\PersonRoleType;
 use App\Manager\ActionManager;
 use App\Manager\PersonRoleManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -41,7 +42,7 @@ class SecurityController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/person/security/role/{id}/manage/", name="manage_roles")
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function manageRole(PersonRoleManager $manager, Request $request, $id = 0)
     {
@@ -66,8 +67,10 @@ class SecurityController extends Controller
      *
      * @param ActionManager $manager
      * @param string $groupBy
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      * @Route("/person/security/permissions/manage/", name="manage_permissions")
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function managePermissions(ActionManager $manager, string $groupBy = '%')
     {
@@ -89,7 +92,7 @@ class SecurityController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/security/permission/{id}/edit/", name="create_edit_permission")
-     * @IsGranted("ROLE_SYSTEM_ADMIN")
+     * @Security("is_granted('USE_ROUTE', ['manage_permissions', {}])")
      */
     public function createEditPermission(ActionManager $manager, Request $request, $id = '0')
     {
@@ -121,7 +124,7 @@ class SecurityController extends Controller
      * @return JsonResponse
      * @throws \Exception
      * @Route("/action/{id}/permission/{role}/toggle/", name="toggle_action_permission")
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('USE_ROUTE', ['manage_permissions', {}])")
      */
     public function changePermission(ActionManager $manager, int $id, string $role, TranslatorInterface $translator)
     {

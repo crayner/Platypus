@@ -217,6 +217,7 @@ class Action
     private static $groupByList = [
         'school_admin',
         'system_admin',
+        'personnel_admin',
     ];
 
     /**

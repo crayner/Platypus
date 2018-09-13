@@ -61,6 +61,7 @@ class ActionType extends AbstractType
                 [
                     'label' => 'action.groupBy.label',
                     'placeholder' => 'action.groupBy.placeholder',
+                    'choice_list_prefix' => 'action.group_by',
                 ]
             )
             ->add('route', TextType::class,
