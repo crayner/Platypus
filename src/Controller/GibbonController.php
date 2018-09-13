@@ -36,7 +36,7 @@ class GibbonController extends Controller
     {
         $logger = $this->get('monolog.logger.demonstration');
         if ($section === 'start')
-            $section = 'GibbonPersonManager';
+            $section = 'GibbonRoleManager';
 
         $manager->transfer($section, $this->get('monolog.logger.gibbon'));
 

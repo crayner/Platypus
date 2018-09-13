@@ -36,7 +36,7 @@ class GibbonPersonManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonRole';
+    protected $nextGibbonName = '';
 
     /**
      * @var array
@@ -45,7 +45,10 @@ class GibbonPersonManager extends GibbonTransferManager
         Person::class,
         User::class,
     ];
-    
+
+    /**
+     * @var array
+     */
     protected $transferRules = [
         'gibbonPersonID' => [
             'field' => 'id',

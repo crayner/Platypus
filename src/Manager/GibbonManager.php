@@ -39,7 +39,7 @@ class GibbonManager
      */
     public function transfer(string $section, LoggerInterface $logger)
     {
-        $path = "App\Manager\Gibbon\\".$section;
+        $path = "App\Manager\Gibbon\\".ucfirst($section);
 
         if (! class_exists($path))
             trigger_error(sprintf('No! No! No! %s does not exist.', $section));

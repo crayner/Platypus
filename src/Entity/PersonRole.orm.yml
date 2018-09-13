@@ -29,6 +29,11 @@ App\Entity\PersonRole:
             column: role_type
             options:
                 default: 'core'
+        canLogin:
+            type: boolean
+            options:
+                default: '1'
+            column: can_login
         futureYearsLogin:
             type: boolean
             options:

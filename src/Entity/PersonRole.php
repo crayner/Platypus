@@ -362,4 +362,29 @@ class PersonRole
     {
         return $this->getCategory();
     }
+
+    /**
+     * @var bool
+     */
+    private $canLogin = true;
+
+    /**
+     * @return bool
+     */
+    public function isCanLogin(): bool
+    {
+        return $this->canLogin ? true : false ;
+    }
+
+    /**
+     * setCanLogin
+     *
+     * @param bool|null $canLogin
+     * @return PersonRole
+     */
+    public function setCanLogin(?bool $canLogin): PersonRole
+    {
+        $this->canLogin = $canLogin ? true : false ;
+        return $this;
+    }
 }
