@@ -53,9 +53,6 @@ class SchoolYearController extends Controller
             ->getArrayResult()
         ;
 
-
-//        findBy([], ['firstDay' => 'DESC'], 12);
-
         return $this->render('SchoolYear/manage.html.twig',
             [
                 'school_years' => $schoolYears,
@@ -78,7 +75,7 @@ class SchoolYearController extends Controller
      * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/school/year/{id}/edit/{tabName}/", name="school_year_edit")
-     * @Security("is_granted('ROLE_ACTION', request)")
+     * @Security("is_granted('USE_ROUTE', ['school_year_manage', {}])")
      */
     public function edit($id, Request $request,
                          SchoolYearManager $schoolYearManager,
@@ -143,13 +140,17 @@ class SchoolYearController extends Controller
             ]
         );
     }
-    
+
     /**
+     * deleteYear
+     *
      * @param $id
      * @param SchoolYearManager $schoolYearManager
+     * @param FlashBagManager $flashBagManager
      * @return RedirectResponse
+     * @throws \Exception
      * @Route("/school/year/{id}/delete/", name="school_year_delete")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('USE_ROUTE', ['school_year_manage', {}])")
      */
     public function deleteYear($id, SchoolYearManager $schoolYearManager, FlashBagManager $flashBagManager)
     {
@@ -169,14 +170,16 @@ class SchoolYearController extends Controller
     }
 
     /**
-     * @param   int $id
-     * @param   bool $closeWindow
+     * display
+     *
+     * @param $id
      * @param SchoolYearManager $schoolYearManager
-     * @return  Response
+     * @param bool $closeWindow
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/school/year/{id}/display/{closeWindow}", name="school_year_display")
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("IS_FULLY_AUTHENTICATED")
      */
-    public function display($id, $closeWindow = false, SchoolYearManager $schoolYearManager)
+    public function display($id, SchoolYearManager $schoolYearManager, $closeWindow = false)
     {
         $repo = $schoolYearManager->getSchoolYearRepository();
 
@@ -221,15 +224,20 @@ class SchoolYearController extends Controller
     }
 
     /**
-     * @Route("/school/year/{id}/special/day/{cid}/manage/", name="special_day_manage")
-     * @IsGranted("ROLE_REGISTRAR")
+     * manageSpecialDay
+     *
      * @param $id
-     * @param string $cid
      * @param SchoolYearManager $schoolYearManager
      * @param \Twig_Environment $twig
+     * @param string $cid
      * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     * @Route("/school/year/{id}/special/day/{cid}/manage/", name="special_day_manage")
+     * @Security("is_granted('USE_ROUTE', ['school_year_manage', {}])")
      */
-    public function manageSpecialDay($id, $cid = 'ignore', SchoolYearManager $schoolYearManager, \Twig_Environment $twig)
+    public function manageSpecialDay($id, SchoolYearManager $schoolYearManager, \Twig_Environment $twig, $cid = 'ignore')
     {
         $schoolYearManager->find($id);
 
@@ -263,15 +271,20 @@ class SchoolYearController extends Controller
     }
 
     /**
-     * @Route("/school/year/{id}/term/{cid}/manage/", name="term_manage")
-     * @IsGranted("ROLE_REGISTRAR")
+     * manageTerm
+     *
      * @param $id
-     * @param string $cid
      * @param SchoolYearManager $schoolYearManager
      * @param \Twig_Environment $twig
+     * @param string $cid
      * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     * @Route("/school/year/{id}/term/{cid}/manage/", name="term_manage")
+     * @Security("is_granted('USE_ROUTE', ['school_year_manage', {}])")
      */
-    public function manageTerm($id, $cid = 'ignore', SchoolYearManager $schoolYearManager, \Twig_Environment $twig)
+    public function manageTerm($id, SchoolYearManager $schoolYearManager, \Twig_Environment $twig, $cid = 'ignore')
     {
         $schoolYearManager->find($id);
 
@@ -303,12 +316,16 @@ class SchoolYearController extends Controller
             200
         );
     }
+
     /**
-     * @Route("/school/year/term/{id}/delete/", name="term_delete")
-     * @IsGranted("ROLE_REGISTRAR")
-     * @param                        $id
+     * delete
+     *
+     * @param $id
      * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param FlashBagManager $flashBagManager
+     * @return RedirectResponse
+     * @Route("/school/year/term/{id}/delete/", name="term_delete")
+     * @Security("is_granted('USE_ROUTE', ['school_year_manage', {}])")
      */
     public function delete($id, EntityManagerInterface $entityManager, FlashBagManager $flashBagManager)
     {
@@ -343,13 +360,21 @@ class SchoolYearController extends Controller
 
         return $this->redirectToRoute('school_year_edit', ['id' => $schoolYear->getId(), '_fragment' => 'terms']);
     }
-    
+
     /**
+     * deleteAction
+     *
      * @param $id
-     * @param $year
-     * @Route("/school/year/special/day/{id}/delete/", name="special_day_delete")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @param EntityManagerInterface $entityManager
+     * @param FlashBagManager $flashBagManager
+     * @param SettingManager $settingManager
      * @return RedirectResponse
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     * @Route("/school/year/special/day/{id}/delete/", name="special_day_delete")
+     * @Security("is_granted('USE_ROUTE', ['school_year_manage', {}])")
      */
     public function deleteAction($id, EntityManagerInterface $entityManager, FlashBagManager $flashBagManager, SettingManager $settingManager)
     {
