@@ -17,19 +17,13 @@ namespace App\Controller;
 
 use App\Entity\AttendanceCode;
 use App\Entity\DayOfWeek;
-use App\Entity\Department;
-use App\Entity\DepartmentStaff;
-use App\Entity\ExternalAssessmentField;
 use App\Entity\Facility;
 use App\Entity\House;
-use App\Entity\Person;
 use App\Entity\YearGroup;
 use App\Form\AttendanceSettingsType;
 use App\Form\CollectionManagerType;
 use App\Form\DaysOfWeekType;
 use App\Form\DepartmentType;
-use App\Form\ExternalAssessmentCategoryType;
-use App\Form\ExternalAssessmentCategoriesType;
 use App\Form\ExternalAssessmentFieldType;
 use App\Form\ExternalAssessmentType;
 use App\Form\FacilityType;
@@ -55,11 +49,11 @@ use App\Manager\TwigManager;
 use App\Organism\AttendanceCodes;
 use App\Organism\DaysOfWeek;
 use App\Pagination\DepartmentPagination;
-use App\Pagination\ExternalAssessmentCategoryPagination;
 use App\Pagination\ExternalAssessmentPagination;
 use App\Pagination\FacilityPagination;
 use App\Pagination\RollGroupPagination;
 use App\Pagination\ScalePagination;
+use App\Util\PhotoHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -115,7 +109,7 @@ class SchoolController extends Controller
      * @param EntityManagerInterface $entityManager
      * @return Response
      * @Route("/school/houses/manage/", name="houses_edit")
-     * @Security("is_granted('ROLE_ADMIN', request)")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function editHouses(Request $request, HouseManager $houseManager, EntityManagerInterface $entityManager)
     {
@@ -141,11 +135,13 @@ class SchoolController extends Controller
     }
 
     /**
+     * deleteHouseLogo
+     *
      * @param $houseName
      * @param HouseManager $houseManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/school/houses/logo/{houseName}/delete/", name="house_logo_delete")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('USE_ROUTE', ['houses_edit'])")
      */
     public function deleteHouseLogo($houseName, HouseManager $houseManager)
     {
@@ -159,10 +155,15 @@ class SchoolController extends Controller
     }
 
     /**
+     * deleteHouse
+     *
+     * @param HouseManager $houseManager
+     * @param string $cid
+     * @return Response
      * @Route("/school/house/{cid}/delete/", name="house_remove")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('USE_ROUTE', ['houses_edit'])")
      */
-    public function deleteHouse($cid = 'ignore', HouseManager $houseManager)
+    public function deleteHouse(HouseManager $houseManager, $cid = 'ignore')
     {
         $houseManager->removeHouse($houseManager->find($cid));
 
@@ -211,13 +212,15 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/year/groups/{cid}/delete/", name="year_group_remove")
-     * @IsGranted("ROLE_REGISTRAR")
-     * @param string $cid
+     * deleteYearGroup
+     *
      * @param EntityManagerInterface $entityManager
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param string $cid
+     * @return Response
+     * @Route("/school/year/groups/{cid}/delete/", name="year_group_remove")
+     * @Security("is_granted('USE_ROUTE', ['year_groups_manage'])")
      */
-    public function deleteYearGroup($cid = 'ignore', EntityManagerInterface $entityManager)
+    public function deleteYearGroup(EntityManagerInterface $entityManager, $cid = 'ignore')
     {
         $yg = $entityManager->getRepository(YearGroup::class)->find($cid);
 
@@ -280,14 +283,14 @@ class SchoolController extends Controller
     }
 
     /**
-     * deleteStudentNoteCategory
+     * deleteAttendanceCode
      *
-     * @Route("/school/attendance/code/{cid}/delete/", name="remove_attendance_code")
-     * @IsGranted("ROLE_PRINCIPAL")
      * @param $cid
      * @param AttendanceCodeManager $manager
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/school/attendance/code/{cid}/delete/", name="remove_attendance_code")
+     * @Security("is_granted('USE_ROUTE', ['manage_attendance_settings'])")
      */
     public function deleteAttendanceCode($cid, AttendanceCodeManager $manager, FlashBagManager $flashBagManager)
     {
@@ -320,11 +323,13 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/facility/{id}/edit/", name="facility_edit")
-     * @IsGranted("ROLE_REGISTRAR")
+     * editFacility
+     *
      * @param $id
      * @param Request $request
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @Route("/school/facility/{id}/edit/", name="facility_edit")
+     * @Security("is_granted('USE_ROUTE', ['manage_facilities'])")
      */
     public function editFacility($id, Request $request)
     {
@@ -354,10 +359,12 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/facility/duplicate/", name="facility_duplicate")
-     * @IsGranted("ROLE_REGISTRAR")
+     * duplicateFacility
+     *
      * @param Request $request
      * @return Response
+     * @Route("/school/facility/duplicate/", name="facility_duplicate")
+     * @Security("is_granted('USE_ROUTE', ['manage_facilities'])")
      */
     public function duplicateFacility(Request $request)
     {
@@ -417,16 +424,18 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/roll/group/{id}/edit/{closeWindow}", name="roll_group_edit")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * rollEdit
+     *
      * @param Request $request
-     * @param string $id
      * @param RollGroupManager $manager
+     * @param string $id
      * @param string|null $closeWindow
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Exception
+     * @Route("/school/roll/group/{id}/edit/{closeWindow}", name="roll_group_edit")
+     * @Security("is_granted('USE_ROUTE', ['manage_roll_groups'])")
      */
-    public function rollEdit(Request $request, $id = 'Add', RollGroupManager $manager, string $closeWindow = null)
+    public function rollEdit(Request $request, RollGroupManager $manager, $id = 'Add', string $closeWindow = null)
     {
         $roll = $manager->find($id);
 
@@ -453,15 +462,17 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/roll/group/{id}/delete/", name="roll_group_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
-     * @param string $id
+     * rollDelete
+     *
      * @param RollGroupManager $manager
      * @param FlashBagManager $flashBagManager
+     * @param string $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
+     * @Route("/school/roll/group/{id}/delete/", name="roll_group_delete")
+     * @Security("is_granted('USE_ROUTE', ['manage_roll_groups'])")
      */
-    public function rollDelete($id = 'Add', RollGroupManager $manager, FlashBagManager $flashBagManager)
+    public function rollDelete(RollGroupManager $manager, FlashBagManager $flashBagManager, $id = 'Add')
     {
         $manager->delete($id);
         $flashBagManager->addMessages($manager->getMessageManager());
@@ -469,13 +480,15 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/roll/groups/copy/", name="roll_group_copy_to_next_year")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * rollCopy
+     *
      * @param RollGroupManager $manager
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\ORMException
+     * @Route("/school/roll/groups/copy/", name="roll_group_copy_to_next_year")
+     * @Security("is_granted('USE_ROUTE', ['manage_roll_groups'])")
      */
     public function rollCopy(RollGroupManager $manager, FlashBagManager $flashBagManager)
     {
@@ -532,14 +545,16 @@ class SchoolController extends Controller
     }
 
     /**
+     * edit
+     *
      * @param $id
-     * @param string $tabName
      * @param Request $request
      * @param FlashBagManager $flashBagManager
      * @param DepartmentManager $departmentManager
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @param string $tabName
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @Route("/school/department/{id}/edit/{tabName}/", name="department_edit")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @Security("is_granted('USE_ROUTE', ['manage_departments'])")
      */
     public function edit($id, Request $request, FlashBagManager $flashBagManager, DepartmentManager $departmentManager, $tabName = 'department_details')
     {
@@ -591,16 +606,17 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/department/logo/delete/{id}/", name="department_logo_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * deleteLogo
+     *
      * @param $id
      * @param DepartmentManager $departmentManager
      * @param FlashBagManager $flashBagManager
      * @return Response
+     * @Route("/school/department/logo/delete/{id}/", name="department_logo_delete")
+     * @Security("is_granted('USE_ROUTE', ['manage_departments'])")
      */
     public function deleteLogo($id, DepartmentManager $departmentManager, FlashBagManager $flashBagManager)
     {
-
         $departmentManager->removeLogo($id);
         $flashBagManager->addMessages($departmentManager->getMessageManager());
 /*
@@ -622,18 +638,20 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/department/{id}/members/{cid}/manage/", name="department_members_manage")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * manageMemberCollection
+     *
      * @param $id
-     * @param string $cid
      * @param DepartmentManager $departmentManager
      * @param TwigManager $twig
+     * @param string $cid
      * @return JsonResponse
      * @throws \Twig_Error_Loader
      * @throws \Twig_Error_Runtime
      * @throws \Twig_Error_Syntax
+     * @Route("/school/department/{id}/members/{cid}/manage/", name="department_members_manage")
+     * @Security("is_granted('USE_ROUTE', ['manage_departments'])")
      */
-    public function manageMemberCollection($id, $cid = 'ignore', DepartmentManager $departmentManager, TwigManager $twig)
+    public function manageMemberCollection($id, DepartmentManager $departmentManager, TwigManager $twig, $cid = 'ignore')
     {
         $departmentManager->removeMember($id, $cid);
 
@@ -665,13 +683,13 @@ class SchoolController extends Controller
     /**
      * deleteDepartment
      *
-     * @Route("/school/department/{id}/delete/", name="department_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
      * @param $id
      * @param DepartmentManager $departmentManager
      * @param FlashBagManager $flashBagManager
      * @return Response
      * @throws \Exception
+     * @Route("/school/department/{id}/delete/", name="department_delete")
+     * @Security("is_granted('USE_ROUTE', ['manage_departments'])")
      */
     public function deleteDepartment($id, DepartmentManager $departmentManager, FlashBagManager $flashBagManager)
     {
@@ -705,17 +723,19 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/scale/{id}/edit/{tabName}/{closeWindow}", name="scale_edit")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * scaleEdit
+     *
      * @param Request $request
+     * @param ScaleManager $manager
      * @param string $id
      * @param string $tabName
-     * @param ScaleManager $manager
      * @param string|null $closeWindow
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Exception
+     * @Route("/school/scale/{id}/edit/{tabName}/{closeWindow}", name="scale_edit")
+     * @Security("is_granted('USE_ROUTE', ['manage_scales'])")
      */
-    public function scaleEdit(Request $request, $id = 'Add', $tabName = 'details', ScaleManager $manager, string $closeWindow = null)
+    public function scaleEdit(Request $request, ScaleManager $manager, $id = 'Add', $tabName = 'details', string $closeWindow = null)
     {
         $scale = $manager->find($id);
 
@@ -741,13 +761,15 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/scale/{id}/delete/", name="scale_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
-     * @param string $id
+     * scaleDelete
+     *
+     * @param $id
      * @param ScaleManager $manager
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
+     * @Route("/school/scale/{id}/delete/", name="scale_delete")
+     * @Security("is_granted('USE_ROUTE', ['manage_scales'])")
      */
     public function scaleDelete($id, ScaleManager $manager, FlashBagManager $flashBagManager)
     {
@@ -758,13 +780,15 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/scale/grade/{cid}/delete/", name="scale_grade_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
-     * @param string $cid
+     * scaleGradeDelete
+     *
+     * @param $cid
      * @param ScaleGradeManager $manager
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
+     * @Route("/school/scale/grade/{cid}/delete/", name="scale_grade_delete")
+     * @Security("is_granted('USE_ROUTE', ['manage_scales'])")
      */
     public function scaleGradeDelete($cid, ScaleGradeManager $manager, FlashBagManager $flashBagManager)
     {
@@ -800,8 +824,8 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/external/assessment/{id}/edit/{tabName}/{closeWindow}", name="external_assessment_edit")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * editExternalAssessment
+     *
      * @param Request $request
      * @param ExternalAssessmentManager $manager
      * @param string $id
@@ -809,6 +833,8 @@ class SchoolController extends Controller
      * @param string|null $closeWindow
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Exception
+     * @Route("/school/external/assessment/{id}/edit/{tabName}/{closeWindow}", name="external_assessment_edit")
+     * @Security("is_granted('USE_ROUTE', ['manage_external_assessments'])")
      */
     public function editExternalAssessment(Request $request, ExternalAssessmentManager $manager, $id = 'Add', string $tabName = 'details', string $closeWindow = null)
     {
@@ -836,13 +862,15 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/external/assessment/{id}/delete/", name="external_assessment_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * deleteExternalAssessment
+     *
      * @param int $id
      * @param ExternalAssessmentManager $manager
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
+     * @Route("/school/external/assessment/{id}/delete/", name="external_assessment_delete")
+     * @Security("is_granted('USE_ROUTE', ['manage_external_assessments'])")
      */
     public function deleteExternalAssessment(int $id, ExternalAssessmentManager $manager, FlashBagManager $flashBagManager)
     {
@@ -855,11 +883,20 @@ class SchoolController extends Controller
     /**
      * editExternalAssessmentField
      *
+     * @param Request $request
+     * @param int $ea
+     * @param ExternalAssessmentFieldManager $manager
+     * @param ExternalAssessmentManager $externalAssessmentManager
+     * @param string $id
+     * @param string $tabName
+     * @param string|null $closeWindow
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      * @Route("/school/external/assessment/{ea}/field/{id}/edit/{tabName}/{closeWindow}", name="external_assessment_field_edit")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * @Security("is_granted('USE_ROUTE', ['manage_external_assessments'])")
      */
-    public function editExternalAssessmentField(Request $request, $id = 'Add', int $ea, string $tabName = 'details',
-                                                ExternalAssessmentFieldManager $manager, ExternalAssessmentManager $externalAssessmentManager, string $closeWindow = null)
+    public function editExternalAssessmentField(Request $request, int $ea,
+                                                ExternalAssessmentFieldManager $manager, ExternalAssessmentManager $externalAssessmentManager, $id = 'Add', string $tabName = 'details', string $closeWindow = null)
     {
         $externalAssessmentField = $manager->find($id);
 
@@ -888,13 +925,15 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/external/assessment/field/{id}/delete/", name="external_assessment_field_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
+     * deleteExternalAssessmentField
+     *
      * @param int $id
      * @param ExternalAssessmentFieldManager $manager
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
+     * @Route("/school/external/assessment/field/{id}/delete/", name="external_assessment_field_delete")
+     * @Security("is_granted('USE_ROUTE', ['manage_external_assessments'])")
      */
     public function deleteExternalAssessmentField(int $id, ExternalAssessmentFieldManager $manager, FlashBagManager $flashBagManager)
     {
@@ -906,13 +945,16 @@ class SchoolController extends Controller
     }
 
     /**
-     * @Route("/school/external/assessment/{id}/category/{cid}/delete/", name="external_assessment_category_delete")
-     * @IsGranted("ROLE_PRINCIPAL")
-     * @param int $cid
+     * deleteExternalAssessmentCategory
+     *
+     * @param int $id
      * @param ExternalAssessmentCategoryManager $manager
      * @param FlashBagManager $flashBagManager
+     * @param string $cid
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
+     * @Route("/school/external/assessment/{id}/category/{cid}/delete/", name="external_assessment_category_delete")
+     * @Security("is_granted('USE_ROUTE', ['manage_external_assessments'])")
      */
     public function deleteExternalAssessmentCategory(int $id, ExternalAssessmentCategoryManager $manager, FlashBagManager $flashBagManager, $cid = 'ignore')
     {
