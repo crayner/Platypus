@@ -31,6 +31,7 @@ use Hillrange\Security\Exception\UserException;
 use Hillrange\Security\Form\ChangePasswordType;
 use Hillrange\Security\Util\PasswordManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,6 +48,7 @@ class PersonController extends Controller
      * @param int $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/security/user/edit/{id}/", name="user_edit")
+     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
      */
     public function userEdit(int $id)
     {
@@ -55,14 +57,15 @@ class PersonController extends Controller
 
     /**
      * preferences
-     * @Route("/user/preferences/", name="preferences")
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     *
      * @param AuthenticationUtils $authUtils
      * @param Request $request
      * @param PasswordManager $passwordManager
-     * @param UserManager $userManager
+     * @param PersonHelper $personHelper
+     * @param ThemeManager $themeManager
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Doctrine\ORM\ORMException
+     * @Route("/user/preferences/", name="preferences")
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      */
     public function preferences(AuthenticationUtils $authUtils, Request $request, PasswordManager $passwordManager, PersonHelper $personHelper, ThemeManager $themeManager)
     {
@@ -119,16 +122,15 @@ class PersonController extends Controller
     }
 
     /**
-     * index
+     * managePeople
      *
-     * @param Request $request
      * @param PersonPagination $personPagination
-     * @param PersonManager $personManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @param PersonHelper $manager
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/people/all/list/", name="manage_people")
-     * @IsGranted("ROLE_TEACHER")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
-    public function index(PersonPagination $personPagination, PersonHelper $manager)
+    public function managePeople(PersonPagination $personPagination, PersonHelper $manager)
     {
         return $this->render('Person/list.html.twig',
             array(
@@ -142,8 +144,12 @@ class PersonController extends Controller
      * delete
      *
      * @param int $id
+     * @param PersonPagination $personPagination
+     * @param PersonManager $manager
+     * @return JsonResponse
+     * @throws \Exception
      * @Route("/person/{id}/delete/", name="person_delete"))
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
      */
     public function delete(int $id, PersonPagination $personPagination, PersonManager $manager)
     {
@@ -170,7 +176,7 @@ class PersonController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/person/{id}/edit/{tabName}", name="person_edit"))
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
      */
     public function edit(PersonManager $manager, Request $request, AddressManager $addressManager, PhoneManager $phoneManager, $id = 'Add', $tabName = 'basic.information')
     {
@@ -228,7 +234,7 @@ class PersonController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @throws \Exception
      * @Route("/person/{id}/image/{getImageMethod}/delete/{tabName}", name="personal_image_remover")
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
      */
     public function removePersonalImage(AssetHelper $assetHelper, PersonManager $manager, string $getImageMethod, int $id, string $tabName = 'basic.information')
     {
@@ -248,7 +254,7 @@ class PersonController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/person/custom/field/{id}/manage/", name="manage_custom_fields")
-     * @IsGranted("ROLE_ADMIN")
+     * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function manageCustomFields(PersonFieldManager $manager, Request $request, $id = 0)
     {
