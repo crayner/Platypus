@@ -73,13 +73,13 @@ class ActionVoter implements VoterInterface
 
         if (!$token->getUser() instanceof UserInterface)
             return VoterInterface::ACCESS_DENIED;
-
         $route = $subject->get('_route');
         $routeParams = $subject->get('_route_params');
         $actions = $this->actionManager->getRepository()->findByRoute($route);
-        if (empty($actions)) {
+
+        if (empty($actions))
             throw new \Exception(sprintf('No action has been created for route \'%s\'.', $route));
-        }
+
         foreach($actions as $action)
         {
             if ($this->isAllowed($action, $token, $routeParams))
@@ -100,11 +100,15 @@ class ActionVoter implements VoterInterface
      */
     private function isAllowed(Action $action, TokenInterface $token, array $routeParams): bool
     {
+        if (empty($action->getVoterRouteParams()))
+            return true;
+
         $diff = array_diff($routeParams, $action->getVoterRouteParams());
-        if (count($diff) === 1 && isset($diff['_locale'])) {
+
+        if (count($diff) === 1 && isset($diff['_locale']))
             if ($this->decisionManager->decide($token, $this->getRoles($action)))
                 return true;
-        }
+
         return false;
     }
 
