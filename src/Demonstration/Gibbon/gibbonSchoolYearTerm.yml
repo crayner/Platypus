@@ -1,0 +1,100 @@
+%YAML 1.1
+---
+# craigray_gibbon.gibbonSchoolYearTerm
+-
+  gibbonSchoolYearTermID: 19
+  gibbonSchoolYearID: 21
+  sequenceNumber: 16
+  name: "Term 1"
+  nameShort: "T1"
+  firstDay: "2015-08-19"
+  lastDay: "2015-12-18"
+-
+  gibbonSchoolYearTermID: 20
+  gibbonSchoolYearID: 21
+  sequenceNumber: 17
+  name: "Term 2"
+  nameShort: "T2"
+  firstDay: "2016-01-04"
+  lastDay: "2016-03-24"
+-
+  gibbonSchoolYearTermID: 21
+  gibbonSchoolYearID: 21
+  sequenceNumber: 18
+  name: "Term 3"
+  nameShort: "T3"
+  firstDay: "2016-04-11"
+  lastDay: "2016-06-23"
+-
+  gibbonSchoolYearTermID: 22
+  gibbonSchoolYearID: 22
+  sequenceNumber: 19
+  name: "Term 1"
+  nameShort: "T1"
+  firstDay: "2016-08-22"
+  lastDay: "2016-12-16"
+-
+  gibbonSchoolYearTermID: 23
+  gibbonSchoolYearID: 22
+  sequenceNumber: 20
+  name: "Term 2"
+  nameShort: "T2"
+  firstDay: "2017-01-03"
+  lastDay: "2017-03-31"
+-
+  gibbonSchoolYearTermID: 24
+  gibbonSchoolYearID: 22
+  sequenceNumber: 21
+  name: "Term 3"
+  nameShort: "T3"
+  firstDay: "2017-04-18"
+  lastDay: "2017-06-28"
+-
+  gibbonSchoolYearTermID: 25
+  gibbonSchoolYearID: 23
+  sequenceNumber: 22
+  name: "Term 1"
+  nameShort: "T1"
+  firstDay: "2017-08-16"
+  lastDay: "2017-12-15"
+-
+  gibbonSchoolYearTermID: 26
+  gibbonSchoolYearID: 23
+  sequenceNumber: 23
+  name: "Term 2"
+  nameShort: "T2"
+  firstDay: "2018-01-08"
+  lastDay: "2018-03-28"
+-
+  gibbonSchoolYearTermID: 27
+  gibbonSchoolYearID: 23
+  sequenceNumber: 24
+  name: "Term 3"
+  nameShort: "T3"
+  firstDay: "2018-04-16"
+  lastDay: "2018-06-28"
+-
+  gibbonSchoolYearTermID: 28
+  gibbonSchoolYearID: 24
+  sequenceNumber: 25
+  name: "Term 1"
+  nameShort: "T1"
+  firstDay: "2018-08-16"
+  lastDay: "2018-12-15"
+-
+  gibbonSchoolYearTermID: 29
+  gibbonSchoolYearID: 24
+  sequenceNumber: 27
+  name: "Term 3"
+  nameShort: "T3"
+  firstDay: "2019-04-16"
+  lastDay: "2019-06-28"
+-
+  gibbonSchoolYearTermID: 30
+  gibbonSchoolYearID: 24
+  sequenceNumber: 26
+  name: "Term 2"
+  nameShort: "T2"
+  firstDay: "2019-01-08"
+  lastDay: "2019-03-28"
+...

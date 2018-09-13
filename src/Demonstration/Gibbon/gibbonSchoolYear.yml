@@ -1,0 +1,53 @@
+%YAML 1.1
+---
+# craigray_gibbon.gibbonSchoolYear
+-
+  gibbonSchoolYearID: 19
+  name: "2013-2014"
+  status: "Past"
+  sequenceNumber: 5
+  firstDay: "2013-08-21"
+  lastDay: "2014-06-26"
+-
+  gibbonSchoolYearID: 20
+  name: "2014-2015"
+  status: "Past"
+  sequenceNumber: 6
+  firstDay: "2014-08-25"
+  lastDay: "2015-06-26"
+-
+  gibbonSchoolYearID: 21
+  name: "2015-2016"
+  status: "Past"
+  sequenceNumber: 7
+  firstDay: "2015-08-20"
+  lastDay: "2016-06-24"
+-
+  gibbonSchoolYearID: 22
+  name: "2016-2017"
+  status: "Past"
+  sequenceNumber: 8
+  firstDay: "2016-08-22"
+  lastDay: "2017-06-28"
+-
+  gibbonSchoolYearID: 23
+  name: "2017-2018"
+  status: "Past"
+  sequenceNumber: 9
+  firstDay: "2017-08-16"
+  lastDay: "2018-06-28"
+-
+  gibbonSchoolYearID: 24
+  name: "2018-2019"
+  status: "Current"
+  sequenceNumber: 10
+  firstDay: "2018-08-20"
+  lastDay: "2019-06-30"
+-
+  gibbonSchoolYearID: 25
+  name: "2019-2020"
+  status: "Upcoming"
+  sequenceNumber: 11
+  firstDay: "2019-08-20"
+  lastDay: "2020-06-30"
+...

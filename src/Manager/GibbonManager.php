@@ -77,7 +77,8 @@ class GibbonManager
                 $newData = [];
                 foreach ($this->datum as $field => $value)
                     $newData = $this->generateNewFieldData($entityName, $newData, $field, $value);
-                $records[] = $newData;
+
+                $records[] = $this->postRecord($entityName, $newData);
             }
 
             $this->writeEntityRecords($entityName, $records);
@@ -411,6 +412,30 @@ class GibbonManager
     }
 
     /**
+     * date
+     *
+     * @param $value
+     * @param $options
+     * @return string
+     */
+    private function date($value, $options): string
+    {
+        return mb_substr($value, 0, 10);
+    }
+
+    /**
+     * time
+     *
+     * @param $value
+     * @param $options
+     * @return string
+     */
+    private function time($value , $options): string
+    {
+        return mb_substr($value, 0, 8);
+    }
+
+    /**
      * call
      *
      * @param $value
@@ -617,5 +642,19 @@ class GibbonManager
     public function getNextGibbonName(): string
     {
         return $this->getTransferManager()->getNextGibbonName();
+    }
+
+    /**
+     * postRecord
+     *
+     * @param string $entityName
+     * @param array $newData
+     * @return array
+     */
+    private function postRecord(string $entityName, array $newData): array
+    {
+        if (! method_exists($this->getTransferManager(), 'postRecord'))
+            return $newData;
+        return $this->getTransferManager()->postRecord($entityName, $newData, $this->getObjectManager());
     }
 }

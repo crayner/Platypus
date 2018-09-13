@@ -12,11 +12,13 @@ App\Entity\SchoolYearSpecialDay:
             length: 20
         type:
             length: 16
+            column: special_day_type
         description:
             length: 255
             nullable: true
         date:
             type: date
+            column: day_date
         schoolOpen:
             type: time
             nullable: true

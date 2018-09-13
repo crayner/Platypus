@@ -12,7 +12,7 @@ App\Entity\SchoolYear:
             length: 9
             nullable: false
         status:
-            length:
+            length: 10
             options:
                 default: 'upcoming'
             nullable: false
@@ -21,8 +21,10 @@ App\Entity\SchoolYear:
             nullable: false
         firstDay:
             type: date
+            column: first_day
         lastDay:
             type: date
+            column: last_day
     oneToMany:
         terms:
             targetEntity: App\Entity\SchoolYearTerm
