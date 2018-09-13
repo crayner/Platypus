@@ -11,7 +11,7 @@
         "hillrange/symfony-form": "^0.2",
         "knpuniversity/oauth2-client-bundle": "^1.16",
         "league/oauth2-google": "^2.2",
-        "php-translation/symfony-bundle": "^0.7.0",
+        "php-translation/symfony-bundle": "^0.8",
         "platypus-template/original": "^0.0",
         "symfony/asset": "^4.1",
         "symfony/console": "^4.1",

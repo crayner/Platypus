@@ -18,6 +18,7 @@ namespace App\Security\Voter;
 use App\Entity\Action;
 use App\Manager\ActionManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -68,23 +69,43 @@ class ActionVoter implements VoterInterface
      */
     public function vote(TokenInterface $token, $subject, array $attributes)
     {
-        if (empty($subject) || ! $subject instanceof Request || ! in_array('ROLE_ACTION', $attributes))
+        $routeParams = [];
+        if (in_array('USE_ROUTE', $attributes)) {
+            $attributes[] = 'ROLE_ACTION';
+            $r = $subject;
+            foreach($subject as $item)
+            {
+                if (is_string($item))
+                    $route = $item;
+                if (is_array($item))
+                    $routeParams = $item;
+            }
+
+        } elseif (! in_array('ROLE_ACTION', $attributes) || ! $subject instanceof Request)
             return VoterInterface::ACCESS_ABSTAIN;
+        else {
+            $route = $subject->get('_route');
+            $routeParams = $subject->get('_route_params');
+        }
+
 
         if (!$token->getUser() instanceof UserInterface)
             return VoterInterface::ACCESS_DENIED;
-        $route = $subject->get('_route');
-        $routeParams = $subject->get('_route_params');
+
         $actions = $this->actionManager->getRepository()->findByRoute($route);
 
         if (empty($actions))
             throw new \Exception(sprintf('No action has been created for route \'%s\'.', $route));
 
+        $this->found = false;
         foreach($actions as $action)
         {
             if ($this->isAllowed($action, $token, $routeParams))
                 return VoterInterface::ACCESS_GRANTED;
         }
+
+        if (! $this->found)
+            throw new \Exception(sprintf('No action has been created for route \'%s\' that has the appropriate parameters.', $route));
 
         return VoterInterface::ACCESS_DENIED;
 
@@ -105,9 +126,11 @@ class ActionVoter implements VoterInterface
 
         $diff = array_diff($routeParams, $action->getVoterRouteParams());
 
-        if (count($diff) === 1 && isset($diff['_locale']))
+        if (count($diff) === 1 && isset($diff['_locale'])) {
+            $this->found = true;
             if ($this->decisionManager->decide($token, $this->getRoles($action)))
                 return true;
+        }
 
         return false;
     }
