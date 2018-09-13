@@ -51,7 +51,6 @@ App\Entity\Person:
                 default: 1
             column: receive_email_notifications
         personalCalendarFeed:
-            type: text
             nullable: true
             column: personal_calendar_feed
         personalBackground:
@@ -128,37 +127,46 @@ App\Entity\Person:
             type: string
             length: 16
             nullable: true
+            column: citizenship_1
         citizenship1Passport:
             type: string
             length: 16
             nullable: true
+            column: citizenship_1_passport
         citizenship1PassportScan:
             type: string
             length: '150'
             nullable: true
+            column: citizenship_1_passport_scan
         citizenship2:
             type: string
             length: 16
             nullable: true
+            column: citizenship_2
         citizenship2Passport:
             type: string
             length: 16
             nullable: true
+            column: citizenship_2_passport
         nationalIDCard:
             type: string
             length: 32
             nullable: true
+            column: national_card
         nationalIDCardScan:
             type: string
             length: '150'
             nullable: true
+            column: national_card_scan
         residencyStatus:
             type: string
             length: 32
             nullable: true
+            column: residential_status
         visaExpiryDate:
             type: date
             nullable: true
+            column: visa_expiry_date
         vehicleRegistration:
             length: 20
             nullable: true
@@ -189,6 +197,39 @@ App\Entity\Person:
             column: job_title
         website:
             nullable: true
+        viewSchoolCalendar:
+            type: boolean
+            options:
+                default: '1'
+            column: view_school_calendar
+        viewPersonalCalendar:
+            type: boolean
+            options:
+                default: '1'
+            column: view_personal_calendar
+        viewSpaceBookingCalendar:
+            type: boolean
+            options:
+                default: '1'
+            column: view_space_booking_calendar
+        privacy:
+            type: text
+            nullable: true
+        studentAgreements:
+            type: text
+            nullable: true
+            column: student_agreements
+        dayType:
+            length: 30
+            column: day_type
+            nullable: true
+        googleAPIRefreshToken:
+            column: google_refresh_token
+            nullable: true
+        fields:
+            type: array
+            options:
+                default: a:0:{}
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff
@@ -225,10 +266,10 @@ App\Entity\Person:
             joinTable:
                 name: person_secondary_roles
                 joinColumns:
-                    role_id:
+                    person_id:
                         referencedColumnName: id
                 inverseJoinColumns:
-                    person_id:
+                    role_id:
                         referencedColumnName: id
         addresses:
             targetEntity: App\Entity\Address

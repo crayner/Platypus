@@ -1,6 +1,7 @@
 monolog:
     channels:
         - 'demonstration'
+        - 'gibbon'
         - 'setting'
     handlers:
         security:
@@ -33,6 +34,12 @@ monolog:
             type:     rotating_file
             path:     '%kernel.logs_dir%/demonstration.%kernel.environment%.log'
             channels: [demonstration]
+            max_files: 1
+        gibbon:
+            level:    debug
+            type:     rotating_file
+            path:     '%kernel.logs_dir%/gibbon.%kernel.environment%.log'
+            channels: [gibbon]
             max_files: 1
         setting:
             level:    debug

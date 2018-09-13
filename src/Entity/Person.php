@@ -1756,4 +1756,188 @@ class Person
         $this->website = $website;
         return $this;
     }
+
+    /**
+     * @var boolean|null
+     */
+    private $viewSchoolCalendar;
+
+    /**
+     * @return bool
+     */
+    public function getViewSchoolCalendar(): bool
+    {
+        return $this->viewSchoolCalendar ? true : false ;
+    }
+
+    /**
+     * @param bool|null $viewSchoolCalendar
+     * @return Person
+     */
+    public function setViewSchoolCalendar(?bool $viewSchoolCalendar): Person
+    {
+        $this->viewSchoolCalendar = $viewSchoolCalendar ? true : false;
+        return $this;
+    }
+
+    /**
+     * @var boolean|null
+     */
+    private $viewPersonalCalendar;
+
+    /**
+     * @return bool
+     */
+    public function getViewPersonalCalendar(): bool
+    {
+        return $this->viewPersonalCalendar ? true : false ;
+    }
+
+    /**
+     * @param bool|null $viewPersonalCalendar
+     * @return Person
+     */
+    public function setViewPersonalCalendar(?bool $viewPersonalCalendar): Person
+    {
+        $this->viewPersonalCalendar = $viewPersonalCalendar ? true : false;
+        return $this;
+    }
+
+    /**
+     * @var boolean|null
+     */
+    private $viewSpaceBookingCalendar;
+
+    /**
+     * @return bool
+     */
+    public function getViewSpaceBookingCalendar(): bool
+    {
+        return $this->viewSpaceBookingCalendar ? true : false ;
+    }
+
+    /**
+     * @param bool|null $viewSpaceBookingCalendar
+     * @return Person
+     */
+    public function setViewSpaceBookingCalendar(?bool $viewSpaceBookingCalendar): Person
+    {
+        $this->viewSpaceBookingCalendar = $viewSpaceBookingCalendar ? true : false;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $privacy;
+
+    /**
+     * @return null|string
+     */
+    public function getPrivacy(): ?string
+    {
+        return $this->privacy;
+    }
+
+    /**
+     * @param null|string $privacy
+     * @return Person
+     */
+    public function setPrivacy(?string $privacy): Person
+    {
+        $this->privacy = $privacy;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $dayType;
+
+    /**
+     * @return null|string
+     */
+    public function getDayType(): ?string
+    {
+        return $this->dayType;
+    }
+
+    /**
+     * @param null|string $dayType
+     * @return Person
+     */
+    public function setDayType(?string $dayType): Person
+    {
+        $this->dayType = $dayType;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $googleAPIRefreshToken;
+
+    /**
+     * @return null|string
+     */
+    public function getGoogleAPIRefreshToken(): ?string
+    {
+        return $this->googleAPIRefreshToken;
+    }
+
+    /**
+     * @param null|string $googleAPIRefreshToken
+     * @return Person
+     */
+    public function setGoogleAPIRefreshToken(?string $googleAPIRefreshToken): Person
+    {
+        $this->googleAPIRefreshToken = $googleAPIRefreshToken;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $studentAgreements;
+
+    /**
+     * @return null|string
+     */
+    public function getStudentAgreements(): ?string
+    {
+        return $this->studentAgreements;
+    }
+
+    /**
+     * @param null|string $studentAgreements
+     * @return Person
+     */
+    public function setStudentAgreements(?string $studentAgreements): Person
+    {
+        $this->studentAgreements = $studentAgreements;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $fields;
+
+    /**
+     * @return null|string
+     */
+    public function getFields(): ?string
+    {
+        return $this->fields;
+    }
+
+    /**
+     * @param null|string $fields
+     * @return Person
+     */
+    public function setFields(?string $fields): Person
+    {
+        $this->fields = $fields;
+        return $this;
+    }
 }

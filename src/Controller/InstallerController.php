@@ -40,6 +40,10 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Class InstallerController
+ * @package App\Controller
+ */
 class InstallerController extends Controller
 {
     /**

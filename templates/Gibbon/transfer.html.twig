@@ -1,0 +1,24 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'System' %}
+
+{% block title %}{%  if getSetting('org.name.long', 'Busybee Learning') is iterable %}
+{% endif %}{{ 'home.heading'|trans({'%{header}': getSetting('org.name.long', 'Busybee Learning')}) }}{% endblock title %}
+{% block headerTitle %}{{ 'gibbon.transfer.title'|trans({'%{header}': getSetting('org.name.long', 'Busybee Learning')}) }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'gibbon.transfer.description'|trans({'%{gibbonName}': manager.gibbonName}) }}.{% endblock headerLead %}
+
+{% block contentContainer %}
+    <div class="container">
+        <p>{{ 'gibbon.transfer.destination'|trans({'%{gibbonName}': manager.gibbonName}) }}</p>
+        <ul>
+            {% for name in manager.entityName %}
+                <li>{{ name }}</li>
+            {% endfor %}
+        </ul>
+        {% if manager.nextGibbonName is same as ('') %}
+            <hr/>
+        {% else %}
+            <p><a href="{{ path('app_gibbon_transfer', {section: (manager.nextGibbonName ~ 'Manager')}) }}" title="{{ 'gibbon.transfer.load'|trans({'%{next}': manager.nextGibbonName}) }}">{{ 'gibbon.transfer.load'|trans({'%{next}': manager.nextGibbonName}) }}</a></p>
+        {% endif %}
+    </div>
+{% endblock contentContainer %}
