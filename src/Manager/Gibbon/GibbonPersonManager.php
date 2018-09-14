@@ -36,7 +36,7 @@ class GibbonPersonManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = '';
+    protected $nextGibbonName = 'gibbonFamily';
 
     /**
      * @var array
