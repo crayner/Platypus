@@ -11,36 +11,36 @@
  *
  * User: craig
  * Date: 14/09/2018
- * Time: 10:40
+ * Time: 10:47
  */
 namespace App\Manager\Gibbon;
 
-use App\Entity\FileExtension;
+use App\Entity\House;
 
 /**
- * Class GibbonFileExtensionManager
+ * Class GibbonHouseManager
  * @package App\Manager\Gibbon
  */
-class GibbonFileExtensionManager extends GibbonTransferManager
+class GibbonHouseManager extends GibbonTransferManager
 {
     /**
      * @var array
      */
     protected $entityName = [
-        FileExtension::class,
+        House::class,
     ];
 
     /**
      * @var string
      */
-    protected $gibbonName = 'gibbonFileExtension';
+    protected $gibbonName = 'gibbonHouse';
 
     /**
      * @var array
      */
 
     protected $transferRules = [
-        'gibbonFileExtensionID' => [
+        'gibbonHouseID' => [
             'field' => 'id',
             'functions' => [
                 'integer' => '',
@@ -49,20 +49,20 @@ class GibbonFileExtensionManager extends GibbonTransferManager
         'name' => [
             'field' => 'name',
             'functions' => [
-                'length' => 50,
+                'length' => 30,
             ],
         ],
-        'extension' => [
-            'field' => 'extension',
+        'nameShort' => [
+            'field' => 'name_short',
             'functions' => [
-                'length' => 7,
+                'length' => 4,
             ],
         ],
-        'type' => [
-            'field' => 'file_type',
+        'logo' => [
+            'field' => 'logo',
             'functions' => [
-                'length' => 32,
-                'enum' => '',
+                'length' => 255,
+                'nullable' => ''
             ],
         ],
     ];
@@ -70,5 +70,5 @@ class GibbonFileExtensionManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonHouse';
+    protected $nextGibbonName = 'gibbonRole';
 }

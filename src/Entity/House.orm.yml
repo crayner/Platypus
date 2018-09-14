@@ -6,7 +6,7 @@ App\Entity\House:
         locality:
             columns:
                 - name
-                - nameShort
+                - name_short
     id:
         id:
             type: integer
@@ -17,6 +17,7 @@ App\Entity\House:
             length: 30
         nameShort:
             length: 4
+            column: name_short
         logo:
             length: 255
             nullable: true
