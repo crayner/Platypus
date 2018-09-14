@@ -4,6 +4,8 @@ import React from "react"
 import PropTypes from 'prop-types'
 import {translateMessage} from '../Component/MessageTranslator'
 import PaginationCombineCell from './PaginationCombineCell'
+import Parser from 'html-react-parser';
+
 
 export default function PaginationCell(props) {
     const {
@@ -18,6 +20,12 @@ export default function PaginationCell(props) {
         if (definition.style === 'text')
             return (
                 <div className={definition.class + ' card-text col-' + definition.size}>{(definition.translate === false || data[definition.name] === '' ||  data[definition.name] === null ? data[definition.name] : translateMessage(translations, definition.translate + data[definition.name]))}</div>
+            )
+        else if (definition.style === 'html')
+            return (
+                <div className={definition.class + ' card-text col-' + definition.size}>
+                    {Parser(data[definition.name])}
+                </div>
             )
         else if (definition.style === 'photo') {
             if (data[definition.name] === null)
