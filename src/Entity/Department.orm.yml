@@ -21,6 +21,7 @@ App\Entity\Department:
             length: 20
             options:
                 default: 'learning_area'
+            column: department_type
         subjectListing:
             length: 255
             nullable: true

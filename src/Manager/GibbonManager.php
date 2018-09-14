@@ -17,6 +17,7 @@
 namespace App\Manager;
 
 use App\Manager\Gibbon\GibbonTransferInterface;
+use App\Util\StringHelper;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\DBAL\Exception\InvalidFieldNameException;
@@ -436,6 +437,28 @@ class GibbonManager
     }
 
     /**
+     * nullable
+     *
+     * @param $value
+     * @return null
+     */
+    private function nullable($value)
+    {
+        return empty($value) ? null : $value ;
+    }
+
+    /**
+     * enum
+     *
+     * @param $value
+     * @return string
+     */
+    private function enum($value)
+    {
+        return StringHelper::safeString($value, true) ;
+    }
+
+    /**
      * call
      *
      * @param $value
@@ -492,17 +515,6 @@ class GibbonManager
             $links[] = $result;
         }
         $this->joinTables[$joinTable['name']] = array_merge(empty($this->joinTables[$joinTable['name']]) ? [] : $this->joinTables[$joinTable['name']], $links);
-    }
-
-    /**
-     * nullable
-     *
-     * @param $value
-     * @return null
-     */
-    private function nullable($value)
-    {
-        return empty($value) ? null : $value ;
     }
 
     /**
