@@ -11,36 +11,36 @@
  *
  * User: craig
  * Date: 14/09/2018
- * Time: 10:47
+ * Time: 11:03
  */
 namespace App\Manager\Gibbon;
 
-use App\Entity\House;
+use App\Entity\INDescriptor;
 
 /**
- * Class GibbonHouseManager
+ * Class GibbonINDescriptorManager
  * @package App\Manager\Gibbon
  */
-class GibbonHouseManager extends GibbonTransferManager
+class GibbonINDescriptorManager extends GibbonTransferManager
 {
     /**
      * @var array
      */
     protected $entityName = [
-        House::class,
+        INDescriptor::class,
     ];
 
     /**
      * @var string
      */
-    protected $gibbonName = 'gibbonHouse';
+    protected $gibbonName = 'gibbonINDescriptor';
 
     /**
      * @var array
      */
 
     protected $transferRules = [
-        'gibbonHouseID' => [
+        'gibbonINDescriptorID' => [
             'field' => 'id',
             'functions' => [
                 'integer' => '',
@@ -49,20 +49,22 @@ class GibbonHouseManager extends GibbonTransferManager
         'name' => [
             'field' => 'name',
             'functions' => [
-                'length' => 30,
+                'length' => 50,
             ],
         ],
         'nameShort' => [
             'field' => 'name_short',
             'functions' => [
-                'length' => 4,
+                'length' => 5,
             ],
         ],
-        'logo' => [
-            'field' => 'logo',
+        'description' => [
+            'field' => 'description',
+        ],
+        'sequenceNumber' => [
+            'field' => 'sequence',
             'functions' => [
-                'length' => 255,
-                'nullable' => ''
+                'integer' => '',
             ],
         ],
     ];
@@ -70,5 +72,5 @@ class GibbonHouseManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonINDescriptor';
+    protected $nextGibbonName = 'gibbonRole';
 }
