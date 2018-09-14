@@ -317,6 +317,12 @@ System Admin:
                 id: "%"
 People Admin:
     people_management:
+        manage_families:
+            label: manage_families
+            role: ROLE_ADMIN
+            route: manage_families
+            parameters: {}
+            transDomain: Person
         manage_permissions:
             label: manage_permissions
             role: ROLE_ADMIN

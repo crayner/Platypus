@@ -139,7 +139,6 @@ class PersonPagination extends PaginationReactManager
         'u.username' => [
             'label' => 'person.user_name.label',
             'name' => 'username',
-
         ],
     ];
 
@@ -169,7 +168,7 @@ class PersonPagination extends PaginationReactManager
         return $this;
     }
 
-    /**\
+    /**
      * @var array
      */
     protected $actions = [

@@ -23,7 +23,6 @@ use App\Manager\PersonFieldManager;
 use App\Manager\PersonManager;
 use App\Manager\PhoneManager;
 use App\Manager\ThemeManager;
-use App\Manager\UserManager;
 use App\Pagination\PersonPagination;
 use App\Util\AssetHelper;
 use App\Util\PersonHelper;

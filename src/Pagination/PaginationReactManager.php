@@ -548,17 +548,6 @@ abstract class PaginationReactManager implements PaginationInterface
      */
     private function getColumnDefinitions(): array
     {
-        $select = [];
-        foreach($this->getSelect() as $name=>$value)
-            if ($name === intval($name))
-                $select[] = $value;
-            else
-                $select[] = $name;
-
-        $resolver = new OptionsResolver();
-        $resolver->setRequired($select);
-        $resolver->resolve($this->columnDefinitions);
-
         $columnDefinitions = [];
         foreach($this->columnDefinitions as $key => $definition)
         {
@@ -756,9 +745,10 @@ abstract class PaginationReactManager implements PaginationInterface
 
         foreach($this->columnDefinitions as $name=>$definition)
         {
-            if (! empty($definition['select']))
-                $this->select[$name] = $definition['select'];
-            else {
+            if (isset($definition['select'])) {
+                if ($definition['select'] !== false)
+                    $this->select[$name] = $definition['select'];
+            } else {
                 $this->columnDefinitions[$name]['select'] = $name;
                 $this->select[] = $name;
             }

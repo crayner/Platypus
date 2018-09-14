@@ -178,7 +178,7 @@ class Family
     /**
      * @var array
      */
-    private static $statusList = ['','married','separated','divorced','de_facto','other'];
+    private static $statusList = ['','married','separated','divorced','de_facto','widowed','other'];
 
     /**
      * @return string
