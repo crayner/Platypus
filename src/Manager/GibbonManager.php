@@ -185,6 +185,8 @@ class GibbonManager
     public function truncate()
     {
         foreach($this->getEntityName() as $entityName) {
+            if ($this->skipTruncate($entityName))
+                continue;
             $this->preTruncate($entityName);
             $table = $this->objectManager->getClassMetadata($entityName);
             $this->truncateTable($table->table['name']);
@@ -696,5 +698,25 @@ class GibbonManager
         if (! method_exists($this->getTransferManager(), 'postRecord'))
             return $newData;
         return $this->getTransferManager()->postRecord($entityName, $newData, $this->getObjectManager());
+    }
+
+    /**
+     * skipTruncate
+     *
+     * @param string $entityName
+     * @return bool
+     */
+    private function skipTruncate(string $entityName): bool
+    {
+        if (! property_exists($this->getTransferManager(), 'skipTruncate'))
+            return false;
+
+        $skipTruncate = $this->getTransferManager()->skipTruncate;
+        if (empty($skipTruncate[$entityName]))
+            return false;
+
+        if ($skipTruncate[$entityName])
+            return true;
+        return false;
     }
 }

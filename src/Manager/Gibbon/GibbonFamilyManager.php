@@ -13,12 +13,14 @@
  * Date: 14/09/2018
  * Time: 12:21
  */
-
 namespace App\Manager\Gibbon;
-
 
 use App\Entity\Family;
 
+/**
+ * Class GibbonFamilyManager
+ * @package App\Manager\Gibbon
+ */
 class GibbonFamilyManager extends GibbonTransferManager
 {
     /**
@@ -29,7 +31,7 @@ class GibbonFamilyManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = '';
+    protected $nextGibbonName = 'gibbonFamilyAdult';
 
     /**
      * @var array
