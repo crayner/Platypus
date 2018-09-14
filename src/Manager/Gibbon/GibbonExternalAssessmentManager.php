@@ -84,5 +84,5 @@ class GibbonExternalAssessmentManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonRole';
+    protected $nextGibbonName = 'gibbonFacility';
 }

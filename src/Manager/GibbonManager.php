@@ -459,6 +459,18 @@ class GibbonManager
     }
 
     /**
+     * default
+     *
+     * @param $value
+     * @param $options
+     * @return mixed
+     */
+    private function default($value, $options)
+    {
+        return empty($value) ? $options : $value ;
+    }
+
+    /**
      * call
      *
      * @param $value

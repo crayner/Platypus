@@ -14,6 +14,7 @@ App\Entity\Facility:
             unique: true
         type:
             length: 32
+            column: space_type
         capacity:
             type: integer
             nullable: true
@@ -25,6 +26,7 @@ App\Entity\Facility:
             type: integer
             options:
                 default: '0'
+            column: student_computers
         projector:
             type: boolean
         tv:
@@ -40,9 +42,11 @@ App\Entity\Facility:
         phoneInt:
             length: '5'
             nullable: true
+            column: phone_internal
         phoneExt:
             length: '20'
             nullable: true
+            column: phone_external
         comment:
             type: text
             nullable: true
