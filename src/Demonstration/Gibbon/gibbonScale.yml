@@ -1,0 +1,116 @@
+%YAML 1.1
+---
+# craigray_gibbon.gibbonScale
+-
+  gibbonScaleID: 1
+  name: "International Baccalaureate"
+  nameShort: "IB"
+  usage: "7 (highest) to 1 (lowest)"
+  lowestAcceptable: ""
+  active: "N"
+  numeric: "Y"
+-
+  gibbonScaleID: 2
+  name: "International Baccalaureate EE"
+  nameShort: "IBEE"
+  usage: "A (highest) to E (lowest)"
+  lowestAcceptable: ""
+  active: "N"
+  numeric: "N"
+-
+  gibbonScaleID: 3
+  name: "United Kingdom GCSE/iGCSE"
+  nameShort: "GCSE"
+  usage: "A* (highest) to U (lowest)"
+  lowestAcceptable: ""
+  active: "Y"
+  numeric: "N"
+-
+  gibbonScaleID: 4
+  name: "Percentage"
+  nameShort: "%"
+  usage: "100 (highest) to 0 (lowest)"
+  lowestAcceptable: 51
+  active: "Y"
+  numeric: "Y"
+-
+  gibbonScaleID: 5
+  name: "Full Letter Grade"
+  nameShort: "FLG"
+  usage: "A+ (highest) to F (lowest)"
+  lowestAcceptable: ""
+  active: "N"
+  numeric: "N"
+-
+  gibbonScaleID: 6
+  name: "Simple Letter Grade"
+  nameShort: "SLG"
+  usage: "A (highest) to F (lowest)"
+  lowestAcceptable: ""
+  active: "N"
+  numeric: "N"
+-
+  gibbonScaleID: 7
+  name: "International College HK"
+  nameShort: "ICHK"
+  usage: "7 (highest) to 1 (lowest)"
+  lowestAcceptable: 4
+  active: "Y"
+  numeric: "Y"
+-
+  gibbonScaleID: 9
+  name: "Completion"
+  nameShort: "Comp"
+  usage: "Has task has been completed?"
+  lowestAcceptable: 1
+  active: "Y"
+  numeric: "N"
+-
+  gibbonScaleID: 10
+  name: "Cognitive Abilities Test"
+  nameShort: "CAT"
+  usage: "140 (highest) to 60 (lowest)"
+  lowestAcceptable: 70
+  active: "Y"
+  numeric: "Y"
+-
+  gibbonScaleID: 11
+  name: "UK National Curriculum KS3"
+  nameShort: "KS3"
+  usage: "8A (highest) to B3 (lowest)"
+  lowestAcceptable: 14
+  active: "Y"
+  numeric: "N"
+-
+  gibbonScaleID: 12
+  name: "United Kingdom GCSE/iGCSE Predicted"
+  nameShort: "GPrd"
+  usage: "8A (highest) to B3 (lowest)"
+  lowestAcceptable: ""
+  active: "Y"
+  numeric: "N"
+-
+  gibbonScaleID: 13
+  name: "IB Diploma (Subject)"
+  nameShort: "IBDS"
+  usage: "7 (highest) to 1 (lowest)"
+  lowestAcceptable: 4
+  active: "Y"
+  numeric: "Y"
+-
+  gibbonScaleID: 14
+  name: "IB Diploma (Total)"
+  nameShort: "IBDT"
+  usage: "45 (highest) to 0"
+  lowestAcceptable: 22
+  active: "Y"
+  numeric: "Y"
+-
+  gibbonScaleID: 15
+  name: "UK National Curriculum KS3 Simplified"
+  nameShort: "KS3S"
+  usage: "Level 8 (highest) to Level 3 (lowest)"
+  lowestAcceptable: 4
+  active: "Y"
+  numeric: "N"
+...

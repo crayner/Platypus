@@ -1,0 +1,2307 @@
+%YAML 1.1
+---
+# craigray_gibbon.gibbonScaleGrade
+-
+  gibbonScaleGradeID: 1
+  gibbonScaleID: 1
+  value: 7
+  descriptor: 7
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 2
+  gibbonScaleID: 1
+  value: 6
+  descriptor: 6
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 3
+  gibbonScaleID: 1
+  value: 5
+  descriptor: 5
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 4
+  gibbonScaleID: 1
+  value: 4
+  descriptor: 4
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 5
+  gibbonScaleID: 1
+  value: 3
+  descriptor: 3
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 6
+  gibbonScaleID: 1
+  value: 2
+  descriptor: 2
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 7
+  gibbonScaleID: 1
+  value: 1
+  descriptor: 1
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 8
+  gibbonScaleID: 2
+  value: "A"
+  descriptor: "49–60"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 9
+  gibbonScaleID: 2
+  value: "B"
+  descriptor: "40–48"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 10
+  gibbonScaleID: 2
+  value: "C"
+  descriptor: "32–39"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 11
+  gibbonScaleID: 2
+  value: "D"
+  descriptor: "22–31"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 12
+  gibbonScaleID: 2
+  value: "E"
+  descriptor: "0–21"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 13
+  gibbonScaleID: 3
+  value: "A*"
+  descriptor: "A*"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 14
+  gibbonScaleID: 3
+  value: "A"
+  descriptor: "A"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 15
+  gibbonScaleID: 3
+  value: "B"
+  descriptor: "B"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 16
+  gibbonScaleID: 3
+  value: "C"
+  descriptor: "C"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 17
+  gibbonScaleID: 3
+  value: "D"
+  descriptor: "D"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 18
+  gibbonScaleID: 3
+  value: "E"
+  descriptor: "E"
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 19
+  gibbonScaleID: 3
+  value: "F"
+  descriptor: "F"
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 20
+  gibbonScaleID: 3
+  value: "G"
+  descriptor: "G"
+  sequenceNumber: 8
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 21
+  gibbonScaleID: 3
+  value: "U"
+  descriptor: "Unclassified"
+  sequenceNumber: 9
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 22
+  gibbonScaleID: 4
+  value: "100%"
+  descriptor: "100%"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 23
+  gibbonScaleID: 4
+  value: "99%"
+  descriptor: "99%"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 24
+  gibbonScaleID: 4
+  value: "98%"
+  descriptor: "98%"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 25
+  gibbonScaleID: 4
+  value: "97%"
+  descriptor: "97%"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 26
+  gibbonScaleID: 4
+  value: "96%"
+  descriptor: "96%"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 27
+  gibbonScaleID: 4
+  value: "95%"
+  descriptor: "95%"
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 28
+  gibbonScaleID: 4
+  value: "94%"
+  descriptor: "94%"
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 29
+  gibbonScaleID: 4
+  value: "93%"
+  descriptor: "93%"
+  sequenceNumber: 8
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 30
+  gibbonScaleID: 4
+  value: "92%"
+  descriptor: "92%"
+  sequenceNumber: 9
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 31
+  gibbonScaleID: 4
+  value: "91%"
+  descriptor: "91%"
+  sequenceNumber: 10
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 32
+  gibbonScaleID: 4
+  value: "90%"
+  descriptor: "90%"
+  sequenceNumber: 11
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 33
+  gibbonScaleID: 4
+  value: "89%"
+  descriptor: "89%"
+  sequenceNumber: 12
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 34
+  gibbonScaleID: 4
+  value: "88%"
+  descriptor: "88%"
+  sequenceNumber: 13
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 35
+  gibbonScaleID: 4
+  value: "87%"
+  descriptor: "87%"
+  sequenceNumber: 14
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 36
+  gibbonScaleID: 4
+  value: "86%"
+  descriptor: "86%"
+  sequenceNumber: 15
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 37
+  gibbonScaleID: 4
+  value: "85%"
+  descriptor: "85%"
+  sequenceNumber: 16
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 38
+  gibbonScaleID: 4
+  value: "84%"
+  descriptor: "84%"
+  sequenceNumber: 17
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 39
+  gibbonScaleID: 4
+  value: "83%"
+  descriptor: "83%"
+  sequenceNumber: 18
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 40
+  gibbonScaleID: 4
+  value: "82%"
+  descriptor: "82%"
+  sequenceNumber: 19
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 41
+  gibbonScaleID: 4
+  value: "81%"
+  descriptor: "81%"
+  sequenceNumber: 20
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 42
+  gibbonScaleID: 4
+  value: "80%"
+  descriptor: "80%"
+  sequenceNumber: 21
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 43
+  gibbonScaleID: 4
+  value: "79%"
+  descriptor: "79%"
+  sequenceNumber: 22
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 44
+  gibbonScaleID: 4
+  value: "78%"
+  descriptor: "78%"
+  sequenceNumber: 23
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 45
+  gibbonScaleID: 4
+  value: "77%"
+  descriptor: "77%"
+  sequenceNumber: 24
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 46
+  gibbonScaleID: 4
+  value: "76%"
+  descriptor: "76%"
+  sequenceNumber: 25
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 47
+  gibbonScaleID: 4
+  value: "75%"
+  descriptor: "75%"
+  sequenceNumber: 26
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 48
+  gibbonScaleID: 4
+  value: "74%"
+  descriptor: "74%"
+  sequenceNumber: 27
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 49
+  gibbonScaleID: 4
+  value: "73%"
+  descriptor: "73%"
+  sequenceNumber: 28
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 50
+  gibbonScaleID: 4
+  value: "72%"
+  descriptor: "72%"
+  sequenceNumber: 29
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 51
+  gibbonScaleID: 4
+  value: "71%"
+  descriptor: "71%"
+  sequenceNumber: 30
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 52
+  gibbonScaleID: 4
+  value: "70%"
+  descriptor: "70%"
+  sequenceNumber: 31
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 53
+  gibbonScaleID: 4
+  value: "69%"
+  descriptor: "69%"
+  sequenceNumber: 32
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 54
+  gibbonScaleID: 4
+  value: "68%"
+  descriptor: "68%"
+  sequenceNumber: 33
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 55
+  gibbonScaleID: 4
+  value: "67%"
+  descriptor: "67%"
+  sequenceNumber: 34
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 56
+  gibbonScaleID: 4
+  value: "66%"
+  descriptor: "66%"
+  sequenceNumber: 35
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 57
+  gibbonScaleID: 4
+  value: "65%"
+  descriptor: "65%"
+  sequenceNumber: 36
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 58
+  gibbonScaleID: 4
+  value: "64%"
+  descriptor: "64%"
+  sequenceNumber: 37
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 59
+  gibbonScaleID: 4
+  value: "63%"
+  descriptor: "63%"
+  sequenceNumber: 38
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 60
+  gibbonScaleID: 4
+  value: "62%"
+  descriptor: "62%"
+  sequenceNumber: 39
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 61
+  gibbonScaleID: 4
+  value: "61%"
+  descriptor: "61%"
+  sequenceNumber: 40
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 62
+  gibbonScaleID: 4
+  value: "60%"
+  descriptor: "60%"
+  sequenceNumber: 41
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 63
+  gibbonScaleID: 4
+  value: "59%"
+  descriptor: "59%"
+  sequenceNumber: 42
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 64
+  gibbonScaleID: 4
+  value: "58%"
+  descriptor: "58%"
+  sequenceNumber: 43
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 65
+  gibbonScaleID: 4
+  value: "57%"
+  descriptor: "57%"
+  sequenceNumber: 44
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 66
+  gibbonScaleID: 4
+  value: "56%"
+  descriptor: "56%"
+  sequenceNumber: 45
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 67
+  gibbonScaleID: 4
+  value: "55%"
+  descriptor: "55%"
+  sequenceNumber: 46
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 68
+  gibbonScaleID: 4
+  value: "54%"
+  descriptor: "54%"
+  sequenceNumber: 47
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 69
+  gibbonScaleID: 4
+  value: "53%"
+  descriptor: "53%"
+  sequenceNumber: 48
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 70
+  gibbonScaleID: 4
+  value: "52%"
+  descriptor: "52%"
+  sequenceNumber: 49
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 71
+  gibbonScaleID: 4
+  value: "51%"
+  descriptor: "51%"
+  sequenceNumber: 50
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 72
+  gibbonScaleID: 4
+  value: "50%"
+  descriptor: "50%"
+  sequenceNumber: 51
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 73
+  gibbonScaleID: 4
+  value: "49%"
+  descriptor: "49%"
+  sequenceNumber: 52
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 74
+  gibbonScaleID: 4
+  value: "48%"
+  descriptor: "48%"
+  sequenceNumber: 53
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 75
+  gibbonScaleID: 4
+  value: "47%"
+  descriptor: "47%"
+  sequenceNumber: 54
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 76
+  gibbonScaleID: 4
+  value: "46%"
+  descriptor: "46%"
+  sequenceNumber: 55
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 77
+  gibbonScaleID: 4
+  value: "45%"
+  descriptor: "45%"
+  sequenceNumber: 56
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 78
+  gibbonScaleID: 4
+  value: "44%"
+  descriptor: "44%"
+  sequenceNumber: 57
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 79
+  gibbonScaleID: 4
+  value: "43%"
+  descriptor: "43%"
+  sequenceNumber: 58
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 80
+  gibbonScaleID: 4
+  value: "42%"
+  descriptor: "42%"
+  sequenceNumber: 59
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 81
+  gibbonScaleID: 4
+  value: "41%"
+  descriptor: "41%"
+  sequenceNumber: 60
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 82
+  gibbonScaleID: 4
+  value: "40%"
+  descriptor: "40%"
+  sequenceNumber: 61
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 83
+  gibbonScaleID: 4
+  value: "39%"
+  descriptor: "39%"
+  sequenceNumber: 62
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 84
+  gibbonScaleID: 4
+  value: "38%"
+  descriptor: "38%"
+  sequenceNumber: 63
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 85
+  gibbonScaleID: 4
+  value: "37%"
+  descriptor: "37%"
+  sequenceNumber: 64
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 86
+  gibbonScaleID: 4
+  value: "36%"
+  descriptor: "36%"
+  sequenceNumber: 65
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 87
+  gibbonScaleID: 4
+  value: "35%"
+  descriptor: "35%"
+  sequenceNumber: 66
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 88
+  gibbonScaleID: 4
+  value: "34%"
+  descriptor: "34%"
+  sequenceNumber: 67
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 89
+  gibbonScaleID: 4
+  value: "33%"
+  descriptor: "33%"
+  sequenceNumber: 68
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 90
+  gibbonScaleID: 4
+  value: "32%"
+  descriptor: "32%"
+  sequenceNumber: 69
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 91
+  gibbonScaleID: 4
+  value: "31%"
+  descriptor: "31%"
+  sequenceNumber: 70
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 92
+  gibbonScaleID: 4
+  value: "30%"
+  descriptor: "30%"
+  sequenceNumber: 71
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 93
+  gibbonScaleID: 4
+  value: "29%"
+  descriptor: "29%"
+  sequenceNumber: 72
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 94
+  gibbonScaleID: 4
+  value: "28%"
+  descriptor: "28%"
+  sequenceNumber: 73
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 95
+  gibbonScaleID: 4
+  value: "27%"
+  descriptor: "27%"
+  sequenceNumber: 74
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 96
+  gibbonScaleID: 4
+  value: "26%"
+  descriptor: "26%"
+  sequenceNumber: 75
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 97
+  gibbonScaleID: 4
+  value: "25%"
+  descriptor: "25%"
+  sequenceNumber: 76
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 98
+  gibbonScaleID: 4
+  value: "24%"
+  descriptor: "24%"
+  sequenceNumber: 77
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 99
+  gibbonScaleID: 4
+  value: "23%"
+  descriptor: "23%"
+  sequenceNumber: 78
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 100
+  gibbonScaleID: 4
+  value: "22%"
+  descriptor: "22%"
+  sequenceNumber: 79
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 101
+  gibbonScaleID: 4
+  value: "21%"
+  descriptor: "21%"
+  sequenceNumber: 80
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 102
+  gibbonScaleID: 4
+  value: "20%"
+  descriptor: "20%"
+  sequenceNumber: 81
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 103
+  gibbonScaleID: 4
+  value: "19%"
+  descriptor: "19%"
+  sequenceNumber: 82
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 104
+  gibbonScaleID: 4
+  value: "18%"
+  descriptor: "18%"
+  sequenceNumber: 83
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 105
+  gibbonScaleID: 4
+  value: "17%"
+  descriptor: "17%"
+  sequenceNumber: 84
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 106
+  gibbonScaleID: 4
+  value: "16%"
+  descriptor: "16%"
+  sequenceNumber: 85
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 107
+  gibbonScaleID: 4
+  value: "15%"
+  descriptor: "15%"
+  sequenceNumber: 86
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 108
+  gibbonScaleID: 4
+  value: "14%"
+  descriptor: "14%"
+  sequenceNumber: 87
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 109
+  gibbonScaleID: 4
+  value: "13%"
+  descriptor: "13%"
+  sequenceNumber: 88
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 110
+  gibbonScaleID: 4
+  value: "12%"
+  descriptor: "12%"
+  sequenceNumber: 89
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 111
+  gibbonScaleID: 4
+  value: "11%"
+  descriptor: "11%"
+  sequenceNumber: 90
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 112
+  gibbonScaleID: 4
+  value: "10%"
+  descriptor: "10%"
+  sequenceNumber: 91
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 113
+  gibbonScaleID: 4
+  value: "9%"
+  descriptor: "9%"
+  sequenceNumber: 92
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 114
+  gibbonScaleID: 4
+  value: "8%"
+  descriptor: "8%"
+  sequenceNumber: 93
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 115
+  gibbonScaleID: 4
+  value: "7%"
+  descriptor: "7%"
+  sequenceNumber: 94
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 116
+  gibbonScaleID: 4
+  value: "6%"
+  descriptor: "6%"
+  sequenceNumber: 95
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 117
+  gibbonScaleID: 4
+  value: "5%"
+  descriptor: "5%"
+  sequenceNumber: 96
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 118
+  gibbonScaleID: 4
+  value: "4%"
+  descriptor: "4%"
+  sequenceNumber: 97
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 119
+  gibbonScaleID: 4
+  value: "3%"
+  descriptor: "3%"
+  sequenceNumber: 98
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 120
+  gibbonScaleID: 4
+  value: "2%"
+  descriptor: "2%"
+  sequenceNumber: 99
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 121
+  gibbonScaleID: 4
+  value: "1%"
+  descriptor: "2%"
+  sequenceNumber: 100
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 122
+  gibbonScaleID: 4
+  value: "0%"
+  descriptor: "0%"
+  sequenceNumber: 101
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 123
+  gibbonScaleID: 5
+  value: "A+"
+  descriptor: "A+"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 124
+  gibbonScaleID: 5
+  value: "A"
+  descriptor: "A"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 125
+  gibbonScaleID: 5
+  value: "A-"
+  descriptor: "A-"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 126
+  gibbonScaleID: 5
+  value: "B+"
+  descriptor: "B+"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 127
+  gibbonScaleID: 5
+  value: "B"
+  descriptor: "B"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 128
+  gibbonScaleID: 5
+  value: "B-"
+  descriptor: "B-"
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 129
+  gibbonScaleID: 5
+  value: "C+"
+  descriptor: "C+"
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 130
+  gibbonScaleID: 5
+  value: "C"
+  descriptor: "C"
+  sequenceNumber: 8
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 131
+  gibbonScaleID: 5
+  value: "C-"
+  descriptor: "C-"
+  sequenceNumber: 9
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 132
+  gibbonScaleID: 5
+  value: "D+"
+  descriptor: "D+"
+  sequenceNumber: 10
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 133
+  gibbonScaleID: 5
+  value: "D"
+  descriptor: "D"
+  sequenceNumber: 11
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 134
+  gibbonScaleID: 5
+  value: "D-"
+  descriptor: "D-"
+  sequenceNumber: 12
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 135
+  gibbonScaleID: 5
+  value: "E+"
+  descriptor: "E+"
+  sequenceNumber: 13
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 136
+  gibbonScaleID: 5
+  value: "E"
+  descriptor: "E"
+  sequenceNumber: 14
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 137
+  gibbonScaleID: 5
+  value: "E-"
+  descriptor: "E-"
+  sequenceNumber: 15
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 138
+  gibbonScaleID: 5
+  value: "F"
+  descriptor: "F"
+  sequenceNumber: 16
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 139
+  gibbonScaleID: 6
+  value: "A"
+  descriptor: "A"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 140
+  gibbonScaleID: 6
+  value: "B"
+  descriptor: "B"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 141
+  gibbonScaleID: 6
+  value: "C"
+  descriptor: "C"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 142
+  gibbonScaleID: 6
+  value: "D"
+  descriptor: "D"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 143
+  gibbonScaleID: 6
+  value: "E"
+  descriptor: "E"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 144
+  gibbonScaleID: 6
+  value: "F"
+  descriptor: "F"
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 145
+  gibbonScaleID: 7
+  value: 7
+  descriptor: "Exceptional  Performance"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 146
+  gibbonScaleID: 7
+  value: 6
+  descriptor: "Well Above Expected Level"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 147
+  gibbonScaleID: 7
+  value: 5
+  descriptor: "Above Expected Level"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 148
+  gibbonScaleID: 7
+  value: 4
+  descriptor: "At Expected Level"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 149
+  gibbonScaleID: 7
+  value: 3
+  descriptor: "Below Expected Level 	"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 150
+  gibbonScaleID: 7
+  value: 2
+  descriptor: "Well Below Expected Level"
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 151
+  gibbonScaleID: 7
+  value: 1
+  descriptor: "Cause For Concern"
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 152
+  gibbonScaleID: 9
+  value: "Complete"
+  descriptor: "Work complete"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 153
+  gibbonScaleID: 9
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 154
+  gibbonScaleID: 9
+  value: "Late"
+  descriptor: "Work submitted late"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 155
+  gibbonScaleID: 7
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequenceNumber: 8
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 156
+  gibbonScaleID: 1
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequenceNumber: 8
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 157
+  gibbonScaleID: 3
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequenceNumber: 10
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 158
+  gibbonScaleID: 4
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequenceNumber: 102
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 159
+  gibbonScaleID: 5
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequenceNumber: 17
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 160
+  gibbonScaleID: 6
+  value: "Incomplete"
+  descriptor: "Work incomplete"
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 162
+  gibbonScaleID: 10
+  value: 60
+  descriptor: 60
+  sequenceNumber: 110
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 163
+  gibbonScaleID: 10
+  value: 61
+  descriptor: 61
+  sequenceNumber: 109
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 164
+  gibbonScaleID: 10
+  value: 62
+  descriptor: 62
+  sequenceNumber: 108
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 165
+  gibbonScaleID: 10
+  value: 63
+  descriptor: 63
+  sequenceNumber: 107
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 166
+  gibbonScaleID: 10
+  value: 64
+  descriptor: 64
+  sequenceNumber: 106
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 167
+  gibbonScaleID: 10
+  value: 65
+  descriptor: 65
+  sequenceNumber: 105
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 168
+  gibbonScaleID: 10
+  value: 66
+  descriptor: 66
+  sequenceNumber: 104
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 169
+  gibbonScaleID: 10
+  value: 67
+  descriptor: 67
+  sequenceNumber: 103
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 170
+  gibbonScaleID: 10
+  value: 68
+  descriptor: 68
+  sequenceNumber: 102
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 171
+  gibbonScaleID: 10
+  value: 69
+  descriptor: 69
+  sequenceNumber: 101
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 172
+  gibbonScaleID: 10
+  value: 70
+  descriptor: 70
+  sequenceNumber: 100
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 173
+  gibbonScaleID: 10
+  value: 71
+  descriptor: 71
+  sequenceNumber: 99
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 174
+  gibbonScaleID: 10
+  value: 72
+  descriptor: 72
+  sequenceNumber: 98
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 175
+  gibbonScaleID: 10
+  value: 73
+  descriptor: 73
+  sequenceNumber: 97
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 176
+  gibbonScaleID: 10
+  value: 74
+  descriptor: 74
+  sequenceNumber: 96
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 177
+  gibbonScaleID: 10
+  value: 75
+  descriptor: 75
+  sequenceNumber: 95
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 178
+  gibbonScaleID: 10
+  value: 76
+  descriptor: 76
+  sequenceNumber: 94
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 179
+  gibbonScaleID: 10
+  value: 77
+  descriptor: 77
+  sequenceNumber: 93
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 180
+  gibbonScaleID: 10
+  value: 78
+  descriptor: 78
+  sequenceNumber: 92
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 181
+  gibbonScaleID: 10
+  value: 79
+  descriptor: 79
+  sequenceNumber: 91
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 182
+  gibbonScaleID: 10
+  value: 80
+  descriptor: 80
+  sequenceNumber: 90
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 183
+  gibbonScaleID: 10
+  value: 81
+  descriptor: 81
+  sequenceNumber: 89
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 184
+  gibbonScaleID: 10
+  value: 82
+  descriptor: 82
+  sequenceNumber: 88
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 185
+  gibbonScaleID: 10
+  value: 83
+  descriptor: 83
+  sequenceNumber: 87
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 186
+  gibbonScaleID: 10
+  value: 84
+  descriptor: 84
+  sequenceNumber: 86
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 187
+  gibbonScaleID: 10
+  value: 85
+  descriptor: 85
+  sequenceNumber: 85
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 188
+  gibbonScaleID: 10
+  value: 86
+  descriptor: 86
+  sequenceNumber: 84
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 189
+  gibbonScaleID: 10
+  value: 87
+  descriptor: 87
+  sequenceNumber: 83
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 190
+  gibbonScaleID: 10
+  value: 88
+  descriptor: 88
+  sequenceNumber: 82
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 191
+  gibbonScaleID: 10
+  value: 89
+  descriptor: 89
+  sequenceNumber: 81
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 192
+  gibbonScaleID: 10
+  value: 90
+  descriptor: 90
+  sequenceNumber: 80
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 193
+  gibbonScaleID: 10
+  value: 91
+  descriptor: 91
+  sequenceNumber: 79
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 194
+  gibbonScaleID: 10
+  value: 92
+  descriptor: 92
+  sequenceNumber: 78
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 195
+  gibbonScaleID: 10
+  value: 93
+  descriptor: 93
+  sequenceNumber: 77
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 196
+  gibbonScaleID: 10
+  value: 94
+  descriptor: 94
+  sequenceNumber: 76
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 197
+  gibbonScaleID: 10
+  value: 95
+  descriptor: 95
+  sequenceNumber: 75
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 198
+  gibbonScaleID: 10
+  value: 96
+  descriptor: 96
+  sequenceNumber: 74
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 199
+  gibbonScaleID: 10
+  value: 97
+  descriptor: 97
+  sequenceNumber: 73
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 200
+  gibbonScaleID: 10
+  value: 98
+  descriptor: 98
+  sequenceNumber: 72
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 201
+  gibbonScaleID: 10
+  value: 99
+  descriptor: 99
+  sequenceNumber: 71
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 202
+  gibbonScaleID: 10
+  value: 100
+  descriptor: 100
+  sequenceNumber: 70
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 203
+  gibbonScaleID: 10
+  value: 101
+  descriptor: 101
+  sequenceNumber: 69
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 204
+  gibbonScaleID: 10
+  value: 102
+  descriptor: 102
+  sequenceNumber: 68
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 205
+  gibbonScaleID: 10
+  value: 103
+  descriptor: 103
+  sequenceNumber: 67
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 206
+  gibbonScaleID: 10
+  value: 104
+  descriptor: 104
+  sequenceNumber: 66
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 207
+  gibbonScaleID: 10
+  value: 105
+  descriptor: 105
+  sequenceNumber: 65
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 208
+  gibbonScaleID: 10
+  value: 106
+  descriptor: 106
+  sequenceNumber: 64
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 209
+  gibbonScaleID: 10
+  value: 107
+  descriptor: 107
+  sequenceNumber: 63
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 210
+  gibbonScaleID: 10
+  value: 108
+  descriptor: 108
+  sequenceNumber: 62
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 211
+  gibbonScaleID: 10
+  value: 109
+  descriptor: 109
+  sequenceNumber: 61
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 212
+  gibbonScaleID: 10
+  value: 110
+  descriptor: 110
+  sequenceNumber: 60
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 213
+  gibbonScaleID: 10
+  value: 111
+  descriptor: 111
+  sequenceNumber: 59
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 214
+  gibbonScaleID: 10
+  value: 112
+  descriptor: 112
+  sequenceNumber: 58
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 215
+  gibbonScaleID: 10
+  value: 113
+  descriptor: 113
+  sequenceNumber: 57
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 216
+  gibbonScaleID: 10
+  value: 114
+  descriptor: 114
+  sequenceNumber: 56
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 217
+  gibbonScaleID: 10
+  value: 115
+  descriptor: 115
+  sequenceNumber: 55
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 218
+  gibbonScaleID: 10
+  value: 116
+  descriptor: 116
+  sequenceNumber: 54
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 219
+  gibbonScaleID: 10
+  value: 117
+  descriptor: 117
+  sequenceNumber: 53
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 220
+  gibbonScaleID: 10
+  value: 118
+  descriptor: 118
+  sequenceNumber: 52
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 221
+  gibbonScaleID: 10
+  value: 119
+  descriptor: 119
+  sequenceNumber: 51
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 222
+  gibbonScaleID: 10
+  value: 120
+  descriptor: 120
+  sequenceNumber: 50
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 223
+  gibbonScaleID: 10
+  value: 121
+  descriptor: 121
+  sequenceNumber: 49
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 224
+  gibbonScaleID: 10
+  value: 122
+  descriptor: 122
+  sequenceNumber: 48
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 225
+  gibbonScaleID: 10
+  value: 123
+  descriptor: 123
+  sequenceNumber: 47
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 226
+  gibbonScaleID: 10
+  value: 124
+  descriptor: 124
+  sequenceNumber: 46
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 227
+  gibbonScaleID: 10
+  value: 125
+  descriptor: 125
+  sequenceNumber: 45
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 228
+  gibbonScaleID: 10
+  value: 126
+  descriptor: 126
+  sequenceNumber: 44
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 229
+  gibbonScaleID: 10
+  value: 127
+  descriptor: 127
+  sequenceNumber: 43
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 230
+  gibbonScaleID: 10
+  value: 128
+  descriptor: 128
+  sequenceNumber: 42
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 231
+  gibbonScaleID: 10
+  value: 129
+  descriptor: 129
+  sequenceNumber: 41
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 232
+  gibbonScaleID: 10
+  value: 130
+  descriptor: 130
+  sequenceNumber: 40
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 233
+  gibbonScaleID: 10
+  value: 131
+  descriptor: 131
+  sequenceNumber: 39
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 234
+  gibbonScaleID: 10
+  value: 132
+  descriptor: 132
+  sequenceNumber: 38
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 235
+  gibbonScaleID: 10
+  value: 133
+  descriptor: 133
+  sequenceNumber: 37
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 236
+  gibbonScaleID: 10
+  value: 134
+  descriptor: 134
+  sequenceNumber: 36
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 237
+  gibbonScaleID: 10
+  value: 135
+  descriptor: 135
+  sequenceNumber: 35
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 238
+  gibbonScaleID: 10
+  value: 136
+  descriptor: 136
+  sequenceNumber: 34
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 239
+  gibbonScaleID: 10
+  value: 137
+  descriptor: 137
+  sequenceNumber: 33
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 240
+  gibbonScaleID: 10
+  value: 138
+  descriptor: 138
+  sequenceNumber: 32
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 241
+  gibbonScaleID: 10
+  value: 139
+  descriptor: 139
+  sequenceNumber: 31
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 242
+  gibbonScaleID: 10
+  value: 140
+  descriptor: 140
+  sequenceNumber: 30
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 243
+  gibbonScaleID: 11
+  value: "8A"
+  descriptor: "8A"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 244
+  gibbonScaleID: 11
+  value: "8B"
+  descriptor: "8B"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 245
+  gibbonScaleID: 11
+  value: "8C"
+  descriptor: "8C"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 246
+  gibbonScaleID: 11
+  value: "7A"
+  descriptor: "7A"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 247
+  gibbonScaleID: 11
+  value: "7B"
+  descriptor: "7B"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 248
+  gibbonScaleID: 11
+  value: "7C"
+  descriptor: "7C"
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 249
+  gibbonScaleID: 11
+  value: "6A"
+  descriptor: "6A"
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 250
+  gibbonScaleID: 11
+  value: "6B"
+  descriptor: "6B"
+  sequenceNumber: 8
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 251
+  gibbonScaleID: 11
+  value: "6C"
+  descriptor: "6C"
+  sequenceNumber: 9
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 252
+  gibbonScaleID: 11
+  value: "5A"
+  descriptor: "5A"
+  sequenceNumber: 9
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 253
+  gibbonScaleID: 11
+  value: "5B"
+  descriptor: "5B"
+  sequenceNumber: 10
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 254
+  gibbonScaleID: 11
+  value: "5C"
+  descriptor: "5C"
+  sequenceNumber: 11
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 255
+  gibbonScaleID: 11
+  value: "4A"
+  descriptor: "4A"
+  sequenceNumber: 12
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 256
+  gibbonScaleID: 11
+  value: "4B"
+  descriptor: "4B"
+  sequenceNumber: 13
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 257
+  gibbonScaleID: 11
+  value: "4C"
+  descriptor: "4C"
+  sequenceNumber: 14
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 258
+  gibbonScaleID: 11
+  value: "B3"
+  descriptor: "B3"
+  sequenceNumber: 15
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 259
+  gibbonScaleID: 12
+  value: "A"
+  descriptor: "A"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 260
+  gibbonScaleID: 12
+  value: "A/B"
+  descriptor: "A/B"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 261
+  gibbonScaleID: 12
+  value: "B"
+  descriptor: "B"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 262
+  gibbonScaleID: 12
+  value: "B/C"
+  descriptor: "B/C"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 263
+  gibbonScaleID: 12
+  value: "C"
+  descriptor: "C"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 264
+  gibbonScaleID: 12
+  value: "C/D"
+  descriptor: "C/D"
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 265
+  gibbonScaleID: 12
+  value: "D"
+  descriptor: "D"
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 266
+  gibbonScaleID: 12
+  value: "D/E"
+  descriptor: "D/E"
+  sequenceNumber: 8
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 267
+  gibbonScaleID: 12
+  value: "E"
+  descriptor: "E"
+  sequenceNumber: 9
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 268
+  gibbonScaleID: 12
+  value: "E/F"
+  descriptor: "E/F"
+  sequenceNumber: 10
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 269
+  gibbonScaleID: 12
+  value: "F"
+  descriptor: "F"
+  sequenceNumber: 11
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 270
+  gibbonScaleID: 12
+  value: "G"
+  descriptor: "G"
+  sequenceNumber: 12
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 271
+  gibbonScaleID: 12
+  value: "U"
+  descriptor: "Unclassified"
+  sequenceNumber: 13
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 272
+  gibbonScaleID: 10
+  value: 141
+  descriptor: 141
+  sequenceNumber: 29
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 273
+  gibbonScaleID: 13
+  value: 7
+  descriptor: 7
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 274
+  gibbonScaleID: 13
+  value: 6
+  descriptor: 6
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 275
+  gibbonScaleID: 13
+  value: 5
+  descriptor: 5
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 276
+  gibbonScaleID: 13
+  value: 4
+  descriptor: 4
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 277
+  gibbonScaleID: 13
+  value: 3
+  descriptor: 3
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 278
+  gibbonScaleID: 13
+  value: 2
+  descriptor: 2
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 279
+  gibbonScaleID: 13
+  value: 1
+  descriptor: 1
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 280
+  gibbonScaleID: 14
+  value: 45
+  descriptor: 45
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 281
+  gibbonScaleID: 14
+  value: 44
+  descriptor: 44
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 282
+  gibbonScaleID: 14
+  value: 43
+  descriptor: 43
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 283
+  gibbonScaleID: 14
+  value: 42
+  descriptor: 42
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 284
+  gibbonScaleID: 14
+  value: 41
+  descriptor: 41
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 285
+  gibbonScaleID: 14
+  value: 40
+  descriptor: 40
+  sequenceNumber: 6
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 286
+  gibbonScaleID: 14
+  value: 39
+  descriptor: 39
+  sequenceNumber: 7
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 287
+  gibbonScaleID: 14
+  value: 38
+  descriptor: 38
+  sequenceNumber: 8
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 288
+  gibbonScaleID: 14
+  value: 37
+  descriptor: 37
+  sequenceNumber: 9
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 289
+  gibbonScaleID: 14
+  value: 36
+  descriptor: 36
+  sequenceNumber: 10
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 290
+  gibbonScaleID: 14
+  value: 35
+  descriptor: 35
+  sequenceNumber: 11
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 291
+  gibbonScaleID: 14
+  value: 34
+  descriptor: 34
+  sequenceNumber: 12
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 292
+  gibbonScaleID: 14
+  value: 33
+  descriptor: 33
+  sequenceNumber: 13
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 293
+  gibbonScaleID: 14
+  value: 32
+  descriptor: 32
+  sequenceNumber: 14
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 294
+  gibbonScaleID: 14
+  value: 31
+  descriptor: 31
+  sequenceNumber: 15
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 295
+  gibbonScaleID: 14
+  value: 30
+  descriptor: 30
+  sequenceNumber: 16
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 296
+  gibbonScaleID: 14
+  value: 29
+  descriptor: 29
+  sequenceNumber: 17
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 297
+  gibbonScaleID: 14
+  value: 28
+  descriptor: 28
+  sequenceNumber: 18
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 298
+  gibbonScaleID: 14
+  value: 27
+  descriptor: 27
+  sequenceNumber: 19
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 299
+  gibbonScaleID: 14
+  value: 26
+  descriptor: 26
+  sequenceNumber: 20
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 300
+  gibbonScaleID: 14
+  value: 25
+  descriptor: 25
+  sequenceNumber: 21
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 301
+  gibbonScaleID: 14
+  value: 24
+  descriptor: 24
+  sequenceNumber: 22
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 302
+  gibbonScaleID: 14
+  value: 23
+  descriptor: 23
+  sequenceNumber: 23
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 303
+  gibbonScaleID: 14
+  value: 22
+  descriptor: 22
+  sequenceNumber: 24
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 304
+  gibbonScaleID: 14
+  value: 21
+  descriptor: 21
+  sequenceNumber: 25
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 305
+  gibbonScaleID: 14
+  value: 20
+  descriptor: 20
+  sequenceNumber: 26
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 306
+  gibbonScaleID: 14
+  value: 19
+  descriptor: 19
+  sequenceNumber: 27
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 307
+  gibbonScaleID: 14
+  value: 18
+  descriptor: 18
+  sequenceNumber: 28
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 308
+  gibbonScaleID: 14
+  value: 17
+  descriptor: 17
+  sequenceNumber: 29
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 309
+  gibbonScaleID: 14
+  value: 16
+  descriptor: 16
+  sequenceNumber: 30
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 310
+  gibbonScaleID: 14
+  value: 15
+  descriptor: 15
+  sequenceNumber: 31
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 311
+  gibbonScaleID: 14
+  value: 14
+  descriptor: 14
+  sequenceNumber: 32
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 312
+  gibbonScaleID: 14
+  value: 13
+  descriptor: 13
+  sequenceNumber: 33
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 313
+  gibbonScaleID: 14
+  value: 12
+  descriptor: 12
+  sequenceNumber: 34
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 314
+  gibbonScaleID: 14
+  value: 11
+  descriptor: 11
+  sequenceNumber: 35
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 315
+  gibbonScaleID: 14
+  value: 10
+  descriptor: 10
+  sequenceNumber: 36
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 316
+  gibbonScaleID: 14
+  value: 9
+  descriptor: 9
+  sequenceNumber: 37
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 317
+  gibbonScaleID: 14
+  value: 8
+  descriptor: 8
+  sequenceNumber: 38
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 318
+  gibbonScaleID: 14
+  value: 7
+  descriptor: 7
+  sequenceNumber: 39
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 319
+  gibbonScaleID: 14
+  value: 6
+  descriptor: 6
+  sequenceNumber: 40
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 320
+  gibbonScaleID: 14
+  value: 5
+  descriptor: 5
+  sequenceNumber: 41
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 321
+  gibbonScaleID: 14
+  value: 4
+  descriptor: 4
+  sequenceNumber: 42
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 322
+  gibbonScaleID: 14
+  value: 3
+  descriptor: 3
+  sequenceNumber: 43
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 323
+  gibbonScaleID: 14
+  value: 2
+  descriptor: 2
+  sequenceNumber: 44
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 324
+  gibbonScaleID: 14
+  value: 1
+  descriptor: 1
+  sequenceNumber: 45
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 325
+  gibbonScaleID: 15
+  value: 8
+  descriptor: "Level 8"
+  sequenceNumber: 1
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 326
+  gibbonScaleID: 15
+  value: 7
+  descriptor: "Level 7"
+  sequenceNumber: 2
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 327
+  gibbonScaleID: 15
+  value: 6
+  descriptor: "Level 6"
+  sequenceNumber: 3
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 328
+  gibbonScaleID: 15
+  value: 5
+  descriptor: "Level 5"
+  sequenceNumber: 4
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 329
+  gibbonScaleID: 15
+  value: 4
+  descriptor: "Level 4"
+  sequenceNumber: 5
+  isDefault: "N"
+-
+  gibbonScaleGradeID: 330
+  gibbonScaleID: 15
+  value: 3
+  descriptor: "Level 3"
+  sequenceNumber: 6
+  isDefault: "N"
+...
