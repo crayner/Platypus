@@ -16,6 +16,7 @@ App\Entity\NotificationEvent:
             options:
                 default: 'core'
             nullable: false
+            column: event_type
         scopes:
             type: json_array
             nullable: false

@@ -565,7 +565,6 @@ class GibbonManager
         return in_array(strtoupper($value), ['Y']) ? '0' : '1' ;
     }
 
-
     /**
      * array
      *
@@ -581,6 +580,23 @@ class GibbonManager
             $value = [];
 
         return serialize($value) ;
+    }
+
+    /**
+     * json_array
+     *
+     * @param $value
+     * @return string
+     */
+    private function json_array($value): string
+    {
+        if (is_string($value))
+            $value = explode(',',$value);
+
+        if (empty($value))
+            $value = [];
+
+        return json_encode($value) ;
     }
 
     /**

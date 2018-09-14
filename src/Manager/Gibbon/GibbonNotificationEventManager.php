@@ -11,66 +11,74 @@
  *
  * User: craig
  * Date: 14/09/2018
- * Time: 11:03
+ * Time: 11:11
  */
+
 namespace App\Manager\Gibbon;
 
-use App\Entity\INDescriptor;
 
-/**
- * Class GibbonINDescriptorManager
- * @package App\Manager\Gibbon
- */
-class GibbonINDescriptorManager extends GibbonTransferManager
+use App\Entity\NotificationEvent;
+
+class GibbonNotificationEventManager extends GibbonTransferManager
 {
     /**
      * @var array
      */
     protected $entityName = [
-        INDescriptor::class,
+        NotificationEvent::class,
     ];
 
     /**
      * @var string
      */
-    protected $gibbonName = 'gibbonINDescriptor';
+    protected $gibbonName = 'gibbonNotificationEvent';
 
     /**
      * @var array
      */
 
     protected $transferRules = [
-        'gibbonINDescriptorID' => [
+        'gibbonNotificationEventID' => [
             'field' => 'id',
             'functions' => [
                 'integer' => '',
             ],
         ],
-        'name' => [
-            'field' => 'name',
+        'event' => [
+            'field' => 'event',
             'functions' => [
-                'length' => 50,
+                'length' => 90,
             ],
         ],
-        'nameShort' => [
-            'field' => 'name_short',
+        'type' => [
+            'field' => 'event_type',
             'functions' => [
-                'length' => 5,
+                'length' => 10,
+                'enum' => '',
             ],
         ],
-        'description' => [
-            'field' => 'description',
-        ],
-        'sequenceNumber' => [
-            'field' => 'sequence',
+        'scopes' => [
+            'field' => 'scopes',
             'functions' => [
-                'integer' => '',
+                'json_array' => '',
             ],
+        ],
+        'active' => [
+            'field' => 'active',
+            'functions' => [
+                'boolean' => '',
+            ],
+        ],
+        'moduleName' => [
+            'field' => '',
+        ],
+        'actionName' => [
+            'field' => '',
         ],
     ];
 
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonNotificationEvent';
+    protected $nextGibbonName = 'gibbonRole';
 }
