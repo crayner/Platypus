@@ -15,6 +15,7 @@
  */
 namespace App\Manager\Gibbon;
 
+use App\Entity\Family;
 use App\Entity\FamilyPerson;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -106,6 +107,19 @@ class GibbonFamilyChildManager extends GibbonTransferManager
             ->getArrayResult()
         ;
         $meta = $manager->getClassMetadata($entityName);
+
+        foreach($result as $id)
+            $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
+
+        $result = $manager->getRepository(Family::class)->createQueryBuilder('f')
+            ->leftJoin('f.members', 'm')
+            ->where('m.id IS NULL')
+            ->select('f.id')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+
+        $meta = $manager->getClassMetadata(Family::class);
 
         foreach($result as $id)
             $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
