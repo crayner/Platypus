@@ -1,0 +1,28 @@
+%YAML 1.1
+---
+# craigray_gibbon.gibbonExternalAssessment
+-
+  gibbonExternalAssessmentID: 1
+  name: "Cognitive Abilities Test"
+  nameShort: "CAT"
+  description: "UK-based standardised tests that provides scores in maths, verbal and non-verbal skills, as well as KS3 and GCSE predicted grades."
+  website: ""
+  active: "Y"
+  allowFileUpload: "N"
+-
+  gibbonExternalAssessmentID: 2
+  name: "GCSE/iGCSE"
+  nameShort: "GCSE"
+  description: "UK-based General Certificate of Secondary Education"
+  website: ""
+  active: "Y"
+  allowFileUpload: "N"
+-
+  gibbonExternalAssessmentID: 3
+  name: "IB Diploma"
+  nameShort: "IB Diploma"
+  description: "International Baccalaureate Diploma"
+  website: "http://www.ibo.org/"
+  active: "Y"
+  allowFileUpload: "N"
+...

@@ -10,33 +10,37 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 13/09/2018
- * Time: 15:12
+ * Date: 14/09/2018
+ * Time: 10:17
  */
 namespace App\Manager\Gibbon;
 
-use App\Entity\Department;
+use App\Entity\ExternalAssessment;
 
-class GibbonDepartmentManager extends GibbonTransferManager
+/**
+ * Class GibbonExternalAssessmentManager
+ * @package App\Manager\Gibbon
+ */
+class GibbonExternalAssessmentManager extends GibbonTransferManager
 {
     /**
      * @var array
      */
     protected $entityName = [
-        Department::class,
+        ExternalAssessment::class,
     ];
 
     /**
      * @var string
      */
-    protected $gibbonName = 'gibbonDepartment';
+    protected $gibbonName = 'gibbonExternalAssessment';
 
     /**
      * @var array
      */
 
     protected $transferRules = [
-        'gibbonDepartmentID' => [
+        'gibbonExternalAssessmentID' => [
             'field' => 'id',
             'functions' => [
                 'integer' => '',
@@ -51,32 +55,34 @@ class GibbonDepartmentManager extends GibbonTransferManager
         'nameShort' => [
             'field' => 'name_short',
             'functions' => [
-                'length' => 4,
+                'length' => 10,
             ],
         ],
-        'subjectListing' => [
-            'field' => 'subject_listing',
+        'description' => [
+            'field' => 'description',
+        ],
+        'website' => [
+            'field' => 'website',
             'functions' => [
                 'length' => 255,
             ],
         ],
-        'type' => [
-            'field' => 'department_type',
+        'active' => [
+            'field' => 'active',
             'functions' => [
-                'length' => 20,
-                'enum' => '',
+                'boolean' => '',
             ],
         ],
-        'blurb' => [
-            'field' => 'blurb',
-        ],
-        'logo' => [
-            'field' => 'logo',
+        'allowFileUpload' => [
+            'field' => 'allow_file_upload',
+            'functions' => [
+                'boolean' => '',
+            ],
         ],
     ];
 
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonExternalAssessment';
+    protected $nextGibbonName = 'gibbonRole';
 }
