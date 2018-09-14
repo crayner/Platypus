@@ -34,6 +34,7 @@ App\Entity\Family:
             targetEntity: App\Entity\FamilyPerson
             mappedBy: family
             cascade: [ persist, remove ]
+            orphanRemoval: true
     manyToMany:
         addresses:
             targetEntity: App\Entity\Address

@@ -239,6 +239,7 @@ App\Entity\Person:
             targetEntity: App\Entity\FamilyPerson
             mappedBy: person
             cascade: [ persist, remove ]
+            orphanRemoval: true
     manyToOne:
         primaryRole:
             targetEntity: App\Entity\PersonRole

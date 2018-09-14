@@ -16,6 +16,7 @@
 namespace App\Manager\Gibbon;
 
 use App\Entity\FamilyPerson;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class GibbonFamilyChildManager
@@ -85,5 +86,28 @@ class GibbonFamilyChildManager extends GibbonTransferManager
     {
         $newData['person_type'] = 'child';
         return $newData;
+    }
+
+    /**
+     * postLoad
+     *
+     * @param string $entityName
+     * @param ObjectManager $manager
+     */
+    public function postLoad(string $entityName, ObjectManager $manager)
+    {
+        $result = $manager->getRepository(FamilyPerson::class)->createQueryBuilder('x')
+            ->leftJoin('x.person', 'p')
+            ->leftJoin('x.family', 'f')
+            ->where('p.id IS NULL')
+            ->orWhere('f.id IS NULL')
+            ->select('x.id')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+        $meta = $manager->getClassMetadata($entityName);
+
+        foreach($result as $id)
+            $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
     }
 }
