@@ -483,9 +483,9 @@ class GibbonManager
             trigger_error('Call options must have a function');
         $function = $options['function'];
 
-        $options['options'] = array_merge($options['options'] ?: [], ['datum' => $this->datum]);
+        $options['options'] = array_merge(empty($options['options']) ? [] : $options['options'], ['datum' => $this->datum]);
 
-        return $this->getTransferManager()->$function($value, $options['options']);
+        return $this->getTransferManager()->$function($value, $options['options'], $this->getObjectManager());
     }
 
     /**

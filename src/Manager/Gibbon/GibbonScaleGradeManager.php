@@ -11,76 +11,75 @@
  *
  * User: craig
  * Date: 14/09/2018
- * Time: 11:11
+ * Time: 11:38
  */
 namespace App\Manager\Gibbon;
 
-use App\Entity\NotificationEvent;
+use App\Entity\ScaleGrade;
 
 /**
- * Class GibbonNotificationEventManager
+ * Class GibbonScaleGradeManager
  * @package App\Manager\Gibbon
  */
-class GibbonNotificationEventManager extends GibbonTransferManager
+class GibbonScaleGradeManager extends GibbonTransferManager
 {
     /**
      * @var array
      */
     protected $entityName = [
-        NotificationEvent::class,
+        ScaleGrade::class,
     ];
 
     /**
      * @var string
      */
-    protected $gibbonName = 'gibbonNotificationEvent';
+    protected $gibbonName = 'gibbonScaleGrade';
 
     /**
      * @var array
      */
 
     protected $transferRules = [
-        'gibbonNotificationEventID' => [
+        'gibbonScaleGradeID' => [
             'field' => 'id',
             'functions' => [
                 'integer' => '',
             ],
         ],
-        'event' => [
-            'field' => 'event',
+        'gibbonScaleID' => [
+            'field' => 'scale_id',
             'functions' => [
-                'length' => 90,
+                'integer' => '',
             ],
         ],
-        'type' => [
-            'field' => 'event_type',
+        'value' => [
+            'field' => 'value',
             'functions' => [
                 'length' => 10,
-                'enum' => '',
             ],
         ],
-        'scopes' => [
-            'field' => 'scopes',
+        'descriptor' => [
+            'field' => 'descriptor',
             'functions' => [
-                'json_array' => '',
+                'length' => 50,
             ],
         ],
-        'active' => [
-            'field' => 'active',
+        'sequenceNumber' => [
+            'field' => 'sequence',
+            'functions' => [
+                'integer' => '',
+            ],
+        ],
+        'isDefault' => [
+            'field' => 'is_default',
             'functions' => [
                 'boolean' => '',
             ],
-        ],
-        'moduleName' => [
-            'field' => '',
-        ],
-        'actionName' => [
-            'field' => '',
         ],
     ];
 
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonScaleGrade';
+    protected $nextGibbonName = 'gibbonScale';
 }
