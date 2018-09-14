@@ -1,6 +1,8 @@
 <?php
 namespace App\Pagination;
 
+use App\Entity\FamilyMemberAdult;
+use App\Entity\FamilyMemberChild;
 use App\Entity\Person;
 
 class PersonPagination extends PaginationReactManager
@@ -38,7 +40,7 @@ class PersonPagination extends PaginationReactManager
 				'type' => 'leftJoin',
 				'alias' =>'r',
 			],
-            'p.families' => [
+/*            'p.families' => [
                 'type' => 'leftJoin',
                 'alias' => 'fp',
             ],
@@ -46,7 +48,7 @@ class PersonPagination extends PaginationReactManager
                 'type' => 'leftJoin',
                 'alias' => 'f',
             ],
-		];
+*/		];
 
 	/**
 	 * @var string
@@ -69,9 +71,33 @@ class PersonPagination extends PaginationReactManager
      */
     public function getAllResults(): array
     {
-        return $this->buildQuery()
+        $results = $this->buildQuery()
             ->getQuery()
             ->getArrayResult();
+
+        $people = $this->getRepository(FamilyMemberAdult::class)->createQueryBuilder('m')
+            ->select('p.id, f.name')
+            ->leftJoin('m.family', 'f')
+            ->leftJoin('m.person', 'p')
+            ->getQuery()
+            ->getArrayResult();
+        $people = array_merge($people, $this->getRepository(FamilyMemberChild::class)->createQueryBuilder('m')
+            ->select('p.id, f.name')
+            ->leftJoin('m.family', 'f')
+            ->leftJoin('m.person', 'p')
+            ->getQuery()
+            ->getArrayResult());
+
+        foreach($results as $q=>$w)
+            foreach($people as $e=>$r)
+                if ($w['id'] === $r['id']) {
+                    $results[$q]['familyName'] = $r['name'];
+                    break;
+                }
+        dump($results);
+        dump($people);
+
+        return $results;
     }
 
     /**
@@ -134,7 +160,7 @@ class PersonPagination extends PaginationReactManager
                 'combine' => ['status' => ['translate' => 'person.status.'], 'primaryRole' => ['join' => '<br />'], 'familyName' => ['join' => '<br />']],
             ],
             'class' => 'text-center',
-            'select' => ['p.status', 'r.name AS primaryRole', 'f.name AS familyName'],
+            'select' => ['p.status', 'r.name AS primaryRole'],
         ],
         'u.username' => [
             'label' => 'person.user_name.label',

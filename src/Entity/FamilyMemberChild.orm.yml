@@ -1,0 +1,18 @@
+App\Entity\FamilyMemberChild:
+    type: entity
+    repositoryClass: App\Repository\FamilyMemberChildRepository
+    manyToOne:
+        family:
+            targetEntity: App\Entity\Family
+            inversedBy: childMembers
+            joinColumn:
+                name: family_id
+                referencedColumnName: id
+                nullable: false
+        person:
+            targetEntity: App\Entity\Person
+            inversedBy: childFamilies
+            joinColumn:
+                name: person_id
+                referencedColumnName: id
+                nullable: false

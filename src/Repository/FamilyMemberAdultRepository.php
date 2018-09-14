@@ -10,27 +10,27 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 22/08/2018
- * Time: 10:48
+ * Date: 15/09/2018
+ * Time: 08:00
  */
 namespace App\Repository;
 
-use App\Entity\FamilyPerson;
+use App\Entity\FamilyMemberAdult;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class FamilyPersonRepository
+ * Class FamilyMemberAdultRepository
  * @package App\Repository
  */
-class FamilyPersonRepository extends ServiceEntityRepository
+class FamilyMemberAdultRepository extends ServiceEntityRepository
 {
     /**
-     * FamilyPersonRepository constructor.
+     * FamilyMemberAdultRepository constructor.
      * @param RegistryInterface $registry
      */
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, FamilyPerson::class);
+        parent::__construct($registry, FamilyMemberAdult::class);
     }
 }

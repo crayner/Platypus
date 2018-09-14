@@ -1,25 +1,7 @@
-App\Entity\FamilyPerson:
+App\Entity\FamilyMemberAdult:
     type: entity
-    table: family_person
-    repositoryClass: App\Repository\FamilyPersonRepository
-    uniqueConstraints:
-        family_person:
-            columns:
-                - family_id
-                - person_id
-    id:
-        id:
-            type: integer
-            generator:
-                strategy: AUTO
+    repositoryClass: App\Repository\FamilyMemberAdultRepository
     fields:
-        type:
-            length: 6
-            nullable: false
-            column: person_type
-        comment:
-            type: text
-            nullable: true
         childDataAccess:
             type: boolean
             options:
@@ -53,13 +35,15 @@ App\Entity\FamilyPerson:
     manyToOne:
         family:
             targetEntity: App\Entity\Family
-            inversedBy: members
+            inversedBy: adultMembers
             joinColumn:
                 name: family_id
                 referencedColumnName: id
+                nullable: false
         person:
             targetEntity: App\Entity\Person
-            inversedBy: families
+            inversedBy: adultFamilies
             joinColumn:
                 name: person_id
                 referencedColumnName: id
+                nullable: false

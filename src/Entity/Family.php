@@ -83,64 +83,131 @@ class Family
     /**
      * @var Collection
      */
-    private $members;
+    private $adultMembers;
 
     /**
      * @return Collection
      */
-    public function getMembers(): Collection
+    public function getAdultMembers(): Collection
     {
-        if (empty($this->members))
-            $this->members = new ArrayCollection();
+        if (empty($this->adultMembers))
+            $this->adultMembers = new ArrayCollection();
 
-        if ($this->members instanceof PersistentCollection)
-            $this->members->initialize();
+        if ($this->adultMembers instanceof PersistentCollection)
+            $this->adultMembers->initialize();
 
-        return $this->members;
+        return $this->adultMembers;
     }
 
     /**
-     * @param Collection|null $members
+     * @param Collection|null $adultMembers
      * @return Family
      */
-    public function setMembers(?Collection $members): Family
+    public function setAdultMembers(?Collection $adultMembers): Family
     {
-        $this->members = $members;
+        $this->adultMembers = $adultMembers;
         return $this;
     }
 
     /**
-     * addMember
+     * addAdultMember
      *
-     * @param FamilyPerson|null $person
+     * @param FamilyAdultMember|null $person
      * @param bool $add
      * @return Family
      */
-    public function addMember(?FamilyPerson $person, bool $add = true): Family
+    public function addAdultMember(?FamilyAdultMember $person, bool $add = true): Family
     {
-        if (empty($person) || $this->getMembers()->contains($person))
+        if (empty($person) || $this->getAdultMembers()->contains($person))
             return $this;
 
         if ($add)
             $person->setFamily($this, false);
 
-        $this->members->add($person);
+        $this->adultMembers->add($person);
 
         return $this;
     }
 
     /**
-     * removeMember
+     * removeAdultMember
      *
-     * @param FamilyPerson|null $person
+     * @param FamilyAdultMember|null $person
      * @return Family
      */
-    public function removeMember(?FamilyPerson $person): Family
+    public function removeAdultMember(?FamilyAdultMember $person): Family
     {
         if (empty($person))
             return $this;
 
-        $this->getMembers()->removeElement($person);
+        $this->getAdultMembers()->removeElement($person);
+
+        $person->setFamily(null);
+
+        return $this;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $childMembers;
+
+    /**
+     * @return Collection
+     */
+    public function getChildMembers(): Collection
+    {
+        if (empty($this->childMembers))
+            $this->childMembers = new ArrayCollection();
+
+        if ($this->childMembers instanceof PersistentCollection)
+            $this->childMembers->initialize();
+
+        return $this->childMembers;
+    }
+
+    /**
+     * @param Collection|null $childMembers
+     * @return Family
+     */
+    public function setChildMembers(?Collection $childMembers): Family
+    {
+        $this->childMembers = $childMembers;
+        return $this;
+    }
+
+    /**
+     * addChildMember
+     *
+     * @param FamilyChildMember|null $person
+     * @param bool $add
+     * @return Family
+     */
+    public function addChildMember(?FamilyChildMember $person, bool $add = true): Family
+    {
+        if (empty($person) || $this->getChildMembers()->contains($person))
+            return $this;
+
+        if ($add)
+            $person->setFamily($this, false);
+
+        $this->childMembers->add($person);
+
+        return $this;
+    }
+
+    /**
+     * removeChildMember
+     *
+     * @param FamilyChildMember|null $person
+     * @return Family
+     */
+    public function removeChildMember(?FamilyChildMember $person): Family
+    {
+        if (empty($person))
+            return $this;
+
+        $this->getChildMembers()->removeElement($person);
 
         $person->setFamily(null);
 

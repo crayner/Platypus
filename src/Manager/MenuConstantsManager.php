@@ -362,5 +362,10 @@ People Admin:
             parameters:
                 id: "%"
                 tabName: "%"
+        family_edit:
+            route: family_edit
+            parameters:
+                id: "%"
+                tabName: "%"
 ';
 }

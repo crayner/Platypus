@@ -22,7 +22,7 @@ use App\Manager\Traits\EntityTrait;
  * Class FamilyManager
  * @package App\Manager
  */
-class FamilyManager
+class FamilyManager extends TabManager
 {
     use EntityTrait;
 
@@ -30,4 +30,17 @@ class FamilyManager
      * @var string
      */
     protected $entityName = Family::class;
+
+    /**
+     * @var array
+     */
+    protected $tabs = [
+        [
+            'name' => 'details',
+            'label' => 'family.details.tab',
+            'include' => 'Family/details.html.twig',
+            'message' => 'familyDetailsMessage',
+            'translation' => 'Person',
+        ],
+    ];
 }

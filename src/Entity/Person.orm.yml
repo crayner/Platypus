@@ -235,8 +235,13 @@ App\Entity\Person:
             targetEntity: App\Entity\DepartmentStaff
             mappedBy: member
             cascade: [ all ]
-        families:
-            targetEntity: App\Entity\FamilyPerson
+        adultFamilies:
+            targetEntity: App\Entity\FamilyMemberAdult
+            mappedBy: person
+            cascade: [ persist, remove ]
+            orphanRemoval: true
+        childFamilies:
+            targetEntity: App\Entity\FamilyMemberChild
             mappedBy: person
             cascade: [ persist, remove ]
             orphanRemoval: true

@@ -1,0 +1,23 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'family.details.title', name: manager.entity.name, transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+<div class="row">
+    <div class="col-4 card">
+        {{ form_row(form.name) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.languageHomePrimary) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.languageHomeSecondary) }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-6 card">
+        {{ form_row(form.nameAddress) }}
+    </div>
+    <div class="col-6 card">
+        {{ form_row(form.status) }}
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}

@@ -16,7 +16,7 @@
 namespace App\Demonstration;
 
 use App\Entity\Family;
-use App\Entity\FamilyPerson;
+use App\Entity\FamilyMember;
 use App\Entity\Person;
 use Doctrine\Common\Persistence\ObjectManager;
 use Psr\Log\LoggerInterface;
@@ -44,10 +44,10 @@ class PeopleFixtures implements DummyDataInterface
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/family_adult.yml'));
 
-        $this->buildTable($data, FamilyPerson::class, $manager);
+        $this->buildTable($data, FamilyMember::class, $manager);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/family_child.yml'));
 
-        $this->buildTable($data, FamilyPerson::class, $manager);
+        $this->buildTable($data, FamilyMember::class, $manager);
     }
 }

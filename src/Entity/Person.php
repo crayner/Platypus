@@ -587,65 +587,131 @@ class Person
     /**
      * @var Collection
      */
-    private $families;
+    private $adultFamilies;
 
     /**
      * @return Collection
      */
-    public function getFamilies(): Collection
+    public function getAdultFamilies(): Collection
     {
-        if (empty($this->families))
-            $this->familes = new ArrayCollection();
+        if (empty($this->adultFamilies))
+            $this->adultFamiles = new ArrayCollection();
 
-        if ($this->families instanceof PersistentCollection)
-            $this->families->initialize();
+        if ($this->adultFamilies instanceof PersistentCollection)
+            $this->adultFamilies->initialize();
 
-        return $this->families;
+        return $this->adultFamilies;
     }
 
     /**
-     * @param Collection $families
+     * @param Collection $adultFamilies
      * @return Person
      */
-    public function setFamilies(Collection $families): Person
+    public function setAdultFamilies(Collection $adultFamilies): Person
     {
-        $this->families = $families;
+        $this->adultFamilies = $adultFamilies;
         return $this;
     }
 
     /**
-     * addFamily
+     * addAdultFamily
      *
-     * @param FamilyPerson|null $family
+     * @param AdultFamilyMember|null $adultFamily
      * @param bool $add
      * @return Person
      */
-    public function addFamily(?FamilyPerson $family, bool $add = true): Person
+    public function addAdultFamily(?AdultFamilyMember $adultFamily, bool $add = true): Person
     {
-        if (empty($family) || $this->getFamilies()->contains($family))
+        if (empty($adultFamily) || $this->getAdultFamilies()->contains($adultFamily))
             return $this;
 
         if ($add)
-            $family->setPerson($this, false);
+            $adultFamily->setPerson($this, false);
 
-        $this->families->add($family);
+        $this->adultFamilies->add($adultFamily);
 
         return $this;
     }
 
     /**
-     * removeFamily
+     * removeAdultFamily
      *
-     * @param FamilyPerson|null $family
+     * @param AdultFamilyMember|null $adultFamily
      * @return Person
      */
-    public function removeFamily(?FamilyPerson $family): Person
+    public function removeAdultFamily(?AdultFamilyMember $adultFamily): Person
     {
-        if (empty($family))
+        if (empty($adultFamily))
             return $this;
 
-        $family->setPerson(null);
-        $this->getFamilies()->removeElement($family);
+        $adultFamily->setPerson(null);
+        $this->getAdultFamilies()->removeElement($adultFamily);
+
+        return $this;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $childFamilies;
+
+    /**
+     * @return Collection
+     */
+    public function getChildFamilies(): Collection
+    {
+        if (empty($this->childFamilies))
+            $this->childFamiles = new ArrayCollection();
+
+        if ($this->childFamilies instanceof PersistentCollection)
+            $this->childFamilies->initialize();
+
+        return $this->childFamilies;
+    }
+
+    /**
+     * @param Collection $childFamilies
+     * @return Person
+     */
+    public function setChildFamilies(Collection $childFamilies): Person
+    {
+        $this->childFamilies = $childFamilies;
+        return $this;
+    }
+
+    /**
+     * addChildFamily
+     *
+     * @param ChildFamilyMember|null $childFamily
+     * @param bool $add
+     * @return Person
+     */
+    public function addChildFamily(?ChildFamilyMember $childFamily, bool $add = true): Person
+    {
+        if (empty($childFamily) || $this->getChildFamilies()->contains($childFamily))
+            return $this;
+
+        if ($add)
+            $childFamily->setPerson($this, false);
+
+        $this->childFamilies->add($childFamily);
+
+        return $this;
+    }
+
+    /**
+     * removeChildFamily
+     *
+     * @param ChildFamilyMember|null $childFamily
+     * @return Person
+     */
+    public function removeChildFamily(?ChildFamilyMember $childFamily): Person
+    {
+        if (empty($childFamily))
+            return $this;
+
+        $childFamily->setPerson(null);
+        $this->getChildFamilies()->removeElement($childFamily);
 
         return $this;
     }

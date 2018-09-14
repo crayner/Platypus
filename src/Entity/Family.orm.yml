@@ -30,8 +30,13 @@ App\Entity\Family:
             nullable: true
             column: family_sync
     oneToMany:
-        members:
-            targetEntity: App\Entity\FamilyPerson
+        adultMembers:
+            targetEntity: App\Entity\FamilyMemberAdult
+            mappedBy: family
+            cascade: [ persist, remove ]
+            orphanRemoval: true
+        childMembers:
+            targetEntity: App\Entity\FamilyMemberChild
             mappedBy: family
             cascade: [ persist, remove ]
             orphanRemoval: true

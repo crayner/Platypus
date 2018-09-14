@@ -16,7 +16,7 @@
 namespace App\Manager\Gibbon;
 
 use App\Entity\Family;
-use App\Entity\FamilyPerson;
+use App\Entity\FamilyMemberChild;
 use Doctrine\Common\Persistence\ObjectManager;
 
 /**
@@ -39,14 +39,14 @@ class GibbonFamilyChildManager extends GibbonTransferManager
      * @var array
      */
     protected $entityName = [
-        FamilyPerson::class,
+        FamilyMemberChild::class,
     ];
 
     /**
      * @var bool
      */
     public $skipTruncate = [
-        FamilyPerson::class => true,
+        FamilyMemberChild::class => true,
     ];
 
     /**
@@ -85,7 +85,7 @@ class GibbonFamilyChildManager extends GibbonTransferManager
      */
     public function postRecord(string $entityName, array $newData): array
     {
-        $newData['person_type'] = 'child';
+        $newData['member_type'] = 'child';
         return $newData;
     }
 
@@ -97,7 +97,7 @@ class GibbonFamilyChildManager extends GibbonTransferManager
      */
     public function postLoad(string $entityName, ObjectManager $manager)
     {
-        $result = $manager->getRepository(FamilyPerson::class)->createQueryBuilder('x')
+        $result = $manager->getRepository(FamilyMemberChild::class)->createQueryBuilder('x')
             ->leftJoin('x.person', 'p')
             ->leftJoin('x.family', 'f')
             ->where('p.id IS NULL')
@@ -112,15 +112,16 @@ class GibbonFamilyChildManager extends GibbonTransferManager
             $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
 
         $result = $manager->getRepository(Family::class)->createQueryBuilder('f')
-            ->leftJoin('f.members', 'm')
-            ->where('m.id IS NULL')
+            ->leftJoin('f.childMembers', 'c')
+            ->where('c.id IS NULL')
+            ->leftJoin('f.adultMembers', 'a')
+            ->andWhere('a.id IS NULL')
             ->select('f.id')
             ->getQuery()
             ->getArrayResult()
         ;
 
         $meta = $manager->getClassMetadata(Family::class);
-
         foreach($result as $id)
             $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
     }

@@ -1,0 +1,25 @@
+App\Entity\FamilyMember:
+    type: entity
+    table: family_member
+    inheritanceType: single_table
+    discriminatorColumn:
+        name: member_type
+        type: string
+    discriminatorMap:
+        child: App\Entity\FamilyMemberChild
+        adult: App\Entity\FamilyMemberAdult
+    repositoryClass: App\Repository\FamilyMemberRepository
+    uniqueConstraints:
+        family_person:
+            columns:
+                - family_id
+                - person_id
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        comment:
+            type: text
+            nullable: true

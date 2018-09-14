@@ -16,7 +16,8 @@
 namespace App\Pagination;
 
 use App\Entity\Family;
-use App\Entity\FamilyPerson;
+use App\Entity\FamilyMemberAdult;
+use App\Entity\FamilyMemberChild;
 use App\Manager\FamilyManager;
 use App\Manager\MessageManager;
 use App\Util\PersonNameHelper;
@@ -82,10 +83,25 @@ class FamilyPagination extends PaginationReactManager
             $family['adults'] = '';
             $families[$family['id']] = $family;
         }
-        $people = $this->getRepository(FamilyPerson::class)->createQueryBuilder('x')
+        $people = $this->getRepository(FamilyMemberChild::class)->createQueryBuilder('x')
             ->leftJoin('x.family', 'f')
             ->leftJoin('x.person', 'p')
-            ->select('x.type as person_type, f.id as family_id, p.id as person_id, p.surname, p.firstName, p.title, p.preferredName')
+            ->select('f.id as family_id, p.id as person_id, p.surname, p.firstName, p.title, p.preferredName')
+            ->orderBy('p.dob')
+            ->where('p.id IS NOT NULL')
+            ->getQuery()
+            ->getArrayResult();
+        foreach($people as $person)
+        {
+            $family = $families[$person['family_id']];
+            $family['children'] .= '<br/>' . PersonNameHelper::getFullName($person, ['preferredOnly' => true, 'surnameFirst' => false]);
+            $family['children'] = trim($family['children'], '<br/>');
+            $families[$person['family_id']] = $family;
+        }
+        $people = $this->getRepository(FamilyMemberAdult::class)->createQueryBuilder('x')
+            ->leftJoin('x.family', 'f')
+            ->leftJoin('x.person', 'p')
+            ->select('f.id as family_id, p.id as person_id, p.surname, p.firstName, p.title, p.preferredName')
             ->orderBy('x.contactPriority')
             ->where('p.id IS NOT NULL')
             ->getQuery()
@@ -93,14 +109,8 @@ class FamilyPagination extends PaginationReactManager
         foreach($people as $person)
         {
             $family = $families[$person['family_id']];
-
-            if ($person['person_type'] === 'child') {
-                $family['children'] .= '<br/>' . PersonNameHelper::getFullName($person, ['preferredOnly' => true, 'surnameFirst' => false]);
-                $family['children'] = trim($family['children'], '<br/>');
-            } else {
-                $family['adults'] .= '<br/>' . PersonNameHelper::getFullName($person, ['preferredOnly' => true, 'surnameFirst' => false]);
-                $family['adults'] = trim($family['adults'], '<br/>');
-            }
+            $family['adults'] .= '<br/>' . PersonNameHelper::getFullName($person, ['preferredOnly' => true, 'surnameFirst' => false]);
+            $family['adults'] = trim($family['adults'], '<br/>');
             $families[$person['family_id']] = $family;
         }
 
@@ -174,7 +184,7 @@ class FamilyPagination extends PaginationReactManager
         'buttons' => [
             [
                 'label' => 'family.action.delete',
-                'url' => '/person/__id__/delete/',
+                'url' => '/family/__id__/delete/',
                 'url_options' => [
                     '__id__' => 'id',
                 ],
@@ -183,7 +193,7 @@ class FamilyPagination extends PaginationReactManager
             ],
             [
                 'label' => 'family.action.edit',
-                'url' => '/person/__id__/edit/',
+                'url' => '/family/__id__/edit/',
                 'url_options' => [
                     '__id__' => 'id',
                 ],

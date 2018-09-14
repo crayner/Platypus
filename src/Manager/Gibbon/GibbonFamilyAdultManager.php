@@ -15,7 +15,8 @@
  */
 namespace App\Manager\Gibbon;
 
-use App\Entity\FamilyPerson;
+use App\Entity\FamilyMemberAdult;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class GibbonFamilyAdultManager
@@ -37,7 +38,7 @@ class GibbonFamilyAdultManager extends GibbonTransferManager
      * @var array
      */
     protected $entityName = [
-        FamilyPerson::class,
+        FamilyMemberAdult::class,
     ];
 
     /**
@@ -112,7 +113,30 @@ class GibbonFamilyAdultManager extends GibbonTransferManager
      */
     public function postRecord(string $entityName, array $newData): array
     {
-        $newData['person_type'] = 'adult';
+        $newData['member_type'] = 'adult';
         return $newData;
+    }
+
+    /**
+     * postLoad
+     *
+     * @param string $entityName
+     * @param ObjectManager $manager
+     */
+    public function postLoad(string $entityName, ObjectManager $manager)
+    {
+        $result = $manager->getRepository(FamilyMemberAdult::class)->createQueryBuilder('x')
+            ->leftJoin('x.person', 'p')
+            ->leftJoin('x.family', 'f')
+            ->where('p.id IS NULL')
+            ->orWhere('f.id IS NULL')
+            ->select('x.id')
+            ->getQuery()
+            ->getArrayResult()
+        ;
+        $meta = $manager->getClassMetadata($entityName);
+
+        foreach($result as $id)
+            $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
     }
 }

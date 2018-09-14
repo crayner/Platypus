@@ -15,9 +15,15 @@
  */
 namespace App\Controller;
 
+use App\Form\Type\FamilyType;
+use App\Manager\AddressManager;
+use App\Manager\FamilyManager;
+use App\Manager\PhoneManager;
 use App\Pagination\FamilyPagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,15 +37,78 @@ class FamilyController extends Controller
      *
      * @param FamilyPagination $pagination
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/family/all/list/", name="manage_families")
+     * @Route("/family/list/", name="manage_families")
      * @Security("is_granted('ROLE_ACTION', request)")
      */
-    public function manageFamily(FamilyPagination $pagination) {
+    public function list(FamilyPagination $pagination) {
         return $this->render('Family/list.html.twig',
             array(
                 'pagination' => $pagination,
                 'manager'    => $pagination->getFamilyManager(),
             )
+        );
+    }
+
+    /**
+     * edit
+     *
+     * @param FamilyManager $manager
+     * @param Request $request
+     * @param AddressManager $addressManager
+     * @param PhoneManager $phoneManager
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     * @Route("/family/{id}/edit/{tabName}", name="family_edit")
+     * @Security("is_granted('USE_ROUTE', ['manage_families'])")
+     */
+    public function edit(FamilyManager $manager, Request $request, AddressManager $addressManager, PhoneManager $phoneManager, $id = 'Add', $tabName = 'details')
+    {
+        $entity = $manager->find($id);
+
+        $form = $this->createForm(FamilyType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $manager->getEntityManager()->persist($entity);
+            $manager->getEntityManager()->flush();
+        }
+
+        return $this->render(
+            'Family/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+                'manager' => $manager,
+                'addressManager' => $addressManager,
+                'phoneManager' => $phoneManager,
+            ]
+        );
+    }
+
+    /**
+     * delete
+     *
+     * @param int $id
+     * @param FamilyPagination $familyPagination
+     * @param FamilyManager $manager
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/family/{id}/delete/", name="family_delete"))
+     * @Security("is_granted('USE_ROUTE', ['manage_families'])")
+     */
+    public function delete(int $id, FamilyPagination $familyPagination, FamilyManager $manager)
+    {
+        $manager->delete($id);
+
+        return new JsonResponse(
+            [
+                'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($this->get('translator')),
+                'rows' => $familyPagination->getAllResults(),
+            ],
+            200
         );
     }
 }
