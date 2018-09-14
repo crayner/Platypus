@@ -16,6 +16,7 @@ App\Entity\FileExtension:
             nullable: false
             options:
                 default: other
+            column: file_type
         extension:
             length: 7
             nullable: false

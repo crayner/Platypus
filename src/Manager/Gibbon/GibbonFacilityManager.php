@@ -134,5 +134,5 @@ class GibbonFacilityManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonRole';
+    protected $nextGibbonName = 'gibbonFileExtension';
 }
