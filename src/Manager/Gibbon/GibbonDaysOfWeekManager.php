@@ -15,35 +15,29 @@
  */
 namespace App\Manager\Gibbon;
 
-use App\Entity\SchoolYearTerm;
+use App\Entity\DayOfWeek;
 
-class GibbonSchoolYearTermManager extends GibbonTransferManager
+class GibbonDaysOfWeekManager extends GibbonTransferManager
 {
     /**
      * @var array
      */
     protected $entityName = [
-        SchoolYearTerm::class,
+        DayOfWeek::class,
     ];
 
     /**
      * @var string
      */
-    protected $gibbonName = 'gibbonSchoolYearTerm';
+    protected $gibbonName = 'gibbonDaysOfWeek';
 
     /**
      * @var array
      */
 
     protected $transferRules = [
-        'gibbonSchoolYearTermID' => [
+        'gibbonDaysOfWeekID' => [
             'field' => 'id',
-            'functions' => [
-                'integer' => '',
-            ],
-        ],
-        'gibbonSchoolYearID' => [
-            'field' => 'school_year_id',
             'functions' => [
                 'integer' => '',
             ],
@@ -51,7 +45,7 @@ class GibbonSchoolYearTermManager extends GibbonTransferManager
         'name' => [
             'field' => 'name',
             'functions' => [
-                'length' => 20,
+                'length' => 10,
             ],
         ],
         'nameShort' => [
@@ -60,25 +54,47 @@ class GibbonSchoolYearTermManager extends GibbonTransferManager
                 'length' => 4,
             ],
         ],
-        'firstDay' => [
-            'field' => 'first_day',
+        'schoolDay' => [
+            'field' => 'school_day',
             'functions' => [
-                'date' => '',
-            ],
-        ],
-        'lastDay' => [
-            'field' => 'last_day',
-            'functions' => [
-                'date' => '',
+                'boolean' => '',
             ],
         ],
         'sequenceNumber' => [
-            'field' => '',
+            'field' => 'sequence',
+            'functions' => [
+                'integer' => '',
+            ],
+
+        ],
+        'schoolOpen' => [
+            'field' => 'school_open',
+            'functions' => [
+                'time' => '',
+            ],
+        ],
+        'schoolStart' => [
+            'field' => 'school_start',
+            'functions' => [
+                'time' => '',
+            ],
+        ],
+        'schoolEnd' => [
+            'field' => 'school_end',
+            'functions' => [
+                'time' => '',
+            ],
+        ],
+        'schoolClose' => [
+            'field' => 'school_close',
+            'functions' => [
+                'time' => '',
+            ],
         ],
     ];
 
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonDaysOfWeek';
+    protected $nextGibbonName = 'gibbonRole';
 }

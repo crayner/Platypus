@@ -1,0 +1,66 @@
+%YAML 1.1
+---
+# craigray_gibbon.gibbonDaysOfWeek
+-
+  gibbonDaysOfWeekID: 1
+  name: "Monday"
+  nameShort: "Mon"
+  sequenceNumber: 1
+  schoolDay: "Y"
+  schoolOpen: "07:45:00"
+  schoolStart: "08:30:00"
+  schoolEnd: "15:30:00"
+  schoolClose: "17:00:00"
+-
+  gibbonDaysOfWeekID: 2
+  name: "Tuesday"
+  nameShort: "Tue"
+  sequenceNumber: 2
+  schoolDay: "Y"
+  schoolOpen: "07:45:00"
+  schoolStart: "08:30:00"
+  schoolEnd: "15:30:00"
+  schoolClose: "17:00:00"
+-
+  gibbonDaysOfWeekID: 3
+  name: "Wednesday"
+  nameShort: "Wed"
+  sequenceNumber: 3
+  schoolDay: "Y"
+  schoolOpen: "07:45:00"
+  schoolStart: "08:30:00"
+  schoolEnd: "15:30:00"
+  schoolClose: "17:00:00"
+-
+  gibbonDaysOfWeekID: 4
+  name: "Thursday"
+  nameShort: "Thu"
+  sequenceNumber: 4
+  schoolDay: "Y"
+  schoolOpen: "07:45:00"
+  schoolStart: "08:30:00"
+  schoolEnd: "15:30:00"
+  schoolClose: "17:00:00"
+-
+  gibbonDaysOfWeekID: 5
+  name: "Friday"
+  nameShort: "Fri"
+  sequenceNumber: 5
+  schoolDay: "Y"
+  schoolOpen: "07:45:00"
+  schoolStart: "08:30:00"
+  schoolEnd: "15:30:00"
+  schoolClose: "17:00:00"
+-
+  gibbonDaysOfWeekID: 6
+  name: "Saturday"
+  nameShort: "Sat"
+  sequenceNumber: 6
+  schoolDay: "N"
+-
+  gibbonDaysOfWeekID: 7
+  name: "Sunday"
+  nameShort: "Sun"
+  sequenceNumber: 7
+  schoolDay: "N"
+...
