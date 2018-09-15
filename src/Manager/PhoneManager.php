@@ -53,6 +53,7 @@ class PhoneManager
         'phone.edit.help',
         'phone.help.header',
         'phone.help.content',
+        'family.button.link',
     ];
 
     /**

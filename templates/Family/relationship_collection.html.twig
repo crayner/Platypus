@@ -4,7 +4,6 @@
 {% block family_relationship_errors %}{% endblock %}
 
 {% block family_relationship_widget %}
-    {% dump(form) %}
     <div class="row row-striped small">
         <div class="col-4 card">
                     {{ form_widget(form.family, {value: transformData(form.family)}) }}

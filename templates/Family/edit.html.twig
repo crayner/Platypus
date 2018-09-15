@@ -20,7 +20,6 @@
     {% set h3Content = saveButton() %}
     {% include 'Default/tabs.html.twig' with {translation: 'School', tabManager: manager} %}
     {{ form_end(form) }}
-    {% dump(manager.entity) %}
 {% endblock contentContainer %}
 
 {% block javascripts %}

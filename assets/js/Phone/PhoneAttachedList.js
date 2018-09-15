@@ -40,7 +40,7 @@ export default function PhoneAttachedList(props) {
                             buttonClickAction={() => removePhone(url)}
                             translations={translations}
                             style={{float: 'right'}}
-                        />) : <div className='btn btn-light btn-sm' style={{float: 'right'}}><FontAwesomeIcon icon={faLink} fixedWidth={true} /></div> }
+                        />) : <div className='btn btn-light btn-sm' style={{float: 'right'}} title={translateMessage(translations, 'family.button.link')}><FontAwesomeIcon icon={faLink} fixedWidth={true} /></div> }
                         <button type={'button'} title={translateMessage(translations, 'phone.button.edit')} className={'btn btn-primary btn-sm'} style={{float: 'right'}} onClick={() => editPhone(phone.id)}><FontAwesomeIcon icon={faEdit} fixedWidth={true} /></button>
                     </span>
                 </div>

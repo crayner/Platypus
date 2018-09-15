@@ -2006,4 +2006,14 @@ class Person
         $this->fields = $fields;
         return $this;
     }
+
+
+    public function getFamilies(): Collection
+    {
+        $families = $this->getAdultFamilies();
+        foreach($this->getChildFamilies()->getIterator() as $child)
+            if(! $families->contains($child))
+                $families->add($child);
+        return $families;
+    }
 }

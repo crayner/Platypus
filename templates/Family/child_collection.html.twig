@@ -17,8 +17,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-2 card collection-actions">
-
+        <div class="col-2 card">
+            <div class="collection-actions">
+            </div>
+            {% if form.person.vars.data is not empty %}
+                <br/><div>
+                {{ editButton({windowOpen: {route: path('person_edit', {id: form.person.vars.data})}, title: 'person.action.edit', transDomain: 'Person', mergeClass: 'btn-sm fa-fw'})|raw }}
+                </div>
+            {% endif %}
         </div>
     </div>
 {% endblock family_child_widget %}

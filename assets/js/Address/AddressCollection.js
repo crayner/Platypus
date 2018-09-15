@@ -57,7 +57,7 @@ export default function AddressCollection(props) {
                 buttonClickAction={removeAddress}
                 translations={translations}
                 style={{ float: 'right' }}
-              />) : <div className="btn btn-light btn-sm" style={{ float: 'right' }}><FontAwesomeIcon icon={faLink} fixedWidth /></div> }
+              />) : <div className="btn btn-light btn-sm" style={{ float: 'right' }} title={translateMessage(translations, 'family.button.link')}><FontAwesomeIcon icon={faLink} fixedWidth /></div> }
             <button type="button" title={translateMessage(translations, 'address.button.edit')} className="btn btn-primary btn-sm" style={{ float: 'right' }} onClick={() => editAddress(address.id)}><FontAwesomeIcon icon={faEdit} fixedWidth /></button>
           </span>
         </div>

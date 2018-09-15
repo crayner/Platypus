@@ -63,7 +63,7 @@ class FamilyType extends AbstractType
                     'allow_delete' => true,
                     'help'         => 'family.adult_members.help',
                     'required'     => true,
-                    'button_merge_class' => 'btn-sm',
+                    'button_merge_class' => 'btn-sm fa-fw',
                     'sort_manage' => true,
                 ]
             )
@@ -73,7 +73,7 @@ class FamilyType extends AbstractType
                     'allow_add'    => true,
                     'allow_delete' => true,
                     'help'  => 'family.child_members.help',
-                    'button_merge_class' => 'btn-sm',
+                    'button_merge_class' => 'btn-sm fa-fw',
                     'required'     => false,
                 ]
             )

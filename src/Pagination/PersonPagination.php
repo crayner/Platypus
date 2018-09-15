@@ -40,15 +40,7 @@ class PersonPagination extends PaginationReactManager
 				'type' => 'leftJoin',
 				'alias' =>'r',
 			],
-/*            'p.families' => [
-                'type' => 'leftJoin',
-                'alias' => 'fp',
-            ],
-            'fp.family' => [
-                'type' => 'leftJoin',
-                'alias' => 'f',
-            ],
-*/		];
+		];
 
 	/**
 	 * @var string
