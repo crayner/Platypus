@@ -7,7 +7,7 @@ App\Entity\FamilyMemberAdult:
             options:
                 default: '0'
             column: child_data_access
-        contactPriority:
+        sequence:
             type: integer
             options:
                 default: 1

@@ -16,6 +16,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Family;
+use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
@@ -54,32 +55,31 @@ class FamilyType extends AbstractType
                     'label' => 'family.status.label',
                 ]
             )
-/*            ->add('careGivers', CollectionType::class, array(
-                    'label'        => 'family.caregivers.label',
-                    'entry_type'   => CareGiverType::class,
+            ->add('adultMembers', CollectionType::class, array(
+                    'label'        => 'family.adult_members.label',
+                    'entry_type'   => FamilyAdultType::class,
                     'allow_add'    => true,
                     'by_reference' => false,
                     'allow_delete' => true,
-                    'attr'         => array(
-                        'class' => 'careGiverList',
-                        'help'  => 'family.caregivers.help',
-                    ),
-                    'required'     => false,
+                    'help'         => 'family.adult_members.help',
+                    'required'     => true,
+                    'button_merge_class' => 'btn-sm',
+                    'sort_manage' => true,
                 )
             )
-            ->add('students', CollectionType::class, array(
-                    'label'        => 'family.label.students',
-                    'entry_type'   => StudentType::class,
-                    'allow_add'    => true,
-                    'by_reference' => false,
-                    'allow_delete' => true,
-                    'attr'         => array(
-                        'class' => 'studentList',
-                        'help'  => 'family.help.students',
-                    ),
-                    'required'     => false,
-                )
-            )  */
+            /*            ->add('students', CollectionType::class, array(
+                                'label'        => 'family.label.students',
+                                'entry_type'   => StudentType::class,
+                                'allow_add'    => true,
+                                'by_reference' => false,
+                                'allow_delete' => true,
+                                'attr'         => array(
+                                    'class' => 'studentList',
+                                    'help'  => 'family.help.students',
+                                ),
+                                'required'     => false,
+                            )
+                        )  */
             ->add('languageHomePrimary', LanguageType::class,
                 [
                     'label'       => 'family.language_home_primary.label',

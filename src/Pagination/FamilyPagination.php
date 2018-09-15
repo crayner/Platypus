@@ -102,7 +102,7 @@ class FamilyPagination extends PaginationReactManager
             ->leftJoin('x.family', 'f')
             ->leftJoin('x.person', 'p')
             ->select('f.id as family_id, p.id as person_id, p.surname, p.firstName, p.title, p.preferredName')
-            ->orderBy('x.contactPriority')
+            ->orderBy('x.sequence')
             ->where('p.id IS NOT NULL')
             ->getQuery()
             ->getArrayResult();

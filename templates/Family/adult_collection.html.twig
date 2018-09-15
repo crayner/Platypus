@@ -1,0 +1,43 @@
+{% trans_default_domain "Address" %}
+
+{% block family_adult_label %}{% endblock %}
+{% block family_adult_errors %}{% endblock %}
+
+{% block family_adult_widget %}
+    <div class="row row-striped small">
+        <div class="col-10 card">
+            <div class="row">
+                <div class="col-12">
+                    {{ form_widget(form.person, {value: transformData(form.person)}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 card">
+                    {{ form_row(form.childDataAccess) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.contactCall) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.contactSMS) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 offset-4 card">
+                    {{ form_row(form.contactEmail) }}
+                </div>
+                <div class="col-4 card">
+                    {{ form_row(form.contactMail) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 card">
+                    {{ form_row(form.comment) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-2 card collection-actions">
+
+        </div>
+    </div>
+{% endblock family_adult_widget %}

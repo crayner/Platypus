@@ -3,7 +3,7 @@
 {% extends "Default/template.html.twig" %}
 
 {% form_theme form
-    'Address/choose_address_collection.html.twig'
+    'Family/adult_collection.html.twig'
     '@HillrangeForm/FormTheme/jquery.collection.html.twig'
     '@HillrangeForm/FormTheme/bootstrap.html.twig'
 %}
@@ -18,11 +18,15 @@
     {% set h3Content = saveButton() %}
     {% include 'Default/tabs.html.twig' with {translation: 'School', tabManager: manager} %}
     {{ form_end(form) }}
+    {% dump(manager.entity) %}
 {% endblock contentContainer %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ toggle_script() }}
+    {{ collections_manage(form, ['adultMembers'])|raw }}
+    {{ collection_script(form.adultMembers)|raw }}
+    {% include 'Script/formTabSubmitScript.html.twig' with {route: 'family_edit'} %}
 
     {% set translations = translations|default({}) %}
     {% for tx in addressManager.translations %}

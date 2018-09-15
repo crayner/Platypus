@@ -13,7 +13,6 @@
  * Date: 22/08/2018
  * Time: 09:09
  */
-
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -96,6 +95,9 @@ class Family
         if ($this->adultMembers instanceof PersistentCollection)
             $this->adultMembers->initialize();
 
+        foreach($this->adultMembers->getIterator() as $member)
+            $member->getId();
+
         return $this->adultMembers;
     }
 
@@ -112,11 +114,11 @@ class Family
     /**
      * addAdultMember
      *
-     * @param FamilyAdultMember|null $person
+     * @param FamilyMemberAdult|null $person
      * @param bool $add
      * @return Family
      */
-    public function addAdultMember(?FamilyAdultMember $person, bool $add = true): Family
+    public function addAdultMember(?FamilyMemberAdult $person, bool $add = true): Family
     {
         if (empty($person) || $this->getAdultMembers()->contains($person))
             return $this;
@@ -132,10 +134,10 @@ class Family
     /**
      * removeAdultMember
      *
-     * @param FamilyAdultMember|null $person
+     * @param FamilyMemberAdult|null $person
      * @return Family
      */
-    public function removeAdultMember(?FamilyAdultMember $person): Family
+    public function removeAdultMember(?FamilyMemberAdult $person): Family
     {
         if (empty($person))
             return $this;
@@ -163,6 +165,9 @@ class Family
         if ($this->childMembers instanceof PersistentCollection)
             $this->childMembers->initialize();
 
+        foreach($this->childMembers->getIterator() as $member)
+            $member->getId();
+
         return $this->childMembers;
     }
 
@@ -179,11 +184,11 @@ class Family
     /**
      * addChildMember
      *
-     * @param FamilyChildMember|null $person
+     * @param FamilyMemberChild|null $person
      * @param bool $add
      * @return Family
      */
-    public function addChildMember(?FamilyChildMember $person, bool $add = true): Family
+    public function addChildMember(?FamilyMemberChild $person, bool $add = true): Family
     {
         if (empty($person) || $this->getChildMembers()->contains($person))
             return $this;
@@ -199,10 +204,10 @@ class Family
     /**
      * removeChildMember
      *
-     * @param FamilyChildMember|null $person
+     * @param FamilyMemberChild|null $person
      * @return Family
      */
-    public function removeChildMember(?FamilyChildMember $person): Family
+    public function removeChildMember(?FamilyMemberChild $person): Family
     {
         if (empty($person))
             return $this;

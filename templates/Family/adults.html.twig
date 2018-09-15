@@ -1,0 +1,15 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'family.adults.title', name: manager.entity.name, transDomain: 'Person', panelParagraph: 'Please ensure correct contact priority by sorting the order from top to bottom of the page.', panelStyle: 'info'} %}
+<div class="row row-border">
+    <div class="col-10 card">
+        {{ 'Family Adult Details'|trans }}
+    </div>
+    <div class="col-2 card collection-actions">
+        {{ 'actions'|trans({}, 'System') }}
+    </div>
+</div>
+
+
+    {{ collection_widget(form.adultMembers) }}
+{% include 'Default/panelEnd.html.twig' %}

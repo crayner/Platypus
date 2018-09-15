@@ -616,11 +616,11 @@ class Person
     /**
      * addAdultFamily
      *
-     * @param AdultFamilyMember|null $adultFamily
+     * @param FamilyMemberAdult|null $adultFamily
      * @param bool $add
      * @return Person
      */
-    public function addAdultFamily(?AdultFamilyMember $adultFamily, bool $add = true): Person
+    public function addAdultFamily(?FamilyMemberAdult $adultFamily, bool $add = true): Person
     {
         if (empty($adultFamily) || $this->getAdultFamilies()->contains($adultFamily))
             return $this;
@@ -636,10 +636,10 @@ class Person
     /**
      * removeAdultFamily
      *
-     * @param AdultFamilyMember|null $adultFamily
+     * @param FamilyMemberAdult|null $adultFamily
      * @return Person
      */
-    public function removeAdultFamily(?AdultFamilyMember $adultFamily): Person
+    public function removeAdultFamily(?FamilyMemberAdult $adultFamily): Person
     {
         if (empty($adultFamily))
             return $this;
@@ -682,11 +682,11 @@ class Person
     /**
      * addChildFamily
      *
-     * @param ChildFamilyMember|null $childFamily
+     * @param FamilyMemberChild|null $childFamily
      * @param bool $add
      * @return Person
      */
-    public function addChildFamily(?ChildFamilyMember $childFamily, bool $add = true): Person
+    public function addChildFamily(?FamilyMemberChild $childFamily, bool $add = true): Person
     {
         if (empty($childFamily) || $this->getChildFamilies()->contains($childFamily))
             return $this;
@@ -702,10 +702,10 @@ class Person
     /**
      * removeChildFamily
      *
-     * @param ChildFamilyMember|null $childFamily
+     * @param FamilyMemberChild|null $childFamily
      * @return Person
      */
-    public function removeChildFamily(?ChildFamilyMember $childFamily): Person
+    public function removeChildFamily(?FamilyMemberChild $childFamily): Person
     {
         if (empty($childFamily))
             return $this;

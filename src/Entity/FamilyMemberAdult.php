@@ -49,23 +49,23 @@ class FamilyMemberAdult extends FamilyMember
     /**
      * @var integer|null
      */
-    private $contactPriority;
+    private $sequence;
 
     /**
      * @return int|null
      */
-    public function getContactPriority(): ?int
+    public function getSequence(): ?int
     {
-        return $this->contactPriority;
+        return $this->sequence;
     }
 
     /**
-     * @param int|null $contactPriority
+     * @param int|null $sequence
      * @return FamilyMember
      */
-    public function setContactPriority(?int $contactPriority): FamilyMember
+    public function setSequence(?int $sequence): FamilyMember
     {
-        $this->contactPriority = $contactPriority;
+        $this->sequence = $sequence;
         return $this;
     }
 
@@ -184,7 +184,7 @@ class FamilyMemberAdult extends FamilyMember
     public function setFamily(?Family $family, bool $add = true): FamilyMember
     {
         if ($add && $family instanceof Family)
-            $family->addMember($this, false);
+            $family->addAdultMember($this, false);
 
         $this->family = $family;
         return $this;
@@ -213,7 +213,7 @@ class FamilyMemberAdult extends FamilyMember
     public function setPerson(?Person $person, bool $add = true): FamilyMember
     {
         if ($add && $person instanceof Person)
-            $person->addFamily($this, false);
+            $person->addAdultFamily($this, false);
 
         $this->person = $person;
         return $this;

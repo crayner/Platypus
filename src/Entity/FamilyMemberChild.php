@@ -44,7 +44,7 @@ class FamilyMemberChild extends FamilyMember
     public function setFamily(?Family $family, bool $add = true): FamilyMember
     {
         if ($add && $family instanceof Family)
-            $family->addMember($this, false);
+            $family->addChildMember($this, false);
 
         $this->family = $family;
         return $this;
@@ -73,7 +73,7 @@ class FamilyMemberChild extends FamilyMember
     public function setPerson(?Person $person, bool $add = true): FamilyMember
     {
         if ($add && $person instanceof Person)
-            $person->addFamily($this, false);
+            $person->addChildFamily($this, false);
 
         $this->person = $person;
         return $this;

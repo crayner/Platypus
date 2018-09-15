@@ -35,6 +35,7 @@ App\Entity\Family:
             mappedBy: family
             cascade: [ persist, remove ]
             orphanRemoval: true
+            orderBy: { sequence: 'ASC' }
         childMembers:
             targetEntity: App\Entity\FamilyMemberChild
             mappedBy: family
