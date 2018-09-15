@@ -59,7 +59,6 @@ class FamilyType extends AbstractType
                     'label'        => 'family.adult_members.label',
                     'entry_type'   => FamilyAdultType::class,
                     'allow_add'    => true,
-                    'by_reference' => false,
                     'allow_delete' => true,
                     'help'         => 'family.adult_members.help',
                     'required'     => true,
@@ -67,19 +66,16 @@ class FamilyType extends AbstractType
                     'sort_manage' => true,
                 )
             )
-            /*            ->add('students', CollectionType::class, array(
-                                'label'        => 'family.label.students',
-                                'entry_type'   => StudentType::class,
-                                'allow_add'    => true,
-                                'by_reference' => false,
-                                'allow_delete' => true,
-                                'attr'         => array(
-                                    'class' => 'studentList',
-                                    'help'  => 'family.help.students',
-                                ),
-                                'required'     => false,
-                            )
-                        )  */
+            ->add('childMembers', CollectionType::class, array(
+                    'label'        => 'family.child_members.label',
+                    'entry_type'   => FamilyChildType::class,
+                    'allow_add'    => true,
+                    'allow_delete' => true,
+                    'help'  => 'family.child_members.help',
+                    'button_merge_class' => 'btn-sm',
+                    'required'     => false,
+                )
+            )
             ->add('languageHomePrimary', LanguageType::class,
                 [
                     'label'       => 'family.language_home_primary.label',

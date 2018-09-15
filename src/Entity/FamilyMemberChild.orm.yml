@@ -12,6 +12,7 @@ App\Entity\FamilyMemberChild:
         person:
             targetEntity: App\Entity\Person
             inversedBy: childFamilies
+            orderBy: { dob: 'ASC'}
             joinColumn:
                 name: person_id
                 referencedColumnName: id

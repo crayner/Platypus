@@ -46,7 +46,14 @@ class FamilyManager extends TabManager
             'name' => 'adults',
             'label' => 'family.adults.tab',
             'include' => 'Family/adults.html.twig',
-            'message' => 'familyAdultMessage',
+            'message' => 'familyAdultsMessage',
+            'translation' => 'Person',
+        ],
+        [
+            'name' => 'children',
+            'label' => 'family.children.tab',
+            'include' => 'Family/children.html.twig',
+            'message' => 'familyChildrenMessage',
             'translation' => 'Person',
         ],
     ];

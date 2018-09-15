@@ -61,11 +61,6 @@ class FamilyPagination extends PaginationReactManager
     protected $transDomain = 'Person';
 
     /**
-     * @var array|null
-     */
-    protected $searchDefinition = [];
-
-    /**
      * getAllResults
      *
      * @return array
@@ -139,6 +134,16 @@ class FamilyPagination extends PaginationReactManager
     {
         return $this->familyManager;
     }
+
+    /**
+     * @var array|null
+     */
+    protected $searchDefinition = [
+        'name',
+        'status',
+        'adults',
+        'children',
+    ];
 
     /**
      * @var array

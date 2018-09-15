@@ -16,6 +16,7 @@
 namespace App\Form\Type;
 
 use App\Entity\FamilyMemberAdult;
+use App\Entity\FamilyMemberChild;
 use App\Entity\Person;
 use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\EntityType;
@@ -27,10 +28,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class FamilyAdultType
+ * Class FamilyChildType
  * @package App\Form\Type
  */
-class FamilyAdultType extends AbstractType
+class FamilyChildType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -45,41 +46,11 @@ class FamilyAdultType extends AbstractType
                             ->orderBy('p.surname')
                             ->addOrderBy('p.firstName')
                             ->leftJoin('p.primaryRole', 'r')
-                            ->where('r.category <> :cat')
+                            ->where('r.category = :cat')
                             ->setParameter('cat', 'student')
                             ;
                     },
 
-                ]
-            )
-            ->add('childDataAccess', ToggleType::class,
-                [
-                    'label' => 'Receive Reporting',
-                    'button_merge_class' => 'btn-sm',
-                ]
-            )
-            ->add('contactCall', ToggleType::class,
-                [
-                    'label' => 'Contact by Phone Call',
-                    'button_merge_class' => 'btn-sm',
-                ]
-            )
-            ->add('contactSMS', ToggleType::class,
-                [
-                    'label' => 'Contact by SMS',
-                    'button_merge_class' => 'btn-sm',
-                ]
-            )
-            ->add('contactEmail', ToggleType::class,
-                [
-                    'label' => 'Contact by E-Mail',
-                    'button_merge_class' => 'btn-sm',
-                ]
-            )
-            ->add('contactMail', ToggleType::class,
-                [
-                    'label' => 'Contact by Mail',
-                    'button_merge_class' => 'btn-sm',
                 ]
             )
             ->add('comment', TextareaType::class,
@@ -92,7 +63,6 @@ class FamilyAdultType extends AbstractType
                 ]
             )
             ->add('id', HiddenType::class)
-            ->add('sequence', HiddenType::class)
         ;
     }
 
@@ -105,7 +75,7 @@ class FamilyAdultType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'data_class' => FamilyMemberAdult::class,
+                'data_class' => FamilyMemberChild::class,
                 'translation_domain' => 'Person',
             ]
         );
@@ -118,6 +88,6 @@ class FamilyAdultType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'family_adult';
+        return 'family_child';
     }
 }
