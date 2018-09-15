@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 use App\Entity\Family;
+use App\Entity\FamilyRelationship;
 use App\Manager\Traits\EntityTrait;
 
 /**
@@ -56,5 +57,59 @@ class FamilyManager extends TabManager
             'message' => 'familyChildrenMessage',
             'translation' => 'Person',
         ],
+        [
+            'name' => 'relationships',
+            'label' => 'Relationships',
+            'include' => 'Family/relationship.html.twig',
+            'message' => 'familyRelationshipMessage',
+            'translation' => 'Person',
+            'display' => 'hasRelationships'
+        ],
     ];
+
+    /**
+     * hasRelationships
+     *
+     * @return bool
+     */
+    public function hasRelationships(): bool
+    {
+        if (empty($this->getEntity()) || $this->getEntity()->getAdultMembers()->count() === 0 || $this->getEntity()->getChildMembers()->count() === 0)
+            return false;
+
+        $this->buildRelationships();
+        return true;
+    }
+
+    /**
+     * buildRelationships
+     * buildRelationships
+     *
+     * @return FamilyManager
+     */
+    private function buildRelationships(): FamilyManager
+    {
+        foreach($this->getEntity()->getAdultMembers()->getIterator() as $adult)
+        {
+            foreach($this->getEntity()->getChildMembers()->getIterator() as $child)
+            {
+                $found = false;
+                foreach($this->getEntity()->getRelationships()->getIterator() as $rel)
+                    if ($rel->getAdult() == $adult->getPerson() && $rel->getChild() === $child->getPerson())
+                    {
+                        $found = true;
+                        break;
+                    }
+                    if (! $found) {
+                        $rel = new FamilyRelationship();
+                        $rel->setFamily($this->getEntity());
+                        $rel->setAdult($adult->getPerson());
+                        $rel->setChild($child->getPerson());
+                        $this->getEntity()->addRelationship($rel);
+                    }
+            }
+        }
+
+        return $this;
+    }
 }

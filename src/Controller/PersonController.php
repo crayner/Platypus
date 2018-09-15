@@ -183,8 +183,6 @@ class PersonController extends Controller
 
         $form = $this->createForm(PersonType::class, $entity, ['manager' => $manager]);
 
-        $manager->getTabs();
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())

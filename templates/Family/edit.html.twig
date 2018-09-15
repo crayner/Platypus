@@ -5,6 +5,7 @@
 {% form_theme form
     'Family/adult_collection.html.twig'
     'Family/child_collection.html.twig'
+    'Family/relationship_collection.html.twig'
     '@HillrangeForm/FormTheme/jquery.collection.html.twig'
     '@HillrangeForm/FormTheme/bootstrap.html.twig'
 %}
@@ -25,9 +26,10 @@
 {% block javascripts %}
     {{ parent() }}
     {{ toggle_script() }}
-    {{ collections_manage(form, ['adultMembers', 'childMembers'])|raw }}
+    {{ collections_manage(form, ['adultMembers', 'childMembers', 'relationships'])|raw }}
     {{ collection_script(form.adultMembers)|raw }}
     {{ collection_script(form.childMembers)|raw }}
+    {{ collection_script(form.relationships)|raw }}
     {% include 'Script/formTabSubmitScript.html.twig' with {route: 'family_edit'} %}
 
     {% set translations = translations|default({}) %}
@@ -40,13 +42,14 @@
     {% for tx in formTranslations() %}
         {% set translations = translations|merge({(tx): (tx|trans({}, 'FormTheme')) }) %}
     {% endfor %}
-    {% set addressProps = {translations: translations, locale: app.request.get('_locale'), parentClass: 'Person', id: app.request.get('id'), country: getParameter('country')} %}
+    {% set addressProps = {translations: translations, locale: app.request.get('_locale'), parentClass: 'Family', id: app.request.get('id'), country: getParameter('country')} %}
     {% set addressProps = addressProps|merge(addressManager.addressProperties) %}
     {% set addressProps = addressProps|merge(phoneManager.phoneProperties) %}
 
     <script>
         window.ADDRESS_PROPS = {{ addressProps|json_encode|raw }}
     </script>
+
     <script src="{{ asset('build/address.js') }}" language="JavaScript" type="text/javascript"></script>
     <script src="{{ asset('build/phone.js') }}" language="JavaScript" type="text/javascript"></script>
 {% endblock javascripts %}

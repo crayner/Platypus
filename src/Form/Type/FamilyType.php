@@ -16,6 +16,7 @@
 namespace App\Form\Type;
 
 use App\Entity\Family;
+use App\Form\Subscriber\FamilySubscriber;
 use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
@@ -55,7 +56,7 @@ class FamilyType extends AbstractType
                     'label' => 'family.status.label',
                 ]
             )
-            ->add('adultMembers', CollectionType::class, array(
+            ->add('adultMembers', CollectionType::class, [
                     'label'        => 'family.adult_members.label',
                     'entry_type'   => FamilyAdultType::class,
                     'allow_add'    => true,
@@ -64,9 +65,9 @@ class FamilyType extends AbstractType
                     'required'     => true,
                     'button_merge_class' => 'btn-sm',
                     'sort_manage' => true,
-                )
+                ]
             )
-            ->add('childMembers', CollectionType::class, array(
+            ->add('childMembers', CollectionType::class, [
                     'label'        => 'family.child_members.label',
                     'entry_type'   => FamilyChildType::class,
                     'allow_add'    => true,
@@ -74,7 +75,7 @@ class FamilyType extends AbstractType
                     'help'  => 'family.child_members.help',
                     'button_merge_class' => 'btn-sm',
                     'required'     => false,
-                )
+                ]
             )
             ->add('languageHomePrimary', LanguageType::class,
                 [
@@ -93,6 +94,7 @@ class FamilyType extends AbstractType
                 ]
             )
         ;
+        $builder->addEventSubscriber(new FamilySubscriber($options['manager']));
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -103,5 +105,6 @@ class FamilyType extends AbstractType
                 'translation_domain' => 'Person',
             ]
         );
+        $resolver->setRequired(['manager']);
     }
 }

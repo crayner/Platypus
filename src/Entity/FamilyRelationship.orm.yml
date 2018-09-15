@@ -1,0 +1,39 @@
+App\Entity\FamilyRelationship:
+    type: entity
+    table: family_relationship
+    repositoryClass: App\Repository\FamilyRelationshipRepository
+    uniqueConstraints:
+        family_adult_child:
+            columns:
+                - family_id
+                - adult_id
+                - child_id
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        relationship:
+            length: 50
+            nullable: false
+    manyToOne:
+        family:
+            targetEntity: App\Entity\Family
+            inversedBy: relationships
+            joinColumn:
+                name: family_id
+                referencedColumnName: id
+                nullable: false
+        adult:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: adult_id
+                referencedColumnName: id
+                nullable: false
+        child:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: child_id
+                referencedColumnName: id
+                nullable: false

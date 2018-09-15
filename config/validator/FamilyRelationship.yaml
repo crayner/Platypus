@@ -1,0 +1,16 @@
+App\Entity\FamilyRelationship:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [family,adult,child]
+    properties:
+        relationship:
+            - NotBlank: ~
+        family:
+            - NotBlank: ~
+            - Valid: ~
+        adult:
+            - NotBlank: ~
+            - Valid: ~
+        child:
+            - NotBlank: ~
+            - Valid: ~

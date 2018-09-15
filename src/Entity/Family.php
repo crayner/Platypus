@@ -460,4 +460,73 @@ class Family
 
         return $this;
     }
+
+    /**
+     * @var Collection
+     */
+    private $relationships;
+
+    /**
+     * getRelationships
+     *
+     * @return Collection
+     */
+    public function getRelationships(): Collection
+    {
+        if (empty($this->relationships))
+            $this->relationships = new ArrayCollection();
+
+        if ($this->relationships instanceof PersistentCollection)
+            $this->relationships->initialize();
+
+        foreach($this->relationships->getIterator() as $member)
+            $member->getId();
+
+        return $this->relationships;
+    }
+
+    /**
+     * setRelationships
+     *
+     * @param Collection|null $relationships
+     * @return Family
+     */
+    public function setRelationships(?Collection $relationships): Family
+    {
+        $this->relationships = $relationships;
+        return $this;
+    }
+
+    /**
+     * addRelationship
+     *
+     * @param FamilyRelationship|null $relationship
+     * @param bool $add
+     * @return Family
+     */
+    public function addRelationship(?FamilyRelationship $relationship, bool $add = true): Family
+    {
+        if (empty($relationship) || $this->getRelationships()->contains($relationship))
+            return $this;
+
+        if ($add)
+            $relationship->setFamily($this, false);
+
+        $this->relationships->add($relationship);
+
+        return $this;
+    }
+
+    /**
+     * removeRelationship
+     *
+     * @param FamilyRelationship|null $relationship
+     * @return Family
+     */
+    public function removeRelationship(?FamilyRelationship $relationship): Family
+    {
+        $this->relationships->removeElement($relationship);
+
+        return $this;
+    }
 }

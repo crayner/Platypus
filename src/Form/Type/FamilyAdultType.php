@@ -17,6 +17,7 @@ namespace App\Form\Type;
 
 use App\Entity\FamilyMemberAdult;
 use App\Entity\Person;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\ToggleType;
@@ -42,12 +43,14 @@ class FamilyAdultType extends AbstractType
                     'placeholder' => 'Required Select...',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('p')
+                            ->select('p, s')
                             ->orderBy('p.surname')
                             ->addOrderBy('p.firstName')
                             ->leftJoin('p.primaryRole', 'r')
+                            ->leftJoin('p.staff', 's')
                             ->where('r.category <> :cat')
                             ->setParameter('cat', 'student')
-                            ;
+                        ;
                     },
 
                 ]

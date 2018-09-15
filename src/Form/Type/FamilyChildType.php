@@ -43,9 +43,11 @@ class FamilyChildType extends AbstractType
                     'placeholder' => 'Required Select...',
                     'query_builder' => function (EntityRepository $er) {
                         return $er->createQueryBuilder('p')
+                            ->select('p, s')
                             ->orderBy('p.surname')
                             ->addOrderBy('p.firstName')
                             ->leftJoin('p.primaryRole', 'r')
+                            ->leftJoin('p.staff', 's')
                             ->where('r.category = :cat')
                             ->setParameter('cat', 'student')
                             ;

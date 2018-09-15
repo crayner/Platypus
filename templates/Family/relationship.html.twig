@@ -1,0 +1,16 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'family.relationships.title', name: manager.entity.name, transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+<div class="row row-border">
+    <div class="col-4 card">
+        {{ 'Adult'|trans }}
+    </div>
+    <div class="col-4 card">
+        {{ 'Child'|trans }}
+    </div>
+    <div class="col-4 card">
+        {{ 'Relationship'|trans }}
+    </div>
+</div>
+{{ collection_widget(form.relationships) }}
+{% include 'Default/panelEnd.html.twig' %}

@@ -39,6 +39,11 @@ class PreferenceSubscriber implements EventSubscriberInterface
         );
     }
 
+    /**
+     * preSetData
+     *
+     * @param FormEvent $event
+     */
     public function preSetData(FormEvent $event)
     {
         PersonHelper::setPerson($event->getData());

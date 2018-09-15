@@ -66,7 +66,7 @@ class FamilyController extends Controller
     {
         $entity = $manager->find($id);
 
-        $form = $this->createForm(FamilyType::class, $entity);
+        $form = $this->createForm(FamilyType::class, $entity, ['manager' => $manager]);
 
         $form->handleRequest($request);
 
@@ -74,6 +74,7 @@ class FamilyController extends Controller
         {
             $manager->getEntityManager()->persist($entity);
             $manager->getEntityManager()->flush();
+            $form = $this->createForm(FamilyType::class, $entity, ['manager' => $manager]);
         }
 
         return $this->render(

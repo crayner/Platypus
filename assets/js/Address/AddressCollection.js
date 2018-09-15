@@ -130,5 +130,5 @@ AddressCollection.propTypes = {
     inputSearch: PropTypes.string.isRequired,
     editAddress: PropTypes.func.isRequired,
     messages: PropTypes.array.isRequired,
-    attached: PropTypes.bool.isRequired,
+    attached: PropTypes.array.isRequired,
 };

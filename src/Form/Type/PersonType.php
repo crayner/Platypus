@@ -310,7 +310,6 @@ class PersonType extends AbstractType
         if ($options['manager']->isParent())
             $this->buildParentForm($builder, $options);
         $this->buildUserForm($builder, $options);
-
     }
 
     /**

@@ -1,0 +1,23 @@
+{% trans_default_domain "Person" %}
+
+{% block family_relationship_label %}{% endblock %}
+{% block family_relationship_errors %}{% endblock %}
+
+{% block family_relationship_widget %}
+    {% dump(form) %}
+    <div class="row row-striped small">
+        <div class="col-4 card">
+                    {{ form_widget(form.family, {value: transformData(form.family)}) }}
+                    {{ form_widget(form.adult, {value: transformData(form.adult)}) }}
+                    {{ form.vars.value.adult.fullName({preferredOnly: true, surnameFirst: false}) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_widget(form.child, {value: transformData(form.child)}) }}
+            {{ form.vars.value.child.fullName({preferredOnly: true, surnameFirst: false}) }}
+            </div>
+        <div class="col-4 card">
+            {{ form_widget(form.relationship) }}
+            {{ form_errors(form.relationship) }}
+        </div>
+    </div>
+{% endblock family_relationship_widget %}

@@ -41,6 +41,11 @@ App\Entity\Family:
             mappedBy: family
             cascade: [ persist, remove ]
             orphanRemoval: true
+        relationships:
+            targetEntity: App\Entity\FamilyRelationship
+            mappedBy: family
+            cascade: [ persist, remove ]
+            orphanRemoval: true
     manyToMany:
         addresses:
             targetEntity: App\Entity\Address
