@@ -152,7 +152,7 @@ class FamilyManager extends TabManager
             $formalName .= ' ' . $p1->getSurname();
 
         $result['formalName'] = $formalName;
-
+        $result['name'] .= ' ('.mb_substr($family->getId(), -3).')';
         return $result;
     }
 }

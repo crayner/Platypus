@@ -4,6 +4,10 @@ namespace App\Pagination;
 use App\Entity\FamilyMemberAdult;
 use App\Entity\FamilyMemberChild;
 use App\Entity\Person;
+use App\Manager\MessageManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Routing\RouterInterface;
 
 class PersonPagination extends PaginationReactManager
 {
@@ -32,10 +36,6 @@ class PersonPagination extends PaginationReactManager
 	 */
 	protected $join =
 		[
-			'p.user' => [
-				'type'  => 'leftJoin',
-				'alias' => 'u',
-			],
 			'p.primaryRole' => [
 				'type' => 'leftJoin',
 				'alias' =>'r',
@@ -68,26 +68,27 @@ class PersonPagination extends PaginationReactManager
             ->getArrayResult();
 
         $people = $this->getRepository(FamilyMemberAdult::class)->createQueryBuilder('m')
-            ->select('p.id, f.name')
+            ->select('p.id, f.name, f.id as family_id')
             ->leftJoin('m.family', 'f')
             ->leftJoin('m.person', 'p')
             ->getQuery()
             ->getArrayResult();
         $people = array_merge($people, $this->getRepository(FamilyMemberChild::class)->createQueryBuilder('m')
-            ->select('p.id, f.name')
+            ->select('p.id, f.name, f.id as family_id')
             ->leftJoin('m.family', 'f')
             ->leftJoin('m.person', 'p')
             ->getQuery()
             ->getArrayResult());
 
-        foreach($results as $q=>$w)
-            foreach($people as $e=>$r)
+        foreach($results as $q=>$w) {
+            $results[$q]['familyName'] = !empty($results[$q]['familyName']) ? $results[$q]['familyName'] : '';
+            foreach ($people as $e => $r)
                 if ($w['id'] === $r['id']) {
-                    $results[$q]['familyName'] = $r['name'];
+                    $results[$q]['familyName'] .= ' <a href="'.$this->router->generate('family_edit', ['id' => $r['family_id']]).'">' . $r['name'] . '</a>';
+                    $results[$q]['familyName'] = trim($results[$q]['familyName']);
                     break;
                 }
-        dump($results);
-        dump($people);
+        }
 
         return $results;
     }
@@ -138,25 +139,16 @@ class PersonPagination extends PaginationReactManager
             'display' => false,
             'name' => 'id',
         ],
-        'userId' => [
-            'label' => false,
-            'display' => false,
-            'name' => 'userId',
-            'select' => 'u.id',
-        ],
         'details' => [
             'label' => 'person.details.label',
             'name' => 'details',
             'style' => 'combine',
+            'size' => 4,
             'options' => [
-                'combine' => ['status' => ['translate' => 'person.status.'], 'primaryRole' => ['join' => '<br />'], 'familyName' => ['join' => '<br />']],
+                'combine' => ['status' => ['translate' => 'person.status.'], 'primaryRole' => ['join' => '<br />'], 'familyName' => ['join' => '<br />', 'style' => 'html']],
             ],
             'class' => 'text-center',
             'select' => ['p.status', 'r.name AS primaryRole'],
-        ],
-        'u.username' => [
-            'label' => 'person.user_name.label',
-            'name' => 'username',
         ],
     ];
 
@@ -270,4 +262,23 @@ class PersonPagination extends PaginationReactManager
             ],
         ],
     ];
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
+     * PersonPagination constructor.
+     * @param RequestStack $request
+     * @param EntityManagerInterface $entityManager
+     * @param MessageManager $messageManager
+     * @param RouterInterface $router
+     */
+    public function __construct(RequestStack $request, EntityManagerInterface $entityManager, MessageManager $messageManager, RouterInterface $router)
+    {
+        parent::__construct($request,  $entityManager,  $messageManager);
+        $this->router = $router;
+
+    }
 }

@@ -5,7 +5,15 @@
 
 {% block family_relationship_widget %}
     <div class="row row-striped small">
-        <div class="col-4 card">
+        {% dump(form) %}
+        {% set colour = '' %}
+        {% if form.vars.value.adult.gender is same as ('f') %}
+            {% set colour = ' alert-danger' %}
+        {% endif %}
+        {% if form.vars.value.adult.gender is same as ('m') %}
+            {% set colour = ' alert-primary' %}
+        {% endif %}
+        <div class="col-4 card{{ colour }}">
                     {{ form_widget(form.family, {value: transformData(form.family)}) }}
                     {{ form_widget(form.adult, {value: transformData(form.adult)}) }}
                     {{ form.vars.value.adult.fullName({preferredOnly: true, surnameFirst: false}) }}

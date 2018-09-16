@@ -68,9 +68,8 @@ class FamilyPagination extends PaginationReactManager
     public function getAllResults(): array
     {
         $results = $this->buildQuery()
-            ->getQuery();
-        dump($results);
-        $results = $results    ->getArrayResult();
+            ->getQuery()
+            ->getArrayResult();
 
         $families = [];
         foreach($results as $family) {

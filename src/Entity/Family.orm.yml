@@ -11,6 +11,7 @@ App\Entity\Family:
         name:
             length: 100
             nullable: false
+            unique: true
         nameAddress:
             length: 100
             options:

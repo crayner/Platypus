@@ -1,7 +1,10 @@
 App\Entity\Family:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [name]
     properties:
         relationships:
-            -   Valid: ~
+            - Valid: ~
         name:
             - NotBlank: ~
         nameAddress:
