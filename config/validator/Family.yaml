@@ -1,0 +1,13 @@
+App\Entity\Family:
+    properties:
+        relationships:
+            -   Valid: ~
+        name:
+            - NotBlank: ~
+        nameAddress:
+            - NotBlank: ~
+        languageHomePrimary:
+            - NotBlank: ~
+            - Language: ~
+        languageHomeSecondary:
+            - Language: ~

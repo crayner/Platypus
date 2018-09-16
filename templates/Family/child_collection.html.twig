@@ -21,8 +21,8 @@
             <div class="collection-actions">
             </div>
             {% if form.person.vars.data is not empty %}
-                <br/><div>
-                {{ editButton({windowOpen: {route: path('person_edit', {id: form.person.vars.data})}, title: 'person.action.edit', transDomain: 'Person', mergeClass: 'btn-sm fa-fw'})|raw }}
+                <div style="clear: right;">
+                    {{ editButton({windowOpen: {route: path('person_edit', {id: form.person.vars.data})}, title: 'person.action.edit', transDomain: 'Person', mergeClass: 'btn-sm fa-fw'})|raw }}
                 </div>
             {% endif %}
         </div>

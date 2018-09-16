@@ -7,10 +7,7 @@ App\Entity\FamilyRelationship:
             - NotBlank: ~
         family:
             - NotBlank: ~
-            - Valid: ~
         adult:
             - NotBlank: ~
-            - Valid: ~
         child:
             - NotBlank: ~
-            - Valid: ~

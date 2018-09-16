@@ -17,7 +17,9 @@
 {% block contentContainer %}
     {{ form_start(form) }}
     {{ all_form_errors(fullForm) }}
-    {% set h3Content = saveButton() %}
+    {% set h3Content = '' %}
+    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_families')}}) %}
+    {% set h3Content = h3Content ~ saveButton() %}
     {% include 'Default/tabs.html.twig' with {translation: 'School', tabManager: manager} %}
     {{ form_end(form) }}
 {% endblock contentContainer %}
@@ -28,7 +30,9 @@
     {{ collections_manage(form, ['adultMembers', 'childMembers', 'relationships'])|raw }}
     {{ collection_script(form.adultMembers)|raw }}
     {{ collection_script(form.childMembers)|raw }}
+    {% if form.relationships is defined %}
     {{ collection_script(form.relationships)|raw }}
+    {% endif %}
     {% include 'Script/formTabSubmitScript.html.twig' with {route: 'family_edit'} %}
 
     {% set translations = translations|default({}) %}
@@ -51,4 +55,20 @@
 
     <script src="{{ asset('build/address.js') }}" language="JavaScript" type="text/javascript"></script>
     <script src="{{ asset('build/phone.js') }}" language="JavaScript" type="text/javascript"></script>
+    <script>
+        function suggestFamilyName(path) {
+            console.log(path)
+            $.ajax({
+                url: path,
+                type: "POST",
+                success: function (data) {
+                    $('#family_name').val(data['name'])
+                    $('#family_nameAddress').val(data['formalName'])
+                },
+                error: function (req, status, err) {
+                    console.log(err)
+                }
+            });
+        }
+    </script>
 {% endblock javascripts %}

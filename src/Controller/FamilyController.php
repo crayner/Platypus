@@ -20,11 +20,13 @@ use App\Manager\AddressManager;
 use App\Manager\FamilyManager;
 use App\Manager\PhoneManager;
 use App\Pagination\FamilyPagination;
+use Hillrange\Security\Util\ParameterInjector;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class FamilyController
@@ -111,5 +113,21 @@ class FamilyController extends Controller
             ],
             200
         );
+    }
+
+    /**
+     * suggestFamilyName
+     *
+     * @param int $id
+     * @param FamilyManager $manager
+     * @param TranslatorInterface $translator
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/family/{id}/suggest/name/", name="suggest_family_name"))
+     * @Security("is_granted('USE_ROUTE', ['manage_families'])")
+     */
+    public function suggestFamilyName(int $id, FamilyManager $manager, TranslatorInterface $translator, ParameterInjector $injector)
+    {
+        return new JsonResponse($manager->suggestFamilyName($id, $translator),200);
     }
 }

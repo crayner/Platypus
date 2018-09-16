@@ -14,7 +14,16 @@
 </div>
 <div class="row">
     <div class="col-6 card">
-        {{ form_row(form.nameAddress) }}
+        <div class="form-group input-group{% if form.nameAddress.vars.errors|length > 0 %} has-danger{% endif %}">
+            {{ form_widget(form.nameAddress) }}
+            <div class="input-group-append">
+                <span class="input-group-text" title="{{ 'Suggest a family name and address.'|trans }}" onclick="suggestFamilyName('{{ path('suggest_family_name', {id: form.vars.value.id}) }}')">{{ 'Suggest'|trans }}</span>
+            </div>
+            <div style="clear: both;">
+                {{ form_label(form.nameAddress) }}
+                {{ form_errors(form.nameAddress) }}
+            </div>
+        </div>
     </div>
     <div class="col-6 card">
         {{ form_row(form.status) }}

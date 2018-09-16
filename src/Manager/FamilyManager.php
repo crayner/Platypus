@@ -18,6 +18,7 @@ namespace App\Manager;
 use App\Entity\Family;
 use App\Entity\FamilyRelationship;
 use App\Manager\Traits\EntityTrait;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class FamilyManager
@@ -111,5 +112,47 @@ class FamilyManager extends TabManager
         }
 
         return $this;
+    }
+
+    /**
+     * suggestFamilyName
+     *
+     * @param int $id
+     * @param TranslatorInterface $translator
+     * @return array
+     * @throws \Exception
+     */
+    public function suggestFamilyName(int $id, TranslatorInterface $translator): array
+    {
+        $result = [
+            'name' => '',
+            'formalName' => '',
+        ];
+
+        $family = $this->find($id);
+        if (empty($family) || $family->getId() !== $id)
+            return $result;
+
+        $parents = $family->getAdultMembers();
+        if ($parents->count() === 0)
+            return $result;
+        $p1 = $parents->first()->getPerson();
+        $result['name'] = $p1->getSurname();
+        $formalName = trim($translator->trans('person.title.'.$p1->getTitle(), [], 'Person'). ' ' . $p1->getFirstName());
+
+        if ($parents->count() > 1)
+        {
+            $p2 = $parents->get(1)->getPerson();
+            if ($p1->getSurname() !== $p2->getSurname()) {
+                $formalName .= ' ' . $p1->getSurname();
+                $result['name'] .= '/' . $p2->getSurname();
+            }
+            $formalName .= ' and ' . trim($translator->trans('person.title.'.$p2->getTitle(), [], 'Person'). ' ' . $p2->getFirstName() . ' ' . $p2->getSurname());
+        } else
+            $formalName .= ' ' . $p1->getSurname();
+
+        $result['formalName'] = $formalName;
+
+        return $result;
     }
 }

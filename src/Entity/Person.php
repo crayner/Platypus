@@ -201,7 +201,7 @@ class Person
      */
     public function getTitle(): string
     {
-        return $this->title = in_array($this->title, self::getStatusList()) ? $this->title : '';
+        return $this->title = in_array($this->title, self::getTitleList()) ? $this->title : '';
     }
 
     /**
@@ -210,7 +210,7 @@ class Person
      */
     public function setTitle(?string $title): Person
     {
-        $this->title = in_array($title, self::getStatusList()) ? $title : '';
+        $this->title = in_array($title, self::getTitleList()) ? $title : '';
         return $this;
     }
 
