@@ -18,6 +18,7 @@ namespace App\Security\Voter;
 use App\Entity\Action;
 use App\Manager\ActionManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -34,7 +35,7 @@ class ActionVoter implements VoterInterface
     /**
      * @var ActionManager
      */
-    private $actionManager;
+    private static $actionManager;
 
     /**
      * @var RouterInterface
@@ -44,7 +45,7 @@ class ActionVoter implements VoterInterface
     /**
      * @var AccessDecisionManagerInterface
      */
-    private $decisionManager;
+    private static $decisionManager;
 
     /**
      * ActionVoter constructor.
@@ -53,9 +54,17 @@ class ActionVoter implements VoterInterface
      */
     public function __construct(ActionManager $actionManager, RouterInterface $router, AccessDecisionManagerInterface $decisionManager)
     {
-        $this->decisionManager = $decisionManager;
-        $this->actionManager = $actionManager;
-        $this->router =$router;
+        self::$decisionManager = $decisionManager;
+        self::$actionManager = $actionManager;
+        $this->router = $router;
+    }
+
+    /**
+     * @return ActionManager
+     */
+    public static function getActionManager(): ActionManager
+    {
+        return self::$actionManager;
     }
 
     /**
@@ -67,7 +76,7 @@ class ActionVoter implements VoterInterface
      * @return int
      * @throws \Exception
      */
-    public function vote(TokenInterface $token, $subject, array $attributes)
+    public function vote(TokenInterface $token, $subject, array $attributes): int
     {
         $routeParams = [];
         if (in_array('USE_ROUTE', $attributes)) {
@@ -88,27 +97,7 @@ class ActionVoter implements VoterInterface
             $routeParams = $subject->get('_route_params');
         }
 
-
-        if (!$token->getUser() instanceof UserInterface)
-            return VoterInterface::ACCESS_DENIED;
-
-        $actions = $this->actionManager->getRepository()->findByRoute($route);
-
-        if (empty($actions))
-            throw new \Exception(sprintf('No action has been created for route \'%s\'.', $route));
-
-        $this->found = false;
-        foreach($actions as $action)
-        {
-            if ($this->isAllowed($action, $token, $routeParams))
-                return VoterInterface::ACCESS_GRANTED;
-        }
-
-        if (! $this->found)
-            throw new \Exception(sprintf('No action has been created for route \'%s\' that has the appropriate parameters.', $route));
-
-        return VoterInterface::ACCESS_DENIED;
-
+        return self::getActionResult($route, $routeParams, $token);
     }
 
     /**
@@ -119,16 +108,16 @@ class ActionVoter implements VoterInterface
      * @param array $routeParams
      * @return bool
      */
-    private function isAllowed(Action $action, TokenInterface $token, array $routeParams): bool
+    private static function isAllowed(Action $action, TokenInterface $token, array $routeParams): bool
     {
         if (empty($action->getVoterRouteParams()))
             return true;
 
         $diff = array_diff($routeParams, $action->getVoterRouteParams());
 
-        if (count($diff) === 1 && isset($diff['_locale'])) {
-            $this->found = true;
-            if ($this->decisionManager->decide($token, $this->getRoles($action)))
+        if ((count($diff) === 1 && isset($diff['_locale'])) || count($diff) === 0) {
+            self::$found = true;
+            if (self::$decisionManager->decide($token, self::getRoles($action)))
                 return true;
         }
 
@@ -141,10 +130,10 @@ class ActionVoter implements VoterInterface
      * @param Action $action
      * @return array
      */
-    private function getRoles(Action $action): array
+    public static function getRoles(Action $action): array
     {
         $roles = [];
-        foreach($this->actionManager->getAllExistingRoles($action->getId()) as $personRole)
+        foreach(self::$actionManager->getAllExistingRoles($action->getId()) as $personRole)
         {
             switch ($personRole->getNameShort()) {
                 case 'Reg':
@@ -169,5 +158,42 @@ class ActionVoter implements VoterInterface
         }
 
         return $roles;
+    }
+
+    /**
+     * @var boolean
+     */
+    private static $found;
+
+    /**
+     * getActionResult
+     *
+     * @param string $route
+     * @param array|null $routeParams
+     * @param TokenInterface $token
+     * @return int
+     * @throws \Exception
+     */
+    public static function getActionResult(string $route, ?array $routeParams = [], TokenInterface $token): int
+    {
+        if (!$token->getUser() instanceof UserInterface)
+            return VoterInterface::ACCESS_DENIED;
+
+        $actions = self::getActionManager()->getRepository()->findByRoute($route);
+
+        if (empty($actions))
+            throw new \Exception(sprintf('No action has been created for route \'%s\'.', $route));
+
+        self::$found = false;
+        foreach($actions as $action)
+        {
+            if (self::isAllowed($action, $token, $routeParams))
+                return VoterInterface::ACCESS_GRANTED;
+        }
+
+        if (! self::$found)
+            throw new \Exception(sprintf('No action has been created for route \'%s\' that has the appropriate parameters.', $route));
+
+        return VoterInterface::ACCESS_DENIED;
     }
 }

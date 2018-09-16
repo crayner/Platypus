@@ -383,9 +383,9 @@ class SystemSettings implements SettingCreationInterface
 
         $setting->setName('idle_timeout')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('number')
             ->__set('displayName', 'Session Duration')
             ->__set('description', 'Time, in minutes, before system logs a user out. Should be less than PHP\'s session.gc_maxlifetime option.')
+            ->setType('number')
             ->setParameter(true, $sm,15)
             ->__set('choice', null)
             ->setValidators([

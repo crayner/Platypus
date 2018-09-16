@@ -19,6 +19,7 @@ namespace App\Manager;
 
 use App\Entity\PersonRole;
 use App\Manager\Traits\EntityTrait;
+use App\Util\StringHelper;
 
 class PersonRoleManager
 {
@@ -41,7 +42,26 @@ class PersonRoleManager
             ->orderBy('r.category', 'ASC')
             ->getQuery()
             ->getArrayResults();
-        dump($results);
         return $results;
+    }
+
+    /**
+     * getPersonRoleList
+     *
+     * @return array
+     * @throws \Exception
+     */
+    public function getPersonRoleList(): array
+    {
+        $result = $this->getRepository()->createQueryBuilder('r', 'r.id')
+            ->orderBy('r.name')
+            ->select('r.id, r.name')
+            ->getQuery()
+            ->getArrayResult();
+
+        foreach($result as $q=>$w)
+            $result[$w['id']] = StringHelper::safeString($w['name'], true);
+
+        return $result;
     }
 }

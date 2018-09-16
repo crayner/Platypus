@@ -23,6 +23,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Hillrange\Security\Util\ParameterInjector;
 use PhpParser\Node\Expr\Cast\Object_;
+use Symfony\Component\Form\Exception\AlreadySubmittedException;
 
 /**
  * Trait EntityTrait
@@ -222,14 +223,21 @@ trait EntityTrait
     }
 
     /**
+     * @var bool|null
+     */
+    private $validEntityManager;
+
+    /**
      * isValidEntityManager
      *
      * @return bool
      */
     public function isValidEntityManager(): bool
     {
+        if (! is_null($this->validEntityManager))
+            return $this->validEntityManager;
         if (InstallSubscriber::isInstalling() || empty($this->getEntityManager()->getConnection()->getParams()['dbname']))
-            return false;
-        return true;
+            return $this->validEntityManager = false;
+        return $this->validEntityManager = true;
     }
 }

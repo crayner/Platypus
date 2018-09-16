@@ -137,9 +137,9 @@ class MenuManager extends MenuConstantsManager
 		{
 			if ($w['node'] == $node && $this->itemCheck($w))
 			{
-                $w['parameters'] = ! empty($w['parameters']) ? $w['parameters'] : array();
+                $w['parameters'] = ! empty($w['parameters']) ? $w['parameters'] : [] ;
 				if (isset($w['route']))
-					$w['role'] = $this->getRouteAccess($w['route'], empty($w['role']) ? null : $w['role']);
+					$w['role'] = $this->getRouteAccess($w['route'], $w['parameters'], empty($w['role']) ? null : $w['role']);
 				if (empty($w['role']))
 					unset($w['role']);
 				$result[] = $w;
@@ -187,14 +187,17 @@ class MenuManager extends MenuConstantsManager
 
 			foreach ($this->pageRoles[$node['route']] as $role)
 			{
+			    if (! is_array($role))
+			        $role = [$role];
+			    $role[] = 'ROLE_MENU';
 				try
 				{
-					if ($this->checker->isGranted($role))
+					if ($this->checker->isGranted($role, ['route' => $node['route'], 'routeParams' =>[]] ))
 						return true;
 				}
 				catch (AuthenticationCredentialsNotFoundException $e)
 				{
-					// Do Nothin!
+					return false;
 				}
 			}
 
@@ -217,18 +220,19 @@ class MenuManager extends MenuConstantsManager
 		}
 	}
 
-	/**
-	 * get Route Access
-	 *
-	 * @param string $route
-	 * @param string $role
-	 *
-	 * @return array
-	 */
-	private function getRouteAccess($route, $role)
+    /**
+     * getRouteAccess
+     *
+     * @param string $route
+     * @param array|null $routeParams
+     * @param string $role
+     * @return array|null
+     */
+	private function getRouteAccess(string $route, ?array $routeParams = [], string $role)
 	{
 		$roles = [];
 		$page  = $this->pageManager->findOneByRoute($route, $role);
+
 		if (!empty($page))
 			$roles = $page->getRoles();
 		if (in_array(null, $roles))
@@ -358,7 +362,13 @@ class MenuManager extends MenuConstantsManager
 					$sections[$q][$e]['linkClass'] = 'sectionLink';
 					if ($this->isCurrentRoute($r))
 						$sections[$q][$e]['linkClass'] .= ' currentLink';
-					if (!empty($r['role']) && false === $this->checker->isGranted($r['role']))
+
+					if (! is_array($r['role']))
+					    $r['role'] = [$r['role']];
+					if (! empty($r['role']))
+                        $r['role'][] = 'ROLE_MENU';
+
+					if (!empty($r['role']) && false === $this->checker->isGranted($r['role'], ['route' => $r['route'], 'routeParams' => $r['parameters']] ))
 					{
 						unset($sections[$q][$e]);
 					}

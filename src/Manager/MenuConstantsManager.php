@@ -316,6 +316,14 @@ System Admin:
             parameters:
                 id: "%"
 People Admin:
+    student_management:
+        public_registration_settings:
+            label: public_registration_settings
+            role: ROLE_ACTION
+            route: manage_settings
+            parameters: 
+                name: PublicRegistration
+            transDomain: System
     people_management:
         manage_families:
             label: manage_families
@@ -352,7 +360,7 @@ People Admin:
             transDomain: Person
         manage_people:
             label: manage_people_label
-            role: ROLE_SYSTEM_ADMIN
+            role: ROLE_MENU
             route: manage_people
             parameters: {}
             transDomain: Person
