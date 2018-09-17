@@ -242,9 +242,9 @@ class SettingCache
         if ($this->value === $this)
             $this->value = null;
         if (empty($this->value) && $this->isBaseSetting()) {
-            if (empty($this->getSetting()) || empty($this->getType()))
+            if (empty($this->getSetting()) || empty($this->getSettingType()))
                 return null;
-            $method = 'get' . ucfirst($this->getType()) . 'Value';
+            $method = 'get' . ucfirst($this->getSettingType()) . 'Value';
             if (method_exists($this, $method))
                 $this->value = $this->$method();
             else
@@ -261,9 +261,9 @@ class SettingCache
     {
         $this->value = $value;
         if ($this->isBaseSetting()) {
-            if (empty($this->getSetting()) || empty($this->getType()))
+            if (empty($this->getSetting()) || empty($this->getSettingType()))
                 return $this;
-            $method = 'set' . ucfirst($this->getType()) . 'Value';
+            $method = 'set' . ucfirst($this->getSettingType()) . 'Value';
             if (method_exists($this, $method))
                 $this->value = $this->$method();
             else
@@ -333,7 +333,7 @@ class SettingCache
     public function getDefaultValue()
     {
         if (empty($this->defaultValue) && $this->isBaseSetting()) {
-            $method = 'getDefault' . ucfirst($this->getSetting()->getType()) . 'Value';
+            $method = 'getDefault' . ucfirst($this->getSetting()->getSettingType()) . 'Value';
             if (method_exists($this, $method))
                 $this->defaultValue = $this->$method();
             else
@@ -350,9 +350,9 @@ class SettingCache
     {
         $this->defaultValue = $defaultValue;
         if ($this->isBaseSetting()) {
-            if (empty($this->getSetting()) || empty($this->getSetting()->getType()))
+            if (empty($this->getSetting()) || empty($this->getSetting()->getSettingType()))
                 return $this;
-            $method = 'setDefault' . ucfirst($this->getSetting()->getType()) . 'Value';
+            $method = 'setDefault' . ucfirst($this->getSetting()->getSettingType()) . 'Value';
             if (method_exists($this, $method))
                 return $this->$method();
             else
@@ -669,31 +669,31 @@ class SettingCache
     /**
      * @var string
      */
-    private $type;
+    private $settingType;
 
     /**
-     * getType
+     * getSettingType
      *
      * @return string
      */
-    public function getType(): ?string
+    public function getSettingType(): ?string
     {
         if ($this->isBaseSetting())
-            return $this->getSetting()->getType();
-        return $this->type;
+            return $this->getSetting()->getSettingType();
+        return $this->settingType;
     }
 
     /**
-     * setType
+     * setSettingType
      *
-     * @param $type
+     * @param $settingType
      * @return SettingCache
      */
-    public function setType($type): SettingCache
+    public function setSettingType($settingType): SettingCache
     {
-        $this->type = $type;
+        $this->settingType = $settingType;
         if (! empty($this->getSetting()))
-            $this->getSetting()->setType($type);
+            $this->getSetting()->setSettingType($settingType);
         return $this;
     }
 
@@ -704,7 +704,7 @@ class SettingCache
      */
     public function convertImportValues(): SettingCache
     {
-        switch ($this->getType()){
+        switch ($this->getSettingType()){
             case 'time':
                 $this->value = $this->value ? new \DateTime('1970-01-01 ' . $this->value) : null ;
                 $this->defaultValue = $this->defaultValue ? new \DateTime('1970-01-01 ' . $this->defaultValue) : null ;
@@ -817,7 +817,7 @@ class SettingCache
     public function isValid(): bool
     {
         if (! $this->isBaseSetting() && ! empty($this->getName() && $this->isCacheTimeCurrent())) {
-            if (is_array($this->getValue()) && !$this->getType() === 'System')
+            if (is_array($this->getValue()) && !$this->getSettingType() === 'System')
                 return false;
             return true;
         }

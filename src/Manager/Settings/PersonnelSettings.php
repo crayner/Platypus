@@ -47,9 +47,9 @@ class PersonnelSettings implements SettingCreationInterface
         $settings = [];
         $sections = [];
 
-        $setting = $sm->createOneByName('ethnicity.list');
+        $setting = $sm->createOneByName('person_admin.ethnicity');
 
-        $setting->setName('ethnicity.list')
+        $setting->setName('person_admin.ethnicity')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('array')
             ->__set('displayName', 'List of Ethnicities')
@@ -111,9 +111,9 @@ class PersonnelSettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('religion.list');
+        $setting = $sm->createOneByName('person_admin.religion');
 
-        $setting->setName('religion.list')
+        $setting->setName('person_admin.religion')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('array')
             ->__set('displayName', 'List of Religions')

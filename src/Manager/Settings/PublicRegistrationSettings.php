@@ -50,7 +50,7 @@ class PublicRegistrationSettings implements SettingCreationInterface
         $sections['header'] = 'public_registration_settings';
         $settings = [];
 
-        $setting = $sm->createOneByName('user_admin.enable_public_registration');
+        $setting = $sm->createOneByName('person_admin.enable_public_registration');
 
         $setting->setName('people_admin.enable_public_registration')
             ->__set('role', 'ROLE_ADMIN')
@@ -67,9 +67,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('user_admin.public_registration_minimum_age');
+        $setting = $sm->createOneByName('person_admin.public_registration_minimum_age');
 
-        $setting->setName('user_admin.public_registration_minimum_age')
+        $setting->setName('person_admin.public_registration_minimum_age')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('number')
             ->__set('displayName', 'Public Registration Minimum Age')
@@ -86,9 +86,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('user_admin.public_registration_default_status');
+        $setting = $sm->createOneByName('person_admin.public_registration_default_status');
 
-        $setting->setName('user_admin.public_registration_default_status')
+        $setting->setName('person_admin.public_registration_default_status')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('choice')
             ->__set('displayName', 'Public Registration Default Status')
@@ -106,9 +106,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
 
         $prm = new PersonRoleManager($sm->getEntityManager(), new MessageManager());
 
-        $setting = $sm->createOneByName('user_admin.public_registration_default_role');
+        $setting = $sm->createOneByName('person_admin.public_registration_default_role');
 
-        $setting->setName('user_admin.public_registration_default_role')
+        $setting->setName('person_admin.public_registration_default_role')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('choice')
             ->__set('displayName', 'Public Registration Default Role')
@@ -133,9 +133,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
         $section = [];
         $settings = [];
 
-        $setting = $sm->createOneByName('user_admin.public_registration_intro');
+        $setting = $sm->createOneByName('person_admin.public_registration_intro');
 
-        $setting->setName('user_admin.public_registration_intro')
+        $setting->setName('person_admin.public_registration_intro')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('html')
             ->__set('displayName', 'Public Registration Introductory Text')
@@ -150,9 +150,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('user_admin.public_registration_postscript');
+        $setting = $sm->createOneByName('person_admin.public_registration_postscript');
 
-        $setting->setName('user_admin.public_registration_postscript')
+        $setting->setName('person_admin.public_registration_postscript')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('html')
             ->__set('displayName', 'Public Registration Postscript')
@@ -167,9 +167,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('user_admin.public_registration_privacy_statement');
+        $setting = $sm->createOneByName('person_admin.public_registration_privacy_statement');
 
-        $setting->setName('user_admin.public_registration_privacy_statement')
+        $setting->setName('person_admin.public_registration_privacy_statement')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('html')
             ->__set('displayName', 'Public Registration Privacy Statement')
@@ -184,9 +184,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('user_admin.public_registration_agreement');
+        $setting = $sm->createOneByName('person_admin.public_registration_agreement');
 
-        $setting->setName('user_admin.public_registration_agreement')
+        $setting->setName('person_admin.public_registration_agreement')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('html')
             ->__set('displayName', 'Public Registration Agreement')

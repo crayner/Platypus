@@ -2,9 +2,15 @@
 namespace App\Entity;
 
 use App\Util\PhotoHelper;
+use Doctrine\Common\Collections\ArrayCollection;
+use Hillrange\Form\Validator\Colour;
+use Hillrange\Form\Validator\Integer;
 use Hillrange\Security\Util\UserTrackInterface;
 use Hillrange\Security\Util\UserTrackTrait;
 use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Url;
 
 /**
  * Setting
@@ -15,6 +21,14 @@ class Setting
      * @var int|null
      */
 	private $id;
+
+    /**
+     * @return array
+     */
+    public static function getSettingTypeList(): array
+    {
+        return self::$settingTypeList;
+    }
 
     /**
      * @return int|null
@@ -35,25 +49,49 @@ class Setting
     }
 
     /**
+     * @var array
+     */
+    private static $settingTypeList = [
+        'array',
+        'boolean',
+        'choice',
+        'colour',
+        'currency',
+        'date',
+        'email',
+        'file',
+        'html',
+        'image',
+        'integer',
+        'multiChoice',
+        'string',
+        'system',
+        'text',
+        'url',
+    ];
+
+    /**
      * @var string|null
      */
-    private $type;
+    private $settingType;
 
     /**
      * @return null|string
      */
-    public function getType(): ?string
+    public function getSettingType(): ?string
     {
-        return $this->type;
+        return $this->settingType;
     }
 
     /**
-     * @param null|string $type
+     * @param string $settingType
      * @return Setting
      */
-    public function setType(?string $type): Setting
+    public function setSettingType(string $settingType): Setting
     {
-        $this->type = $type;
+        if (! in_array($settingType, self::getSettingTypeList()))
+            trigger_error(sprintf('The setting type %s has not been defined.  Allowed types are %s', $settingType, implode(',',self::getSettingTypeList())));
+        $this->settingType = $settingType;
         return $this;
     }
 
@@ -147,7 +185,7 @@ class Setting
      */
     public function setValue($value): Setting
     {
-        if ($this->getType() === 'image' && $value !== $this->getValue())
+        if ($this->getSettingType() === 'image' && $value !== $this->getValue())
             PhotoHelper::deletePhotoFile($this->getValue());
 
         $this->value = $value;
@@ -191,7 +229,39 @@ class Setting
      */
     public function getValidators(): array
     {
-        return $this->validators ?: [];
+        $this->validators = $this->validators ?: [];
+
+        $w = new ArrayCollection($this->validators);
+
+        switch ($this->getSettingType()) {
+            case 'url':
+                $x = new Url();
+                if (! $w->contains($x))
+                    $w->add($x);
+                break;
+            case 'string':
+                $x = new Length(['max' => 25]);
+                if (! $w->contains($x))
+                    $w->add($x);
+                break;
+            case 'integer':
+                $x = new Integer();
+                if (! $w->contains($x))
+                    $w->add($x);
+                break;
+            case 'colour':
+                $x = new Colour();
+                if (! $w->contains($x))
+                    $w->add($x);
+                break;
+            case 'image':
+                $x = new Image();
+                if (! $w->contains($x))
+                    $w->add($x);
+                break;
+        }
+
+        return $this->validators = $w->toArray();
     }
 
     /**

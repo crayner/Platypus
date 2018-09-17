@@ -14,8 +14,8 @@
 {% block contentContainer %}
     <div id="content-container">
         <section>
-            {% if getSetting('system.index.text', null) is not empty %}
-                <p>{{ getSetting('system.index.text', null)|raw }}</p>
+            {% if getSetting('system.index_text', null) is not empty %}
+                <p>{{ getSetting('system.index_text', null)|raw }}</p>
             {% else %}
                 <p>{{ 'home.para1'|trans }}</p>
                 <p>{{ 'home.para2'|trans }}</p>

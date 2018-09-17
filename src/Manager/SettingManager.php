@@ -281,13 +281,13 @@ class SettingManager implements ContainerAwareInterface
                 ->setBaseSetting(false)
                 ->setCacheTime(new \DateTime('now'));
             if (is_array($w))
-                $newSetting->setType('array');
+                $newSetting->setSettingType('array');
             else
-                $newSetting->setType('system');
+                $newSetting->setSettingType('system');
 
             $this->Setting = $newSetting->getSetting();
             $this->addSetting($newSetting);
-            if ($newSetting->getType() === 'array')
+            if ($newSetting->getSettingType() === 'array')
                 $this->unpackArray($newSetting);
         }
     }
@@ -322,7 +322,7 @@ class SettingManager implements ContainerAwareInterface
 
             if ($setting instanceof SettingCache)
             {
-                if ($setting->getType() !== 'array')
+                if ($setting->getSettingType() !== 'array')
                     return $this->addSetting($setting);
                 else
                     $this->unpackArray($setting);
@@ -469,7 +469,7 @@ class SettingManager implements ContainerAwareInterface
             [
                 'name',
                 'displayName',
-                'type',
+                'settingType',
                 'description',
             ]
         );
@@ -639,7 +639,7 @@ class SettingManager implements ContainerAwareInterface
      */
     private function getValue($default = null, array $options = [])
     {
-        switch ($this->setting->getType()) {
+        switch ($this->setting->getSettingType()) {
             case 'twig':
                 $value = null;
                 try {
@@ -705,7 +705,7 @@ class SettingManager implements ContainerAwareInterface
             if (!$this->getAuthorisation()->isGranted($this->setting->getSetting()->getRole(), $this->setting->getSetting()))
                 return $this;
 
-        if ($this->setting->getType() === 'file')
+        if ($this->setting->getSettingType() === 'file')
             $this->removeFile($this->setting->getValue());
 
         $setting = $this->getEntityManager()->getRepository(Setting::class)->find($this->setting->getId());
@@ -714,7 +714,7 @@ class SettingManager implements ContainerAwareInterface
 
         if ($x = $this->setting->setValue($value)
             ->setCacheTime(new \DateTime('now'))
-            ->writeSetting($this->getEntityManager(), $this->getValidator(), $this->getConstraints($this->setting->getType())) !== true)
+            ->writeSetting($this->getEntityManager(), $this->getValidator(), $this->getConstraints($this->setting->getSettingType())) !== true)
         {
             foreach($x->getIterator() as $constraintViolation)
             {
@@ -848,7 +848,7 @@ class SettingManager implements ContainerAwareInterface
             return $this->getMessageManager();
         }
 
-        switch ($setting->getType())
+        switch ($setting->getSettingType())
         {
             case 'array':
                 $count = 0;
@@ -907,7 +907,7 @@ class SettingManager implements ContainerAwareInterface
     /**
      * @return array
      */
-    public function getConstraints(string $type): array
+    public function getConstraints(string $settingType): array
     {
         $constraints = [];
         $constraints['boolean'] = [];
@@ -924,15 +924,15 @@ class SettingManager implements ContainerAwareInterface
         ];
         $constraints['system'] = [];
         $constraints['string'] = [];
-        $constraints['enum'] = [];  //SettingChoiceType should be used as it adds a Setting Choice Validator
+        $constraints['enum'] = [];  //SettingChoiceSettingType should be used as it adds a Setting Choice Validator
         $constraints['regex'] = [
             new Regex(),
         ];
         $constraints['text'] = [];
         $constraints['time'] = [];
 
-        if (isset($constraints[$type]))
-            return $constraints[$type];
+        if (isset($constraints[$settingType]))
+            return $constraints[$settingType];
         return [];
     }
 
@@ -972,15 +972,15 @@ class SettingManager implements ContainerAwareInterface
     {
         $result = '';
         $results = $this->getEntityManager()->getRepository(Setting::class)->createQueryBuilder('s')
-            ->where('s.type != :setType')
-            ->setParameter('setType', 'system')
+            ->where('s.settingType != :setSettingType')
+            ->setParameter('setSettingType', 'system')
             ->getQuery()
             ->getResult();
         $settings = [];
         foreach($results as $setting) {
             $w = $setting->__toArray();
             unset($w['valid'],$w['createdOn'],$w['lastModified'],$w['createdBy'],$w['modifiedBy'],$w['id']);
-            switch($w['type']){
+            switch($w['settingType']){
                 case 'array':
                     $w['value'] = SettingCache::convertDatabaseToArray($w['value']);
                     $w['defaultValue'] = SettingCache::convertDatabaseToArray($w['defaultValue']);
@@ -1095,7 +1095,7 @@ class SettingManager implements ContainerAwareInterface
     {
         $version = [];
         $data = [];
-        $version['type'] = 'system';
+        $version['settingType'] = 'system';
         $version['displayName'] = 'System Version';
         $version['description'] = 'The version of Busybee currently configured on your system.';
         $version['role'] = 'ROLE_SYSTEM_ADMIN';
@@ -1183,7 +1183,7 @@ class SettingManager implements ContainerAwareInterface
      */
     public function createSetting(Setting $setting): SettingManager
     {
-        if ($setting->getType() === 'array')
+        if ($setting->getSettingType() === 'array')
             $setting->setValue(str_replace(array("\\r", "\\n", '"'), array('', "\n", ''),$setting->getValue()));
         $exists = $this->get($setting->getName());
         if ($exists instanceof SettingCache)

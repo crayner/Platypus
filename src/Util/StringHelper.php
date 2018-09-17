@@ -51,4 +51,34 @@ class StringHelper
             $value = trim(str_replace('__', '_', $value), '_');
         return trim($lowerCase ? strtolower($value) : $value, ' _');
     }
+
+    /**
+     * insertUnderScore
+     *
+     * @param $value
+     * @return string
+     */
+    public static function insertUnderScore($value): string
+    {
+        $value = self::safeString($value);
+        $s = '';
+        $r = 0;
+        for($i=0; $i<mb_strlen($value); $i++)
+        {
+            if (preg_match('/[A-Z]/', $value[$i])) {
+                if (abs($r - $i) > 1)
+                    $s .= '_';
+                $r = $i;
+            }
+            $s .= strtolower($value[$i]);
+        }
+        $s = str_replace(['(',')', '-'], '_', $s);
+
+
+        do {
+            $s = str_replace('__', '_', $s);
+        } while (mb_strpos($s, '__') !== false);
+
+        return trim($s, '_');
+    }
 }

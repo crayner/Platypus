@@ -13,7 +13,6 @@
  * Date: 12/09/2018
  * Time: 11:21
  */
-
 namespace App\Manager;
 
 use App\Manager\Gibbon\GibbonTransferInterface;
@@ -79,7 +78,7 @@ class GibbonManager
                 foreach ($this->datum as $field => $value)
                     $newData = $this->generateNewFieldData($entityName, $newData, $field, $value);
 
-                $records[] = $this->postRecord($entityName, $newData);
+                $records = $this->postRecord($entityName, $newData, $records);
             }
 
             $this->writeEntityRecords($entityName, $records);
@@ -693,11 +692,11 @@ class GibbonManager
      * @param array $newData
      * @return array
      */
-    private function postRecord(string $entityName, array $newData): array
+    private function postRecord(string $entityName, array $newData, array $records): array
     {
         if (! method_exists($this->getTransferManager(), 'postRecord'))
             return $newData;
-        return $this->getTransferManager()->postRecord($entityName, $newData, $this->getObjectManager());
+        return $this->getTransferManager()->postRecord($entityName, $newData, $records, $this->getObjectManager());
     }
 
     /**

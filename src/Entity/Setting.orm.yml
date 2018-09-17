@@ -3,24 +3,25 @@ App\Entity\Setting:
     table: setting
     repositoryClass: App\Repository\SettingRepository
     indexes:
-        type:
-            columns: [ type, name ] 
+        settingType:
+            columns: [ setting_type, name ]
     id:
         id:
             type: integer
             generator:
                 strategy: AUTO
     fields:
-        type:
+        settingType:
             type: string
-            length: '25'
+            length: 25
+            column: setting_type
         name:
             type: string
-            length: '64'
+            length: 64
             unique: true
         displayName:
             type: string
-            length: '64'
+            length: 64
             unique: true
             column: display_name
         description:
