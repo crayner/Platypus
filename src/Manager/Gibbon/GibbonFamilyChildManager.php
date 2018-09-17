@@ -33,7 +33,7 @@ class GibbonFamilyChildManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = '';
+    protected $nextGibbonName = 'gibbonStaff';
 
     /**
      * @var array

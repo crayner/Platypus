@@ -77,7 +77,7 @@ class GibbonManager
                 $newData = [];
                 foreach ($this->datum as $field => $value)
                     $newData = $this->generateNewFieldData($entityName, $newData, $field, $value);
-
+dump($records);
                 $records = $this->postRecord($entityName, $newData, $records);
             }
 
@@ -490,6 +490,17 @@ class GibbonManager
     }
 
     /**
+     * safeString
+     *
+     * @param $value
+     * @return string
+     */
+    private function safeString($value): string
+    {
+        return StringHelper::safeString($value, true);
+    }
+
+    /**
      * handleJoinTable
      *
      * @param array $joinTable
@@ -694,8 +705,10 @@ class GibbonManager
      */
     private function postRecord(string $entityName, array $newData, array $records): array
     {
-        if (! method_exists($this->getTransferManager(), 'postRecord'))
-            return $newData;
+        if (! method_exists($this->getTransferManager(), 'postRecord')) {
+            $records[] = $newData;
+            return $records;
+        }
         return $this->getTransferManager()->postRecord($entityName, $newData, $records, $this->getObjectManager());
     }
 

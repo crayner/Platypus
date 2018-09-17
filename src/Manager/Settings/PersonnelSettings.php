@@ -264,9 +264,9 @@ class PersonnelSettings implements SettingCreationInterface
         $settings[] = $setting;
 
 
-        $setting = $sm->createOneByName('person.residency_status');
+        $setting = $sm->createOneByName('person_admin.residency_status');
 
-        $setting->setName('person.residency_status')
+        $setting->setName('person_admin.residency_status')
             ->__set('role', 'ROLE_ADMIN')
             ->setType('array')
             ->__set('displayName', 'Residency Status')

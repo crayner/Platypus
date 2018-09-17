@@ -13,6 +13,30 @@ App\Entity\Staff:
             options:
                 default: 1
             column: smart_workflow_help
+        staffType:
+            length: 20
+            column: staff_type
+        jobTitle:
+            length: 100
+            column: job_title
+        firstAidQualified:
+            type: boolean
+            options:
+                default: 1
+            column: first_aid_qualified
+        countryOfOrigin:
+            length: 80
+            column: country_of_origin
+        qualifications:
+            type: text
+        biography:
+            type: text
+        biographicalGrouping:
+            length: 100
+            column: biographical_grouping
+        biographicalGroupingPriority:
+            type: smallint
+            column: biographical_grouping_priority
     oneToOne:
         person:
             targetEntity: App\Entity\Person

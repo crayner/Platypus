@@ -27,6 +27,16 @@ class Staff
     private $id;
 
     /**
+     * getStaffTypeList
+     *
+     * @return array
+     */
+    public static function getStaffTypeList(): array
+    {
+        return self::$staffTypeList;
+    }
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -96,5 +106,200 @@ class Staff
     public function __construct()
     {
         $this->smartWorkflowHelp = true;
+    }
+
+    /**
+     * @var array
+     */
+    private static $staffTypeList = [
+        'teaching',
+        'support',
+        'administrator',
+        'ancillary',
+        'finance',
+    ];
+
+    /**
+     * @var string|null
+     */
+    private $staffType;
+
+    /**
+     * @return null|string
+     */
+    public function getStaffType(): ?string
+    {
+        return $this->staffType;
+    }
+
+    /**
+     * @param null|string $staffType
+     * @return Staff
+     */
+    public function setStaffType(?string $staffType): Staff
+    {
+        $this->staffType = $staffType;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $jobTitle;
+
+    /**
+     * @return null|string
+     */
+    public function getJobTitle(): ?string
+    {
+        return $this->jobTitle;
+    }
+
+    /**
+     * @param null|string $jobTitle
+     * @return Staff
+     */
+    public function setJobTitle(?string $jobTitle): Staff
+    {
+        $this->jobTitle = $jobTitle;
+        return $this;
+    }
+
+    /**
+     * @var boolean
+     */
+    private $firstAidQualified;
+
+    /**
+     * @return bool
+     */
+    public function isFirstAidQualified(): bool
+    {
+        return $this->firstAidQualified ? true : false ;
+    }
+
+    /**
+     * @param bool|null $firstAidQualified
+     * @return Staff
+     */
+    public function setFirstAidQualified(?bool $firstAidQualified): Staff
+    {
+        $this->firstAidQualified = $firstAidQualified ? true : false;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $countryOfOrigin;
+
+    /**
+     * @return null|string
+     */
+    public function getCountryOfOrigin(): ?string
+    {
+        return $this->countryOfOrigin;
+    }
+
+    /**
+     * @param null|string $countryOfOrigin
+     * @return Staff
+     */
+    public function setCountryOfOrigin(?string $countryOfOrigin): Staff
+    {
+        $this->countryOfOrigin = $countryOfOrigin;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $qualifications;
+
+    /**
+     * @return null|string
+     */
+    public function getQualifications(): ?string
+    {
+        return $this->qualifications;
+    }
+
+    /**
+     * @param null|string $qualifications
+     * @return Staff
+     */
+    public function setQualifications(?string $qualifications): Staff
+    {
+        $this->qualifications = $qualifications;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $biography;
+
+    /**
+     * @return null|string
+     */
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    /**
+     * @param null|string $biography
+     * @return Staff
+     */
+    public function setBiography(?string $biography): Staff
+    {
+        $this->biography = $biography;
+        return $this;
+    }
+
+    /**
+     * @var string|null
+     */
+    private $biographicalGrouping;
+
+    /**
+     * @return null|string
+     */
+    public function getBiographicalGrouping(): ?string
+    {
+        return $this->biographicalGrouping;
+    }
+
+    /**
+     * @param null|string $biographicalGrouping
+     * @return Staff
+     */
+    public function setBiographicalGrouping(?string $biographicalGrouping): Staff
+    {
+        $this->biographicalGrouping = $biographicalGrouping;
+        return $this;
+    }
+
+    /**
+     * @var integer|null
+     */
+    private $biographicalGroupingPriority;
+
+    /**
+     * @return int|null
+     */
+    public function getBiographicalGroupingPriority(): ?int
+    {
+        return $this->biographicalGroupingPriority;
+    }
+
+    /**
+     * @param int|null $biographicalGroupingPriority
+     * @return Staff
+     */
+    public function setBiographicalGroupingPriority(?int $biographicalGroupingPriority): Staff
+    {
+        $this->biographicalGroupingPriority = $biographicalGroupingPriority;
+        return $this;
     }
 }

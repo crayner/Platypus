@@ -53,27 +53,38 @@ class ThirdPartySettings implements SettingCreationInterface
         $settings = [];
         $sections = [];
 
-        $setting = $sm->createOneByName('google');
+        $setting = $sm->createOneByName('google.o_auth');
 
-        $setting->setName('google')
+        $setting
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('array')
+            ->setType('boolean')
             ->__set('displayName', 'Google Integration')
             ->__set('description', 'Enable Gibbon-wide integration with the Google APIs?')
             ->__set('choice', null)
             ->__set('translateChoice', null)
-            ->setDefaultValue(['o_auth' => '0',
-                'client_id' => '',
-                'client_secret' => '',])
-            ->setValidators([
-                new Yaml(),
-                new Google(),
-            ]);
+            ->setDefaultValue(false)
+            ->setValidators();
         if (empty($setting->getValue())) {
-            $setting->setValue(['o_auth' => '0',
-                'client_id' => '',
-                'client_secret' => '',]);
+            $setting->setValue(false);
         }
+        $setting->setHideParent('google.o_auth');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('google.client_name');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setType('text')
+            ->__set('displayName', 'Google Developers Client Name')
+            ->__set('description', 'Name of Google Project in Developers Console.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(false)
+            ->setValidators();
+        if (empty($setting->getValue())) {
+            $setting->setValue(false);
+        }
+        $setting->setHideParent('google.o_auth');
         $settings[] = $setting;
 
         $section['name'] = 'Google Integration';
