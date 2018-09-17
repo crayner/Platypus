@@ -729,6 +729,7 @@ class SettingCache
     {
         $this->findOneByName($values['name'], $entityManager);
         $this->setting = $this->getSetting() instanceof Setting ? $this->getSetting() : new Setting();
+dump($this->setting);
         foreach ($values as $field => $value) {
             $func = 'set' . ucfirst($field);
             if ($field === 'value')
@@ -759,13 +760,13 @@ class SettingCache
             return [];
 
         if (! is_array($value))
-            $value = [$value];
+            trigger_error(sprintf('The validation for the setting %s is correctly formated', $value), E_USER_ERROR);
 
         $results = [];
-
-        foreach($value as $validator)
+dump($value);
+        foreach($value as $validator=>$parameters)
             if (class_exists($validator))
-                $results[] = new $validator();
+                $results[] = new $validator($parameters);
             else
                 trigger_error('The validator ' .$validator . ' is not available', E_USER_ERROR);
 

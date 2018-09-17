@@ -40,7 +40,7 @@
         {% for section_name, section_form in form.children %}
             {% if section_name is not same as('_token') %}
                 {% for setting in section_form.collection %}
-                    {% if setting.vars.value.type is same as('boolean') and setting.vars.value.hideParent is not empty %}
+                    {% if setting.vars.value.settingType is same as('boolean') and setting.vars.value.hideParent is not empty %}
 
         var id = '#' + $('.' + '{{ camelCase(setting.vars.value.hideParent ~ '_parent') }}').find('input[type=hidden]').attr('id');
         toggleHideParent('{{ camelCase(setting.vars.value.hideParent) }}', 0);

@@ -207,7 +207,7 @@ class MultipleSettingManager
                 if ($setting->isParameter()) {
                     $this->saveParameter($sm, $setting);
                 } else {
-                    if ($setting->getType() === 'multiChoice' && empty($data[$name]['collection'][$key])) {
+                    if ($setting->getSettingType() === 'multiChoice' && empty($data[$name]['collection'][$key])) {
                         $refresh = true;
                         $setting->setValue([]);
                     }

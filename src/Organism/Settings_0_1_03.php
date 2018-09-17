@@ -13,9 +13,9 @@ class Settings_0_1_03 implements SettingInterface
 	public function getSettings()
 	{
 		return <<<LLL
-ethnicity.list:
-    type: array
-    name: ethnicity.list
+person_admin.ethnicity:
+    settingType: array
+    name: person_admin.ethnicity
     displayName: 'List of Ethnicities'
     description: 'List of Ethnicities.  Uses the Australian Standard to create this list'
     value:
@@ -67,9 +67,9 @@ ethnicity.list:
     role: null
     defaultValue: {  }
     translateChoice: Person
-religion.list:
-    type: array
-    name: religion.list
+person_admin.religions:
+    settingType: array
+    name: person_admin.religions
     displayName: 'List of Religions'
     description: 'List of Religions.  Uses the Australian Standard to create this list'
     value:
@@ -209,9 +209,9 @@ religion.list:
     role: ROLE_ADMIN
     defaultValue: {  }
     translateChoice: Person
-person.residency_status:
-    type: array
-    name: person.residency_status
+person_admin.residency_status:
+    settingType: array
+    name: person_admin.residency_status
     displayName: 'Residency Status'
     description: 'List of residency status available in system.'
     value:
@@ -225,9 +225,9 @@ person.residency_status:
     role: ROLE_ADMIN
     defaultValue: {  }
     translateChoice: Person
-departure.reasons:
-    type: array
-    name: departure.reasons
+person_admin.departure_reasons:
+    settingType: array
+    name: person_admin.departure_reasons
     displayName: 'Departure Reasons'
     description: 'List of Departure Reasons.'
     value: {}

@@ -64,6 +64,7 @@ class Setting
         'image',
         'integer',
         'multiChoice',
+        'number',
         'string',
         'system',
         'text',
@@ -200,11 +201,11 @@ class Setting
     /**
      * getChoice
      *
-     * @return array|null
+     * @return array
      */
-    public function getChoice(): ?array
+    public function getChoice(): array
     {
-        return $this->choice;
+        return $this->choice = empty($this->choice) ? [] : is_array($this->choice) ? $this->choice : [] ;
     }
 
     /**

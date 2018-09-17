@@ -1587,7 +1587,7 @@
 -
   id: 326
   setting_type: "array"
-  name: "person.residency_status"
+  name: "person_admin.residency_status"
   display_name: "Residency Status"
   description: "List of residency status available in system."
   value: "- citizen\n- permanent\n- temporary\n- visitor\n- work"

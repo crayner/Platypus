@@ -58,7 +58,7 @@ class MultipleSettingType extends AbstractType
             $data = $options['all_data'][$key];
             $attr = $data->getFormAttr() ?: [];
             $additional = [];
-            switch ($data->getType()) {
+            switch ($data->getSettingType()) {
                 case 'array':
                     $formType = TextareaType::class;
                     $attr = ['rows' => '5',];
@@ -85,6 +85,7 @@ class MultipleSettingType extends AbstractType
                 case 'choice':
                     $formType = ChoiceType::class;
                     $choices = $data->__get('choice');
+                    $x = [];
                     if (empty($data->__get('translateChoice'))) {
                         if (is_null($data->__get('translateChoice'))) {
                             foreach ($choices as $value)
@@ -167,7 +168,7 @@ class MultipleSettingType extends AbstractType
             $builder
                 ->add('value', TextType::class);
 
-        $builder->get('value')->addViewTransformer(new SettingValueTransformer(empty($data) ? 'text' : $data->getType()));
+        $builder->get('value')->addViewTransformer(new SettingValueTransformer(empty($data) ? 'text' : $data->getSettingType()));
     }
 
     /**

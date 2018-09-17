@@ -456,9 +456,10 @@ class SettingManager implements ContainerAwareInterface
 
     /**
      * createSettings
+     *
      * @param array $data
      * @return int
-     * @throws TableNotFoundException
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
      * @throws \Doctrine\ORM\ORMException
      */
     public function createSettings(array $data = []): int
@@ -489,6 +490,7 @@ class SettingManager implements ContainerAwareInterface
         $count = 0;
         foreach ($data as $name => $values) {
             $values['name'] = strtolower($name);
+            dump($data);
             $values = $resolver->resolve($values);
             $setting = $this->getSettingCache();
 

@@ -47,7 +47,7 @@ class StaffManager
      * @param array|null $join
      * @return array
      */
-    public static function getStaffList(array $select = ['s','p'], string $where = '', array $order = [], array $join = []): array
+    public static function getStaffList(array $select = ['s, p'], string $where = '', array $order = [], array $join = []): array
     {
         $query = self::getEntityManager()->getRepository(Staff::class)->createQueryBuilder('s')
             ->leftJoin('s.person', 'p')

@@ -41,6 +41,7 @@ parameters:
         security_password_forgot: password_request_reset
         security_forced_password_change: forced_password_change
         security_home: home
+    security.password.reset.token.ttl: 86400
     db_driver: pdo_mysql
     db_host: localhost
     db_port: '3306'
