@@ -10,7 +10,7 @@
 {{ form_start(form) }}
     {% set h3Content = miscButton({additional: {onclick: "this.form.action='" ~ path(getSecurityRoute('security_password_forgot'))|raw ~ "'", tabindex: '2'}, transDomain: 'security', class: 'btn btn-info', title: 'security.login.reset_password.label', type: 'submit', icon: {class: 'fas fa-key', 'data-fa-transform': 'shrink-10 down-3', 'data-fa-mask': 'fas fa-lock'}}) %}
 
-    {% if getSetting('system.google_oauth', false) %}
+    {% if getSetting('google.o_auth', false) %}
         {% set h3Content = h3Content ~ miscButton({class: 'btn btn-success fab fa-google', title: 'google.oauth', transDomain: 'home', windowOpen: {route: path('google_oauth')}})|raw %}
     {% endif %}
 
