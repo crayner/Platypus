@@ -185,7 +185,8 @@ class SchoolController extends Controller
         $collectionManager->setCollection(new ArrayCollection($yearGroups));
 
         $form = $this->createForm(CollectionManagerType::class, $collectionManager,
-            [   'entry_type' => YearGroupType::class,
+            [
+                'entry_type' => YearGroupType::class,
                 'entry_options_data_class' => YearGroup::class,
                 'translation_domain' => 'School',
                 'sort_manage' => true,

@@ -19,6 +19,7 @@ use App\Entity\House;
 use App\Entity\Person;
 use App\Entity\YearGroup;
 use App\Form\Subscriber\HouseSubscriber;
+use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\TextType;
@@ -66,6 +67,15 @@ class YearGroupType extends AbstractType
                     'class'     => Person::class,
                     'placeholder' => 'school.year_group.head_of_year.placeholder',
                     'choice_label' => 'fullName',
+                    'query_builder' => function (EntityRepository $er) {
+                        return $er->createQueryBuilder('p')
+                            ->orderBy('p.surname')
+                            ->select('p, s')
+                            ->addOrderBy('p.firstName')
+                            ->leftJoin('p.staff', 's')
+                            ->where('s.id IS NOT NULL')
+                        ;
+                    },
                     'attr'      => [
                         'class' => 'form-control-sm',
                     ],
