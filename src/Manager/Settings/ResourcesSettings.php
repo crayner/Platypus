@@ -49,65 +49,65 @@ class ResourcesSettings implements SettingCreationInterface
 
         $setting = $sm->createOneByName('resources.categories');
 
-        $setting->setName('resources.categories')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('array')
+            ->setSettingType('array')
+            ->__set('choice', null)
+            ->setValidators(
+                [
+                    new NotBlank(),
+                    new Yaml(),
+                ]
+            )
+            ->setDefaultValue(null)
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Categories')
             ->__set('description', 'Allowable choices for category.');
         if (empty($setting->getValue())) {
             $setting->setValue(['Article', 'Book', 'Document', 'Graphic', 'Idea', 'Music', 'Object', 'Painting', 'Person', 'Photo', 'Place', 'Poetry', 'Prose', 'Rubric', 'Text', 'Video', 'Website', 'Work Sample', 'Other'])
-                ->__set('choice', null)
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                        new Yaml(),
-                    ]
-                )
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
 
         $setting = $sm->createOneByName('resources.purposes_general');
 
-        $setting->setName('resources.purposes_general')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('array')
+            ->setSettingType('array')
+            ->setValidators(
+                [
+                    new NotBlank(),
+                    new Yaml(),
+                ]
+            )
+            ->setDefaultValue(null)
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Purposes (General)')
             ->__set('description', 'Allowable choices for purpose when creating a resource.');
         if (empty($setting->getValue())) {
             $setting->setValue(['Assessment Aid', 'Concept', 'Inspiration', 'Learner Profile', 'Mass Mailer Attachment', 'Provocation', 'Skill', 'Teaching and Learning Strategy', 'Other'])
                 ->__set('choice', null)
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                        new Yaml(),
-                    ]
-                )
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
 
         $setting = $sm->createOneByName('resources.purposes_restricted');
 
-        $setting->setName('resources.purposes_restricted')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('array')
+            ->setSettingType('array')
+            ->setValidators(
+                [
+                    new Yaml(),
+                ]
+            )
+            ->setDefaultValue(null)
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Purposes (Restricted) ')
             ->__set('description', 'Additional allowable choices for purpose when creating a resource, for those with "Manage All Resources" rights.');
         if (empty($setting->getValue())) {
             $setting->setValue([])
                 ->__set('choice', null)
-                ->setValidators(
-                    [
-                        new Yaml(),
-                    ]
-                )
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
