@@ -48,21 +48,21 @@ class FacilitySettings implements SettingCreationInterface
 
         $setting = $sm->createOneByName('school_admin.facility_types');
 
-        $setting->setName('school_admin.facility_types')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('array')
+            ->setSettingType('array')
+            ->__set('choice', null)
+            ->setValidators(
+                [
+                    new NotBlank(),
+                ]
+            )
+            ->setDefaultValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Facility Types')
             ->__set('description', 'List of types for facilities.');
         if (empty($setting->getValue())) {
             $setting->setValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
-                ->__set('choice', null)
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                    ]
-                )
-                ->setDefaultValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
