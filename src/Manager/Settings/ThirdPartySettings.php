@@ -16,11 +16,11 @@
 namespace App\Manager\Settings;
 
 use App\Manager\SettingManager;
-use App\Validator\Google;
 use App\Validator\PayPal;
 use App\Validator\SMS;
 use App\Validator\Yaml;
 use Hillrange\Form\Validator\Integer;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -57,13 +57,13 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('boolean')
+            ->setSettingType('boolean')
             ->__set('displayName', 'Google Integration')
             ->__set('description', 'Enable Gibbon-wide integration with the Google APIs?')
             ->__set('choice', null)
             ->__set('translateChoice', null)
             ->setDefaultValue(false)
-            ->setValidators();
+            ->setValidators(null);
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -74,13 +74,99 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('text')
+            ->setSettingType('text')
             ->__set('displayName', 'Google Developers Client Name')
             ->__set('description', 'Name of Google Project in Developers Console.')
             ->__set('choice', null)
             ->__set('translateChoice', null)
             ->setDefaultValue(false)
-            ->setValidators();
+            ->setValidators(null);
+        if (empty($setting->getValue())) {
+            $setting->setValue(false);
+        }
+        $setting->setHideParent('google.o_auth');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('google.client_id');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('text')
+            ->__set('displayName', 'Google Developers Client ID')
+            ->__set('description', 'Client ID for Google Project In Developers Console.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(false)
+            ->setValidators(null);
+        if (empty($setting->getValue())) {
+            $setting->setValue(false);
+        }
+        $setting->setHideParent('google.o_auth');
+        $settings[] = $setting;
+
+
+        $setting = $sm->createOneByName('google.client_secret');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('text')
+            ->__set('displayName', 'Google Developers Client Secret')
+            ->__set('description', 'Client Secret for Google Project In Developers Console.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(false)
+            ->setValidators(null);
+        if (empty($setting->getValue())) {
+            $setting->setValue(false);
+        }
+        $setting->setHideParent('google.o_auth');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('google.redirect_uri');
+
+        $route = $sm->getContainer()->get('router')->generate('connect_google_check', [], RouterInterface::ABSOLUTE_URL);
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('text')
+            ->__set('displayName', 'Google Developers Redirect Uri')
+            ->__set('description', 'Google Redirect on successful authentication. (Hint: This will be a page on your site.)')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue($route)
+            ->setValidators(null)
+            ->setValue($route);
+        $setting->setHideParent('google.o_auth');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('google.developer_key');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('text')
+            ->__set('displayName', 'Google Developers Developer Key')
+            ->__set('description', 'Google project Developer Key.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(false)
+            ->setValidators(null);
+        if (empty($setting->getValue())) {
+            $setting->setValue(false);
+        }
+        $setting->setHideParent('google.o_auth');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('system.calendar_feed');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('text')
+            ->__set('displayName', 'School Google Calendar ID')
+            ->__set('description', 'Google Calendar ID for your school calendar. Only enables timetable integration when logging in via Google.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(false)
+            ->setValidators(null);
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -94,29 +180,72 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $settings = [];
 
-        $setting = $sm->createOneByName('pay_pal');
+        $setting = $sm->createOneByName('system.enable_payments');
 
-        $setting->setName('pay_pal')
+        $setting
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('array')
+            ->setSettingType('boolean')
             ->__set('displayName', 'PayPal API Integration')
             ->__set('description', '')
             ->__set('choice', null)
             ->__set('translateChoice', null)
-            ->setDefaultValue(['enable' => '0',
-                'username' => '',
-                'password' => '',
-                'signature' => '',])
-            ->setValidators([
-                new Yaml(),
-                new PayPal(),
-            ]);
+            ->setDefaultValue(false)
+            ->setValidators(null);
         if (empty($setting->getValue())) {
-            $setting->setValue(['enable' => '0',
-                'username' => '',
-                'password' => '',
-                'signature' => '',]);
+            $setting->setValue(false);
         }
+        $setting->setHideParent('system.enable_payments');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('system.paypal_apiusername');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('string')
+            ->__set('displayName', 'PayPal API Username')
+            ->__set('description', 'API username provided by PayPal.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(null)
+            ->setValidators(null);
+        if (empty($setting->getValue())) {
+            $setting->setValue(null);
+        }
+        $setting->setHideParent('system.enable_payments');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('system.paypal_apipassword');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('string')
+            ->__set('displayName', 'PayPal API Password')
+            ->__set('description', 'API password provided by PayPal.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(null)
+            ->setValidators(null);
+        if (empty($setting->getValue())) {
+            $setting->setValue(null);
+        }
+        $setting->setHideParent('system.enable_payments');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('system.paypal_apisignature');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('text')
+            ->__set('displayName', 'PayPal API Signature')
+            ->__set('description', 'API signature provided by PayPal.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(null)
+            ->setValidators(null);
+        if (empty($setting->getValue())) {
+            $setting->setValue(null);
+        }
+        $setting->setHideParent('system.enable_payments');
         $settings[] = $setting;
 
         $section['name'] = 'PayPal Payment Gateway';
@@ -126,33 +255,84 @@ class ThirdPartySettings implements SettingCreationInterface
         $sections[] = $section;
         $settings = [];
 
-        $setting = $sm->createOneByName('sms');
+        $setting = $sm->createOneByName('messenger.enable_sms');
 
-        $setting->setName('sms')
+        $setting
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('array')
-            ->__set('displayName', 'SMS Settings')
+            ->setSettingType('boolean')
+            ->__set('displayName', 'Enable SMS Settings')
             ->__set('description', '')
             ->__set('choice', null)
             ->__set('translateChoice', null)
-            ->setDefaultValue(['enable' => '0',
-                'username' => '',
-                'password' => '',
-                'url' => '',
-                'urlCredit' => '',
-            ])
-            ->setValidators([
-                new Yaml(),
-                new SMS(),
-            ]);
-        if (empty($setting->getValue())) {
-            $setting->setValue(['enable' => '0',
-                'username' => '',
-                'password' => '',
-                'url' => '',
-                'urlCredit' => '',
-            ]);
-        }
+            ->setDefaultValue(false)
+            ->setValidators(null);
+        if (empty($setting->getValue()))
+            $setting->setValue(false);
+        $setting->setHideParent('messenger.enable_sms');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('messenger.sms_username');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('string')
+            ->__set('displayName', 'SMS Username')
+            ->__set('description', 'SMS gateway username')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(null)
+            ->setValidators(null);
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $setting->setHideParent('messenger.enable_sms');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('messenger.sms_password');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('string')
+            ->__set('displayName', 'SMS Password')
+            ->__set('description', 'SMS gateway password')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(null)
+            ->setValidators(null);
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $setting->setHideParent('messenger.enable_sms');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('messenger.sms_url');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('string')
+            ->__set('displayName', 'SMS Url')
+            ->__set('description', 'SMS gateway URL for send requests.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(null)
+            ->setValidators(null);
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $setting->setHideParent('messenger.enable_sms');
+        $settings[] = $setting;
+
+        $setting = $sm->createOneByName('messenger.sms_urlcredit');
+
+        $setting
+            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+            ->setSettingType('number')
+            ->__set('displayName', 'SMS Url Credit')
+            ->__set('description', 'SMS gateway URL for checking credit.')
+            ->__set('choice', null)
+            ->__set('translateChoice', null)
+            ->setDefaultValue(null)
+            ->setValidators(null);
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $setting->setHideParent('messenger.enable_sms');
         $settings[] = $setting;
 
         $section['name'] = 'SMS Settings';
@@ -166,7 +346,7 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_transport')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('choice')
+            ->setSettingType('choice')
             ->__set('displayName', 'EMail Transport')
             ->__set('description', '')
             ->__set('choice', ['','smtp','mail','sendmail','gmail'])
@@ -182,7 +362,7 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_host')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('string')
+            ->setSettingType('string')
             ->__set('displayName', 'EMail Host')
             ->__set('description', 'Only the domain name is required, so \'smtp.gmail.com\' or \'hotmail.com\'')
             ->__set('choice', null)
@@ -198,7 +378,7 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_user')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('string')
+            ->setSettingType('string')
             ->__set('displayName', 'EMail User Name')
             ->__set('description', 'Consult your email host for details of the username.')
             ->__set('choice', null)
@@ -214,7 +394,7 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_password')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('string')
+            ->setSettingType('string')
             ->__set('displayName', 'EMail Password')
             ->__set('description', '')
             ->__set('choice', null)
@@ -230,7 +410,7 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_port')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('string')
+            ->setSettingType('string')
             ->__set('displayName', 'EMail Server Port')
             ->__set('description', 'The port that the server has open to receive outgoing emails. Standard port for email systems include 25, 465, 587, but you sever information should give this detail.')
             ->__set('choice', null)
@@ -249,7 +429,7 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_encryption')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('choice')
+            ->setSettingType('choice')
             ->__set('displayName', 'EMail Server Encryption')
             ->__set('description', 'Encryption details can be found in your email server documentation.')
             ->__set('choice', [
@@ -269,7 +449,7 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_auth_mode')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('choice')
+            ->setSettingType('choice')
             ->__set('displayName', 'EMail Server Authority Mode')
             ->__set('description', 'Authority Mode details can be found in your email server documentation.')
             ->__set('choice', [
@@ -289,7 +469,7 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_sender_name')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('string')
+            ->setSettingType('string')
             ->__set('displayName', 'EMail Sender Name')
             ->__set('description', 'This is the name that will appear on all emails sent by the site. It can be a personal name, or the name of the school.')
             ->__set('choice', null)
@@ -305,12 +485,12 @@ class ThirdPartySettings implements SettingCreationInterface
 
         $setting->setName('mailer_sender_address')
             ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setType('string')
+            ->setSettingType('string')
             ->__set('displayName', 'EMail Sender Address')
             ->__set('description', 'This is the email address that will appear on all emails sent by the site. It will be the address that replies come too. If you use a none reply address, then each email message should clearly state that replies are not received by the school.')
             ->__set('choice', null)
             ->__set('translateChoice', null)
-            ->setDefaultValue(null)
+            ->setDefaultValue($sm->get('org.email', 'email@some-domain.org'))
             ->setValidators([
                 new Email(),
             ])
@@ -327,6 +507,7 @@ class ThirdPartySettings implements SettingCreationInterface
         $sections['header'] = 'third_party_settings';
 
         $this->sections = $sections;
+
         return $this;
     }
 

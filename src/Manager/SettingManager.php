@@ -1137,8 +1137,13 @@ class SettingManager implements ContainerAwareInterface
     public function createOneByName(string $name): ?SettingCache
     {
         $setting = $this->getSettingCache();
+        $sss = $setting->findOneByName($name, $this->getEntityManager());
+if ($sss->getSetting() === null)
+{
+    dump([$name, $sss]);
+}
 
-        $this->addSetting($setting->findOneByName($name, $this->getEntityManager()));
+        $this->addSetting($sss);
 
         if ($setting === $this->setting)
              return $this->setting;
