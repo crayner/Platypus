@@ -669,8 +669,6 @@ class GibbonSettingManager extends GibbonTransferManager
             'functions' => [
                 'safeString' => null,
             ],
-
-
         ],
         'messenger.message_bubble_bgcolor' => [
             'settingType' => 'colour',
