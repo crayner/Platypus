@@ -50,6 +50,7 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
      */
     public function trans($id, array $parameters = [], $domain = null, $locale = null)
     {
+        dump($id);
         $trans = $this->translator->trans($id, $parameters, $domain, $locale);
 
         return $this->getInstituteTranslation($trans, $locale);

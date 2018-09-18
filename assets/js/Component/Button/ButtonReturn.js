@@ -4,17 +4,17 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import Button from './Button'
 
-export default function ButtonMiscellaneous(props) {
+export default function ButtonReturn(props) {
     const {
         button,
         ...otherProps,
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')
-        button.colour = 'light'
+        button.colour = 'primary'
 
     if (button.icon === false || typeof(button.icon) === 'undefined')
-        button.icon = ['fas','atom']
+        button.icon = ['far','hand-point-left']
 
     return (
         <Button
@@ -24,6 +24,6 @@ export default function ButtonMiscellaneous(props) {
     )
 }
 
-ButtonMiscellaneous.propTypes = {
+ButtonAdd.propTypes = {
     button: PropTypes.object.isRequired,
 }

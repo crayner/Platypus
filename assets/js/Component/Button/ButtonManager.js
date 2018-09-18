@@ -34,6 +34,27 @@ export default function ButtonManager(props) {
                 {...otherProps}
             />
         )
+    if (button.type === 'return')
+        return (
+            <ButtonReturn
+                button={button}
+                {...otherProps}
+            />
+        )
+    if (button.type === 'refresh')
+        return (
+            <ButtonRefresh
+                button={button}
+                {...otherProps}
+            />
+        )
+    if (button.type === 'close')
+        return (
+            <ButtonClose
+                button={button}
+                {...otherProps}
+            />
+        )
     return (
         <ButtonMiscellaneous
             button={button}

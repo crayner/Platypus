@@ -556,7 +556,6 @@ abstract class PaginationReactManager implements PaginationInterface
                 [
                     'label',
                     'name',
-                    'select',
                 ]
             );
             $resolver->setDefaults(
@@ -568,6 +567,8 @@ abstract class PaginationReactManager implements PaginationInterface
                     'style' => 'text',
                     'options' => [],
                     'class' => null,
+                    'select' => null,
+
                 ]
             );
             $definition = $resolver->resolve($definition);
@@ -588,18 +589,16 @@ abstract class PaginationReactManager implements PaginationInterface
         if (! property_exists($this, 'headerDefinition') || ! is_array($this->headerDefinition))
             return [
                 'title' => $this->getHeaderTitle().'.title',
-                'paragraph' => false
+                'paragraph' => false,
+                'buttons' => [],
             ];
 
         $resolver = new OptionsResolver();
-        $resolver->setRequired(
-            [
-                'title',
-            ]
-        );
         $resolver->setDefaults(
             [
+                'title' => $this->getHeaderTitle().'.title',
                 'paragraph' => false,
+                'buttons' => [],
             ]
         );
         $headerDefinition = $resolver->resolve($this->headerDefinition);

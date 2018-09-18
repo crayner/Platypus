@@ -6,6 +6,7 @@ import PaginationList from './PaginationList'
 import {translateMessage} from '../Component/MessageTranslator'
 import PaginationColumnHeader from './PaginationColumnHeader'
 import PaginationActionHeader from './PaginationActionHeader'
+import ButtonManager from "../Component/Button/ButtonManager";
 
 export default function PaginationTitle(props) {
     const {
@@ -29,13 +30,34 @@ export default function PaginationTitle(props) {
         />
     )
 
+    var buttons = headerDefinition.buttons.map(function(button,key){
+
+        let url = button.url
+
+        if (typeof(button.url_options) !== 'object')
+            button.url_options = new Object()
+
+        Object.keys(button.url_options).map(function(key) {
+            const value = button.url_options[key]
+            url = url.replace(key, item[value])
+        })
+
+        return <ButtonManager
+            button={button}
+            url={url}
+            key={key}
+            translations={translations}
+            {...otherProps}
+        />
+    })
+
     return (
         <div className="container_fluid">
             <div className="card card-warning">
                 <div className="card-header">
                     <h3 className="card-title d-flex mb-12 justify-content-between">
                         <span className="p-6">{translateMessage(translations, headerDefinition.title)}</span>
-                        <span className="p-6"></span>
+                        <span className="p-6">{buttons}</span>
                     </h3>
                     <p>{headerDefinition.paragraph ? translateMessage(translations, headerDefinition.paragraph) : '' }</p>
                 </div>

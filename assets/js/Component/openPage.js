@@ -3,12 +3,12 @@
 export function openPage(url, options, locale) {
 
     var target = '_self'
-    if (options && options.target) {
+    if (options && typeof(options.target) === 'string') {
         target = options.target
     }
 
     var specs = ''
-    if (options && options.specs) {
+    if (options && typeof(options.specs) === 'string') {
         specs = options.specs
     }
 

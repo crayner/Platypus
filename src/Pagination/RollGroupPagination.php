@@ -184,4 +184,39 @@ class RollGroupPagination extends PaginationReactManager
             ],
         ],
     ];
+
+    /**
+     * @var array
+     */
+    protected $headerDefinition = [
+        'buttons' => [
+            [
+                'label' => 'school.roll_group.add.title',
+                'url' => '/school/roll/group/Add/edit/_closeWindow',
+                'type' => 'add',
+                'url_options' => [],
+                'options' => [
+                    'target' => 'RollGroupManage',
+                    'specs' => 'width=1100,height=750',
+                ],
+            ],
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    protected $specificTranslations = [
+        'school.roll_group.add.title',
+    ];
+
+    /**
+     * setSpecificTranslations
+     *
+     * @return PaginationInterface
+     */
+    protected function setSpecificTranslations(): PaginationInterface
+    {
+        return $this;
+    }
 }

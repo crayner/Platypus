@@ -14,7 +14,7 @@ export default function ButtonAdd(props) {
         button.colour = 'info'
 
     if (button.icon === false || typeof(button.icon) === 'undefined')
-        button.icon = ['far','plus-circle']
+        button.icon = ['fas','plus-circle']
 
     return (
         <Button
