@@ -66,6 +66,7 @@ export default function Alarm(props) {
                 <Sound
                     url={soundUrl}
                     volume={volume}
+                    autoLoad={true}
                     loop={true}
                     playStatus={'PLAYING'}
                 />
@@ -89,7 +90,11 @@ Alarm.propTypes = {
     translations: PropTypes.object.isRequired,
     permission: PropTypes.bool.isRequired,
     currentPerson: PropTypes.object.isRequired,
-    staffList: PropTypes.array.isRequired,
+    staffList: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array,
+
+    ]).isRequired,
     acknowledgeAlarm: PropTypes.func.isRequired,
     volume: PropTypes.number.isRequired,
 }

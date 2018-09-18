@@ -17,7 +17,7 @@ export default class AlarmApp extends Component {
             modal: false,
             currentPerson: new Object(),
             volume: 100,
-            staffList: [],
+            staffList: {},
         }
 
         this.translations = props.translations
@@ -47,9 +47,6 @@ export default class AlarmApp extends Component {
     }
 
     handleNewAlarm(data) {
-        var staffList = data.staffList
-        if (staffList.length === 0)
-            staffList = []
         this.permission = data.permission
         this.currentPerson = data.currentPerson
 
@@ -69,11 +66,13 @@ export default class AlarmApp extends Component {
             change = true
         if (data.volume !== this.state.volume)
             change = true
-        if (this.state.staffList !== staffList) {
-            data.staffList = staffList
+        if (this.state.staffList !== data.staffList)
             change = true
-        }
+        if (typeof(data.staffList) !== 'object')
+            data.staffList = {}
+
         this.soundUrl = data.customFile
+
         if (change)
             this.setState({
                 ...data

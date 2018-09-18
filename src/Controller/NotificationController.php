@@ -134,20 +134,24 @@ class NotificationController extends Controller
         $confirmed = $this->get('doctrine')->getManager()->getRepository(AlarmConfirm::class)->findByAlarm($alarm);
 
         foreach($confirmed as $item)
-            foreach($staffList as $key=>$staff)
-                if ($staff['id'] === $item->getPerson()->getId())
-                {
+            foreach($staffList as $key=>$staff) {
+                if ($staff['id'] === $item->getPerson()->getId()) {
                     $staff['confirmed'] = true;
                     $staffList->set($key, $staff);
                 }
+                if (is_null($staff['id']))
+                    unset($staffList[$key]);
+            }
 
         if ($alarm->getId() > 0 && $request->hasSession())
             $session->set('alarm_confirm_list', $staffList);
 
+        $alarm = $alarm->normaliser($volume);
+        $alarm['staffList'] = $staffList->toArray() ?: [];
+
         return new JsonResponse(
             [
-                'alarm' => $alarm->normaliser($volume),
-                'staffList' => $staffList->toArray() ?: [],
+                'alarm' => $alarm,
                 'permission' => $user_permission,
                 'currentPerson' => $person ?: [],
             ],
