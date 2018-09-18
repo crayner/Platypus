@@ -268,7 +268,7 @@ class SchoolController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($sm, $request->request->get('sections'));
+            $multipleSettingManager->saveSections($sm, $request->request->get('attendance_settings'));
             foreach($settings->getAttendanceCodes()->toArray() as $entity)
                 $sm->getEntityManager()->persist($entity);
             $sm->getEntityManager()->flush();
