@@ -20,8 +20,8 @@
                 {% set toggleClass = form.value.vars.div_class|default('') %}
             {% endif %}
         {% elseif 'ckeditor' in form.value.vars.cache_key %}
-            {% set columnA = '4' %}
-            {% set columnB = '8' %}
+            {% set columnA = '3' %}
+            {% set columnB = '9' %}
         {% endif %}
 
         {% set id = 'id=' ~ form.value.vars['id']|trim('_value') %}
