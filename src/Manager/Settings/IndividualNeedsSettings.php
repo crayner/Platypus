@@ -49,51 +49,51 @@ class IndividualNeedsSettings implements SettingCreationInterface
 
         $setting = $sm->createOneByName('individual_needs.targets_template');
 
-        $setting->setName('individual_needs.targets_template')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('html')
+            ->setSettingType('html')
+            ->__set('choice', null)
+            ->setValidators(null)
+            ->setDefaultValue(null)
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Targets Template')
             ->__set('description', 'An HTML template to be used in the targets field.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', null)
-                ->setValidators(null)
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
 
         $setting = $sm->createOneByName('individual_needs.teaching_strategies_template');
 
-        $setting->setName('individual_needs.teaching_strategies_template')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('html')
+            ->setSettingType('html')
+            ->__set('choice', null)
+            ->setValidators(null)
+            ->setDefaultValue(null)
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Teaching Strategies Template')
             ->__set('description', 'An HTML template to be used in the teaching strategies field.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', null)
-                ->setValidators(null)
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
 
         $setting = $sm->createOneByName('individual_needs.notes_review_template');
 
-        $setting->setName('individual_needs.notes_review_template')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('html')
+            ->setSettingType('html')
+            ->__set('choice', null)
+            ->setValidators(null)
+            ->setDefaultValue(null)
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Notes & Review Template')
             ->__set('description', 'An HTML template to be used in the notes and review field.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', null)
-                ->setValidators(null)
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
