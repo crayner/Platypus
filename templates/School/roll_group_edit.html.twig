@@ -17,11 +17,7 @@
     {{ form_start(form, {attr: {id: 'saveForm'}}) }}
     {% include '@HillrangeForm/Script/collection_message.html.twig' %}
     {% set h3Content = '' %}
-    {% if app.request.get('closeWindow') is empty %}
-        {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_roll_groups')}}) %}
-    {% else %}
-        {% set h3Content = h3Content ~ closeButton() %}
-    {% endif %}
+    {% set h3Content = h3Content ~ closeButton() %}
     {% set h3Content = h3Content ~ resetButton() %}
     {% set h3Content = h3Content ~ saveButton() %}
     {% include 'Default/panelStart.html.twig' with {header: 'school.roll_group.manage.title', name: form.vars.value.name, transDomain: 'School'} %}

@@ -603,6 +603,30 @@ abstract class PaginationReactManager implements PaginationInterface
         );
         $headerDefinition = $resolver->resolve($this->headerDefinition);
 
+        $resolver->setRequired(
+            [
+                'url',
+            ]
+        );
+        $resolver->setDefaults(
+            [
+                'type' => 'miscellaneous',
+                'label' => false,
+                'url_options' => [],
+                'classMerge' => '',
+                'style' => ['float' => 'right'],
+                'response_type' => 'json',
+                'icon' => false,
+                'colour' => '',
+                'options' => [],
+            ]
+        );
+
+        foreach($headerDefinition['buttons'] as $q=>$button)
+            $headerDefinition['buttons'][$q] = $resolver->resolve($button);
+
+
+
         return $headerDefinition;
     }
 
@@ -701,6 +725,7 @@ abstract class PaginationReactManager implements PaginationInterface
                     'response_type' => 'json',
                     'icon' => false,
                     'colour' => '',
+                    'options' => [],
                 ]
             );
             $button = $resolver->resolve($button);

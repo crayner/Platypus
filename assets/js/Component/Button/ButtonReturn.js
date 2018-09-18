@@ -24,6 +24,6 @@ export default function ButtonReturn(props) {
     )
 }
 
-ButtonAdd.propTypes = {
+ButtonReturn.propTypes = {
     button: PropTypes.object.isRequired,
 }

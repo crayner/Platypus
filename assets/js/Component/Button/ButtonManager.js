@@ -6,6 +6,9 @@ import ButtonDelete from './ButtonDelete'
 import ButtonEdit from './ButtonEdit'
 import ButtonMiscellaneous from './ButtonMiscellaneous'
 import ButtonAdd from './ButtonAdd'
+import ButtonRefresh from './ButtonRefresh'
+import ButtonReturn from './ButtonReturn'
+import ButtonClose from './ButtonClose'
 
 export default function ButtonManager(props) {
     const {

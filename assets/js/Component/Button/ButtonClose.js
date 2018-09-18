@@ -24,6 +24,6 @@ export default function ButtonClose(props) {
     )
 }
 
-ButtonAdd.propTypes = {
+ButtonClose.propTypes = {
     button: PropTypes.object.isRequired,
 }

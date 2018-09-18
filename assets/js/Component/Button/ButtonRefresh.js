@@ -24,6 +24,6 @@ export default function ButtonRefresh(props) {
     )
 }
 
-ButtonAdd.propTypes = {
+ButtonRefresh.propTypes = {
     button: PropTypes.object.isRequired,
 }

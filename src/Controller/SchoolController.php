@@ -433,10 +433,10 @@ class SchoolController extends Controller
      * @param string|null $closeWindow
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Exception
-     * @Route("/school/roll/group/{id}/edit/{closeWindow}", name="roll_group_edit")
+     * @Route("/school/roll/group/{id}/edit/", name="roll_group_edit")
      * @Security("is_granted('USE_ROUTE', ['manage_roll_groups'])")
      */
-    public function rollEdit(Request $request, RollGroupManager $manager, $id = 'Add', string $closeWindow = null)
+    public function rollEdit(Request $request, RollGroupManager $manager, $id = 'Add')
     {
         $roll = $manager->find($id);
 
@@ -450,7 +450,7 @@ class SchoolController extends Controller
             $manager->getEntityManager()->flush();
 
             if ($id === 'Add')
-                return $this->redirectToRoute('roll_group_edit', ['id' => $roll->getId(),  'closeWindow' => $closeWindow]);
+                return $this->redirectToRoute('roll_group_edit', ['id' => $roll->getId()]);
         }
 
         return $this->render('School/roll_group_edit.html.twig',
@@ -458,6 +458,8 @@ class SchoolController extends Controller
                 'form' => $form->createView(),
                 'fullForm' => $form,
                 'tabManager' => $manager,
+                'headerOff' => true,
+                'fullPage' => true,
             ]
         );
     }

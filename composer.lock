@@ -1604,16 +1604,16 @@
         },
         {
             "name": "hillrange/symfony-form",
-            "version": "0.2.01",
+            "version": "0.2.03",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/symfony-form.git",
-                "reference": "6ee11363fcb218e7c8b3ab3175c9ad5ebd276748"
+                "reference": "106c53fc251745897b2b8fc412f858906967fb79"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/6ee11363fcb218e7c8b3ab3175c9ad5ebd276748",
-                "reference": "6ee11363fcb218e7c8b3ab3175c9ad5ebd276748",
+                "url": "https://api.github.com/repos/crayner/symfony-form/zipball/106c53fc251745897b2b8fc412f858906967fb79",
+                "reference": "106c53fc251745897b2b8fc412f858906967fb79",
                 "shasum": ""
             },
             "require": {
@@ -1657,7 +1657,7 @@
             "keywords": [
                 "form"
             ],
-            "time": "2018-09-15T07:51:33+00:00"
+            "time": "2018-09-18T23:16:55+00:00"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -1961,16 +1961,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.0.3",
+            "version": "v4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "bd088dc940a418f09cda079a9b5c7c478890fb8d"
+                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/bd088dc940a418f09cda079a9b5c7c478890fb8d",
-                "reference": "bd088dc940a418f09cda079a9b5c7c478890fb8d",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/fa6ee28600d21d49b2b4e1006b48426cec8e579c",
+                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c",
                 "shasum": ""
             },
             "require": {
@@ -2008,7 +2008,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-07-15T17:25:16+00:00"
+            "time": "2018-09-18T07:03:24+00:00"
         },
         {
             "name": "nyholm/nsa",

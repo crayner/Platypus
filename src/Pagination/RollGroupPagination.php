@@ -181,20 +181,6 @@ class RollGroupPagination extends PaginationReactManager
                 'type' => 'edit',
                 'response_type' => 'redirect',
                 'classMerge' => 'btn-sm',
-            ],
-        ],
-    ];
-
-    /**
-     * @var array
-     */
-    protected $headerDefinition = [
-        'buttons' => [
-            [
-                'label' => 'school.roll_group.add.title',
-                'url' => '/school/roll/group/Add/edit/_closeWindow',
-                'type' => 'add',
-                'url_options' => [],
                 'options' => [
                     'target' => 'RollGroupManage',
                     'specs' => 'width=1100,height=750',
@@ -206,8 +192,36 @@ class RollGroupPagination extends PaginationReactManager
     /**
      * @var array
      */
+    protected $headerDefinition = [
+        'buttons' => [
+            [
+                'label' => 'Refresh Roll Groups',
+                'url' => '/school/roll/group/manage/',
+                'type' => 'refresh',
+                'response_type' => 'redirect',
+            ],
+            [
+                'label' => 'school.roll_group.add.title',
+                'url' => '/school/roll/group/Add/edit/',
+                'url_options' => [],
+                'type' => 'add',
+                'options' => [
+                    'target' => 'RollGroupManage',
+                    'specs' => 'width=1100,height=750',
+                ],
+                'response_type' => 'redirect',
+            ],
+        ],
+    ];
+
+    /**
+     * @var array
+     */
     protected $specificTranslations = [
         'school.roll_group.add.title',
+        'school.roll_group.edit.title',
+        'school.roll_group.delete.title',
+        'Refresh Roll Groups',
     ];
 
     /**

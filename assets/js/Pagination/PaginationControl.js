@@ -263,8 +263,8 @@ export default class PaginationControl extends Component {
         this.handlePagination()
     }
 
-    buttonClickAction(url,type,options) {
-        if (type === 'json') {
+    buttonClickAction(url,response_type,options) {
+        if (response_type === 'json') {
             fetchJson(url, {}, this.locale)
                 .then((data) => {
                     this.allResults = data['rows']
@@ -273,8 +273,9 @@ export default class PaginationControl extends Component {
                     this.buildSearchString()
                     this.handlePagination()
                 });
-        } else if (type === 'redirect')
+        } else if (response_type === 'redirect')
             openPage(url, options, this.locale)
+
     }
 
     buildSearchString(){
