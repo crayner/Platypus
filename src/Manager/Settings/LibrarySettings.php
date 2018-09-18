@@ -51,9 +51,9 @@ class LibrarySettings implements SettingCreationInterface
 
         $setting = $sm->createOneByName('library.default_loan_length');
 
-        $setting->setName('library.default_loan_length')
+        $setting
             ->__set('role', 'ROLE_HEAD_TEACHER')
-            ->setType('integer')
+            ->setSettingType('integer')
             ->__set('displayName', 'Default Loan Length')
             ->__set('description', 'The standard loan length for a library item, in days');
         if (empty($setting->getValue())) {
@@ -70,11 +70,11 @@ class LibrarySettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('library.browse.bg.colour');
+        $setting = $sm->createOneByName('library.browse_bgcolour');
 
-        $setting->setName('library.browse.bg.colour')
+        $setting
             ->__set('role', 'ROLE_HEAD_TEACHER')
-            ->setType('colour')
+            ->setSettingType('colour')
             ->__set('displayName', 'Browse Library BG Colour ')
             ->__set('description', 'Background colour used behind library browsing screen.');
         if (empty($setting->getValue())) {
@@ -92,11 +92,11 @@ class LibrarySettings implements SettingCreationInterface
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('library.browse.bg.image');
+        $setting = $sm->createOneByName('library.browse_bgimage');
 
-        $setting->setName('library.browse.bg.image')
+        $setting
             ->__set('role', 'ROLE_HEAD_TEACHER')
-            ->setType('image')
+            ->setSettingType('image')
             ->__set('displayName', 'Browse Library BG Image')
             ->__set('description', 'URL to background image used behind library browsing screen.');
         if (empty($setting->getValue())) {

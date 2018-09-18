@@ -310,6 +310,7 @@ class GibbonSettingManager extends GibbonTransferManager
         ],
         'library.browse_bgcolor' => [
             'settingType' => 'colour',
+            'name' => 'library.browse_bgcolour',
         ],
         'library.browse_bgimage' => [
             'settingType' => 'image',
@@ -673,6 +674,7 @@ class GibbonSettingManager extends GibbonTransferManager
         ],
         'messenger.message_bubble_bgcolor' => [
             'settingType' => 'colour',
+            'name' => 'messenger.message_bubble_bgcolour'
         ],
         'messenger.message_bubble_auto_hide' => [
             'settingType' => 'boolean',
