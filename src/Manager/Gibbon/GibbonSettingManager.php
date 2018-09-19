@@ -841,53 +841,66 @@ class GibbonSettingManager extends GibbonTransferManager
         ],
         'staff.staff_application_form_introduction' => [
             'settingType' => 'html',
+            'name' => 'staff.application_form_introduction',
         ],
         'staff.staff_application_form_postscript' => [
             'settingType' => 'html',
+            'name' => 'staff.application_form_postscript',
         ],
         'staff.staff_application_form_agreement' => [
             'settingType' => 'html',
+            'name' => 'staff.application_form_agreement',
         ],
         'staff.staff_application_form_milestones' => [
             'settingType' => 'array',
+            'name' => 'staff.application_form_milestones',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'staff.staff_application_form_required_documents' => [
             'settingType' => 'array',
+            'name' => 'staff.application_form_required_documents',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'staff.staff_application_form_required_documents_compulsory' => [
+            'name' => 'staff.application_form_required_documents_compulsory',
             'settingType' => 'boolean',
         ],
         'staff.staff_application_form_required_documents_text' => [
             'settingType' => 'html',
+            'name' => 'staff.application_form_required_documents_text',
         ],
         'staff.staff_application_form_notification_default' => [
             'settingType' => 'boolean',
+            'name' => 'staff.application_form_notification_default',
         ],
         'staff.staff_application_form_notification_message' => [
             'settingType' => 'html',
+            'name' => 'staff.application_form_notification_message',
         ],
         'staff.staff_application_form_default_email' => [
             'settingType' => 'string',
+            'name' => 'staff.application_form_default_email',
             'validators' => [
                 Email::class => [],
             ],
         ],
         'staff.staff_application_form_default_website' => [
             'settingType' => 'url',
+            'name' => 'staff.application_form_default_website',
         ],
         'staff.staff_application_form_username_format' => [
             'settingType' => 'text',
+            'name' => 'staff.application_form_username_format',
         ],
         'system.organisation_hr' => [
             'settingType' => 'integer',
         ],
         'staff.staff_application_form_questions' => [
+            'name' => 'staff.application_form_questions',
             'settingType' => 'html',
         ],
         'staff.salary_scale_positions' => [
@@ -987,7 +1000,7 @@ class GibbonSettingManager extends GibbonTransferManager
         ],
         'staff_application_form.staff_application_form_public_applications' => [
             'settingType' => 'boolean',
-            'name' => 'staff.staff_application_form_public_applications'
+            'name' => 'staff.application_form_public_applications'
         ],
         'individual_needs.targets_template' => [
             'settingType' => 'html',
