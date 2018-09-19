@@ -641,6 +641,7 @@ class SettingManager implements ContainerAwareInterface
      */
     private function getValue($default = null, array $options = [])
     {
+        dump($this->setting->getSettingType());
         switch ($this->setting->getSettingType()) {
             case 'twig':
                 $value = null;
@@ -1139,9 +1140,7 @@ class SettingManager implements ContainerAwareInterface
         $setting = $this->getSettingCache();
         $sss = $setting->findOneByName($name, $this->getEntityManager());
 if ($sss->getSetting() === null)
-{
     dump([$name, $sss]);
-}
 
         $this->addSetting($sss);
 
