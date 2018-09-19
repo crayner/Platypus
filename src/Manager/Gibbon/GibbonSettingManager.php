@@ -719,10 +719,11 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'person_admin.public_registration_default_status' => [
-            'settingType' => 'string',
-            'choice' => ['full', 'pending_approval'],
+            'settingType' => 'choice',
+            'choice' => ['full', 'pending'],
             'functions' => [
                 'safeString' => '',
+                'inArray' => ['default' =>'pending', 'choices' => ['full', 'pending']],
             ],
         ],
         'person_admin.public_registration_default_role' => [

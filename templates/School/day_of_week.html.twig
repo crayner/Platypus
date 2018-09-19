@@ -11,17 +11,17 @@
     {% set short = value.nameShort|trans({}, 'System') %}
     {% set panelParagraph =  '<div style="float: right">' ~ ('day_of_week.school_day.label'|trans) ~ '&nbsp;' ~ form_widget(form.schoolDay) ~ '</div' %}
     {% include 'Default/panelStart.html.twig' with {header: 'day.name', headerParams: {'%{name}': name, '%{short}': short}, panelStyle: 'light', transDomain: 'School', bodyAttr: 'id=display_school_times_' ~  id|replace({'days_of_week_days_': ''})} %}
-    <div class="row small">
-        <div class="col-3">
+    <div class="row">
+        <div class="col-3 card">
             {{ form_row(form.schoolOpen) }}
         </div>
-        <div class="col-3">
+        <div class="col-3 card">
             {{ form_row(form.schoolStart) }}
         </div>
-        <div class="col-3">
+        <div class="col-3 card">
             {{ form_row(form.schoolEnd) }}
         </div>
-        <div class="col-3">
+        <div class="col-3 card">
             {{ form_row(form.schoolClose) }}
         </div>
     </div>

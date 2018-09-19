@@ -460,6 +460,20 @@ class GibbonManager
     }
 
     /**
+     * inArray
+     *
+     * @param $value
+     * @param $options
+     * @return mixed
+     */
+    private function inArray($value, $options)
+    {
+        if (empty($options['default']) || empty($options['choices']))
+            return $value;
+        return in_array($value, $options['choices']) ? $value : $options['default'] ;
+    }
+
+    /**
      * default
      *
      * @param $value

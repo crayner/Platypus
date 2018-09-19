@@ -372,27 +372,6 @@ class SettingCache
     }
 
     /**
-     * getChoiceValue
-     *
-     * @return array
-     */
-    private function getChoiceValue(): array
-    {
-        return unserialize($this->getSetting()->getValue());
-    }
-
-    /**
-     * setChoiceValue
-     *
-     * @return SettingCache
-     */
-    private function setChoiceValue(): SettingCache
-    {
-        $this->getSetting()->setValue(serialize($this->value));
-        return $this;
-    }
-
-    /**
      * settArrayValue
      *
      * @return SettingCache
