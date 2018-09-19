@@ -493,16 +493,24 @@ class MenuManager extends MenuConstantsManager
         $currentRoute = $this->routerManager->getCurrentRoute();
         if ($currentRoute !== $r['route'])
             return false;
-
         $currentRouteParams = $this->routerManager->getCurrentRouteParams();
 
         if (isset($currentRouteParams['_locale']))
             unset($currentRouteParams['_locale']);
 
+        if (isset($currentRouteParams['tabName']))
+            unset($currentRouteParams['tabName']);
+
+        if (empty($currentRouteParams['closeWindow']) || isset($currentRouteParams['closeWindow']))
+            unset($currentRouteParams['closeWindow']);
+
         foreach($r['parameters'] as $name=>$value)
             if (isset($currentRouteParams[$name]) && ($currentRouteParams[$name] === $value || $value === '%'))
                 unset($currentRouteParams[$name]);
 
+        dump($currentRoute);
+        dump($currentRouteParams);
+        dump($r);
         if (empty($currentRouteParams))
             return true;
 

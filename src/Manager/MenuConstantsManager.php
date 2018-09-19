@@ -245,14 +245,10 @@ School Admin:
             route: scale_edit
             parameters:
                 id: "%"
-                closeWindow: "%"
-                tabName: "%"
         external_assessment_edit:
             route: external_assessment_edit
             parameters:
                 id: "%"
-                closeWindow: "%"
-                tabName: "%"
 System Admin:
     alarm:
         manage_alarm:
