@@ -508,9 +508,6 @@ class MenuManager extends MenuConstantsManager
             if (isset($currentRouteParams[$name]) && ($currentRouteParams[$name] === $value || $value === '%'))
                 unset($currentRouteParams[$name]);
 
-        dump($currentRoute);
-        dump($currentRouteParams);
-        dump($r);
         if (empty($currentRouteParams))
             return true;
 

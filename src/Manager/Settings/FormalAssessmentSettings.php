@@ -56,22 +56,22 @@ class FormalAssessmentSettings implements SettingCreationInterface
 
         $setting = $sm->createOneByName('formal_assessment.internal_assessment_types');
 
-        $setting->setName('formal_assessment.internal_assessment_types')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('array')
+            ->setSettingType('array')
+            ->setValidators(
+                [
+                    new NotBlank(),
+                    new Yaml(),
+                ]
+            )
+            ->setDefaultValue(['expected_grade','predicted_grade','target_grade'])
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Internal Assessment Types')
             ->__set('description', 'List of types to make available in Internal Assessments.');
         if (empty($setting->getValue())) {
             $setting->setValue(['expected_grade','predicted_grade','target_grade'])
                 ->__set('choice', null)
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                        new Yaml(),
-                    ]
-                )
-                ->setDefaultValue(['expected_grade','predicted_grade','target_grade'])
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;

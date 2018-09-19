@@ -157,7 +157,7 @@ class ExternalAssessmentManager extends TabManager
 
         $setting->setName('school_admin.primary_external_assessment_by_year_group')
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('array')
+            ->setSettingType('array')
             ->__set('displayName', 'External Assessment Types by Year Group')
             ->__set('description', 'List of types to make available in Internal Assessments.')
             ->setValue($new)
