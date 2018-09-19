@@ -312,6 +312,14 @@ System Admin:
             parameters:
                 id: "%"
 People Admin:
+    staff_management:
+        staff_application_form_settings:
+            label: "Staff Application Form Settings"
+            role: ROLE_ACTION
+            route: manage_settings
+            parameters: 
+                name: StaffApplicationForm
+            transDomain: System
     student_management:
         application_form_settings:
             label: "Application Form Settings"

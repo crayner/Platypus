@@ -49,7 +49,7 @@ class ApplicationFormSettings implements SettingCreationInterface
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
         $sections = [];
-        $sections['header'] = 'public_registration_settings';
+        $sections['header'] = 'application_form_settings';
         $settings = [];
 
         $setting = $sm->createOneByName('application_form.introduction');
