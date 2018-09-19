@@ -147,6 +147,10 @@ class MultipleSettingType extends AbstractType
                     break;
                 case 'text':
                     $formType = TextareaType::class;
+                    $attr = ['rows' => '3',];
+                    break;
+                case 'blob':
+                    $formType = TextareaType::class;
                     $attr = ['rows' => '5',];
                     break;
                 default:

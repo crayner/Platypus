@@ -53,6 +53,7 @@ class Setting
      */
     private static $settingTypeList = [
         'array',
+        'blob',
         'boolean',
         'choice',
         'colour',
@@ -242,6 +243,11 @@ class Setting
                 break;
             case 'string':
                 $x = new Length(['max' => 25]);
+                if (! $w->contains($x))
+                    $w->add($x);
+                break;
+            case 'text':
+                $x = new Length(['max' => 255]);
                 if (! $w->contains($x))
                     $w->add($x);
                 break;

@@ -313,6 +313,13 @@ System Admin:
                 id: "%"
 People Admin:
     student_management:
+        application_form_settings:
+            label: "Application Form Settings"
+            role: ROLE_ACTION
+            route: manage_settings
+            parameters: 
+                name: ApplicationForm
+            transDomain: System
         public_registration_settings:
             label: public_registration_settings
             role: ROLE_ACTION
