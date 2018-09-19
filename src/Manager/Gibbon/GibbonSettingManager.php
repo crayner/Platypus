@@ -634,9 +634,11 @@ class GibbonSettingManager extends GibbonTransferManager
         ],
         'markbook.attainment_alternative_name_abrev' => [
             'settingType' => 'string',
+            'name' => 'markbook.attainment_alternative_name_abbrev',
         ],
         'markbook.effort_alternative_name_abrev' => [
             'settingType' => 'string',
+            'name' => 'markbook.effort_alternative_name_abbrev',
         ],
         'planner.parent_weekly_email_summary_include_behaviour' => [
             'settingType' => 'boolean',

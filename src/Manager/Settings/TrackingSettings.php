@@ -86,8 +86,6 @@ class TrackingSettings implements SettingCreationInterface
 
         $settings = [];
 
-        dump($sm->get('formal_assessment.internal_assessment_types', ['expected_grade','predicted_grade','target_grade']));
-dump($sm);
         foreach($sm->get('formal_assessment.internal_assessment_types', ['expected_grade','predicted_grade','target_grade']) as $ia)
         {
             $setting = $sm->createOneByName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)));
