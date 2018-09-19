@@ -12,14 +12,14 @@
 {% block headerTitle %}{{ form.vars.value.header|trans({}, 'School') }}{% endblock headerTitle %}
 {% block headerLead %}{% endblock headerLead %}
 
-{% set manager = form.vars.value %}
+{% set settingManager = form.vars.value %}
 
 {% block contentContainer %}
     {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}
     {{ form_start(form) }}
     {% for section_name, section_form in form.children %}
         {% if section_name is not same as('_token') %}
-            {% set section = manager.sections[section_name] %}
+            {% set section = settingManager.sections[section_name] %}
             {% set h3Content = saveButton() %}
             {% include 'Default/panelStart.html.twig' with {header: section['name'], name: '', transDomain: 'School', panelParagraph: section['description'],
                 panelStyle: section['colour']|default('warning'), headerParams: section['name_parameters'], panelParams: section['description_parameters']} %}
@@ -28,7 +28,8 @@
         {% endif %}
     {% endfor %}
     {{ form_end(form) }}
-    {% include 'School/department_list.html.twig' %}
+    {% block paginationContent %}{% endblock paginationContent %}
+    <section id="paginationControl"></section>
 {% endblock contentContainer %}
 
 
@@ -39,7 +40,7 @@
         {% for section_name, section_form in form.children %}
             {% if section_name is not same as('_token') %}
                 {% for setting in section_form.collection %}
-                    {% if setting.vars.value.type is same as('boolean') and setting.vars.value.hideParent is not empty %}
+                    {% if setting.vars.value.settingType is same as('boolean') and setting.vars.value.hideParent is not empty %}
 
         var id = '#' + $('.' + '{{ camelCase(setting.vars.value.hideParent ~ '_parent') }}').find('input[type=hidden]').attr('id');
         toggleHideParent('{{ camelCase(setting.vars.value.hideParent) }}', 0);
@@ -61,7 +62,6 @@
                 $('.' + name + 'Child').fadeOut();
             }
         }
-
-
     </script>
+    {{ pagination_script(pagination) }}
 {% endblock javascripts %}

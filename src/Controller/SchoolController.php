@@ -519,10 +519,6 @@ class SchoolController extends Controller
     public function departmentSettings(Request $request, DepartmentPagination $pagination, DepartmentManager $manager,
                                        MultipleSettingManager $multipleSettingManager,  SettingManager $sm)
     {
-        $pagination->injectRequest($request);
-
-        $pagination->getDataSet();
-
         foreach($sm->createSettingDefinition('Department')->getSections() as $name =>$section)
             if ($name === 'header')
                 $multipleSettingManager->setHeader($section);
@@ -540,7 +536,7 @@ class SchoolController extends Controller
         return $this->render('School/department_settings.html.twig',
             [
                 'pagination' => $pagination,
-                'dept_manager' => $manager,
+                'manager' => $manager,
                 'form' => $form->createView(),
                 'fullForm' => $form,
             ]

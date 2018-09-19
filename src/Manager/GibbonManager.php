@@ -77,7 +77,7 @@ class GibbonManager
                 $newData = [];
                 foreach ($this->datum as $field => $value)
                     $newData = $this->generateNewFieldData($entityName, $newData, $field, $value);
-dump($records);
+
                 $records = $this->postRecord($entityName, $newData, $records);
             }
 

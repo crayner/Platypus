@@ -29,7 +29,7 @@ class GibbonStaffManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = '';
+    protected $nextGibbonName = 'gibbonDepartmentStaff';
 
     /**
      * @var array

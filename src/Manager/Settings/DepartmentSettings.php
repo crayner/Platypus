@@ -47,17 +47,17 @@ class DepartmentSettings implements SettingCreationInterface
 
         $setting = $sm->createOneByName('departments.make_departments_public');
 
-        $setting->setName('departments.make_departments_public')
+        $setting
             ->__set('role', 'ROLE_PRINCIPAL')
-            ->setType('boolean')
+            ->setSettingType('boolean')
+            ->__set('choice', null)
+            ->setValidators(null)
+            ->setDefaultValue(false)
+            ->__set('translateChoice', 'Setting')
             ->__set('displayName', 'Make Departments Public')
             ->__set('description', 'Should department information be made available to the public, via the Gibbon homepage?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
-                ->__set('choice', null)
-                ->setValidators(null)
-                ->setDefaultValue(false)
-                ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;

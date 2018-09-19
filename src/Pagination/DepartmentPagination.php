@@ -16,18 +16,20 @@
 namespace App\Pagination;
 
 use App\Entity\Department;
+use App\Entity\DepartmentStaff;
+use App\Util\PersonNameHelper;
 use Doctrine\ORM\QueryBuilder;
 
 /**
  * Class DepartmentPagination
  * @package App\Pagination
  */
-class DepartmentPagination extends PaginationManager
+class DepartmentPagination extends PaginationReactManager
 {
     /**
      * @var string
      */
-    protected $paginationName = 'Department';
+    protected $name = 'Department';
 
     /**
      * @var string
@@ -39,31 +41,25 @@ class DepartmentPagination extends PaginationManager
      */
     protected $sortByList = [
         'department.sort.name' => [
-            'd.name' => 'ASC',
+            'name',
+        ],
+        'department.sort.type' => [
+            'type',
+            'name',
         ],
     ];
 
     /**
      * @var int
      */
-    protected $limit = 50;
+    protected $limit = 25;
 
     /**
      * @var array
      */
     protected $searchList = [
-        'd.name',
-        'd.nameShort',
-    ];
-
-    /**
-     * @var array
-     */
-    protected $select = [
-        'd.name',
-        'd.type',
-        'd.nameShort',
-        'd.id',
+        'fullName',
+        'staffList',
     ];
 
     /**
@@ -80,7 +76,7 @@ class DepartmentPagination extends PaginationManager
     /**
      * @var string
      */
-    protected $repositoryName = Department::class;
+    protected $entityName = Department::class;
 
     /**
      * @var string
@@ -88,29 +84,121 @@ class DepartmentPagination extends PaginationManager
     protected $transDomain = 'School';
 
     /**
-     * build Query
+     * getAllResults
      *
-     * @version    28th October 2016
-     * @since      28th October 2016
-     *
-     * @param    boolean $count
-     *
-     * @return    QueryBuilder
+     * @return array
      */
-    public function buildQuery($count = false): QueryBuilder
+    public function getAllResults(): array
     {
-        $this->initiateQuery($count);
-        if ($count)
-            $this
-                ->setQueryJoin()
-                ->setSearchWhere();
-        else
-            $this
-                ->setQuerySelect()
-                ->setQueryJoin()
-                ->setOrderBy()
-                ->setSearchWhere();
+        $results = $this->buildQuery()
+            ->getQuery()
+            ->getArrayResult();
 
-        return $this->getQuery();
+        foreach($results as $q=>$dept) {
+            $staff = $this->getEntityManager()->getRepository(DepartmentStaff::class)->createQueryBuilder('m')
+                ->select('m, p.surname, p.firstName, p.title, p.preferredName')
+                ->leftJoin('m.department', 'd')
+                ->leftJoin('m.member', 'p')
+                ->where('d.id = :department')
+                ->andWhere('p.id IS NOT NULL')
+                ->setParameter('department', $dept['id'])
+                ->orderBy('p.surname')
+                ->addOrderBy('p.firstName')
+                ->getQuery()
+                ->getArrayResult();
+            ;
+            $result = '';
+            foreach ($staff as $person)
+                $result .= PersonNameHelper::getFullName($person, ['preferredOnly' => true]) . "<br/>\n";
+            $results[$q]['staffList'] = ! empty(trim($result, "<br/>\n")) ? trim($result, "<br/>\n") : 'None';
+        }
+
+        return $results;
+
+    }
+
+    /**
+     * @var array
+     */
+    protected $columnDefinitions = [
+        'fullName' => [
+            'label' => 'Name',
+            'name' => 'fullName',
+            'size' => 3,
+            'style' => 'combine',
+            'options' => [
+                'combine' => ['name' => [], 'nameShort' => ['join' => '<br />'], 'style' => 'html']
+            ],
+            'select' => ['d.name', 'd.nameShort'],
+        ],
+        'd.id' => [
+            'label' => false,
+            'display' => false,
+            'name' => 'id',
+        ],
+        'd.type' => [
+            'label' => 'Type',
+            'size' => 3,
+            'name' => 'type',
+            'translate' => 'department.type.',
+        ],
+        'staffList' => [
+            'label' => 'Staff Members',
+            'name' => 'staffList',
+            'style' => 'html',
+            'size' => 3,
+            'select' => false,
+        ],
+    ];
+
+    /**
+     * @var array
+     */
+    protected $actions = [
+        'size' => 3,
+        'buttons' => [
+            [
+                'label' => 'Delete Department',
+                'url' => '/school/department/{id}/delete/',
+                'url_options' => [
+                    '__id__' => 'id',
+                ],
+                'type' => 'delete',
+                'response_type' => 'redirect',
+                'classMerge' => 'btn-sm',
+            ],
+            [
+                'label' => 'Edit Department',
+                'url' => '/school/department/{id}/edit/{tabName}/',
+                'url_options' => [
+                    '{id}' => 'id',
+                    '{tabName}' => 'tabName',
+                ],
+                'type' => 'edit',
+                'response_type' => 'redirect',
+                'classMerge' => 'btn-sm',
+            ],
+        ],
+    ];
+
+    /**
+     * @var array|null
+     */
+    protected $specificTranslations;
+
+    /**
+     * setSpecificTranslations
+     *
+     * @return PaginationInterface
+     */
+    protected function setSpecificTranslations(): PaginationInterface
+    {
+        if (empty($this->specificTranslations))
+            $this->specificTranslations = [];
+
+        foreach(Department::getTypeList() as $title)
+            $this->specificTranslations[] = 'department.type.' . $title;
+
+        return $this;
     }
 }
