@@ -54,6 +54,7 @@ class PhoneManager
         'phone.help.header',
         'phone.help.content',
         'family.button.link',
+        'phone.no.family',
     ];
 
     /**

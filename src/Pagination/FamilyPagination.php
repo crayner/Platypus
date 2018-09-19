@@ -211,6 +211,21 @@ class FamilyPagination extends PaginationReactManager
     /**
      * @var array
      */
+    protected $headerDefinition = [
+        'buttons' => [
+            [
+                'label' => 'Add Family',
+                'url' => '/family/Add/edit/',
+                'url_options' => [],
+                'type' => 'add',
+                'response_type' => 'redirect',
+            ],
+        ],
+    ];
+
+    /**
+     * @var array
+     */
     protected $sortByList = [
         'family.name.label' => [
             'name',

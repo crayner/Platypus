@@ -118,15 +118,16 @@ class FamilyController extends Controller
     /**
      * suggestFamilyName
      *
-     * @param int $id
      * @param FamilyManager $manager
      * @param TranslatorInterface $translator
+     * @param ParameterInjector $injector
+     * @param $id
      * @return JsonResponse
      * @throws \Exception
      * @Route("/family/{id}/suggest/name/", name="suggest_family_name"))
      * @Security("is_granted('USE_ROUTE', ['manage_families'])")
      */
-    public function suggestFamilyName(int $id, FamilyManager $manager, TranslatorInterface $translator, ParameterInjector $injector)
+    public function suggestFamilyName(FamilyManager $manager, TranslatorInterface $translator, ParameterInjector $injector, $id)
     {
         return new JsonResponse($manager->suggestFamilyName($id, $translator),200);
     }

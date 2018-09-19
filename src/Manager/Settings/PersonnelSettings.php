@@ -49,9 +49,17 @@ class PersonnelSettings implements SettingCreationInterface
 
         $setting = $sm->createOneByName('person_admin.ethnicity');
 
-        $setting->setName('person_admin.ethnicity')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('array')
+            ->setSettingType('array')
+            ->__set('choice', null)
+            ->setValidators(
+                [
+                    new NotBlank(),
+                ]
+            )
+            ->setDefaultValue([])
+            ->__set('translateChoice', 'Person')
             ->__set('displayName', 'List of Ethnicities')
             ->__set('description', 'List of Ethnicities.  Uses the Australian Standard to create this list');
         if (empty($setting->getValue())) {
@@ -99,23 +107,23 @@ class PersonnelSettings implements SettingCreationInterface
                 'Sub-Saharan African' => '9000',
                 'Central and West African' => '9100',
                 'Southern and East African' => '9200',])
-                ->__set('choice', null)
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                    ]
-                )
-                ->setDefaultValue([])
-                ->__set('translateChoice', 'Person')
             ;
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('person_admin.religion');
+        $setting = $sm->createOneByName('person_admin.religions');
 
-        $setting->setName('person_admin.religion')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('array')
+            ->setSettingType('array')
+            ->__set('choice', null)
+            ->setValidators(
+                [
+                    new NotBlank(),
+                ]
+            )
+            ->setDefaultValue([])
+            ->__set('translateChoice', 'Person')
             ->__set('displayName', 'List of Religions')
             ->__set('description', 'List of Religions.  Uses the Australian Standard to create this list');
         if (empty($setting->getValue())) {
@@ -251,14 +259,7 @@ class PersonnelSettings implements SettingCreationInterface
                 'Worship Centre network' => '242d',
                 'Yezidi' => '690d',
                 'Zoroastrianism' => '699d',
-            ])->__set('choice', null)
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                    ]
-                )
-                ->setDefaultValue([])
-                ->__set('translateChoice', 'Person')
+            ])
             ;
         }
         $settings[] = $setting;
@@ -266,9 +267,13 @@ class PersonnelSettings implements SettingCreationInterface
 
         $setting = $sm->createOneByName('person_admin.residency_status');
 
-        $setting->setName('person_admin.residency_status')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('array')
+            ->setSettingType('array')
+            ->__set('choice', null)
+            ->setValidators(null)
+            ->setDefaultValue([])
+            ->__set('translateChoice', 'Person')
             ->__set('displayName', 'Residency Status')
             ->__set('description', 'List of residency status available in system.');
         if (empty($setting->getValue())) {
@@ -278,28 +283,25 @@ class PersonnelSettings implements SettingCreationInterface
                 'temporary',
                 'visitor',
                 'work',
-            ])->__set('choice', null)
-                ->setValidators(null)
-                ->setDefaultValue([])
-                ->__set('translateChoice', 'Person')
+            ])
             ;
         }
         $settings[] = $setting;
 
 
-        $setting = $sm->createOneByName('departure.reasons');
+        $setting = $sm->createOneByName('person_admin.departure_reasons');
 
-        $setting->setName('departure.reasons')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('array')
+            ->setSettingType('array')
+            ->__set('choice', null)
+            ->setValidators(null)
+            ->setDefaultValue([])
+            ->__set('translateChoice', 'Person')
             ->__set('displayName', 'Departure Reasons')
             ->__set('description', 'List of departure reasons.');
         if (empty($setting->getValue())) {
             $setting->setValue([])
-                ->__set('choice', null)
-                ->setValidators(null)
-                ->setDefaultValue([])
-                ->__set('translateChoice', 'Person')
             ;
         }
         $settings[] = $setting;
@@ -312,52 +314,52 @@ class PersonnelSettings implements SettingCreationInterface
 
         $settings = [];
 
-        $setting = $sm->createOneByName('personnel.privacy');
+        $setting = $sm->createOneByName('person_admin.privacy');
 
-        $setting->setName('personnel.privacy')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('boolean')
+            ->setSettingType('boolean')
+            ->setValidators(null)
+            ->setDefaultValue(false)
             ->__set('displayName', 'Privacy')
             ->__set('description', 'Should privacy options be turned on across the system?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
-                ->setValidators(null)
-                ->setDefaultValue(false)
             ;
         }
-        $setting->setHideParent('personnel.privacy');
+        $setting->setHideParent('person_admin.privacy');
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('personnel.privacy_blurb');
+        $setting = $sm->createOneByName('person_admin.privacy_blurb');
 
-        $setting->setName('personnel.privacy_blurb')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('text')
+            ->setSettingType('text')
+            ->setValidators(null)
+            ->setDefaultValue(null)
             ->__set('displayName', 'Privacy Blurb')
             ->__set('description', 'Descriptive text to accompany image privacy option when shown to people using the system.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->setValidators(null)
-                ->setDefaultValue(null)
             ;
         }
-        $setting->setHideParent('personnel.privacy');
+        $setting->setHideParent('person_admin.privacy');
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('personnel.privacy_options');
+        $setting = $sm->createOneByName('person_admin.privacy_options');
 
-        $setting->setName('personnel.privacy_options')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('array')
+            ->setSettingType('array')
+            ->setValidators(null)
+            ->setDefaultValue([])
             ->__set('displayName', 'Privacy Options')
             ->__set('description', 'List of choices to make available if privacy is turned on. If blank, privacy fields will not be displayed.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->setValidators(null)
-                ->setDefaultValue([])
             ;
         }
-        $setting->setHideParent('personnel.privacy');
+        $setting->setHideParent('person_admin.privacy');
         $settings[] = $setting;
 
         $section['name'] = 'Privacy Options';
@@ -368,17 +370,17 @@ class PersonnelSettings implements SettingCreationInterface
 
         $settings = [];
 
-        $setting = $sm->createOneByName('personal.background');
+        $setting = $sm->createOneByName('person_admin.personal_background');
 
-        $setting->setName('personal.background')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('boolean')
+            ->setSettingType('boolean')
+            ->setValidators(null)
+            ->setDefaultValue(true)
             ->__set('displayName', 'Personal Background')
             ->__set('description', 'Should personnel/students be allowed to set their own personal backgrounds?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
-                ->setValidators(null)
-                ->setDefaultValue(true)
             ;
         }
         $settings[] = $setting;
@@ -391,32 +393,32 @@ class PersonnelSettings implements SettingCreationInterface
 
         $settings = [];
 
-        $setting = $sm->createOneByName('day_type_options');
+        $setting = $sm->createOneByName('person_admin.day_type_options');
 
-        $setting->setName('day_type_options')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('array')
+            ->setSettingType('array')
+            ->setValidators(null)
+            ->setDefaultValue(null)
             ->__set('displayName', 'Day Type Options')
             ->__set('description', 'List of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->setValidators(null)
-                ->setDefaultValue(null)
             ;
         }
         $settings[] = $setting;
 
-        $setting = $sm->createOneByName('day_type_text');
+        $setting = $sm->createOneByName('person_admin.day_type_text');
 
-        $setting->setName('day_type_text')
+        $setting
             ->__set('role', 'ROLE_ADMIN')
-            ->setType('text')
+            ->setSettingType('text')
+            ->setValidators(null)
+            ->setDefaultValue(null)
             ->__set('displayName', 'Day-Type Text')
             ->__set('description', 'Explanatory text to include with Day Type Options.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->setValidators(null)
-                ->setDefaultValue(null)
             ;
         }
         $settings[] = $setting;

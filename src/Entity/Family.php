@@ -253,10 +253,14 @@ class Family
     private static $statusList = ['','married','separated','divorced','de_facto','widowed','other'];
 
     /**
+     * getStatus
+     *
      * @return string
      */
     public function getStatus(): string
     {
+        if (empty($this->status))
+            $this->status = '';
         return $this->status = in_array($this->status, self::getStatusList()) ? $this->status : '';
     }
 

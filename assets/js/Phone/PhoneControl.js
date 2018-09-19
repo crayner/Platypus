@@ -266,6 +266,17 @@ export default class PhoneControl extends Component {
                 </div>
             </div>)
 
+        if (this.id === 'Add')
+            return (
+                <div className="card card-warning">
+                    <div className="card-header">
+                        <h3 className="card-title d-flex mb-12 justify-content-between">{translateMessage(this.translations, 'phone.help.header')}</h3>
+                        <p>{translateMessage(this.translations, 'phone.no.family')}</p>
+                    </div>
+                </div>
+            )
+
+
         return (
             <div className="card card-primary">
                 <div className="card-header">
