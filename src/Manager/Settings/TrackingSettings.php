@@ -60,17 +60,17 @@ class TrackingSettings implements SettingCreationInterface
             $catName = $ea['category'];
             $setting = $sm->createOneByName(strtolower('tracking.ext_ass_data_point.'.StringHelper::safeString($ea['nameShort']).'.'.StringHelper::safeString($catName)));
 
-            $setting->setName(strtolower('tracking.ext_ass_data_point.'.StringHelper::safeString($ea['nameShort']).'.'.StringHelper::safeString($catName)))
+            $setting
                 ->__set('role', 'ROLE_PRINCIPAL')
-                ->setType('multiChoice')
+                ->setSettingType('multiChoice')
+                ->__set('choice', YearGroupHelper::getYearGroupList())
+                ->setValidators(null)
+                ->setDefaultValue([])
+                ->__set('translateChoice', 'School')
                 ->__set('displayName', $ea['nameShort'] . ' - ' . $catName)
                 ->__set('description', 'Tracking External Assessment');
             if (empty($setting->getValue())) {
                 $setting->setValue([])
-                    ->__set('choice', YearGroupHelper::getYearGroupList())
-                    ->setValidators(null)
-                    ->setDefaultValue([])
-                    ->__set('translateChoice', 'School')
                 ;
             }
             $settings[] = $setting;
@@ -86,22 +86,23 @@ class TrackingSettings implements SettingCreationInterface
 
         $settings = [];
 
-
+        dump($sm->get('formal_assessment.internal_assessment_types', ['expected_grade','predicted_grade','target_grade']));
+dump($sm);
         foreach($sm->get('formal_assessment.internal_assessment_types', ['expected_grade','predicted_grade','target_grade']) as $ia)
         {
             $setting = $sm->createOneByName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)));
 
-            $setting->setName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
+            $setting
                 ->__set('role', 'ROLE_PRINCIPAL')
-                ->setType('multiChoice')
+                ->setSettingType('multiChoice')
+                ->__set('choice', YearGroupHelper::getYearGroupList())
+                ->setValidators(null)
+                ->setDefaultValue([])
+                ->__set('translateChoice', 'School')
                 ->__set('displayName', strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
                 ->__set('description', '');
             if (empty($setting->getValue())) {
                 $setting->setValue([])
-                    ->__set('choice', YearGroupHelper::getYearGroupList())
-                    ->setValidators(null)
-                    ->setDefaultValue([])
-                    ->__set('translateChoice', 'School')
                 ;
             }
             $settings[] = $setting;
