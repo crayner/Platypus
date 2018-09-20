@@ -15,6 +15,7 @@
  */
 namespace App\Manager;
 
+use App\Exception\MissingClassException;
 use App\Manager\Gibbon\GibbonTransferInterface;
 use App\Util\StringHelper;
 use Doctrine\Common\Persistence\ObjectManager;

@@ -313,6 +313,13 @@ System Admin:
                 id: "%"
 People Admin:
     staff_management:
+        staff_settings:
+            label: "Manage Staff Settings"
+            role: ROLE_ACTION
+            route: manage_settings
+            parameters: 
+                name: Staff
+            transDomain: System
         staff_application_form_settings:
             label: "Staff Application Form Settings"
             role: ROLE_ACTION
