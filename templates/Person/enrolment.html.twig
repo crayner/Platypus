@@ -1,0 +1,25 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Enrolment: %name%', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+
+<div class="row">
+    <div class="col-6">
+        <div class="row row-header small">
+            <div class="col-4">
+                {{ 'Year Group'|trans }}
+            </div>
+            <div class="col-4">
+                {{ 'Roll Group'|trans }}
+            </div>
+            <div class="col-4">
+                {{ 'Actions'|trans }}
+            </div>
+        </div>
+        {{ collection_widget(form.enrolments) }}
+    </div>
+    <div class="col-6">
+        <p>Teacher List Here @todo</p>
+    </div>
+</div>
+
+{% include 'Default/panelEnd.html.twig' %}

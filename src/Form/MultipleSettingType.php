@@ -157,7 +157,6 @@ class MultipleSettingType extends AbstractType
                 case 'chainedChoice':
                     $formType = ChainedChoiceType::class;
                     $additional = $data->getChainOptions() ?: [];
-                    dd($additional);
                     break;
                 case 'entity':
                     $formType = EntityType::class;

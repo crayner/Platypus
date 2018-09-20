@@ -10,20 +10,20 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 2/08/2018
- * Time: 11:47
+ * Date: 20/09/2018
+ * Time: 14:46
  */
 namespace App\Repository;
 
-use App\Entity\StringReplacement;
+use App\Entity\StudentEnrolment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
- * Class StringReplacementRepository
+ * Class StudentEnrolmentRepository
  * @package App\Repository
  */
-class StringReplacementRepository extends ServiceEntityRepository
+class StudentEnrolmentRepository extends ServiceEntityRepository
 {
     /**
      * StringReplacementRepository constructor.
@@ -31,6 +31,6 @@ class StringReplacementRepository extends ServiceEntityRepository
      */
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, StringReplacement::class);
+        parent::__construct($registry, StudentEnrolment::class);
     }
 }

@@ -1,0 +1,15 @@
+{% trans_default_domain 'Person' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'employment.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+        <div class="row">
+            <div class="col-4 card">
+                {{ form_row(form.profession) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_row(form.employer) }}
+            </div>
+            <div class="col-4 card">
+                {{ form_row(form.jobTitle) }}
+            </div>
+        </div>
+{% include 'Default/panelEnd.html.twig' %}

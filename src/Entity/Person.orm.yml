@@ -245,6 +245,11 @@ App\Entity\Person:
             mappedBy: person
             cascade: [ persist, remove ]
             orphanRemoval: true
+        enrolments:
+            targetEntity: App\Entity\StudentEnrolment
+            mappedBy: student
+            cascade: [ persist, remove ]
+            orphanRemoval: true
     manyToOne:
         primaryRole:
             targetEntity: App\Entity\PersonRole

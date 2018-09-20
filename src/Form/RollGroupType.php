@@ -91,7 +91,9 @@ class RollGroupType extends AbstractType
                         // @todo need to limit the list of people.
                         'query_builder' => function(EntityRepository $er) {
                             return $er->createQueryBuilder('p')
+                                ->select('p, s')
                                 ->orderBy('p.surname', 'ASC')
+                                ->leftJoin('p.staff', 's')
                                 ->addOrderBy('p.firstName', 'ASC')
                                 ;
                         },
@@ -115,7 +117,9 @@ class RollGroupType extends AbstractType
                         // @todo need to limit the list of people.
                         'query_builder' => function(EntityRepository $er) {
                             return $er->createQueryBuilder('p')
+                                ->select('p, s')
                                 ->orderBy('p.surname', 'ASC')
+                                ->leftJoin('p.staff', 's')
                                 ->addOrderBy('p.firstName', 'ASC')
                                 ;
                         },

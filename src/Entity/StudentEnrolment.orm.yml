@@ -1,0 +1,42 @@
+App\Entity\StudentEnrolment:
+    type: entity
+    table: student_enrolment
+    repositoryClass: App\Repository\StudentEnrolmentRepository
+    uniqueConstraints:
+        student_roll_group:
+            columns:
+                - roll_group_id
+                - student_id
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        sequence:
+            type: smallint
+            nullable: true
+    manyToOne:
+        student:
+            targetEntity: App\Entity\Person
+            orderBy: { 'surname': 'ASC', 'firstName': 'ASC' }
+            inversedBy: enrolments
+            joinColumn:
+                name: student_id
+                referencedColumnName: id
+                nullable: false
+        yearGroup:
+            targetEntity: App\Entity\YearGroup
+            orderBy: { 'sequence': 'ASC' }
+            joinColumn:
+                name: year_group_id
+                referencedColumnName: id
+                nullable: false
+        rollGroup:
+            targetEntity: App\Entity\RollGroup
+            orderBy: { 'name': 'ASC' }
+            joinColumn:
+                name: roll_group_id
+                referencedColumnName: id
+                nullable: false
+

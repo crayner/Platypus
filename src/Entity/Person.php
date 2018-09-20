@@ -2016,4 +2016,66 @@ class Person
                 $families->add($child);
         return $families;
     }
+
+    /**
+     * @var Collection|null
+     */
+    private $enrolments;
+
+    /**
+     * @return Collection
+     */
+    public function getEnrolments(): Collection
+    {
+        if (empty($this->enrolments))
+            $this->enrolments = new ArrayCollection();
+
+        if ($this->enrolments instanceof PersistentCollection)
+            $this->enrolments->initialize();
+
+        return $this->enrolments;
+    }
+
+    /**
+     * @param Collection|null $enrolments
+     * @return Person
+     */
+    public function setEnrolments(?Collection $enrolments): Person
+    {
+        $this->enrolments = $enrolments;
+        return $this;
+    }
+
+    /**
+     * addEnrolment
+     *
+     * @param StudentEnrolment|null $enrolment
+     * @param bool $add
+     * @return Person
+     */
+    public function addEnrolment(?StudentEnrolment $enrolment, $add = true): Person
+    {
+        if (empty($enrolment) || $this->getEnrolments()->contains($enrolment))
+            return $this;
+
+        if ($add)
+            $enrolment->setStudent($this, false);
+
+        $this->enrolments->add($enrolment);
+
+        return $this;
+    }
+
+    /**
+     * removeEnrolment
+     *
+     * @param StudentEnrolment|null $enrolment
+     * @return Person
+     */
+    public function removeEnrolment(?StudentEnrolment $enrolment): Person
+    {
+        $this->getEnrolments()->removeElement($enrolment);
+
+        return $this;
+    }
 }

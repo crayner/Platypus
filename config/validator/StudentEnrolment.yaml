@@ -1,0 +1,4 @@
+App\Entity\StudentEnrolment:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [student, rollGroup]

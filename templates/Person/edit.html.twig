@@ -3,6 +3,7 @@
 {% extends "Default/template.html.twig" %}
 
 {% form_theme form
+    'Student/enrolment.html.twig'
     'Address/choose_address_collection.html.twig'
     '@HillrangeForm/FormTheme/jquery.collection.html.twig'
     '@HillrangeForm/FormTheme/bootstrap.html.twig'
@@ -25,7 +26,10 @@
     {{ toggle_script() }}
     {% set route = 'person_edit' %}
     {% include 'Script/formTabSubmitScript.html.twig' %}
-
+    {% if form.enrolments is defined %}
+        {{ collections_manage(form, ['enrolments'])|raw }}
+        {{ collection_script(form.enrolments)|raw }}
+    {% endif %}
     {% set translations = translations|default({}) %}
     {% for tx in addressManager.translations %}
         {% set translations = translations|merge({(tx): (tx|trans({}, 'Address')) }) %}

@@ -1,0 +1,30 @@
+{% trans_default_domain "Person" %}
+
+{% block family_child_label %}{% endblock %}
+{% block family_child_errors %}{% endblock %}
+
+{% block family_child_widget %}
+    <div class="row row-striped small">
+        <div class="col-10 card">
+            <div class="row">
+                <div class="col-12">
+                    {{ form_widget(form.person, {value: transformData(form.person)}) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 card">
+                    {{ form_row(form.comment) }}
+                </div>
+            </div>
+        </div>
+        <div class="col-2 card">
+            <div class="collection-actions">
+            </div>
+            {% if form.person.vars.data is not empty %}
+                <div style="clear: right;">
+                    {{ editButton({windowOpen: {route: path('person_edit', {id: form.person.vars.data})}, title: 'person.action.edit', transDomain: 'Person', mergeClass: 'btn-sm fa-fw'})|raw }}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock family_child_widget %}

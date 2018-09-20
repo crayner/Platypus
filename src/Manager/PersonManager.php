@@ -83,6 +83,14 @@ class PersonManager extends TabManager
             'display' => 'isParent',
         ],
         [
+            'name' => 'enrolment',
+            'label' => 'Enrolment',
+            'include' => 'Person/enrolment.html.twig',
+            'message' => 'enrolmentInformationMessage',
+            'translation' => 'Person',
+            'display' => 'isStudent',
+        ],
+        [
             'name' => 'miscellaneous',
             'label' => 'miscellaneous.tab',
             'include' => 'Person/miscellaneous.html.twig',

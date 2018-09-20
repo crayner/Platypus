@@ -1,0 +1,18 @@
+{% trans_default_domain "Person" %}
+
+{% block student_enrolment_label %}{% endblock %}
+{% block student_enrolment_errors %}{% endblock %}
+
+{% block student_enrolment_widget %}
+    <div class="row row-striped small">
+        <div class="col-4">
+            {{ form_widget(form.yearGroup, {value: transformData(form.yearGroup)}) }}
+        </div>
+        <div class="col-4">
+            {{ form_widget(form.rollGroup, {value: transformData(form.rollGroup)}) }}
+            {{ form_widget(form.student) }}
+        </div>
+        <div class="col-4 collection-actions">
+        </div>
+    </div>
+{% endblock student_enrolment_widget %}

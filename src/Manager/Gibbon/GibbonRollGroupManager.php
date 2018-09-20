@@ -16,7 +16,6 @@
 namespace App\Manager\Gibbon;
 
 use App\Entity\RollGroup;
-use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * Class GibbonRollGroupManager
@@ -32,7 +31,7 @@ class GibbonRollGroupManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = '';
+    protected $nextGibbonName = 'gibbonStudentEnrolment';
 
     /**
      * @var array

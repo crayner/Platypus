@@ -21,6 +21,7 @@ use App\Entity\PersonRole;
 use App\Entity\SchoolYear;
 use App\Form\SettingChoiceType;
 use Doctrine\ORM\EntityRepository;
+use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\DateType;
 use Hillrange\Form\Type\DocumentType;
 use Hillrange\Form\Type\EntityType;
@@ -444,6 +445,16 @@ class PersonType extends AbstractType
                     'attr' => [
                         'rows' => 5,
                     ],
+                ]
+            )
+            ->add('enrolments', CollectionType::class,
+                [
+                    'label' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'entry_type' => StudentEnrolmentType::class,
+                    'sort_manage' => true,
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
         ;
