@@ -32,7 +32,7 @@ class GibbonDepartmentStaffManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = '';
+    protected $nextGibbonName = 'gibbonRollGroup';
 
     /**
      * @var array

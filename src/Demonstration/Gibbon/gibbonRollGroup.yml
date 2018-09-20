@@ -1,0 +1,169 @@
+%YAML 1.1
+---
+# craigray_gibbon.gibbonRollGroup
+-
+  gibbonRollGroupID: 123
+  gibbonSchoolYearID: 24
+  name: 7.1
+  nameShort: 7.1
+  gibbonPersonIDTutor: 866
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 124
+  gibbonSchoolYearID: 24
+  name: 7.2
+  nameShort: 7.2
+  gibbonPersonIDTutor: 1506
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 125
+  gibbonSchoolYearID: 24
+  name: 7.3
+  nameShort: 7.3
+  gibbonPersonIDTutor: 1778
+  gibbonPersonIDTutor2: 2096
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 126
+  gibbonSchoolYearID: 24
+  name: 8.1
+  nameShort: 8.1
+  gibbonPersonIDTutor: 1123
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 127
+  gibbonSchoolYearID: 24
+  name: 8.2
+  nameShort: 8.2
+  gibbonPersonIDTutor: 2134
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 128
+  gibbonSchoolYearID: 24
+  name: 8.3
+  nameShort: 8.3
+  gibbonPersonIDTutor: 2326
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 129
+  gibbonSchoolYearID: 24
+  name: 9.1
+  nameShort: 9.1
+  gibbonPersonIDTutor: 1104
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 130
+  gibbonSchoolYearID: 24
+  name: 9.2
+  nameShort: 9.2
+  gibbonPersonIDTutor: 198
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 132
+  gibbonSchoolYearID: 24
+  name: 10.1
+  nameShort: 10.1
+  gibbonPersonIDTutor: 2026
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 133
+  gibbonSchoolYearID: 24
+  name: 10.2
+  nameShort: 10.2
+  gibbonPersonIDTutor: 870
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 134
+  gibbonSchoolYearID: 24
+  name: 11.1
+  nameShort: 11.1
+  gibbonPersonIDTutor: 1776
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 135
+  gibbonSchoolYearID: 24
+  name: 11.2
+  nameShort: 11.2
+  gibbonPersonIDTutor: 1119
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 136
+  gibbonSchoolYearID: 24
+  name: 12.1
+  nameShort: 12.1
+  gibbonPersonIDTutor: 2027
+  gibbonPersonIDTutor2: 1122
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 137
+  gibbonSchoolYearID: 24
+  name: 13.1
+  nameShort: 13.1
+  gibbonPersonIDTutor: 869
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 138
+  gibbonSchoolYearID: 24
+  name: 12.2
+  nameShort: 12.2
+  gibbonPersonIDTutor: 144
+  gibbonPersonIDTutor2: 1122
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 140
+  gibbonSchoolYearID: 24
+  name: 9.3
+  nameShort: 9.3
+  gibbonPersonIDTutor: 2028
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 141
+  gibbonSchoolYearID: 24
+  name: 11.3
+  nameShort: 11.3
+  gibbonPersonIDTutor: 120
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+-
+  gibbonRollGroupID: 142
+  gibbonSchoolYearID: 24
+  name: 13.2
+  nameShort: 13.2
+  gibbonPersonIDTutor: 867
+  gibbonRollGroupIDNext: 
+  attendance: "Y"
+  website: ""
+...

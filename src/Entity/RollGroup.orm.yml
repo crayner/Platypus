@@ -21,7 +21,7 @@ App\Entity\RollGroup:
             length: 10
             nullable: false
         nameShort:
-            length: 10
+            length: 5
             nullable: false
             column: name_short
         attendance:

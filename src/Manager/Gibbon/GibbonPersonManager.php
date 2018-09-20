@@ -892,7 +892,6 @@ class GibbonPersonManager extends GibbonTransferManager
      */
     public function postFieldData(string $entityName, array $newData, string $field, $value): array
     {
-
         if ($field === 'username' && $entityName === User::class)
         {
             $newData['username_canonical'] = $value;
