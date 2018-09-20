@@ -198,7 +198,7 @@ class PersonType extends AbstractType
                     'label'        => 'student.ethnicity.label',
                     'placeholder'  => 'student.ethnicity.placeholder',
                     'required'     => false,
-                    'setting_name' => 'ethnicity.list',
+                    'setting_name' => 'person_admin.ethnicity',
                     'translation_domain' => 'Person',
                     'translation_prefix' => false,
                 )
@@ -208,7 +208,7 @@ class PersonType extends AbstractType
                     'label'        => 'student.religion.label',
                     'placeholder'  => 'student.religion.placeholder',
                     'required'     => false,
-                    'setting_name' => 'religion.list',
+                    'setting_name' => 'person_admin.religions',
                     'translation_prefix'    => false,
                     'strict_validation' => false,
                     'translation_domain' => 'Person',
@@ -269,7 +269,7 @@ class PersonType extends AbstractType
                     'label'        => ['person.residency_status.label', ['%{national}' => $this->country]],
                     'placeholder'  => 'person.residency_status.placeholder',
                     'required'     => false,
-                    'setting_name' => 'person.residency_status',
+                    'setting_name' => 'person_admin.residency_status',
                     'translation_domain' => 'Person',
                 ]
             )

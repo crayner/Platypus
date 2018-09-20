@@ -17,9 +17,8 @@ namespace App\Security\Voter;
 
 use App\Entity\Action;
 use App\Manager\ActionManager;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
@@ -48,15 +47,21 @@ class ActionVoter implements VoterInterface
     private static $decisionManager;
 
     /**
+     * @var LoggerInterface
+     */
+    private static $logger;
+
+    /**
      * ActionVoter constructor.
      * @param ActionManager $actionManager
      * @param Request $request
      */
-    public function __construct(ActionManager $actionManager, RouterInterface $router, AccessDecisionManagerInterface $decisionManager)
+    public function __construct(ActionManager $actionManager, RouterInterface $router, AccessDecisionManagerInterface $decisionManager, LoggerInterface $logger)
     {
         self::$decisionManager = $decisionManager;
         self::$actionManager = $actionManager;
         $this->router = $router;
+        self::$logger = $logger;
     }
 
     /**
@@ -181,8 +186,10 @@ class ActionVoter implements VoterInterface
 
         $actions = self::getActionManager()->getRepository()->findByRoute($route);
 
-        if (empty($actions))
-            throw new \Exception(sprintf('No action has been created for route \'%s\'.', $route));
+        if (empty($actions)) {
+            self::$logger->addInfo(sprintf('No action has been created for route \'%s\'.', $route));
+            return VoterInterface::ACCESS_DENIED;
+        }
 
         self::$found = false;
         foreach($actions as $action)
@@ -192,7 +199,7 @@ class ActionVoter implements VoterInterface
         }
 
         if (! self::$found)
-            throw new \Exception(sprintf('No action has been created for route \'%s\' that has the appropriate parameters.', $route));
+            self::$logger->addInfo(sprintf('No action has been created for route \'%s\' that has the appropriate parameters [%s].', $route, http_build_query($routeParams)));
 
         return VoterInterface::ACCESS_DENIED;
     }

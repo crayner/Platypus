@@ -19,6 +19,8 @@ use App\Entity\Action;
 use App\Entity\PersonRole;
 use App\Manager\Traits\EntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 
 class ActionManager
 {
@@ -69,8 +71,8 @@ class ActionManager
         $action = $this->find($id);
         $results = new ArrayCollection();
         $results->add($action->getRole());
-        foreach($action->getPersonRoles()->getIterator() as $role)
-            if (! $results->contains($role))
+        foreach ($action->getPersonRoles()->getIterator() as $role)
+            if (!$results->contains($role))
                 $results->add($role);
 
         $iterator = $results->getIterator();
@@ -93,8 +95,8 @@ class ActionManager
     public function togglePermission($role)
     {
         $role = $this->getRepository(PersonRole::class)->findOneByNameShort($role);
-        if ($role === $this->entity->getRole() || ! in_array($role->getCategory(), $this->entity->getAllowedCategories()))
-            return ;
+        if ($role === $this->entity->getRole() || !in_array($role->getCategory(), $this->entity->getAllowedCategories()))
+            return;
 
         if ($this->entity->getPersonRoles()->contains($role))
             $this->entity->removePersonRole($role);

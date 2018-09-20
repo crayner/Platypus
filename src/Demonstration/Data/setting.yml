@@ -1565,7 +1565,7 @@
 -
   id: 324
   setting_type: "array"
-  name: "ethnicity.list"
+  name: "person_admin.ethnicity"
   display_name: "List of Ethnicities"
   description: "List of Ethnicities.  Uses the Australian Standard to create this list"
   value: "'Inadequately described': '0000'\n'Not stated': '0001'\nEurasian: '0901'\nAsian: '0902'\n'African, so decribed': '0903'\n'European, so decribed': '0904'\n'Caucasian, so decribed': '0905'\n'Creole, so decribed': '0906'\nOceanian: '1000'\n'Australian Peoples': '1100'\n'New Zealand Peoples': '1200'\n'Melanesian and Papuan': '1300'\nMicronesian: '1400'\nPolynesian: '1500'\n'North-West European': '2000'\nBritish: '2100'\n'Western European': '2300'\n'Northern European': '2400'\n'Southern and  Eastern European': '3000'\n'Southern European': '3100'\n'South Eastern European': '3200'\n'Eastern European': '3300'\n'North African and Middle Eastern': '4000'\nArab: '4100'\n'Peoples of the Sudan': '4300'\n'Other North African and Middle Eastern': '4900'\n'South-East  Asian': '5000'\n'Mainland South-East Asian': '5100'\n'Maritime South-East Asian': '5200'\n'North-East Asian': '6000'\n'Chinese Asian': '6100'\n'Other North-East Asian': '6900'\n'Southern and Central Asian': '7000'\n'Southern Asian': '7100'\n'Central Asian': '7200'\n'Peoples of the Americas': '8000'\n'North American': '8100'\n'South American': '8200'\n'Central American': '8300'\n'Caribbean Islander': '8400'\n'Sub-Saharan African': '9000'\n'Central and West African': '9100'\n'Southern and East African': '9200'"

@@ -513,7 +513,7 @@ class SettingCache
     private function setBooleanValue(): SettingCache
     {
         $this->value = $this->value ? true : false;
-        $this->getSetting()->setValue($this->value);
+        $this->getSetting()->setValue($this->value ? '1' : '0');
         return $this;
     }
 

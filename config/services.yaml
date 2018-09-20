@@ -42,7 +42,13 @@ services:
             - { name: doctrine.event_subscriber }
     App\Listener\MailerLoggerListener:
         arguments:
-            - "@logger"
+            - "@monolog.logger.mailer"
         tags:
-          - { name: monolog.logger, channel: mailer }
-          - { name: "swiftmailer.default.plugin" }
+            - { name: monolog.logger, channel: mailer }
+            - { name: "swiftmailer.default.plugin" }
+    App\Security\Voter\ActionVoter:
+        arguments:
+            - '@App\Manager\ActionManager'
+            - "@router"
+            - "@security.access.decision_manager"
+            - "@monolog.logger.security"

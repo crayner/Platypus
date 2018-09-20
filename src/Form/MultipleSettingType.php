@@ -21,6 +21,7 @@ use App\Organism\SettingCache;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Hillrange\Form\Type\ChainedChoiceType;
 use Hillrange\Form\Type\ColourType;
+use Hillrange\Form\Type\DateType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\MultipleExpandedChoiceType;
@@ -74,6 +75,15 @@ class MultipleSettingType extends AbstractType
                 case 'colour':
                     $formType = ColourType::class;
                     break;
+                case 'date':
+                    $formType = DateType::class;
+                    $years = [];
+                    for($i=intval(date('Y')); $i>=intval(date('Y', strtotime('-25 Years'))); $i--)
+                        $years[] = strval($i);
+                    $additional = [
+                        'years' => $years,
+                    ];
+                    break;
                 case 'image':
                     $formType = ImageType::class;
                     $route = $this->routerManager->getCurrentRoute();
@@ -105,8 +115,20 @@ class MultipleSettingType extends AbstractType
                 case 'multiChoice':
                     $formType = MultipleExpandedChoiceType::class;
                     $choices = $data->__get('choice');
+                    $x = [];
+                    if (empty($data->__get('translateChoice'))) {
+                        if (is_null($data->__get('translateChoice'))) {
+                            foreach ($choices as $value)
+                                $x[$value] = $value;
+                        } else {
+                            $x = $choices;
+                        }
+                    } else {
+                        foreach ($choices as $value)
+                            $x[$data->getName() . '.' . $value] = $value;
+                    }
                     $additional = [
-                        'choices' => $choices,
+                        'choices' => $x,
                         'placeholder' => false,
                         'expanded_attr' => [
                             'class' => 'form-control-sm',

@@ -312,6 +312,14 @@ System Admin:
             parameters:
                 id: "%"
 People Admin:
+    data_updater:
+        data_updater_settings:
+            label: "Data Updater Settings"
+            role: ROLE_ACTION
+            route: manage_settings
+            parameters: 
+                name: DataUpdater
+            transDomain: System
     staff_management:
         staff_settings:
             label: "Manage Staff Settings"
