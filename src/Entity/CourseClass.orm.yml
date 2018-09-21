@@ -1,0 +1,53 @@
+App\Entity\CourseClass:
+    type: entity
+    table: course_class
+    repositoryClass: App\Repository\CourseClassRepository
+    uniqueConstraints:
+        course_name:
+            columns:
+                - name
+                - course_id
+        course_name_short:
+            columns:
+                - name_short
+                - course_id
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 12
+            nullable: false
+        nameShort:
+            length: 5
+            column: name_short
+            nullable: false
+        reportable:
+            type: boolean
+            options:
+                default: '1'
+        attendance:
+            type: boolean
+            options:
+                default: '1'
+        useCourseName:
+            type: boolean
+            column: use_course_name
+            options:
+                default: '1'
+    manyToOne:
+        useScale:
+            targetEntity: App\Entity\Scale
+            joinColumn:
+                name: scale_id
+                referencedColumnName: id
+                nullable: true
+        course:
+            targetEntity: App\Entity\Course
+            inversedBy: classes
+            joinColumn:
+                name: course_id
+                referencedColumnName: id
+                nullable: false

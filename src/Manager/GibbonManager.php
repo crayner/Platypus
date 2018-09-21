@@ -355,6 +355,18 @@ class GibbonManager
     }
 
     /**
+     * commaList
+     *
+     * @param $value
+     * @param $options
+     * @return array
+     */
+    private function commaList($value, $options): array
+    {
+        return explode(',',$value);
+    }
+
+    /**
      * integer
      *
      * @param $value

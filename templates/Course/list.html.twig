@@ -1,0 +1,17 @@
+{% trans_default_domain "Course" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% block title %}{{ parent() }}{{ 'Manage Courses and Classes'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Manage Courses and Classes'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ '' }}{% endblock headerLead %}
+
+{% block contentContainer %}
+
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ pagination_script(pagination) }}
+{% endblock javascripts %}
+

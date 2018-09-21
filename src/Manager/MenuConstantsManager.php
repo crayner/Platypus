@@ -26,6 +26,13 @@ class MenuConstantsManager
     node: 1
     order: 11
     route: manage_system_settings
+12:
+    label: menu.admin.timetable
+    name: Timetable Admin
+    role: ROLE_ADMIN
+    node: 1
+    order: 12
+    route: manage_courses
 13:
     label: menu.admin.people
     name: People Admin
@@ -311,6 +318,14 @@ System Admin:
             route: edit_notification_event
             parameters:
                 id: "%"
+Timetable Admin:
+    course_classes:
+        manage_course_classes:
+            label: "Manage Course & Classes"
+            role: ROLE_ACTION
+            route: manage_courses
+            parameters: {}
+            transDomain: System
 People Admin:
     data_updater:
         data_updater_settings:

@@ -32,7 +32,7 @@ class GibbonStudentEnrolmentManager extends GibbonTransferManager
     /**
      * @var string
      */
-    protected $nextGibbonName = '';
+    protected $nextGibbonName = 'gibbonCourse';
 
     /**
      * @var array

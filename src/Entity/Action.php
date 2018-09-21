@@ -218,6 +218,7 @@ class Action
         'school_admin',
         'system_admin',
         'personnel_admin',
+        'timetable_admin',
     ];
 
     /**

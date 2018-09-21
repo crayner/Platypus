@@ -164,6 +164,8 @@ abstract class PaginationReactManager implements PaginationInterface
      */
     public function isDisplaySort(): bool
     {
+        if (! property_exists($this, 'sortByList'))
+            return false;
         if (is_null($this->getSortList()))
             return false;
         if (! property_exists($this, 'displaySort'))
@@ -176,10 +178,10 @@ abstract class PaginationReactManager implements PaginationInterface
      *
      * @return array
      */
-    public function getSortList(): ?array
+    public function getSortList(): array
     {
         if (! property_exists($this, 'sortByList'))
-            return null;
+            return [];
 
         $sortByList = [];
         if (!empty($this->sortByList) && is_array($this->sortByList))

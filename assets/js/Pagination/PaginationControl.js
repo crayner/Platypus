@@ -36,6 +36,8 @@ export default class PaginationControl extends Component {
         this.displayFilter = props.displayFilter
         this.filter = props.filter
         this.sortOptions = props.sortOptions
+        if (typeof(this.sortOptions) === 'array')
+            this.sortOptions = {}
         this.translations = props.translations
         this.allResults = props.results
         this.total = props.results.length
@@ -58,6 +60,8 @@ export default class PaginationControl extends Component {
 
         this.pages = 0
         this.sortByList = props.sortByList
+        if (typeof(this.sortByList) === 'array')
+            this.sortByList = {}
         this.rows = []
 
         this.changeLimit = this.changeLimit.bind(this)
@@ -126,7 +130,10 @@ export default class PaginationControl extends Component {
         return this.state.results
     }
 
-    getSortResults(results){
+    getSortResults(results) {
+        if (Object.keys(this.sortByList).length === 0)
+            return results
+
         const sortCriteria = this.sortByList[this.sort]
         const sortDepth = sortCriteria.length
 
@@ -468,8 +475,14 @@ PaginationControl.propTypes = {
     filterValue: PropTypes.array.isRequired,
     filter: PropTypes.array.isRequired,
     translations: PropTypes.object.isRequired,
-    sortOptions: PropTypes.object.isRequired,
-    sortByList: PropTypes.object.isRequired,
+    sortOptions: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array,
+    ]).isRequired,
+    sortByList: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.array,
+    ]).isRequired,
     results: PropTypes.array.isRequired,
     search: PropTypes.string.isRequired,
     sort: PropTypes.string.isRequired,

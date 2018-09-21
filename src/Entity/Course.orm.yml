@@ -1,0 +1,56 @@
+App\Entity\Course:
+    type: entity
+    table: course
+    repositoryClass: App\Repository\CourseRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 45
+            nullable: false
+            unique: true
+        nameShort:
+            length: 6
+            nullable: false
+            unique: true
+            column: name_short
+        description:
+            type: text
+            nullable: true
+        map:
+            type: boolean
+            options:
+                default: '1'
+        sequence:
+            type: smallint
+    manyToOne:
+        schoolYear:
+            targetEntity: App\Entity\SchoolYear
+            joinColumn:
+                name: school_year_id
+                referencedColumnName: id
+                nullable: false
+        department:
+            targetEntity: App\Entity\Department
+            joinColumn:
+                name: department_id
+                referencedColumnName: id
+                nullable: true
+    manyToMany:
+        yearGroups:
+            targetEntity: App\Entity\YearGroup
+            joinTable:
+                name: course_year_group
+                joinColumns:
+                    course_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    year_group_id:
+                        referencedColumnName: id
+    oneToMany:
+        classes:
+            targetEntity: App\Entity\CourseClass
+            mappedBy: course
