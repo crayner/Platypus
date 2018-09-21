@@ -1,0 +1,39 @@
+{% trans_default_domain 'Course' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Class Participants: %name%', name: manager.entity.name, transDomain: 'Course', panelParagraph: '', panelStyle: 'primary'} %}
+    <div class="row row-header text-center">
+        <div class="col-4">
+            {{ 'Participant Name'|trans }}
+        </div>
+        <div class="col-3">
+            {{ 'Role'|trans }}
+        </div>
+        <div class="col-2">
+            {{ 'Reportable'|trans }}
+        </div>
+        <div class="col-3 collection-actions">
+            {{ 'Actions'|trans({}, 'System') }}
+        </div>
+    </div>
+    <div class="row row-header text-center">
+        <div class="col-12">
+            {{ 'Teachers / Assistants'|trans }}
+        </div>
+    </div>
+        {{ collection_widget(form.tutors) }}
+        <hr/>
+    <div class="row row-header text-center">
+        <div class="col-12">
+            {{ 'Students'|trans }}
+        </div>
+    </div>
+        {{ collection_widget(form.students) }}
+        <hr/>
+    <div class="row row-header text-center">
+        <div class="col-12">
+            {{ 'Former Participants'|trans }}
+        </div>
+    </div>
+    {{ collection_widget(form.former) }}
+    {% do form.people.setRendered %}
+{% include 'Default/panelEnd.html.twig' %}

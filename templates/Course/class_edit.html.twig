@@ -1,0 +1,33 @@
+{% trans_default_domain "Course" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    'Course/class_participant.html.twig'
+    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ parent() }}{{ 'Edit Class'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Edit CLass'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ '' }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ form_start(form) }}
+    {{ all_form_errors(fullForm) }}
+    {% set h3Content = '' %}
+    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('edit_course', {id: app.request.get('course_id')})}}) %}
+    {% set h3Content = h3Content ~ saveButton() %}
+    {% include 'Default/tabs.html.twig' with {translation: 'Course', tabManager: manager} %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {{ collections_manage(form, ['students', 'tutors', 'former'])|raw }}
+    {{ collection_script(form.tutors) }}
+    {{ collection_script(form.students) }}
+    {{ collection_script(form.former) }}
+    {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_class', options: {course_id: app.request.get('course_id')}} %}
+{% endblock javascripts %}

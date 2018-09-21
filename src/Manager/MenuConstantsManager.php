@@ -328,6 +328,11 @@ Timetable Admin:
             route: edit_course
             parameters:
                 id: "%"
+        edit_class:
+            route: edit_class
+            parameters:
+                id: "%"
+                course_id: "%"
 People Admin:
     data_updater:
         data_updater_settings:

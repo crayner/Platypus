@@ -1,0 +1,26 @@
+{% trans_default_domain 'Course' %}
+
+{% block course_class_participant_label %}{% endblock %}
+{% block course_class_participant_errors %}{% endblock %}
+
+{% block course_class_participant_widget %}
+
+<div class="row row-striped small">
+    <div class="col-4 text-right">
+        {{ form_widget(form.person, {value: transformData(form.person)}) }}
+        {% if form.vars.value.person is defined %}
+            {{ form.vars.value.person.email }}
+        {% endif %}
+    </div>
+    <div class="col-3">
+        {{ form_widget(form.role) }}
+        {{ form_widget(form.courseClass, {value: app.request.get('id')}) }}
+    </div>
+    <div class="col-2 text-center">
+        {{ form_widget(form.reportable) }}
+    </div>
+    <div class="col-3 text-center collection-actions">
+        {{ saveButton({mergeClass: 'btn-sm'})|raw }}
+    </div>
+</div>
+{% endblock course_class_participant_widget %}

@@ -15,7 +15,9 @@
  */
 namespace App\Controller;
 
+use App\Form\Type\CourseClassType;
 use App\Form\Type\CourseType;
+use App\Manager\CourseClassManager;
 use App\Manager\CourseManager;
 use App\Pagination\CoursePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -76,6 +78,41 @@ class CourseController extends Controller
 
         return $this->render(
             'Course/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+                'manager' => $manager,
+            ]
+        );
+    }
+
+    /**
+     * editClass
+     *
+     * @param CourseClassManager $manager
+     * @param Request $request
+     * @param $id
+     * @param string $tabName
+     * @Route("/course/{course_id}/class/{id}/edit/{tabName}", name="edit_class")
+     * @Security("is_granted('USE_ROUTE', ['manage_courses'])")
+     */
+    public function editClass(CourseClassManager $manager, Request $request, $course_id, $id, $tabName = 'details')
+    {
+        $entity = $manager->find($id);
+
+        $form = $this->createForm(CourseClassType::class, $entity, ['choices' => $manager->getParticipants()]);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $manager->getEntityManager()->persist($entity);
+            $manager->getEntityManager()->flush();
+            $form = $this->createForm(CourseClassType::class, $entity);
+        }
+
+        return $this->render(
+            'Course/class_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'fullForm' => $form,

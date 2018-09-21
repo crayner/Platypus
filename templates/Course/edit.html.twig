@@ -3,7 +3,6 @@
 {% extends "Default/template.html.twig" %}
 
 {% form_theme form
-    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
     '@HillrangeForm/FormTheme/bootstrap.html.twig'
 %}
 
@@ -24,6 +23,5 @@
 {% block javascripts %}
     {{ parent() }}
     {{ toggle_script() }}
-    {{ collections_manage(form, ['xxxx'])|raw }}
-    {% include 'Script/formTabSubmitScript.html.twig' %}
+    {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_course'} %}
 {% endblock javascripts %}

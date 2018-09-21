@@ -1,0 +1,13 @@
+App\Entity\CourseClass:
+    constraints:
+        -   Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                fields: [name, course]
+        -   Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                fields: [nameShort, course]
+    properties:
+        name:
+            - Length:
+                  max: 12
+        nameShort:
+            - Length:
+                  max: 5

@@ -32,7 +32,7 @@ class DepartmentSubscriber implements EventSubscriberInterface
 	public function preSubmit(FormEvent $event)
 	{
 		$data = $event->getData();
-		$dept = $event->getForm()->getData();
+		$entity = $event->getForm()->getData();
 
 		if (!empty($data['members']))
 		{

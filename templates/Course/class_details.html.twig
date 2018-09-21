@@ -1,0 +1,26 @@
+{% trans_default_domain 'Course' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Class Details: %name%', name: manager.entity.name, transDomain: 'Course', panelParagraph: '', panelStyle: 'primary'} %}
+    <div class="row">
+        <div class="col-4 card">
+            {{ form_row(form.name, {value: form.vars.value.name(1)}) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_row(form.nameShort, {value: form.vars.value.nameShort(1)}) }}
+        </div>
+        <div class="col-4 card">
+            {{ form_row(form.useCourseName) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 card">
+            {{ form_row(form.reportable) }}
+        </div>
+        <div class="col-3 card">
+            {{ form_row(form.attendance) }}
+        </div>
+        <div class="col-6 card">
+            {{ form_row(form.useScale) }}
+        </div>
+    </div>
+{% include 'Default/panelEnd.html.twig' %}

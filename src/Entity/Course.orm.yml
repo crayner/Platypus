@@ -2,6 +2,15 @@ App\Entity\Course:
     type: entity
     table: course
     repositoryClass: App\Repository\CourseRepository
+    uniqueConstraints:
+        name_school_year:
+            columns:
+                - name
+                - school_year_id
+        short_name_school_year:
+            columns:
+                - name_short
+                - school_year_id
     id:
         id:
             type: integer

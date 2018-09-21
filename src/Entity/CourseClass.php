@@ -53,9 +53,9 @@ class CourseClass
     /**
      * @return null|string
      */
-    public function getName(): ?string
+    public function getName(bool $raw = false): ?string
     {
-        if ($this->useCourseName)
+        if ($this->isUseCourseName() && ! $raw)
             return $this->getCourse()->getName().'.'.$this->name;
         return $this->name;
     }
@@ -78,9 +78,9 @@ class CourseClass
     /**
      * @return null|string
      */
-    public function getNameShort(): ?string
+    public function getNameShort(bool $raw = false): ?string
     {
-        if ($this->useCourseName)
+        if ($this->isUseCourseName() && ! $raw)
             return $this->getCourse()->getNameShort().'.'.$this->nameShort;
         return $this->nameShort;
     }
@@ -234,10 +234,25 @@ class CourseClass
     private $people;
 
     /**
-     * @return Collection|null
+     * getPeople
+     *
+     * @return Collection
      */
-    public function getPeople(): ?Collection
+    public function getPeople(): Collection
     {
+        if (empty($this->people))
+            $this->people = new ArrayCollection();
+
+        $iterator = $this->people->getIterator();
+
+        $iterator->uasort(
+            function ($a, $b) {
+                return ($a->getPerson()->getFullName() < $b->getPerson()->getFullName()) ? -1 : 1;
+            }
+        );
+
+        $this->people = new ArrayCollection(iterator_to_array($iterator, false));
+
         return $this->people;
     }
 
@@ -282,7 +297,7 @@ class CourseClass
         $this->getPeople()->removeElement($person);
 
         if (! empty($person))
-            $person->setColumnClass(null, false);
+            $person->setCourseClass(null, false);
 
         return $this;
     }
@@ -331,5 +346,28 @@ class CourseClass
                 $this->tutors->add($person);
 
         return $this->tutors;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $former;
+
+    /**
+     * getStudents
+     *
+     * @return Collection
+     */
+    public function getFormer(): Collection
+    {
+        if (! empty($this->former))
+            return $this->former;
+        $this->former = new ArrayCollection();
+
+        foreach($this->getPeople()->getIterator() as $person)
+            if ( mb_strpos($person->getRole(), '_left') !== false)
+                $this->former->add($person);
+
+        return $this->former;
     }
 }

@@ -40,13 +40,8 @@
             {{ onOffButton({value: class.reportable, style: '', mergeClass: 'btn-sm'})|raw }}
         </div>
         <div class="col-3">
-
+            {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_class', {course_id: class.course.id, id: class.id})}})|raw }}
         </div>
     </div>
 {% endfor %}
-<div class="row">
-    <div class="col-12">
-        {{ dump(manager.entity.classes) }}
-    </div>
-</div>
 {% include 'Default/panelEnd.html.twig' %}

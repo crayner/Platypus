@@ -129,7 +129,7 @@ class CourseClassPerson
      */
     public function setCourseClass(?CourseClass $courseClass, $add = true): CourseClassPerson
     {
-        if (empty($courseClass) && ! empty($this->courseClass))
+        if (empty($courseClass) && ! empty($this->courseClass) && $add)
             $this->courseClass->removePerson($this);
 
         $this->courseClass = $courseClass;
