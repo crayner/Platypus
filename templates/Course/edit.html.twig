@@ -1,0 +1,29 @@
+{% trans_default_domain "Course" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ parent() }}{{ 'Edit Course & Classes'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Edit Course & Classes'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ '' }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ form_start(form) }}
+    {{ all_form_errors(fullForm) }}
+    {% set h3Content = '' %}
+    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_courses')}}) %}
+    {% set h3Content = h3Content ~ saveButton() %}
+    {% include 'Default/tabs.html.twig' with {translation: 'Course', tabManager: manager} %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {{ collections_manage(form, ['xxxx'])|raw }}
+    {% include 'Script/formTabSubmitScript.html.twig' %}
+{% endblock javascripts %}

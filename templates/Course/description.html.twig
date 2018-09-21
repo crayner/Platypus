@@ -1,0 +1,9 @@
+{% trans_default_domain 'Course' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Course Description: %name%', name: manager.entity.name, transDomain: 'Course', panelParagraph: '', panelStyle: 'primary'} %}
+<div class="row">
+    <div class="col-12 card">
+        {{ form_row(form.description) }}
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}

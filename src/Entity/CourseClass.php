@@ -17,6 +17,9 @@
 namespace App\Entity;
 
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 class CourseClass
 {
     /**
@@ -223,5 +226,110 @@ class CourseClass
     {
         $this->useScale = $useScale;
         return $this;
+    }
+
+    /**
+     * @var Collection|null
+     */
+    private $people;
+
+    /**
+     * @return Collection|null
+     */
+    public function getPeople(): ?Collection
+    {
+        return $this->people;
+    }
+
+    /**
+     * @param Collection|null $people
+     * @return CourseClass
+     */
+    public function setPeople(?Collection $people): CourseClass
+    {
+        $this->people = $people;
+        return $this;
+    }
+
+    /**
+     * addPerson
+     *
+     * @param CourseClassPerson|null $person
+     * @param bool $add
+     * @return CourseClass
+     */
+    public function addPerson(?CourseClassPerson $person, $add = true): CourseClass
+    {
+        if (empty($person) || $this->getPeople()->contains($person))
+            return $this;
+
+        if ($add)
+            $person->setCourseClass($this, false);
+
+        $this->people->add($person);
+
+        return $this;
+    }
+
+    /**
+     * removePerson
+     *
+     * @param CourseClassPerson|null $person
+     * @return CourseClass
+     */
+    public function removePerson(?CourseClassPerson $person): CourseClass
+    {
+        $this->getPeople()->removeElement($person);
+
+        if (! empty($person))
+            $person->setColumnClass(null, false);
+
+        return $this;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $students;
+
+    /**
+     * getStudents
+     *
+     * @return Collection
+     */
+    public function getStudents(): Collection
+    {
+        if (! empty($this->students))
+            return $this->students;
+        $this->students = new ArrayCollection();
+
+        foreach($this->getPeople()->getIterator() as $person)
+            if ($person->getRole() === 'student')
+                $this->students->add($person);
+
+        return $this->students;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $tutors;
+
+    /**
+     * getStudents
+     *
+     * @return Collection
+     */
+    public function getTutors(): Collection
+    {
+        if (! empty($this->tutors))
+            return $this->tutors;
+        $this->tutors = new ArrayCollection();
+
+        foreach($this->getPeople()->getIterator() as $person)
+            if (mb_strpos($person->getRole(), 'student') === false && mb_strpos($person->getRole(), '_left') === false)
+                $this->tutors->add($person);
+
+        return $this->tutors;
     }
 }

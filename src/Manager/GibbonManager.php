@@ -520,10 +520,14 @@ class GibbonManager
      * safeString
      *
      * @param $value
+     * @param $options
      * @return string
      */
-    private function safeString($value): string
+    private function safeString($value, $options): string
     {
+        if (is_array($options) && isset($options['removeChars']) && is_array($options['removeChars']))
+            $value = str_replace($options['removeChars'], '', $value);
+
         return StringHelper::safeString($value, true);
     }
 

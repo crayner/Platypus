@@ -1,0 +1,52 @@
+{% trans_default_domain 'Course' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Course Classes: %name%', name: manager.entity.name, transDomain: 'Course', panelParagraph: '', panelStyle: 'primary'} %}
+<div class="row row-header small text-center">
+    <div class="col-2">
+        {{ 'Class Short Name'|trans }}
+    </div>
+    <div class="col-3">
+        {{ 'Class Name'|trans }}
+    </div>
+    <div class="col-2">
+        {{ 'Students (Tutors)'|trans }}
+    </div>
+    <div class="col-2">
+        {{ 'Reportable'|trans }}
+    </div>
+    <div class="col-3">
+        {{ 'Actions'|trans }}
+    </div>
+</div>
+<div class="row">
+    <div class="col-12" id="courseClassesMessage">
+        {% if manager.entity.classes|length is same as(0) %}
+            <p class="alert alert-warning">{{ 'No classes have been found for this course.'|trans }}</p>
+        {% endif %}
+    </div>
+</div>
+{% for class in manager.entity.classes %}
+    <div class="row row-striped small">
+        <div class="col-2">
+            {{ class.nameShort }}
+        </div>
+        <div class="col-3">
+            {{ class.name }}
+        </div>
+        <div class="col-2 text-center">
+            {{ class.students|length }} ({{ class.tutors|length }})
+        </div>
+        <div class="col-2 text-center">
+            {{ onOffButton({value: class.reportable, style: '', mergeClass: 'btn-sm'})|raw }}
+        </div>
+        <div class="col-3">
+
+        </div>
+    </div>
+{% endfor %}
+<div class="row">
+    <div class="col-12">
+        {{ dump(manager.entity.classes) }}
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}

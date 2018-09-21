@@ -15,10 +15,12 @@
  */
 namespace App\Controller;
 
+use App\Form\Type\CourseType;
 use App\Manager\CourseManager;
 use App\Pagination\CoursePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -33,7 +35,7 @@ class CourseController extends Controller
      * @param CoursePagination $pagination
      * @param CourseManager $manager
      * @return mixed
-     * @Route("courses/manage/", name="manage_courses")
+     * @Route("/courses/manage/", name="manage_courses")
      * @Security("is_granted('ROLE_ACTION', request)")
      */
     public function manage(CoursePagination $pagination, CourseManager $manager)
@@ -43,6 +45,42 @@ class CourseController extends Controller
                 'pagination' => $pagination,
                 'manager'    => $manager,
             )
+        );
+    }
+
+    /**
+     * edit
+     *
+     * @param CourseManager $manager
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
+     * @Route("/course/{id}/edit/{tabName}", name="edit_course")
+     * @Security("is_granted('USE_ROUTE', ['manage_courses'])")
+     */
+    public function edit(CourseManager $manager, Request $request, $id, $tabName = 'details')
+    {
+        $entity = $manager->find($id);
+
+        $form = $this->createForm(CourseType::class, $entity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $manager->getEntityManager()->persist($entity);
+            $manager->getEntityManager()->flush();
+            $form = $this->createForm(CourseType::class, $entity);
+        }
+
+        return $this->render(
+            'Course/edit.html.twig',
+            [
+                'form' => $form->createView(),
+                'fullForm' => $form,
+                'manager' => $manager,
+            ]
         );
     }
 }

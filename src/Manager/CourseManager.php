@@ -17,14 +17,45 @@ namespace App\Manager;
 
 use App\Entity\Course;
 use App\Manager\Traits\EntityTrait;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
  * Class CourseManager
  * @package App\Manager
  */
-class CourseManager
+class CourseManager extends TabManager
 {
     use EntityTrait;
 
+    /**
+     * @var string
+     */
     private $entityName = Course::class;
+
+    /**
+     * @var array
+     */
+    protected $tabs = [
+        [
+            'name' => 'details',
+            'label' => 'Details',
+            'include' => 'Course/details.html.twig',
+            'message' => 'courseDetailsMessage',
+            'translation' => 'Course',
+        ],
+        [
+            'name' => 'description',
+            'label' => 'Description (Blurb)',
+            'include' => 'Course/description.html.twig',
+            'message' => 'courseDescriptionMessage',
+            'translation' => 'Course',
+        ],
+        [
+            'name' => 'classes',
+            'label' => 'Classes',
+            'include' => 'Course/classes.html.twig',
+            'message' => 'courseClassesMessage',
+            'translation' => 'Course',
+        ],
+    ];
 }

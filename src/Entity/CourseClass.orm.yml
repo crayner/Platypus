@@ -51,3 +51,8 @@ App\Entity\CourseClass:
                 name: course_id
                 referencedColumnName: id
                 nullable: false
+    oneToMany:
+        people:
+            targetEntity: App\Entity\CourseClassPerson
+            mappedBy: courseClass
+            cascade: [ 'persist', 'remove' ]

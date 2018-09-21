@@ -237,17 +237,14 @@ School Admin:
             route: school_year_edit
             parameters:
                 id: "%"
-                tabName: "%"
         roll_group_edit:
             route: roll_group_edit
             parameters:
                 id: "%"
-                closeWindow: "%"
         department_edit:
             route: department_edit
             parameters:
                 id: "%"
-                tabName: "%"
         scale_edit:
             route: scale_edit
             parameters:
@@ -326,6 +323,11 @@ Timetable Admin:
             route: manage_courses
             parameters: {}
             transDomain: System
+    hidden:
+        course_edit:
+            route: edit_course
+            parameters:
+                id: "%"
 People Admin:
     data_updater:
         data_updater_settings:

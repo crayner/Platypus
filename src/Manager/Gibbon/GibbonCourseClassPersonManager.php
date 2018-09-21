@@ -11,78 +11,67 @@
  *
  * User: craig
  * Date: 21/09/2018
- * Time: 09:33
+ * Time: 12:16
  */
 namespace App\Manager\Gibbon;
 
-use App\Entity\CourseClass;
+use App\Entity\CourseClassPerson;
 
 /**
- * Class GibbonCourseClassManager
+ * Class GibbonCourseClassPersonManager
  * @package App\Manager\Gibbon
  */
-class GibbonCourseClassManager extends GibbonTransferManager
+class GibbonCourseClassPersonManager extends GibbonTransferManager
 {
     /**
      * @var array
      */
     protected $entityName = [
-        CourseClass::class,
+        CourseClassPerson::class,
     ];
 
     /**
      * @var string
      */
-    protected $gibbonName = 'gibbonCourseClass';
+    protected $gibbonName = 'gibbonCourseClassPerson';
 
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonCourseClassPerson';
+    protected $nextGibbonName = '';
 
     /**
      * @var array
      */
 
     protected $transferRules = [
-        'gibbonCourseID' => [
-            'field' => 'course_id',
-            'functions' => [
-                'integer' => '',
-            ],
-        ],
-        'gibbonCourseClassID' => [
+        'gibbonCourseClassPersonID' => [
             'field' => 'id',
             'functions' => [
                 'integer' => '',
             ],
         ],
-        'gibbonScaleIDTarget' => [
-            'field' => 'scale_id',
+        'gibbonCourseClassID' => [
+            'field' => 'class_id',
             'functions' => [
                 'integer' => '',
             ],
         ],
-        'name' => [
-            'field' => 'name',
+        'gibbonPersonID' => [
+            'field' => 'person_id',
             'functions' => [
-                'length' => 12,
+                'integer' => '',
             ],
         ],
-        'nameShort' => [
-            'field' => 'name_short',
+        'role' => [
+            'field' => 'role',
             'functions' => [
-                'length' => 5,
+                'length' => 20,
+                'safeString' => ['removeChars' => ['-']],
             ],
         ],
         'reportable' => [
             'field' => 'reportable',
-            'functions' => [
-                'boolean' => null,
-            ],
-        ],
-        'attendance' => [
-            'field' => 'attendance',
             'functions' => [
                 'boolean' => null,
             ],

@@ -1,0 +1,36 @@
+App\Entity\CourseClassPerson:
+    type: entity
+    table: course_class_person
+    repositoryClass: App\Repository\CourseClassPersonRepository
+    uniqueConstraints:
+        course_person:
+            columns:
+                - person_id
+                - class_id
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        role:
+            length: 20
+            nullable: false
+        reportable:
+            type: boolean
+            options:
+                default: '1'
+    manyToOne:
+        courseClass:
+            targetEntity: App\Entity\CourseClass
+            inversedBy: people
+            joinColumn:
+                name: class_id
+                referencedColumnName: id
+                nullable: false
+        person:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: person_id
+                referencedColumnName: id
+                nullable: false

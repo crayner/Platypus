@@ -54,3 +54,5 @@ App\Entity\Course:
         classes:
             targetEntity: App\Entity\CourseClass
             mappedBy: course
+            cascade: [ 'persist' ]
+            orderBy: { name: 'ASC' }
