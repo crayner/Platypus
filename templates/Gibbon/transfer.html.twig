@@ -16,7 +16,7 @@
             {% endfor %}
         </ul>
         {% if manager.nextGibbonName is same as ('') %}
-            <hr/>
+            <p><a href="{{ path('home') }}" title="{{ 'Home Page'|trans() }}">{{ 'Completed Transfer: Goto Home Page'|trans }}</a></p>
         {% else %}
             <p><a href="{{ path('app_gibbon_transfer', {section: (manager.nextGibbonName ~ 'Manager')}) }}" title="{{ 'gibbon.transfer.load'|trans({'%{next}': manager.nextGibbonName}) }}">{{ 'gibbon.transfer.load'|trans({'%{next}': manager.nextGibbonName}) }}</a></p>
         {% endif %}

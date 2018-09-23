@@ -6,7 +6,12 @@
 {% set alwaysFullPage = false %}
 {% if fullPage %}{% set alwaysFullPage = true %}{% endif %}
 {% set headerOff = headerOff|default(false) %}
+{% set menuOff = menuOff|default(false) %}
 {% set templateName = getThemeName() %}
+{% if menuOff %}
+    {% set fullPage = true %}
+    {% set alwaysFullPage = true %}
+{% endif %}
 
 {% block htmlContent %}
     <!DOCTYPE html >
@@ -29,7 +34,7 @@
     {% endif %}
 
 
-    {% if not(headerOff) %}
+    {% if not(headerOff) and not(menuOff) %}
         {% block menuContainer %}
             {% include 'Menu/main-menu.html.twig' %}
         {% endblock menuContainer %}

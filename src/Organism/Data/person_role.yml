@@ -1,0 +1,59 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_person_role
+-
+  id: 1
+  category: "staff"
+  name: "Administrator"
+  name_short: "Adm"
+  description: "Controls all aspects of the system"
+  role_type: "core"
+  can_login: 1
+  future_years_login: 1
+  past_years_login: 1
+  restriction: "admin only"
+-
+  id: 2
+  category: "staff"
+  name: "Teacher"
+  name_short: "Tcr"
+  description: "Regular, classroom teacher"
+  role_type: "core"
+  can_login: 1
+  future_years_login: 1
+  past_years_login: 1
+  restriction: "none"
+-
+  id: 3
+  category: "student"
+  name: "Student"
+  name_short: "Std"
+  description: "Person studying in the school"
+  role_type: "core"
+  can_login: 1
+  future_years_login: 1
+  past_years_login: 1
+  restriction: "none"
+-
+  id: 4
+  category: "parent"
+  name: "Parent"
+  name_short: "Prt"
+  description: "Parent or guardian of person studying in"
+  role_type: "core"
+  can_login: 1
+  future_years_login: 1
+  past_years_login: 1
+  restriction: "none"
+-
+  id: 6
+  category: "staff"
+  name: "Support Staff"
+  name_short: "SSt"
+  description: "Staff who support teaching and learning"
+  role_type: "core"
+  can_login: 1
+  future_years_login: 1
+  past_years_login: 1
+  restriction: "none"
+...

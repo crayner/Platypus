@@ -96,19 +96,8 @@ class CourseClassType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'entry_options' => [
-                        'query_builder' => function(PersonRepository $er) {
-                            return $er->createQueryBuilder('p')
-                                ->leftJoin('p.staff', 's')
-                                ->select('p,s')
-                                ->orderBy('p.surname', 'ASC')
-                                ->addOrderBy('p.firstName', 'ASC')
-                                ->leftJoin('p.primaryRole', 'r')
-                                ->where('r.category = :role')
-                                ->andWhere('p.status = :status')
-                                ->setParameter('status', 'full')
-                                ->setParameter('role', 'student')
-                                ;
-                        },
+                        'choices' => $options['choices']['students'],
+                        'choice_label' => 'fullName',
                     ],
                 ]
             )
@@ -119,19 +108,8 @@ class CourseClassType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'entry_options' => [
-                        'query_builder' => function(PersonRepository $er) {
-                            return $er->createQueryBuilder('p')
-                                ->leftJoin('p.staff', 's')
-                                ->select('p,s')
-                                ->orderBy('p.surname', 'ASC')
-                                ->addOrderBy('p.firstName', 'ASC')
-                                ->leftJoin('p.primaryRole', 'r')
-                                ->where('r.category != :role')
-                                ->andWhere('p.status = :status')
-                                ->setParameter('status', 'full')
-                                ->setParameter('role', 'student')
-                                ;
-                        },
+                        'choices' => $options['choices']['tutors'],
+                        'choice_label' => 'fullName',
                     ],
                 ]
             )
@@ -142,14 +120,8 @@ class CourseClassType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'entry_options' => [
-                        'query_builder' => function(PersonRepository $er) {
-                            return $er->createQueryBuilder('p')
-                                ->leftJoin('p.staff', 's')
-                                ->select('p,s')
-                                ->orderBy('p.surname', 'ASC')
-                                ->addOrderBy('p.firstName', 'ASC')
-                                ;
-                        },
+                        'choices' => $options['choices']['former'],
+                        'choice_label' => 'fullName',
                     ],
                 ]
             )
@@ -157,14 +129,8 @@ class CourseClassType extends AbstractType
                 [
                     'entry_type' => ClassParticipantType::class,
                     'entry_options' => [
-                        'query_builder' => function(PersonRepository $er) {
-                            return $er->createQueryBuilder('p')
-                                ->leftJoin('p.staff', 's')
-                                ->select('p,s')
-                                ->orderBy('p.surname', 'ASC')
-                                ->addOrderBy('p.firstName', 'ASC')
-                                ;
-                        },
+                        'choices' => [],
+                        'choice_label' => 'fullName',
                     ],
                 ]
             )
@@ -188,7 +154,7 @@ class CourseClassType extends AbstractType
         );
         $resolver->setRequired(
             [
-                'people_choices',
+                'choices',
             ]
         );
     }

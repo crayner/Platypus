@@ -17,7 +17,11 @@ App\Entity\Person:
             cascade: [ 'persist' ]
         staff:
             targetEntity: App\Entity\Staff
-            mappedBy: person
+            inversedBy: person
+            joinColumn:
+                name: staff_id
+                referencedColumnName: id
+                nullable: true
     fields:
         surname:
             length: 30

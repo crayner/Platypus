@@ -22,7 +22,6 @@ App\Entity\Setting:
         displayName:
             type: string
             length: 64
-            unique: true
             column: display_name
         description:
             type: text

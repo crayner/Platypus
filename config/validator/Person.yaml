@@ -1,7 +1,9 @@
 App\Entity\Person:
     constraints:
         - Hillrange\Form\Validator\UniqueOrBlank:
-            fields: ['student_identifier']
+              fields: ['student_identifier']
+        - Hillrange\Form\Validator\UniqueOrBlank:
+              fields: ['staff_id']
     properties:
         personalBackground:
             - App\Validator\BackgroundImage: ~
@@ -51,3 +53,5 @@ App\Entity\Person:
                   maxRatio: 1.414
         website:
             - Url: ~
+        staff:
+            - Valid: ~

@@ -40,9 +40,4 @@ App\Entity\Staff:
     oneToOne:
         person:
             targetEntity: App\Entity\Person
-            inversedBy: staff
-            joinColumn:
-                name: person_id
-                referencedColumnName: id
-                nullable: false
-                unique: true
+            mappedBy: staff

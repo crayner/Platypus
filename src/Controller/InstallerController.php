@@ -128,7 +128,7 @@ class InstallerController extends Controller
     {
         $installationManager->setStep(2);
 
-        if (! $installationManager->hasDatabase(false)) {
+        if (!$installationManager->hasDatabase(false)) {
             $application = new Application($kernel);
             $application->setAutoExit(false);
 
@@ -145,7 +145,11 @@ class InstallerController extends Controller
             $application->run($input, $output);
 
             // return the output, don't use if you used NullOutput()
-            $content = $output->fetch();
+            $output->fetch();
+
+            $installationManager->loadRequiredData();
+            return $this->redirectToRoute('installer_system_user');
+
         }
         if ($installationManager->hasDatabase()) {
             if ($appEnv !== 'ignore') {
@@ -153,22 +157,38 @@ class InstallerController extends Controller
                 $content = str_replace(['APP_ENV=dev', 'APP_ENV=prod', 'APP_ENV=test'], "APP_ENV=" . $appEnv, $content);
                 file_put_contents(__DIR__ . '/../../.env', $content);
             }
-            if ($installationManager->setAction(true)->buildDatabase($entityManager))
+            if ($installationManager->setAction(true)->buildDatabase($entityManager)) {
                 $settingManager->setAction(true)->buildSystemSettings();
-
+                $installationManager->loadRequiredData();
+            }
             $user = $entityManager->getRepository(User::class)->find(1);
+
             if ($user instanceof UserInterface)
                 return $this->redirectToRoute('installer_complete');
-
-
         }
+        return $this->redirectToRoute('installer_system_user');
+    }
+
+    /**
+     * createSystemUser
+     *
+     * @param InstallationManager $installationManager
+     * @param Request $request
+     * @param SettingManager $settingManager
+     * @return RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/installer/system/user/", name="installer_system_user")
+     */
+    public function createSystemUser(InstallationManager $installationManager, Request $request, SettingManager $settingManager)
+    {
+        $installationManager->setStep(2);
+
         $form = $this->createForm(InstallUserType::class);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $installationManager->writeSystemUser($request, $entityManager, $settingManager);
+            $installationManager->writeSystemUser($request, $settingManager->getEntityManager(), $settingManager);
             return $this->redirectToRoute('installer_complete');
         }
 

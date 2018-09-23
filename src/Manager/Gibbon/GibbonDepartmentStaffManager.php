@@ -102,11 +102,11 @@ class GibbonDepartmentStaffManager extends GibbonTransferManager
      * postLoad
      *
      * @param string $entityName
-     * @param ObjectManager $manager
+     * @param ObjectManager $this->getObjectManager()
      */
-    public function postLoad(string $entityName, ObjectManager $manager)
+    public function postLoad(string $entityName)
     {
-        $result = $manager->getRepository(DepartmentStaff::class)->createQueryBuilder('x')
+        $result = $this->getObjectManager()->getRepository(DepartmentStaff::class)->createQueryBuilder('x')
             ->leftJoin('x.member', 'p')
             ->leftJoin('x.department', 'd')
             ->where('p.id IS NULL')
@@ -115,9 +115,9 @@ class GibbonDepartmentStaffManager extends GibbonTransferManager
             ->getQuery()
             ->getArrayResult()
         ;
-        $meta = $manager->getClassMetadata($entityName);
+        $meta = $this->getObjectManager()->getClassMetadata($entityName);
 
         foreach($result as $id)
-            $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
+            $this->getObjectManager()->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
     }
 }

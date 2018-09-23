@@ -2,7 +2,6 @@
 namespace App\Form;
 
 use App\Manager\SettingManager;
-use App\Validator\GoogleOAuth;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
 use App\Organism\User;
@@ -168,25 +167,26 @@ class InstallUserType extends AbstractType
         ;
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * configureOptions
+     *
+     * @param OptionsResolver $resolver
+     */
 	public function configureOptions(OptionsResolver $resolver)
 	{
 		$resolver->setDefaults(
 			[
 				'translation_domain' => 'System',
 				'data_class'         => User::class,
-                'constraints'   => [
-                    new GoogleOAuth(),
-                ],
 			]
 		);
 	}
 
-	/**
-	 * {@inheritdoc}
-	 */
+    /**
+     * getBlockPrefix
+     *
+     * @return null|string
+     */
 	public function getBlockPrefix()
 	{
 		return 'install_user';

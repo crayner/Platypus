@@ -110,8 +110,7 @@ class GibbonTransferManager implements GibbonTransferInterface
     {
         $count = 0;
         $metaData = $this->getObjectManager()->getClassMetadata($entityName);
-        $this->objectManager->getConnection()->beginTransaction();
-        $this->objectManager->getConnection()->query('SET FOREIGN_KEY_CHECKS = 0');
+        $this->beginTransaction(true);
 
         foreach ($records as $item) {
             try {
@@ -137,8 +136,7 @@ class GibbonTransferManager implements GibbonTransferInterface
         else
             $this->getLogger()->addWarning('Actioned ' . $count . ' records for ' . $entityName . ' of a maximum ' . count($records) . ' possible.');
 
-        $this->objectManager->getConnection()->query('SET FOREIGN_KEY_CHECKS = 1');
-        $this->objectManager->getConnection()->commit();
+        $this->commit();
     }
 
     /**
@@ -174,4 +172,45 @@ class GibbonTransferManager implements GibbonTransferInterface
         return $this->nextGibbonName;
     }
 
+    /**
+     * setForeignKeyChecksOff
+     *
+     */
+    public function setForeignKeyChecksOff(): void
+    {
+        $this->getObjectManager()->getConnection()->query('SET FOREIGN_KEY_CHECKS = 0');
+    }
+
+    /**
+     * setForeignKeyChecksOn
+     *
+     */
+    public function setForeignKeyChecksOn(): void
+    {
+        $this->getObjectManager()->getConnection()->query('SET FOREIGN_KEY_CHECKS = 1');
+    }
+
+    /**
+     * beginTransaction
+     *
+     * @param bool $foreignKeyCheckOff
+     */
+    public function beginTransaction(bool $foreignKeyCheckOff = false): void
+    {
+        $this->getObjectManager()->getConnection()->beginTransaction();
+        if ($foreignKeyCheckOff)
+            $this->setForeignKeyChecksOff();
+    }
+
+    /**
+     * commit
+     *
+     * @param bool $foreignKeyCheckOn
+     */
+    public function commit(bool $foreignKeyCheckOn = true): void
+    {
+        $this->getObjectManager()->getConnection()->commit();
+        if ($foreignKeyCheckOn)
+            $this->setForeignKeyChecksOn();
+    }
 }

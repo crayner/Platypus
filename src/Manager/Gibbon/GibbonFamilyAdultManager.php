@@ -111,21 +111,22 @@ class GibbonFamilyAdultManager extends GibbonTransferManager
      * @param array $newData
      * @return array
      */
-    public function postRecord(string $entityName, array $newData): array
+    public function postRecord(string $entityName, array $newData, array $records): array
     {
         $newData['member_type'] = 'adult';
-        return $newData;
+        $records[] = $newData;
+        return $records;
     }
 
     /**
      * postLoad
      *
      * @param string $entityName
-     * @param ObjectManager $manager
+     * @param ObjectManager $this->getObjectManager()
      */
-    public function postLoad(string $entityName, ObjectManager $manager)
+    public function postLoad(string $entityName)
     {
-        $result = $manager->getRepository(FamilyMemberAdult::class)->createQueryBuilder('x')
+        $result = $this->getObjectManager()->getRepository(FamilyMemberAdult::class)->createQueryBuilder('x')
             ->leftJoin('x.person', 'p')
             ->leftJoin('x.family', 'f')
             ->where('p.id IS NULL')
@@ -134,9 +135,9 @@ class GibbonFamilyAdultManager extends GibbonTransferManager
             ->getQuery()
             ->getArrayResult()
         ;
-        $meta = $manager->getClassMetadata($entityName);
+        $meta = $this->getObjectManager()->getClassMetadata($entityName);
 
         foreach($result as $id)
-            $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
+            $this->getObjectManager()->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
     }
 }

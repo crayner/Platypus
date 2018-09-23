@@ -108,9 +108,12 @@ class GibbonSchoolYearSpecialDayManager extends GibbonTransferManager
      *
      * @param string $entityName
      * @param array $newData
+     * @param array $records
+     * @param ObjectManager $manager
      * @return array
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function postRecord(string $entityName, array $newData, ObjectManager $manager): array
+    public function postRecord(string $entityName, array $newData, array $records, ObjectManager $manager): array
     {
         // need to add School Year indicator.
         $schoolYear = $manager->getRepository(SchoolYear::class)->createQueryBuilder('y')
@@ -126,6 +129,8 @@ class GibbonSchoolYearSpecialDayManager extends GibbonTransferManager
         else
             $newData = [];
 
-        return $newData;
+        $records[] = $newData;
+
+        return $records;
     }
 }

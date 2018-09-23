@@ -469,38 +469,56 @@ class SettingManager implements ContainerAwareInterface
         $resolver->setRequired(
             [
                 'name',
-                'displayName',
-                'settingType',
+                'display_name',
+                'setting_type',
                 'description',
             ]
         );
         $resolver->setDefaults(
             [
                 'value' => null,
-                'defaultValue' => null,
+                'default_value' => null,
                 'role' => null,
                 'choice' => null,
                 'validators' => null,
-                'translateChoice' => null,
+                'translate_choice' => null,
+                'id' => null,
             ]
         );
 
         $create = $this->getRequest()->request->get('create');
         $data = $create ? Yaml::parse($create['setting']) : $data;
-        $count = 0;
-        foreach ($data as $name => $values) {
-            $values['name'] = strtolower($name);
-            dump($data);
-            $values = $resolver->resolve($values);
-            $setting = $this->getSettingCache();
+        $this->settings = new ArrayCollection();
 
-            if ($setting->importSetting($values, $this->getEntityManager())) {
-                $this->addSetting($setting, $name);
-                $count++;
+
+        $settings = $this->getEntityManager()->getRepository(Setting::class)->createQueryBuilder('s','s.name')
+            ->select('s.name,s.id')
+            ->getQuery()
+            ->getArrayResult();
+
+        $insert = 0;
+        $update = 0;
+        $conn = $this->getEntityManager()->getConnection();
+        $tableName = $this->getEntityManager()->getClassMetadata(Setting::class)->table['name'];
+        $this->beginTransaction();
+        foreach ($data as $values) {
+            $values = $resolver->resolve($values);
+            $name = $values['name'];
+            if (isset($settings[$name]))
+            {
+                $w['id'] = $settings[$name]['id'];
+                $values['id']= $w['id'];
+                $conn->update($tableName, $values, $w);
+                $update++;
+            } else {
+                $conn->insert($tableName, $values);
+                $insert++;
             }
         }
-        $this->getMessageManager()->add('success', 'setting.create.success', ['transChoice' => $count], 'System');
-        return $count;
+        $this->commit();
+        $this->getMessageManager()->add('success', '{0}No settings were installed.|{1}A setting was added to the database.|]1,Inf[%count% settings were installed successfully.', ['transChoice' => $insert], 'System');
+        $this->getMessageManager()->add('success', '{0}No settings were altered.|{1}A setting was altered in the database.|]1,Inf[%count% settings were altered successfully.', ['transChoice' => $update], 'System');
+        return $insert + $update;
     }
 
     /**
@@ -774,32 +792,6 @@ class SettingManager implements ContainerAwareInterface
             $this->getSession()->set('settings', $this->settings);
 
         return $this->flushToSession();
-    }
-
-    /**
-     * @param Request $request
-     * @param FormInterface $form
-     */
-    public function handleImportRequest(FormInterface $form)
-    {
-        $form->handleRequest($this->getRequest());
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form->get('import_file')->getData();
-            try {
-                $data = Yaml::parse(file_get_contents($file->getPathName()));
-            } catch (\Exception $e) {
-                $this->getMessageManager()->add('danger', 'setting.import.import.error', ['%{message}' => $e->getMessage()], 'Setting');
-                return;
-            }
-
-            if ($data['name'] !== $form->get('import_file')->getData()->getClientOriginalName()) {
-                $this->getMessageManager()->add('danger', 'setting.import.name.error', ['%{name}' => $data['name']], 'Setting');
-                return;
-            }
-
-            $this->loadSettings($data['settings'], $data['name']);
-        }
     }
 
     /**
@@ -1097,12 +1089,13 @@ class SettingManager implements ContainerAwareInterface
     {
         $version = [];
         $data = [];
-        $version['settingType'] = 'system';
-        $version['displayName'] = 'System Version';
+        $version['setting_type'] = 'system';
+        $version['display_name'] = 'System Version';
         $version['description'] = 'The version of Busybee currently configured on your system.';
         $version['role'] = 'ROLE_SYSTEM_ADMIN';
         $version['value'] = $current;
-        $version['defaultValue'] = '0.0.00';
+        $version['name'] = 'version';
+        $version['default_value'] = '0.0.00';
         $data['version'] = $version;
         $this->createSettings($data);
     }
@@ -1138,8 +1131,6 @@ class SettingManager implements ContainerAwareInterface
     {
         $setting = $this->getSettingCache();
         $sss = $setting->findOneByName($name, $this->getEntityManager());
-if ($sss->getSetting() === null)
-    dump([$name, $sss]);
 
         $this->addSetting($sss);
 
@@ -1258,4 +1249,47 @@ if ($sss->getSetting() === null)
             unlink($this->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $fileName);
 
     }
+
+    /**
+     * setForeignKeyChecksOff
+     *
+     */
+    public function setForeignKeyChecksOff(): void
+    {
+        $this->getEntityManager()->getConnection()->query('SET FOREIGN_KEY_CHECKS = 0');
+    }
+
+    /**
+     * setForeignKeyChecksOn
+     *
+     */
+    public function setForeignKeyChecksOn(): void
+    {
+        $this->getEntityManager()->getConnection()->query('SET FOREIGN_KEY_CHECKS = 1');
+    }
+
+    /**
+     * beginTransaction
+     *
+     * @param bool $foreignKeyCheckOff
+     */
+    public function beginTransaction(bool $foreignKeyCheckOff = false): void
+    {
+        $this->getEntityManager()->getConnection()->beginTransaction();
+        if ($foreignKeyCheckOff)
+            $this->setForeignKeyChecksOff();
+    }
+
+    /**
+     * commit
+     *
+     * @param bool $foreignKeyCheckOn
+     */
+    public function commit(bool $foreignKeyCheckOn = true): void
+    {
+        $this->getEntityManager()->getConnection()->commit();
+        if ($foreignKeyCheckOn)
+            $this->setForeignKeyChecksOn();
+    }
+
 }

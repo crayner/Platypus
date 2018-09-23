@@ -1,0 +1,290 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_action
+-
+  id: 1
+  person_role_id: 1
+  name: "Manage System Settings"
+  group_by: "system_admin"
+  route: "manage_system_settings"
+  route_params: "[]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 2
+  person_role_id: 1
+  name: "Manage People"
+  group_by: "personnel_admin"
+  route: "manage_people"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 3
+  person_role_id: 1
+  name: "Manage Permissions"
+  group_by: "personnel_admin"
+  route: "manage_permissions"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 4
+  person_role_id: 1
+  name: "Third Party Settings"
+  group_by: "system_admin"
+  route: "third_party_settings"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 5
+  person_role_id: 1
+  name: "String Replacement"
+  group_by: "system_admin"
+  route: "manage_string_replacement"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 6
+  person_role_id: 1
+  name: "Notification Settings"
+  group_by: "system_admin"
+  route: "manage_notification_events"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 7
+  person_role_id: 1
+  name: "System Check"
+  group_by: "system_admin"
+  route: "system_check"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 8
+  person_role_id: 1
+  name: "Manage Themes"
+  group_by: "system_admin"
+  route: "manage_themes"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 9
+  person_role_id: 1
+  name: "Sound Alarm"
+  group_by: "system_admin"
+  route: "manage_alarm"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 10
+  person_role_id: 1
+  name: "Manage Personnel Settings"
+  group_by: "personnel_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Personnel\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 11
+  person_role_id: 1
+  name: "Manage Personnel Custom Fields"
+  group_by: "personnel_admin"
+  route: "manage_custom_fields"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 12
+  person_role_id: 1
+  name: "Manage Roles"
+  group_by: "personnel_admin"
+  route: "manage_roles"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 13
+  person_role_id: 1
+  name: "Manage Families"
+  group_by: "personnel_admin"
+  route: "manage_families"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 14
+  person_role_id: 1
+  name: "Manage School Years"
+  group_by: "school_admin"
+  route: "school_year_manage"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 15
+  person_role_id: 1
+  name: "Manage Days of the Week"
+  group_by: "school_admin"
+  route: "days_of_week_manage"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 16
+  person_role_id: 1
+  name: "Manage Resource Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Resources\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 17
+  person_role_id: 1
+  name: "Manage Planner Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Planner\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 18
+  person_role_id: 1
+  name: "Manage Library Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Library\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 19
+  person_role_id: 1
+  name: "Manage Activity Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Activities\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 20
+  person_role_id: 1
+  name: "Manage Student Settings"
+  group_by: "school_admin"
+  route: "manage_student_settings"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 21
+  person_role_id: 1
+  name: "Manage IN Settings"
+  group_by: "school_admin"
+  route: "manage_individual_need_settings"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 22
+  person_role_id: 1
+  name: "Manage Behaviour Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Behaviour\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 23
+  person_role_id: 1
+  name: "Manage Attendance Settings"
+  group_by: "school_admin"
+  route: "manage_attendance_settings"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 24
+  person_role_id: 1
+  name: "Manage Alert Levels"
+  group_by: "school_admin"
+  route: "manage_alert_levels"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 25
+  person_role_id: 1
+  name: "Manage Messenger Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Messenger\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 26
+  person_role_id: 1
+  name: "Manage Finance Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Finance\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 27
+  person_role_id: 1
+  name: "Manage File Extensions"
+  group_by: "school_admin"
+  route: "manage_file_extensions"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 28
+  person_role_id: 1
+  name: "Manage Facility Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Facility\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 29
+  person_role_id: 1
+  name: "Manage Facilities"
+  group_by: "school_admin"
+  route: "manage_facilities"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 30
+  person_role_id: 1
+  name: "Manage Dashboard Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Dashboard\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 31
+  person_role_id: 1
+  name: "Manage Year Groups"
+  group_by: "school_admin"
+  route: "year_groups_manage"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 32
+  person_role_id: 1
+  name: "Manage Roll Groups"
+  group_by: "school_admin"
+  route: "manage_roll_groups"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 33
+  person_role_id: 1
+  name: "Manage Houses"
+  group_by: "school_admin"
+  route: "houses_edit"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 34
+  person_role_id: 1
+  name: "Manage Departments"
+  group_by: "school_admin"
+  route: "manage_departments"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 35
+  person_role_id: 1
+  name: "Tracking Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Tracking\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 36
+  person_role_id: 1
+  name: "Markbook Settings"
+  group_by: "school_admin"
+  route: "manage_settings"
+  route_params: "[{\"name\":\"name\",\"value\":\"Markbook\"}]"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 37
+  person_role_id: 1
+  name: "Manage Grade Scales"
+  group_by: "school_admin"
+  route: "manage_scales"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 38
+  person_role_id: 1
+  name: "Manage External Assessments"
+  group_by: "school_admin"
+  route: "manage_external_assessments"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 39
+  person_role_id: 1
+  name: "Formal Assessment Settings"
+  group_by: "school_admin"
+  route: "manage_formal_assessments"
+  allowed_categories: "[\"staff\"]"
+...

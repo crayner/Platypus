@@ -92,11 +92,11 @@ class GibbonStudentEnrolmentManager extends GibbonTransferManager
      * postLoad
      *
      * @param string $entityName
-     * @param ObjectManager $manager
+     * @param ObjectManager $this->getObjectManager()
      */
-    public function postLoad(string $entityName, ObjectManager $manager)
+    public function postLoad(string $entityName)
     {
-        $result = $manager->getRepository(StudentEnrolment::class)->createQueryBuilder('x')
+        $result = $this->getObjectManager()->getRepository(StudentEnrolment::class)->createQueryBuilder('x')
             ->leftJoin('x.student', 's')
             ->leftJoin('x.rollGroup', 'r')
             ->leftJoin('x.yearGroup', 'y')
@@ -107,10 +107,10 @@ class GibbonStudentEnrolmentManager extends GibbonTransferManager
             ->getQuery()
             ->getArrayResult()
         ;
-        $meta = $manager->getClassMetadata($entityName);
+        $meta = $this->getObjectManager()->getClassMetadata($entityName);
 
         foreach($result as $id)
-            $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
+            $this->getObjectManager()->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
 
     }
 }

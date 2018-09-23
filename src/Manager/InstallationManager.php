@@ -15,6 +15,8 @@
  */
 namespace App\Manager;
 
+use App\Entity\Action;
+use App\Entity\PersonRole;
 use App\Organism\Database;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\ConnectionException;
@@ -24,6 +26,7 @@ use Hillrange\Security\Entity\User;
 use Hillrange\Security\Util\ParameterInjector;
 use Hillrange\Security\Util\PasswordManager;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Yaml\Exception\DumpException;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -116,7 +119,7 @@ class InstallationManager
             $this->connection->connect();
         } catch (ConnectionException $e) {
             $this->addStatus('danger', 'installer.connection.error', ['%{message}' => $e->getMessage()]);
-
+            $this->removeInstallationCheck();
             $this->sql->setConnected(false);
             $this->exception = $e;
             return $this->sql->isConnected();
@@ -279,6 +282,7 @@ class InstallationManager
      */
     public function setCanInstall(): InstallationManager
     {
+        $this->removeInstallationCheck();
         if (is_writable($this->getProjectDir() . '/config/packages/platypus.yaml')) {
             $this->addStatus('success', 'installer.file.permission.success');
             $canInstall = true;
@@ -421,13 +425,25 @@ class InstallationManager
         try {
             $connection->connect();
         } catch (ConnectionException $e) {
+            $this->removeInstallationCheck();
             if ($throw)
                 $this->addStatus('danger', 'installer.database.create.fail', ['%{name}' => $this->sql->getName(), '%{message}' => $e->getMessage()]);
+
         }
         if ($connection->isConnected() && $this->sql->getDriver() === 'pdo_mysql')
             $connection->executeQuery("ALTER DATABASE `" . $this->sql->getName() . "` CHARACTER SET `utf8mb4` COLLATE `utf8mb4_unicode_ci`");
 
         return $connection->isConnected();
+    }
+
+    /**
+     * removeInstallationCheck
+     *
+     */
+    private function removeInstallationCheck(): void
+    {
+        if ($this->getSettingManager()->getSession()->has('installation_check'))
+            $this->getSettingManager()->getSession()->remove('installation_check');
     }
 
     /**
@@ -546,8 +562,6 @@ class InstallationManager
         $user->setEnabled(true);
         $user->setLastLogin(new \DateTime('now'));
         $user->setDirectroles(['ROLE_SYSTEM_ADMIN']);
-        $password = $this->passwordManager->encodePassword($user, $data['_password']);
-        $user->setPassword($password);
         $user->setCredentialsExpireAt(null);
         $user->setCredentialsExpired(false);
         $user->setSuperAdmin(true);
@@ -555,20 +569,9 @@ class InstallationManager
 
         $entityManager->persist($user);
         $entityManager->flush();
-/*        
-        $person = new Person();
-        
-        $person->setHonorific($data['title']);
-        $person->setUser($user);
-        $person->setEmail($data['_email']);
-        $person->setSurname($data['surname']);
-        $person->setFirstName($data['firstName']);
-        $person->setPreferredName($data['firstName']);
-        $person->setOfficialName($data['firstName'] . ' ' . $data['surname']);
-        $person->setIdentifier('');
-        $entityManager->persist($person);
-        $entityManager->flush();
-*/
+
+        $this->passwordManager->saveNewPassword($user, $data['_password']);
+
         $settingManager->setInstallMode(true);
 
         $settingManager->set('currency', $data['currency']);
@@ -639,10 +642,62 @@ class InstallationManager
     }
 
     /**
+     * getSettingManager
+     *
      * @return SettingManager
      */
     public function getSettingManager(): SettingManager
     {
         return $this->settingManager;
+    }
+
+    /**
+     * isSystemUserExists
+     *
+     * @return bool
+     */
+    public function isSystemUserExists(): bool
+    {
+        $user = $this->getEntityManager()->getRepository(User::class)->find(1);
+        if (is_null($user))
+            return false;
+
+        if ($user instanceof User && $user->getId() === 1)
+            return true;
+        return false;
+    }
+
+    /**
+     * loadRequiredData
+     *
+     */
+    public function loadRequiredData(): void
+    {
+        $dataTables = [
+            PersonRole::class,
+            Action::class,
+        ];
+
+        $prefix = $this->getSettingManager()->getParameter('db_prefix');
+
+        $this->getSettingManager()->beginTransaction(true);
+        $conn = $this->getEntityManager()->getConnection();
+        foreach($dataTables as $table)
+        {
+            $tableName = $this->getEntityManager()->getClassMetadata($table)->table['name'];
+            $dataName = str_replace($prefix, '', $tableName);
+            if (realpath(__DIR__. '/../Organism/Data/'.$dataName.'.yml'))
+            {
+                $data = Yaml::parse(file_get_contents(realpath(__DIR__. '/../Organism/Data/'.$dataName.'.yml')));
+                $dbPlatform = $conn->getDatabasePlatform();
+                $sql = $dbPlatform->getTruncateTableSql($tableName);
+                $conn->executeUpdate($sql);
+                foreach($data as $item)
+                    $conn->insert($tableName, $item);
+            } else {
+                trigger_error(sprintf('No data is available for the %s table in %s/%s.', $table,  realpath(__DIR__. '/../Organism/Data/'), $dataName . '.yml'), E_USER_ERROR);
+            }
+        }
+        $this->getSettingManager()->commit();
     }
 }

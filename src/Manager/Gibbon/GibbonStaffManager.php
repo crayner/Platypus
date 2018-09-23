@@ -13,10 +13,9 @@
  * Date: 18/09/2018
  * Time: 08:12
  */
-
 namespace App\Manager\Gibbon;
 
-
+use App\Entity\Person;
 use App\Entity\Staff;
 
 class GibbonStaffManager extends GibbonTransferManager
@@ -41,7 +40,10 @@ class GibbonStaffManager extends GibbonTransferManager
     /**
      * @var bool
      */
-    public $skipTruncate = [];
+    public $skipTruncate = [
+        Person::class => true,
+        'person' => true,
+    ];
 
     /**
      * @var array
@@ -54,9 +56,17 @@ class GibbonStaffManager extends GibbonTransferManager
             ],
         ],
         'gibbonPersonID' => [
-            'field' => 'person_id',
+            'field' => '',
             'functions' => [
-                'integer' => '',
+                'integer' => null,
+            ],
+            // This one is flipped, so be careful...
+            'joinTable' => [
+                'name' => 'person',
+                'join' => 'staff_id',
+                'inverse' => 'id',
+                'call' => ['function' =>'getStaffID', 'options' => ''],
+                'update' => 'id',
             ],
         ],
         'type' => [
@@ -109,4 +119,16 @@ class GibbonStaffManager extends GibbonTransferManager
             ],
         ],
     ];
+
+    /**
+     * getStaffID
+     *
+     * @param $value
+     * @param $options
+     * @return array
+     */
+    public function getStaffID($value, $options)
+    {
+        return [$value];
+    }
 }

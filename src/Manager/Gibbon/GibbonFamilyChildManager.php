@@ -86,7 +86,8 @@ class GibbonFamilyChildManager extends GibbonTransferManager
     public function postRecord(string $entityName, array $newData): array
     {
         $newData['member_type'] = 'child';
-        return $newData;
+        $records[] = $newData;
+        return $records;
     }
 
     /**
@@ -95,9 +96,9 @@ class GibbonFamilyChildManager extends GibbonTransferManager
      * @param string $entityName
      * @param ObjectManager $manager
      */
-    public function postLoad(string $entityName, ObjectManager $manager)
+    public function postLoad(string $entityName)
     {
-        $result = $manager->getRepository(FamilyMemberChild::class)->createQueryBuilder('x')
+        $result = $this->getObjectManager()->getRepository(FamilyMemberChild::class)->createQueryBuilder('x')
             ->leftJoin('x.person', 'p')
             ->leftJoin('x.family', 'f')
             ->where('p.id IS NULL')
@@ -106,12 +107,12 @@ class GibbonFamilyChildManager extends GibbonTransferManager
             ->getQuery()
             ->getArrayResult()
         ;
-        $meta = $manager->getClassMetadata($entityName);
-
+        $meta = $this->getObjectManager()->getClassMetadata($entityName);
+        $this->beginTransaction(true);
         foreach($result as $id)
-            $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
+            $this->getObjectManager()->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
 
-        $result = $manager->getRepository(Family::class)->createQueryBuilder('f')
+        $result = $this->getObjectManager()->getRepository(Family::class)->createQueryBuilder('f')
             ->leftJoin('f.childMembers', 'c')
             ->where('c.id IS NULL')
             ->leftJoin('f.adultMembers', 'a')
@@ -121,8 +122,9 @@ class GibbonFamilyChildManager extends GibbonTransferManager
             ->getArrayResult()
         ;
 
-        $meta = $manager->getClassMetadata(Family::class);
+        $meta = $this->getObjectManager()->getClassMetadata(Family::class);
         foreach($result as $id)
-            $manager->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
+            $this->getObjectManager()->getConnection()->delete($meta->table['name'], ['id' => $id['id']]);
+        $this->commit();
     }
 }

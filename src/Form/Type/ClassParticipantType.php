@@ -18,11 +18,10 @@ namespace App\Form\Type;
 use App\Entity\CourseClass;
 use App\Entity\CourseClassPerson;
 use App\Entity\Person;
-use Doctrine\ORM\EntityRepository;
-use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\ToggleType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -55,9 +54,9 @@ class ClassParticipantType extends AbstractType
             ->add('person', EntityType::class,
                 [
                     'class' => Person::class,
-                    'choice_label' => 'fullName',
                     'placeholder' => 'Please select...',
-                    'query_builder' => $options['query_builder'],
+                    'choice_label' => $options['choice_label'],
+                    'choices' => $options['choices'],
                 ]
             )
         ;
@@ -77,7 +76,8 @@ class ClassParticipantType extends AbstractType
     {
         $resolver->setRequired(
             [
-                'query_builder',
+                'choices',
+                'choice_label',
             ]
         );
         $resolver->setDefaults(

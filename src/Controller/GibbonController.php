@@ -43,6 +43,7 @@ class GibbonController extends Controller
         return $this->render('Gibbon/transfer.html.twig',
             [
                 'manager' => $manager,
+                'menuOff' => true,
             ]
         );
     }

@@ -79,7 +79,7 @@ class GibbonManager
                 foreach ($this->datum as $field => $value)
                     $newData = $this->generateNewFieldData($entityName, $newData, $field, $value);
 
-                $records = $this->postRecord($entityName, $newData, $records);
+                $records = $this->postRecord($entityName, $newData, $records, $this->getObjectManager());
             }
 
             $this->writeEntityRecords($entityName, $records);
@@ -99,12 +99,23 @@ class GibbonManager
         {
             if (! empty($data)) {
                 $this->getLogger()->addInfo(sprintf('The join table %s is being actioned.', $this->dbPrefix.$name));
-                $this->truncateTable($this->dbPrefix.$name);
+
+                if (! $this->skipTruncate($name))
+                    $this->truncateTable($this->dbPrefix.$name);
+
                 $this->objectManager->getConnection()->beginTransaction();
                 $count = 0;
                 foreach($data as $item) {
                     try {
-                        $this->getObjectManager()->getConnection()->insert($this->dbPrefix.$name, $item);
+                        if (isset($item['update']) && $item['update']) {
+                            $update[$item['update']] = $item[$item['update']];
+                            unset($item[$item['update']], $item['update']);
+                            $this->getObjectManager()->getConnection()->update($this->dbPrefix . $name, $item, $update);
+                        } else {
+                            if (isset($item['update']))
+                                unset($item['update']);
+                            $this->getObjectManager()->getConnection()->insert($this->dbPrefix . $name, $item);
+                        }
                     } catch (ForeignKeyConstraintViolationException $e) {
                         $this->getLogger()->addError('The table row in ' . $this->dbPrefix.$name .' encounted a foreign key error: '.$e->getMessage(), $item);
                         $count--;
@@ -550,6 +561,12 @@ class GibbonManager
                 'name'
             ]
         );
+        $resolver->setDefaults(
+            [
+                // default is to install ...
+                'update' => false,
+            ]
+        );
 
         $joinTable = $resolver->resolve($joinTable);
 
@@ -557,18 +574,22 @@ class GibbonManager
             trigger_error(sprintf('Call options must have a function on the join Table %s.', $joinTable['name']));
         $function = $joinTable['call']['function'];
 
+
         /*
          * The call function should return an array of inverse values.
          * */
-        $inverse = $this->getTransferManager()->$function($value, $joinTable['call']['options'] ?: []);
+        $inverse = $this->getTransferManager()->$function($value, $joinTable['call']['options'] ?: [], $newData);
         $links = [];
         foreach($inverse as $value)
         {
             $result = [];
             $result[$joinTable['inverse']] = $value;
             $result[$joinTable['join']] = $newData['id'];
+            if ($joinTable['update'] !== false)
+                $result['update'] = $joinTable['update'];
             $links[] = $result;
         }
+
         $this->joinTables[$joinTable['name']] = array_merge(empty($this->joinTables[$joinTable['name']]) ? [] : $this->joinTables[$joinTable['name']], $links);
     }
 
@@ -698,7 +719,7 @@ class GibbonManager
     {
         if (! method_exists($this->getTransferManager(), 'postLoad'))
             return ;
-        $this->getTransferManager()->postLoad($entityName, $this->getObjectManager());
+        $this->getTransferManager()->postLoad($entityName);
     }
 
     /**
@@ -760,6 +781,7 @@ class GibbonManager
 
         if ($skipTruncate[$entityName])
             return true;
+
         return false;
     }
 }

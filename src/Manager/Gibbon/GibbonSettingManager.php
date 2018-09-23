@@ -155,7 +155,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'integer',
         ],
         'system.country' => [
-            'settingType' => 'replace',
+            'settingType' => 'string',
             'replaceParameter' => [
                 'file' => 'platypus.yaml',
                 'setting' => [
@@ -319,7 +319,7 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'system.password_policy_alpha' => [
-            'settingType' => 'replace',
+            'settingType' => 'boolean',
             'replaceParameter' => [
                 'file' => 'platypus.yaml',
                 'setting' => [
@@ -330,7 +330,7 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'system.password_policy_numeric' => [
-            'settingType' => 'replace',
+            'settingType' => 'boolean',
             'replaceParameter' => [
                 'file' => 'platypus.yaml',
                 'setting' => [
@@ -341,7 +341,7 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'system.password_policy_non_alpha_numeric' => [
-            'settingType' => 'replace',
+            'settingType' => 'boolean',
             'replaceParameter' => [
                 'file' => 'platypus.yaml',
                 'setting' => [
@@ -352,7 +352,7 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'system.password_policy_min_length' => [
-            'settingType' => 'replace',
+            'settingType' => 'integer',
             'replaceParameter' => [
                 'file' => 'platypus.yaml',
                 'setting' => [
@@ -421,7 +421,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'url',
         ],
         'system.currency' => [
-            'settingType' => 'currency',
+            'settingType' => 'string',
             'name' => 'currency',
         ],
         'system.enable_payments' => [
@@ -653,7 +653,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'boolean',
         ],
         'system.session_duration' => [
-            'settingType' => 'replace',
+            'settingType' => 'integer',
             'replaceParameter' => [
                 'file' => 'platypus.yaml',
                 'setting' => [
@@ -667,7 +667,7 @@ class GibbonSettingManager extends GibbonTransferManager
         ],
         'messenger.message_bubble_width_type' => [
             'settingType' => 'string',
-            'choices' => ['regular','wide'],
+            'choice' => ['regular','wide'],
             'functions' => [
                 'safeString' => null,
             ],
@@ -723,7 +723,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'choice' => ['full', 'pending'],
             'functions' => [
                 'safeString' => '',
-                'inArray' => ['default' =>'pending', 'choices' => ['full', 'pending']],
+                'inArray' => ['default' =>'pending', 'choice' => ['full', 'pending']],
             ],
         ],
         'person_admin.public_registration_default_role' => [
@@ -831,7 +831,7 @@ class GibbonSettingManager extends GibbonTransferManager
                 'length' => 3,
                 'safeString' => '',
             ],
-            'choices' => ['mon', 'sun'],
+            'choice' => ['mon', 'sun'],
         ],
         'application_form.username_format' => [
             'settingType' => 'text',
@@ -1195,12 +1195,14 @@ class GibbonSettingManager extends GibbonTransferManager
                 $newData = $this->$func($options, $newData);
             }
 
+if (empty($newData['name']))
+    dd([$newData, $this]);
 
         if (isset($this->settings[$newData['name']]['name']))
             $newData['name'] = $this->settings[$newData['name']]['name'];
 
-        if (isset($this->settings[$newData['name']]['choices']))
-            $newData['choices'] = $this->settings[$newData['name']]['choices'];
+        if (isset($this->settings[$newData['name']]['choice']))
+            $newData['choice'] = $this->settings[$newData['name']]['choice'];
 
         switch ($newData['setting_type']){
             case 'colour':
@@ -1242,8 +1244,8 @@ class GibbonSettingManager extends GibbonTransferManager
         if (isset($newData['validators']) && is_array($newData['validators']))
             $newData['validators'] = serialize($newData['validators']);
 
-        if (isset($newData['choices']) && is_array($newData['choices']))
-            $newData['choices'] = serialize($newData['choices']);
+        if (isset($newData['choice']) && is_array($newData['choice']))
+            $newData['choice'] = serialize($newData['choice']);
 
         if (! is_null($newData['name']))
             $records[] = $newData;
@@ -1292,6 +1294,21 @@ class GibbonSettingManager extends GibbonTransferManager
             $newData['value'][$q] = StringHelper::insertUnderScore($w);
         }
 
+        return $newData;
+    }
+
+    /**
+     * inArray
+     *
+     * @param $value
+     * @param $options
+     * @return array
+     */
+    private function inArray($options, array $newData): array
+    {
+        if (empty($options['default']) || empty($options['choice']))
+            return $newData['value'];
+        $newData['value'] = in_array($newData['value'], $options['choice']) ? $newData['value'] : $options['default'] ;
         return $newData;
     }
 
@@ -1373,16 +1390,16 @@ class GibbonSettingManager extends GibbonTransferManager
      * @param string $entityName
      * @param ObjectManager $manager
      */
-    public function preTruncate(string $entityName, ObjectManager $manager): void
+    public function preTruncate(string $entityName): void
     {
-        $this->keepMe[] = $manager->getRepository(Setting::class)->findOneByName('version');
-        $this->keepMe[] = $manager->getRepository(Setting::class)->findOneByName('template.name');
-        $this->keepMe[] = $manager->getRepository(Setting::class)->findOneByName('personal.title.list');
-        $this->keepMe[] = $manager->getRepository(Setting::class)->findOneByName('date.format');
-        $this->keepMe[] = $manager->getRepository(Setting::class)->findOneByName('background.image');
-        $this->keepMe[] = $manager->getRepository(Setting::class)->findOneByName('org.logo');
-        $this->keepMe[] = $manager->getRepository(Setting::class)->findOneByName('org.transparent.logo');
-        $this->keepMe[] = $manager->getRepository(Setting::class)->findOneByName('countrytype');
+        $this->keepMe[] = $this->getObjectManager()->getRepository(Setting::class)->findOneByName('version');
+        $this->keepMe[] = $this->getObjectManager()->getRepository(Setting::class)->findOneByName('template.name');
+        $this->keepMe[] = $this->getObjectManager()->getRepository(Setting::class)->findOneByName('personal.title.list');
+        $this->keepMe[] = $this->getObjectManager()->getRepository(Setting::class)->findOneByName('date.format');
+        $this->keepMe[] = $this->getObjectManager()->getRepository(Setting::class)->findOneByName('background.image');
+        $this->keepMe[] = $this->getObjectManager()->getRepository(Setting::class)->findOneByName('org.logo');
+        $this->keepMe[] = $this->getObjectManager()->getRepository(Setting::class)->findOneByName('org.transparent.logo');
+        $this->keepMe[] = $this->getObjectManager()->getRepository(Setting::class)->findOneByName('countrytype');
     }
 
     /**
@@ -1390,13 +1407,31 @@ class GibbonSettingManager extends GibbonTransferManager
      *
      * @param string $entityName
      */
-    public function postLoad(string $entityName, ObjectManager $manager)
+    public function postLoad(string $entityName)
     {
-        if (! empty($this->keepMe)) {
-            foreach($this->keepMe as $setting)
-                if ($setting instanceof Setting)
-                $manager->persist($setting);
-            $manager->flush();
+        if (!empty($this->keepMe)) {
+            $conn = $this->getObjectManager()->getConnection();
+            $tableName = $this->getObjectManager()->getClassMetadata(Setting::class)->table['name'];
+            $this->beginTransaction();
+            foreach ($this->keepMe as $setting) {
+                if ($setting instanceof Setting) {
+                    $setting->setId(null);
+                    $item = [];
+                    $item['setting_type'] = $setting->getSettingType();
+                    $item['name'] = $setting->getName();
+                    $item['display_name'] = $setting->getDisplayName();
+                    $item['description'] = $setting->getDescription();
+                    $item['value'] = $setting->getValue();
+                    $item['choice'] = serialize($setting->getChoice());
+                    $item['validators'] = serialize($setting->getValidators());
+                    $item['role'] = $setting->getRole();
+                    $item['default_value'] = $setting->getDefaultValue();
+                    $item['translate_choice'] = $setting->getTranslateChoice();
+
+                    $conn->insert($tableName, $item);
+                }
+            }
+            $this->commit();
         }
     }
 }

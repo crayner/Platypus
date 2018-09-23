@@ -85,6 +85,8 @@ class InstallSubscriber implements EventSubscriberInterface
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_database_create'));
         elseif (! $this->getInstallationManager()->isUpToDate($doFullCheck)) //Are the latest settings and database changes installed.
             $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_update'));
+        elseif (! $this->getInstallationManager()->isSystemUserExists()) // Does the Database contain a System User....
+            $response = new RedirectResponse($this->getInstallationManager()->getRouter()->generate('installer_system_user'));
 
         if (! is_null($response)) {
             if ($event->getRequest()->hasSession()) {
@@ -167,6 +169,7 @@ class InstallSubscriber implements EventSubscriberInterface
                     'load_demonstration_data',
                     'installer_update',
                     'blank',
+                    'installer_system_user',
                 ]
             )
         ) {
