@@ -16,9 +16,11 @@
 namespace App\Manager\Gibbon;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\DBAL\Exception\DriverException;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -106,7 +108,7 @@ class GibbonTransferManager implements GibbonTransferInterface
      * @param string $entityName
      * @param array $records
      */
-    public function writeEntityRecords(string $entityName, array $records)
+    public function writeEntityRecords(string $entityName, array $records, $useUpdate = false)
     {
         $count = 0;
         $metaData = $this->getObjectManager()->getClassMetadata($entityName);
@@ -122,7 +124,19 @@ class GibbonTransferManager implements GibbonTransferInterface
                 $this->getLogger()->addError('The table row in ' . $metaData->table['name'] . ' has an invalid field name: ' . $e->getMessage(), $item);
                 $count--;
             } catch (UniqueConstraintViolationException $e) {
-                $this->getLogger()->addError('The table row in ' . $metaData->table['name'] . ' was not unique: ' . $e->getMessage(), $item);
+                if (! $useUpdate) {
+                    $this->getLogger()->addError('The table row in ' . $metaData->table['name'] . ' was not unique: ' . $e->getMessage(), $item);
+                    $count--;
+                } else {
+                    try {
+                        $this->getObjectManager()->getConnection()->update($metaData->table['name'], $item, ['id' => $item['id']]);
+                    } catch (\Exception $e){
+                        throw $e;
+                    }
+                }
+
+            } catch (DriverException $e) {
+                $this->getLogger()->addError('The table row in ' . $metaData->table['name'] . ' encountered a driver exception: ' . $e->getMessage(), $item);
                 $count--;
             }
             $count++;
@@ -212,5 +226,37 @@ class GibbonTransferManager implements GibbonTransferInterface
         $this->getObjectManager()->getConnection()->commit();
         if ($foreignKeyCheckOn)
             $this->setForeignKeyChecksOn();
+    }
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $gibbonEntityManager;
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getGibbonEntityManager(): EntityManagerInterface
+    {
+        return $this->gibbonEntityManager;
+    }
+
+    /**
+     * @param EntityManagerInterface $gibbonEntityManager
+     * @return GibbonTransferManager
+     */
+    public function setGibbonEntityManager(EntityManagerInterface $gibbonEntityManager): GibbonTransferManager
+    {
+        $this->gibbonEntityManager = $gibbonEntityManager;
+        return $this;
+    }
+
+
+    public function getRequireBefore(): array
+    {
+        if (property_exists($this, 'requireBefore'))
+            return $this->requireBefore;
+        return [];
+
     }
 }

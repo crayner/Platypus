@@ -2,15 +2,15 @@
 ---
 # craigray_platypus.platy_house
 -
-  id: 1
+  id: 9
   name: "Ming"
-  nameShort: "M"
+  name_short: "M"
 -
-  id: 2
-  name: "Tang"
-  nameShort: "T"
--
-  id: 3
+  id: 10
   name: "Song"
-  nameShort: "S"
+  name_short: "S"
+-
+  id: 11
+  name: "Tang"
+  name_short: "T"
 ...

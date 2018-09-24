@@ -15,11 +15,8 @@
  */
 namespace App\Demonstration;
 
-use App\Entity\Action;
 use App\Entity\AlertLevel;
 use App\Entity\AttendanceCode;
-use App\Entity\Campus;
-use App\Entity\Course;
 use App\Entity\DayOfWeek;
 use App\Entity\Department;
 use App\Entity\DepartmentStaff;
@@ -29,9 +26,7 @@ use App\Entity\Facility;
 use App\Entity\FileExtension;
 use App\Entity\House;
 use App\Entity\INDescriptor;
-use App\Entity\Invoice;
-use App\Entity\Module;
-use App\Entity\NotificationEvent;
+use App\Entity\PersonRole;
 use App\Entity\Scale;
 use App\Entity\ScaleGrade;
 use App\Entity\Setting;
@@ -53,71 +48,58 @@ class SchoolFixtures implements DummyDataInterface
      */
     public function load(ObjectManager $manager, LoggerInterface $logger)
     {
-        $this->setLogger($logger);
-
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/day_of_week.yml'));
-
-        $this->buildTable($data, DayOfWeek::class, $manager);
+        $this->setLogger($logger)->setObjectManager($manager)->setMetaData(DayOfWeek::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/individual_needs_descriptor.yml'));
-
-        $this->setLogger($logger)->buildTable($data, INDescriptor::class, $manager);
+        $this->setMetaData(INDescriptor::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/student_note_category.yml'));
-
-        $this->setLogger($logger)->buildTable($data, StudentNoteCategory::class, $manager);
+        $this->setMetaData(StudentNoteCategory::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/attendance_code.yml'));
-
-        $this->setLogger($logger)->buildTable($data, AttendanceCode::class, $manager);
+        $this->setMetaData(AttendanceCode::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/file_extension.yml'));
-
-        $this->setLogger($logger)->buildTable($data, FileExtension::class, $manager);
+        $this->setMetaData(FileExtension::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/facility.yml'));
-
-        $this->setLogger($logger)->buildTable($data, Facility::class, $manager);
+        $this->setMetaData(Facility::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/house.yml'));
-
-        $this->setLogger($logger)->buildTable($data, House::class, $manager);
+        $this->setMetaData(House::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/alert_level.yml'));
-
-        $this->setLogger($logger)->buildTable($data, AlertLevel::class, $manager);
+        $this->setMetaData(AlertLevel::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/year_group.yml'));
-
-        $this->setLogger($logger)->buildTable($data, YearGroup::class, $manager);
+        $this->setMetaData(YearGroup::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department.yml'));
-
-        $this->setLogger($logger)->buildTable($data, Department::class, $manager);
+        $this->setMetaData(Department::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/department_staff.yml'));
-
-        $this->setLogger($logger)->buildTable($data, DepartmentStaff::class, $manager);
+        $this->setMetaData(DepartmentStaff::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/external_assessment.yml'));
-
-        $this->setLogger($logger)->buildTable($data, ExternalAssessment::class, $manager);
+        $this->setMetaData(ExternalAssessment::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/scale.yml'));
-
-        $this->setLogger($logger)->buildTable($data, Scale::class, $manager);
+        $this->setMetaData(Scale::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/external_assessment_field.yml'));
-
-        $this->setLogger($logger)->buildTable($data, ExternalAssessmentField::class, $manager);
+        $this->setMetaData(ExternalAssessmentField::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/scale_grade.yml'));
-
-        $this->setLogger($logger)->buildTable($data, ScaleGrade::class, $manager);
+        $this->setMetaData(ScaleGrade::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/setting.yml'));
+        $this->setMetaData(Setting::class)->truncateTable()->buildTable($data);
 
-        $this->buildTable($data, Setting::class, $manager);
-
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/attendance_code.yml'));
+        $this->setMetaData(Setting::class)->truncateTable()->buildTable($data);
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/attendance_code_person_role.yml'));
+        $this->buildJoinTable($data ?: [], AttendanceCode::class, PersonRole::class,
+            'attendance_code_id', 'person_role_id', 'addPersonRole');
     }
 }

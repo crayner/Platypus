@@ -1,28 +1,28 @@
 %YAML 1.1
 ---
-# craigray_platypus.platy_alert_level
+# craigray_gibbon.gibbonAlertLevel
 -
-  id: 1
+  gibbonAlertLevelID: 1
   name: "High"
-  name_short: "H"
-  colour: "CC0000"
-  colour_bg: "F6CECB"
+  nameShort: "H"
+  color: "CC0000"
+  colorBG: "F6CECB"
   description: "Highest level of severity, requiring intense and immediate readiness, action, individual support or differentiation."
-  sequence: 3
+  sequenceNumber: 3
 -
-  id: 2
+  gibbonAlertLevelID: 2
   name: "Medium"
-  name_short: "M"
-  colour: "FF7414"
-  colour_bg: "FFD2A9"
+  nameShort: "M"
+  color: "FF7414"
+  colorBG: "FFD2A9"
   description: "Moderate severity, requiring intermediate level of readiness, action, individual support or differentiation."
-  sequence: 2
+  sequenceNumber: 2
 -
-  id: 3
+  gibbonAlertLevelID: 3
   name: "Low"
-  name_short: "L"
-  colour: 939090
-  colour_bg: "dddddd"
+  nameShort: "L"
+  color: 939090
+  colorBG: "dddddd"
   description: "Low severity, requiring little to no readiness, action, individual support or differentiation."
-  sequence: 1
+  sequenceNumber: 1
 ...

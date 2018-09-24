@@ -376,6 +376,9 @@ class Person
     {
         $this->receiveNotificationEmails = true;
         $this->gender = 'u';
+        $this->setViewSchoolCalendar(true);
+        $this->setViewPersonalCalendar(true);
+        $this->setViewSpaceBookingCalendar(false);
     }
 
     /**
@@ -2076,6 +2079,52 @@ class Person
     {
         $this->getEnrolments()->removeElement($enrolment);
 
+        return $this;
+    }
+
+    /**
+     * @var \DateTime|null
+     */
+    private $messengerLastBubble;
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getMessengerLastBubble(): ?\DateTime
+    {
+        return $this->messengerLastBubble;
+    }
+
+    /**
+     * @param \DateTime|null $messengerLastBubble
+     * @return Person
+     */
+    public function setMessengerLastBubble(?\DateTime $messengerLastBubble): Person
+    {
+        $this->messengerLastBubble = $messengerLastBubble;
+        return $this;
+    }
+
+    /**
+     * @var ApplicationForm|null
+     */
+    private $applicationForm;
+
+    /**
+     * @return ApplicationForm|null
+     */
+    public function getApplicationForm(): ?ApplicationForm
+    {
+        return $this->applicationForm;
+    }
+
+    /**
+     * @param ApplicationForm|null $applicationForm
+     * @return Person
+     */
+    public function setApplicationForm(?ApplicationForm $applicationForm): Person
+    {
+        $this->applicationForm = $applicationForm;
         return $this;
     }
 }

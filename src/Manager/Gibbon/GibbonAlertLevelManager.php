@@ -10,71 +10,77 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 21/09/2018
- * Time: 12:16
+ * Date: 23/09/2018
+ * Time: 17:50
  */
+
 namespace App\Manager\Gibbon;
 
-use App\Entity\CourseClassPerson;
 
-/**
- * Class GibbonCourseClassPersonManager
- * @package App\Manager\Gibbon
- */
-class GibbonCourseClassPersonManager extends GibbonTransferManager
+use App\Entity\AlertLevel;
+
+class GibbonAlertLevelManager extends GibbonTransferManager
 {
     /**
      * @var array
      */
     protected $entityName = [
-        CourseClassPerson::class,
+        AlertLevel::class,
     ];
 
     /**
      * @var string
      */
-    protected $gibbonName = 'gibbonCourseClassPerson';
+    protected $gibbonName = 'gibbonAlertLevel';
 
     /**
      * @var string
      */
-    protected $nextGibbonName = 'gibbonAttendanceCode';
+    protected $nextGibbonName = '';
 
     /**
      * @var array
      */
 
     protected $transferRules = [
-        'gibbonCourseClassPersonID' => [
+        'gibbonAlertLevelID' => [
             'field' => 'id',
             'functions' => [
                 'integer' => '',
             ],
         ],
-        'gibbonCourseClassID' => [
-            'field' => 'class_id',
+        'sequenceNumber' => [
+            'field' => 'sequence',
             'functions' => [
                 'integer' => '',
             ],
         ],
-        'gibbonPersonID' => [
-            'field' => 'person_id',
+        'name' => [
+            'field' => 'name',
             'functions' => [
-                'integer' => '',
+                'length' => 50,
             ],
         ],
-        'role' => [
-            'field' => 'role',
+        'nameShort' => [
+            'field' => 'name_short',
+            'functions' => [
+                'length' => 4,
+            ],
+        ],
+        'color' => [
+            'field' => 'colour',
             'functions' => [
                 'length' => 20,
-                'safeString' => ['removeChars' => ['-']],
             ],
         ],
-        'reportable' => [
-            'field' => 'reportable',
+        'colorBG' => [
+            'field' => 'colour_bg',
             'functions' => [
-                'boolean' => null,
+                'length' => 20,
             ],
+        ],
+        'description' => [
+            'field' => 'description',
         ],
     ];
 }

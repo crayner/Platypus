@@ -2,227 +2,227 @@
 ---
 # craigray_gibbon.gibbonFileExtension
 -
-  gibbonFileExtensionID: 1
+  gibbonFileExtensionID: 0001
   type: "Document"
   extension: "doc"
   name: "Microsoft Word 97/2000/XP"
 -
-  gibbonFileExtensionID: 2
+  gibbonFileExtensionID: 0002
   type: "Document"
   extension: "docx"
   name: "Microsoft Word 2007+"
 -
-  gibbonFileExtensionID: 3
+  gibbonFileExtensionID: 0003
   type: "Document"
   extension: "pages"
   name: "Apple Pages"
 -
-  gibbonFileExtensionID: 4
+  gibbonFileExtensionID: 0004
   type: "Document"
   extension: "odt"
   name: "OpenOffice Text"
 -
-  gibbonFileExtensionID: 5
+  gibbonFileExtensionID: 0005
   type: "Document"
   extension: "txt"
   name: "Plain Text"
 -
-  gibbonFileExtensionID: 6
+  gibbonFileExtensionID: 0006
   type: "Document"
   extension: "rtf"
   name: "Rich Text Format"
 -
-  gibbonFileExtensionID: 7
+  gibbonFileExtensionID: 0007
   type: "Spreadsheet"
   extension: "xls"
   name: "Microsoft Excel 97/2000/XP"
 -
-  gibbonFileExtensionID: 8
+  gibbonFileExtensionID: 0008
   type: "Spreadsheet"
   extension: "xlsx"
   name: "Microsoft Excel 2007+"
 -
-  gibbonFileExtensionID: 9
+  gibbonFileExtensionID: 0009
   type: "Spreadsheet"
   extension: "ods"
   name: "OpenOffice SpreadSheet"
 -
-  gibbonFileExtensionID: 10
+  gibbonFileExtensionID: 0010
   type: "Spreadsheet"
   extension: "numbers"
   name: "Apple Numbers"
 -
-  gibbonFileExtensionID: 11
+  gibbonFileExtensionID: 0011
   type: "Spreadsheet"
   extension: "csv"
   name: "Comma Seperate Values"
 -
-  gibbonFileExtensionID: 12
+  gibbonFileExtensionID: 0012
   type: "Presentation"
   extension: "ppt"
   name: "Microsoft PowerPoint 97/2000/XP"
 -
-  gibbonFileExtensionID: 13
+  gibbonFileExtensionID: 0013
   type: "Presentation"
   extension: "pptx"
   name: "Microsoft PowerPoint 2007+"
 -
-  gibbonFileExtensionID: 14
+  gibbonFileExtensionID: 0014
   type: "Presentation"
   extension: "key"
   name: "Apple Keynote"
 -
-  gibbonFileExtensionID: 15
+  gibbonFileExtensionID: 0015
   type: "Audio"
   extension: "mp3"
   name: "MPEG Audio"
 -
-  gibbonFileExtensionID: 16
+  gibbonFileExtensionID: 0016
   type: "Audio"
   extension: "mp4"
   name: "MPEG Audio"
 -
-  gibbonFileExtensionID: 17
+  gibbonFileExtensionID: 0017
   type: "Audio"
   extension: "m4a"
   name: "MPEG Audio"
 -
-  gibbonFileExtensionID: 18
+  gibbonFileExtensionID: 0018
   type: "Audio"
   extension: "wma"
   name: "Windows Media Audio"
 -
-  gibbonFileExtensionID: 19
+  gibbonFileExtensionID: 0019
   type: "Audio"
   extension: "ogg"
   name: "Vorbis Ogg"
 -
-  gibbonFileExtensionID: 20
+  gibbonFileExtensionID: 0020
   type: "Audio"
   extension: "aac"
   name: "MPEG Audio"
 -
-  gibbonFileExtensionID: 21
+  gibbonFileExtensionID: 0021
   type: "Graphics/Design"
   extension: "png"
   name: "Portable Network Graphics"
 -
-  gibbonFileExtensionID: 22
+  gibbonFileExtensionID: 0022
   type: "Graphics/Design"
   extension: "jpg"
   name: "Joint Picture Expert Group"
 -
-  gibbonFileExtensionID: 23
+  gibbonFileExtensionID: 0023
   type: "Graphics/Design"
   extension: "gif"
   name: "Graphics Interchange Format"
 -
-  gibbonFileExtensionID: 24
+  gibbonFileExtensionID: 0024
   type: "Graphics/Design"
   extension: "acorn"
   name: "Acorn"
 -
-  gibbonFileExtensionID: 25
+  gibbonFileExtensionID: 0025
   type: "Graphics/Design"
   extension: "ai"
   name: "Adobe Illustrator"
 -
-  gibbonFileExtensionID: 26
+  gibbonFileExtensionID: 0026
   type: "Graphics/Design"
   extension: "psd"
   name: "Adobe Photoshop"
 -
-  gibbonFileExtensionID: 28
+  gibbonFileExtensionID: 0028
   type: "Graphics/Design"
   extension: "xcf"
   name: "GIMP eXperimental Computing Facility"
 -
-  gibbonFileExtensionID: 29
+  gibbonFileExtensionID: 0029
   type: "Video"
   extension: "avi"
   name: "Audio Video Interleave"
 -
-  gibbonFileExtensionID: 30
+  gibbonFileExtensionID: 0030
   type: "Video"
   extension: "wmv"
   name: "Windows Media Video"
 -
-  gibbonFileExtensionID: 31
+  gibbonFileExtensionID: 0031
   type: "Video"
   extension: "mpg"
   name: "MPEG Video"
 -
-  gibbonFileExtensionID: 32
+  gibbonFileExtensionID: 0032
   type: "Video"
   extension: "mov"
   name: "QuickTime Movie"
 -
-  gibbonFileExtensionID: 33
+  gibbonFileExtensionID: 0033
   type: "Video"
   extension: "flv"
   name: "Adobe Flash Video"
 -
-  gibbonFileExtensionID: 34
+  gibbonFileExtensionID: 0034
   type: "Other"
   extension: "fla"
   name: "Adobe Flash"
 -
-  gibbonFileExtensionID: 35
+  gibbonFileExtensionID: 0035
   type: "Video"
   extension: "swf"
   name: "Adobe Flash"
 -
-  gibbonFileExtensionID: 36
+  gibbonFileExtensionID: 0036
   type: "Graphics/Design"
   extension: "skp"
   name: "Google SketchUp"
 -
-  gibbonFileExtensionID: 37
+  gibbonFileExtensionID: 0037
   type: "Document"
   extension: "pdf"
   name: "Portable Document Format"
 -
-  gibbonFileExtensionID: 38
+  gibbonFileExtensionID: 0038
   type: "Graphics/Design"
   extension: "jpeg"
   name: "Joint Picture Expert Group"
 -
-  gibbonFileExtensionID: 39
+  gibbonFileExtensionID: 0039
   type: "Video"
   extension: "mpeg"
   name: "MPEG Video"
 -
-  gibbonFileExtensionID: 40
+  gibbonFileExtensionID: 0040
   type: "Other"
   extension: "sb"
   name: "Scratch"
 -
-  gibbonFileExtensionID: 41
+  gibbonFileExtensionID: 0041
   type: "Video"
   extension: "m4v"
   name: "MPG Varient"
 -
-  gibbonFileExtensionID: 42
+  gibbonFileExtensionID: 0042
   type: "Other"
   extension: "zip"
   name: "ZIP Compressed Archive"
 -
-  gibbonFileExtensionID: 43
+  gibbonFileExtensionID: 0043
   type: "Document"
   extension: "htm"
   name: "HyperText Marrkup Language"
 -
-  gibbonFileExtensionID: 44
+  gibbonFileExtensionID: 0044
   type: "Document"
   extension: "html"
   name: "HyperText Marrkup Language"
 -
-  gibbonFileExtensionID: 45
+  gibbonFileExtensionID: 0045
   type: "Video"
   extension: "3gp"
   name: "3rd Generation Partnership Video"
 -
-  gibbonFileExtensionID: 46
+  gibbonFileExtensionID: 0046
   type: "Other"
   extension: "sb2"
   name: "Scratch 2"

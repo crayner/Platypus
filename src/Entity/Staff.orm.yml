@@ -13,6 +13,9 @@ App\Entity\Staff:
             options:
                 default: 1
             column: smart_workflow_help
+        initials:
+            length: 4
+            nullable: true
         staffType:
             length: 20
             column: staff_type
@@ -24,6 +27,10 @@ App\Entity\Staff:
             options:
                 default: 1
             column: first_aid_qualified
+        firstAidExpiry:
+            type: date
+            nullable: true
+            column: first_aid_expiry
         countryOfOrigin:
             length: 80
             column: country_of_origin

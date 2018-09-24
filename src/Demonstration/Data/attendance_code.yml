@@ -5,72 +5,66 @@
   id: 1
   name: "Present"
   name_short: "P"
-  type: "core"
+  attendance_code_type: "core"
   direction: "in"
   scope: "onsite"
   active: 1
   reportable: 1
   future: 0
   sequence: 1
-  role: "ROLE_TEACHER"
 -
   id: 2
   name: "Present - Late"
   name_short: "PL"
-  type: "core"
+  attendance_code_type: "core"
   direction: "in"
   scope: "onsite_late"
   active: 1
   reportable: 1
   future: 0
   sequence: 2
-  role: "ROLE_TEACHER"
 -
   id: 3
   name: "Present - Offsite"
   name_short: "PS"
-  type: "core"
+  attendance_code_type: "core"
   direction: "in"
   scope: "offsite"
   active: 1
   reportable: 1
   future: 1
   sequence: 3
-  role: "ROLE_TEACHER"
 -
   id: 4
   name: "Absent"
   name_short: "A"
-  type: "core"
+  attendance_code_type: "core"
   direction: "out"
   scope: "offsite"
   active: 1
   reportable: 1
   future: 1
   sequence: 4
-  role: "ROLE_TEACHER"
 -
   id: 5
   name: "Left"
   name_short: "L"
-  type: "core"
+  attendance_code_type: "core"
   direction: "out"
   scope: "offsite_left"
   active: 1
   reportable: 1
-  future: 1
+  future: 0
   sequence: 5
-  role: "ROLE_USER"
 -
   id: 6
   name: "Left - Early"
   name_short: "LE"
-  type: "core"
+  attendance_code_type: "core"
   direction: "out"
   scope: "offsite_left"
   active: 1
   reportable: 1
   future: 0
   sequence: 6
-  role: "ROLE_TEACHER"
 ...

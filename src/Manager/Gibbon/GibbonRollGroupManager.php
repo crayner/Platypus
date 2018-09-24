@@ -67,6 +67,13 @@ class GibbonRollGroupManager extends GibbonTransferManager
                 'integer' => '',
             ],
         ],
+        'gibbonSpaceID' => [
+            'field' => 'facility_id',
+            'functions' => [
+                'integer' => '',
+                'nullable' => null,
+            ],
+        ],
         'attendance' => [
             'field' => 'attendance',
             'functions' => [
@@ -94,7 +101,7 @@ class GibbonRollGroupManager extends GibbonTransferManager
                 'call' => ['function' =>'getTutors', 'options' => ''],
             ],
         ],
-        'gibbonPersonIDTutor1' => [
+        'gibbonPersonIDTutor3' => [
             'field' => '',
             'joinTable' => [
                 'name' => 'roll_group_tutor',
@@ -121,7 +128,7 @@ class GibbonRollGroupManager extends GibbonTransferManager
                 'call' => ['function' =>'getTutors', 'options' => ''],
             ],
         ],
-        'gibbonPersonIDEA1' => [
+        'gibbonPersonIDEA3' => [
             'field' => '',
             'joinTable' => [
                 'name' => 'roll_group_assistant',
@@ -148,7 +155,7 @@ class GibbonRollGroupManager extends GibbonTransferManager
     ];
 
     /**
-     * getRollGroup
+     * getTutors
      *
      * @param $value
      * @return array

@@ -3,13 +3,24 @@ doctrine:
         default_connection: default
         connections:
             default:
-                driver: '%db_driver%'
-                host: '%db_host%'
-                port: '%db_port%'
-                dbname: '%db_name%'
-                user: '%db_user%'
-                password: '%db_pass%'
-                charset: '%db_charset%'
+                driver:     '%db_driver%'
+                host:       '%db_host%'
+                port:       '%db_port%'
+                dbname:     '%db_name%'
+                user:       '%db_user%'
+                password:   '%db_pass%'
+                charset:    '%db_charset%'
+                default_table_options:
+                    charset: utf8mb4
+                    collate: utf8mb4_unicode_ci
+            gibbon:
+                driver:     '%db_driver%'
+                host:       '%db_host%'
+                port:       '%db_port%'
+                dbname:     'craigray_gibbon'
+                user:       '%db_user%'
+                password:   '%db_pass%'
+                charset:    '%db_charset%'
                 default_table_options:
                     charset: utf8mb4
                     collate: utf8mb4_unicode_ci
@@ -27,6 +38,9 @@ doctrine:
                         dir: '%kernel.project_dir%/src/Entity'
                         prefix: App\Entity
                         alias: App
+            gibbon:
+                connection: gibbon
+                auto_mapping: false
 doctrine_cache:
     aliases:
         apc_cache: my_apc_cache

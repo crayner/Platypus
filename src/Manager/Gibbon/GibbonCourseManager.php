@@ -34,6 +34,13 @@ class GibbonCourseManager extends GibbonTransferManager
     protected $gibbonName = 'gibbonCourse';
 
     /**
+     * @var array
+     */
+    protected $requireBefore = [
+        'gibbonYearGroup',
+    ];
+
+    /**
      * @var string
      */
     protected $nextGibbonName = 'gibbonCourseClass';

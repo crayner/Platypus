@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 use App\Entity\Action;
+use App\Entity\Person;
 use App\Entity\PersonRole;
 use App\Organism\Database;
 use Doctrine\DBAL\Connection;
@@ -26,7 +27,6 @@ use Hillrange\Security\Entity\User;
 use Hillrange\Security\Util\ParameterInjector;
 use Hillrange\Security\Util\PasswordManager;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Yaml\Exception\DumpException;
 use Symfony\Component\Yaml\Exception\ParseException;
@@ -551,26 +551,38 @@ class InstallationManager
         if (! $user instanceof User)
             $user = new User();
 
-        $user->setInstaller(true);
-        $user->setUsername($data['_username']);
-        $user->setUsernameCanonical($data['_username']);
-        $user->setEmail($data['_email']);
-        $user->setEmailCanonical($data['_email']);
-        $user->setLocale(ParameterInjector::getParameter('locale', 'en'));
-        $user->setExpired(false);
-        $user->setCredentialsExpired(false);
-        $user->setEnabled(true);
-        $user->setLastLogin(new \DateTime('now'));
-        $user->setDirectroles(['ROLE_SYSTEM_ADMIN']);
-        $user->setCredentialsExpireAt(null);
-        $user->setCredentialsExpired(false);
-        $user->setSuperAdmin(true);
+        $user->setInstaller(true)
+            ->setUsername($data['_username'])
+            ->setUsernameCanonical($data['_username'])
+            ->setEmail($data['_email'])
+            ->setEmailCanonical($data['_email'])
+            ->setLocale(ParameterInjector::getParameter('locale', 'en'))
+            ->setExpired(false)
+            ->setCredentialsExpired(false)
+            ->setPassword($this->getPasswordManager()->encodePassword($data['_password']))
+            ->setEnabled(true)
+            ->setLastLogin(new \DateTime('now'))
+            ->setDirectroles(['ROLE_SYSTEM_ADMIN'])
+            ->setCredentialsExpireAt(null)
+            ->setCredentialsExpired(false)
+            ->setSuperAdmin(true);
 
 
         $entityManager->persist($user);
         $entityManager->flush();
 
-        $this->passwordManager->saveNewPassword($user, $data['_password']);
+        $person = new Person();
+
+        $person->setTitle($data['title']);
+        $person->setUser($user);
+        $person->setStatus('full');
+        $person->setEmail($data['_email']);
+        $person->setSurname($data['surname']);
+        $person->setFirstName($data['firstName']);
+        $person->setPreferredName($data['firstName']);
+        $person->setOfficialName($data['firstName'] . ' ' . $data['surname']);
+        $entityManager->persist($person);
+        $entityManager->flush();
 
         $settingManager->setInstallMode(true);
 

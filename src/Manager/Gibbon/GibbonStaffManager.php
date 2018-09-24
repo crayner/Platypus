@@ -94,10 +94,24 @@ class GibbonStaffManager extends GibbonTransferManager
                 'boolean' => null,
             ],
         ],
+        'firstAidExpiry' => [
+            'field' => 'first_aid_expiry',
+            'functions' => [
+                'date' => null,
+                'nullable' => null,
+            ],
+        ],
         'countryOfOrigin' => [
             'field' => 'country_of_origin',
             'functions' => [
                 'length' => 80,
+            ],
+        ],
+        'initials' => [
+            'field' => 'initials',
+            'functions' => [
+                'length' => 4,
+                'nullable' => null,
             ],
         ],
         'qualifications' => [

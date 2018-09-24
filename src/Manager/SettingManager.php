@@ -735,12 +735,9 @@ class SettingManager implements ContainerAwareInterface
         if ($x = $this->setting->setValue($value)
             ->setCacheTime(new \DateTime('now'))
             ->writeSetting($this->getEntityManager(), $this->getValidator(), $this->getConstraints($this->setting->getSettingType())) !== true)
-        {
-            foreach($x->getIterator() as $constraintViolation)
-            {
-                $this->getMessageManager()->add('danger', $constraintViolation->getMessage(), [], false);
-            }
-        }
+            if (is_iterable($x))
+                foreach($x->getIterator() as $constraintViolation)
+                    $this->getMessageManager()->add('danger', $constraintViolation->getMessage(), [], false);
 
         unset($this->settings[$name]);
 

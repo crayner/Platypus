@@ -71,24 +71,28 @@ class GibbonDaysOfWeekManager extends GibbonTransferManager
             'field' => 'school_open',
             'functions' => [
                 'time' => '',
+                'nullable' => null,
             ],
         ],
         'schoolStart' => [
             'field' => 'school_start',
             'functions' => [
                 'time' => '',
+                'nullable' => null,
             ],
         ],
         'schoolEnd' => [
             'field' => 'school_end',
             'functions' => [
                 'time' => '',
+                'nullable' => null,
             ],
         ],
         'schoolClose' => [
             'field' => 'school_close',
             'functions' => [
                 'time' => '',
+                'nullable' => null,
             ],
         ],
     ];

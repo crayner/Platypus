@@ -15,9 +15,9 @@
  */
 namespace App\Controller;
 
+use App\Demonstration\PeopleFixtures;
 use App\Demonstration\SchoolFixtures;
 use App\Demonstration\SchoolYearFixtures;
-use App\Demonstration\TruncateTables;
 use App\Demonstration\UserFixtures;
 use App\Form\InstallLanguageType;
 use App\Form\InstallDatabaseType;
@@ -216,10 +216,6 @@ class InstallerController extends Controller
         if ($section === 'Start') {
             $logger->addInfo(sprintf('Section %s started.', $section));
 
-            $load = new TruncateTables();
-            $load->execute($objectManager);
-            $logger->addInfo('The existing data has been deleted.');
-
             $load = new UserFixtures();
             $load->load($objectManager, $logger);
 
@@ -238,7 +234,7 @@ class InstallerController extends Controller
             $load->load($objectManager, $logger);
 
             $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('installer_complete');
+
             return $this->redirectToRoute('load_demonstration_data', ['section' => 'People']);
         }
 
@@ -251,39 +247,39 @@ class InstallerController extends Controller
             $logger->addInfo(sprintf('Section %s completed.', $section));
             return $this->redirectToRoute('load_demonstration_data', ['section' => 'Timetable']);
         }
+        /*
 
-        if ($section === 'Timetable') {
-            $logger->addInfo(sprintf('Section %s started.', $section));
+                if ($section === 'Timetable') {
+                    $logger->addInfo(sprintf('Section %s started.', $section));
 
-            $load = new TimetableFixtures();
-            $load->load($objectManager, $logger);
+                    $load = new TimetableFixtures();
+                    $load->load($objectManager, $logger);
 
-            $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('load_demonstration_data', ['section' => 'Activity']);
-        }
+                    $logger->addInfo(sprintf('Section %s completed.', $section));
+                    return $this->redirectToRoute('load_demonstration_data', ['section' => 'Activity']);
+                }
+                if ($section === 'Activity') {
+                    $logger->addInfo(sprintf('Section %s started.', $section));
 
-        if ($section === 'Activity') {
-            $logger->addInfo(sprintf('Section %s started.', $section));
+                    $load = new ActivityFixtures();
+                    $load->load($objectManager, $logger);
 
-            $load = new ActivityFixtures();
-            $load->load($objectManager, $logger);
+                    $logger->addInfo(sprintf('Section %s completed.', $section));
+                    return $this->redirectToRoute('load_demonstration_data', ['section' => 'ActivityStudent']);
+                }
 
-            $logger->addInfo(sprintf('Section %s completed.', $section));
-            return $this->redirectToRoute('load_demonstration_data', ['section' => 'ActivityStudent']);
-        }
+                if ($section === 'ActivityStudent') {
+                    $logger->addInfo(sprintf('Section %s started.', $section));
 
-        if ($section === 'ActivityStudent') {
-            $logger->addInfo(sprintf('Section %s started.', $section));
+                    $load = new ActivityStudentFixtures();
+                    $load->load($objectManager, $logger);
 
-            $load = new ActivityStudentFixtures();
-            $load->load($objectManager, $logger);
+                    $logger->addInfo(sprintf('Section %s completed.', $section));
+                    $logger->addInfo('The Dummy Data Load finished.');
+                    return $this->redirectToRoute('installer_complete');
+                } */
 
-            $logger->addInfo(sprintf('Section %s completed.', $section));
-            $logger->addInfo('The Dummy Data Load finished.');
-            return $this->redirectToRoute('installer_complete');
-        }
-
-        die('Data Load Failed.');
+        return $this->redirectToRoute('home');
     }
 
     /**

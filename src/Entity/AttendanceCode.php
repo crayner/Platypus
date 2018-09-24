@@ -15,6 +15,9 @@
  */
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 use Hillrange\Security\Util\ParameterInjector;
 
 class AttendanceCode
@@ -312,29 +315,6 @@ class AttendanceCode
     }
 
     /**
-     * @var null|string
-     */
-    private $role;
-
-    /**
-     * @return null|string
-     */
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param null|string $role
-     * @return AttendanceCode
-     */
-    public function setRole(?string $role): AttendanceCode
-    {
-        $this->role = $role;
-        return $this;
-    }
-
-    /**
      * setDefaults
      *
      * @return AttendanceCode
@@ -355,5 +335,67 @@ class AttendanceCode
         if ($this->getType() === 'core')
             return false;
         return true;
+    }
+
+    /**
+     * @var Collection
+     */
+    private $personRoles;
+
+    /**
+     * getPersonRoles
+     *
+     * @return Collection
+     */
+    public function getPersonRoles(): Collection
+    {
+        if (empty($this->personRoles))
+            $this->personRoles = new ArrayCollection();
+
+        if ($this->personRoles instanceof PersistentCollection)
+            $this->personRoles->initialize();
+
+        return $this->personRoles;
+    }
+
+    /**
+     * setPersonRoles
+     *
+     * @param Collection|null $personRoles
+     * @return AttendanceCode
+     */
+    public function setPersonRoles(?Collection $personRoles): AttendanceCode
+    {
+        $this->personRoles = $personRoles;
+        return $this;
+    }
+
+    /**
+     * addPersonRole
+     *
+     * @param PersonRole|null $role
+     * @return AttendanceCode
+     */
+    public function addPersonRole(?PersonRole $role): AttendanceCode
+    {
+        if (empty($role) || $this->getPersonRoles()->contains($role))
+            return $this;
+
+        $this->personRoles->add($role);
+
+        return $this;
+    }
+
+    /**
+     * removePersonRole
+     *
+     * @param PersonRole|null $role
+     * @return AttendanceCode
+     */
+    public function removePersonRole(?PersonRole $role): AttendanceCode
+    {
+        $this->getPersonRoles()->removeElement($role);
+
+        return $this;
     }
 }

@@ -302,4 +302,50 @@ class Staff
         $this->biographicalGroupingPriority = $biographicalGroupingPriority;
         return $this;
     }
+
+    /**
+     * @var string|null
+     */
+    private $initials;
+
+    /**
+     * @return null|string
+     */
+    public function getInitials(): ?string
+    {
+        return $this->initials;
+    }
+
+    /**
+     * @param null|string $initials
+     * @return Staff
+     */
+    public function setInitials(?string $initials): Staff
+    {
+        $this->initials = $initials;
+        return $this;
+    }
+
+    /**
+     * @var \DateTime|null
+     */
+    private $firstAidExpiry;
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getFirstAidExpiry(): ?\DateTime
+    {
+        return $this->firstAidExpiry;
+    }
+
+    /**
+     * @param \DateTime|null $firstAidExpiry
+     * @return Staff
+     */
+    public function setFirstAidExpiry(?\DateTime $firstAidExpiry): Staff
+    {
+        $this->firstAidExpiry = $firstAidExpiry;
+        return $this;
+    }
 }

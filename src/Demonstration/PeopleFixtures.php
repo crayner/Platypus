@@ -35,19 +35,12 @@ class PeopleFixtures implements DummyDataInterface
     public function load(ObjectManager $manager, LoggerInterface $logger)
     {
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/person.yml'));
-
-        $this->setLogger($logger)->buildTable($data, Person::class, $manager);
+        $this->setLogger($logger)->setObjectManager($manager)->setMetaData(Person::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/family.yml'));
+        $this->setMetaData(Family::class)->truncateTable()->buildTable($data);
 
-        $this->buildTable($data, Family::class, $manager);
-
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/family_adult.yml'));
-
-        $this->buildTable($data, FamilyMember::class, $manager);
-
-        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/family_child.yml'));
-
-        $this->buildTable($data, FamilyMember::class, $manager);
+        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/family_member.yml'));
+        $this->setMetaData(FamilyMember::class)->truncateTable()->buildTable($data);
     }
 }

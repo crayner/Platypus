@@ -40,20 +40,17 @@ class SchoolYearFixtures implements DummyDataInterface
     public function load(ObjectManager $manager, LoggerInterface $logger)
     {
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/school_year.yml'));
-
-        $this->setLogger($logger)->buildTable($data, SchoolYear::class, $manager);
+        $this->setLogger($logger)->setObjectManager($manager)->setMetaData(SchoolYear::class)->truncateTable()->buildTable($data);
 
 /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/calendar_grade.yml'));
 
-        $this->buildTable($data, CalendarGrade::class, $manager);
+        $this->truncateTable()->buildTable($data, CalendarGrade::class, $manager);
 */
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/school_year_term.yml'));
-
-        $this->buildTable($data, SchoolYearTerm::class, $manager);
+        $this->setMetaData(SchoolYearTerm::class)->truncateTable()->buildTable($data);
 
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/school_year_special_day.yml'));
-
-        $this->buildTable($data, SchoolYearSpecialDay::class, $manager);
+        $this->setMetaData(SchoolYearSpecialDay::class)->truncateTable()->buildTable($data);
 
 /*        $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/course_calendar_grade.yml'));
 

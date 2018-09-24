@@ -20,6 +20,7 @@ App\Entity\AttendanceCode:
         type:
             length: 16
             nullable: false
+            column: attendance_code_type
         direction:
             length: 8
             nullable: false
@@ -34,8 +35,17 @@ App\Entity\AttendanceCode:
             type: boolean
         sequence:
             type: integer
-        role:
-            length: 16
+    manyToMany:
+        personRoles:
+            targetEntity: App\Entity\PersonRole
+            joinTable:
+                name: attendance_code_person_role
+                joinColumns:
+                    attendance_code_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    person_role_id:
+                        referencedColumnName: id
     lifecycleCallbacks:
         prePersist:
             - setDefaults

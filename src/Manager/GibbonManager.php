@@ -22,10 +22,10 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Security\Util\ParameterInjector;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class GibbonManager
@@ -40,25 +40,31 @@ class GibbonManager
      */
     public function transfer(string $section, LoggerInterface $logger)
     {
-        $path = "App\Manager\Gibbon\\".ucfirst($section);
+        $path = "App\Manager\Gibbon\\".ucfirst($section). 'Manager';
 
-        if (! class_exists($path))
-            trigger_error(sprintf('No! No! No! %s does not exist.', $section));
+        if (! class_exists($path)) {
+            $logger->info(sprintf('No! No! No! %s does not exist.', $section));
+            return;
+        }
 
         $this->setTransferManager(new $path());
+
+        foreach ($this->requireBefore() as $w)
+            $this->transfer($w, $logger);
+
+        $this->setTransferManager(new $path());
+
         $this->setLogger($logger);
 
-        $this->getTransferManager()->setObjectManager($this->getObjectManager());
+        $this->getTransferManager()->setObjectManager($this->getObjectManager())->setGibbonEntityManager($this->getGibbonEntityManager());
 
-        $logger->addInfo(sprintf('Started transfer for .', $this->getEntityName()));
+        $logger->addDebug(sprintf('Started transfer for %s.', $this->getGibbonName()));
 
         $this->truncate();
 
         $this->load();
 
-        $logger->addInfo(sprintf('Completed transfer for .', $this->getEntityName()));
-
-       // return $this->redirectToRoute('load_demonstration_data', ['section' => 'School']);
+        $logger->addDebug(sprintf('Completed transfer for %s.', $this->getGibbonName()));
     }
 
     /**
@@ -70,7 +76,9 @@ class GibbonManager
     {
         foreach($this->getEntityName() as $entityName) {
             $this->preLoad($entityName);
-            $data = Yaml::parse(file_get_contents($this->getFileName()));
+
+            $sql = 'SELECT * FROM `'.$this->getGibbonName().'`';
+            $data = $this->getGibbonEntityManager()->getConnection()->fetchAll($sql);
 
             $records = [];
             $this->joinTables = [];
@@ -98,7 +106,7 @@ class GibbonManager
         foreach($this->joinTables as $name => $data)
         {
             if (! empty($data)) {
-                $this->getLogger()->addInfo(sprintf('The join table %s is being actioned.', $this->dbPrefix.$name));
+                $this->getLogger()->addDebug(sprintf('The join table %s is being actioned.', $this->dbPrefix.$name));
 
                 if (! $this->skipTruncate($name))
                     $this->truncateTable($this->dbPrefix.$name);
@@ -106,6 +114,15 @@ class GibbonManager
                 $this->objectManager->getConnection()->beginTransaction();
                 $count = 0;
                 foreach($data as $item) {
+                    $null = false;
+                    foreach($item as $nn=>$value) {
+                        if ($nn !== 'update' && ! is_integer($value))
+                            $value = intval($value);
+                        if (empty($value))
+                            $null = true;
+                    }
+                    if ($null)
+                        continue;
                     try {
                         if (isset($item['update']) && $item['update']) {
                             $update[$item['update']] = $item[$item['update']];
@@ -117,7 +134,7 @@ class GibbonManager
                             $this->getObjectManager()->getConnection()->insert($this->dbPrefix . $name, $item);
                         }
                     } catch (ForeignKeyConstraintViolationException $e) {
-                        $this->getLogger()->addError('The table row in ' . $this->dbPrefix.$name .' encounted a foreign key error: '.$e->getMessage(), $item);
+                        $this->getLogger()->addError('The table row in ' . $this->dbPrefix.$name .' encountered a foreign key error: '.$e->getMessage(), $item);
                         $count--;
                     } catch (InvalidFieldNameException $e) {
                         $this->getLogger()->addError('The table row in ' . $this->dbPrefix.$name .' has an invalid field name: '.$e->getMessage(), $item);
@@ -129,7 +146,7 @@ class GibbonManager
                     $count++;
 
                     if (($count % 100) == 0)
-                        $this->getLogger()->addInfo('Actioned ' . $count . ' records for ' . $this->dbPrefix.$name . ' of a maximum ' . count($data) . ' possible.  Continuing...');
+                        $this->getLogger()->addDebug('Actioned ' . $count . ' records for ' . $this->dbPrefix.$name . ' of a maximum ' . count($data) . ' possible.  Continuing...');
                 }
                 $this->objectManager->getConnection()->commit();
             }
@@ -360,9 +377,27 @@ class GibbonManager
         $rules = $this->getTransferManager()->getTransferRules();
 
         if (empty($rules[$field]))
-            trigger_error(sprintf('The rule for %s is not defined.', $field));
+            trigger_error(sprintf('The rule for "%s" is not defined in "%s".', $field, get_class($this->getTransferManager())));
 
         return $rules[$field];
+    }
+
+    /**
+     * @return EntityManagerInterface
+     */
+    public function getGibbonEntityManager(): EntityManagerInterface
+    {
+        return $this->gibbonEntityManager;
+    }
+
+    /**
+     * @param EntityManagerInterface $gibbonEntityManager
+     * @return GibbonManager
+     */
+    public function setGibbonEntityManager(EntityManagerInterface $gibbonEntityManager): GibbonManager
+    {
+        $this->gibbonEntityManager = $gibbonEntityManager;
+        return $this;
     }
 
     /**
@@ -611,22 +646,22 @@ class GibbonManager
      * boolean
      *
      * @param $value
-     * @return string
+     * @return int
      */
-    private function boolean($value): string
+    private function boolean($value): int
     {
-        return in_array(strtoupper($value), ['Y']) ? '1' : '0' ;
+        return in_array(strtoupper($value), ['Y']) ? 1 : 0 ;
     }
 
     /**
      * inverse_boolean
      *
      * @param $value
-     * @return string
+     * @return int
      */
-    private function inverse_boolean($value): string
+    private function inverse_boolean($value): int
     {
-        return in_array(strtoupper($value), ['Y']) ? '0' : '1' ;
+        return in_array(strtoupper($value), ['Y']) ? 0 : 1 ;
     }
 
     /**
@@ -783,5 +818,20 @@ class GibbonManager
             return true;
 
         return false;
+    }
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $gibbonEntityManager;
+
+    /**
+     * requireBefore
+     *
+     * @return array
+     */
+    private function requireBefore(): array
+    {
+        return $this->getTransferManager()->getRequireBefore();
     }
 }

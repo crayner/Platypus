@@ -1,0 +1,9 @@
+App\Entity\ApplicationForm:
+    type: entity
+    table: application_form
+    repositoryClass: App\Repository\ApplicationFormRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO

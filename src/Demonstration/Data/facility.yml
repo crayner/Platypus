@@ -4,865 +4,856 @@
 -
   id: 1
   name: "C101"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 101
   comment: ""
 -
   id: 2
   name: "C102"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 102
   comment: ""
 -
   id: 4
   name: "C103"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 103
   comment: ""
 -
   id: 5
   name: "C104"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 104
   comment: ""
 -
   id: 6
   name: "C106"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 106
   comment: ""
 -
   id: 7
   name: "C107"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 107
   comment: ""
 -
   id: 8
   name: "C105"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 105
   comment: ""
 -
   id: 9
   name: "C108"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 108
   comment: ""
 -
   id: 10
   name: "D002"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 402
   comment: ""
 -
   id: 11
   name: "D004"
-  type: "Laboratory"
+  space_type: "laboratory"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 404
   comment: ""
 -
   id: 12
   name: "B003"
-  type: "Performance"
+  space_type: "performance"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 218
   comment: ""
 -
   id: 13
   name: "Library"
-  type: "Library"
+  space_type: "library"
   capacity: 30
   computer: 0
-  studentComputers: 2
+  student_computers: 2
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 237
   comment: ""
 -
   id: 14
   name: "Hall"
-  type: "Hall"
+  space_type: "hall"
   capacity: 300
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
-  hifi: 1
+  hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 15
   name: "Court"
-  type: "Outdoor"
+  space_type: "outdoor"
   capacity: 100
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 16
   name: "AHT"
-  type: "Office"
-  capacity: 0
+  space_type: "office"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 17
   name: "C204"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 204
   comment: ""
 -
   id: 18
   name: "C203"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 203
   comment: ""
 -
   id: 19
   name: "C201"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 201
   comment: ""
 -
   id: 20
   name: "C202"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 202
   comment: ""
 -
   id: 21
   name: "C301"
-  type: "Laboratory"
+  space_type: "laboratory"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 301
   comment: ""
 -
   id: 22
   name: "C303"
-  type: "Laboratory"
+  space_type: "laboratory"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 303
   comment: ""
 -
   id: 23
-  name: "C308"
-  type: "Classroom"
+  name: "C309"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 309
   comment: ""
 -
   id: 24
   name: "C205"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 205
   comment: ""
 -
   id: 25
   name: "C206A"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 12
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 206
   comment: ""
 -
   id: 26
   name: "C206B"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 12
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 207
   comment: ""
 -
   id: 28
   name: "C208"
-  type: "Performance"
+  space_type: "performance"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 208
   comment: ""
 -
   id: 29
   name: "C304"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 304
   comment: ""
 -
   id: 30
   name: "C305"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 305
   comment: ""
 -
   id: 31
   name: "C306"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 306
   comment: ""
 -
   id: 32
   name: "C307"
-  type: "Laboratory"
+  space_type: "laboratory"
   capacity: 24
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 307
   comment: ""
 -
   id: 33
   name: "HOS"
-  type: "Office"
-  capacity: 0
+  space_type: "office"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 288
   comment: ""
 -
   id: 34
   name: "C302"
-  type: "Office"
-  capacity: 0
-  computer: 0
-  studentComputers: 0
+  space_type: "office"
+  computer: 1
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 302
   comment: ""
 -
   id: 35
   name: "B002"
-  type: "Office"
-  capacity: 0
+  space_type: "office"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 36
   name: "B001"
-  type: "Office"
-  capacity: 0
+  space_type: "office"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 37
-  name: "C309"
-  type: "Office"
-  capacity: 0
+  name: "C308 (Chemical Store)"
+  space_type: "storage"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 38
   name: "House 8"
-  type: "Other"
-  capacity: 0
+  space_type: "other"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 39
   name: "Server Room"
-  type: "Other"
-  capacity: 0
+  space_type: "other"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 40
   name: "House 2"
-  type: "Other"
-  capacity: 0
+  space_type: "other"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 41
   name: "Back Court"
-  type: "Outdoor"
-  capacity: 0
+  space_type: "outdoor"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 42
   name: "House 3"
-  type: "Other"
-  capacity: 0
+  space_type: "other"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 43
   name: "B001A"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 6
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 227
   comment: ""
 -
   id: 44
   name: "B001B"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 4
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 224
   comment: ""
 -
   id: 45
   name: "B001C (Finance)"
-  type: "Office"
-  capacity: 0
+  space_type: "office"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
   comment: ""
 -
   id: 46
   name: "D101"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 20
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 601
   comment: ""
 -
   id: 47
   name: "D102"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 20
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 602
   comment: ""
 -
   id: 48
   name: "D103"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 20
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 603
   comment: ""
 -
   id: 49
   name: "D104"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 20
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 604
   comment: ""
 -
   id: 50
   name: "D105"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 20
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 605
   comment: ""
 -
   id: 51
   name: "D106"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 20
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 606
   comment: ""
 -
   id: 52
   name: "D100"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 4
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 600
   comment: ""
 -
   id: 53
   name: "D100A (Testing)"
-  type: "Other"
+  space_type: "other"
   capacity: 6
   computer: 0
-  studentComputers: 6
+  student_computers: 6
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 609
   comment: ""
 -
   id: 54
   name: "D100B (Admissions)"
-  type: "Office"
+  space_type: "office"
   capacity: 2
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 610
   comment: ""
 -
   id: 55
   name: "D107 (IB Center)"
-  type: "Classroom"
+  space_type: "classroom"
   capacity: 30
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  phone_internal: 607
   comment: ""
 -
   id: 56
   name: "House 1"
-  type: "Other"
-  capacity: 0
+  space_type: "other"
   computer: 0
-  studentComputers: 0
+  student_computers: 0
   projector: 0
   tv: 0
   dvd: 0
   hifi: 0
   speakers: 0
   iwb: 0
-  phoneInt: ""
-  phoneExt: ""
+  comment: ""
+-
+  id: 57
+  name: "D201 (Yoga)"
+  space_type: "creative_space"
+  capacity: 30
+  computer: 0
+  student_computers: 0
+  projector: 0
+  tv: 0
+  dvd: 0
+  hifi: 0
+  speakers: 0
+  iwb: 0
+  comment: ""
+-
+  id: 58
+  name: "D202 (Music)"
+  space_type: "creative_space"
+  capacity: 30
+  computer: 0
+  student_computers: 0
+  projector: 0
+  tv: 0
+  dvd: 0
+  hifi: 0
+  speakers: 0
+  iwb: 0
+  comment: ""
+-
+  id: 59
+  name: "D203 (Storage)"
+  space_type: "creative_space"
+  capacity: 30
+  computer: 0
+  student_computers: 0
+  projector: 0
+  tv: 0
+  dvd: 0
+  hifi: 0
+  speakers: 0
+  iwb: 0
+  comment: ""
+-
+  id: 60
+  name: "D204 (Maker Space)"
+  space_type: "creative_space"
+  capacity: 30
+  computer: 0
+  student_computers: 0
+  projector: 0
+  tv: 0
+  dvd: 0
+  hifi: 0
+  speakers: 0
+  iwb: 0
+  comment: ""
+-
+  id: 61
+  name: "Learning Support"
+  space_type: "other"
+  capacity: 10
+  computer: 0
+  student_computers: 0
+  projector: 0
+  tv: 0
+  dvd: 0
+  hifi: 0
+  speakers: 0
+  iwb: 0
+  phone_internal: 231
   comment: ""
 ...

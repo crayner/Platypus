@@ -274,6 +274,12 @@ System Admin:
             route: system_check
             parameters: {}
             transDomain: System
+        update:
+            label: Update
+            role: ROLE_SYSTEM_ADMIN
+            route: installer_update
+            parameters: {}
+            transDomain: System
     settings:
         manage_language_setting:
             label: manage_lanuage_setting
@@ -363,7 +369,7 @@ People Admin:
             role: ROLE_ACTION
             route: manage_settings
             parameters: 
-                name: ApplicationForm
+                name: ApplicationForm.orm.yml
             transDomain: System
         public_registration_settings:
             label: public_registration_settings

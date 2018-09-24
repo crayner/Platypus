@@ -32,17 +32,18 @@ class UserFixtures implements DummyDataInterface
      */
     public function load(ObjectManager $manager, LoggerInterface $logger)
     {
+        $this->setLogger($logger)->setObjectManager($manager)->setMetaData(User::class);
         // Bundle to manage file and directories
-
         $data = Yaml::parse(file_get_contents(__DIR__ . '/Data/hrs_user.yml'));
-        $data = $data ?: [];
-        foreach($data as $q=>$user) {
-            if (intval($user['id']) === 1) {
-                unset($data[$q]);
-                break;
-            }
-        }
 
-        $this->setLogger($logger)->buildTable($data, User::class, $manager);
+        $user = $manager->getConnection()->fetchAssoc('SELECT * FROM `'.$this->tableName.'` WHERE id = 1');
+
+        $this->setMetaData(User::class)->truncateTable()->buildTable($data);
+
+        if(is_array($user)) {
+            $this->beginTransaction(true);
+            $this->getConnection()->update($this->tableName, $user, ['id' => 1]);
+            $this->commit();
+        }
     }
 }

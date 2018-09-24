@@ -100,6 +100,7 @@ class GibbonPersonManager extends GibbonTransferManager
             'field' => 'name_in_characters',
             'functions' => [
                 'length' => 20,
+                'nullable' => null,
             ],
         ],
         'gender' => [
@@ -441,8 +442,8 @@ class GibbonPersonManager extends GibbonTransferManager
             'field' => 'residential_status',
             'functions' => [
                 'length' => 32,
+                'safeString' => ['removeChars' => ['-']],
                 'nullable' => '',
-                'lowercase' => '',
             ],
         ],
         'profession' => [
@@ -547,7 +548,7 @@ class GibbonPersonManager extends GibbonTransferManager
         'viewCalendarSchool' => [
             'field' => 'view_school_calendar',
             'functions' => [
-                'boolean' => '',
+                'boolean' => null,
             ],
         ],
         'viewCalendarPersonal' => [
@@ -592,8 +593,8 @@ class GibbonPersonManager extends GibbonTransferManager
         'dayType' => [
             'field' => 'day_type',
             'functions' => [
-                'nullable' => '',
                 'length' => 30,
+                'nullable' => '',
             ],
         ],
         'studentAgreements' => [
@@ -605,8 +606,8 @@ class GibbonPersonManager extends GibbonTransferManager
         'googleAPIRefreshToken' => [
             'field' => 'google_refresh_token',
             'functions' => [
-                'nullable' => '',
                 'length' => 255,
+                'nullable' => '',
             ],
         ],
         'receiveNotificationEmails' => [
@@ -631,7 +632,8 @@ class GibbonPersonManager extends GibbonTransferManager
             'field' => 'last_login',
             'entityName' => User::class,
             'functions' => [
-                'datetime' => '',
+                'datetime' => null,
+                'nullable' => null,
             ],
         ],
         'passwordForceReset' => [
@@ -639,6 +641,61 @@ class GibbonPersonManager extends GibbonTransferManager
             'entityName' => User::class,
             'functions' => [
                 'boolean' => '',
+            ],
+        ],
+        'dob' => [
+            'field' => 'dob',
+            'functions' => [
+                'date' => null,
+                'nullable' => null,
+            ],
+        ],
+        'lastFailTimestamp' => [
+            'field' => '',
+        ],
+        'visaExpiryDate' => [
+            'field' => 'visa_expiry_date',
+            'functions' => [
+                'date' => null,
+                'nullable' => null,
+            ],
+        ],
+        'dateStart' => [
+            'field' => 'date_start',
+            'functions' => [
+                'date' => null,
+                'nullable' => null,
+            ],
+        ],
+        'dateEnd' => [
+            'field' => 'date_end',
+            'functions' => [
+                'date' => null,
+                'nullable' => null,
+            ],
+        ],
+        'messengerLastBubble' => [
+            'field' => 'messenger_last_bubble',
+            'functions' => [
+                'date' => null,
+                'nullable' => null,
+            ],
+        ],
+        'gibbonApplicationFormID' => [
+            'field' => 'application_form_id',
+            'functions' => [
+                'integer' => null,
+                'nullable' => null,
+            ],
+        ],
+        'gibbonThemeIDPersonal' => [
+            'field' => '',
+        ],
+        'gibboni18nIDPersonal' => [
+            'field' => 'personal_language',
+            'functions' => [
+                'integer' => null,
+                'nullable' => null,
             ],
         ],
     ];
@@ -659,74 +716,22 @@ class GibbonPersonManager extends GibbonTransferManager
      * @param string $entityName
      * @param ObjectManager $manager
      */
-    public function preTruncate(string $entityName, ObjectManager $manager): void
+    public function preTruncate(string $entityName): void
     {
         if ($entityName === Person::class) {
             if (!empty($this->personOne)) return;
-            $repository = $manager->getRepository(Person::class);
+            $fields = $this->getObjectManager()->getClassMetadata($entityName);
 
-            $this->personOne = $repository->createQueryBuilder('p')
-                ->where('p.id = :id')
-                ->setParameter('id', 1)
-                ->getQuery()
-                ->getArrayResult();;
+            $this->personOne = $this->getObjectManager()->getConnection()->fetchAssoc('SELECT * FROM `' . $fields->table['name'] . '` WHERE `id` = 1');
+
         }
         if ($entityName === User::class) {
             if (!empty($this->userOne)) return;
-            $repository = $manager->getRepository(User::class);
 
-            $this->userOne = $repository->createQueryBuilder('p')
-                ->where('p.id = :id')
-                ->setParameter('id', 1)
-                ->getQuery()
-                ->getArrayResult();;
-        }
-    }
 
-    /**
-     * postTruncate
-     *
-     * @param string $entityName
-     * @param ObjectManager $manager
-     */
-    public function postTruncate(string $entityName, ObjectManager $manager): void
-    {
-        if ($entityName === Person::class) {
-            if (empty($this->personOne))
-                return;
-            $fields = $manager->getClassMetadata($entityName);
+            $fields = $this->getObjectManager()->getClassMetadata($entityName);
 
-            foreach ($this->personOne[0] as $field => $value)
-                if ($field !== $fields->columnNames[$field]) {
-                    $this->personOne[0][$fields->columnNames[$field]] = $value;
-                    unset($this->personOne[0][$field]);
-                }
-            $this->personOne[0]['fields'] = serialize($this->personOne[0]['fields']);
-            $this->writeEntityRecords($entityName, $this->personOne);
-
-            $this->personOne = null;
-        }
-        if ($entityName === User::class) {
-            if (empty($this->userOne))
-                return;
-            $fields = $manager->getClassMetadata($entityName);
-
-            foreach ($this->userOne[0] as $field => $value)
-                if ($field !== $fields->columnNames[$field]) {
-                    $this->userOne[0][$fields->columnNames[$field]] = $value;
-                    unset($this->userOne[0][$field]);
-                }
-
-            $this->userOne[0]['last_login'] = $this->userOne[0]['last_login']->format('Y-m-d H:i:s');
-            $this->userOne[0]['last_modified'] = $this->userOne[0]['last_modified']->format('Y-m-d H:i:s');
-            $this->userOne[0]['created_on'] = $this->userOne[0]['created_on']->format('Y-m-d H:i:s');
-            $this->userOne[0]['direct_roles'] = serialize($this->userOne[0]['direct_roles']);
-            $this->userOne[0]['user_settings'] = serialize($this->userOne[0]['user_settings']);
-            $this->userOne[0]['groups'] = serialize($this->userOne[0]['groups']);
-            $this->userOne[0]['expired'] = $this->userOne[0]['expired'] ? '1' : '0';
-            $this->userOne[0]['credentials_expired'] = $this->userOne[0]['credentials_expired'] ? '1' : '0';
-            $this->writeEntityRecords($entityName, $this->userOne);
-            $this->userOne = null;
+            $this->userOne = $this->getObjectManager()->getConnection()->fetchAssoc('SELECT * FROM `' . $fields->table['name'] . '` WHERE `id` = 1');
         }
     }
 
@@ -901,5 +906,29 @@ class GibbonPersonManager extends GibbonTransferManager
             $newData['email_canonical'] = $value;
         }
         return $newData;
+    }
+
+    /**
+     * postLoad
+     *
+     * @param string $entityName
+     */
+    public function postLoad(string $entityName)
+    {
+        if ($entityName === Person::class) {
+            if (empty($this->personOne))
+                return;
+
+            $this->writeEntityRecords($entityName, [$this->personOne], true);
+
+            $this->personOne = null;
+        }
+        if ($entityName === User::class) {
+            if (empty($this->userOne))
+                return;
+
+            $this->writeEntityRecords($entityName, [$this->userOne], true);
+            $this->userOne = null;
+        }
     }
 }

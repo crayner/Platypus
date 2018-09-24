@@ -7,21 +7,6 @@ App\Entity\Person:
             type: integer
             generator:
                 strategy: AUTO
-    oneToOne:
-        user:
-            targetEntity: Hillrange\Security\Entity\User
-            joinColumn:
-                name: user_id
-                referencedColumnName: id
-                nullable: true
-            cascade: [ 'persist' ]
-        staff:
-            targetEntity: App\Entity\Staff
-            inversedBy: person
-            joinColumn:
-                name: staff_id
-                referencedColumnName: id
-                nullable: true
     fields:
         surname:
             length: 30
@@ -77,7 +62,7 @@ App\Entity\Person:
             options:
                 default: 'full'
         dob:
-            type: datetime
+            type: date
             nullable: true
         lastSchool:
             length: 100
@@ -234,6 +219,31 @@ App\Entity\Person:
             type: array
             options:
                 default: a:0:{}
+        messengerLastBubble:
+            type: date
+            nullable: true
+            column: messenger_last_bubble
+    oneToOne:
+        user:
+            targetEntity: Hillrange\Security\Entity\User
+            joinColumn:
+                name: user_id
+                referencedColumnName: id
+                nullable: true
+            cascade: [ 'persist' ]
+        staff:
+            targetEntity: App\Entity\Staff
+            inversedBy: person
+            joinColumn:
+                name: staff_id
+                referencedColumnName: id
+                nullable: true
+        applicationForm:
+            targetEntity: App\Entity\ApplicationForm
+            joinColumn:
+                name: application_form_id
+                referencedColumnName: id
+                nullable: true
     oneToMany:
         departments:
             targetEntity: App\Entity\DepartmentStaff

@@ -35,7 +35,7 @@ class ApplicationFormSettings implements SettingCreationInterface
      */
     public function getName(): string
     {
-        return 'ApplicationForm';
+        return 'ApplicationForm.orm.yml';
     }
 
     /**

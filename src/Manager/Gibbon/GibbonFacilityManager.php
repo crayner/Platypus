@@ -53,7 +53,8 @@ class GibbonFacilityManager extends GibbonTransferManager
         'type' => [
             'field' => 'space_type',
             'functions' => [
-                'length' => 30,
+                'length' => 32,
+                'safeString' => ['removeChars' => ['-']],
             ],
         ],
         'comment' => [

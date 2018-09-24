@@ -16,7 +16,6 @@
 namespace App\Controller;
 
 use App\Manager\GibbonManager;
-use Doctrine\Common\Persistence\ObjectManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,22 +28,29 @@ class GibbonController extends Controller
 {
     /**
      * transfer
-     * @Route("/gibbon/transfer/{section}/")
+     * @Route("/gibbon/transfer/{section}/", name="gibbon_transfer")
      * @IsGranted("ROLE_SYSTEM_ADMIN")
      */
-    public function transfer(GibbonManager $manager, ObjectManager $objectManager, string $section = 'start')
+    public function transfer(GibbonManager $manager, string $section = 'start')
     {
         $logger = $this->get('monolog.logger.demonstration');
-        if ($section === 'start')
-            $section = 'GibbonSettingManager';
 
-        $manager->transfer($section, $this->get('monolog.logger.gibbon'));
+        $gm = $this->getDoctrine()->getManager('gibbon');
+        $manager->setGibbonEntityManager($gm);
+        $objectManager = $this->getDoctrine()->getManager();
+        $sql = 'SHOW TABLES';
 
-        return $this->render('Gibbon/transfer.html.twig',
-            [
-                'manager' => $manager,
-                'menuOff' => true,
-            ]
-        );
+        $done = false;
+        foreach($gm->getConnection()->fetchAll($sql) as $table)
+            foreach($table as $name) {
+                if ($done)
+                    $this->redirectToRoute('gibbon_transfer', ['section' => $name]);
+                if ($section === 'start' || $section === $name) {
+                    $manager->transfer($name, $this->get('monolog.logger.gibbon'));
+                    $done = true;
+                }
+            }
+
+        return $this->redirectToRoute('home');
     }
 }
