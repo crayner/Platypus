@@ -17,9 +17,13 @@ namespace App\Form\Type;
 
 use App\Entity\Course;
 use App\Entity\CourseClass;
+use App\Entity\Person;
 use App\Entity\Scale;
 use App\Form\Subscriber\CourseClassSubscriber;
-use App\Repository\PersonRepository;
+use App\Util\SchoolYearHelper;
+use Doctrine\DBAL\Connection;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\HiddenEntityType;
@@ -43,6 +47,28 @@ class CourseClassType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $yearGroups = [];
+        foreach($options['data']->getCourse()->getYearGroups() as $group)
+            $yearGroups[] = $group->getId();
+
+        $preferredStudents = $this->entityManager->getRepository(Person::class)
+            ->createQueryBuilder('p')
+            ->leftJoin('p.primaryRole', 'r')
+            ->where('r.category = :role')
+            ->andWhere('p.status = :status')
+            ->setParameter('status', 'full')
+            ->setParameter('role', 'student')
+            ->leftJoin('p.enrolments', 'e')
+            ->leftJoin('e.rollGroup', 'rg')
+            ->leftJoin('e.yearGroup', 'y')
+            ->andWhere('y.id in (:yearGroups)')
+            ->setParameter('yearGroups', $yearGroups, Connection::PARAM_INT_ARRAY)
+            ->leftJoin('rg.schoolYear', 'sy')
+            ->andWhere('sy = :currentYear')
+            ->setParameter('currentYear', SchoolYearHelper::getCurrentSchoolYear())
+            ->getQuery()
+            ->getResult();
+
         $builder
             ->add('name', TextType::class,
                 [
@@ -96,8 +122,25 @@ class CourseClassType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'entry_options' => [
-                        'choices' => $options['choices']['students'],
-                        'choice_label' => 'fullName',
+                        'choice_label' => 'rollGroupFullName',
+                        'preferred_choices' => $preferredStudents,
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('p')
+                                ->orderBy('rg.name', 'ASC')
+                                ->addOrderBy('p.surname', 'ASC')
+                                ->addOrderBy('p.firstName', 'ASC')
+                                ->leftJoin('p.primaryRole', 'r')
+                                ->where('r.category = :role')
+                                ->andWhere('p.status = :status')
+                                ->setParameter('status', 'full')
+                                ->setParameter('role', 'student')
+                                ->leftJoin('p.enrolments', 'e')
+                                ->leftJoin('e.rollGroup', 'rg')
+                                ->leftJoin('rg.schoolYear', 'sy')
+                                ->andWhere('sy = :currentYear')
+                                ->setParameter('currentYear', SchoolYearHelper::getCurrentSchoolYear())
+                                ;
+                        },
                     ],
                 ]
             )
@@ -108,8 +151,18 @@ class CourseClassType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'entry_options' => [
-                        'choices' => $options['choices']['tutors'],
                         'choice_label' => 'fullName',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('p')
+                                ->orderBy('p.surname', 'ASC')
+                                ->addOrderBy('p.firstName', 'ASC')
+                                ->leftJoin('p.primaryRole', 'r')
+                                ->where('r.category <> :category')
+                                ->andWhere('p.status = :status')
+                                ->setParameter('status', 'full')
+                                ->setParameter('category', 'student')
+                            ;
+                        },
                     ],
                 ]
             )
@@ -117,20 +170,18 @@ class CourseClassType extends AbstractType
                 [
                     'entry_type' => ClassParticipantType::class,
                     'button_merge_class' => 'btn-sm',
-                    'allow_add' => true,
-                    'allow_delete' => true,
+                    'allow_add' => false,
+                    'allow_delete' => false,
                     'entry_options' => [
-                        'choices' => $options['choices']['former'],
                         'choice_label' => 'fullName',
-                    ],
-                ]
-            )
-            ->add('people', CollectionType::class,
-                [
-                    'entry_type' => ClassParticipantType::class,
-                    'entry_options' => [
-                        'choices' => [],
-                        'choice_label' => 'fullName',
+                        'query_builder' => function(EntityRepository $er) {
+                            return $er->createQueryBuilder('p')
+                                ->orderBy('p.surname', 'ASC')
+                                ->addOrderBy('p.firstName', 'ASC')
+                                ->andWhere('p.status != :status')
+                                ->setParameter('status', 'full')
+                            ;
+                        },
                     ],
                 ]
             )
@@ -152,10 +203,19 @@ class CourseClassType extends AbstractType
                 'data_class' => CourseClass::class,
             ]
         );
-        $resolver->setRequired(
-            [
-                'choices',
-            ]
-        );
+    }
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    /**
+     * CourseClassType constructor.
+     * @param EntityManagerInterface $entityManager
+     */
+    public function __construct(EntityManagerInterface $entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
 }

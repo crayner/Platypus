@@ -16,6 +16,7 @@
 namespace App\Entity;
 
 use App\Util\PersonNameHelper;
+use App\Util\SchoolYearHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
@@ -2126,5 +2127,16 @@ class Person
     {
         $this->applicationForm = $applicationForm;
         return $this;
+    }
+
+    public function getRollGroupFullName(): string
+    {
+        $group = '';
+        $en = $this->getEnrolments();
+        foreach($en as $se){
+            if ($se->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear())
+                $group = $se->getRollGroup()->getName();
+        }
+        return ($group ? '('.$group.') ' : ''). $this->getFullName();
     }
 }

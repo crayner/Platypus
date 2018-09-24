@@ -202,7 +202,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'boolean',
         ],
         'activities.activity_types' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -223,31 +223,31 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'boolean',
         ],
         'behaviour.positive_descriptors' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'behaviour.negative_descriptors' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'behaviour.levels' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'resources.categories' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'resources.purposes_general' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -257,7 +257,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'name' => null,
         ],
         'resources.purposes_restricted' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -267,10 +267,9 @@ class GibbonSettingManager extends GibbonTransferManager
             'name' => 'org.email',
         ],
         'activities.date_type' => [
-            'settingType' => 'choice',
-            'choice' => ['term','flexible'],
+            'settingType' => 'string',
             'functions' => [
-                'safeString' => '',
+                'safeString' => null,
             ],
         ],
         'system.install_type' => [
@@ -297,7 +296,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'html',
         ],
         'application_form.milestones' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -363,19 +362,19 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'person_admin.ethnicity' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'person_admin.nationality' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'person_admin.residency_status' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -393,7 +392,7 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'markbook.markbook_type' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -401,9 +400,12 @@ class GibbonSettingManager extends GibbonTransferManager
         'system.allowable_html' => [
             'settingType' => 'array',
             'name' => null,
+            'functions' => [
+                'unserialiser' => null,
+            ],
         ],
         'application_form.how_did_you_hear' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -470,7 +472,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'boolean',
         ],
         'person_admin.day_type_options' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -557,7 +559,7 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'person_admin.departure_reasons' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -683,7 +685,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'boolean',
         ],
         'finance.budget_categories' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -719,11 +721,9 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'person_admin.public_registration_default_status' => [
-            'settingType' => 'choice',
-            'choice' => ['full', 'pending'],
+            'settingType' => 'string',
             'functions' => [
                 'safeString' => '',
-                'inArray' => ['default' =>'pending', 'choice' => ['full', 'pending']],
             ],
         ],
         'person_admin.public_registration_default_role' => [
@@ -754,7 +754,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'boolean',
         ],
         'formal_assessment.internal_assessment_types' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -766,7 +766,7 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'school_admin.facility_types' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -904,7 +904,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'html',
         ],
         'staff.salary_scale_positions' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -922,7 +922,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'url',
         ],
         'person_admin.religions' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -978,13 +978,13 @@ class GibbonSettingManager extends GibbonTransferManager
             ],
         ],
         'attendance.attendance_reasons' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
         ],
         'attendance.attendance_medical_reasons' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -993,7 +993,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'boolean',
         ],
         'students.medical_illness_symptoms' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -1102,7 +1102,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'boolean',
         ],
         'application_form.available_years_of_entry' => [
-            'settingType' => 'choice',
+            'settingType' => 'array',
             'functions' => [
                 'commaList' => '',
             ],
@@ -1194,9 +1194,6 @@ class GibbonSettingManager extends GibbonTransferManager
                     dd([$newData['name'], $this->settings[$newData['name']]]);
                 $newData = $this->$func($options, $newData);
             }
-
-if (empty($newData['name']))
-    dd([$newData, $this]);
 
         if (isset($this->settings[$newData['name']]['name']))
             $newData['name'] = $this->settings[$newData['name']]['name'];
@@ -1374,7 +1371,7 @@ if (empty($newData['name']))
      */
     private function unserialiser($options, array $newData): array
     {
-        $newData['value'] = unserialize($newData['value']);
+        $newData['value'] = Yaml::dump(unserialize($newData['value']));
 
         return $newData;
     }

@@ -100,7 +100,7 @@ class CourseController extends Controller
     {
         $entity = $manager->find($id);
 
-        $form = $this->createForm(CourseClassType::class, $entity, ['choices' => $manager->getParticipants()]);
+        $form = $this->createForm(CourseClassType::class, $entity);
 
         $form->handleRequest($request);
 

@@ -188,6 +188,8 @@ class PersonController extends Controller
         {
             $manager->getEntityManager()->persist($entity);
             $manager->getEntityManager()->flush();
+            $manager->reset();
+            $form = $this->createForm(PersonType::class, $entity, ['manager' => $manager]);
         }
 
         return $this->render(

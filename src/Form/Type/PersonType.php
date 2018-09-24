@@ -469,7 +469,6 @@ class PersonType extends AbstractType
     private function buildStaffForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-
             ->add('lockerNumber', TextType::class,
                 array(
                     'label'        => 'person.locker_number.label',

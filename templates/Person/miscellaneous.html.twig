@@ -2,7 +2,6 @@
 
 {% include 'Default/panelStart.html.twig' with {header: 'miscellaneous.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
 
-
     {% if manager.isStudent %}
         <div class="row">
             <div class="col-6 card">
@@ -30,7 +29,6 @@
         </div>
     {% endif %}
 
-
     {% if manager.isStaff %}
         <div class="row">
             <div class="col-4 card">
@@ -53,8 +51,6 @@
         </div>
     {% endif %}
 
-
-
     {% if not manager.isStaff and manager.isParent %}
         <div class="row">
             <div class="col-6 card">
@@ -66,5 +62,6 @@
         </div>
     {% endif %}
 
-
 {% include 'Default/panelEnd.html.twig' %}
+{% do form.house.setRendered %}
+{% do form.vehicleRegistration.setRendered %}

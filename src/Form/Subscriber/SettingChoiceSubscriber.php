@@ -79,6 +79,8 @@ class SettingChoiceSubscriber implements EventSubscriberInterface
         $choices = $this->settingManager->get($options['setting_name']);
         $setting = $this->settingManager->getSetting($options['setting_name']);
 
+        if (!is_array($choices))
+            trigger_error(sprintf('You need to ensure the setting "%s" is an array to use as a choice form setting.', $options['setting_name']), E_USER_WARNING);
         if (is_null($setting)) {
             $form->getParent()->add($name, MessageType::class,
                 [

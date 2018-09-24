@@ -1,6 +1,7 @@
 {% trans_default_domain 'Person' %}
 
 {% include 'Default/panelStart.html.twig' with {header: 'school.information.title', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+
 {% if manager.isStudent %}
     <div class="row">
         <div class="col-6 card">
@@ -52,7 +53,6 @@
     </div>
 {% endif %}
 
-
 {% if not manager.isStaff and manager.isParent %}
     <div class="row">
         <div class="col-6 card">
@@ -63,7 +63,5 @@
         </div>
     </div>
 {% endif %}
-
-
 
 {% include 'Default/panelEnd.html.twig' %}

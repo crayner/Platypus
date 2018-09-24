@@ -20,7 +20,6 @@ use App\Entity\PersonRole;
 use App\Manager\Traits\EntityTrait;
 use App\Util\PersonNameHelper;
 use Hillrange\Security\Entity\User;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Class PersonManager
@@ -85,7 +84,7 @@ class PersonManager extends TabManager
         [
             'name' => 'enrolment',
             'label' => 'Enrolment',
-            'include' => 'Person/enrolment.html.twig',
+            'include' => 'Person/Enrolment',
             'message' => 'enrolmentInformationMessage',
             'translation' => 'Person',
             'display' => 'isStudent',
@@ -130,6 +129,11 @@ class PersonManager extends TabManager
     }
 
     /**
+     * @var boolean|null
+     */
+    private $staff;
+
+    /**
      * isStaff
      *
      * @param Person|null $person
@@ -137,16 +141,19 @@ class PersonManager extends TabManager
      */
     public function isStaff(?Person $person = null): bool
     {
+        if (is_bool($this->staff))
+            return $this->staff;
         if (empty($person))
             $person = $this->getEntity();
         if (! $person instanceof Person )
-            return false;
+            return $this->staff = false;
         $role = $person->getPrimaryRole();
         if (! $role instanceof PersonRole)
-            return false;
-        if (in_array($role->getCategory(), ['administrator','support_staff','teacher','staff']))
-            return true;
-        return false;
+            return $this->staff = false;
+        dump($role);
+        if ($role->getCategory() === 'staff')
+            return $this->staff = true;
+        return $this->staff = false;
     }
 
     /**
@@ -209,5 +216,17 @@ class PersonManager extends TabManager
             if (in_array($role->getCategory(), ['parent']))
                 return true;
         return false;
+    }
+
+    /**
+     * reset
+     *
+     * @return PersonManager
+     */
+    public function reset(): PersonManager
+    {
+        $this->staff = null;
+
+        return $this;
     }
 }

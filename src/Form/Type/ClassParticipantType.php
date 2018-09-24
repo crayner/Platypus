@@ -56,7 +56,8 @@ class ClassParticipantType extends AbstractType
                     'class' => Person::class,
                     'placeholder' => 'Please select...',
                     'choice_label' => $options['choice_label'],
-                    'choices' => $options['choices'],
+                    'preferred_choices' => $options['preferred_choices'],
+                    'query_builder' => $options['query_builder'],
                 ]
             )
         ;
@@ -72,18 +73,20 @@ class ClassParticipantType extends AbstractType
         return 'course_class_participant';
     }
 
+    /**
+     * configureOptions
+     *
+     * @param OptionsResolver $resolver
+     */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setRequired(
-            [
-                'choices',
-                'choice_label',
-            ]
-        );
         $resolver->setDefaults(
             [
                 'translation_domain' => 'Course',
                 'data_class' => CourseClassPerson::class,
+                'preferred_choices' => [],
+                'query_builder' => null,
+                'choice_label' => '',
             ]
         );
     }

@@ -15,6 +15,10 @@
  */
 namespace App\Util;
 
+/**
+ * Class SettingChoiceGenerator
+ * @package App\Util
+ */
 class SettingChoiceGenerator
 {
     /**
