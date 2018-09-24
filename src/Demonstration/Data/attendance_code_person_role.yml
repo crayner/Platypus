@@ -1,0 +1,58 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_attendance_code_person_role
+-
+  attendance_code_id: 1
+  person_role_id: 1
+-
+  attendance_code_id: 1
+  person_role_id: 2
+-
+  attendance_code_id: 1
+  person_role_id: 6
+-
+  attendance_code_id: 2
+  person_role_id: 1
+-
+  attendance_code_id: 2
+  person_role_id: 2
+-
+  attendance_code_id: 2
+  person_role_id: 6
+-
+  attendance_code_id: 3
+  person_role_id: 1
+-
+  attendance_code_id: 3
+  person_role_id: 2
+-
+  attendance_code_id: 3
+  person_role_id: 6
+-
+  attendance_code_id: 4
+  person_role_id: 1
+-
+  attendance_code_id: 4
+  person_role_id: 2
+-
+  attendance_code_id: 4
+  person_role_id: 6
+-
+  attendance_code_id: 5
+  person_role_id: 1
+-
+  attendance_code_id: 5
+  person_role_id: 2
+-
+  attendance_code_id: 5
+  person_role_id: 6
+-
+  attendance_code_id: 6
+  person_role_id: 1
+-
+  attendance_code_id: 6
+  person_role_id: 2
+-
+  attendance_code_id: 6
+  person_role_id: 6
+...

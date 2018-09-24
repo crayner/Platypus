@@ -1,0 +1,1191 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_course
+-
+  id: 1051
+  school_year_id: 24
+  department_id: 5
+  name: "Year 10 Art"
+  name_short: "AR10"
+  map: 1
+  sequence: 0
+-
+  id: 1052
+  school_year_id: 24
+  department_id: 8
+  name: "Year 10 Chinese First Language"
+  name_short: "CF10"
+  map: 1
+  sequence: 0
+-
+  id: 1053
+  school_year_id: 24
+  department_id: 8
+  name: "Year 10 Chinese Second Language"
+  name_short: "CS10"
+  map: 1
+  sequence: 0
+-
+  id: 1054
+  school_year_id: 24
+  department_id: 5
+  name: "Year 10 Drama"
+  name_short: "DR10"
+  map: 1
+  sequence: 0
+-
+  id: 1055
+  school_year_id: 24
+  department_id: 6
+  name: "Year 10 Economics"
+  name_short: "EC10"
+  map: 1
+  sequence: 0
+-
+  id: 1056
+  school_year_id: 24
+  department_id: 7
+  name: "Year 10 English"
+  name_short: "EN10"
+  map: 1
+  sequence: 0
+-
+  id: 1057
+  school_year_id: 24
+  department_id: 18
+  name: "Year 10 Enrichment & Flow"
+  name_short: "ENF10"
+  map: 1
+  sequence: 0
+-
+  id: 1058
+  school_year_id: 24
+  department_id: 4
+  name: "Year 10 Environmental Management"
+  name_short: "EV10"
+  map: 1
+  sequence: 0
+-
+  id: 1059
+  school_year_id: 24
+  department_id: 6
+  name: "Year 10 History"
+  name_short: "HI10"
+  map: 1
+  sequence: 0
+-
+  id: 1060
+  school_year_id: 24
+  department_id: 18
+  name: "Year 10 Human Technologies"
+  name_short: "HT10"
+  map: 1
+  sequence: 0
+-
+  id: 1061
+  school_year_id: 24
+  department_id: 8
+  name: "Year 10 Japanese"
+  name_short: "JP10"
+  map: 1
+  sequence: 0
+-
+  id: 1062
+  school_year_id: 24
+  department_id: 16
+  name: "Year 10 Mathematics"
+  name_short: "MA10"
+  map: 1
+  sequence: 0
+-
+  id: 1063
+  school_year_id: 24
+  department_id: 5
+  name: "Year 10 Media Studies"
+  name_short: "ME10"
+  map: 1
+  sequence: 0
+-
+  id: 1064
+  school_year_id: 24
+  department_id: 10
+  name: "Year 10 Physical Education"
+  name_short: "PE10"
+  map: 1
+  sequence: 0
+-
+  id: 1065
+  school_year_id: 24
+  department_id: 4
+  name: "Year 10 Science"
+  name_short: "SC10"
+  map: 1
+  sequence: 0
+-
+  id: 1066
+  school_year_id: 24
+  department_id: 8
+  name: "Year 10 Self Study"
+  name_short: "SS10"
+  map: 1
+  sequence: 0
+-
+  id: 1067
+  school_year_id: 24
+  department_id: 8
+  name: "Year 10 Spanish"
+  name_short: "SP10"
+  map: 1
+  sequence: 0
+-
+  id: 1068
+  school_year_id: 24
+  department_id: 15
+  name: "Year 10 Tutor Time"
+  name_short: "TUT10"
+  map: 1
+  sequence: 0
+-
+  id: 1069
+  school_year_id: 24
+  department_id: 5
+  name: "Year 11 Art"
+  name_short: "AR11"
+  map: 1
+  sequence: 0
+-
+  id: 1070
+  school_year_id: 24
+  department_id: 8
+  name: "Year 11 Chinese First Language"
+  name_short: "CF11"
+  map: 1
+  sequence: 0
+-
+  id: 1071
+  school_year_id: 24
+  department_id: 8
+  name: "Year 11 Chinese Second Language"
+  name_short: "CS11"
+  map: 1
+  sequence: 0
+-
+  id: 1072
+  school_year_id: 24
+  department_id: 5
+  name: "Year 11 Drama"
+  name_short: "DR11"
+  map: 1
+  sequence: 0
+-
+  id: 1073
+  school_year_id: 24
+  department_id: 6
+  name: "Year 11 Economics"
+  name_short: "EC11"
+  map: 1
+  sequence: 0
+-
+  id: 1074
+  school_year_id: 24
+  department_id: 7
+  name: "Year 11 English"
+  name_short: "EN11"
+  map: 1
+  sequence: 0
+-
+  id: 1075
+  school_year_id: 24
+  department_id: 18
+  name: "Year 11 Enrichment & Flow"
+  name_short: "ENF11"
+  map: 1
+  sequence: 0
+-
+  id: 1076
+  school_year_id: 24
+  department_id: 4
+  name: "Year 11 Environmental Management"
+  name_short: "EV11"
+  map: 1
+  sequence: 0
+-
+  id: 1078
+  school_year_id: 24
+  department_id: 6
+  name: "Year 11 Global Perspectives"
+  name_short: "GP11"
+  map: 1
+  sequence: 0
+-
+  id: 1079
+  school_year_id: 24
+  department_id: 6
+  name: "Year 11 History"
+  name_short: "HI11"
+  map: 1
+  sequence: 0
+-
+  id: 1080
+  school_year_id: 24
+  name: "Year 11 IB Choices"
+  name_short: "IBC11"
+  map: 1
+  sequence: 0
+-
+  id: 1081
+  school_year_id: 24
+  department_id: 8
+  name: "Year 11 Japanese"
+  name_short: "JP11"
+  map: 1
+  sequence: 0
+-
+  id: 1082
+  school_year_id: 24
+  department_id: 16
+  name: "Year 11 Mathematics"
+  name_short: "MA11"
+  map: 1
+  sequence: 0
+-
+  id: 1083
+  school_year_id: 24
+  department_id: 5
+  name: "Year 11 Media Studies"
+  name_short: "ME11"
+  map: 1
+  sequence: 0
+-
+  id: 1084
+  school_year_id: 24
+  department_id: 10
+  name: "Year 11 Physical Education"
+  name_short: "PE11"
+  map: 1
+  sequence: 0
+-
+  id: 1085
+  school_year_id: 24
+  department_id: 4
+  name: "Year 11 Science"
+  name_short: "SC11"
+  map: 1
+  sequence: 0
+-
+  id: 1086
+  school_year_id: 24
+  department_id: 8
+  name: "Year 11 Self Study"
+  name_short: "SS11"
+  map: 1
+  sequence: 0
+-
+  id: 1087
+  school_year_id: 24
+  department_id: 8
+  name: "Year 11 Spanish"
+  name_short: "SP11"
+  map: 1
+  sequence: 0
+-
+  id: 1088
+  school_year_id: 24
+  department_id: 15
+  name: "Year 11 Tutor Time"
+  name_short: "TUT11"
+  map: 1
+  sequence: 0
+-
+  id: 1089
+  school_year_id: 24
+  department_id: 4
+  name: "Year 12 Biology (Higher)"
+  name_short: "BIHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1090
+  school_year_id: 24
+  department_id: 4
+  name: "Year 12 Biology (Standard)"
+  name_short: "BISL12"
+  map: 1
+  sequence: 0
+-
+  id: 1091
+  school_year_id: 24
+  name: "Year 12 CAS	"
+  name_short: "CAS12"
+  map: 1
+  sequence: 0
+-
+  id: 1092
+  school_year_id: 24
+  department_id: 4
+  name: "Year 12 Chemistry (Higher)"
+  name_short: "CHHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1093
+  school_year_id: 24
+  department_id: 4
+  name: "Year 12 Chemistry (Standard)"
+  name_short: "CHSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1094
+  school_year_id: 24
+  department_id: 8
+  name: "Year 12 Chinese Second Language (Higher)"
+  name_short: "CSHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1095
+  school_year_id: 24
+  department_id: 8
+  name: "Year 12 Chinese Second Language (Standard)"
+  name_short: "CSSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1096
+  school_year_id: 24
+  department_id: 6
+  name: "Year 12 Economics (Higher)"
+  name_short: "ECHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1097
+  school_year_id: 24
+  department_id: 6
+  name: "Year 12 Economics (Standard)"
+  name_short: "ECSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1098
+  school_year_id: 24
+  department_id: 7
+  name: "Year 12 English (Higher)"
+  name_short: "ENHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1099
+  school_year_id: 24
+  department_id: 7
+  name: "Year 12 English (Standard)"
+  name_short: "ENSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1100
+  school_year_id: 24
+  department_id: 4
+  name: "Year 12 Envir. Systems & Societies (Standard)"
+  name_short: "ESSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1101
+  school_year_id: 24
+  name: "Year 12 Extended Essay	"
+  name_short: "EE12"
+  map: 1
+  sequence: 0
+-
+  id: 1102
+  school_year_id: 24
+  department_id: 18
+  name: "Year 13 ITGS (Higher)"
+  name_short: "ITHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1103
+  school_year_id: 24
+  department_id: 16
+  name: "Year 12 Mathematics (Higher)"
+  name_short: "MAHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1104
+  school_year_id: 24
+  department_id: 16
+  name: "Year 12 Mathematics (Standard)"
+  name_short: "MASL12"
+  map: 1
+  sequence: 0
+-
+  id: 1105
+  school_year_id: 24
+  department_id: 16
+  name: "Year 12 Mathematics (Studies)"
+  name_short: "MSSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1106
+  school_year_id: 24
+  department_id: 8
+  name: "Year 12 Pamoja Support"
+  name_short: "PS12"
+  map: 1
+  sequence: 0
+-
+  id: 1107
+  school_year_id: 24
+  department_id: 10
+  name: "Year 12 Physical Education"
+  name_short: "PE12"
+  map: 1
+  sequence: 0
+-
+  id: 1108
+  school_year_id: 24
+  department_id: 4
+  name: "Year 12 Physics (Higher)"
+  name_short: "PHHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1109
+  school_year_id: 24
+  department_id: 4
+  name: "Year 12 Physics (Standard)"
+  name_short: "PHSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1110
+  school_year_id: 24
+  department_id: 6
+  name: "Year 12 Psychology (Higher)"
+  name_short: "PYHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1111
+  school_year_id: 24
+  department_id: 6
+  name: "Year 12 Psychology (Standard)"
+  name_short: "PYSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1112
+  school_year_id: 24
+  department_id: 7
+  name: "Year 12 Self Study"
+  name_short: "SS12"
+  map: 1
+  sequence: 0
+-
+  id: 1113
+  school_year_id: 24
+  department_id: 8
+  name: "Year 12 Spanish (Higher)"
+  name_short: "SPHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1114
+  school_year_id: 24
+  department_id: 8
+  name: "Year 12 Spanish (Standard)"
+  name_short: "SPSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1116
+  school_year_id: 24
+  department_id: 5
+  name: "Year 12 Theatre Arts (Higher)"
+  name_short: "TAHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1117
+  school_year_id: 24
+  department_id: 5
+  name: "Year 12 Theatre Arts (Standard)"
+  name_short: "TASL12"
+  map: 1
+  sequence: 0
+-
+  id: 1118
+  school_year_id: 24
+  department_id: 18
+  name: "Year 12 Theory of Knowledge"
+  name_short: "TOK12"
+  map: 1
+  sequence: 0
+-
+  id: 1119
+  school_year_id: 24
+  department_id: 15
+  name: "Year 12 Tutor Time"
+  name_short: "TUT12"
+  map: 1
+  sequence: 0
+-
+  id: 1120
+  school_year_id: 24
+  department_id: 5
+  name: "Year 12 Visual Arts (Higher)"
+  name_short: "VAHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1121
+  school_year_id: 24
+  department_id: 5
+  name: "Year 12 Visual Arts (Standard)"
+  name_short: "VASL12"
+  map: 1
+  sequence: 0
+-
+  id: 1122
+  school_year_id: 24
+  department_id: 4
+  name: "Year 13 Biology (Higher)"
+  name_short: "BIHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1123
+  school_year_id: 24
+  department_id: 4
+  name: "Year 13 Biology (Standard)"
+  name_short: "BISL13"
+  map: 1
+  sequence: 0
+-
+  id: 1124
+  school_year_id: 24
+  name: "Year 13 CAS"
+  name_short: "CAS13"
+  map: 1
+  sequence: 0
+-
+  id: 1125
+  school_year_id: 24
+  department_id: 4
+  name: "Year 13 Chemistry (Higher)"
+  name_short: "CHHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1126
+  school_year_id: 24
+  department_id: 4
+  name: "Year 13 Chemistry (Standard)"
+  name_short: "CHSL13"
+  map: 1
+  sequence: 0
+-
+  id: 1127
+  school_year_id: 24
+  department_id: 8
+  name: "Year 13 Chinese Ab initio (Standard Level)"
+  name_short: "CASL13"
+  map: 1
+  sequence: 0
+-
+  id: 1128
+  school_year_id: 24
+  department_id: 8
+  name: "Year 13 Chinese Second Language (Higher)"
+  name_short: "CSHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1129
+  school_year_id: 24
+  department_id: 8
+  name: "Year 13 Chinese Second Language (Standard)"
+  name_short: "CSSL13"
+  map: 1
+  sequence: 0
+-
+  id: 1130
+  school_year_id: 24
+  department_id: 6
+  name: "Year 13 Economics (Standard)"
+  name_short: "ECSL13"
+  map: 1
+  sequence: 0
+-
+  id: 1131
+  school_year_id: 24
+  department_id: 7
+  name: "Year 13 English (Higher)"
+  name_short: "ENHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1132
+  school_year_id: 24
+  department_id: 7
+  name: "Year 13 English (Standard)"
+  name_short: "ENSL13"
+  map: 1
+  sequence: 0
+-
+  id: 1133
+  school_year_id: 24
+  department_id: 4
+  name: "Year 13 Envir. Systems & Societies (Standard)"
+  name_short: "ESSL13"
+  map: 1
+  sequence: 0
+-
+  id: 1134
+  school_year_id: 24
+  name: "Year 13 Extended Essay	"
+  name_short: "EE13"
+  map: 1
+  sequence: 0
+-
+  id: 1135
+  school_year_id: 24
+  department_id: 5
+  name: "Year 12 Film Studies (Higher)"
+  name_short: "FSHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1136
+  school_year_id: 24
+  department_id: 8
+  name: "Year 13 French Ab Initio (Standard)"
+  name_short: "FASL13"
+  map: 1
+  sequence: 0
+-
+  id: 1137
+  school_year_id: 24
+  department_id: 6
+  name: "Year 12 History (Higher)"
+  name_short: "HIHL12"
+  map: 1
+  sequence: 0
+-
+  id: 1138
+  school_year_id: 24
+  department_id: 6
+  name: "Year 12 History (Standard)"
+  name_short: "HISL12"
+  map: 1
+  sequence: 0
+-
+  id: 1139
+  school_year_id: 24
+  department_id: 16
+  name: "Year 13 Mathematics (Higher)"
+  name_short: "MAHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1140
+  school_year_id: 24
+  department_id: 16
+  name: "Year 13 Mathematics (Standard)"
+  name_short: "MASL13"
+  map: 1
+  sequence: 0
+-
+  id: 1141
+  school_year_id: 24
+  department_id: 16
+  name: "Year 13 Mathematics (Studies)"
+  name_short: "MSSL13"
+  map: 1
+  sequence: 0
+-
+  id: 1142
+  school_year_id: 24
+  department_id: 8
+  name: "Year 13 Pamoja Support"
+  name_short: "PS13"
+  map: 1
+  sequence: 0
+-
+  id: 1143
+  school_year_id: 24
+  department_id: 10
+  name: "Year 13 Physical Education"
+  name_short: "PE13"
+  map: 1
+  sequence: 0
+-
+  id: 1144
+  school_year_id: 24
+  department_id: 4
+  name: "Year 13 Physics (Higher)"
+  name_short: "PHHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1145
+  school_year_id: 24
+  department_id: 4
+  name: "Year 13 Physics (Standard)"
+  name_short: "PHSL13"
+  map: 1
+  sequence: 0
+-
+  id: 1146
+  school_year_id: 24
+  department_id: 6
+  name: "Year 13 Psychology (Higher)"
+  name_short: "PYHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1147
+  school_year_id: 24
+  department_id: 6
+  name: "Year 13 Psychology (Standard)"
+  name_short: "PYSL13"
+  map: 1
+  sequence: 0
+-
+  id: 1148
+  school_year_id: 24
+  department_id: 7
+  name: "Year 13 Self Study"
+  name_short: "SS13"
+  map: 1
+  sequence: 0
+-
+  id: 1149
+  school_year_id: 24
+  department_id: 8
+  name: "Year 13 Spanish (Higher)"
+  name_short: "SPHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1152
+  school_year_id: 24
+  department_id: 5
+  name: "Year 13 Theatre Arts (Higher)"
+  name_short: "TAHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1153
+  school_year_id: 24
+  department_id: 18
+  name: "Year 13 Theory of Knowledge"
+  name_short: "TOK13"
+  map: 1
+  sequence: 0
+-
+  id: 1154
+  school_year_id: 24
+  department_id: 15
+  name: "Year 13 Tutor Time"
+  name_short: "TUT13"
+  map: 1
+  sequence: 0
+-
+  id: 1155
+  school_year_id: 24
+  department_id: 5
+  name: "Year 13 Visual Arts (Higher)"
+  name_short: "VAHL13"
+  map: 1
+  sequence: 0
+-
+  id: 1156
+  school_year_id: 24
+  department_id: 5
+  name: "Year 13 Visual Arts (Standard)"
+  name_short: "VASL13"
+  map: 1
+  sequence: 0
+-
+  id: 1157
+  school_year_id: 24
+  department_id: 5
+  name: "Year 7 Art"
+  name_short: "AR07"
+  map: 1
+  sequence: 0
+-
+  id: 1158
+  school_year_id: 24
+  department_id: 6
+  name: "Year 7 Big History"
+  name_short: "BH07"
+  map: 1
+  sequence: 0
+-
+  id: 1159
+  school_year_id: 24
+  department_id: 8
+  name: "Year 7 Chinese First Language"
+  name_short: "CF07"
+  map: 1
+  sequence: 0
+-
+  id: 1160
+  school_year_id: 24
+  department_id: 8
+  name: "Year 7 Chinese Second Language"
+  name_short: "CS07"
+  map: 1
+  sequence: 0
+-
+  id: 1161
+  school_year_id: 24
+  department_id: 7
+  name: "Year 7 English"
+  name_short: "EN07"
+  map: 1
+  sequence: 0
+-
+  id: 1162
+  school_year_id: 24
+  department_id: 5
+  name: "Year 7 Expressive Arts"
+  name_short: "EX07"
+  map: 1
+  sequence: 0
+-
+  id: 1163
+  school_year_id: 24
+  department_id: 18
+  name: "Year 7 Free Learning"
+  name_short: "FL07"
+  map: 1
+  sequence: 0
+-
+  id: 1164
+  school_year_id: 24
+  department_id: 18
+  name: "Year 7 Human Technologies"
+  name_short: "HT07"
+  map: 1
+  sequence: 0
+-
+  id: 1165
+  school_year_id: 24
+  department_id: 8
+  name: "Year 7 Japanese"
+  name_short: "JP07"
+  map: 1
+  sequence: 0
+-
+  id: 1166
+  school_year_id: 24
+  department_id: 16
+  name: "Year 7 Mathematics"
+  name_short: "MA07"
+  map: 1
+  sequence: 0
+-
+  id: 1167
+  school_year_id: 24
+  department_id: 10
+  name: "Year 7 Physical Education"
+  name_short: "PE07"
+  map: 1
+  sequence: 0
+-
+  id: 1168
+  school_year_id: 24
+  department_id: 4
+  name: "Year 7 Science"
+  name_short: "SC07"
+  map: 1
+  sequence: 0
+-
+  id: 1169
+  school_year_id: 24
+  department_id: 8
+  name: "Year 7 Spanish"
+  name_short: "SP07"
+  map: 1
+  sequence: 0
+-
+  id: 1170
+  school_year_id: 24
+  department_id: 15
+  name: "Year 7 Tutor Time"
+  name_short: "TUT07"
+  map: 1
+  sequence: 0
+-
+  id: 1171
+  school_year_id: 24
+  department_id: 6
+  name: "Year 8 Big History"
+  name_short: "BH08"
+  map: 1
+  sequence: 0
+-
+  id: 1172
+  school_year_id: 24
+  department_id: 8
+  name: "Year 8 Chinese First Language"
+  name_short: "CF08"
+  map: 1
+  sequence: 0
+-
+  id: 1173
+  school_year_id: 24
+  department_id: 8
+  name: "Year 8 Chinese Second Language"
+  name_short: "CS08"
+  map: 1
+  sequence: 0
+-
+  id: 1174
+  school_year_id: 24
+  department_id: 18
+  name: "Year 8 Digital Creativity & Visual Thinking"
+  name_short: "DCVT08"
+  map: 1
+  sequence: 0
+-
+  id: 1175
+  school_year_id: 24
+  department_id: 7
+  name: "Year 8 English"
+  name_short: "EN08"
+  map: 1
+  sequence: 0
+-
+  id: 1176
+  school_year_id: 24
+  department_id: 5
+  name: "Year 8 Expressive Arts"
+  name_short: "EX08"
+  map: 1
+  sequence: 0
+-
+  id: 1177
+  school_year_id: 24
+  department_id: 18
+  name: "Year 8 Free Learning"
+  name_short: "FL08"
+  map: 1
+  sequence: 0
+-
+  id: 1178
+  school_year_id: 24
+  department_id: 18
+  name: "Year 8 Human Technologies"
+  name_short: "HT08"
+  map: 1
+  sequence: 0
+-
+  id: 1179
+  school_year_id: 24
+  department_id: 8
+  name: "Year 8 Japanese"
+  name_short: "JP08"
+  map: 1
+  sequence: 0
+-
+  id: 1180
+  school_year_id: 24
+  department_id: 16
+  name: "Year 8 Mathematics"
+  name_short: "MA08"
+  map: 1
+  sequence: 0
+-
+  id: 1181
+  school_year_id: 24
+  department_id: 10
+  name: "Year 8 Physical Education"
+  name_short: "PE08"
+  map: 1
+  sequence: 0
+-
+  id: 1182
+  school_year_id: 24
+  department_id: 4
+  name: "Year 8 Science"
+  name_short: "SC08"
+  map: 1
+  sequence: 0
+-
+  id: 1183
+  school_year_id: 24
+  department_id: 8
+  name: "Year 8 Spanish"
+  name_short: "SP08"
+  map: 1
+  sequence: 0
+-
+  id: 1184
+  school_year_id: 24
+  department_id: 15
+  name: "Year 8 Tutor Time"
+  name_short: "TUT08"
+  map: 1
+  sequence: 0
+-
+  id: 1185
+  school_year_id: 24
+  department_id: 5
+  name: "Year 9 Art"
+  name_short: "AR09"
+  map: 1
+  sequence: 0
+-
+  id: 1186
+  school_year_id: 24
+  department_id: 8
+  name: "Year 9 Chinese First Language"
+  name_short: "CF09"
+  map: 1
+  sequence: 0
+-
+  id: 1187
+  school_year_id: 24
+  department_id: 8
+  name: "Year 9 Chinese Second Language"
+  name_short: "CS09"
+  map: 1
+  sequence: 0
+-
+  id: 1188
+  school_year_id: 24
+  department_id: 7
+  name: "Year 9 English"
+  name_short: "EN09"
+  map: 1
+  sequence: 0
+-
+  id: 1189
+  school_year_id: 24
+  department_id: 5
+  name: "Year 9 Expressive Arts"
+  name_short: "EX09"
+  map: 1
+  sequence: 0
+-
+  id: 1190
+  school_year_id: 24
+  department_id: 18
+  name: "Year 9 Free Learning"
+  name_short: "FL09"
+  map: 1
+  sequence: 0
+-
+  id: 1191
+  school_year_id: 24
+  department_id: 18
+  name: "Year 9 Human Technologies"
+  name_short: "HT09"
+  map: 1
+  sequence: 0
+-
+  id: 1192
+  school_year_id: 24
+  department_id: 6
+  name: "Year 9 Humanities"
+  name_short: "HU09"
+  map: 1
+  sequence: 0
+-
+  id: 1193
+  school_year_id: 24
+  department_id: 8
+  name: "Year 9 Japanese"
+  name_short: "JP09"
+  map: 1
+  sequence: 0
+-
+  id: 1194
+  school_year_id: 24
+  department_id: 16
+  name: "Year 9 Mathematics"
+  name_short: "MA09"
+  map: 1
+  sequence: 0
+-
+  id: 1195
+  school_year_id: 24
+  department_id: 5
+  name: "Year 9 Media Studies"
+  name_short: "ME09"
+  map: 1
+  sequence: 0
+-
+  id: 1196
+  school_year_id: 24
+  department_id: 10
+  name: "Year 9 Physical Education"
+  name_short: "PE09"
+  map: 1
+  sequence: 0
+-
+  id: 1197
+  school_year_id: 24
+  department_id: 4
+  name: "Year 9 Science"
+  name_short: "SC09"
+  map: 1
+  sequence: 0
+-
+  id: 1198
+  school_year_id: 24
+  department_id: 8
+  name: "Year 9 Spanish"
+  name_short: "SP09"
+  map: 1
+  sequence: 0
+-
+  id: 1199
+  school_year_id: 24
+  department_id: 15
+  name: "Year 9 Tutor Time"
+  name_short: "TUT09"
+  map: 1
+  sequence: 0
+-
+  id: 1200
+  school_year_id: 24
+  department_id: 5
+  name: "Year 13 Theatre Arts (Standard)"
+  name_short: "TASL13"
+  map: 1
+  sequence: 0
+-
+  id: 1201
+  school_year_id: 24
+  department_id: 5
+  name: "Year 12 Film Studies (Standard)"
+  name_short: "FSSL12"
+  map: 1
+  sequence: 0
+-
+  id: 1203
+  school_year_id: 24
+  department_id: 8
+  name: "Year 13 Spanish Ab Initio (Standard)"
+  name_short: "SASL13"
+  map: 1
+  sequence: 0
+-
+  id: 1204
+  school_year_id: 24
+  department_id: 8
+  name: "Year 12 Spanish Ab Initio (Standard)"
+  name_short: "SASL12"
+  map: 1
+  sequence: 0
+...

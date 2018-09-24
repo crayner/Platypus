@@ -1,0 +1,1868 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_course_class
+-
+  id: 2005
+  course_id: 1051
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2006
+  course_id: 1052
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2007
+  course_id: 1052
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2008
+  course_id: 1053
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2009
+  course_id: 1053
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2010
+  course_id: 1054
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2011
+  course_id: 1055
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2012
+  course_id: 1056
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2013
+  course_id: 1056
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2014
+  course_id: 1056
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2016
+  course_id: 1057
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2017
+  course_id: 1057
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2018
+  course_id: 1058
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2019
+  course_id: 1059
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2020
+  course_id: 1060
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2021
+  course_id: 1060
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2022
+  course_id: 1061
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2023
+  course_id: 1062
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2024
+  course_id: 1062
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2025
+  course_id: 1062
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2026
+  course_id: 1063
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2027
+  course_id: 1064
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2028
+  course_id: 1064
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2030
+  course_id: 1065
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2031
+  course_id: 1065
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2032
+  course_id: 1066
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2033
+  course_id: 1067
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2035
+  course_id: 1068
+  name: 2
+  name_short: 2
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2036
+  course_id: 1068
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2037
+  course_id: 1069
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2038
+  course_id: 1070
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2039
+  course_id: 1070
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2040
+  course_id: 1071
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2041
+  course_id: 1072
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2042
+  course_id: 1073
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2043
+  course_id: 1074
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2044
+  course_id: 1074
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2045
+  course_id: 1074
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2046
+  course_id: 1075
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2048
+  course_id: 1076
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2049
+  course_id: 1078
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2050
+  course_id: 1079
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2051
+  course_id: 1080
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2052
+  course_id: 1081
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2053
+  course_id: 1082
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2054
+  course_id: 1082
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2055
+  course_id: 1082
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2057
+  course_id: 1083
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2058
+  course_id: 1084
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2059
+  course_id: 1084
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2060
+  course_id: 1085
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2061
+  course_id: 1085
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2062
+  course_id: 1087
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2063
+  course_id: 1088
+  name: 2
+  name_short: 2
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2064
+  course_id: 1088
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2065
+  course_id: 1089
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2066
+  course_id: 1090
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2067
+  course_id: 1091
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2068
+  course_id: 1092
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2069
+  course_id: 1093
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2070
+  course_id: 1094
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2071
+  course_id: 1095
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2073
+  course_id: 1096
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2074
+  course_id: 1097
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2076
+  course_id: 1098
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2078
+  course_id: 1099
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2079
+  course_id: 1100
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2080
+  course_id: 1101
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2082
+  course_id: 1103
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2083
+  course_id: 1104
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2084
+  course_id: 1105
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2085
+  course_id: 1106
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2086
+  course_id: 1107
+  name: 2
+  name_short: 2
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2087
+  course_id: 1107
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2088
+  course_id: 1108
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2089
+  course_id: 1109
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2090
+  course_id: 1110
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2091
+  course_id: 1111
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2092
+  course_id: 1112
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2093
+  course_id: 1113
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2094
+  course_id: 1114
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2096
+  course_id: 1116
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2097
+  course_id: 1117
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2098
+  course_id: 1118
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2099
+  course_id: 1119
+  name: 2
+  name_short: 2
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2100
+  course_id: 1119
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2101
+  course_id: 1120
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2102
+  course_id: 1121
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2103
+  course_id: 1122
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2104
+  course_id: 1123
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2105
+  course_id: 1124
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2106
+  course_id: 1125
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2107
+  course_id: 1126
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2109
+  course_id: 1128
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2110
+  course_id: 1129
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2111
+  course_id: 1130
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2112
+  course_id: 1131
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2113
+  course_id: 1131
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2114
+  course_id: 1132
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2115
+  course_id: 1132
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2116
+  course_id: 1133
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2117
+  course_id: 1134
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2118
+  course_id: 1135
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2120
+  course_id: 1138
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2121
+  course_id: 1139
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2122
+  course_id: 1140
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2123
+  course_id: 1141
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2124
+  course_id: 1142
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2125
+  course_id: 1143
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2126
+  course_id: 1144
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2127
+  course_id: 1146
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2128
+  course_id: 1147
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2130
+  course_id: 1152
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2131
+  course_id: 1153
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2132
+  course_id: 1154
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2133
+  course_id: 1155
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2134
+  course_id: 1156
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2135
+  course_id: 1157
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2136
+  course_id: 1157
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2137
+  course_id: 1157
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2138
+  course_id: 1158
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2139
+  course_id: 1158
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2140
+  course_id: 1158
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2141
+  course_id: 1159
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2142
+  course_id: 1159
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2143
+  course_id: 1160
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2144
+  course_id: 1160
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2145
+  course_id: 1161
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2146
+  course_id: 1161
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2147
+  course_id: 1161
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2148
+  course_id: 1162
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2149
+  course_id: 1162
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2150
+  course_id: 1162
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2151
+  course_id: 1163
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2152
+  course_id: 1163
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2153
+  course_id: 1163
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2154
+  course_id: 1164
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2155
+  course_id: 1164
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2156
+  course_id: 1164
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2157
+  course_id: 1165
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2158
+  course_id: 1166
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2159
+  course_id: 1166
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2161
+  course_id: 1166
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2162
+  course_id: 1167
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2163
+  course_id: 1167
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2164
+  course_id: 1167
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2165
+  course_id: 1168
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2166
+  course_id: 1168
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2167
+  course_id: 1168
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2168
+  course_id: 1169
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2169
+  course_id: 1170
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2170
+  course_id: 1170
+  name: 2
+  name_short: 2
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2171
+  course_id: 1170
+  name: 3
+  name_short: 3
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2172
+  course_id: 1171
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2173
+  course_id: 1171
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2174
+  course_id: 1171
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2175
+  course_id: 1172
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2176
+  course_id: 1172
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2177
+  course_id: 1173
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2178
+  course_id: 1173
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2179
+  course_id: 1174
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2180
+  course_id: 1174
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2181
+  course_id: 1174
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2182
+  course_id: 1175
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2183
+  course_id: 1175
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2184
+  course_id: 1175
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2185
+  course_id: 1176
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2186
+  course_id: 1176
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2187
+  course_id: 1176
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2188
+  course_id: 1177
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2189
+  course_id: 1177
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2190
+  course_id: 1177
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2191
+  course_id: 1178
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2192
+  course_id: 1178
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2193
+  course_id: 1178
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2194
+  course_id: 1179
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2195
+  course_id: 1180
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2196
+  course_id: 1180
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2197
+  course_id: 1180
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2198
+  course_id: 1181
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2199
+  course_id: 1181
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2200
+  course_id: 1181
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2201
+  course_id: 1182
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2202
+  course_id: 1182
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2203
+  course_id: 1182
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2204
+  course_id: 1183
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2205
+  course_id: 1184
+  name: 3
+  name_short: 3
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2206
+  course_id: 1184
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2207
+  course_id: 1184
+  name: 2
+  name_short: 2
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2208
+  course_id: 1185
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2209
+  course_id: 1186
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2210
+  course_id: 1186
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2211
+  course_id: 1187
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2212
+  course_id: 1188
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2213
+  course_id: 1188
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2214
+  course_id: 1188
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2215
+  course_id: 1189
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2216
+  course_id: 1190
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2217
+  course_id: 1190
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2218
+  course_id: 1191
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2219
+  course_id: 1191
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2220
+  course_id: 1192
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2221
+  course_id: 1192
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2222
+  course_id: 1193
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2223
+  course_id: 1194
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2224
+  course_id: 1194
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2225
+  course_id: 1194
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2226
+  course_id: 1195
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2227
+  course_id: 1196
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2228
+  course_id: 1196
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2229
+  course_id: 1197
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2230
+  course_id: 1197
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2231
+  course_id: 1198
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2232
+  course_id: 1199
+  name: 2
+  name_short: 2
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2233
+  course_id: 1199
+  name: 1
+  name_short: 1
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2234
+  course_id: 1175
+  name: 4
+  name_short: 4
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2235
+  course_id: 1180
+  name: 4
+  name_short: 4
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2236
+  course_id: 1191
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2237
+  course_id: 1190
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2238
+  course_id: 1075
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2239
+  course_id: 1192
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2240
+  course_id: 1137
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2241
+  course_id: 1187
+  name: 2
+  name_short: 2
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2242
+  course_id: 1149
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2244
+  course_id: 1196
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2245
+  course_id: 1197
+  name: 3
+  name_short: 3
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2246
+  course_id: 1145
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2247
+  course_id: 1200
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2248
+  course_id: 1201
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2250
+  course_id: 1202
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2251
+  course_id: 1147
+  name: 1
+  name_short: 1
+  reportable: 1
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2252
+  course_id: 1199
+  name: 3
+  name_short: 3
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+-
+  id: 2256
+  course_id: 1088
+  name: 3
+  name_short: 3
+  reportable: 0
+  attendance: 1
+  use_course_name: 1
+...
