@@ -1,0 +1,11 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_timetable
+-
+  id: 9
+  school_year_id: 24
+  name: "2018-2019 TT"
+  name_short: "2018-2019TT"
+  name_short_display: "timetable_day_short_name"
+  active: 1
+...

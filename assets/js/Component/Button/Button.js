@@ -34,9 +34,26 @@ export default function Button(props) {
         button.type = {}
 
 
+    if (url === '')
+        return (
+            <button
+                type={button.type}
+                className={className}
+                style={button.style}
+                title={translateMessage(translations, button.label)}>
+                    {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
+                    <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
+            </button>
+        )
     return (
-        <button type={button.type} className={className} onClick={() => { buttonClickAction(url, button.response_type, button.options)}} style={button.style} title={translateMessage(translations, button.label)}>
-            {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ? <FontAwesomeIcon icon={button.icon} fixedWidth={true} /> : null}
+        <button
+            type={button.type}
+            className={className}
+            onClick={() => {buttonClickAction(url, button.response_type, button.options)}}
+            style={button.style}
+            title={translateMessage(translations, button.label)}>
+                {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
+                <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
         </button>
     )
 }
@@ -45,5 +62,5 @@ Button.propTypes = {
     url: PropTypes.string.isRequired,
     button: PropTypes.object.isRequired,
     translations: PropTypes.object.isRequired,
-    buttonClickAction: PropTypes.func.isRequired,
+    buttonClickAction: PropTypes.func,
 };

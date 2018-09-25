@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import {translateMessage} from '../Component/MessageTranslator'
 import PaginationCombineCell from './PaginationCombineCell'
 import Parser from 'html-react-parser';
+import ButtonOn from '../Component/Button/ButtonOn'
+import ButtonOff from '../Component/Button/ButtonOff'
 
 
 export default function PaginationCell(props) {
@@ -48,6 +50,13 @@ export default function PaginationCell(props) {
                         data={data}
                         translations={translations}
                     />
+                </div>
+            )
+        } else if (definition.style === 'boolean') {
+            const button = (typeof(definition.options.button)) !== 'undefined' ? definition.options.button : {}
+            return (
+                <div className={definition.class + ' card-text col-' + definition.size}>
+                    {data[definition.name] ? <ButtonOn button={button} url={''} translations={translations} /> : <ButtonOff button={button} url={''} translations={translations} /> }
                 </div>
             )
         } else if (definition.style === 'array') {

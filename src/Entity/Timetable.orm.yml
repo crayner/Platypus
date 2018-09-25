@@ -1,0 +1,41 @@
+App\Entity\Timetable:
+    type: entity
+    table: timetable
+    repositoryClass: App\Repository\TimetableRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 30
+        nameShort:
+            length: 12
+            column: name_short
+        nameShortDisplay:
+            length: 25
+            column: name_short_display
+        active:
+            type: boolean
+            options:
+                default: '0'
+    manyToOne:
+        schoolYear:
+            targetEntity: App\Entity\SchoolYear
+            joinColumn:
+                name: school_year_id
+                referencedColumnName: id
+                nullable: false
+    manyToMany:
+        yearGroups:
+            targetEntity: App\Entity\YearGroup
+            orderBy: { sequence: 'ASC' }
+            joinTable:
+                name: timetable_year_group
+                joinColumns:
+                    timetable_id:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    year_group_id:
+                        referencedColumnName: id

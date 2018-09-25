@@ -1,0 +1,25 @@
+%YAML 1.1
+---
+# craigray_platypus.platy_timetable_year_group
+-
+  timetable_id: 9
+  year_group_id: 1
+-
+  timetable_id: 9
+  year_group_id: 2
+-
+  timetable_id: 9
+  year_group_id: 3
+-
+  timetable_id: 9
+  year_group_id: 4
+-
+  timetable_id: 9
+  year_group_id: 5
+-
+  timetable_id: 9
+  year_group_id: 6
+-
+  timetable_id: 9
+  year_group_id: 7
+...

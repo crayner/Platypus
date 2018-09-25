@@ -32,7 +32,7 @@ class MenuConstantsManager
     role: ROLE_ADMIN
     node: 1
     order: 12
-    route: manage_courses
+    route: manage_timetables
 13:
     label: menu.admin.people
     name: People Admin
@@ -329,6 +329,13 @@ Timetable Admin:
             route: manage_courses
             parameters: {}
             transDomain: System
+    timetable:
+        manage_timetables:
+            label: "Manage Timetables"
+            role: ROLE_ACTION
+            route: manage_timetables
+            parameters: {}
+            transDomain: System         
     hidden:
         course_edit:
             route: edit_course

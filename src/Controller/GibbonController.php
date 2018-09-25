@@ -28,10 +28,10 @@ class GibbonController extends Controller
 {
     /**
      * transfer
-     * @Route("/gibbon/transfer/{section}/", name="gibbon_transfer")
+     * @Route("/gibbon/transfer/{section}/{only}", name="gibbon_transfer")
      * @IsGranted("ROLE_SYSTEM_ADMIN")
      */
-    public function transfer(GibbonManager $manager, string $section = 'start')
+    public function transfer(GibbonManager $manager, string $section = 'start', string $only = 'none')
     {
         $logger = $this->get('monolog.logger.demonstration');
 
@@ -41,6 +41,13 @@ class GibbonController extends Controller
         $sql = 'SHOW TABLES';
 
         $done = false;
+
+        if ($only !== 'none')
+        {
+            $manager->transfer($only, $this->get('monolog.logger.gibbon'));
+            return $this->redirectToRoute('home');
+        }
+
         foreach($gm->getConnection()->fetchAll($sql) as $table)
             foreach($table as $name) {
                 if ($done)
