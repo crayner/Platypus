@@ -53,10 +53,21 @@ export default function PaginationCell(props) {
                 </div>
             )
         } else if (definition.style === 'boolean') {
-            const button = (typeof(definition.options.button)) !== 'undefined' ? definition.options.button : {}
+            let button = {}
+            if (typeof(definition.options) === 'object')
+            {
+                if (typeof(definition.options.classMerge) !== 'undefined')
+                    button = Object.assign(button, {classMerge: definition.options.classMerge})
+                if (typeof(definition.options.on) !== 'undefined' && data[definition.name])
+                    button = Object.assign(button, definition.options.on)
+                if (typeof(definition.options.off) !== 'undefined' && ! data[definition.name])
+                    button = Object.assign(button, definition.options.off)
+            }
+
+            const displayButton = data[definition.name] ? (<ButtonOn button={button} url={''} translations={translations} />) : (<ButtonOff button={button} url={''} translations={translations} />)
             return (
                 <div className={definition.class + ' card-text col-' + definition.size}>
-                    {data[definition.name] ? <ButtonOn button={button} url={''} translations={translations} /> : <ButtonOff button={button} url={''} translations={translations} /> }
+                    {displayButton}
                 </div>
             )
         } else if (definition.style === 'array') {

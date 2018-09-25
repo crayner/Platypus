@@ -2,6 +2,11 @@ App\Entity\Timetable:
     type: entity
     table: timetable
     repositoryClass: App\Repository\TimetableRepository
+    uniqueConstraints:
+        name_school_year:
+            columns:
+                - name
+                - school_year_id
     id:
         id:
             type: integer

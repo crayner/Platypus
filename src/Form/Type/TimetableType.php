@@ -10,32 +10,27 @@
  * file that was distributed with this source code.
  *
  * User: craig
- * Date: 21/09/2018
- * Time: 10:20
+ * Date: 25/09/2018
+ * Time: 14:29
  */
 namespace App\Form\Type;
 
-use App\Entity\Course;
-use App\Entity\CourseClass;
-use App\Entity\Department;
-use App\Entity\SchoolYear;
+use App\Entity\Timetable;
 use App\Entity\YearGroup;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
-use Hillrange\Form\Type\CollectionType;
+use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\EntityType;
-use Hillrange\Form\Type\HiddenEntityType;
+use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * Class CourseType
+ * Class TimetableType
  * @package App\Form\Type
  */
-class CourseType extends AbstractType
+class TimetableType extends AbstractType
 {
     /**
      * buildForm
@@ -48,54 +43,42 @@ class CourseType extends AbstractType
         $builder
             ->add('name', TextType::class,
                 [
-                    'label' => 'Course Name',
-                    'help' => 'Must be unique in the school year.'
+                    'label' => 'Name',
+                    'help' => 'Must be unique within the school year',
                 ]
             )
             ->add('nameShort', TextType::class,
                 [
-                    'label' => 'Course Short Name',
+                    'label' => 'Abbreviated Name',
+                    'help' => 'Must be unique within the school year',
                 ]
             )
-            ->add('department', EntityType::class,
+            ->add('nameShortDisplay', EnumType::class,
                 [
-                    'label' => 'Learning Area',
-                    'class' => Department::class,
-                    'placeholder' => 'Please select...'
+                    'label' => 'Day Column Display Format',
                 ]
             )
-            ->add('schoolYear', HiddenEntityType::class,
+            ->add('active', ToggleType::class,
                 [
-                    'class' => SchoolYear::class,
-                ]
-            )
-            ->add('description', CKEditorType::class,
-                [
-                    'label' => 'Description (Blurb)',
-                ]
-            )
-            ->add('map', ToggleType::class,
-                [
-                    'label' => 'Include In Curriculum Map',
+                    'label' => 'Active',
                 ]
             )
             ->add('yearGroups', EntityType::class,
                 [
-                    'label' => 'Year Groups',
-                    'help' => 'Enrolment available to selected year groups.',
                     'multiple' => true,
                     'expanded' => true,
                     'choice_label' => 'name',
-                    'class' => YearGroup::class,
                     'attr' => [
                         'class' => 'text-right',
                     ],
-                ]
-            )
-            ->add('sequence', IntegerType::class,
-                [
-                    'label' => 'Order',
-                    'help' => 'May be used to adjust arrangement of courses in reports.',
+                    'class' => YearGroup::class,
+                    'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('g')
+                            ->orderBy('g.sequence', 'ASC')
+                        ;
+                    },
+                    'label' => 'Year Groups',
+                    'help' => 'Groups not in a active timetable in this school year.'
                 ]
             )
         ;
@@ -110,8 +93,8 @@ class CourseType extends AbstractType
     {
         $resolver->setDefaults(
             [
-                'translation_domain' => 'Course',
-                'data_class' => Course::class,
+                'translation_domain' => 'Timetable',
+                'data_class' => Timetable::class,
             ]
         );
     }

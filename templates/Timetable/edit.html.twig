@@ -1,0 +1,27 @@
+{% trans_default_domain "Timetable" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% form_theme form
+    '@HillrangeForm/FormTheme/bootstrap.html.twig'
+%}
+
+{% block title %}{{ parent() }}{{ 'Edit Timetable'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Edit Timetable'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ '' }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {{ form_start(form) }}
+    {{ all_form_errors(fullForm) }}
+    {% set h3Content = '' %}
+    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_timetables')}}) %}
+    {% set h3Content = h3Content ~ saveButton() %}
+    {% include 'Timetable/details.html.twig' %}
+    {{ form_end(form) }}
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ toggle_script() }}
+    {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_timetable'} %}
+{% endblock javascripts %}

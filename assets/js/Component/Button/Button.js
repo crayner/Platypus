@@ -25,7 +25,7 @@ export default function Button(props) {
         className = className + ' ' + button.classMerge
 
     if (typeof(button.style) !== 'object')
-        button.style = new Object()
+        button.style = {}
 
     if (button.type === '' || typeof(button.type) === 'undefined')
         button.type = 'button'

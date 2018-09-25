@@ -109,7 +109,7 @@ class TimetablePagination extends PaginationReactManager
             'label' => 'Active',
             'name' => 'active',
             'style' => 'boolean',
-            'options' => ['button' => ['classMerge' => 'btn-sm']],
+            'options' => ['classMerge' => 'btn-sm', 'on' => ['icon' => ['far','check-circle']], 'off' => ['icon' => ['far','times-circle']]],
             'class' => 'text-center',
         ],
     ];

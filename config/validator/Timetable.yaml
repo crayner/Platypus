@@ -1,0 +1,7 @@
+App\Entity\Timetable:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [name, schoolYear]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [nameShort, schoolYear]
+        - App\Validator\Timetable: ~
