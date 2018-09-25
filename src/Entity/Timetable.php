@@ -26,6 +26,15 @@ use Doctrine\ORM\PersistentCollection;
 class Timetable
 {
     /**
+     * Timetable constructor.
+     */
+    public function __construct()
+    {
+        $this->setNameShortDisplay('day_of_the_week');
+        $this->setActive(true);
+    }
+
+    /**
      * @var integer|null
      */
     private $id;
@@ -111,24 +120,30 @@ class Timetable
      * @var array
      */
     private static $nameShortDisplayList = [
-        'day_of_the_week','timetable_day_short_name',''
+        'day_of_the_week',
+        'timetable_day_short_name',
+        ''
     ];
 
     /**
+     * getNameShortDisplay
+     *
      * @return null|string
      */
     public function getNameShortDisplay(): ?string
     {
-        return $this->nameShortDisplay;
+        return $this->nameShortDisplay = in_array($this->nameShortDisplay, self::$nameShortDisplayList) ? $this->nameShortDisplay : 'day_of_the_week' ;
     }
 
     /**
+     * setNameShortDisplay
+     *
      * @param null|string $nameShortDisplay
      * @return Timetable
      */
     public function setNameShortDisplay(?string $nameShortDisplay): Timetable
     {
-        $this->nameShortDisplay = $nameShortDisplay;
+        $this->nameShortDisplay = in_array($nameShortDisplay, self::$nameShortDisplayList) ? $nameShortDisplay : 'day_of_the_week' ;
         return $this;
     }
 

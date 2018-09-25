@@ -16,6 +16,7 @@
 namespace App\Pagination;
 
 use App\Entity\Timetable;
+use App\Util\SchoolYearHelper;
 
 /**
  * Class TimetablePagination
@@ -170,6 +171,8 @@ class TimetablePagination extends PaginationReactManager
             ->leftJoin('t.yearGroups', 'g')
             ->orderBy('t.id', 'ASC')
             ->addOrderBy('g.sequence', 'ASC')
+            ->where('s = :schoolYear')
+            ->setParameter('schoolYear', SchoolYearHelper::getCurrentSchoolYear())
             ->getQuery()
             ->getArrayResult();
 
