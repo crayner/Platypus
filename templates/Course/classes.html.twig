@@ -40,7 +40,7 @@
             {{ onOffButton({value: class.reportable, style: '', mergeClass: 'btn-sm'})|raw }}
         </div>
         <div class="col-3">
-            {{ editButton({class: 'btn-sm btn btn-info fas fa-users', windowOpen: {route: path('edit_class', {course_id: class.course.id, id: class.id, _fragment: 'participants'})}})|raw }}
+            {{ editButton({class: 'btn-sm btn btn-info fas fa-users', windowOpen: {route: path('edit_class', {course_id: class.course.id, id: class.id, tabName: 'participants'})}})|raw }}
             {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_class', {course_id: class.course.id, id: class.id})}})|raw }}
         </div>
     </div>

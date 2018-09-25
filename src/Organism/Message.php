@@ -71,7 +71,7 @@ class Message
 	 */
 	public function getMessage(): string
 	{
-		return strtolower($this->message);
+		return $this->message;
 	}
 
 	/**
@@ -79,7 +79,7 @@ class Message
 	 */
 	public function setMessage(string $message)
 	{
-		$this->message = strtolower($message);
+		$this->message = $message;
 
 		return $this;
 	}

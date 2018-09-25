@@ -69,13 +69,13 @@ class CourseClassManager extends TabManager
         {
             $courseClassPerson = $this->getRepository(CourseClassPerson::class)->findOneBy(['person' => $person, 'courseClass' => $this->getEntity()]);
 
-            if ($courseClassPerson instanceof CourseClassPerson || false) {
+            if ($courseClassPerson instanceof CourseClassPerson) {
                 $this->getEntityManager()->remove($courseClassPerson);
                 $this->getEntityManager()->flush();
                 $this->getMessageManager()->addMessage('success', 'Removed %{person} from %{class}', ['%{person}' => $person->getFullName(), '%{class}' => $this->getEntity()->getName()], 'Course');
                 return $this;
             }
-            $this->getMessageManager()->addMessage('warning', 'I did not find a participant to remove!', [], 'Course');
+            $this->getMessageManager()->addMessage('warning', 'I did not find a participant to remove from %{class}!', ['%{class}' => $this->getEntity()->getName()], 'Course');
             return $this;
         }
         $this->getMessageManager()->addMessage('danger', 'The class or person was not found and removal do not happen!', [], 'Course');
