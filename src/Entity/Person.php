@@ -2129,6 +2129,11 @@ class Person
         return $this;
     }
 
+    /**
+     * getRollGroupFullName
+     *
+     * @return string
+     */
     public function getRollGroupFullName(): string
     {
         $group = '';
@@ -2137,6 +2142,6 @@ class Person
             if ($se->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear())
                 $group = $se->getRollGroup()->getName();
         }
-        return ($group ? '('.$group.') ' : ''). $this->getFullName();
+        return $this->getFullName() . ($group ? ' ('.$group.')' : '');
     }
 }

@@ -18,6 +18,7 @@
     {% set h3Content = '' %}
     {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('edit_course', {id: app.request.get('course_id'), _fragment: 'classes'})}}) %}
     {% set h3Content = h3Content ~ saveButton() %}
+    {% include '@HillrangeForm/Script/collection_message.html.twig' %}
     {% include 'Default/tabs.html.twig' with {translation: 'Course', tabManager: manager} %}
     {{ form_end(form) }}
 {% endblock contentContainer %}

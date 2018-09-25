@@ -121,12 +121,12 @@ class CourseClassType extends AbstractType
                     'button_merge_class' => 'btn-sm',
                     'allow_add' => true,
                     'allow_delete' => true,
+                    'remove_element_route' => 'remove_class_participant',
                     'entry_options' => [
                         'choice_label' => 'rollGroupFullName',
                         'preferred_choices' => $preferredStudents,
                         'query_builder' => function(EntityRepository $er) {
                             return $er->createQueryBuilder('p')
-                                ->orderBy('rg.name', 'ASC')
                                 ->addOrderBy('p.surname', 'ASC')
                                 ->addOrderBy('p.firstName', 'ASC')
                                 ->leftJoin('p.primaryRole', 'r')
@@ -149,6 +149,7 @@ class CourseClassType extends AbstractType
                     'entry_type' => ClassParticipantType::class,
                     'button_merge_class' => 'btn-sm',
                     'allow_add' => true,
+                    'remove_element_route' => 'remove_class_participant',
                     'allow_delete' => true,
                     'entry_options' => [
                         'choice_label' => 'fullName',
@@ -180,12 +181,11 @@ class CourseClassType extends AbstractType
                                 ->addOrderBy('p.firstName', 'ASC')
                                 ->andWhere('p.status != :status')
                                 ->setParameter('status', 'full')
-                            ;
+                                ;
                         },
                     ],
                 ]
             )
-            ->addEventSubscriber(new CourseClassSubscriber())
         ;
 
     }

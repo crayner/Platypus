@@ -58,6 +58,9 @@ class ClassParticipantType extends AbstractType
                     'choice_label' => $options['choice_label'],
                     'preferred_choices' => $options['preferred_choices'],
                     'query_builder' => $options['query_builder'],
+                    'attr' => [
+                        'class' => 'removeElement',
+                    ],
                 ]
             )
         ;

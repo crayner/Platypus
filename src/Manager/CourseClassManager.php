@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 use App\Entity\CourseClass;
+use App\Entity\CourseClassPerson;
 use App\Entity\Person;
 use App\Manager\Traits\EntityTrait;
 use Doctrine\DBAL\Connection;
@@ -33,6 +34,9 @@ class CourseClassManager extends TabManager
      */
     private $entityName = CourseClass::class;
 
+    /**
+     * @var array
+     */
     protected $tabs = [
         [
             'name' => 'details',
@@ -49,4 +53,32 @@ class CourseClassManager extends TabManager
             'translation' => 'Course',
         ],
     ];
+
+    /**
+     * removeClassParticipant
+     *
+     * @param int $id
+     * @return CourseClassManager
+     * @throws \Exception
+     */
+    public function removeClassParticipant(int $id): CourseClassManager
+    {
+        $person = $this->getRepository(Person::class)->find($id);
+
+        if ($person instanceof Person && $this->getEntity() instanceof CourseClass)
+        {
+            $courseClassPerson = $this->getRepository(CourseClassPerson::class)->findOneBy(['person' => $person, 'courseClass' => $this->getEntity()]);
+
+            if ($courseClassPerson instanceof CourseClassPerson || false) {
+                $this->getEntityManager()->remove($courseClassPerson);
+                $this->getEntityManager()->flush();
+                $this->getMessageManager()->addMessage('success', 'Removed %{person} from %{class}', ['%{person}' => $person->getFullName(), '%{class}' => $this->getEntity()->getName()], 'Course');
+                return $this;
+            }
+            $this->getMessageManager()->addMessage('warning', 'I did not find a participant to remove!', [], 'Course');
+            return $this;
+        }
+        $this->getMessageManager()->addMessage('danger', 'The class or person was not found and removal do not happen!', [], 'Course');
+        return $this;
+    }
 }

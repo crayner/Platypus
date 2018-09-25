@@ -63,23 +63,23 @@ class CoursePagination extends PaginationReactManager
      * @var array
      */
     protected $sortByList = [
+        'Abbreviation' => [
+            'nameShort',
+            'name',
+        ],
         'Name' => [
             'name',
-            'shortName',
-        ],
-        'Short Name' => [
-            'shortName',
-            'name',
+            'nameShort',
         ],
         'Department' => [
             'department',
             'name',
-            'nameShirt',
+            'nameShort',
         ],
         'Class Count' => [
             'classes',
             'name',
-            'nameShirt',
+            'nameShort',
         ],
     ];
 

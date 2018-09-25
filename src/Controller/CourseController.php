@@ -19,11 +19,14 @@ use App\Form\Type\CourseClassType;
 use App\Form\Type\CourseType;
 use App\Manager\CourseClassManager;
 use App\Manager\CourseManager;
+use App\Manager\TwigManager;
 use App\Pagination\CoursePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class CourseController
@@ -119,5 +122,30 @@ class CourseController extends Controller
                 'manager' => $manager,
             ]
         );
+    }
+
+    /**
+     * removeClassParticipant
+     *
+     * @param CourseClassManager $manager
+     * @param int $id
+     * @param int $cid
+     * @param TwigManager $twig
+     * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     * @Route("/class/{id}/participant/{cid}/remove/", name="remove_class_participant")
+     * @Security("is_granted('USE_ROUTE', ['manage_courses'])")
+     */
+    public function removeClassParticipant(CourseClassManager $manager, int $id, int $cid, TwigManager $twig)
+    {
+        $manager->find($id);
+
+        $manager->removeClassParticipant($cid);
+
+        return new JsonResponse([
+            'message' => $manager->getMessageManager()->renderView($twig->getTwig()),
+        ],200);
     }
 }
