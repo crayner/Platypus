@@ -20,6 +20,7 @@ use App\Manager\TimetableManager;
 use App\Pagination\TimetablePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -70,7 +71,6 @@ class TimetableController extends Controller
         {
             $manager->getEntityManager()->persist($entity);
             $manager->getEntityManager()->flush();
-            $form = $this->createForm(TimetableType::class, $entity);
         }
 
         return $this->render(
@@ -80,6 +80,30 @@ class TimetableController extends Controller
                 'fullForm' => $form,
                 'manager' => $manager,
             ]
+        );
+    }
+
+    /**
+     * delete
+     *
+     * @param TimetableManager $manager
+     * @param TimetablePagination $pagination
+     * @param int $id
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/timetable/{id}/delete/", name="delete_timetable")
+     * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
+     */
+    public function delete(TimetableManager $manager, TimetablePagination $pagination, int $id)
+    {
+        $manager->delete($id);
+
+        return new JsonResponse(
+            [
+                'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($this->get('translator')),
+                'rows' => $pagination->getAllResults(),
+            ],
+            200
         );
     }
 }

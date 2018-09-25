@@ -240,4 +240,26 @@ class Timetable
         $this->getYearGroups()->removeElement($yearGroup);
         return $this;
     }
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        if ($this->isActive())
+            return false;
+        return true;
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getName();
+    }
 }

@@ -145,7 +145,7 @@ class TimetablePagination extends PaginationReactManager
     /**
      * @var array
      */
-    protected $headerDefinitions = [
+    protected $headerDefinition = [
         'buttons' => [
             [
                 'label' => 'Add Timetable',

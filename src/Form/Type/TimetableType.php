@@ -15,11 +15,14 @@
  */
 namespace App\Form\Type;
 
+use App\Entity\SchoolYear;
 use App\Entity\Timetable;
 use App\Entity\YearGroup;
+use App\Util\SchoolYearHelper;
 use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\EnumType;
+use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
@@ -79,6 +82,11 @@ class TimetableType extends AbstractType
                     },
                     'label' => 'Year Groups',
                     'help' => 'Groups not in a active timetable in this school year.'
+                ]
+            )
+            ->add('schoolYear', HiddenEntityType::class,
+                [
+                    'class' => SchoolYear::class,
                 ]
             )
         ;

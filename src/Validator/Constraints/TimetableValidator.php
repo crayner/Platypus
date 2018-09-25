@@ -34,15 +34,16 @@ class TimetableValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        dump($value->getYearGroups());
+        if (empty($value) || !$value->isActive())
+            return ;
 
         $others = $this->repository->createQueryBuilder('t')
             ->where('t.active = :active')
             ->andWhere('t.schoolYear = :schoolYear')
-            ->andWhere('t != :timetable')
+            ->andWhere('t.id != :timetable')
             ->setParameter('active', true)
             ->setParameter('schoolYear', SchoolYearHelper::getCurrentSchoolYear())
-            ->setParameter('timetable', $value)
+            ->setParameter('timetable', $value->getId())
             ->getQuery()
             ->getResult();
 
@@ -54,7 +55,7 @@ class TimetableValidator extends ConstraintValidator
                         $duplicates[$yg->getId()] = $yg->getName();
         if (! empty($duplicates)) {
             $duplicates = implode(',', $duplicates);
-dump($duplicates);
+
             $this->context->buildViolation($constraint->message)
                 ->setTranslationDomain('Timetable')
                 ->setParameter('%{yearGroups}',  $duplicates)

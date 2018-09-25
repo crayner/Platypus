@@ -30,4 +30,14 @@ class TimetableManager
      * @var string
      */
     private $entityName = Timetable::class;
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        return $this->getEntity()->canDelete();
+    }
 }
