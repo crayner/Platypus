@@ -37,8 +37,8 @@ class GibbonTTManager extends GibbonTransferManager
      * @var array
      */
     protected $requireBefore = [
-//        'gibbonYearGroup',
-//        'gibbonSchoolYear',
+        'gibbonYearGroup',
+        'gibbonSchoolYear',
     ];
 
     /**

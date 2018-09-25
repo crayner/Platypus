@@ -23,6 +23,7 @@ use Doctrine\DBAL\Exception\ForeignKeyConstraintViolationException;
 use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
+use Hillrange\Form\Validator\Constraints\ColourValidator;
 use Hillrange\Security\Util\ParameterInjector;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -575,6 +576,22 @@ class GibbonManager
             $value = str_replace($options['removeChars'], '', $value);
 
         return StringHelper::safeString($value, true);
+    }
+
+    /**
+     * safeString
+     *
+     * @param $value
+     * @param $options
+     * @return string
+     */
+    private function colour($value, $options): string
+    {
+        $colour = ColourValidator::isColour($value, 'hex');
+
+        if ($colour === false)
+            return null;
+        return $colour;
     }
 
     /**
