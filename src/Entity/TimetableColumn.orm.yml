@@ -1,0 +1,17 @@
+App\Entity\TimetableColumn:
+    type: entity
+    table: timetable_column
+    repositoryClass: App\Repository\TimetableColumnRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 30
+            unique: true
+        nameShort:
+            length: 12
+            column: name_short
+            unique: true
