@@ -138,14 +138,14 @@ class TimetableController extends Controller
     }
 
     /**
-     * manageColumns
+     * listColumns
      *
      * @param TimetableColumnPagination $pagination
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/timetable/column/list/", name="manage_columns")
      * @Security("is_granted('ROLE_ACTION', request)")
      */
-    public function manageColumns(TimetableColumnPagination $pagination)
+    public function listColumns(TimetableColumnPagination $pagination)
     {
         return $this->render('Timetable/column_list.html.twig',
             [

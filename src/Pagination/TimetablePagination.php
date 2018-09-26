@@ -63,7 +63,7 @@ class TimetablePagination extends PaginationReactManager
      * @var array
      */
     protected $sortByList = [
-        'Abbreviation' => [
+        'Abbrev.' => [
             'schoolYear',
             'nameShort',
             'name',

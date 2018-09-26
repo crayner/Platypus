@@ -18,7 +18,6 @@ namespace App\Form\Type;
 use App\Entity\SchoolYear;
 use App\Entity\Timetable;
 use App\Entity\YearGroup;
-use App\Util\SchoolYearHelper;
 use Doctrine\ORM\EntityRepository;
 use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\EntityType;
@@ -90,7 +89,7 @@ class TimetableType extends AbstractType
                     'class' => SchoolYear::class,
                 ]
             )
-            ->add('days', CollectionType::class,
+            ->add('timetableDays', CollectionType::class,
                 [
                     'entry_type' => TimetableDayType::class,
                     'allow_add' => true,

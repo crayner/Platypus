@@ -60,16 +60,7 @@ class TimetableColumnPagination extends PaginationReactManager
     /**
      * @var array
      */
-    protected $sortByList = [
-        'Name' => [
-            'name',
-            'nameShort',
-        ],
-        'Abbrev.' => [
-            'nameShort',
-            'name',
-        ],
-    ];
+    protected $sortByList = [];
 
     /**
      * @var array
@@ -153,6 +144,8 @@ class TimetableColumnPagination extends PaginationReactManager
         $result = $this->getRepository()->createQueryBuilder('c')
             ->select('c.nameShort, c.id, c.name, COUNT(r.id) as rows')
             ->leftJoin('c.timetableColumnRows', 'r')
+            ->leftJoin('c.dayOfWeek', 'd')
+            ->orderBy('d.sequence')
             ->groupBy('c.id')
             ->getQuery()
             ->getArrayResult();

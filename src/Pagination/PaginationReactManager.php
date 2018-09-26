@@ -164,7 +164,7 @@ abstract class PaginationReactManager implements PaginationInterface
      */
     public function isDisplaySort(): bool
     {
-        if (! property_exists($this, 'sortByList'))
+        if (! property_exists($this, 'sortByList') || empty($this->sortByList))
             return false;
         if (is_null($this->getSortList()))
             return false;

@@ -110,6 +110,7 @@ trait EntityTrait
      */
     public function delete($id)
     {
+        if ($id === 'ignore') return $this->getEntity();
         $entity = $this->find($id);
         if (empty($entity))
         {
