@@ -1,0 +1,25 @@
+{% trans_default_domain 'Timetable' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Timetable Column Rows: %name%', name: manager.entity.name, transDomain: 'Timetable', panelParagraph: '', panelStyle: 'info'} %}
+    <div class="row row-header text-center">
+        <div class="col-2 align-self-center">
+            {{ 'Name'|trans({}, 'System') }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'Abbrev.'|trans({}, 'System') }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'Start @'|trans }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'End @'|trans }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'Row Type'|trans }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'Actions'|trans({}, 'System') }}
+        </div>
+    </div>
+    {{ collection_widget(form.timetableColumnRows) }}
+{% include 'Default/panelEnd.html.twig' %}

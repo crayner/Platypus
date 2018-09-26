@@ -9,7 +9,7 @@
     {% set h3Content = h3Content ~ '</div>' %}
     {% set name = value.name|trans({}, 'System') %}
     {% set short = value.nameShort|trans({}, 'System') %}
-    {% set panelParagraph =  '<div style="float: right">' ~ ('day_of_week.school_day.label'|trans) ~ '&nbsp;' ~ form_widget(form.schoolDay) ~ '</div' %}
+    {% set panelParagraph =  '<div class="row"><div class="col-3 offset-1">' ~ ('day_of_week.school_day.label'|trans) ~ '&nbsp;' ~ form_widget(form.schoolDay) ~ '</div></div>' %}
     {% include 'Default/panelStart.html.twig' with {header: 'day.name', headerParams: {'%{name}': name, '%{short}': short}, panelStyle: 'light', transDomain: 'School', bodyAttr: 'id=display_school_times_' ~  id|replace({'days_of_week_days_': ''})} %}
     <div class="row">
         <div class="col-3 card">

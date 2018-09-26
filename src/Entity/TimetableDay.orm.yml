@@ -25,13 +25,14 @@ App\Entity\TimetableDay:
     manyToOne:
         timetableColumn:
             targetEntity: App\Entity\TimetableColumn
+            inversedBy: timetableDays
             joinColumn:
                 name: timetable_column_id
                 referencedColumnName: id
                 nullable: false
         timetable:
             targetEntity: App\Entity\Timetable
-            inversedBy: days
+            inversedBy: timetableDays
             joinColumn:
                 name: timetable_id
                 referencedColumnName: id

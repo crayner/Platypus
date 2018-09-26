@@ -330,12 +330,18 @@ Timetable Admin:
             parameters: {}
             transDomain: System
     timetable:
+        manage_timetable_columns:
+            label: "Manage Columns"
+            role: ROLE_ACTION
+            route: manage_columns
+            parameters: {}
+            transDomain: Timetable         
         manage_timetables:
             label: "Manage Timetables"
             role: ROLE_ACTION
             route: manage_timetables
             parameters: {}
-            transDomain: System         
+            transDomain: Timetable         
     hidden:
         course_edit:
             route: edit_course
@@ -343,6 +349,10 @@ Timetable Admin:
                 id: "%"
         timetable_edit:
             route: edit_timetable
+            parameters:
+                id: "%"
+        column_edit:
+            route: edit_column
             parameters:
                 id: "%"
         edit_class:

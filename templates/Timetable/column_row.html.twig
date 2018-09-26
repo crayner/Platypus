@@ -1,0 +1,29 @@
+{% trans_default_domain 'Timetable' %}
+
+{% block timetable_column_row_label %}{% endblock %}
+{% block timetable_column_row_errors %}{% endblock %}
+
+{% block timetable_column_row_widget %}
+    <div class="small row row-striped">
+        <div class="col-2">
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="col-2">
+            {{ form_widget(form.nameShort) }}
+        </div>
+        <div class="col-2">
+            {{ form_widget(form.timeStart) }}
+        </div>
+        <div class="col-2">
+            {{ form_widget(form.timeEnd) }}
+        </div>
+        <div class="col-2 text-right">
+            {{ form_widget(form.type) }}
+            {{ form_widget(form.id) }}
+            {{ form_widget(form.timetableColumn, {value: app.request.get('id')}) }}
+        </div>
+        <div class="col-2 text-center collection-actions align-self-center">
+            {{ saveButton({mergeClass: 'btn-sm'})|raw }}
+        </div>
+    </div>
+{% endblock timetable_column_row_widget %}

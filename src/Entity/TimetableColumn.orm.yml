@@ -15,8 +15,17 @@ App\Entity\TimetableColumn:
             length: 12
             column: name_short
             unique: true
+    manyToOne:
+        dayOfWeek:
+            targetEntity: App\Entity\DayOfWeek
+            joinColumn:
+                name: day_of_week_id
+                referencedColumnName: id
     oneToMany:
         timetableColumnRows:
             targetEntity: App\Entity\TimetableColumnRow
             mappedBy: timetableColumn
             cascade: [ 'all' ]
+        timetableDays:
+            targetEntity: App\Entity\TimetableDay
+            mappedBy: timetableColumn

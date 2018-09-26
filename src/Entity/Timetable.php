@@ -132,7 +132,7 @@ class Timetable
      */
     public function getNameShortDisplay(): ?string
     {
-        return $this->nameShortDisplay = in_array($this->nameShortDisplay, self::$nameShortDisplayList) ? $this->nameShortDisplay : 'day_of_the_week' ;
+        return $this->nameShortDisplay = in_array($this->nameShortDisplay, self::$nameShortDisplayList) ? $this->nameShortDisplay : 'timetableDay_of_the_week' ;
     }
 
     /**
@@ -143,7 +143,7 @@ class Timetable
      */
     public function setNameShortDisplay(?string $nameShortDisplay): Timetable
     {
-        $this->nameShortDisplay = in_array($nameShortDisplay, self::$nameShortDisplayList) ? $nameShortDisplay : 'day_of_the_week' ;
+        $this->nameShortDisplay = in_array($nameShortDisplay, self::$nameShortDisplayList) ? $nameShortDisplay : 'timetableDay_of_the_week' ;
         return $this;
     }
 
@@ -281,65 +281,65 @@ class Timetable
     /**
      * @var Collection|null
      */
-    private $days;
+    private $timetableDays;
 
     /**
-     * getDays
+     * getTimetableDays
      *
      * @return Collection
      */
-    public function getDays(): Collection
+    public function getTimetableDays(): Collection
     {
-        if (empty($this->days))
-            $this->days = new ArrayCollection();
+        if (empty($this->timetableDays))
+            $this->timetableDays = new ArrayCollection();
 
-        if ($this->days instanceof PersistentCollection)
-            $this->days->initialize();
+        if ($this->timetableDays instanceof PersistentCollection)
+            $this->timetableDays->initialize();
 
-        return $this->days;
+        return $this->timetableDays;
     }
 
     /**
-     * @param Collection|null $days
+     * @param Collection|null $timetableDays
      * @return Timetable
      */
-    public function setDays(?Collection $days): Timetable
+    public function setTimetableDays(?Collection $timetableDays): Timetable
     {
-        $this->days = $days;
+        $this->timetableDays = $timetableDays;
         return $this;
     }
 
     /**
-     * addDay
+     * addTimetableDay
      *
-     * @param TimetableDay|null $day
+     * @param TimetableDay|null $timetableDay
      * @param bool $add
      * @return Timetable
      */
-    public function addDay(?TimetableDay $day, $add = true): Timetable
+    public function addTimetableDay(?TimetableDay $timetableDay, $add = true): Timetable
     {
-        if (empty($day) || $this->getDays()->contains($day))
+        if (empty($timetableDay) || $this->getTimetableDays()->contains($timetableDay))
             return $this;
 
         if ($add)
-            $day->setTimetable($this, false);
+            $timetableDay->setTimetable($this, false);
 
-        $this->days->add($day);
+        $this->timetableDays->add($timetableDay);
 
         return $this;
     }
 
     /**
-     * removeDay
+     * removeTimetableDay
      *
-     * @param TimetableDay|null $day
+     * @param TimetableDay|null $timetableDay
      * @return Timetable
      */
-    public function removeDay(?TimetableDay $day): Timetable
+    public function removeTimetableDay(?TimetableDay $timetableDay): Timetable
     {
-        if (! empty($day))
-            $day->setTimetable(null,false);
-        $this->getDays()->removeElement($day);
+        if (! empty($timetableDay))
+            $timetableDay->setTimetable(null,false);
+        $this->getTimetableDays()->removeElement($timetableDay);
 
         return $this;
     }

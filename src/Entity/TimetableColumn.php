@@ -112,6 +112,13 @@ class TimetableColumn
         if ($this->timetableColumnRows instanceof PersistentCollection)
             $this->timetableColumnRows->initialize();
 
+        $iterator = $this->timetableColumnRows->getIterator();
+        $iterator->uasort(function ($a, $b) {
+            return ($a->getTimeStart() < $b->getTimeStart()) ? -1 : 1;
+        });
+
+        $this->timetableColumnRows = new ArrayCollection(iterator_to_array($iterator, false));
+
         return $this->timetableColumnRows;
     }
 
@@ -156,6 +163,76 @@ class TimetableColumn
         $this->getTimetableColumnRows()->removeElement($row);
         if (!empty($row))
             $row->setTimetableColumn(null, false);
+        return $this;
+    }
+
+    /**
+     * @var Collection|null
+     */
+    private $timetableDays;
+
+    /**
+     * getTimetableDays
+     *
+     * @return Collection
+     */
+    public function getTimetableDays(): Collection
+    {
+        if (empty($this->timetableDays))
+            $this->timetableDays = new ArrayCollection();
+        if ($this->timetableDays instanceof PersistentCollection)
+            $this->timetableDays->initialize();
+
+        return $this->timetableDays;
+    }
+
+    /**
+     * @param Collection|null $timetableDays
+     * @return TimetableColumn
+     */
+    public function setTimetableDays(?Collection $timetableDays): TimetableColumn
+    {
+        $this->timetableDays = $timetableDays;
+        return $this;
+    }
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        if ($this->getTimetableDays()->count() > 0)
+            return false;
+        return true;
+    }
+
+    public function __toString(): ?string
+    {
+        return $this->getName();
+    }
+
+    /**
+     * @var DayOfWeek|null
+     */
+    private $dayOfWeek;
+
+    /**
+     * @return DayOfWeek|null
+     */
+    public function getDayOfWeek(): ?DayOfWeek
+    {
+        return $this->dayOfWeek;
+    }
+
+    /**
+     * @param DayOfWeek|null $dayOfWeek
+     * @return TimetableColumn
+     */
+    public function setDayOfWeek(?DayOfWeek $dayOfWeek): TimetableColumn
+    {
+        $this->dayOfWeek = $dayOfWeek;
         return $this;
     }
 }

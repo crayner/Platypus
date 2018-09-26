@@ -3,30 +3,30 @@
 {% extends "Default/template.html.twig" %}
 
 {% form_theme form
-    'Timetable/timetable_day.html.twig'
+    'Timetable/column_row.html.twig'
     '@HillrangeForm/FormTheme/jquery.collection.html.twig'
     '@HillrangeForm/FormTheme/bootstrap.html.twig'
 %}
 
-{% block title %}{{ parent() }}{{ 'Edit Timetable'|trans }}{% endblock title %}
-{% block headerTitle %}{{ 'Edit Timetable'|trans }}{% endblock headerTitle %}
+{% block title %}{{ parent() }}{{ 'Edit Timetable Column'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Edit Timetable Column'|trans }}{% endblock headerTitle %}
 {% block headerLead %}{{ '' }}{% endblock headerLead %}
 
 {% block contentContainer %}
     {{ form_start(form) }}
     {{ all_form_errors(fullForm) }}
     {% set h3Content = '' %}
-    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_timetables')}}) %}
+    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_columns')}}) %}
     {% set h3Content = h3Content ~ saveButton() %}
     {% include '@HillrangeForm/Script/collection_message.html.twig' %}
-    {% include 'Default/tabs.html.twig' with {translation: 'Timetable', tabManager: manager} %}
+    {% include 'Default/tabs.html.twig' with {translation: 'Course', tabManager: manager} %}
     {{ form_end(form) }}
 {% endblock contentContainer %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ toggle_script() }}
-    {{ collections_manage(form, ['days'])|raw }}
-    {{ collection_script(form.days)|raw }}
-    {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_timetable'} %}
+    {{ collections_manage(form, ['timetableColumnRows'])|raw }}
+    {{ collection_script(form.timetableColumnRows)|raw }}
+    {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_column'} %}
 {% endblock javascripts %}

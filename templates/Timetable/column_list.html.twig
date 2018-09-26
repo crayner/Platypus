@@ -1,0 +1,17 @@
+{% trans_default_domain "Timetable" %}
+
+{% extends "Default/template.html.twig" %}
+
+{% block title %}{{ parent() }}{{ 'Manage Timetable Columns'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Manage Timetable Columns'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{{ '' }}{% endblock headerLead %}
+
+{% block contentContainer %}
+
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ pagination_script(pagination) }}
+{% endblock javascripts %}
+

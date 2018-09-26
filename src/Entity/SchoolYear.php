@@ -312,4 +312,9 @@ class SchoolYear extends SchoolYearExtension
 
         return $this;
     }
+
+    public function stopDelete()
+    {
+        trigger_error('You are deleting a School Year! WHY!!!', E_USER_ERROR);
+    }
 }

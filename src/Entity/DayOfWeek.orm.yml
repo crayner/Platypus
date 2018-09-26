@@ -16,10 +16,8 @@ App\Entity\DayOfWeek:
             nullable: false
             column: name_short
         sequence:
-            type: integer
-            length: 3
+            type: smallint
             nullable: false
-            column: sequence
         schoolDay:
             type: boolean
             nullable: false

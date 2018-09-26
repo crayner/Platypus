@@ -5,3 +5,16 @@ App\Entity\Timetable:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
               fields: [nameShort, schoolYear]
         - App\Validator\Timetable: ~
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                  max: 30
+        nameShort:
+            - NotBlank: ~
+            - Length:
+                  max: 12
+        schoolYear:
+            - Valid: ~
+        yearGroups:
+            - Valid: ~

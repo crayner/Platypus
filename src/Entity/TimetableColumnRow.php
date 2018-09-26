@@ -197,4 +197,24 @@ class TimetableColumnRow
 
         return $this;
     }
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        return false;
+    }
+
+    /**
+     * __toString
+     *
+     * @return null|string
+     */
+    public function __toString(): ?string
+    {
+        return $this->getTimetableColumn()->getName() . ' ' . $this->getName();
+    }
 }

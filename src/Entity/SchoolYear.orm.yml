@@ -38,3 +38,6 @@ App\Entity\SchoolYear:
             cascade: [persist, remove]
             orphanRemoval: true
             orderBy: {date: ASC}
+    lifecycleCallbacks:
+        preRemove:
+            - stopDelete

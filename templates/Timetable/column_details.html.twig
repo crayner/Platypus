@@ -1,0 +1,15 @@
+{% trans_default_domain 'Timetable' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Manage Timetable Column',  transDomain: 'Timetable', panelParagraph: '', panelStyle: 'success'} %}
+<div class="row">
+    <div class="col-4 card">
+        {{ form_row(form.name) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.nameShort) }}
+    </div>
+    <div class="col-4 card">
+        {{ form_row(form.dayOfWeek, {value: transformData(form.dayOfWeek)}) }}
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}
