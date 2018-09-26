@@ -25,6 +25,12 @@ App\Entity\Timetable:
             type: boolean
             options:
                 default: '0'
+    oneToMany:
+        days:
+            targetEntity: App\Entity\TimetableDay
+            mappedBy: timetable
+            cascade: [ 'all' ]
+            orphanRemoval: true
     manyToOne:
         schoolYear:
             targetEntity: App\Entity\SchoolYear

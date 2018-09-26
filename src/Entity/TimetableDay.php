@@ -153,9 +153,13 @@ class TimetableDay
      * @param Timetable|null $timetable
      * @return TimetableDay
      */
-    public function setTimetable(?Timetable $timetable): TimetableDay
+    public function setTimetable(?Timetable $timetable, $add = true): TimetableDay
     {
         $this->timetable = $timetable;
+
+        if ($add || ! empty($timetable))
+            $timetable->addDay($this, false);
+
         return $this;
     }
 
@@ -180,5 +184,15 @@ class TimetableDay
     {
         $this->timetableColumn = $timetableColumn;
         return $this;
+    }
+
+    /**
+     * __toString
+     *
+     * @return null|string
+     */
+    public function __toString(): ?string
+    {
+        return $this->getName();
     }
 }

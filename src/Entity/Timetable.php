@@ -277,4 +277,70 @@ class Timetable
     {
         return $this->getName();
     }
+
+    /**
+     * @var Collection|null
+     */
+    private $days;
+
+    /**
+     * getDays
+     *
+     * @return Collection
+     */
+    public function getDays(): Collection
+    {
+        if (empty($this->days))
+            $this->days = new ArrayCollection();
+
+        if ($this->days instanceof PersistentCollection)
+            $this->days->initialize();
+
+        return $this->days;
+    }
+
+    /**
+     * @param Collection|null $days
+     * @return Timetable
+     */
+    public function setDays(?Collection $days): Timetable
+    {
+        $this->days = $days;
+        return $this;
+    }
+
+    /**
+     * addDay
+     *
+     * @param TimetableDay|null $day
+     * @param bool $add
+     * @return Timetable
+     */
+    public function addDay(?TimetableDay $day, $add = true): Timetable
+    {
+        if (empty($day) || $this->getDays()->contains($day))
+            return $this;
+
+        if ($add)
+            $day->setTimetable($this, false);
+
+        $this->days->add($day);
+
+        return $this;
+    }
+
+    /**
+     * removeDay
+     *
+     * @param TimetableDay|null $day
+     * @return Timetable
+     */
+    public function removeDay(?TimetableDay $day): Timetable
+    {
+        if (! empty($day))
+            $day->setTimetable(null,false);
+        $this->getDays()->removeElement($day);
+
+        return $this;
+    }
 }

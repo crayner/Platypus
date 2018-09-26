@@ -191,6 +191,7 @@ class TimetablePagination extends PaginationReactManager
             }
         }
         sort($tt);
+
         return $tt;
     }
 }

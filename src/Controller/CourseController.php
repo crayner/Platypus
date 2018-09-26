@@ -129,7 +129,7 @@ class CourseController extends Controller
      *
      * @param CourseClassManager $manager
      * @param int $id
-     * @param int $cid
+     * @param mixed $cid
      * @param TwigManager $twig
      * @return JsonResponse
      * @throws \Twig_Error_Loader
@@ -138,7 +138,7 @@ class CourseController extends Controller
      * @Route("/class/{id}/participant/{cid}/remove/", name="remove_class_participant")
      * @Security("is_granted('USE_ROUTE', ['manage_courses'])")
      */
-    public function removeClassParticipant(CourseClassManager $manager, int $id, int $cid, TwigManager $twig)
+    public function removeClassParticipant(CourseClassManager $manager, int $id, $cid, TwigManager $twig)
     {
         $manager->find($id);
 

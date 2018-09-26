@@ -341,6 +341,10 @@ Timetable Admin:
             route: edit_course
             parameters:
                 id: "%"
+        timetable_edit:
+            route: edit_timetable
+            parameters:
+                id: "%"
         edit_class:
             route: edit_class
             parameters:

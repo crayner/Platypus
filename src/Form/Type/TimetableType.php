@@ -20,6 +20,7 @@ use App\Entity\Timetable;
 use App\Entity\YearGroup;
 use App\Util\SchoolYearHelper;
 use Doctrine\ORM\EntityRepository;
+use Hillrange\Form\Type\CollectionType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\HiddenEntityType;
@@ -87,6 +88,15 @@ class TimetableType extends AbstractType
             ->add('schoolYear', HiddenEntityType::class,
                 [
                     'class' => SchoolYear::class,
+                ]
+            )
+            ->add('days', CollectionType::class,
+                [
+                    'entry_type' => TimetableDayType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'button_merge_class' => 'btn-sm',
+                    'remove_element_route' => 'delete_timetable_day',
                 ]
             )
         ;

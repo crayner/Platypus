@@ -1,0 +1,25 @@
+{% trans_default_domain 'Timetable' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Timetable Days: %name%', name: manager.entity.name, transDomain: 'Timetable', panelParagraph: '', panelStyle: 'primary'} %}
+    <div class="row row-header text-center small">
+        <div class="col-2 align-self-center">
+            {{ 'Name'|trans({}, 'System') }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'Short Name'|trans({}, 'System') }}
+        </div>
+        <div class="col-2 text-center align-self-center">
+            {{ 'Column'|trans }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'Header Background Colour'|trans }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'Header Font Colour'|trans }}
+        </div>
+        <div class="col-2 align-self-center">
+            {{ 'Actions'|trans({}, 'System') }}
+        </div>
+    </div>
+    {{ collection_widget(form.days) }}
+{% include 'Default/panelEnd.html.twig' %}

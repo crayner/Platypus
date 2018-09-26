@@ -22,7 +22,7 @@ use App\Manager\Traits\EntityTrait;
  * Class TimetableManager
  * @package App\Manager
  */
-class TimetableManager
+class TimetableManager extends TabManager
 {
     use EntityTrait;
 
@@ -40,4 +40,24 @@ class TimetableManager
     {
         return $this->getEntity()->canDelete();
     }
+
+    /**
+     * @var array
+     */
+    public $tabs = [
+        [
+            'name' => 'details',
+            'label' => 'Details',
+            'include' => 'Timetable/details.html.twig',
+            'message' => 'timetableDetailsMessage',
+            'translation' => 'Timetable',
+        ],
+        [
+            'name' => 'days',
+            'label' => 'Days',
+            'include' => 'Timetable/days.html.twig',
+            'message' => 'timetableDayMessage',
+            'translation' => 'Timetable',
+        ],
+    ];
 }

@@ -1,0 +1,35 @@
+{% trans_default_domain 'Timetable' %}
+
+{% block timetable_day_label %}{% endblock %}
+{% block timetable_day_errors %}{% endblock %}
+
+{% block timetable_day_widget %}
+    <div class="row row-striped small">
+        <div class="col-2">
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="col-2">
+            {{ form_widget(form.nameShort) }}
+        </div>
+        <div class="col-2 text-center align-self-center">
+            {% if transformData(form.timetableColumn) > 0 %}
+                {% set dayName = form.timetableColumn.parent.vars.name %}
+                    {{ form.timetableColumn.parent.vars.value.timetableColumn.name }}
+                    <input type="hidden" id="timetable_days_{{ dayName }}_timetableColumn" name="timetable[days][{{ dayName }}][timetableColumn]" class="form-control" value="{{ transformData(form.timetableColumn) }}" />
+            {% else %}
+                {{ form_widget(form.timetableColumn, {value: transformData(form.timetableColumn)}) }}
+            {% endif %}
+        </div>
+        <div class="col-2 text-center">
+            {{ form_widget(form.colour) }}
+        </div>
+        <div class="col-2 text-center">
+            {{ form_widget(form.fontColour) }}
+            {{ form_widget(form.id) }}
+            {{ form_widget(form.timetable, {value: app.request.get('id')}) }}
+        </div>
+        <div class="col-2 text-center collection-actions align-self-center">
+            {{ saveButton({mergeClass: 'btn-sm'})|raw }}
+        </div>
+    </div>
+{% endblock timetable_day_widget %}

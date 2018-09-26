@@ -16,7 +16,9 @@
 namespace App\Controller;
 
 use App\Form\Type\TimetableType;
+use App\Manager\TimetableDayManager;
 use App\Manager\TimetableManager;
+use App\Manager\TwigManager;
 use App\Pagination\TimetablePagination;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -102,6 +104,29 @@ class TimetableController extends Controller
             [
                 'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($this->get('translator')),
                 'rows' => $pagination->getAllResults(),
+            ],
+            200
+        );
+    }
+
+    /**
+     * deleteDay
+     *
+     * @param TimetableDayManager $manager
+     * @param int $id
+     * @param $cid
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/timetable/{id}/day/{cid}/delete/", name="delete_timetable_day")
+     * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
+     */
+    public function deleteDay(TimetableDayManager $manager,  int $id, $cid, TwigManager $twig)
+    {
+        $manager->delete($cid);
+
+        return new JsonResponse(
+            [
+                'message' => $manager->getMessageManager()->renderView($twig->getTwig()),
             ],
             200
         );
