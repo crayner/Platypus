@@ -1,0 +1,10 @@
+App\Entity\TimetableColumn:
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                  max: 30
+        nameShort:
+            - NotBlank: ~
+            - Length:
+                  max: 12

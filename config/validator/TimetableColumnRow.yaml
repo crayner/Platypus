@@ -1,0 +1,19 @@
+App\Entity\TimetableColumnRow:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [name, timetableColumn]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [nameShort, timetableColumn]
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                  max: 12
+        nameShort:
+            - NotBlank: ~
+            - Length:
+                  max: 4
+        timeStart:
+            - Time: ~
+        timeEnd:
+            - Time: ~

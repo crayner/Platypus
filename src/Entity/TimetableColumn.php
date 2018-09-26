@@ -15,6 +15,10 @@
  */
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
+
 /**
  * Class TimetableColumn
  * @package App\Entity
@@ -87,6 +91,71 @@ class TimetableColumn
     public function setNameShort(?string $nameShort): TimetableColumn
     {
         $this->nameShort = $nameShort;
+        return $this;
+    }
+
+    /**
+     * @var Collection|null
+     */
+    private $timetableColumnRows;
+
+    /**
+     * getTimetableColumnRows
+     *
+     * @return Collection
+     */
+    public function getTimetableColumnRows(): Collection
+    {
+        if (empty($this->timetableColumnRows))
+            $this->timetableColumnRows = new ArrayCollection();
+
+        if ($this->timetableColumnRows instanceof PersistentCollection)
+            $this->timetableColumnRows->initialize();
+
+        return $this->timetableColumnRows;
+    }
+
+    /**
+     * @param Collection|null $timetableColumnRows
+     * @return TimetableColumn
+     */
+    public function setTimetableColumnRows(?Collection $timetableColumnRows): TimetableColumn
+    {
+        $this->timetableColumnRows = $timetableColumnRows;
+        return $this;
+    }
+
+    /**
+     * addTimetableColumnRow
+     *
+     * @param TimetableColumnRow|null $row
+     * @param bool $add
+     * @return TimetableColumn
+     */
+    public function addTimetableColumnRow(?TimetableColumnRow $row, $add = true): TimetableColumn
+    {
+        if (empty($row) || $this->getTimetableColumnRows()->contains($row))
+            return $this;
+
+        if ($add)
+            $row->setTimetableColumn($this, false);
+
+        $this->timetableColumnRows->add($row);
+
+        return $this;
+    }
+
+    /**
+     * removeTimetableColumnRow
+     *
+     * @param TimetableColumnRow|null $row
+     * @return TimetableColumn
+     */
+    public function removeTimetableColumnRow(?TimetableColumnRow $row): TimetableColumn
+    {
+        $this->getTimetableColumnRows()->removeElement($row);
+        if (!empty($row))
+            $row->setTimetableColumn(null, false);
         return $this;
     }
 }

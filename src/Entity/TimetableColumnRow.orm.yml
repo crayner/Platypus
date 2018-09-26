@@ -1,0 +1,41 @@
+App\Entity\TimetableColumnRow:
+    type: entity
+    table: timetable_column_row
+    repositoryClass: App\Repository\TimetableColumnRowRepository
+    uniqueConstraints:
+        name_column:
+            columns:
+                - name
+                - timetable_column_id
+        name_short_column:
+            columns:
+                - name_short
+                - timetable_column_id
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            length: 30
+        nameShort:
+            length: 12
+            column: name_short
+        timeStart:
+            type: time
+            column: time_start
+        timeEnd:
+            type: time
+            column: time_end
+        type:
+            length: 10
+            column: column_row_type
+    manyToOne:
+        timetableColumn:
+            targetEntity: App\Entity\TimetableColumn
+            inversedBy: timetableColumnRows
+            joinColumn:
+                name: timetable_column_id
+                referencedColumnName: id
+                nullable: false
