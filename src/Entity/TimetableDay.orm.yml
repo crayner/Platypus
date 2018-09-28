@@ -2,6 +2,15 @@ App\Entity\TimetableDay:
     type: entity
     table: timetable_day
     repositoryClass: App\Repository\TimetableDayRepository
+    uniqueConstraints:
+        name_timetable:
+            columns:
+                - name
+                - timetable_id
+        name_short_timetable:
+            columns:
+                - name_short
+                - timetable_id
     id:
         id:
             type: integer
@@ -22,6 +31,10 @@ App\Entity\TimetableDay:
             length: 20
             nullable: true
             column: font_colour
+        sequence:
+            type: smallint
+            options:
+                default: 0
     manyToOne:
         timetableColumn:
             targetEntity: App\Entity\TimetableColumn

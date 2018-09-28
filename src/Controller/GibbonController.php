@@ -18,6 +18,7 @@ namespace App\Controller;
 use App\Manager\GibbonManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -31,12 +32,19 @@ class GibbonController extends Controller
      * @Route("/gibbon/transfer/{section}/{only}", name="gibbon_transfer")
      * @IsGranted("ROLE_SYSTEM_ADMIN")
      */
-    public function transfer(GibbonManager $manager, string $section = 'start', string $only = 'none')
+    public function transfer(GibbonManager $manager, Request $request, string $section = 'start', string $only = 'none')
     {
         $logger = $this->get('monolog.logger.demonstration');
+        $session = $request->getSession();
+
+        if ($section === 'start')
+            $session->set('gibbon_transfer', []);
 
         $gm = $this->getDoctrine()->getManager('gibbon');
-        $manager->setGibbonEntityManager($gm);
+        $manager
+            ->setSession($session)
+            ->setGibbonEntityManager($gm);
+
         $objectManager = $this->getDoctrine()->getManager();
         $sql = 'SHOW TABLES';
 

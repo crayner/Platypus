@@ -81,7 +81,7 @@ class TimetableType extends AbstractType
                         ;
                     },
                     'label' => 'Year Groups',
-                    'help' => 'Groups not in a active timetable in this school year.'
+                    'help' => 'Select only groups not in an active timetable in this school year.'
                 ]
             )
             ->add('schoolYear', HiddenEntityType::class,
@@ -96,6 +96,7 @@ class TimetableType extends AbstractType
                     'allow_delete' => true,
                     'button_merge_class' => 'btn-sm',
                     'remove_element_route' => 'delete_timetable_day',
+                    'sort_manage' => true,
                 ]
             )
         ;

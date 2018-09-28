@@ -36,6 +36,13 @@ class GibbonSchoolYearSpecialDayManager extends GibbonTransferManager
     /**
      * @var array
      */
+    protected $requireBefore = [
+        'gibbonSchoolYear',
+    ];
+
+    /**
+     * @var array
+     */
 
     protected $transferRules = [
         'gibbonSchoolYearSpecialDayID' => [
@@ -63,7 +70,7 @@ class GibbonSchoolYearSpecialDayManager extends GibbonTransferManager
             'field' => 'special_day_type',
             'functions' => [
                 'length' => 16,
-                'lowercase' => '',
+                'safeString' => ['removeChars' => ['-']],
             ],
         ],
         'date' => [
@@ -103,11 +110,6 @@ class GibbonSchoolYearSpecialDayManager extends GibbonTransferManager
     ];
 
     /**
-     * @var string
-     */
-    protected $nextGibbonName = 'gibbonSchoolYearTerm';
-
-    /**
      * postRecord
      *
      * @param string $entityName
@@ -117,10 +119,10 @@ class GibbonSchoolYearSpecialDayManager extends GibbonTransferManager
      * @return array
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function postRecord(string $entityName, array $newData, array $records, ObjectManager $manager): array
+    public function postRecord(string $entityName, array $newData, array $records): array
     {
         // need to add School Year indicator.
-        $schoolYear = $manager->getRepository(SchoolYear::class)->createQueryBuilder('y')
+        $schoolYear = $this->getObjectManager()->getRepository(SchoolYear::class)->createQueryBuilder('y')
             ->select('y.id')
             ->where('y.firstDay <= :f_date')
             ->andWhere('y.lastDay >= :l_date')

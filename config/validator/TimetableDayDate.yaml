@@ -1,0 +1,11 @@
+App\Entity\TimetableDayDate:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [date, timetableDay]
+    properties:
+        date:
+            - NotBlank: ~
+            - Date: ~
+        timetableDay:
+            - Valid: ~
+            - NotBlank: ~

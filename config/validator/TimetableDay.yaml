@@ -1,0 +1,19 @@
+App\Entity\TimetableDay:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [name, timetable]
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+              fields: [nameShort, timetable]
+    properties:
+        name:
+            - NotBlank: ~
+            - Length:
+                  max: 12
+        nameShort:
+            - NotBlank: ~
+            - Length:
+                  max: 4
+        colour:
+            - Hillrange\Form\Validator\Colour: ~
+        fontColour:
+            - Hillrange\Form\Validator\Colour: ~

@@ -1,0 +1,19 @@
+{% trans_default_domain 'Timetable' %}
+
+{% include 'Default/panelStart.html.twig' with {header: 'Term Days: %tt_name% - %term%', headerParams: {'%tt_name%': manager.entity.name, '%term%': tab.label}, transDomain: 'Timetable', panelParagraph: 'Click on any day to cycle to the next timetable day.  Changes to timetable days are saved immediately.', panelStyle: 'primary'} %}
+
+
+<div class="row">
+    <div class="col-9 offset-3">
+        <div class="row row-header small">
+            {% for day in manager.schoolDays %}
+                <div class="col-2 card text-center">
+                    {{ day.name }}<br/><span class="small text-muted">{{ day.nameShort }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div id="assignDays{{ tab.with.term.id }}"></div>
+
+{% include 'Default/panelEnd.html.twig' %}

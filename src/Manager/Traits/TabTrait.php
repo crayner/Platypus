@@ -39,11 +39,12 @@ trait TabTrait
      */
     public function getTabs(): array
     {
+        if (method_exists($this, 'setTabs'))
+            $this->setTabs();
         if (! property_exists($this, 'tabs'))
             throw new InvalidOptionsException('The class \''.get_class($this).'\' must define \'$tabs\' as an array');
         if (! is_array($this->tabs))
             throw new InvalidOptionsException('The class \''.get_class($this).'\' must define \'$tabs\' as an array');
-
 
         foreach($this->tabs as $q=>$tab) {
             $resolver = new OptionsResolver();
@@ -59,6 +60,7 @@ trait TabTrait
                 [
                     'display' => true,
                     'translation' => false,
+                    'with' => [],
                 ]
             );
             $this->tabs[$q] = $resolver->resolve($tab);

@@ -296,6 +296,13 @@ class Timetable
         if ($this->timetableDays instanceof PersistentCollection)
             $this->timetableDays->initialize();
 
+        $iterator = $this->timetableDays->getIterator();
+        $iterator->uasort(function ($a, $b) {
+            return ($a->getSequence() < $b->getSequence()) ? -1 : 1;
+        });
+
+        $this->timetableDays = new ArrayCollection(iterator_to_array($iterator, false));
+
         return $this->timetableDays;
     }
 

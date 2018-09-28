@@ -26,6 +26,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Validator\Constraints\ColourValidator;
 use Hillrange\Security\Util\ParameterInjector;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -38,6 +39,7 @@ class GibbonManager
      * transfer
      *
      * @param string $section
+     * @param LoggerInterface $logger
      */
     public function transfer(string $section, LoggerInterface $logger)
     {
@@ -53,19 +55,27 @@ class GibbonManager
         foreach ($this->requireBefore() as $w)
             $this->transfer($w, $logger);
 
-        $this->setTransferManager(new $path());
+        //Test if transfer has already happened..
+        if (! in_array($section, $this->getSession()->get('gibbon_transfer'))) {
 
-        $this->setLogger($logger);
+            $gt = $this->getSession()->get('gibbon_transfer');
+            $gt[] = $section;
+            $this->getSession()->set('gibbon_transfer', $gt);
 
-        $this->getTransferManager()->setObjectManager($this->getObjectManager())->setGibbonEntityManager($this->getGibbonEntityManager());
+            $this->setTransferManager(new $path());
 
-        $logger->addDebug(sprintf('Started transfer for %s.', $this->getGibbonName()));
+            $this->setLogger($logger);
 
-        $this->truncate();
+            $this->getTransferManager()->setObjectManager($this->getObjectManager())->setGibbonEntityManager($this->getGibbonEntityManager());
 
-        $this->load();
+            $logger->addDebug(sprintf('Started transfer for %s.', $this->getGibbonName()));
 
-        $logger->addDebug(sprintf('Completed transfer for %s.', $this->getGibbonName()));
+            $this->truncate();
+
+            $this->load();
+
+            $logger->addDebug(sprintf('Completed transfer for %s.', $this->getGibbonName()));
+        }
     }
 
     /**
@@ -88,7 +98,7 @@ class GibbonManager
                 foreach ($this->datum as $field => $value)
                     $newData = $this->generateNewFieldData($entityName, $newData, $field, $value);
 
-                $records = $this->postRecord($entityName, $newData, $records, $this->getObjectManager());
+                $records = $this->postRecord($entityName, $newData, $records);
             }
 
             $this->writeEntityRecords($entityName, $records);
@@ -587,7 +597,7 @@ class GibbonManager
      */
     private function colour($value, $options): string
     {
-        $colour = ColourValidator::isColour($value, 'hex');
+        $colour = ColourValidator::isColour('#'.$value, 'hex');
 
         if ($colour === false)
             return null;
@@ -813,7 +823,7 @@ class GibbonManager
             $records[] = $newData;
             return $records;
         }
-        return $this->getTransferManager()->postRecord($entityName, $newData, $records, $this->getObjectManager());
+        return $this->getTransferManager()->postRecord($entityName, $newData, $records);
     }
 
     /**
@@ -850,5 +860,28 @@ class GibbonManager
     private function requireBefore(): array
     {
         return $this->getTransferManager()->getRequireBefore();
+    }
+
+    /**
+     * @var SessionInterface|null
+     */
+    private $session;
+
+    /**
+     * @return null|SessionInterface
+     */
+    public function getSession(): ?SessionInterface
+    {
+        return $this->session;
+    }
+
+    /**
+     * @param null|SessionInterface $session
+     * @return GibbonManager
+     */
+    public function setSession(?SessionInterface $session): GibbonManager
+    {
+        $this->session = $session;
+        return $this;
     }
 }

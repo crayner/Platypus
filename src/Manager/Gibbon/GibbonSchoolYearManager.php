@@ -76,7 +76,36 @@ class GibbonSchoolYearManager extends GibbonTransferManager
     ];
 
     /**
-     * @var string
+     * postRecord
+     *
+     * @param string $entityName
+     * @param array $newData
+     * @param array $records
+     * @return array
      */
-    protected $nextGibbonName = 'gibbonSchoolYearSpecialDay';
+    public function postRecord(string $entityName, array $newData, array $records)
+    {
+        //Test if full year defined
+        $start = new \DateTime($newData['first_day']);
+        $end = new \DateTime($newData['last_day']);
+
+        $diff = date_diff($end,$start);
+        if ($diff->y !== 1 || $diff->m !== 0 || $diff->d !== 0) {
+
+            //Test if north or south hemisphere year
+            if(mb_substr($newData['first_day'], 0, 4) === mb_substr($newData['last_day'], 0, 4))
+            {
+                // Southern
+                $newData['first_day'] = mb_substr($newData['first_day'], 0, 4) . '-01-01';
+                $newData['last_day'] = mb_substr($newData['first_day'], 0, 4) . '-12-31';
+            } else {
+                //Northern
+                $newData['first_day'] = mb_substr($newData['first_day'], 0, 4) . '-07-01';
+                $newData['last_day'] = mb_substr($newData['last_day'], 0, 4) . '-06-30';
+            }
+        }
+
+        $records[] = $newData;
+        return $records;
+    }
 }

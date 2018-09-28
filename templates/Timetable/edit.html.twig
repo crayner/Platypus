@@ -29,4 +29,41 @@
     {{ collections_manage(form, ['timetableDays'])|raw }}
     {{ collection_script(form.timetableDays)|raw }}
     {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_timetable'} %}
+    <script type="text/javascript">
+        function toggleRotateStart(dayDate, timetable, term) {
+            var path = '{{ path('next_day_date', {id: '__timetable__', dayDate: '__dayDate__', term: '__term__'}) }}';
+            path = path.replace('__dayDate__', dayDate);
+            path = path.replace('__timetable__', timetable);
+            path = path.replace('__term__', term);
+
+            $.ajax({
+                url: path,
+                type: 'POST',
+                success: function (result) {
+                    $('#messageNotice' + term).html(result.message);
+                    if (result.data !== undefined) {
+                        $('#assignDays' + term).html(result.data);
+                    }
+                }
+            });
+        }
+        $(document).ready(function () {
+            {% for tab in manager.tabs %}
+                {% if tab.with.term is defined %}
+                    var path = '{{ path('display_term_dates', {id: app.request.get('id'), term: tab.with.term.id}) }}';
+
+                    $.ajax({
+                        url: path,
+                        type: 'POST',
+                        success: function (result) {
+                            $('#messageNotice{{ tab.with.term.id }}').html(result.message);
+                            if (result.data !== undefined) {
+                                $('#assignDays{{ tab.with.term.id }}').html(result.data);
+                            }
+                        }
+                    });
+                {% endif %}
+            {% endfor %}
+        });
+    </script>
 {% endblock javascripts %}

@@ -1,0 +1,25 @@
+App\Entity\TimetableDayDate:
+    type: entity
+    table: timetable_day_date
+    repositoryClass: App\Repository\TimetableDayDateRepository
+    uniqueConstraints:
+        day_date_timetable_day:
+            columns:
+                - day_date
+                - timetable_day_id
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: date
+            column: day_date
+    manyToOne:
+        timetableDay:
+            targetEntity: App\Entity\TimetableDay
+            joinColumn:
+                name: timetable_day_id
+                referencedColumnName: id
+                nullable: false

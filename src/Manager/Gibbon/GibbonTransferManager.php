@@ -22,6 +22,7 @@ use Doctrine\DBAL\Exception\InvalidFieldNameException;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * Class GibbonTransferManager
@@ -257,6 +258,5 @@ class GibbonTransferManager implements GibbonTransferInterface
         if (property_exists($this, 'requireBefore'))
             return $this->requireBefore;
         return [];
-
     }
 }

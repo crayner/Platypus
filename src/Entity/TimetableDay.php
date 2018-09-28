@@ -158,7 +158,7 @@ class TimetableDay
         $this->timetable = $timetable;
 
         if ($add || ! empty($timetable))
-            $timetable->addDay($this, false);
+            $timetable->addTimetableDay($this, false);
 
         return $this;
     }
@@ -194,5 +194,43 @@ class TimetableDay
     public function __toString(): ?string
     {
         return $this->getName();
+    }
+
+    /**
+     * @var integer
+     */
+    private $sequence;
+
+    /**
+     * @return int
+     */
+    public function getSequence(): int
+    {
+        return $this->sequence = intval($this->sequence);
+    }
+
+    /**
+     * setSequence
+     *
+     * @param int|null $sequence
+     * @return TimetableDay
+     */
+    public function setSequence(?int $sequence): TimetableDay
+    {
+        $this->sequence = intval($sequence);
+        return $this;
+    }
+
+    /**
+     * getNormalisedDayOfWeek
+     *
+     * @return int|null
+     */
+    public function getNormalisedDayOfWeek(): ?int
+    {
+        if (empty($this->getTimetableColumn()))
+            return null;
+
+        return $this->getTimetableColumn()->getNormalisedDayOfWeek();
     }
 }

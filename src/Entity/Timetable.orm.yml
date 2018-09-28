@@ -29,8 +29,7 @@ App\Entity\Timetable:
         timetableDays:
             targetEntity: App\Entity\TimetableDay
             mappedBy: timetable
-            cascade: [ 'all' ]
-            orphanRemoval: true
+            cascade: [ 'persist', 'remove' ]
     manyToOne:
         schoolYear:
             targetEntity: App\Entity\SchoolYear

@@ -15,6 +15,10 @@
  */
 namespace App\Controller;
 
+use App\Entity\SchoolYearTerm;
+use App\Entity\Timetable;
+use App\Entity\TimetableColumn;
+use App\Entity\TimetableDayDate;
 use App\Form\Type\TimetableColumnType;
 use App\Form\Type\TimetableType;
 use App\Manager\FlashBagManager;
@@ -125,7 +129,7 @@ class TimetableController extends Controller
      * @Route("/timetable/{id}/day/{cid}/delete/", name="delete_timetable_day")
      * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
      */
-    public function deleteDay(TimetableDayManager $manager,  int $id, $cid, TwigManager $twig)
+    public function deleteDay(TimetableDayManager $manager, int $id, $cid, TwigManager $twig)
     {
         $manager->delete($cid);
 
@@ -190,9 +194,9 @@ class TimetableController extends Controller
      * @Route("/timetable/column/{id}/edit/{tabName}", name="edit_column")
      * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
      */
-    public function editColumn(TimetableColumnManager $manager, Request $request, $id, $tabName = 'details')
+    public function editColumn(TimetableColumnManager $manager, Request $request, TimetableColumn $id, $tabName = 'details')
     {
-        $entity = $manager->find($id);
+        $entity = $manager->setEntity($id);
 
         $form = $this->createForm(TimetableColumnType::class, $entity);
 
@@ -226,12 +230,66 @@ class TimetableController extends Controller
      * @Route("/timetable/column/{id}/row/{cid}/delete/", name="delete_timetable_column_row")
      * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
      */
-    public function deleteColumnRow(TimetableColumnRowManager $manager, int $id, $cid, FlashBagManager $bagManager)
+    public function deleteColumnRow(TimetableColumnRowManager $manager, TimetableColumn $id, $cid, FlashBagManager $bagManager)
     {
         $manager->delete($cid);
 
         $bagManager->addMessages($manager->getMessageManager());
 
-        return $this->redirectToRoute('edit_column', ['id' => $id, 'tabName' => 'rows']);
+        return $this->redirectToRoute('edit_column', ['id' => $id->getId(), 'tabName' => 'rows']);
+    }
+
+    /**
+     * timetableDayIncrement
+     *
+     * @param Timetable $timetable
+     * @param SchoolYearTerm $term
+     * @param TimetableDayDate $dayDate
+     * @param TimetableManager $manager
+     * @Route("/timetable/{id}/term/{term}/day/date/{dayDate}/increment/", name="next_day_date")
+     * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
+     * @return JsonResponse
+     */
+    public function timetableDayIncrement(int $id, SchoolYearTerm $term, TimetableDayDate $dayDate, TimetableManager $manager)
+    {
+        $manager->find($id);
+        $manager->nextDayDate($dayDate);
+        return new JsonResponse(
+            [
+                'data' => $this->renderView('Timetable/assign_days_content.html.twig',
+                    [
+                        'term' => $term,
+                        'manager' => $manager,
+                    ]
+                ),
+                'messages' => [],
+            ],
+            200);
+    }
+
+    /**
+     * timetableDayIncrement
+     *
+     * @param Timetable $timetable
+     * @param SchoolYearTerm $term
+     * @param TimetableDayDate $dayDate
+     * @param TimetableManager $manager
+     * @Route("/timetable/{id}/term/{term}/days/display/", name="display_term_dates")
+     * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
+     * @return JsonResponse
+     */
+    public function displayTermDays(int $id, SchoolYearTerm $term, TimetableManager $manager)
+    {
+        $manager->find($id);
+        return new JsonResponse(
+            [
+                'data' => $this->renderView('Timetable/assign_days_content.html.twig',
+                    [
+                        'term' => $term,
+                        'manager' => $manager,
+                    ]
+                ),
+            ],
+            200);
     }
 }

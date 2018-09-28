@@ -34,7 +34,13 @@ class GibbonSchoolYearTermManager extends GibbonTransferManager
     /**
      * @var array
      */
+    protected $requireBefore = [
+        'gibbonSchoolYear',
+    ];
 
+    /**
+     * @var array
+     */
     protected $transferRules = [
         'gibbonSchoolYearTermID' => [
             'field' => 'id',
@@ -76,9 +82,4 @@ class GibbonSchoolYearTermManager extends GibbonTransferManager
             'field' => '',
         ],
     ];
-
-    /**
-     * @var string
-     */
-    protected $nextGibbonName = 'gibbonDaysOfWeek';
 }

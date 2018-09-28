@@ -90,4 +90,24 @@ class GibbonTTDayManager extends GibbonTransferManager
             ],
         ],
     ];
+
+    /**
+     * @var int
+     */
+    private $sequence = 1;
+
+    /**
+     * postRecord
+     *
+     * @param $entityName
+     * @param $newData
+     * @param $records
+     * @return array
+     */
+    public function postRecord($entityName, $newData, $records)
+    {
+        $newData['sequence'] = $this->sequence++;
+        $records[] = $newData;
+        return $records;
+    }
 }

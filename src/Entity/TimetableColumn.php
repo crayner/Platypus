@@ -235,4 +235,16 @@ class TimetableColumn
         $this->dayOfWeek = $dayOfWeek;
         return $this;
     }
+
+    /**
+     * getNormalisedDayOfWeek
+     *
+     * @return int|null
+     */
+    public function getNormalisedDayOfWeek(): ?int
+    {
+        if (empty($this->getDayOfWeek()))
+            return null;
+        return $this->getDayOfWeek()->getNormalisedDayOfWeek();
+    }
 }
