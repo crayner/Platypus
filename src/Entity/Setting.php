@@ -1,26 +1,38 @@
 <?php
+/**
+ * Created by PhpStorm.
+ *
+ * This file is part of the Busybee Project.
+ *
+ * (c) Craig Rayner <craig@craigrayner.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * User: craig
+ * Date: 28/09/2018
+ * Time: 13:38
+ */
 namespace App\Entity;
 
 use App\Util\PhotoHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Hillrange\Form\Validator\Colour;
 use Hillrange\Form\Validator\Integer;
-use Hillrange\Security\Util\UserTrackInterface;
-use Hillrange\Security\Util\UserTrackTrait;
-use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Url;
 
 /**
- * Setting
+ * Class Setting
+ * @package App\Entity
  */
 class Setting
 {
     /**
      * @var int|null
      */
-	private $id;
+    private $id;
 
     /**
      * @return array
@@ -55,20 +67,20 @@ class Setting
         'array',
         'blob',
         'boolean',
-        'choice',
         'colour',
         'currency',
         'date',
         'email',
+        'enum',
         'file',
         'html',
         'image',
         'integer',
-        'multiChoice',
         'number',
         'string',
         'system',
         'text',
+        'twig',
         'url',
     ];
 
@@ -187,37 +199,10 @@ class Setting
      */
     public function setValue($value): Setting
     {
-        if ($this->getSettingType() === 'image' && $value !== $this->getValue())
+        if (($this->getSettingType() === 'image' || $this->getSettingType() === 'file') && $value !== $this->getValue())
             PhotoHelper::deletePhotoFile($this->getValue());
 
         $this->value = $value;
-        return $this;
-    }
-
-    /**
-     * @var array|null
-     */
-    private $choice;
-
-    /**
-     * getChoice
-     *
-     * @return array
-     */
-    public function getChoice(): array
-    {
-        return $this->choice = empty($this->choice) ? [] : is_array($this->choice) ? $this->choice : [] ;
-    }
-
-    /**
-     * setChoice
-     *
-     * @param array|null $choice
-     * @return Setting
-     */
-    public function setChoice(?array $choice): Setting
-    {
-        $this->choice = $choice ?: [];
         return $this;
     }
 
@@ -282,120 +267,43 @@ class Setting
     }
 
     /**
-     * add Validator
+     * @var array|null
+     */
+    private $choices;
+
+    /**
+     * @return array|null
+     */
+    public function getChoices(): ?array
+    {
+        return $this->choices;
+    }
+
+    /**
+     * @param array|null $choices
+     * @return Setting
+     */
+    public function setChoices(?array $choices): Setting
+    {
+        $this->choices = $choices;
+        return $this;
+    }
+
+    /**
+     * setFlatChoices
      *
-     * @param null|Constraint $constraint
+     * @param array|null $choices
+     * @param bool $translate
      * @return Setting
      */
-    public function addValidator(?Constraint $constraint): Setting
+    public function setFlatChoices(?array $choices, $translate = true): Setting
     {
-        if (empty($constraint) || in_array($constraint, $this->getValidators()))
-            return $this;
-
-        $this->validators[] = $constraint;
-
+        $this->choices = [];
+        foreach($choices as $name)
+            if ($translate)
+                $this->choices['setting.'.$this->getName().'.'.$name] = $name;
+            else
+                $this->choices[$name] = $name;
         return $this;
-    }
-
-    /**
-     * @var string|null
-     */
-    private $role;
-
-    /**
-     * @return null|string
-     */
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param null|string $role
-     * @return Setting
-     */
-    public function setRole(?string $role): Setting
-    {
-        $this->role = $role;
-        return $this;
-    }
-
-    /**
-     * @var mixed
-     */
-    private $defaultValue;
-
-    /**
-     * @return mixed
-     */
-    public function getDefaultValue()
-    {
-        return $this->defaultValue;
-    }
-
-    /**
-     * @param mixed $defaultValue
-     * @return Setting
-     */
-    public function setDefaultValue($defaultValue): Setting
-    {
-        $this->defaultValue = $defaultValue;
-        return $this;
-    }
-
-    /**
-     * @var bool
-     */
-    private $valid = true;
-
-    /**
-     * @return bool
-     */
-    public function isValid(): bool
-    {
-        return $this->valid;
-    }
-
-    /**
-     * @param bool $valid
-     * @return Setting
-     */
-    public function setValid(bool $valid): Setting
-    {
-        $this->valid = $valid;
-        return $this;
-    }
-
-    /**
-     * @var string|null
-     */
-    private $translateChoice;
-
-    /**
-     * @return null|boolean|string
-     */
-    public function getTranslateChoice()
-    {
-        return $this->translateChoice;
-    }
-
-    /**
-     * @param null|boolean|string $translateChoice
-     * @return Setting
-     */
-    public function setTranslateChoice($translateChoice): Setting
-    {
-        $this->translateChoice = $translateChoice;
-        return $this;
-    }
-
-    /**
-     * __toArray
-     *
-     * @return array
-     */
-    public function __toArray()
-    {
-        return get_object_vars($this);
     }
 }

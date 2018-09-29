@@ -24,7 +24,6 @@ use Hillrange\Form\Type\ColourType;
 use Hillrange\Form\Type\DateType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\ImageType;
-use Hillrange\Form\Type\MultipleExpandedChoiceType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
@@ -57,9 +56,9 @@ class MultipleSettingType extends AbstractType
         $data = null;
         if ($key !== "") {
             $data = $options['all_data'][$key];
-            $attr = $data->getFormAttr() ?: [];
+            $attr = [];
             $additional = [];
-            switch ($data->getSettingType()) {
+            switch ($data->getSetting()->getSettingType()) {
                 case 'array':
                     $formType = TextareaType::class;
                     $attr = ['rows' => '5',];
@@ -88,56 +87,20 @@ class MultipleSettingType extends AbstractType
                     $formType = ImageType::class;
                     $route = $this->routerManager->getCurrentRoute();
                     $additional = [
-                        'fileName' => $data->getName(),
-                        'deletePhoto' => $this->router->generate('delete_setting_image', ['name' => $data->getName(), 'route' => $route]),
+                        'fileName' => $data->getSetting()->getName(),
+                        'deletePhoto' => $this->router->generate('delete_setting_image', ['name' => $data->getSetting()->getName(), 'route' => $route]),
                     ];
                     break;
-                case 'choice':
+                case 'enum':
                     $formType = ChoiceType::class;
-                    $choices = $data->__get('choice');
-                    $x = [];
-                    if (empty($data->__get('translateChoice'))) {
-                        if (is_null($data->__get('translateChoice'))) {
-                            foreach ($choices as $value)
-                                $x[$value] = $value;
-                        } else {
-                            $x = $choices;
-                        }
-                    } else {
-                        foreach ($choices as $value)
-                            $x[$data->getName() . '.' . $value] = $value;
-                    }
                     $additional = [
-                        'choices' => $x,
+                        'choices' => $data->getSetting()->getChoices(),
                         'placeholder' => false,
-                    ];
-                    break;
-                case 'multiChoice':
-                    $formType = MultipleExpandedChoiceType::class;
-                    $choices = $data->__get('choice');
-                    $x = [];
-                    if (empty($data->__get('translateChoice'))) {
-                        if (is_null($data->__get('translateChoice'))) {
-                            foreach ($choices as $value)
-                                $x[$value] = $value;
-                        } else {
-                            $x = $choices;
-                        }
-                    } else {
-                        foreach ($choices as $value)
-                            $x[$data->getName() . '.' . $value] = $value;
-                    }
-                    $additional = [
-                        'choices' => $x,
-                        'placeholder' => false,
-                        'expanded_attr' => [
-                            'class' => 'form-control-sm',
-                        ],
                     ];
                     break;
                 case 'integer':
                     $formType = TextType::class;
-                    foreach($data->getValidators() as $validator)
+                    foreach($data->getSetting()->getValidators() as $validator)
                     {
                         if (get_class($validator) === Range::class)
                         {
@@ -156,15 +119,12 @@ class MultipleSettingType extends AbstractType
                     break;
                 case 'chainedChoice':
                     $formType = ChainedChoiceType::class;
-                    $additional = $data->getChainOptions() ?: [];
                     break;
                 case 'entity':
                     $formType = EntityType::class;
-                    $additional = $data->getEntityOptions() ?: [];
                     break;
                 case 'system':
                     $formType = HiddenType::class;
-                    $additional = $data->getEntityOptions() ?: [];
                     break;
                 case 'text':
                     $formType = TextareaType::class;
@@ -180,12 +140,11 @@ class MultipleSettingType extends AbstractType
             $builder
                 ->add('value', $formType,
                     array_merge($additional, [
-                        'label' => $data->getDisplayName(),
-                        'help' => $data->getDescription(),
-                        'translation_domain' => empty($data->getTranslateChoice()) ? 'Setting' : $data->getTranslateChoice(),
+                        'label' => $data->getSetting()->getDisplayName(),
+                        'help' => $data->getSetting()->getDescription(),
                         'attr' => $attr,
                         'required' => false,
-                        'constraints' => $data->getValidators(),
+                        'constraints' => $data->getSetting()->getValidators(),
                     ])
                 )
             ;
@@ -193,7 +152,7 @@ class MultipleSettingType extends AbstractType
             $builder
                 ->add('value', TextType::class);
 
-        $builder->get('value')->addViewTransformer(new SettingValueTransformer(empty($data) ? 'text' : $data->getSettingType()));
+        $builder->get('value')->addViewTransformer(new SettingValueTransformer(empty($data) ? 'text' : $data->getSetting()->getSettingType()));
     }
 
     /**

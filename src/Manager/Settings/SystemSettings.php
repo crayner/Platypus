@@ -21,8 +21,6 @@ use App\Manager\StaffManager;
 use App\Manager\TranslationManager;
 use App\Util\InternationalHelper;
 use App\Validator\Logo;
-use App\Validator\OrgName;
-use App\Validator\Yaml;
 use Hillrange\Form\Validator\Integer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Intl\Intl;
@@ -38,7 +36,7 @@ use Symfony\Component\Validator\Constraints\Url;
  * Class DashboardSettings
  * @package App\Manager\Settings
  */
-class SystemSettings implements SettingCreationInterface
+class SystemSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -60,526 +58,298 @@ class SystemSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
-
-        $setting = $sm->createOneByName('system.absolute_url');
-
-        $setting->__set('role', 'ROLE_SYSTEM_ADMIN')
+        $this->setSettingManager($sm);
+        $setting = $sm->createOneByName('system.absolute_url')
             ->setSettingType('system')
-            ->__set('displayName', 'Base URL')
-            ->__set('choice', null)
-            ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', 'The address at which the whole system resides.')
+            ->setDisplayName('Base URL')
+            ->setValidators([
+                new Url(),
+            ])
+            ->setDescription('The address at which the whole system resides.')
             ->setValue($this->getRequest()->server->get('REQUEST_SCHEME').'://'.$this->getRequest()->server->get('SERVER_NAME'));
-        $settings[] = $setting;
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.absolute_path');
-
-        $setting
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+        $setting = $sm->createOneByName('system.absolute_path')
             ->setSettingType('system')
-            ->__set('displayName', 'Base Path')
-            ->__set('choice', null)
+            ->setDisplayName('Base Path')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', 'The local file server path to the system.');
-            $setting->setValue($this->getRequest()->server->get('DOCUMENT_ROOT'));
-        $settings[] = $setting;
+            ->setDescription('The local file server path to the system.')
+            ->setValue($this->getRequest()->server->get('DOCUMENT_ROOT'));
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.system_name');
-
-        $setting->__set('role', 'ROLE_REGISTRAR')
+        $setting = $sm->createOneByName('system.system_name')
             ->setSettingType('string')
-            ->__set('displayName', 'System Name')
-            ->__set('choice', null)
+            ->setDisplayName('System Name')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', '');
+            ->setDescription('');
         if (empty($setting->getValue()))
             $setting->setValue('Busybee');
-        $settings[] = $setting;
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.index_text');
-
-        $setting->__set('role', 'ROLE_REGISTRAR')
+        $setting = $sm->createOneByName('system.index_text')
             ->setSettingType('html')
-            ->__set('choice', null)
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Index Page Text')
-            ->__set('description', 'Text displayed in system\'s welcome page.  If left blank, then the system default is used.');
+            ->setDisplayName('Index Page Text')
+            ->setDescription('Text displayed in system\'s welcome page.  If left blank, then the system default is used.');
         if (empty($setting->getValue()))
             $setting->setValue(null);
-        $settings[] = $setting;
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.install_type');
-
-        $setting->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('choice')
-            ->__set('displayName', 'Install Type')
-            ->__set('description', 'The purpose of this installation of Busybee')
-            ->__set('choice', ['production','testing','development'])
+        $setting = $sm->createOneByName('system.install_type')
+            ->setSettingType('enum')
+            ->setDisplayName('Install Type')
+            ->setDescription('How are you using this installation of Busybee')
             ->setValidators(null)
-            ->setDefaultValue('production')
-            ->__set('translateChoice', 'System');
-        if (empty($setting->getValue()))
+            ->setFlatChoices(['production','testing','development']);
+        if (in_array($setting->getValue(), $setting->getChoices()))
+            $setting->setValue($setting->getValue());
+        else
             $setting->setValue('production');
-        $settings[] = $setting;
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.stats_collection');
-
-        $setting->__set('role', 'ROLE_REGISTRAR')
+        $setting = $sm->createOneByName('system.stats_collection')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Statistics Collection')
-            ->__set('choice', null)
+            ->setDisplayName('Statistics Collection')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', 'To track Busybee uptake, the system tracks basic data (current URL, install type, organisation name) on each install. Do you want to help?');
+            ->setDescription('To track Busybee uptake, the system tracks basic data (current URL, install type, organisation name) on each install. Do you want to help?');
         if (empty($setting->getValue()))
             $setting->setValue(false);
-        $settings[] = $setting;
+        $this->addSetting($setting, $arguments = []);
 
-        $sections = [];
+        $this->addSection('System Settings');
 
-        $section['name'] = 'System Settings';
-        $section['description'] = '';
-        $section['settings'] = $settings;
-
-        $sections[] = $section;
 // Start New Section
-        $settings = [];
-
-        $setting = $sm->createOneByName('org.name.long');
-
-        $setting->__set('role', 'ROLE_REGISTRAR')
+        $setting = $sm->createOneByName('org.name.long')
             ->setSettingType('string')
-            ->__set('displayName', 'Organisation Name')
-            ->__set('choice', null)
+            ->setDisplayName('Organisation Name')
             ->setValidators(null)
-            ->setDefaultValue('Busybee Learning')
-            ->__set('translateChoice', null)
-            ->__set('description', '');
+            ->setDescription('');
+        if (empty($setting->getValue()))
+            $setting->setValue('Busybee');
+        $this->addSetting($setting, $arguments = []);
+
+        $setting = $sm->createOneByName('org.name.short')
+            ->setSettingType('string')
+            ->setDisplayName('Short Organisation Name')
+            ->setValidators(null)
+            ->setDescription('');
+        if (empty($setting->getValue()))
+            $setting->setValue('BEE');
+        $this->addSetting($setting, $arguments = []);
+
+        $setting = $sm->createOneByName('org.email')
+            ->setValidators([
+                new Email(),
+            ])
+            ->setSettingType('string')
+            ->setDisplayName('Organisation Email')
+            ->setDescription('General email address for the school.');
         if (empty($setting->getValue()))
             $setting->setValue(null);
-        $settings[] = $setting;
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('org.name.short');
-
-        $setting->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('string')
-            ->__set('displayName', 'Short Organisation Name')
-            ->__set('choice', null)
-            ->setValidators(null)
-            ->setDefaultValue('BEE')
-            ->__set('translateChoice', null)
-            ->__set('description', '');
-        if (empty($setting->getValue()))
-            $setting->setValue(null);
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('org.email');
-
-        $setting->setName('org.email')
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('string')
-            ->__set('displayName', 'Organisation Email')
-            ->__set('description', 'General email address for the school.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-                ->__set('choice', null)
-                ->setValidators([
-                    new Email(),
-                ])
-                ->setDefaultValue(null)
-                ->__set('translateChoice', null)
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('org.logo');
-
-        $setting->__set('role', 'ROLE_REGISTRAR')
+        $setting = $sm->createOneByName('org.logo')
             ->setSettingType('image')
-            ->__set('displayName', 'Organisation Logo')
-            ->__set('choice', null)
+            ->setDisplayName('Organisation Logo')
             ->setValidators([
                 new Logo(),
             ])
-            ->setDefaultValue('build/static/images/bee.png')
-            ->__set('translateChoice', null)
-            ->__set('description', 'Relative path to site logo. If empty, the template logo is used.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('Relative path to site logo. If empty, the template logo is used.');
+        if (empty($setting->getValue()))
+            $setting->setValue('build/static/images/bee.png');
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.organisation_administrator');
-
-        $setting
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('choice')
-            ->__set('displayName', 'System Administrator')
-            ->__set('choice', StaffManager::getStaffListChoice())
+        $setting = $sm->createOneByName('system.organisation_administrator')
+            ->setSettingType('enum')
+            ->setDisplayName('System Administrator')
+            ->setChoices(StaffManager::getStaffListChoice())
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('description', 'The staff member who receives notifications for system events.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('The staff member who receives notifications for system events.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.organisation_dba');
-
-        $setting
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('choice')
-            ->__set('displayName', 'Database Administrator')
-            ->__set('choice', StaffManager::getStaffListChoice())
+        $setting = $sm->createOneByName('system.organisation_dba')
+            ->setSettingType('enum')
+            ->setDisplayName('Database Administrator')
+            ->setChoices(StaffManager::getStaffListChoice())
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('description', 'The staff member who receives notifications for data events.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('The staff member who receives notifications for data events.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.organisation_admissions');
-
-        $setting
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('choice')
-            ->__set('choice', StaffManager::getStaffListChoice())
+        $setting = $sm->createOneByName('system.organisation_admissions')
+            ->setSettingType('enum')
+            ->setChoices(StaffManager::getStaffListChoice())
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Admissions Administrator')
-            ->__set('description', 'The staff member who receives notifications for admissions events.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDisplayName('Admissions Administrator')
+            ->setDescription('The staff member who receives notifications for admissions events.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, $arguments = []);
 
-        $setting = $sm->createOneByName('system.organisation_hr');
-
-        $setting
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->__set('choice', StaffManager::getStaffListChoice())
+        $setting = $sm->createOneByName('system.organisation_hr')
+            ->setChoices(StaffManager::getStaffListChoice())
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->setSettingType('choice')
-            ->__set('displayName', 'Human Resources Administrator')
-            ->__set('description', 'The staff member who receives notifications for staffing events.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setSettingType('enum')
+            ->setDisplayName('Human Resources Administrator')
+           ->setDescription('The staff member who receives notifications for staffing events.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, $arguments = []);
 
-        $section['name'] = 'Organisation Settings';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Organisation Settings');
 
-        $sections[] = $section;
-
-// Start New Section
-        $settings = [];
-
-        $setting = $sm->createOneByName('security.password.settings:min_length');
-
-        $setting->setName('security.password.settings:min_length')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setSettingType('choice')
-            ->__set('displayName', 'Password - Minimum Length')
-            ->__set('description', 'Minimum acceptable password length required by all users.')
-            ->setParameter(true, $sm,8)
-            ->__set('choice', [4,5,6,7,8,9,10,11,12])
+        // Start New Section
+        $setting = $sm->createOneByName('security.password.settings:min_length')
+            ->setSettingType('enum')
+            ->setDisplayName('Password - Minimum Length')
+            ->setDescription('Minimum acceptable password length required by all users.')
+            ->setFlatChoices([4,5,6,7,8,9,10,11,12,13,14,15,16], false)
             ->setValidators([
-                new Range(['min' => 4])
-            ])
-            ->setDefaultValue(8)
-            ->__set('translateChoice', null)
-            ;
-        $settings[] = $setting;
+                new Range(['min' => 4, 'max' => 16])
+            ]);
+        $this->addSetting($setting, ['parameter' => true, 'default' => 8]);
 
-        $setting = $sm->createOneByName('security.password.settings:mixed_case');
-
-        $setting->setName('security.password.settings:mixed_case')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+        $setting = $sm->createOneByName('security.password.settings:mixed_case')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Password - Alpha Requirement')
-            ->__set('description', 'Require both upper and lower case alpha characters for all user passwords?')
-            ->setParameter(true, $sm, true)
-            ->__set('choice', null)
-            ->setValidators(null)
-            ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-            ;
-        $settings[] = $setting;
+            ->setDisplayName('Password - Alpha Requirement')
+            ->setDescription('Require both upper and lower case alpha characters for all user passwords?')
+            ->setValidators(null);
+        $this->addSetting($setting, ['parameter' => true, 'default' => true]);
 
-        $setting = $sm->createOneByName('security.password.settings:numbers');
-
-        $setting->setName('security.password.settings:numbers')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+        $setting = $sm->createOneByName('security.password.settings:numbers')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Password - Numeric Requirement')
-            ->__set('description', 'Require at least one numeric character for all user passwords?')
-            ->setParameter(true, $sm, true)
-            ->__set('choice', null)
-            ->setValidators(null)
-            ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-            ;
-        $settings[] = $setting;
+            ->setDisplayName('Password - Numeric Requirement')
+            ->setDescription('Require at least one numeric character for all user passwords?')
+            ->setValidators(null);
+        $this->addSetting($setting, ['parameter' => true, 'default' => true]);
 
-        $setting = $sm->createOneByName('security.password.settings:specials');
-
-        $setting->setName('security.password.settings:specials')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
+        $setting = $sm->createOneByName('security.password.settings:specials')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Password - Non-Alphanumeric Requirement')
-            ->__set('description', 'Require at least one non-alphanumeric character (e.g. punctuation mark or space) in all user passwords?')
-            ->setParameter(true, $sm,true)
-            ->__set('choice', null)
-            ->setValidators(null)
-            ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-            ;
-        $settings[] = $setting;
+            ->setDisplayName('Password - Non-Alphanumeric Requirement')
+            ->setDescription('Require at least one non-alphanumeric character (e.g. punctuation mark or space) in all user passwords?')
+            ->setValidators(null);
+        $this->addSetting($setting, ['parameter' => true, 'default' => true]);
 
-        $section['name'] = 'Security Settings - Password Policy';
-        $section['description'] = 'Changes in password policy will be applied the next time you attempt to sign in.';
-        $section['settings'] = $settings;
+        $this->addSection('Security Settings - Password Policy', 'Changes in password policy will be applied the next time you attempt to sign in.');
 
-        $sections[] = $section;
-// Start New Section
-        $settings = [];
-
-        $setting = $sm->createOneByName('idle_timeout');
-
-        $setting->setName('idle_timeout')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->__set('displayName', 'Session Duration')
-            ->__set('description', 'Time, in minutes, before system logs a user out. Should be less than PHP\'s session.gc_maxlifetime option.')
+        // Start New Section
+        $setting = $sm->createOneByName('idle_timeout')
+            ->setDisplayName('Session Duration')
+            ->setDescription('Time, in minutes, before system logs a user out. Should be less than PHP\'s session.gc_maxlifetime option.')
             ->setSettingType('number')
-            ->setParameter(true, $sm,15)
-            ->__set('choice', null)
             ->setValidators([
                 new Range(['max' => 30, 'min' => 5])
-            ])
-            ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-        ;
-        $settings[] = $setting;
+            ]);
+        $this->addSetting($setting, ['parameter' => true, 'default' => 15]);
 
-        $section['name'] = 'Security Settings - Miscellaneous';
-        $section['description'] = 'Changes in password policy will be applied the next time you attempt to sign in.';
-        $section['settings'] = $settings;
+        $this->addSection('Security Settings - Miscellaneous', 'Changes in password policy will be applied the next time you attempt to sign in.');
 
-        $sections[] = $section;
-// Start New Section
-        $settings = [];
-
-        $setting = $sm->createOneByName('country');
-
-        $setting->setName('country')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setSettingType('choice')
-            ->__set('displayName', 'Country')
-            ->__set('description', 'The country the school is located in.')
-            ->setParameter(true, $sm,15)
-            ->__set('choice', array_flip(Intl::getRegionBundle()->getCountryNames()))
+        // Start New Section
+        $setting = $sm->createOneByName('country')
+            ->setSettingType('enum')
+            ->setDisplayName('Country')
+            ->setDescription('The country the school is located in.')
+            ->setChoices(array_flip(Intl::getRegionBundle()->getCountryNames()))
             ->setValidators([
                 new Country(),
-            ])
-            ->setDefaultValue(true)
-            ->__set('translateChoice', false)
-        ;
-        $settings[] = $setting;
+            ]);
+        $this->addSetting($setting, ['parameter' => true, 'default' => 'AU']);
 
-        $setting = $sm->createOneByName('system.first_day_of_the_week');
-
-        $setting->setName('system.first_day_of_the_week')
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('choice')
-            ->__set('displayName', 'First Day Of The Week')
-            ->__set('description', 'On which day should the week begin?');
-        if (empty($setting->getValue())) {
-            $setting->setValue('mon')
-                ->__set('choice', ['mon','sun'])
-                ->setValidators(null)
-                ->setDefaultValue('mon')
-                ->__set('translateChoice', 'Setting')
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('timezone');
-
-        $setting->setName('timezone')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setSettingType('choice')
-            ->__set('displayName', 'Timezone')
-            ->__set('description', 'The timezone where the school is located.')
-            ->setParameter(true, $sm,'UTC')
-            ->__set('choice', InternationalHelper::getTimezones())
+        $setting = $sm->createOneByName('system.first_day_of_the_week')
+            ->setSettingType('enum')
+            ->setDisplayName('First Day Of The Week')
+            ->setFlatChoices(['mon','sun'])
             ->setValidators(null)
-            ->setDefaultValue(true)
-            ->__set('translateChoice', false)
-        ;
-        $settings[] = $setting;
+            ->setDescription('On which day should the week begin?');
+        if (empty($setting->getValue()))
+            $setting->setValue('mon');
+        $this->addSetting($setting);
 
-        $setting = $sm->createOneByName('currency');
 
-        $setting->setName('currency')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setSettingType('choice')
-            ->__set('displayName', 'Currency')
-            ->__set('description', 'System-wde currency for financial transactions. Support for online payment in this currency depends on your credit card gateway: please consult their support documentation.')
-            ->setParameter(true, $sm,'AUD')
-            ->__set('choice', array_flip(Intl::getCurrencyBundle()->getCurrencyNames()))
+        $z = InternationalHelper::getTimezones();
+        $zones = [];
+        foreach(InternationalHelper::getTimezones() as $region=>$data)
+        {
+            $zones[$region] = $data;
+        }
+
+        $setting = $sm->createOneByName('timezone')
+            ->setSettingType('enum')
+            ->setDisplayName('Timezone')
+            ->setDescription('The timezone where the school is located.')
+            ->setChoices($zones)
+            ->setValidators(null);
+        $this->addSetting($setting, ['parameter' => true, 'default' => 'UTC']);
+
+        $setting = $sm->createOneByName('currency')
+            ->setSettingType('enum')
+            ->setDisplayName('Currency')
+            ->setDescription('System-wde currency for financial transactions. Support for online payment in this currency depends on your credit card gateway: please consult their support documentation.')
+            ->setChoices(array_flip(Intl::getCurrencyBundle()->getCurrencyNames()))
             ->setValidators([
                 new Currency(),
-            ])
-            ->setDefaultValue(true)
-            ->__set('translateChoice', false)
-        ;
-        $settings[] = $setting;
+            ]);
+        $this->addSetting($setting, ['parameter' => true, 'default' => 'AUD']);
 
-        $setting = $sm->createOneByName('locale');
-
-        $setting->setName('locale')
-            ->__set('role', 'ROLE_SYSTEM_ADMIN')
-            ->setSettingType('choice')
-            ->__set('displayName', 'Language Setting')
-            ->__set('description', 'This setting defaults the system to the selected language. Language can be over ridden by individual users.')
-            ->setParameter(true, $sm,'en')
-            ->__set('choice', array_flip(TranslationManager::$languages))
+        $setting = $sm->createOneByName('locale')
+            ->setSettingType('enum')
+            ->setDisplayName('Language Setting')
+            ->setDescription('This setting defaults the system to the selected language. Language can be over ridden by individual users.')
+            ->setChoices(array_flip(TranslationManager::$languages))
             ->setValidators([
                 new Language(),
+            ]);
+        $this->addSetting($setting, ['parameter' => true, 'default' => 'en']);
+
+        $this->addSection('Localisation');
+
+        // Start New Section
+        $setting = $sm->createOneByName('system.web_link')
+            ->setSettingType('string')
+            ->setValidators([
+                new Url(),
             ])
-            ->setDefaultValue('en')
-            ->__set('translateChoice', false)
-        ;
-        $settings[] = $setting;
+            ->setDisplayName('Link To Web')
+            ->setDescription('The link that points to the school\'s website');
+        $this->addSetting($setting);
 
-        $section['name'] = 'Localisation';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $setting = $sm->createOneByName('system.pagination')
+            ->setSettingType('integer')
+            ->setDisplayName('Pagination Count')
+            ->setValidators([
+                new NotBlank(),
+                new Integer(),
+                new Range(['min' => 10, 'max' => 100]),
+            ])
+            ->setDescription('Must be numeric. Number of records shown per page.');
+        if (empty($setting->getValue()))
+            $setting->setValue(25);
+        $this->addSetting($setting);
 
-        $sections[] = $section;
-
-// Start New Section
-        $settings = [];
-
-        $setting = $sm->createOneByName('system.web_link');
-
-        $setting->setName('system.web_link')
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('string')
-            ->__set('displayName', 'Link To Web')
-            ->__set('description', 'The link that points to the school\'s website');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-                ->__set('choice', null)
-                ->setValidators([
-                    new Url(),
-                ])
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('system.pagination');
-
-        $setting->setName('system.pagination')
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('string')
-            ->__set('displayName', 'Pagination Count')
-            ->__set('description', 'Must be numeric. Number of records shown per page.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(25)
-                ->__set('choice', null)
-                ->setValidators([
-                    new NotBlank(),
-                    new Integer(),
-                    new Range(['min' => 10, 'max' => 100]),
-                ])
-                ->setDefaultValue(25)
-                ->__set('translateChoice', 'Setting')
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('system.analytics');
-
-        $setting->setName('system.analytics')
-            ->__set('role', 'ROLE_REGISTRAR')
+        $setting = $sm->createOneByName('system.analytics')
             ->setSettingType('text')
-            ->__set('displayName', 'Analytics')
-            ->__set('description', 'Javascript code to integrate statistics, such as Google Analytics.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-                ->__set('choice', null)
-                ->setValidators(null)
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
-            ;
-        }
-        $settings[] = $setting;
+            ->setDisplayName('Analytics')
+            ->setDescription('Javascript code to integrate statistics, such as Google Analytics.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting);
 
-        $setting = $sm->createOneByName('system.default_assessment_scale');
+        $setting = $sm->createOneByName('system.default_assessment_scale')
+            ->setSettingType('enum')
+            ->setDisplayName('Default Assessment Scale')
+            ->setChoices(ScaleManager::getScaleList(true))
+            ->setDescription('This is the scale used as a default where assessment scales need to be selected.');
+        $this->addSetting($setting);
 
-        $setting->setName('system.default_assessment_scale')
-            ->__set('role', 'ROLE_REGISTRAR')
-            ->setSettingType('choice')
-            ->__set('displayName', 'Default Assessment Scale')
-            ->__set('description', 'This is the scale used as a default where assessment scales need to be selected.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-                ->__set('choice', ScaleManager::getScaleList(true))
-                ->setValidators(null)
-                ->setDefaultValue(null)
-                ->__set('translateChoice', false)
-            ;
-        }
-        $settings[] = $setting;
+        $this->addSection('Miscellaneous');
 
-        $section['name'] = 'Miscellaneous';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->setSectionsHeader('manage_system_settings');
 
-        $sections[] = $section;
-        $sections['header'] = 'manage_system_settings';
-
-        $this->sections = $sections;
+        $this->setSettingManager(null);
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 
     /**

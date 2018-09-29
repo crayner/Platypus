@@ -1,34 +1,41 @@
 <?php
+/**
+ * Created by PhpStorm.
+ *
+ * This file is part of the Busybee Project.
+ *
+ * (c) Craig Rayner <craig@craigrayner.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * User: craig
+ * Date: 28/09/2018
+ * Time: 13:48
+ */
 namespace App\Manager;
 
+use App\Entity\Setting;
 use App\Manager\Settings\SettingCreationInterface;
 use App\Organism\SettingCache;
 use App\Validator\Regex;
 use App\Validator\Twig;
-use App\Entity\Setting;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\ConnectionException;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Validator\Integer;
-use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Yaml\Yaml;
 
 /**
- * Setting Manager
- *
- * @version    6th September 2017
- * @since      20th October 2016
- * @author     Craig Rayner
+ * Class SettingManager
+ * @package App\Manager
  */
 class SettingManager implements ContainerAwareInterface
 {
@@ -38,17 +45,9 @@ class SettingManager implements ContainerAwareInterface
     private $container;
 
     /**
-     * @return ContainerInterface
+     * @var object|\Symfony\Bridge\Monolog\Logger
      */
-    public function getContainer(): ContainerInterface
-    {
-        return $this->container;
-    }
-
-    /**
-     * @var AuthorizationCheckerInterface
-     */
-    private $authorisation;
+    private $logger;
 
     /**
      * @var TwigManager
@@ -56,27 +55,22 @@ class SettingManager implements ContainerAwareInterface
     private $twig;
 
     /**
-     * @var bool
+     * @return ContainerInterface
      */
-    private $databaseFail = false;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
+    public function getContainer(): ContainerInterface
+    {
+        return $this->container;
+    }
     /**
      * SettingManager constructor.
      * @param ContainerInterface $container
      * @param MessageManager $messageManager
      */
-    public function __construct(ContainerInterface $container, MessageManager $messageManager,
-                                AuthorizationCheckerInterface $authorisation, TwigManager $twig)
+    public function __construct(ContainerInterface $container, MessageManager $messageManager, TwigManager $twig)
     {
         $this->setContainer($container);
         new StaffManager($this->getEntityManager());
         $this->messageManager = $messageManager;
-        $this->authorisation = $authorisation;
         $this->twig = $twig;
         try {
             $this->getEntityManager()->getRepository(Setting::class);
@@ -97,54 +91,98 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
+     * getEntityManager
+     *
+     * @return EntityManagerInterface
+     */
+    public function getEntityManager(): EntityManagerInterface
+    {
+        return $this->getContainer()->get('doctrine.orm.default_entity_manager');
+    }
+
+    /**
+     * @var bool
+     */
+    private $databaseFail = false;
+
+    /**
+     * isDatabaseFail
+     *
+     * @return bool
+     */
+    public function isDatabaseFail(): bool
+    {
+        return $this->databaseFail ? true : false;
+    }
+
+    /**
+     * setDatabaseFail
+     *
+     * @param bool|null $databaseFail
+     * @return SettingManager
+     */
+    public function setDatabaseFail(?bool $databaseFail): SettingManager
+    {
+        $this->databaseFail = $databaseFail ? true : false;
+        return $this;
+    }
+
+    /**
+     * @var MessageManager
+     */
+    private $messageManager;
+
+    /**
+     * @return MessageManager
+     */
+    public function getMessageManager(): MessageManager
+    {
+        return $this->messageManager;
+    }
+
+    /**
      * get
      *
      * @param string $name
      * @param null $default
      * @param array $options
-     * @return array|mixed|null|string
-     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
-     * @throws \Throwable
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Syntax
+     * @return null
      */
     public function get(string $name, $default = null, array $options = [])
     {
+        $this->name = $name;
         if ($this->isDatabaseFail()) {
             $this->logger->error(sprintf('The database is not available. Default value returned for setting %s.', $name), [$name, $default, $options]);
             return $default;
         }
         $name = strtolower($name);
-        $this->readSession()->setName($name)->getSetting($name);
+
+        $this->readSession()->getSetting($name);
 
         if ($this->isValid()) {
             $this->logger->debug(sprintf('The setting %s was found and returned from the cache.', $name), [$name, $default, $options]);
             return $this->getValue($default, $options);
         }
-
         $this->loadSetting($name);
-        $this->readSession()->setName($name)->getSetting($name);
 
         if ($this->isValid() && $this->isCorrectName($name)) {
             $this->logger->debug(sprintf('The setting %s was found and returned from the database.', $name), [$name, $default, $options]);
             return $this->getValue($default, $options);
         }
         elseif ($this->isValid() && ! $this->isCorrectName($name)) {
-            $this->logger->error(sprintf('The setting %s was found but an issue caused the system to reject the value..', $name), [$name, $default, $options]);
-            return $this->get($this->name, $default, $options);
+            $this->logger->error(sprintf('The setting %s was found but an issue caused the system to reject the value.', $name), [$name, $default, $options]);
+            return $this->get($name, $default, $options);
         }
         return $default;
     }
 
     /**
-     * @var ArrayCollection
+     * @return object|\Symfony\Bridge\Monolog\Logger
      */
-    private $settings;
-
-    /**
-     * @var bool
-     */
-    private $lockedCache = false;
+    public function getLogger()
+    {
+        return $this->logger;
+    }
 
     /**
      * Read Session
@@ -164,14 +202,26 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
-     * @return ArrayCollection
+     * @var bool
      */
-    public function getSettings(): ArrayCollection
-    {
+    private $lockedCache = false;
 
-        if (empty($this->settings))
-            $this->settings = new ArrayCollection();
-        return $this->settings;
+    /**
+     * @return bool
+     */
+    public function isLockedCache(): bool
+    {
+        return $this->lockedCache;
+    }
+
+    /**
+     * @param bool $lockedCache
+     * @return SettingManager
+     */
+    public function setLockedCache(bool $lockedCache): SettingManager
+    {
+        $this->lockedCache = $lockedCache;
+        return $this;
     }
 
     /**
@@ -185,11 +235,8 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
-     * @var Request
-     */
-    private $request;
-
-    /**
+     * getRequest
+     *
      * @return Request
      */
     public function getRequest(): Request
@@ -201,34 +248,46 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
-     * @var string|null
+     * getSession
+     *
+     * @return SessionInterface|null
      */
-    private $name;
-
-    /**
-     * @var bool
-     */
-    private $flip = false;
-
-    /**
-     * @param string $name
-     * @return SettingManager
-     */
-    public function setName(string $name): SettingManager
+    public function getSession(): ?SessionInterface
     {
-        $name = strtolower($name);
-        $this->flip = false;
-        if (substr($name, -6) === '._flip') {
-            $this->flip = true;
-            $name = str_replace('._flip', '', $name);
-        }
+        if ($this->hasSession())
+            return $this->getRequest()->getSession();
+        return null;
+    }
 
-        if (empty($this->name) || mb_strpos($this->name, $name) !== 0) {
-            $this->name     = $name;
-            $this->setting  = null;
-        }
+    /**
+     * removeInvalidSettings
+     *
+     */
+    private function removeInvalidSettings(): SettingManager
+    {
+        $settings = clone $this->getSettings();
+
+        foreach ($settings as $setting)
+            if (! $this->isValid($setting))
+                $this->settings->remove($setting->getName());
 
         return $this;
+    }
+
+    /**
+     * @var ArrayCollection|null
+     */
+    private $settings;
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getSettings(): ArrayCollection
+    {
+
+        if (empty($this->settings))
+            $this->settings = new ArrayCollection();
+        return $this->settings;
     }
 
     /**
@@ -243,8 +302,9 @@ class SettingManager implements ContainerAwareInterface
      */
     public function getSetting(string $name): ?SettingCache
     {
-        if ($this->setting && $this->setting->getName() === $name)
+        if ($this->isValid() && $name === $this->setting->getSetting()->getName())
             return $this->setting;
+
         if ($this->getSettings()->containsKey($name))
             $this->setting = $this->settings->get($name);
         else
@@ -254,55 +314,29 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
-     * @param SettingCache|null $setting
-     * @return SettingManager
-     */
-    public function setSetting(?SettingCache $setting): SettingManager
-    {
-        $this->setting = $setting;
-        return $this;
-    }
-
-
-    /**
-     * unpackArray
+     * isValid
      *
-     * @param $setting
+     * @return bool
      */
-    private function unpackArray(SettingCache $setting)
+    private function isValid(?SettingCache $setting = null): bool
     {
-        foreach($setting->getValue() as $q=>$w)
-        {
-            $newSetting = new SettingCache(new Setting());
-            $newSetting->setName($setting->getName().'.'.strval($q))
-                ->setValue($w)
-                ->setParent($setting->getName())
-                ->setParentKey($q)
-                ->setBaseSetting(false)
-                ->setCacheTime(new \DateTime('now'));
-            if (is_array($w))
-                $newSetting->setSettingType('array');
-            else
-                $newSetting->setSettingType('system');
+        if (empty($setting))
+            $setting = $this->setting;
 
-            $this->Setting = $newSetting->getSetting();
-            $this->addSetting($newSetting);
-            if ($newSetting->getSettingType() === 'array')
-                $this->unpackArray($newSetting);
-        }
+        if (! $setting instanceof SettingCache)
+            return false;
+
+        if (! $setting->getSetting() instanceof Setting)
+            return false;
+
+        return $setting->isValid();
     }
 
     /**
      * loadSetting
      *
      * @param string $name
-     * @param string $preName
      * @return SettingManager
-     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
-     * @throws \Doctrine\ORM\ORMException
-     * @throws \Throwable
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Syntax
      */
     private function loadSetting(string $name): SettingManager
     {
@@ -311,25 +345,7 @@ class SettingManager implements ContainerAwareInterface
         if ($setting instanceof SettingCache)
             return $this->addSetting($setting);
 
-        $parts = explode('.', $name);
-        $name = '';
-
-        foreach($parts as $part)
-        {
-            $name .= '.' . $part;
-            $name = trim($name, '.');
-            $setting = $this->findOneByName($name);
-
-            if ($setting instanceof SettingCache)
-            {
-                if ($setting->getSettingType() !== 'array')
-                    return $this->addSetting($setting);
-                else
-                    $this->unpackArray($setting);
-            }
-        }
-
-        $this->readSession()->setName($name)->getSetting($name);
+        $this->readSession()->getSetting($name);
 
         return $this;
     }
@@ -339,14 +355,16 @@ class SettingManager implements ContainerAwareInterface
      *
      * @param string $name
      * @return SettingCache|null
-     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
-     * @throws \Doctrine\ORM\ORMException
      */
     public function findOneByName(string $name): ?SettingCache
     {
-        $setting = $this->getSettingCache();
+        $setting = $this->getEntityManager()->getRepository(Setting::class)->findOneByName($name);
 
-        $this->addSetting($setting->findOneByName($name, $this->getEntityManager()));
+        $setting = $this->getSettingCache($setting);
+
+        $setting->getValue();
+
+        $this->addSetting($setting, $name);
 
         return $this->setting;
     }
@@ -363,16 +381,6 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
-     * getEntityManager
-     *
-     * @return EntityManagerInterface
-     */
-    public function getEntityManager(): EntityManagerInterface
-    {
-        return $this->getContainer()->get('doctrine.orm.default_entity_manager');
-    }
-
-    /**
      * addSetting
      *
      * @param SettingCache|null $setting
@@ -384,11 +392,13 @@ class SettingManager implements ContainerAwareInterface
         if (empty($setting) || ! $setting->isValid())
             return $this;
 
-        $name = $name ?: $setting->getName();
+        $name = $name ?: $setting->getSetting()->getName();
 
         $setting->setCacheTime(new \DateTime('now'));
 
-        $this->getSettings()->set(strtolower($name), $setting);
+        $this->getSettings();
+
+        $this->settings->set(strtolower($name), $setting);
 
         $this->setting = $setting;
 
@@ -396,176 +406,11 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
-     * removeSetting
+     * getParameter
      *
-     * @param SettingCache|null $setting
-     * @return SettingManager
-     */
-    private function removeSetting(?SettingCache $setting): SettingManager
-    {
-        if (! $setting instanceof SettingCache)
-            return $this;
-
-        if ($setting->getParent() !== null) {
-            $parent = $this->getSetting($setting->getParent());
-            $this->removeSetting($parent);
-        }
-
-        $this->getSettings()->remove($setting->getName());
-
-        return $this->flushToSession();
-    }
-
-    /**
-     * isValid
-     *
-     * @return bool
-     */
-    private function isValid(): bool
-    {
-        if (! $this->setting instanceof SettingCache)
-            return false;
-
-        if ($this->setting->isValid())
-            return true;
-
-        return false;
-    }
-
-    /**
-     * has
-     *
-     * @param string $name
-     * @return bool
-     */
-    public function has(string $name): bool
-    {
-        $this->get($name);
-        return $this->isValid();
-    }
-
-    /**
-     * @return SessionInterface
-     */
-    public function getSession(): ?SessionInterface
-    {
-        if ($this->hasSession())
-            return $this->getRequest()->getSession();
-        return null;
-    }
-
-    /**
-     * createSettings
-     *
-     * @param array $data
-     * @return int
-     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
-     * @throws \Doctrine\ORM\ORMException
-     */
-    public function createSettings(array $data = []): int
-    {
-
-        $resolver = new OptionsResolver();
-        $resolver->setRequired(
-            [
-                'name',
-                'display_name',
-                'setting_type',
-                'description',
-            ]
-        );
-        $resolver->setDefaults(
-            [
-                'value' => null,
-                'default_value' => null,
-                'role' => null,
-                'choice' => null,
-                'validators' => null,
-                'translate_choice' => null,
-                'id' => null,
-            ]
-        );
-
-        $create = $this->getRequest()->request->get('create');
-        $data = $create ? Yaml::parse($create['setting']) : $data;
-        $this->settings = new ArrayCollection();
-
-
-        $settings = $this->getEntityManager()->getRepository(Setting::class)->createQueryBuilder('s','s.name')
-            ->select('s.name,s.id')
-            ->getQuery()
-            ->getArrayResult();
-
-        $insert = 0;
-        $update = 0;
-        $conn = $this->getEntityManager()->getConnection();
-        $tableName = $this->getEntityManager()->getClassMetadata(Setting::class)->table['name'];
-        $this->beginTransaction();
-        foreach ($data as $values) {
-            $values = $resolver->resolve($values);
-            $name = $values['name'];
-            if (isset($settings[$name]))
-            {
-                $w['id'] = $settings[$name]['id'];
-                $values['id']= $w['id'];
-                $conn->update($tableName, $values, $w);
-                $update++;
-            } else {
-                $conn->insert($tableName, $values);
-                $insert++;
-            }
-        }
-        $this->commit();
-        $this->getMessageManager()->add('success', '{0}No settings were installed.|{1}A setting was added to the database.|]1,Inf[%count% settings were installed successfully.', ['transChoice' => $insert], 'System');
-        $this->getMessageManager()->add('success', '{0}No settings were altered.|{1}A setting was altered in the database.|]1,Inf[%count% settings were altered successfully.', ['transChoice' => $update], 'System');
-        return $insert + $update;
-    }
-
-    /**
-     * @var MessageManager
-     */
-    private $messageManager;
-
-    /**
-     * getMessageManager
-     *
-     * @return MessageManager
-     */
-    public function getMessageManager(): MessageManager
-    {
-        return $this->messageManager;
-    }
-
-    /**
-     * @var bool
-     */
-    private $installMode = false;
-
-    /**
-     * @return bool
-     */
-    public function isInstallMode(): bool
-    {
-        return $this->installMode;
-    }
-
-    /**
-     * @param bool $installMode
-     * @return SettingManager
-     */
-    public function setInstallMode(bool $installMode): SettingManager
-    {
-        $this->installMode = $installMode ? true : false ;
-        return $this;
-    }
-
-    /**
-     * Get parameter
-     *
-     * @param   string $name
-     * @param   mixed $default
-     *
-     * @return  mixed
+     * @param $name
+     * @param null $default
+     * @return mixed|null
      */
     public function getParameter($name, $default = null)
     {
@@ -603,389 +448,28 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
-     * setParameter
-     *
-     * @param array $name
-     * @param $value
-     * @return mixed
+     * @var bool
      */
-    public function setParameter(array $name, $value)
-    {
-        $path = $this->getContainer()->get('kernel')->getProjectDir() . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'packages' . DIRECTORY_SEPARATOR . 'platypus.yaml';
-        $content = Yaml::parse(file_get_contents($path));
-
-        $content['parameters'] = $this->changeParameterValue($content['parameters'], $name, $value);
-        try{
-            file_put_contents($path, Yaml::dump($content));
-        } catch (\ErrorException $e) {
-            throw new \ErrorException(sprintf("The file '%s' permissions are not set to allow the file to be written. This needs to be corrected on the server before the settings can be changed.", $path));
-        }
-    }
-
-    /**
-     * changeParameterValue
-     *
-     * @param array $parameters
-     * @param array $name
-     * @param mixed $value
-     * @return array
-     */
-    private function changeParameterValue(array $parameters, array $name, $value): array
-    {
-        $key = array_shift($name);
-
-        if (empty($name))
-        {
-            $parameters[$key] = $value;
-            return $parameters;
-        }
-
-        if (empty($parameters[$key]))
-            $parameters[$key] = [];
-
-        $parameters[$key] = $this->changeParameterValue($parameters[$key], $name, $value);
-
-        return $parameters;
-    }
-    /**
-     * getValue
-     *
-     * @param null $default
-     * @param array $options
-     * @return array|mixed|null|string
-     * @throws \Throwable
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Syntax
-     */
-    private function getValue($default = null, array $options = [])
-    {
-        switch ($this->setting->getSettingType()) {
-            case 'twig':
-                $value = null;
-                try {
-                    return $this->twig->getTwig()->createTemplate($this->setting->getFinalValue($default))->render($options);
-                } catch (\Twig_Error_Syntax $e) {
-                    throw $e;
-                } catch (\Twig_Error_Runtime $e) {
-                    // Ignore Runtime Errors, and return raw twig value
-                    return $this->setting->getFinalValue($default);
-                }
-                break;
-            case 'array':
-                if ($this->isFlip())
-                    return array_flip($this->setting->getFinalValue($default));
-                return $this->setting->getFinalValue($default);
-                break;
-            default:
-                return $this->setting->getFinalValue($default);
-        }
-    }
-
-    /**
-     * getCurrentSetting
-     *
-     * @return Setting|null
-     */
-    public function getCurrentSetting(): ?Setting
-    {
-        if (!$this->setting)
-            return null;
-        return $this->setting->getSetting();
-    }
+    private $action = false;
 
     /**
      * @return bool
      */
-    private function isFlip(): bool
+    public function isAction(): bool
     {
-        return $this->flip;
+        return $this->action ? true : false;
     }
 
     /**
-     * set Setting
+     * @param bool $action
      *
-     * @version 31st October 2016
-     * @since   21st October 2016
-     * @param $name
-     * @param $value
      * @return SettingManager
-     * @throws \Throwable
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Syntax
      */
-    public function set($name, $value): SettingManager
+    public function setAction(bool $action): SettingManager
     {
-        $name = strtolower($name);
-        $this->get($name);
+        $this->action = $action ? true : false;
 
-        if (!$this->isValid())
-            return $this;
-
-        if (!$this->isInstallMode())
-            if (!$this->getAuthorisation()->isGranted($this->setting->getSetting()->getRole(), $this->setting->getSetting()))
-                return $this;
-
-        if ($this->setting->getSettingType() === 'file')
-            $this->removeFile($this->setting->getValue());
-
-        $setting = $this->getEntityManager()->getRepository(Setting::class)->find($this->setting->getId());
-        $this->getEntityManager()->refresh($setting);
-        $this->setting = $this->getSettingCache($setting);
-
-        if ($x = $this->setting->setValue($value)
-            ->setCacheTime(new \DateTime('now'))
-            ->writeSetting($this->getEntityManager(), $this->getValidator(), $this->getConstraints($this->setting->getSettingType())) !== true)
-            if (is_iterable($x))
-                foreach($x->getIterator() as $constraintViolation)
-                    $this->getMessageManager()->add('danger', $constraintViolation->getMessage(), [], false);
-
-        unset($this->settings[$name]);
-
-        return $this->removeSetting($this->setting)->addSetting($this->setting);
-    }
-
-    /**
-     * @return AuthorizationCheckerInterface
-     */
-    public function getAuthorisation(): AuthorizationCheckerInterface
-    {
-        return $this->authorisation;
-    }
-
-    /**
-     * flushToSession
-     *
-     * @param Setting $setting
-     */
-    private function flushToSession(): SettingManager
-    {
-        if ($this->hasSession())
-            $this->getSession()->set('settings', $this->getSettings());
         return $this;
-    }
-
-    /**
-     * @return TwigManager
-     */
-    public function getTwig(): TwigManager
-    {
-        return $this->twig;
-    }
-
-    /**
-     * clearSetting
-     *
-     * @param Setting $setting
-     * @return SettingManager
-     */
-    public function clearSetting(Setting $setting): SettingManager
-    {
-        if ($setting->getName()) {
-            if ($this->getSettings()->containsKey($setting->getName()))
-                $this->getSettings()->remove($setting->getName());
-        }
-        $this->setting = null;
-        if ($this->hasSession())
-            $this->getSession()->set('settings', $this->settings);
-
-        return $this->flushToSession();
-    }
-
-    /**
-     * find
-     *
-     * @param $id
-     * @return Setting
-     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
-     * @throws \Throwable
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Syntax
-     */
-    public function find($id): Setting
-    {
-        $setting = $this->getEntityManager()->getRepository(Setting::class)->find($id);
-        if ($setting instanceof Setting)
-            $this->get($setting->getName());
-        return $this->getCurrentSetting();
-    }
-
-    /**
-     * injectSetting
-     *
-     * @param Setting $setting
-     * @return SettingManager
-     */
-    public function injectSetting(Setting $setting): SettingManager
-    {
-        $this->setting = $this->getSettingCache();
-        $this->setting->setSetting($setting);
-        $this->setting->setName($setting->getName());
-        $this->setting->setCacheTime(new \DateTime('now'));
-        $this->setting->setBaseSetting(true);
-        return $this->addSetting($this->setting);
-    }
-
-    /**
-     * translateValue
-     *
-     * @return array
-     */
-    public function translateValue(): MessageManager
-    {
-        $setting  = $this->setting;
-        if ($setting->getTranslateChoice() === 'false')
-        {
-            $this->getMessageManager()->add('info', 'setting.translate.turned.off', [], 'System');
-            return $this->getMessageManager();
-        }
-
-        switch ($setting->getSettingType())
-        {
-            case 'array':
-                $count = 0;
-                foreach($this->generateTranslationKeys($setting->getName(), $setting->getValue()) as $name=>$value)
-                {
-                    $this->getMessageManager()->add('info', 'setting.translate.definition', ['%{name}' => $name, '%{value}' => $this->getTranslator()->trans($value, [], $setting->getTranslateChoice() ?: 'Setting')], 'System');
-                    if ($count++ > 24)
-                        return $this->getMessageManager();
-                }
-                break;
-            default:
-                $this->getMessageManager()->add('info', 'setting.translate.not.required', [], 'System');
-        }
-        return $this->getMessageManager();
-    }
-
-    /**
-     * generateTranslationKeys
-     *
-     * @param $key
-     * @param $data
-     * @return array
-     */
-    public function generateTranslationKeys($key, $data)
-    {
-        $results = [];
-        foreach($data as $name => $value)
-        {
-            if (strval(intval($name)) !== trim($name))
-                $results[$name] = $key. '.' . $name;
-            if (is_array($value))
-                $results = array_merge($results, $this->generateTranslationKeys($key, $value));
-            else
-                $results[$value] = $key. '.' . $value;
-        }
-
-        return $results;
-    }
-
-    /**
-     * @return TranslatorInterface
-     */
-    public function getTranslator(): TranslatorInterface
-    {
-        return $this->getContainer()->get('translator');
-    }
-
-    /**
-     * @return ValidatorInterface
-     */
-    public function getValidator(): ValidatorInterface
-    {
-        return Validation::createValidator();
-    }
-
-    /**
-     * @return array
-     */
-    public function getConstraints(string $settingType): array
-    {
-        $constraints = [];
-        $constraints['boolean'] = [];
-        $constraints['integer'] = [
-            new Integer(),
-        ];
-        $constraint['image'] = [];
-        $constraints['file'] = [];
-        $constraints['array'] = [
-            new \App\Validator\Yaml(),
-        ];
-        $constraints['twig'] = [
-            new Twig(),
-        ];
-        $constraints['system'] = [];
-        $constraints['string'] = [];
-        $constraints['enum'] = [];  //SettingChoiceSettingType should be used as it adds a Setting Choice Validator
-        $constraints['regex'] = [
-            new Regex(),
-        ];
-        $constraints['text'] = [];
-        $constraints['time'] = [];
-
-        if (isset($constraints[$settingType]))
-            return $constraints[$settingType];
-        return [];
-    }
-
-    /**
-     * removeInvalidSettings
-     *
-     */
-    private function removeInvalidSettings()
-    {
-        $settings = clone $this->getSettings();
-        foreach ($settings as $setting)
-        {
-            $this->setting = $setting;
-            if ($this->isValid())
-                continue;
-            while (! $setting->isBaseSetting()) {
-                $this->settings->remove($setting->getName());
-                $setting = $settings->get($setting->getParent());
-            }
-        }
-    }
-
-    /**
-     * @return bool
-     */
-    public function isLockedCache(): bool
-    {
-        return $this->lockedCache;
-    }
-
-    /**
-     * exportSettings
-     *
-     * @return string
-     */
-    public function exportSettings()
-    {
-        $result = '';
-        $results = $this->getEntityManager()->getRepository(Setting::class)->createQueryBuilder('s')
-            ->where('s.settingType != :setSettingType')
-            ->setParameter('setSettingType', 'system')
-            ->getQuery()
-            ->getResult();
-        $settings = [];
-        foreach($results as $setting) {
-            $w = $setting->__toArray();
-            unset($w['valid'],$w['createdOn'],$w['lastModified'],$w['createdBy'],$w['modifiedBy'],$w['id']);
-            switch($w['settingType']){
-                case 'array':
-                    $w['value'] = SettingCache::convertDatabaseToArray($w['value']);
-                    $w['defaultValue'] = SettingCache::convertDatabaseToArray($w['defaultValue']);
-                    break;
-                case 'time':
-                    $w['value'] = $w['value'] ? SettingCache::convertDatabaseToDateTime($w['value'])->format('H:i') : null;
-                    $w['defaultValue'] = $w['defaultValue'] ? SettingCache::convertDatabaseToDateTime($w['defaultValue'])->format('H:i') : null;
-                    break;
-                default:
-            }
-            $settings[strtolower($w['name'])] = $w;
-        }
-        $result = Yaml::dump($settings, 4);
-        return $result;
     }
 
     /**
@@ -1054,197 +538,78 @@ class SettingManager implements ContainerAwareInterface
     }
 
     /**
-     * @var bool
-     */
-    private $action = false;
-
-    /**
-     * @return bool
-     */
-    public function isAction(): bool
-    {
-        return $this->action ? true : false;
-    }
-
-    /**
-     * @param bool $action
-     *
-     * @return SettingManager
-     */
-    public function setAction(bool $action): SettingManager
-    {
-        $this->action = $action ? true : false;
-
-        return $this;
-    }
-
-    /**
-     * @param $current
-     * @throws \Doctrine\ORM\ORMException
-     */
-    private function updateCurrentVersion($current)
-    {
-        $version = [];
-        $data = [];
-        $version['setting_type'] = 'system';
-        $version['display_name'] = 'System Version';
-        $version['description'] = 'The version of Busybee currently configured on your system.';
-        $version['role'] = 'ROLE_SYSTEM_ADMIN';
-        $version['value'] = $current;
-        $version['name'] = 'version';
-        $version['default_value'] = '0.0.00';
-        $data['version'] = $version;
-        $this->createSettings($data);
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDatabaseFail(): bool
-    {
-        return $this->databaseFail ? true : false;
-    }
-
-    /**
-     * @param bool $databaseFail
-     * @return SettingManager
-     */
-    public function setDatabaseFail(bool $databaseFail): SettingManager
-    {
-        $this->databaseFail = $databaseFail ? true : false;
-        return $this;
-    }
-
-
-    /**
-     * createOneByName
+     * has
      *
      * @param string $name
-     * @return SettingCache|null
+     * @return bool
+     */
+    public function has(string $name): bool
+    {
+        $this->get($name);
+        return $this->isValid();
+    }
+
+    /**
+     * createSettings
+     *
+     * @param array $data
+     * @return int
      * @throws \Doctrine\DBAL\Exception\TableNotFoundException
      * @throws \Doctrine\ORM\ORMException
      */
-    public function createOneByName(string $name): ?SettingCache
+    public function createSettings(array $data = []): int
     {
-        $setting = $this->getSettingCache();
-        $sss = $setting->findOneByName($name, $this->getEntityManager());
 
-        $this->addSetting($sss);
+        $resolver = new OptionsResolver();
+        $resolver->setRequired(
+            [
+                'name',
+                'display_name',
+                'setting_type',
+                'description',
+            ]
+        );
+        $resolver->setDefaults(
+            [
+                'value' => null,
+                'validators' => null,
+                'id' => null,
+            ]
+        );
 
-        if ($setting === $this->setting)
-             return $this->setting;
+        $create = $this->getRequest()->request->get('create');
+        $data = $create ? Yaml::parse($create['setting']) : $data;
+        $this->settings = new ArrayCollection();
 
-        $setting = $this->getSettingCache();
-        $setting->createOneByName($name);
-        $this->addSetting($setting);
 
-        return $setting;
-    }
+        $settings = $this->getEntityManager()->getRepository(Setting::class)->createQueryBuilder('s','s.name')
+            ->select('s.name,s.id')
+            ->getQuery()
+            ->getArrayResult();
 
-    /**
-     * createSettingDefinition
-     *
-     * @param string $name
-     * @param array $options
-     * @return SettingCreationInterface
-     */
-    public function createSettingDefinition(string $name, array $options = []): SettingCreationInterface
-    {
-        $class = 'App\\Manager\\Settings\\' . $name . 'Settings';
-        if (! class_exists($class))
-            trigger_error('The class ' . $class . ' does not exist,');
-
-        $class = new $class($options);
-
-        if (! $class instanceof SettingCreationInterface)
-            trigger_error('The class ' . get_class($class) . ' does not implement the ' . SettingCreationInterface::class);
-
-        if ($name !== $class->getName())
-            trigger_error('The class ' . get_class($class) . ' does not match the setting\'s name: '.$name);
-
-        return $class->getSettings($this);
-    }
-
-    /**
-     * createSetting
-     * @param Setting $setting
-     * @return SettingManager
-     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
-     * @throws \Throwable
-     * @throws \Twig_Error_Loader
-     * @throws \Twig_Error_Syntax
-     */
-    public function createSetting(Setting $setting): SettingManager
-    {
-        if ($setting->getSettingType() === 'array')
-            $setting->setValue(str_replace(array("\\r", "\\n", '"'), array('', "\n", ''),$setting->getValue()));
-        $exists = $this->get($setting->getName());
-        if ($exists instanceof SettingCache)
-            return $this->set($setting->getName(), $setting->getValue());
-
-        $this->getEntityManager()->persist($setting);
-        $this->getEntityManager()->flush();
-
-        return $this;
-    }
-
-    /**
-     * validateSetting
-     *
-     * @param Setting $setting
-     * @param $value
-     * @return bool
-     */
-    public function validateSetting(Setting $setting, $value): bool
-    {
-        if (! empty($setting->getValidators())) {
-            $validator = Validation::createValidator();
-            $violations = $validator->validate($value, $setting->getValidators());
-
-            if (0 !== count($violations)) {
-                // there are errors, now you can show them
-                foreach ($violations as $violation) {
-                    $this->getMessageManager()->add('danger', $violation->getMessage(), [], false);
-                }
-                return false;
+        $insert = 0;
+        $update = 0;
+        $conn = $this->getEntityManager()->getConnection();
+        $tableName = $this->getEntityManager()->getClassMetadata(Setting::class)->table['name'];
+        $this->beginTransaction();
+        foreach ($data as $values) {
+            $values = $resolver->resolve($values);
+            $name = $values['name'];
+            if (isset($settings[$name]))
+            {
+                $w['id'] = $settings[$name]['id'];
+                $values['id']= $w['id'];
+                $conn->update($tableName, $values, $w);
+                $update++;
+            } else {
+                $conn->insert($tableName, $values);
+                $insert++;
             }
         }
-        return true;
-    }
-
-    /**
-     * isCorrectName
-     *
-     * @param $name
-     * @return bool
-     */
-    public function isCorrectName($name): bool
-    {
-        if ($name === $this->setting->getName())
-            return true;
-
-        $this->settings = null;
-        $this->setting = null;
-
-        if($this->hasSession())
-            $this->getSession()->set('settings', $this->getSettings());
-
-        return false;
-    }
-
-    /**
-     * removeFile
-     *
-     * @param string $fileName
-     */
-    private function removeFile(?string $fileName = '')
-    {
-        if (empty($fileName))
-            return;
-
-        if (file_exists($this->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $fileName))
-            unlink($this->getParameter('kernel.project_dir') . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . $fileName);
-
+        $this->commit();
+        $this->getMessageManager()->add('success', '{0}No settings were installed.|{1}A setting was added to the database.|]1,Inf[%count% settings were installed successfully.', ['transChoice' => $insert], 'System');
+        $this->getMessageManager()->add('success', '{0}No settings were altered.|{1}A setting was altered in the database.|]1,Inf[%count% settings were altered successfully.', ['transChoice' => $update], 'System');
+        return $insert + $update;
     }
 
     /**
@@ -1289,4 +654,323 @@ class SettingManager implements ContainerAwareInterface
             $this->setForeignKeyChecksOn();
     }
 
+    /**
+     * @param $current
+     * @throws \Doctrine\ORM\ORMException
+     */
+    private function updateCurrentVersion($current)
+    {
+        $version = [];
+        $data = [];
+        $version['setting_type'] = 'system';
+        $version['display_name'] = 'System Version';
+        $version['description'] = 'The version of Busybee currently configured on your system.';
+        $version['value'] = $current;
+        $version['name'] = 'version';
+        $data['version'] = $version;
+        $this->createSettings($data);
+    }
+
+    /**
+     * set Setting
+     *
+     * @version 31st October 2016
+     * @since   21st October 2016
+     * @param $name
+     * @param $value
+     * @return SettingManager
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     */
+    public function set($name, $value): SettingManager
+    {
+        $name = strtolower($name);
+        $this->get($name);
+
+        if (!$this->isValid())
+            return $this;
+
+        $setting = $this->getEntityManager()->getRepository(Setting::class)->findOneByName($this->setting->getSetting()->getName());
+
+        $this->getEntityManager()->refresh($setting);
+        $this->setting = $this->getSettingCache($setting);
+
+        if ($x = $this->setting->setValue($value)
+                ->writeSetting($this->getEntityManager(), $this->getValidator(), $this->getConstraints($this->setting->getSetting()->getSettingType())) !== true)
+            if (is_iterable($x))
+                foreach($x->getIterator() as $constraintViolation)
+                    $this->getMessageManager()->add('danger', $constraintViolation->getMessage(), [], false);
+
+        unset($this->settings[$name]);
+
+        return $this->removeSetting($this->setting)->addSetting($this->setting);
+    }
+
+    /**
+     * isCorrectName
+     *
+     * @param $name
+     * @return bool
+     */
+    public function isCorrectName($name): bool
+    {
+        if ($name === $this->setting->getSetting()->getName())
+            return true;
+
+        $this->settings = null;
+        $this->setting = null;
+
+        if($this->hasSession())
+            $this->getSession()->set('settings', $this->getSettings());
+
+        return false;
+    }
+
+    /**
+     * flushToSession
+     *
+     * @param Setting $setting
+     */
+    private function flushToSession(): SettingManager
+    {
+        if ($this->hasSession())
+            $this->getSession()->set('settings', $this->getSettings());
+        return $this;
+    }
+
+    /**
+     * getValue
+     *
+     * @param null $default
+     * @param array $options
+     * @return array|mixed|null|string
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     */
+    private function getValue($default = null, array $options = [])
+    {
+        switch ($this->setting->getSetting()->getSettingType()) {
+            case 'twig':
+                $value = null;
+                try {
+                    return $this->twig->getTwig()->createTemplate($this->setting->getFinalValue($default))->render($options);
+                } catch (\Twig_Error_Syntax $e) {
+                    throw $e;
+                } catch (\Twig_Error_Runtime $e) {
+                    // Ignore Runtime Errors, and return raw twig value
+                    return $this->setting->getFinalValue($default);
+                }
+                break;
+            case 'array':
+                if ($this->isFlip())
+                    return array_flip($this->setting->getFinalValue($default));
+                return $this->setting->getFinalValue($default);
+                break;
+            default:
+                return $this->setting->getFinalValue($default);
+        }
+    }
+
+    /**
+     * @var bool
+     */
+    private $installMode = false;
+
+    /**
+     * @return bool
+     */
+    public function isInstallMode(): bool
+    {
+        return $this->installMode = $this->installMode ? true : false ;
+    }
+
+    /**
+     * @param bool $installMode
+     * @return SettingManager
+     */
+    public function setInstallMode(?bool $installMode): SettingManager
+    {
+        $this->installMode = $installMode ? true : false ;
+        return $this;
+    }
+
+    /**
+     * getValidator
+     *
+     * @return ValidatorInterface
+     */
+    public function getValidator(): ValidatorInterface
+    {
+        return Validation::createValidator();
+    }
+
+    /**
+     * getConstraints
+     *
+     * @param string $settingType
+     * @return array
+     */
+    public function getConstraints(string $settingType): array
+    {
+        $constraints = [];
+        $constraints['boolean'] = [];
+        $constraints['integer'] = [
+            new Integer(),
+        ];
+        $constraint['image'] = [];
+        $constraints['file'] = [];
+        $constraints['array'] = [
+            new \App\Validator\Yaml(),
+        ];
+        $constraints['twig'] = [
+            new Twig(),
+        ];
+        $constraints['system'] = [];
+        $constraints['string'] = [];
+        $constraints['enum'] = [];  //SettingChoiceSettingType should be used as it adds a Setting Choice Validator
+        $constraints['regex'] = [
+            new Regex(),
+        ];
+        $constraints['text'] = [];
+        $constraints['time'] = [];
+
+        if (isset($constraints[$settingType]))
+            return $constraints[$settingType];
+        return [];
+    }
+
+    /**
+     * removeSetting
+     *
+     * @param SettingCache|null $setting
+     * @return SettingManager
+     */
+    private function removeSetting(?SettingCache $setting): SettingManager
+    {
+        if (! $setting instanceof SettingCache)
+            return $this;
+
+        $this->getSettings()->remove($setting->getSetting()->getName());
+
+        return $this->flushToSession();
+    }
+
+    /**
+     * createSettingDefinition
+     *
+     * @param string $name
+     * @param array $options
+     * @return SettingCreationInterface
+     */
+    public function createSettingDefinition(string $name, array $options = []): SettingCreationInterface
+    {
+        $class = 'App\\Manager\\Settings\\' . $name . 'Settings';
+        if (! class_exists($class))
+            trigger_error('The class ' . $class . ' does not exist,');
+
+        $class = new $class($options);
+
+        if (! $class instanceof SettingCreationInterface)
+            trigger_error('The class ' . get_class($class) . ' does not implement the ' . SettingCreationInterface::class);
+
+        if ($name !== $class->getName())
+            trigger_error('The class ' . get_class($class) . ' does not match the setting\'s name: '.$name);
+
+        return $class->getSettings($this);
+    }
+
+    /**
+     * createOneByName
+     *
+     * @param string $name
+     * @return SettingCache|null
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Doctrine\ORM\ORMException
+     */
+    public function createOneByName(string $name): Setting
+    {
+        $sss = $this->findOneByName($name);
+
+        if ($sss->getSetting()->getName() === $name) {
+            $this->addSetting($sss);
+            return $sss->getSetting();
+        }
+
+        $setting = new Setting();
+        $setting->setName($name);
+
+        return $setting;
+    }
+
+    /**
+     * createSetting
+     * @param Setting $setting
+     * @return SettingManager
+     * @throws \Doctrine\DBAL\Exception\TableNotFoundException
+     * @throws \Throwable
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Syntax
+     */
+    public function createSetting(Setting $setting): SettingManager
+    {
+        if ($setting->getSettingType() === 'array')
+            $setting->setValue(str_replace(array("\\r", "\\n", '"'), array('', "\n", ''),$setting->getValue()));
+        $exists = $this->get($setting->getName());
+
+        if ($this->setting instanceof SettingCache && $setting->getName() === $this->setting->getName())
+            return $this->set($setting->getName(), $setting->getValue());
+
+        $this->getEntityManager()->persist($setting);
+        $this->getEntityManager()->flush();
+
+        return $this;
+    }
+
+    /**
+     * setParameter
+     *
+     * @param array $name
+     * @param $value
+     * @return mixed
+     */
+    public function setParameter(array $name, $value)
+    {
+        $path = $this->getContainer()->get('kernel')->getProjectDir() . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . 'packages' . DIRECTORY_SEPARATOR . 'platypus.yaml';
+        $content = Yaml::parse(file_get_contents($path));
+
+        $content['parameters'] = $this->changeParameterValue($content['parameters'], $name, $value);
+        try{
+            file_put_contents($path, Yaml::dump($content));
+        } catch (\ErrorException $e) {
+            throw new \ErrorException(sprintf("The file '%s' permissions are not set to allow the file to be written. This needs to be corrected on the server before the settings can be changed.", $path));
+        }
+    }
+
+    /**
+     * changeParameterValue
+     *
+     * @param array $parameters
+     * @param array $name
+     * @param mixed $value
+     * @return array
+     */
+    private function changeParameterValue(array $parameters, array $name, $value): array
+    {
+        $key = array_shift($name);
+
+        if (empty($name))
+        {
+            $parameters[$key] = $value;
+            return $parameters;
+        }
+
+        if (empty($parameters[$key]))
+            $parameters[$key] = [];
+
+        $parameters[$key] = $this->changeParameterValue($parameters[$key], $name, $value);
+
+        return $parameters;
+    }
 }

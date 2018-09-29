@@ -18,9 +18,6 @@ namespace App\Manager;
 use App\Organism\SettingCache;
 use App\Util\StringHelper;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\EntityManagerInterface;
-use PhpParser\Node\Stmt\Else_;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MultipleSettingManager
@@ -85,6 +82,13 @@ class MultipleSettingManager
         $section = $resolver->resolve($section);
 
         $this->getSections();
+
+        $settings = [];
+        foreach($section['settings'] as $setting) {
+            if (!$setting instanceof SettingCache)
+                trigger_error(sprintf('The setting %s is not correctly formatted.', $setting->getName()), E_USER_WARNING);
+        }
+
         $this->sections[$this->safeName($section['name'])]  = $section;
         return $this;
     }
@@ -201,19 +205,21 @@ class MultipleSettingManager
     public function saveSections(SettingManager $sm, array $data): bool
     {
         $refresh = false;
-        foreach ($this->getSections() as $name=>$section)
-            foreach ($section['settings'] as $key=>$setting)
-            {
+        foreach ($this->getSections() as $name=>$section) {
+            foreach ($section['settings'] as $key => $setting) {
                 if ($setting->isParameter()) {
                     $this->saveParameter($sm, $setting);
                 } else {
-                    if ($setting->getSettingType() === 'multiChoice' && empty($data[$name]['collection'][$key])) {
+                    if (empty($data[$name]['collection'][$key])) {
                         $refresh = true;
-                        $setting->setValue([]);
+                        $setting->setValue(null);
+                    } else {
+                        $setting->setValue($data[$name]['collection'][$key]['value']);
                     }
                     $sm->createSetting($setting->getSetting());
                 }
             }
+        }
 
         return $refresh;
     }

@@ -28,21 +28,9 @@ App\Entity\Setting:
         value:
             type: text
             nullable: true
-        choice:
-            type: array
-            nullable: true
         validators:
             type: array
             nullable: true
-        role:
-            type: string
-            length: 64
+        choices:
+            type: array
             nullable: true
-        defaultValue:
-            type: text
-            nullable: true
-            column: default_value
-        translateChoice:
-            length: 128
-            nullable: true
-            column: translate_choice
