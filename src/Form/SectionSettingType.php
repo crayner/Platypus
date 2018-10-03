@@ -35,23 +35,25 @@ class SectionSettingType extends AbstractType
         foreach($data->getSections() as $q=>$section)
         {
             $collectionManager = $data->getNewCollection($section);
-            $builder->add(StringHelper::safeString($section['name']),CollectionManagerType::class,
-                [
-                    'allow_up' => false,
-                    'allow_down' => false,
-                    'data' => $collectionManager,
-                    'entry_type' => MultipleSettingType::class,
-                    'entry_options_data_class' => SettingCache::class,
-                    'entry_options' => [
-                        'all_data' => $collectionManager->getCollection(),
-                        'section_name' => $section['name'],
-                        'section_description' => $section['description'],
-                    ],
-                    'constraints' => [
-                        new Valid(),
-                    ],
-                ]
-            );
+            $builder
+                ->add(StringHelper::safeString($section['name']),CollectionManagerType::class,
+                    [
+                        'allow_up' => false,
+                        'allow_down' => false,
+                        'data' => $collectionManager,
+                        'entry_type' => MultipleSettingType::class,
+                        'entry_options_data_class' => SettingCache::class,
+                        'entry_options' => [
+                            'all_data' => $collectionManager->getCollection(),
+                            'section_name' => $section['name'],
+                            'section_description' => $section['description'],
+                        ],
+                        'constraints' => [
+                            new Valid(),
+                        ],
+                    ]
+                )
+            ;
         }
     }
 

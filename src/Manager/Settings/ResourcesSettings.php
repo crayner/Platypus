@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * Class ResourcesSettings
  * @package App\Manager\Settings
  */
-class ResourcesSettings implements SettingCreationInterface
+class ResourcesSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -45,33 +45,24 @@ class ResourcesSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
-
-        $setting = $sm->createOneByName('resources.categories');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $this->setSettingManager($sm);
+        $setting = $sm->createOneByName('resources.categories')
             ->setSettingType('array')
-
             ->setValidators(
                 [
                     new NotBlank(),
                     new Yaml(),
                 ]
             )
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Categories')
-           ->setDescription('Allowable choices for category.');
+            ->setDescription('Allowable choices for category.');
         if (empty($setting->getValue())) {
             $setting->setValue(['Article', 'Book', 'Document', 'Graphic', 'Idea', 'Music', 'Object', 'Painting', 'Person', 'Photo', 'Place', 'Poetry', 'Prose', 'Rubric', 'Text', 'Video', 'Website', 'Work Sample', 'Other'])
             ;
         }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('resources.purposes_general');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('resources.purposes_general')
             ->setSettingType('array')
             ->setValidators(
                 [
@@ -79,60 +70,35 @@ class ResourcesSettings implements SettingCreationInterface
                     new Yaml(),
                 ]
             )
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Purposes (General)')
-           ->setDescription('Allowable choices for purpose when creating a resource.');
+            ->setDescription('Allowable choices for purpose when creating a resource.');
         if (empty($setting->getValue())) {
             $setting->setValue(['Assessment Aid', 'Concept', 'Inspiration', 'Learner Profile', 'Mass Mailer Attachment', 'Provocation', 'Skill', 'Teaching and Learning Strategy', 'Other'])
 
             ;
         }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('resources.purposes_restricted');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('resources.purposes_restricted')
             ->setSettingType('array')
             ->setValidators(
                 [
                     new Yaml(),
                 ]
             )
-            ->__set('translateChoice', 'Setting')
+
             ->setDisplayName('Purposes (Restricted) ')
-           ->setDescription('Additional allowable choices for purpose when creating a resource, for those with "Manage All Resources" rights.');
-        if (empty($setting->getValue())) {
-            $setting->setValue([])
+            ->setDescription('Additional allowable choices for purpose when creating a resource, for those with "Manage All Resources" rights.');
+        if (empty($setting->getValue()))
+            $setting->setValue([]);
+        $this->addSetting($setting, []);
 
-            ;
-        }
-        $settings[] = $setting;
+        $this->addSection('Resource Settings');
 
-        $sections = [];
+        $this->setSectionsHeader('manage_resource_settings');
 
-        $section['name'] = 'Resource Settings';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->setSettingManager(null);
 
-        $sections[] = $section;
-
-        $sections['header'] = 'manage_resource_settings';
-
-        $this->sections = $sections;
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }

@@ -21,6 +21,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Class SettingCache
@@ -438,6 +439,33 @@ class SettingCache
     private function setBooleanValue()
     {
         return $this->value = $this->value ? true : false ;
+    }
+
+    /**
+     * getArrayValue
+     *
+     * @return mixed
+     */
+    private function getArrayValue()
+    {
+        $w = Yaml::parse($this->value);
+        if (is_array($w))
+            return $w;
+
+        if (empty(trim($this->value)))
+            return [];
+        $w = unserialize(trim($this->value));
+        return $w;
+    }
+
+    /**
+     * setArrayValue
+     *
+     * @return string
+     */
+    private function setArrayValue()
+    {
+        return $this->value = Yaml::dump($this->value);
     }
 
     /**

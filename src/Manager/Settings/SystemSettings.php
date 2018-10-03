@@ -67,7 +67,7 @@ class SystemSettings extends SettingCreationManager
             ])
             ->setDescription('The address at which the whole system resides.')
             ->setValue($this->getRequest()->server->get('REQUEST_SCHEME').'://'.$this->getRequest()->server->get('SERVER_NAME'));
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting,[]);
 
         $setting = $sm->createOneByName('system.absolute_path')
             ->setSettingType('system')
@@ -75,7 +75,7 @@ class SystemSettings extends SettingCreationManager
             ->setValidators(null)
             ->setDescription('The local file server path to the system.')
             ->setValue($this->getRequest()->server->get('DOCUMENT_ROOT'));
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('system.system_name')
             ->setSettingType('string')
@@ -84,7 +84,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('');
         if (empty($setting->getValue()))
             $setting->setValue('Busybee');
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('system.index_text')
             ->setSettingType('html')
@@ -93,7 +93,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('Text displayed in system\'s welcome page.  If left blank, then the system default is used.');
         if (empty($setting->getValue()))
             $setting->setValue(null);
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('system.install_type')
             ->setSettingType('enum')
@@ -105,7 +105,7 @@ class SystemSettings extends SettingCreationManager
             $setting->setValue($setting->getValue());
         else
             $setting->setValue('production');
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('system.stats_collection')
             ->setSettingType('boolean')
@@ -114,7 +114,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('To track Busybee uptake, the system tracks basic data (current URL, install type, organisation name) on each install. Do you want to help?');
         if (empty($setting->getValue()))
             $setting->setValue(false);
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $this->addSection('System Settings');
 
@@ -126,7 +126,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('');
         if (empty($setting->getValue()))
             $setting->setValue('Busybee');
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('org.name.short')
             ->setSettingType('string')
@@ -135,7 +135,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('');
         if (empty($setting->getValue()))
             $setting->setValue('BEE');
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('org.email')
             ->setValidators([
@@ -146,7 +146,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('General email address for the school.');
         if (empty($setting->getValue()))
             $setting->setValue(null);
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('org.logo')
             ->setSettingType('image')
@@ -157,7 +157,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('Relative path to site logo. If empty, the template logo is used.');
         if (empty($setting->getValue()))
             $setting->setValue('build/static/images/bee.png');
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('system.organisation_administrator')
             ->setSettingType('enum')
@@ -167,7 +167,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('The staff member who receives notifications for system events.');
         if (empty($setting->getValue()))
             $setting->setValue(null);
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('system.organisation_dba')
             ->setSettingType('enum')
@@ -177,7 +177,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('The staff member who receives notifications for data events.');
         if (empty($setting->getValue()))
             $setting->setValue(null);
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('system.organisation_admissions')
             ->setSettingType('enum')
@@ -187,7 +187,7 @@ class SystemSettings extends SettingCreationManager
             ->setDescription('The staff member who receives notifications for admissions events.');
         if (empty($setting->getValue()))
             $setting->setValue(null);
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('system.organisation_hr')
             ->setChoices(StaffManager::getStaffListChoice())
@@ -197,7 +197,7 @@ class SystemSettings extends SettingCreationManager
            ->setDescription('The staff member who receives notifications for staffing events.');
         if (empty($setting->getValue()))
             $setting->setValue(null);
-        $this->addSetting($setting, $arguments = []);
+        $this->addSetting($setting, []);
 
         $this->addSection('Organisation Settings');
 

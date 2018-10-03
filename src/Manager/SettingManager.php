@@ -769,8 +769,6 @@ class SettingManager implements ContainerAwareInterface
                 }
                 break;
             case 'array':
-                if ($this->isFlip())
-                    return array_flip($this->setting->getFinalValue($default));
                 return $this->setting->getFinalValue($default);
                 break;
             default:
@@ -922,10 +920,6 @@ class SettingManager implements ContainerAwareInterface
     {
         if ($setting->getSettingType() === 'array')
             $setting->setValue(str_replace(array("\\r", "\\n", '"'), array('', "\n", ''),$setting->getValue()));
-        $exists = $this->get($setting->getName());
-
-        if ($this->setting instanceof SettingCache && $setting->getName() === $this->setting->getName())
-            return $this->set($setting->getName(), $setting->getValue());
 
         $this->getEntityManager()->persist($setting);
         $this->getEntityManager()->flush();

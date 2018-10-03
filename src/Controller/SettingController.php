@@ -112,11 +112,10 @@ class SettingController extends Controller
     public function manageMultipleSettings(Request $request, MultipleSettingManager $multipleSettingManager, SettingManager $settingManager, FlashBagManager $flashBagManager, ExternalAssessmentManager $eam)
     {
         $settings = $request->getSession()->get('manage_settings');
-        foreach ($settings->getSections() as $name =>$section)
-            if ($name === 'header')
-                $multipleSettingManager->setHeader($section);
-            else
-                $multipleSettingManager->addSection($section);
+
+        $multipleSettingManager->setHeader($settings->getSectionsHeader());
+        foreach ($settings->getSections() as $name=>$section)
+            $multipleSettingManager->addSection($section);
 
         $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
 

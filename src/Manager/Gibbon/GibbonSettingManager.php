@@ -1422,11 +1422,7 @@ class GibbonSettingManager extends GibbonTransferManager
                     $item['display_name'] = $setting->getDisplayName();
                     $item['description'] = $setting->getDescription();
                     $item['value'] = $setting->getValue();
-                    $item['choice'] = serialize($setting->getChoice());
                     $item['validators'] = serialize($setting->getValidators());
-                    $item['role'] = $setting->getRole();
-                    $item['default_value'] = $setting->getDefaultValue();
-                    $item['translate_choice'] = $setting->getTranslateChoice();
 
                     $conn->insert($tableName, $item);
                 }
