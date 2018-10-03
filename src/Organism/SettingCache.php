@@ -300,7 +300,7 @@ class SettingCache
         $arguments = $resolver->resolve($arguments);
 
         $this->setParameter($arguments['parameter'], $settingManager, $arguments['default']);
-        $this->setHideParent($arguments['parameter']);
+        $this->setHideParent($arguments['hideParent']);
         $this->setFormAttr($arguments['formAttr']);
 
         return $this;
