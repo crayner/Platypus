@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints\Range;
  * Class LibrarySettings
  * @package App\Manager\Settings
  */
-class LibrarySettings implements SettingCreationInterface
+class LibrarySettings extends SettingCreationManager
 {
     /**
      * getName
@@ -47,93 +47,53 @@ class LibrarySettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
-
-        $setting = $sm->createOneByName('library.default_loan_length');
-
-        $setting
-            ->__set('role', 'ROLE_HEAD_TEACHER')
+        $this->setSettingManager($sm);
+        $setting = $sm->createOneByName('library.default_loan_length')
             ->setSettingType('integer')
+            ->setValidators(
+                [
+                    new Range(['min' => 0, 'max' => 31]),
+                ]
+            )
             ->setDisplayName('Default Loan Length')
-           ->setDescription('The standard loan length for a library item, in days');
-        if (empty($setting->getValue())) {
-            $setting->setValue('7')
+            ->setDescription('The standard loan length for a library item, in days');
+        if (empty($setting->getValue()))
+            $setting->setValue('7');
+        $this->addSetting($setting, []);
 
-                ->setValidators(
-                    [
-                        new Range(['min' => 0, 'max' => 31]),
-                    ]
-                )
-                ->setDefaultValue('7')
-                ->__set('translateChoice', 'Setting')
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('library.browse_bgcolour');
-
-        $setting
-            ->__set('role', 'ROLE_HEAD_TEACHER')
+        $setting = $sm->createOneByName('library.browse_bgcolour')
             ->setSettingType('colour')
             ->setDisplayName('Browse Library BG Colour ')
-           ->setDescription('Background colour used behind library browsing screen.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
+            ->setValidators(
+                [
+                    new NotBlank(),
+                    new Colour(),
+                ]
+            )
+            ->setDescription('Background colour used behind library browsing screen.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-                ->setValidators(
-                    [
-                        new NotBlank(),
-                        new Colour(),
-                    ]
-                )
-                    ->__set('translateChoice', 'Setting')
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('library.browse_bgimage');
-
-        $setting
-            ->__set('role', 'ROLE_HEAD_TEACHER')
+        $setting = $sm->createOneByName('library.browse_bgimage')
             ->setSettingType('image')
             ->setDisplayName('Browse Library BG Image')
-           ->setDescription('URL to background image used behind library browsing screen.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
+            ->setValidators(
+                [
+                    new BackgroundImage(),
+                ]
+            )
+            ->setDescription('URL to background image used behind library browsing screen.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-                ->setValidators(
-                    [
-                        new BackgroundImage(),
-                    ]
-                )
-                    ->__set('translateChoice', 'Setting')
-            ;
-        }
-        $settings[] = $setting;
+        $this->addSection('Descriptors');
 
-        $sections = [];
+        $this->setSectionsHeader('manage_library_settings');
 
-        $section['name'] = 'Descriptors';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->setSettingManager(null);
 
-        $sections[] = $section;
-        $sections['header'] = 'manage_library_settings';
-
-        $this->sections = $sections;
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }

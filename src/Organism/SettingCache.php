@@ -18,6 +18,7 @@ namespace App\Organism;
 use App\Entity\Setting;
 use App\Manager\SettingManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Hillrange\Form\Validator\Constraints\ColourValidator;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -466,6 +467,30 @@ class SettingCache
     private function setArrayValue()
     {
         return $this->value = Yaml::dump($this->value);
+    }
+
+    /**
+     * getArrayValue
+     *
+     * @return mixed
+     */
+    private function getColourValue()
+    {
+        if (ColourValidator::isColour($this->value))
+            return $this->value;
+        return '#000000';
+    }
+
+    /**
+     * setArrayValue
+     *
+     * @return string
+     */
+    private function setColourValue()
+    {
+        if (ColourValidator::isColour($this->value))
+            return $this->value;
+        return $this->value = '#000000';
     }
 
     /**
