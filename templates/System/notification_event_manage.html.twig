@@ -31,7 +31,7 @@
         {% for event in pagination.getResult %}
             <div class="row row-striped">
                 <div class="col-3 small">
-
+                    {% dump(event) %}
                 </div>
                 <div class="col-3 small">
                     {{ event.event }}
@@ -43,7 +43,7 @@
                     {{ yesNo(event.active)|trans }}
                 </div>
                 <div class="col-2 text-center">
-                    {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_notification_event', {id: event.id})}, title: 'notification.event.edit', transDomain: 'System'})|raw }}
+                    {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: 'edit_notification_event'}, title: 'notification.event.edit', transDomain: 'System'})|raw }}
                 </div>
             </div>
         {% endfor %}

@@ -13,7 +13,6 @@ yarn-error.log
 ###< symfony/webpack-encore-pack ###
 
 /.idea/
-!/vendor/hillrange/*
 #Remove Settings from
 platypus.yaml
-/public/uploads/
+/public/uploads/*

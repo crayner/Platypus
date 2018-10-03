@@ -7,6 +7,7 @@
 {% block headerLead %}{{ 'system.check.description'|trans  }}{% endblock headerLead %}
 
 {% block contentContainer %}
+    {% dump %}
     {% for section in manager.systemCheck %}
         {% include 'Default/panelStart.html.twig' with {transDomain: 'System', header: 'system.check.' ~ section.header, colour: 'dark', panelParagraph: 'system.check.' ~ section.header ~ '.help'} %}
             {% for check in section.checks %}
