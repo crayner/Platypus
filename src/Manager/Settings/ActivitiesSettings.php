@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints\Range;
  * Class ActivitiesSettings
  * @package App\Manager\Settings
  */
-class ActivitiesSettings implements SettingCreationInterface
+class ActivitiesSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -45,194 +45,127 @@ class ActivitiesSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
-
-        $setting = $sm->createOneByName('activities.date_type');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('choice')
+        $this->setSettingManager($sm);
+        $setting = $sm->createOneByName('activities.date_type')
+            ->setSettingType('enum')
             ->setDisplayName('Date Type')
-            ->__set('choice', ['date', 'term'])
+            ->setChoices([
+                'activities.date_type.term' => 'term',
+                'activities.date_type.date' => 'date'])
             ->setValidators(
                 [
                     new NotBlank(),
                 ]
             )
-            ->setDefaultValue('term')
-            ->__set('translateChoice', 'Setting')
-           ->setDescription('Should activities be organised around dates (flexible) or terms (easy)?');
-        if (empty($setting->getValue())) {
+            ->setDescription('Should activities be organised around dates (flexible) or terms (easy)?');
+        if (empty($setting->getValue()))
             $setting->setValue('term');
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('activities.max_per_term');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('integer')
-
-            ->setValidators(
-                [
-                    new Range(['min' => 0, 'max' => 5]),
-                ]
-            )
-            ->setDefaultValue('0')
-            ->__set('translateChoice', 'Setting')
+        $setting = $sm->createOneByName('activities.max_per_term')
+            ->setSettingType('enum')
+            ->setChoices([0,1,2,3,4,5])
             ->setDisplayName('Maximum Activities per Term')
-           ->setDescription('The most a student can sign up for in one term. Set to 0 for unlimited.');
-        if (empty($setting->getValue())) {
+            ->setDescription('The most a student can sign up for in one term. Set to 0 for unlimited.');
+        if (empty($setting->getValue()))
             $setting->setValue('0');
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('activities.access');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('choice')
-            ->__set('choice', ['none', 'view', 'register'])
+        $setting = $sm->createOneByName('activities.access')
+            ->setSettingType('enum')
+            ->setChoices([
+                'activities.access.none' => 'none',
+                'activities.access.view' => 'view',
+                'activities.access.register' => 'register'
+            ])
             ->setValidators(
                 [
                     new NotBlank(),
                 ]
             )
-            ->setDefaultValue('register')
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Access')
-           ->setDescription('System-wide access control');
-        if (empty($setting->getValue())) {
+            ->setDescription('System-wide access control');
+        if (empty($setting->getValue()))
             $setting->setValue('register');
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('activities.payment');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('choice')
-            ->__set('choice', ['none', 'single', 'per_activity', 'single_per_activity'])
+        $setting = $sm->createOneByName('activities.payment')
+            ->setSettingType('enum')
+            ->setChoices([
+                'activities.payment.none' => 'none',
+                'activities.payment.single' => 'single',
+                'activities.payment.per_activity' => 'per_activity',
+                'activities.payment.single_per_activity' => 'single_per_activity'])
             ->setValidators(
                 [
                     new NotBlank(),
                 ]
             )
-            ->setDefaultValue('per_activity')
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Payment')
-           ->setDescription('Payment system');
-        if (empty($setting->getValue())) {
+            ->setDescription('Payment system');
+        if (empty($setting->getValue()))
             $setting->setValue('per_activity');
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('activities.enrolment_type');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('choice')
-            ->__set('choice', ['competitive', 'selection'])
+        $setting = $sm->createOneByName('activities.enrolment_type')
+            ->setSettingType('enum')
+            ->setChoices([
+                'activities.enrolment_type.competitive' => 'competitive',
+                'activities.enrolment_type.selection' => 'selection'
+            ])
             ->setValidators(
                 [
                     new NotBlank(),
                 ]
             )
-            ->setDefaultValue('competitive')
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Enrolment Type')
-           ->setDescription('Enrolment process type');
-        if (empty($setting->getValue())) {
+            ->setDescription('Enrolment process type');
+        if (empty($setting->getValue()))
             $setting->setValue('competitive');
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('activities.backup_choice');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('activities.backup_choice')
             ->setSettingType('boolean')
-
             ->setValidators(null)
-            ->setDefaultValue(true)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Backup Choice')
-           ->setDescription('Allow students to choose a backup, in case enroled activity is full.');
-        if (empty($setting->getValue())) {
+            ->setDescription('Allow students to choose a backup, in case enroled activity is full.');
+        if (empty($setting->getValue()))
             $setting->setValue(true);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('activities.activity_types');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('activities.activity_types')
             ->setSettingType('array')
-
             ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Activity Types')
-           ->setDescription('List of the different activity types available in school. Leave blank to disable this feature.');
-        if (empty($setting->getValue())) {
+            ->setDescription('List of the different activity types available in school. Leave blank to disable this feature.');
+        if (empty($setting->getValue()))
             $setting->setValue(['creativity', 'action', 'service']);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('activities.disable_external_provider_signup');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('activities.disable_external_provider_signup')
             ->setSettingType('boolean')
-
             ->setValidators(null)
-            ->setDefaultValue(false)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Disable External Provider Signup')
-           ->setDescription('Should we turn off the option to sign up for activities provided by an outside agency?');
-        if (empty($setting->getValue())) {
+            ->setDescription('Should we turn off the option to sign up for activities provided by an outside agency?');
+        if (empty($setting->getValue()))
             $setting->setValue(false);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('activities.hide_external_provider_cost');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('activities.hide_external_provider_cost')
             ->setSettingType('boolean')
-
             ->setValidators(null)
-            ->setDefaultValue(false)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Hide External Provider Cost')
-           ->setDescription('Should we hide the cost of activities provided by an outside agency from the Activities View?');
-        if (empty($setting->getValue())) {
+            ->setDescription('Should we hide the cost of activities provided by an outside agency from the Activities View?');
+        if (empty($setting->getValue()))
             $setting->setValue(false);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $sections = [];
+        $this->addSection('Activity Settings');
 
-        $section['name'] = 'Activity Settings';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->setSectionsHeader('manage_activities_settings');
 
-        $sections[] = $section;
-        $sections['header'] = 'manage_activities_settings';
+        $this->setSettingManager(null);
 
-        $this->sections = $sections;
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
