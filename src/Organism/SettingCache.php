@@ -449,13 +449,17 @@ class SettingCache
      */
     private function getArrayValue()
     {
+        if (empty(trim($this->value)))
+            return [];
         $w = Yaml::parse($this->value);
         if (is_array($w))
             return $w;
 
-        if (empty(trim($this->value)))
-            return [];
-        $w = unserialize(trim($this->value));
+        try {
+            $w = unserialize(trim($this->value));
+        } catch (\ErrorException $e) {
+            $w = [];
+        }
         return $w;
     }
 
@@ -466,7 +470,7 @@ class SettingCache
      */
     private function setArrayValue()
     {
-        return $this->value = Yaml::dump($this->value);
+        return $this->value = Yaml::dump($this->value ?: []);
     }
 
     /**

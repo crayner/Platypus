@@ -17,7 +17,6 @@ namespace App\Manager\Settings;
 
 use App\Manager\SettingManager;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * Class ActivitiesSettings
