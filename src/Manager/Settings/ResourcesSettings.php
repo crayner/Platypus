@@ -56,10 +56,8 @@ class ResourcesSettings extends SettingCreationManager
             )
             ->setDisplayName('Categories')
             ->setDescription('Allowable choices for category.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(['Article', 'Book', 'Document', 'Graphic', 'Idea', 'Music', 'Object', 'Painting', 'Person', 'Photo', 'Place', 'Poetry', 'Prose', 'Rubric', 'Text', 'Video', 'Website', 'Work Sample', 'Other'])
-            ;
-        }
+        if (empty($setting->getValue()))
+            $setting->setValue(['Article', 'Book', 'Document', 'Graphic', 'Idea', 'Music', 'Object', 'Painting', 'Person', 'Photo', 'Place', 'Poetry', 'Prose', 'Rubric', 'Text', 'Video', 'Website', 'Work Sample', 'Other']);
         $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('resources.purposes_general')
