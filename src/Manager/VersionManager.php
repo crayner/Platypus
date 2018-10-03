@@ -180,13 +180,8 @@ class VersionManager
         $fileCount = 0;
         $publicWriteCount = 0;
         $path = $this->getSettingManager()->getParameter('kernel.project_dir');
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'uploads')) as $filename)
-        {
-            if (is_dir($filename)) continue;
-            $fileCount++;
-            if (is_writable($filename))
-                $publicWriteCount++;
-        }
+        if (! is_dir($path.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'uploads'))
+            mkdir($path.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'uploads', 0777, true);
         $fileCount++;
         if (is_writable($path.DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.'uploads'))
             $publicWriteCount++;
