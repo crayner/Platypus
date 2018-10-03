@@ -51,7 +51,7 @@ class FacilitySettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new NotBlank(),
@@ -59,8 +59,8 @@ class FacilitySettings implements SettingCreationInterface
             )
             ->setDefaultValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Facility Types')
-            ->__set('description', 'List of types for facilities.');
+            ->setDisplayName('Facility Types')
+           ->setDescription('List of types for facilities.');
         if (empty($setting->getValue())) {
             $setting->setValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
             ;

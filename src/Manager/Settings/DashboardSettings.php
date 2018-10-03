@@ -51,11 +51,10 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('choice')
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Staff Dashboard Default Tab')
+            ->setDisplayName('Staff Dashboard Default Tab')
             ->__set('choice', ['','planner'])
-            ->__set('description', 'The default landing tab for the staff dashboard.');
+           ->setDescription('The default landing tab for the staff dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -68,11 +67,10 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('choice')
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Student Dashboard Default Tab')
+            ->setDisplayName('Student Dashboard Default Tab')
             ->__set('choice', ['','planner'])
-            ->__set('description', 'The default landing tab for the student dashboard.');
+           ->setDescription('The default landing tab for the student dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -85,11 +83,10 @@ class DashboardSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('choice')
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Parent Dashboard Default Tab')
+            ->setDisplayName('Parent Dashboard Default Tab')
             ->__set('choice', ['','learning_overview','timetable','activities'])
-            ->__set('description', 'The default landing tab for the parent dashboard.');
+           ->setDescription('The default landing tab for the parent dashboard.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;

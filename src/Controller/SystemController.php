@@ -110,11 +110,9 @@ class SystemController extends Controller
 
         $settings = $request->getSession()->get('manage_settings');
 
-        foreach ($settings->getSections() as $name =>$section)
-            if ($name === 'header')
-                $multipleSettingManager->setHeader($section);
-            else
-                $multipleSettingManager->addSection($section);
+        $multipleSettingManager->setHeader($settings->getSectionsHeader());
+        foreach ($settings->getSections() as $name=>$section)
+            $multipleSettingManager->addSection($section);
 
         $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
 

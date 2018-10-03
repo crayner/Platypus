@@ -57,10 +57,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Enable Public Registration')
-            ->__set('choice', null)
-            ->__set('description', 'Allows members of the public to register to use the system.');
+            ->setDisplayName('Enable Public Registration')
+
+           ->setDescription('Allows members of the public to register to use the system.');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -75,10 +74,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
                 new Range(['max' => 30, 'min' => 5])
             ])
             ->setDefaultValue(13)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Public Registration Minimum Age')
-            ->__set('choice', null)
-            ->__set('description', 'The minimum age, in years, permitted to register.');
+            ->setDisplayName('Public Registration Minimum Age')
+
+           ->setDescription('The minimum age, in years, permitted to register.');
         if (empty($setting->getValue())) {
             $setting->setValue(13)
             ;
@@ -93,9 +91,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
             ->setValidators(null)
             ->setDefaultValue('pending')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Public Registration Default Status')
+            ->setDisplayName('Public Registration Default Status')
             ->__set('choice', ['full', 'pending'])
-            ->__set('description', 'Should new people be \'Full\' or \'Pending Approval\'?
+           ->setDescription('Should new people be \'Full\' or \'Pending Approval\'?
 ');
         if (! in_array($setting->getValue(),['full', 'pending'])) {
             $setting->setValue('pending')
@@ -113,9 +111,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
             ->setValidators(null)
             ->setDefaultValue('student')
             ->__set('translateChoice', 'Person')
-            ->__set('displayName', 'Public Registration Default Role')
+            ->setDisplayName('Public Registration Default Role')
             ->__set('choice', $prm->getPersonRoleList())
-            ->__set('description', 'System role to be assigned to registering members of the public.');
+           ->setDescription('System role to be assigned to registering members of the public.');
         if (empty($setting->getValue())) {
             $setting->setValue('student')
             ;
@@ -138,11 +136,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('html')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Public Registration Introductory Text')
-            ->__set('choice', null)
-            ->__set('description', 'HTML text that will appear above the public registration form.');
+            ->setDisplayName('Public Registration Introductory Text')
+
+           ->setDescription('HTML text that will appear above the public registration form.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -155,11 +151,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('html')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Public Registration Postscript')
-            ->__set('choice', null)
-            ->__set('description', 'HTML text that will appear underneath the public registration form.');
+            ->setDisplayName('Public Registration Postscript')
+
+           ->setDescription('HTML text that will appear underneath the public registration form.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -173,10 +167,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
             ->setSettingType('html')
             ->setValidators(null)
             ->setDefaultValue('By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.')
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Public Registration Privacy Statement')
-            ->__set('choice', null)
-            ->__set('description', 'HTML text that will appear above the Submit button, explaining privacy policy.');
+            ->setDisplayName('Public Registration Privacy Statement')
+
+           ->setDescription('HTML text that will appear above the Submit button, explaining privacy policy.');
         if (empty($setting->getValue())) {
             $setting->setValue('By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.')
             ;
@@ -190,10 +183,9 @@ class PublicRegistrationSettings implements SettingCreationInterface
             ->setSettingType('html')
             ->setValidators(null)
             ->setDefaultValue('In joining this site, and checking the box below, I agree to act lawfully, ethically and with respect for others. I agree to use this site for learning purposes only, and understand that access may be withdrawn at any time, at the discretion of the site\'s administrators.')
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Public Registration Agreement')
-            ->__set('choice', null)
-            ->__set('description', 'Agreement that people must confirm before joining. Blank for no agreement.');
+            ->setDisplayName('Public Registration Agreement')
+
+           ->setDescription('Agreement that people must confirm before joining. Blank for no agreement.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;

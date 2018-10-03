@@ -56,7 +56,7 @@ class MultipleSettingType extends AbstractType
         $data = null;
         if ($key !== "") {
             $data = $options['all_data'][$key];
-            $attr = [];
+            $attr = $data->getFormAttr();
             $additional = [];
             switch ($data->getSetting()->getSettingType()) {
                 case 'array':

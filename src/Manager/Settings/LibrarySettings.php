@@ -54,11 +54,11 @@ class LibrarySettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_HEAD_TEACHER')
             ->setSettingType('integer')
-            ->__set('displayName', 'Default Loan Length')
-            ->__set('description', 'The standard loan length for a library item, in days');
+            ->setDisplayName('Default Loan Length')
+           ->setDescription('The standard loan length for a library item, in days');
         if (empty($setting->getValue())) {
             $setting->setValue('7')
-                ->__set('choice', null)
+
                 ->setValidators(
                     [
                         new Range(['min' => 0, 'max' => 31]),
@@ -75,19 +75,18 @@ class LibrarySettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_HEAD_TEACHER')
             ->setSettingType('colour')
-            ->__set('displayName', 'Browse Library BG Colour ')
-            ->__set('description', 'Background colour used behind library browsing screen.');
+            ->setDisplayName('Browse Library BG Colour ')
+           ->setDescription('Background colour used behind library browsing screen.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', null)
+
                 ->setValidators(
                     [
                         new NotBlank(),
                         new Colour(),
                     ]
                 )
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
+                    ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
@@ -97,18 +96,17 @@ class LibrarySettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_HEAD_TEACHER')
             ->setSettingType('image')
-            ->__set('displayName', 'Browse Library BG Image')
-            ->__set('description', 'URL to background image used behind library browsing screen.');
+            ->setDisplayName('Browse Library BG Image')
+           ->setDescription('URL to background image used behind library browsing screen.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', null)
+
                 ->setValidators(
                     [
                         new BackgroundImage(),
                     ]
                 )
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
+                    ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;

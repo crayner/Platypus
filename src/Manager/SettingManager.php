@@ -22,6 +22,7 @@ use App\Validator\Regex;
 use App\Validator\Twig;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\ConnectionException;
+use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Validator\Integer;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
@@ -358,8 +359,12 @@ class SettingManager implements ContainerAwareInterface
      */
     public function findOneByName(string $name): ?SettingCache
     {
-        $setting = $this->getEntityManager()->getRepository(Setting::class)->findOneByName($name);
-
+        try {
+            $setting = $this->getEntityManager()->getRepository(Setting::class)->findOneByName($name);
+        } catch (TableNotFoundException $e) {
+            // Continue
+            $setting = new Setting();
+        }
         $setting = $this->getSettingCache($setting);
 
         $setting->getValue();

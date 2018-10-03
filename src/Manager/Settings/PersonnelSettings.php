@@ -52,7 +52,7 @@ class PersonnelSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new NotBlank(),
@@ -60,8 +60,8 @@ class PersonnelSettings implements SettingCreationInterface
             )
             ->setDefaultValue([])
             ->__set('translateChoice', 'Person')
-            ->__set('displayName', 'List of Ethnicities')
-            ->__set('description', 'List of Ethnicities.  Uses the Australian Standard to create this list');
+            ->setDisplayName('List of Ethnicities')
+           ->setDescription('List of Ethnicities.  Uses the Australian Standard to create this list');
         if (empty($setting->getValue())) {
             $setting->setValue([
                 'Inadequately described' => '0000',
@@ -116,7 +116,7 @@ class PersonnelSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new NotBlank(),
@@ -124,8 +124,8 @@ class PersonnelSettings implements SettingCreationInterface
             )
             ->setDefaultValue([])
             ->__set('translateChoice', 'Person')
-            ->__set('displayName', 'List of Religions')
-            ->__set('description', 'List of Religions.  Uses the Australian Standard to create this list');
+            ->setDisplayName('List of Religions')
+           ->setDescription('List of Religions.  Uses the Australian Standard to create this list');
         if (empty($setting->getValue())) {
             $setting->setValue([
                 'Aboriginal Evangelical Missions' => '2801',
@@ -270,12 +270,12 @@ class PersonnelSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue([])
             ->__set('translateChoice', 'Person')
-            ->__set('displayName', 'Residency Status')
-            ->__set('description', 'List of residency status available in system.');
+            ->setDisplayName('Residency Status')
+           ->setDescription('List of residency status available in system.');
         if (empty($setting->getValue())) {
             $setting->setValue([
                 'citizen',
@@ -294,12 +294,12 @@ class PersonnelSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue([])
             ->__set('translateChoice', 'Person')
-            ->__set('displayName', 'Departure Reasons')
-            ->__set('description', 'List of departure reasons.');
+            ->setDisplayName('Departure Reasons')
+           ->setDescription('List of departure reasons.');
         if (empty($setting->getValue())) {
             $setting->setValue([])
             ;
@@ -321,8 +321,8 @@ class PersonnelSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('displayName', 'Privacy')
-            ->__set('description', 'Should privacy options be turned on across the system?');
+            ->setDisplayName('Privacy')
+           ->setDescription('Should privacy options be turned on across the system?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -336,9 +336,8 @@ class PersonnelSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('text')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('displayName', 'Privacy Blurb')
-            ->__set('description', 'Descriptive text to accompany image privacy option when shown to people using the system.');
+            ->setDisplayName('Privacy Blurb')
+           ->setDescription('Descriptive text to accompany image privacy option when shown to people using the system.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -353,8 +352,8 @@ class PersonnelSettings implements SettingCreationInterface
             ->setSettingType('array')
             ->setValidators(null)
             ->setDefaultValue([])
-            ->__set('displayName', 'Privacy Options')
-            ->__set('description', 'List of choices to make available if privacy is turned on. If blank, privacy fields will not be displayed.');
+            ->setDisplayName('Privacy Options')
+           ->setDescription('List of choices to make available if privacy is turned on. If blank, privacy fields will not be displayed.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -377,8 +376,8 @@ class PersonnelSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('displayName', 'Personal Background')
-            ->__set('description', 'Should personnel/students be allowed to set their own personal backgrounds?');
+            ->setDisplayName('Personal Background')
+           ->setDescription('Should personnel/students be allowed to set their own personal backgrounds?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -399,9 +398,8 @@ class PersonnelSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('array')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('displayName', 'Day Type Options')
-            ->__set('description', 'List of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.');
+            ->setDisplayName('Day Type Options')
+           ->setDescription('List of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -414,9 +412,8 @@ class PersonnelSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('text')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('displayName', 'Day-Type Text')
-            ->__set('description', 'Explanatory text to include with Day Type Options.');
+            ->setDisplayName('Day-Type Text')
+           ->setDescription('Explanatory text to include with Day Type Options.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;

@@ -52,12 +52,12 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Enable Effort')
-            ->__set('description', 'Should columns have the Effort section enabled?');
+            ->setDisplayName('Enable Effort')
+           ->setDescription('Should columns have the Effort section enabled?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -68,12 +68,12 @@ class MarkbookSettings implements SettingCreationInterface
 
         $setting->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Enable Rubrics')
-            ->__set('description', 'Should columns have Rubrics section enabled?');
+            ->setDisplayName('Enable Rubrics')
+           ->setDescription('Should columns have Rubrics section enabled?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -85,11 +85,11 @@ class MarkbookSettings implements SettingCreationInterface
         $setting->setName('markbook.enable_column_weighting')
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Enable Column Weighting')
-            ->__set('description', 'Should column weighting and total scores be enabled in the Markbook?');
+            ->setDisplayName('Enable Column Weighting')
+           ->setDescription('Should column weighting and total scores be enabled in the Markbook?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
-                ->__set('choice', null)
+
                 ->setValidators(null)
                 ->setDefaultValue(false)
                 ->__set('translateChoice', 'Setting')
@@ -103,12 +103,12 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Enable Display Cumulative Marks')
-            ->__set('description', 'Should cumulative marks be displayed on the View Markbook page for Students and Parents and in Student Profiles?');
+            ->setDisplayName('Enable Display Cumulative Marks')
+           ->setDescription('Should cumulative marks be displayed on the View Markbook page for Students and Parents and in Student Profiles?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -121,12 +121,12 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Enable Raw Attainment Marks')
-            ->__set('description', 'Should recording of raw marks be enabled in the Markbook?');
+            ->setDisplayName('Enable Raw Attainment Marks')
+           ->setDescription('Should recording of raw marks be enabled in the Markbook?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -147,15 +147,15 @@ class MarkbookSettings implements SettingCreationInterface
 
         $setting->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators([
                 new NotBlank(),
                 new Yaml(),
             ])
             ->setDefaultValue(['essay','exam','homework','reflection','test','unit','end_of_year','other'])
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Markbook Type')
-            ->__set('description', 'List of types to make available in the Markbook.');
+            ->setDisplayName('Markbook Type')
+           ->setDescription('List of types to make available in the Markbook.');
         if (empty($setting->getValue())) {
             $setting->setValue(['essay','exam','homework','reflection','test','unit','end_of_year','other'])
             ;
@@ -167,12 +167,12 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Group Columns by Term')
-            ->__set('description', 'Should columns and total scores be grouped by term?');
+            ->setDisplayName('Group Columns by Term')
+           ->setDescription('Should columns and total scores be grouped by term?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -184,12 +184,11 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('string')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Attainment Alternative Name')
-            ->__set('description', 'A name to use instead of "Attainment" in the first grade column of the markbook.');
+            ->setDisplayName('Attainment Alternative Name')
+           ->setDescription('A name to use instead of "Attainment" in the first grade column of the markbook.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -201,12 +200,11 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('string')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Attainment Alternative Name Abbreviation')
-            ->__set('description', 'A short name to use instead of "Attainment" in the first grade column of the markbook.');
+            ->setDisplayName('Attainment Alternative Name Abbreviation')
+           ->setDescription('A short name to use instead of "Attainment" in the first grade column of the markbook.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -218,12 +216,11 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('string')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Effort Alternative Name')
-            ->__set('description', 'A name to use instead of "Effort" in the second grade column of the markbook.');
+            ->setDisplayName('Effort Alternative Name')
+           ->setDescription('A name to use instead of "Effort" in the second grade column of the markbook.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -235,12 +232,11 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('string')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Effort Alternative Name Abbreviation')
-            ->__set('description', 'A short name to use instead of "Effort" in the second grade column of the markbook.');
+            ->setDisplayName('Effort Alternative Name Abbreviation')
+           ->setDescription('A short name to use instead of "Effort" in the second grade column of the markbook.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -259,12 +255,12 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Show Student Attainment Warning')
-            ->__set('description', 'Show low attainment grade visual warning to students?');
+            ->setDisplayName('Show Student Attainment Warning')
+           ->setDescription('Show low attainment grade visual warning to students?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -275,12 +271,12 @@ class MarkbookSettings implements SettingCreationInterface
 
         $setting->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Show Student Effort Warning')
-            ->__set('description', 'Show low effort grade visual warning to students?');
+            ->setDisplayName('Show Student Effort Warning')
+           ->setDescription('Show low effort grade visual warning to students?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -292,12 +288,12 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Show Parent Attainment Warning')
-            ->__set('description', 'Show low attainment grade visual warning to parents?');
+            ->setDisplayName('Show Parent Attainment Warning')
+           ->setDescription('Show low attainment grade visual warning to parents?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -309,12 +305,12 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Show Parent Effort Warning')
-            ->__set('description', 'Show low effort grade visual warning to parents?');
+            ->setDisplayName('Show Parent Effort Warning')
+           ->setDescription('Show low effort grade visual warning to parents?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -326,12 +322,12 @@ class MarkbookSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Personalised Warnings')
-            ->__set('description', 'Should markbook warnings be based on personal targets, if they are available?');
+            ->setDisplayName('Personalised Warnings')
+           ->setDescription('Should markbook warnings be based on personal targets, if they are available?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;

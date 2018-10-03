@@ -21,6 +21,7 @@ use App\Entity\PersonRole;
 use App\Organism\Database;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception\ConnectionException;
+use Doctrine\DBAL\Exception\TableNotFoundException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
 use Hillrange\Security\Entity\User;
@@ -703,9 +704,13 @@ class InstallationManager
                 $data = Yaml::parse(file_get_contents(realpath(__DIR__. '/../Organism/Data/'.$dataName.'.yml')));
                 $dbPlatform = $conn->getDatabasePlatform();
                 $sql = $dbPlatform->getTruncateTableSql($tableName);
-                $conn->executeUpdate($sql);
-                foreach($data as $item)
-                    $conn->insert($tableName, $item);
+                try {
+                    $conn->executeUpdate($sql);
+                    foreach ($data as $item)
+                        $conn->insert($tableName, $item);
+                } catch (TableNotFoundException $e) {
+                    // Do nothing
+                }
             } else {
                 trigger_error(sprintf('No data is available for the %s table in %s/%s.', $table,  realpath(__DIR__. '/../Organism/Data/'), $dataName . '.yml'), E_USER_ERROR);
             }

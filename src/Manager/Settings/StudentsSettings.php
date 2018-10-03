@@ -52,12 +52,12 @@ class StudentsSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Enable Student Notes')
-            ->__set('description', 'Should student notes be turned on?');
+            ->setDisplayName('Enable Student Notes')
+           ->setDescription('Should student notes be turned on?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -77,8 +77,8 @@ class StudentsSettings implements SettingCreationInterface
             )
             ->setDefaultValue('tutors')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Note Creation Notification')
-            ->__set('description', 'Determines who to notify when a new student note is created.');
+            ->setDisplayName('Note Creation Notification')
+           ->setDescription('Determines who to notify when a new student note is created.');
         if (empty($setting->getValue())) {
             $setting->setValue('tutors')
             ;
@@ -99,16 +99,14 @@ class StudentsSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('integer')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new Range(['min' => 0, 'max' => 50])
                 ]
             )
-            ->setDefaultValue(3)
-            ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Low Academic Alert Threshold')
-            ->__set('description', 'The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student.');
+            ->setDisplayName('Low Academic Alert Threshold')
+           ->setDescription('The number of Markbook concerns needed in the past 60 days to raise a low level academic alert on a student.');
         if (empty($setting->getValue())) {
             $setting->setValue(3)
             ;
@@ -120,16 +118,14 @@ class StudentsSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('integer')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new Range(['min' => 0, 'max' => 50])
                 ]
             )
-            ->setDefaultValue(5)
-            ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Medium Academic Alert Threshold')
-            ->__set('description', 'The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student.');
+            ->setDisplayName('Medium Academic Alert Threshold')
+           ->setDescription('The number of Markbook concerns needed in the past 60 days to raise a medium level academic alert on a student.');
         if (empty($setting->getValue())) {
             $setting->setValue(5)
             ;
@@ -141,16 +137,14 @@ class StudentsSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('integer')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new Range(['min' => 0, 'max' => 50])
                 ]
             )
-            ->setDefaultValue(9)
-            ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'High Academic Alert Threshold')
-            ->__set('description', 'The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student.');
+            ->setDisplayName('High Academic Alert Threshold')
+           ->setDescription('The number of Markbook concerns needed in the past 60 days to raise a high level academic alert on a student.');
         if (empty($setting->getValue())) {
             $setting->setValue(9)
             ;
@@ -162,16 +156,14 @@ class StudentsSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('integer')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new Range(['min' => 0, 'max' => 50])
                 ]
             )
-            ->setDefaultValue(3)
-            ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Low Behaviour Alert Threshold')
-            ->__set('description', 'The number of Behaviour concerns needed in the past 60 days to raise a low level Behaviour alert on a student.');
+            ->setDisplayName('Low Behaviour Alert Threshold')
+           ->setDescription('The number of Behaviour concerns needed in the past 60 days to raise a low level Behaviour alert on a student.');
         if (empty($setting->getValue())) {
             $setting->setValue(3)
             ;
@@ -183,16 +175,14 @@ class StudentsSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('integer')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new Range(['min' => 0, 'max' => 50])
                 ]
             )
-            ->setDefaultValue(5)
-            ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Medium Behaviour Alert Threshold')
-            ->__set('description', 'The number of Behaviour concerns needed in the past 60 days to raise a medium level Behaviour alert on a student.');
+            ->setDisplayName('Medium Behaviour Alert Threshold')
+           ->setDescription('The number of Behaviour concerns needed in the past 60 days to raise a medium level Behaviour alert on a student.');
         if (empty($setting->getValue())) {
             $setting->setValue(5)
             ;
@@ -204,16 +194,14 @@ class StudentsSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('integer')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new Range(['min' => 0, 'max' => 50])
                 ]
             )
-            ->setDefaultValue(9)
-            ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'High Behaviour Alert Threshold')
-            ->__set('description', 'The number of Behaviour concerns needed in the past 60 days to raise a high level Behaviour alert on a student.');
+            ->setDisplayName('High Behaviour Alert Threshold')
+           ->setDescription('The number of Behaviour concerns needed in the past 60 days to raise a high level Behaviour alert on a student.');
         if (empty($setting->getValue())) {
             $setting->setValue(9)
             ;
@@ -233,12 +221,12 @@ class StudentsSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Extended Brief Profile')
-            ->__set('description', 'The extended version of the brief student profile includes contact information of parents.');
+            ->setDisplayName('Extended Brief Profile')
+           ->setDescription('The extended version of the brief student profile includes contact information of parents.');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -252,10 +240,9 @@ class StudentsSettings implements SettingCreationInterface
             ->setSettingType('array')
             ->__set('choice', ['tutors','tutors_teachers'])
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Student Agreement Options')
-            ->__set('description', 'List of agreements that students might be asked to sign in school (e.g. ICT Policy).');
+            ->setDisplayName('Student Agreement Options')
+           ->setDescription('List of agreements that students might be asked to sign in school (e.g. ICT Policy).');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;

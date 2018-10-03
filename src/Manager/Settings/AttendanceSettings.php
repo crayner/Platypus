@@ -56,15 +56,15 @@ class AttendanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators([
                 new NotBlank(),
                 new Yaml(),
             ])
             ->setDefaultValue(['pending', 'education', 'family', 'medical', 'other'])
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Attendance Reasons')
-            ->__set('description', 'List of reasons which are available when taking attendance.');
+            ->setDisplayName('Attendance Reasons')
+           ->setDescription('List of reasons which are available when taking attendance.');
         if (empty($setting->getValue())) {
             $setting->setValue(['pending', 'education', 'family', 'medical', 'other']);
         }
@@ -82,12 +82,12 @@ class AttendanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Pre-Fill Roll Group Attendance')
-            ->__set('description', 'Should Attendance by Roll Group be pre-filled with data available from other contexts?');
+            ->setDisplayName('Pre-Fill Roll Group Attendance')
+           ->setDescription('Should Attendance by Roll Group be pre-filled with data available from other contexts?');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -98,12 +98,12 @@ class AttendanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Pre-Fill Class Attendance')
-            ->__set('description', 'Should Attendance by Class be pre-filled with data available from other contexts?');
+            ->setDisplayName('Pre-Fill Class Attendance')
+           ->setDescription('Should Attendance by Class be pre-filled with data available from other contexts?');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -114,12 +114,12 @@ class AttendanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Pre-Fill Person Attendance')
-            ->__set('description', 'Should Attendance by Person be pre-filled with data available from other contexts?');
+            ->setDisplayName('Pre-Fill Person Attendance')
+           ->setDescription('Should Attendance by Person be pre-filled with data available from other contexts?');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -133,9 +133,8 @@ class AttendanceSettings implements SettingCreationInterface
             ->__set('choice', AttendanceCodeManager::getActiveAttendanceCodeList())
             ->setValidators(null)
             ->setDefaultValue('Present')
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Default Roll Group Attendance Type')
-            ->__set('description', 'The default selection for attendance type when taking Roll Group attendance.');
+            ->setDisplayName('Default Roll Group Attendance Type')
+           ->setDescription('The default selection for attendance type when taking Roll Group attendance.');
         if (empty($setting->getValue())) {
             $setting->setValue('Present');
         }
@@ -149,9 +148,8 @@ class AttendanceSettings implements SettingCreationInterface
             ->__set('choice', AttendanceCodeManager::getActiveAttendanceCodeList())
             ->setValidators(null)
             ->setDefaultValue('Present')
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Default Class Attendance Type')
-            ->__set('description', 'The default selection for attendance type when taking Class attendance.');
+            ->setDisplayName('Default Class Attendance Type')
+           ->setDescription('The default selection for attendance type when taking Class attendance.');
         if (empty($setting->getValue())) {
             $setting->setValue('Present');
         }
@@ -170,12 +168,11 @@ class AttendanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'School')
-            ->__set('displayName', 'Student Self Registration IP Addresses')
-            ->__set('description', 'List of IP addresses within which students can self register.');
+            ->setDisplayName('Student Self Registration IP Addresses')
+           ->setDescription('List of IP addresses within which students can self register.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -186,12 +183,12 @@ class AttendanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'School')
-            ->__set('displayName', 'Self Registration Redirect')
-            ->__set('description', 'Should self registration redirect to Message Wall?');
+            ->setDisplayName('Self Registration Redirect')
+           ->setDescription('Should self registration redirect to Message Wall?');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -211,12 +208,12 @@ class AttendanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'School')
-            ->__set('displayName', 'Enable Notifications by Roll Group')
-            ->__set('description', null);
+            ->setDisplayName('Enable Notifications by Roll Group')
+           ->setDescription(null);
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -227,12 +224,12 @@ class AttendanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'School')
-            ->__set('displayName', 'Enable Notifications by Class')
-            ->__set('description', null);
+            ->setDisplayName('Enable Notifications by Class')
+           ->setDescription(null);
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -245,10 +242,9 @@ class AttendanceSettings implements SettingCreationInterface
             ->setSettingType('choice')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Additional Users to Notify')
+            ->setDisplayName('Additional Users to Notify')
             ->__set('choice', array_flip(StaffManager::getStaffListChoice()))
-            ->__set('description', 'Send the school-wide daily attendance report to additional users. Restricted to roles with permission to access Roll Groups Not Registered or Classes Not Registered.<br/>Use Control, Command and/or Shift to select multiple');
+           ->setDescription('Send the school-wide daily attendance report to additional users. Restricted to roles with permission to access Roll Groups Not Registered or Classes Not Registered.<br/>Use Control, Command and/or Shift to select multiple');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }

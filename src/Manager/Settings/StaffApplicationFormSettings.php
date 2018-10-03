@@ -54,12 +54,11 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('displayName', 'Staff Application Introduction')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Introduction')
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('description', 'Information to display before the form');
+           ->setDescription('Information to display before the form');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -70,12 +69,11 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('displayName', 'Staff Application Questions')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Questions')
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('description', 'HTML text that will appear as questions for the applicant to answer.');
+           ->setDescription('HTML text that will appear as questions for the applicant to answer.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -86,12 +84,11 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('displayName', 'Staff Application Postscript')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Postscript')
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('description', 'Information to display at the end of the form.');
+           ->setDescription('Information to display at the end of the form.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -102,12 +99,12 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('displayName', 'Staff Application Agreement')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Agreement')
+
             ->setValidators(null)
             ->setDefaultValue('<p>In submitting this form, I confirm that all information provided above is accurate and complete to the best of my knowledge.</p>')
             ->__set('translateChoice', 'Setting')
-            ->__set('description', 'Without this text, which is displayed above the agreement, peoples will not be asked to agree to anything.');
+           ->setDescription('Without this text, which is displayed above the agreement, peoples will not be asked to agree to anything.');
         if (empty($setting->getValue())) {
             $setting->setValue('<p>In submitting this form, I confirm that all information provided above is accurate and complete to the best of my knowledge.</p>');
         }
@@ -118,12 +115,12 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Staff Public Applications?')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Public Applications?')
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('description', 'If yes, members of the public can submit staff applications.');
+           ->setDescription('If yes, members of the public can submit staff applications.');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -134,12 +131,12 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('displayName', 'Staff Application Milestones')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Milestones')
+
             ->setValidators(null)
             ->setDefaultValue(['Short List','First Interview','Second Interview','Offer Made','Offer Accepted','Contact Issued','Contact Signed'])
             ->__set('translateChoice', 'Setting')
-            ->__set('description', 'List of the major steps in the application process. Applicants can be tracked through the various stages.');
+           ->setDescription('List of the major steps in the application process. Applicants can be tracked through the various stages.');
         if (empty($setting->getValue())) {
             $setting->setValue(['Short List','First Interview','Second Interview','Offer Made','Offer Accepted','Contact Issued','Contact Signed']);
         }
@@ -181,12 +178,11 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('displayName', 'Staff Application Reference Links')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Reference Links')
+
             ->setValidators(null)
             ->setDefaultValue($value)
-            ->__set('translateChoice', null)
-            ->__set('description', "Link to an external form that will be emailed to a referee of the applicant's choosing.");
+           ->setDescription("Link to an external form that will be emailed to a referee of the applicant's choosing.");
         if (empty($setting->getValue())) {
             $setting->setValue($value);
         }
@@ -206,12 +202,11 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('displayName', 'Staff Application Required Documents')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Required Documents')
+
             ->setValidators(null)
             ->setDefaultValue(['Curriculum Vitae'])
-            ->__set('translateChoice', null)
-            ->__set('description', "List of documents which must be submitted electronically with the application form.");
+           ->setDescription("List of documents which must be submitted electronically with the application form.");
         if (empty($setting->getValue())) {
             $setting->setValue(['Curriculum Vitae']);
         }
@@ -222,12 +217,11 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('displayName', 'Staff Application Required Documents Text')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Required Documents Text')
+
             ->setValidators(null)
             ->setDefaultValue('<p>Please submit the following document(s) to ensure your application can be processed without delay.</p>')
-            ->__set('translateChoice', null)
-            ->__set('description', "List of documents which must be submitted electronically with the application form.");
+           ->setDescription("List of documents which must be submitted electronically with the application form.");
         if (empty($setting->getValue())) {
             $setting->setValue('<p>Please submit the following document(s) to ensure your application can be processed without delay.</p>');
         }
@@ -238,12 +232,11 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Staff Application Required Documents Compulsory')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Required Documents Compulsory')
+
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-            ->__set('description', "Are the required documents compulsory?");
+           ->setDescription("Are the required documents compulsory?");
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -263,12 +256,11 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('text')
-            ->__set('displayName', 'Staff User-name Format')
-            ->__set('choice', null)
+            ->setDisplayName('Staff User-name Format')
+
             ->setValidators(null)
             ->setDefaultValue('[preferredNameInitial].[surname]')
-            ->__set('translateChoice', null)
-            ->__set('description', "How should user-names be formatted? Choose from [preferredName], [preferredNameInitial], [surname].");
+           ->setDescription("How should user-names be formatted? Choose from [preferredName], [preferredNameInitial], [surname].");
         if (empty($setting->getValue())) {
             $setting->setValue('[preferredNameInitial].[surname]');
         }
@@ -279,12 +271,10 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('displayName', 'Staff Application Notification Message')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Notification Message')
+
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', "A custom message to add to the standard email on acceptance.");
+           ->setDescription("A custom message to add to the standard email on acceptance.");
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -295,12 +285,10 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Staff Application Notification Default')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Application Notification Default')
+
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', "Should acceptance email be turned on or off by default.");
+           ->setDescription("Should acceptance email be turned on or off by default.");
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -311,12 +299,10 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('text')
-            ->__set('displayName', 'Staff Default Email')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Default Email')
+
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', "Set default email on acceptance, using [username] to insert user-name.  e.g. [username]_staff@your-domain.com");
+           ->setDescription("Set default email on acceptance, using [username] to insert user-name.  e.g. [username]_staff@your-domain.com");
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -327,12 +313,10 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('text')
-            ->__set('displayName', 'Staff Default Website')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Default Website')
+
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', "Set default website on acceptance, using [username] to insert user-name.  e.g. http://your-domain.com/[username]/");
+           ->setDescription("Set default website on acceptance, using [username] to insert user-name.  e.g. http://your-domain.com/[username]/");
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }

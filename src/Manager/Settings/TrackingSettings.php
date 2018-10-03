@@ -67,8 +67,8 @@ class TrackingSettings implements SettingCreationInterface
                 ->setValidators(null)
                 ->setDefaultValue([])
                 ->__set('translateChoice', 'School')
-                ->__set('displayName', $ea['nameShort'] . ' - ' . $catName)
-                ->__set('description', 'Tracking External Assessment');
+                ->setDisplayName($ea['nameShort'] . ' - ' . $catName)
+               ->setDescription('Tracking External Assessment');
             if (empty($setting->getValue())) {
                 $setting->setValue([])
                 ;
@@ -97,8 +97,8 @@ class TrackingSettings implements SettingCreationInterface
                 ->setValidators(null)
                 ->setDefaultValue([])
                 ->__set('translateChoice', 'School')
-                ->__set('displayName', strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
-                ->__set('description', '');
+                ->setDisplayName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
+               ->setDescription('');
             if (empty($setting->getValue())) {
                 $setting->setValue([])
                 ;

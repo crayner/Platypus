@@ -401,7 +401,7 @@ class GibbonSettingManager extends GibbonTransferManager
             'settingType' => 'array',
             'name' => null,
             'functions' => [
-                'unserialiser' => null,
+                'commaList' => null,
             ],
         ],
         'application_form.how_did_you_hear' => [
@@ -1152,6 +1152,9 @@ class GibbonSettingManager extends GibbonTransferManager
         'markbook.enable_modified_assessment' => [
             'settingType' => 'boolean',
         ],
+        'markbook.wordpress_comment_push' => [
+            'settingType' => 'boolean',
+        ],
     ];
 
     /**
@@ -1230,10 +1233,9 @@ class GibbonSettingManager extends GibbonTransferManager
      * @param string $entityName
      * @param array $newData
      * @param array $records
-     * @param ObjectManager $manager
      * @return array
      */
-    public function postRecord(string $entityName, array $newData, array $records, ObjectManager $manager): array
+    public function postRecord(string $entityName, array $newData, array $records): array
     {
         if (is_array($newData['value']))
             $newData['value'] = serialize($newData['value']);
@@ -1371,6 +1373,7 @@ class GibbonSettingManager extends GibbonTransferManager
      */
     private function unserialiser($options, array $newData): array
     {
+
         $newData['value'] = Yaml::dump(unserialize($newData['value']));
 
         return $newData;

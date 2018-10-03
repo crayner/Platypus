@@ -52,12 +52,11 @@ class StaffSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('displayName', 'Staff Salary Scale Positions')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Salary Scale Positions')
+
             ->setValidators(null)
             ->setDefaultValue(['1','2','3','4','5','6','7','8','9','10'])
-            ->__set('translateChoice', false)
-            ->__set('description', 'List of salary scale positions, from lowest to highest.');
+             ->setDescription('List of salary scale positions, from lowest to highest.');
         if (empty($setting->getValue())) {
             $setting->setValue(['1','2','3','4','5','6','7','8','9','10']);
         }
@@ -68,12 +67,11 @@ class StaffSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('displayName', 'Staff Responsibility Posts')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Responsibility Posts')
+
             ->setValidators(null)
             ->setDefaultValue([])
-            ->__set('translateChoice', false)
-            ->__set('description', 'List of posts carrying extra responsibilities.');
+             ->setDescription('List of posts carrying extra responsibilities.');
         if (empty($setting->getValue())) {
             $setting->setValue([]);
         }
@@ -84,8 +82,8 @@ class StaffSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('displayName', 'Staff Job Opening Description Template')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Job Opening Description Template')
+
             ->setValidators(null)
             ->setDefaultValue('<table style=\'width: 100%\'>
 	<tr>
@@ -127,8 +125,7 @@ class StaffSettings implements SettingCreationInterface
 		</td>
 	</tr>
 </table>')
-            ->__set('translateChoice', false)
-            ->__set('description', 'Default HTML contents for the Job Opening Description field.');
+             ->setDescription('Default HTML contents for the Job Opening Description field.');
         if (empty($setting->getValue())) {
             $setting->setValue('<table style=\'width: 100%\'>
 	<tr>
@@ -187,12 +184,11 @@ class StaffSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('text')
-            ->__set('displayName', 'Staff Formal Name Format')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Formal Name Format')
+
             ->setValidators(null)
             ->setDefaultValue('[title] [preferredName:1]. [surname]')
-            ->__set('translateChoice', false)
-            ->__set('description', '');
+             ->setDescription('');
         if (empty($setting->getValue())) {
             $setting->setValue('[title] [preferredName:1]. [surname]');
         }
@@ -203,12 +199,11 @@ class StaffSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('text')
-            ->__set('displayName', 'Staff Formal Name Format - Reverse')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Formal Name Format - Reverse')
+
             ->setValidators(null)
             ->setDefaultValue('[title] [surname], [preferredName:1].')
-            ->__set('translateChoice', false)
-            ->__set('description', '');
+             ->setDescription('');
         if (empty($setting->getValue())) {
             $setting->setValue('[title] [surname], [preferredName:1].');
         }
@@ -219,12 +214,11 @@ class StaffSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('text')
-            ->__set('displayName', 'Staff Informal Name Format')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Informal Name Format')
+
             ->setValidators(null)
             ->setDefaultValue('[preferredName] [surname]')
-            ->__set('translateChoice', false)
-            ->__set('description', '');
+             ->setDescription('');
         if (empty($setting->getValue())) {
             $setting->setValue('[preferredName] [surname]');
         }
@@ -235,12 +229,11 @@ class StaffSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('text')
-            ->__set('displayName', 'Staff Informal Name Format - Reverse')
-            ->__set('choice', null)
+            ->setDisplayName('Staff Informal Name Format - Reverse')
+
             ->setValidators(null)
             ->setDefaultValue('[surname], [preferredName]')
-            ->__set('translateChoice', false)
-            ->__set('description', '');
+             ->setDescription('');
         if (empty($setting->getValue())) {
             $setting->setValue('[surname], [preferredName]');
         }

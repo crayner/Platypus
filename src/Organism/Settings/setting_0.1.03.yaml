@@ -89,7 +89,7 @@
   validators: "a:2:{i:0;O:43:\"Symfony\\Component\\Validator\\Constraints\\Url\":7:{s:7:\"message\";s:30:\"This value is not a valid URL.\";s:10:\"dnsMessage\";s:31:\"The host could not be resolved.\";s:9:\"protocols\";a:2:{i:0;s:4:\"http\";i:1;s:5:\"https\";}s:8:\"checkDNS\";b:0;s:16:\"relativeProtocol\";b:0;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:46:\"Symfony\\Component\\Validator\\Constraints\\Length\":9:{s:10:\"maxMessage\";s:140:\"This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.\";s:10:\"minMessage\";s:142:\"This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.\";s:12:\"exactMessage\";s:108:\"This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.\";s:14:\"charsetMessage\";s:61:\"This value does not match the expected {{ charset }} charset.\";s:3:\"max\";i:25;s:3:\"min\";N;s:7:\"charset\";s:5:\"UTF-8\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
 -
   id: 18
-  setting_type: "choice"
+  setting_type: "enum"
   name: "system.default_assessment_scale"
   display_name: "Default Assessment Scale"
   description: "This is the scale used as a default where assessment scales need to be selected."
@@ -150,7 +150,7 @@
   value: 1
 -
   id: 28
-  setting_type: "choice"
+  setting_type: "array"
   name: "activities.activity_types"
   display_name: "Activity Types"
   description: "List of the different activity types available in school. Leave blank to disalbe this feature."
@@ -192,35 +192,35 @@
   value: 1
 -
   id: 34
-  setting_type: "choice"
+  setting_type: "array"
   name: "behaviour.positive_descriptors"
   display_name: "Positive Descriptors"
   description: "Allowable choices for positive behaviour"
   value: "a:11:{i:0;s:20:\"attitude_to_learning\";i:1;s:13:\"collaboration\";i:2;s:16:\"community_spirit\";i:3;s:10:\"creativity\";i:4;s:6:\"effort\";i:5;s:10:\"leadership\";i:6;s:13:\"participation\";i:7;s:11:\"persistence\";i:8;s:15:\"problem_solving\";i:9;s:15:\"quality_of_work\";i:10;s:6:\"values\";}"
 -
   id: 35
-  setting_type: "choice"
+  setting_type: "array"
   name: "behaviour.negative_descriptors"
   display_name: "Negative Descriptors"
   description: "Allowable choices for negative behaviour"
   value: "a:11:{i:0;s:14:\"classwork_late\";i:1;s:20:\"classwork_incomplete\";i:2;s:22:\"classwork_unacceptable\";i:3;s:13:\"disrespectful\";i:4;s:10:\"disruptive\";i:5;s:13:\"homework_late\";i:6;s:19:\"homework_incomplete\";i:7;s:21:\"homework_unacceptable\";i:8;s:10:\"ict_misuse\";i:9;s:7:\"truancy\";i:10;s:5:\"other\";}"
 -
   id: 36
-  setting_type: "choice"
+  setting_type: "array"
   name: "behaviour.levels"
   display_name: "Levels"
   description: "Allowable choices for severity level (from lowest to highest)"
   value: "a:8:{i:0;s:0:\"\";i:1;s:7:\"stage_1\";i:2;s:16:\"stage_1_actioned\";i:3;s:7:\"stage_2\";i:4;s:16:\"stage_2_actioned\";i:5;s:7:\"stage_3\";i:6;s:16:\"stage_3_actioned\";i:7;s:8:\"actioned\";}"
 -
   id: 37
-  setting_type: "choice"
+  setting_type: "array"
   name: "resources.categories"
   display_name: "Categories"
   description: "Allowable choices for category"
   value: "a:19:{i:0;s:7:\"article\";i:1;s:4:\"book\";i:2;s:8:\"document\";i:3;s:7:\"graphic\";i:4;s:4:\"idea\";i:5;s:5:\"music\";i:6;s:6:\"object\";i:7;s:8:\"painting\";i:8;s:6:\"person\";i:9;s:5:\"photo\";i:10;s:5:\"place\";i:11;s:6:\"poetry\";i:12;s:5:\"prose\";i:13;s:6:\"rubric\";i:14;s:4:\"text\";i:15;s:5:\"video\";i:16;s:7:\"website\";i:17;s:11:\"work_sample\";i:18;s:5:\"other\";}"
 -
   id: 38
-  setting_type: "choice"
+  setting_type: "array"
   name: "resources.purposes_general"
   display_name: "Purposes (General)"
   description: "Allowable choices for purpose when creating a resource"
@@ -234,7 +234,7 @@
   value: "17.0.00"
 -
   id: 40
-  setting_type: "choice"
+  setting_type: "array"
   name: "resources.purposes_restricted"
   display_name: "Purposes (Restricted)"
   description: "Additional allowable choices for purpose when creating a resource, for those with \"Manage All Resources\" rights"
@@ -249,19 +249,18 @@
   validators: "a:4:{i:0;O:46:\"Symfony\\Component\\Validator\\Constraints\\Length\":9:{s:10:\"maxMessage\";s:140:\"This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.\";s:10:\"minMessage\";s:142:\"This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.\";s:12:\"exactMessage\";s:108:\"This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.\";s:14:\"charsetMessage\";s:61:\"This value does not match the expected {{ charset }} charset.\";s:3:\"max\";i:25;s:3:\"min\";N;s:7:\"charset\";s:5:\"UTF-8\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:1;O:46:\"Symfony\\Component\\Validator\\Constraints\\Length\":9:{s:10:\"maxMessage\";s:140:\"This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.\";s:10:\"minMessage\";s:142:\"This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.\";s:12:\"exactMessage\";s:108:\"This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.\";s:14:\"charsetMessage\";s:61:\"This value does not match the expected {{ charset }} charset.\";s:3:\"max\";i:25;s:3:\"min\";N;s:7:\"charset\";s:5:\"UTF-8\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:2;O:46:\"Symfony\\Component\\Validator\\Constraints\\Length\":9:{s:10:\"maxMessage\";s:140:\"This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.\";s:10:\"minMessage\";s:142:\"This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.\";s:12:\"exactMessage\";s:108:\"This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.\";s:14:\"charsetMessage\";s:61:\"This value does not match the expected {{ charset }} charset.\";s:3:\"max\";i:25;s:3:\"min\";N;s:7:\"charset\";s:5:\"UTF-8\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}i:3;O:46:\"Symfony\\Component\\Validator\\Constraints\\Length\":9:{s:10:\"maxMessage\";s:140:\"This value is too long. It should have {{ limit }} character or less.|This value is too long. It should have {{ limit }} characters or less.\";s:10:\"minMessage\";s:142:\"This value is too short. It should have {{ limit }} character or more.|This value is too short. It should have {{ limit }} characters or more.\";s:12:\"exactMessage\";s:108:\"This value should have exactly {{ limit }} character.|This value should have exactly {{ limit }} characters.\";s:14:\"charsetMessage\";s:61:\"This value does not match the expected {{ charset }} charset.\";s:3:\"max\";i:25;s:3:\"min\";N;s:7:\"charset\";s:5:\"UTF-8\";s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
 -
   id: 42
-  setting_type: "choice"
+  setting_type: "enum"
   name: "activities.date_type"
   display_name: "Date Type"
   description: "Should activities be organised around dates (flexible) or terms (easy)?"
   value: "term"
 -
   id: 43
-  setting_type: "choice"
+  setting_type: "enum"
   name: "system.install_type"
   display_name: "Install Type"
   description: "The purpose of this installation of Busybee"
   value: "production"
-  validators: "a:0:{}"
 -
   id: 44
   setting_type: "boolean"
@@ -307,7 +306,7 @@
   value: ""
 -
   id: 50
-  setting_type: "choice"
+  setting_type: "array"
   name: "application_form.milestones"
   display_name: "Milestones"
   description: "List of the major steps in the application process. Applicants can be tracked through the various stages."
@@ -371,21 +370,21 @@
   value: 8
 -
   id: 59
-  setting_type: "choice"
+  setting_type: 'array'
   name: "person_admin.ethnicity"
   display_name: "Ethnicity"
   description: "List of ethnicities available in system"
   value: "a:1:{i:0;s:0:\"\";}"
 -
   id: 60
-  setting_type: "choice"
+  setting_type: 'array'
   name: "person_admin.nationality"
   display_name: "Nationality"
   description: "List of nationalities available in system. If blank, system will default to list of countries"
   value: "a:1:{i:0;s:0:\"\";}"
 -
   id: 61
-  setting_type: "choice"
+  setting_type: 'array'
   name: "person_admin.residency_status"
   display_name: "Residency Status"
   description: "List of residency status available in system. If blank, system will allow text input"
@@ -406,7 +405,7 @@
   value: "a:7:{s:3:\"001\";s:1:\"-\";s:3:\"002\";s:1:\"-\";s:3:\"003\";s:1:\"-\";s:3:\"004\";s:1:\"-\";s:3:\"005\";s:1:\"-\";s:3:\"006\";s:1:\"-\";s:3:\"007\";s:1:\"-\";}"
 -
   id: 66
-  setting_type: "choice"
+  setting_type: "array"
   name: "markbook.markbook_type"
   display_name: "Markbook Type"
   description: "List of types to make available in the Markbook."
@@ -420,7 +419,7 @@
   value: "br[style],strong[style],em[style],span[style],p[style],address[style],pre[style],h1[style],h2[style],h3[style],h4[style],h5[style],h6[style],table[style],thead[style],tbody[style],tfoot[style],tr[style],td[style|colspan|rowspan],ol[style],ul[style],li[style],blockquote[style],a[style|target|href],img[style|class|src|width|height],video[style],source[style],hr[style],iframe[style|width|height|src|frameborder|allowfullscreen],embed[style],div[style],sup[style],sub[style]"
 -
   id: 68
-  setting_type: "choice"
+  setting_type: "array"
   name: "application_form.how_did_you_hear"
   display_name: "How Did Your Hear?"
   description: "List"
@@ -457,7 +456,7 @@
   validators: "a:1:{i:0;O:43:\"Symfony\\Component\\Validator\\Constraints\\Url\":7:{s:7:\"message\";s:30:\"This value is not a valid URL.\";s:10:\"dnsMessage\";s:31:\"The host could not be resolved.\";s:9:\"protocols\";a:2:{i:0;s:4:\"http\";i:1;s:5:\"https\";}s:8:\"checkDNS\";b:0;s:16:\"relativeProtocol\";b:0;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
 -
   id: 74
-  setting_type: "choice"
+  setting_type: "enum"
   name: "currency"
   display_name: "Currency"
   description: "System-wde currency for financial transactions. Support for online payment in this currency depends on your credit card gateway: please consult their support documentation."
@@ -559,7 +558,7 @@
   value: 1
 -
   id: 91
-  setting_type: "choice"
+  setting_type: "array"
   name: "person_admin.day_type_options"
   display_name: "Day-Type Options"
   description: "List of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form. "
@@ -735,7 +734,7 @@
   value: "Invoice ID"
 -
   id: 119
-  setting_type: "choice"
+  setting_type: "array"
   name: "person_admin.departure_reasons"
   display_name: "Departure Reasons"
   description: "List of reasons for departure from school. If blank, user can enter any text."
@@ -959,7 +958,7 @@
   value: 1
 -
   id: 151
-  setting_type: "choice"
+  setting_type: "array"
   name: "finance.budget_categories"
   display_name: "Budget Categories"
   description: "List of budget categories."
@@ -1023,7 +1022,7 @@
   validators: "a:1:{i:0;O:45:\"Symfony\\Component\\Validator\\Constraints\\Range\":7:{s:10:\"minMessage\";s:41:\"This value should be {{ limit }} or more.\";s:10:\"maxMessage\";s:41:\"This value should be {{ limit }} or less.\";s:14:\"invalidMessage\";s:36:\"This value should be a valid number.\";s:3:\"min\";i:0;s:3:\"max\";i:25;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
 -
   id: 161
-  setting_type: "choice"
+  setting_type: "enum"
   name: "person_admin.public_registration_default_status"
   display_name: "Public Registration Default Status"
   description: "Should new users be 'Full' or 'Pending Approval'?"
@@ -1086,7 +1085,7 @@
   value: 1
 -
   id: 170
-  setting_type: "choice"
+  setting_type: 'array'
   name: "formal_assessment.internal_assessment_types"
   display_name: "Internal Assessment Types"
   description: "List of types to make available in Internal Assessments."
@@ -1101,10 +1100,10 @@
   validators: "a:1:{i:0;O:44:\"Symfony\\Component\\Validator\\Constraints\\File\":18:{s:12:\"binaryFormat\";N;s:9:\"mimeTypes\";a:1:{i:0;s:7:\"audio/*\";}s:15:\"notFoundMessage\";s:28:\"The file could not be found.\";s:18:\"notReadableMessage\";s:25:\"The file is not readable.\";s:14:\"maxSizeMessage\";s:98:\"The file is too large ({{ size }} {{ suffix }}). Allowed maximum size is {{ limit }} {{ suffix }}.\";s:16:\"mimeTypesMessage\";s:86:\"The mime type of the file is invalid ({{ type }}). Allowed mime types are {{ types }}.\";s:20:\"disallowEmptyMessage\";s:29:\"An empty file is not allowed.\";s:25:\"uploadIniSizeErrorMessage\";s:72:\"The file is too large. Allowed maximum size is {{ limit }} {{ suffix }}.\";s:26:\"uploadFormSizeErrorMessage\";s:22:\"The file is too large.\";s:25:\"uploadPartialErrorMessage\";s:37:\"The file was only partially uploaded.\";s:24:\"uploadNoFileErrorMessage\";s:21:\"No file was uploaded.\";s:26:\"uploadNoTmpDirErrorMessage\";s:46:\"No temporary folder was configured in php.ini.\";s:27:\"uploadCantWriteErrorMessage\";s:36:\"Cannot write temporary file to disk.\";s:27:\"uploadExtensionErrorMessage\";s:42:\"A PHP extension caused the upload to fail.\";s:18:\"uploadErrorMessage\";s:31:\"The file could not be uploaded.\";s:10:\" * maxSize\";N;s:7:\"payload\";N;s:6:\"groups\";a:1:{i:0;s:7:\"Default\";}}}"
 -
   id: 172
-  setting_type: "choice"
+  setting_type: 'array'
   name: "school_admin.facility_types"
   display_name: "FacilityTypes"
-  description: "A comma-separated list of types for facilities."
+  description: "List of facility types."
   value: "a:12:{i:0;s:9:\"classroom\";i:1;s:4:\"hall\";i:2;s:10:\"laboratory\";i:3;s:7:\"library\";i:4;s:6:\"office\";i:5;s:7:\"outdoor\";i:6;s:11:\"performance\";i:7;s:9:\"staffroom\";i:8;s:7:\"storage\";i:9;s:5:\"study\";i:10;s:10:\"undercover\";i:11;s:5:\"other\";}"
 -
   id: 173
@@ -1115,7 +1114,7 @@
   value: 1
 -
   id: 174
-  setting_type: "choice"
+  setting_type: 'enum'
   name: "system.organisation_administrator"
   display_name: "System Administrator"
   description: "The staff member who receives notifications for system events."
@@ -1123,7 +1122,7 @@
   validators: "a:0:{}"
 -
   id: 175
-  setting_type: "choice"
+  setting_type: 'enum'
   name: "system.organisation_dba"
   display_name: "Database Administrator"
   description: "The staff member who receives notifications for data events."
@@ -1131,7 +1130,7 @@
   validators: "a:0:{}"
 -
   id: 176
-  setting_type: "choice"
+  setting_type: 'enum'
   name: "system.organisation_admissions"
   display_name: "Admissions Administrator"
   description: "The staff member who receives notifications for admissions events."
@@ -1223,7 +1222,7 @@
   value: 0
 -
   id: 189
-  setting_type: "choice"
+  setting_type: 'enum'
   name: "system.first_day_of_the_week"
   display_name: "First Day Of The Week"
   description: "On which day should the week begin?"
@@ -1330,7 +1329,7 @@
   value: "[preferredNameInitial].[surname]"
 -
   id: 204
-  setting_type: "choice"
+  setting_type: 'enum'
   name: "system.organisation_hr"
   display_name: "Human Resources Administrator"
   description: "The staff member who receives notifications for staffing events."
@@ -1345,14 +1344,14 @@
   value: "<span style='text-decoration: underline; font-weight: bold'>Why are you applying for this role?</span><br/><p></p>"
 -
   id: 206
-  setting_type: "choice"
+  setting_type: 'array'
   name: "staff.salary_scale_positions"
   display_name: "Salary Scale Positions"
   description: "List of salary scale positions, from lowest to highest."
   value: "a:10:{i:0;s:1:\"1\";i:1;s:1:\"2\";i:2;s:1:\"3\";i:3;s:1:\"4\";i:4;s:1:\"5\";i:5;s:1:\"6\";i:6;s:1:\"7\";i:7;s:1:\"8\";i:8;s:1:\"9\";i:9;s:2:\"10\";}"
 -
   id: 207
-  setting_type: "multiChoice"
+  setting_type: "array"
   name: "staff.responsibility_posts"
   display_name: "Responsibility Posts"
   description: "List of posts carrying extra responsibilities."
@@ -1373,7 +1372,7 @@
   value: ""
 -
   id: 210
-  setting_type: "choice"
+  setting_type: 'enum'
   name: "person_admin.religions"
   display_name: "Religions"
   description: "List of ethnicities available in system"
@@ -1478,14 +1477,14 @@
   value: "a:5:{i:0;s:5:\"admin\";i:1;s:6:\"assess\";i:2;s:5:\"learn\";i:3;s:6:\"people\";i:4;s:5:\"other\";}"
 -
   id: 232
-  setting_type: "choice"
+  setting_type: 'array'
   name: "attendance.attendance_reasons"
   display_name: "Attendance Reasons"
   description: "List of reasons which are available when taking attendance."
   value: "a:5:{i:0;s:7:\"pending\";i:1;s:9:\"education\";i:2;s:6:\"family\";i:3;s:7:\"medical\";i:4;s:5:\"other\";}"
 -
   id: 233
-  setting_type: "choice"
+  setting_type: 'array'
   name: "attendance.attendance_medical_reasons"
   display_name: "Medical Reasons"
   description: "List of allowable medical reasons."
@@ -1499,7 +1498,7 @@
   value: 0
 -
   id: 235
-  setting_type: "choice"
+  setting_type: 'array'
   name: "students.medical_illness_symptoms"
   display_name: "Predefined Illness Symptoms"
   description: "List of illness symptoms."
@@ -1702,7 +1701,7 @@
   value: 0
 -
   id: 264
-  setting_type: "choice"
+  setting_type: 'array'
   name: "application_form.available_years_of_entry"
   display_name: "Available Years of Entry"
   description: "Which school years should be available to apply to?"

@@ -52,17 +52,16 @@ class ResourcesSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new NotBlank(),
                     new Yaml(),
                 ]
             )
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Categories')
-            ->__set('description', 'Allowable choices for category.');
+            ->setDisplayName('Categories')
+           ->setDescription('Allowable choices for category.');
         if (empty($setting->getValue())) {
             $setting->setValue(['Article', 'Book', 'Document', 'Graphic', 'Idea', 'Music', 'Object', 'Painting', 'Person', 'Photo', 'Place', 'Poetry', 'Prose', 'Rubric', 'Text', 'Video', 'Website', 'Work Sample', 'Other'])
             ;
@@ -80,13 +79,12 @@ class ResourcesSettings implements SettingCreationInterface
                     new Yaml(),
                 ]
             )
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Purposes (General)')
-            ->__set('description', 'Allowable choices for purpose when creating a resource.');
+            ->setDisplayName('Purposes (General)')
+           ->setDescription('Allowable choices for purpose when creating a resource.');
         if (empty($setting->getValue())) {
             $setting->setValue(['Assessment Aid', 'Concept', 'Inspiration', 'Learner Profile', 'Mass Mailer Attachment', 'Provocation', 'Skill', 'Teaching and Learning Strategy', 'Other'])
-                ->__set('choice', null)
+
             ;
         }
         $settings[] = $setting;
@@ -101,13 +99,12 @@ class ResourcesSettings implements SettingCreationInterface
                     new Yaml(),
                 ]
             )
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Purposes (Restricted) ')
-            ->__set('description', 'Additional allowable choices for purpose when creating a resource, for those with "Manage All Resources" rights.');
+            ->setDisplayName('Purposes (Restricted) ')
+           ->setDescription('Additional allowable choices for purpose when creating a resource, for those with "Manage All Resources" rights.');
         if (empty($setting->getValue())) {
             $setting->setValue([])
-                ->__set('choice', null)
+
             ;
         }
         $settings[] = $setting;

@@ -59,10 +59,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('html')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Application Form Introduction.')
-            ->__set('choice', null)
-            ->__set('description', 'Information to display before the form');
+            ->setDisplayName('Application Form Introduction.')
+
+           ->setDescription('Information to display before the form');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -76,10 +75,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('url')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Application Form Referee Link.')
-            ->__set('choice', null)
-            ->__set('description', 'Link to an external form that will be emailed to a referee of the applicant\'s choosing.');
+            ->setDisplayName('Application Form Referee Link.')
+
+           ->setDescription('Link to an external form that will be emailed to a referee of the applicant\'s choosing.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -93,10 +91,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('html')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Application Form Postscript.')
-            ->__set('choice', null)
-            ->__set('description', 'Information to display at the end of the form');
+            ->setDisplayName('Application Form Postscript.')
+
+           ->setDescription('Information to display at the end of the form');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -110,10 +107,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('html')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Application Form Agreement.')
-            ->__set('choice', null)
-            ->__set('description', 'Without this text, which is displayed above the agreement, peoples will not be asked to agree to anything');
+            ->setDisplayName('Application Form Agreement.')
+
+           ->setDescription('Without this text, which is displayed above the agreement, peoples will not be asked to agree to anything');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -127,10 +123,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('string')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Application Fee.')
-            ->__set('choice', null)
-            ->__set('description', sprintf('The cost of applying to the school. In %s.', $sm->get('currency')));
+            ->setDisplayName('Application Fee.')
+
+           ->setDescription(sprintf('The cost of applying to the school. In %s.', $sm->get('currency')));
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -144,10 +139,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Public Applications?')
-            ->__set('choice', null)
-            ->__set('description', 'If yes, members of the public can submit applications');
+            ->setDisplayName('Public Applications?')
+
+           ->setDescription('If yes, members of the public can submit applications');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -161,10 +155,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('array')
             ->setValidators(null)
             ->setDefaultValue([])
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Application Milestones')
-            ->__set('choice', null)
-            ->__set('description', 'List of the major steps in the application process. Applicants can be tracked through the various stages.');
+            ->setDisplayName('Application Milestones')
+
+           ->setDescription('List of the major steps in the application process. Applicants can be tracked through the various stages.');
         if (empty($setting->getValue())) {
             $setting->setValue([])
             ;
@@ -178,10 +171,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('array')
             ->setValidators(null)
             ->setDefaultValue([])
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'How Did Your Hear?')
-            ->__set('choice', null)
-            ->__set('description', '');
+            ->setDisplayName('How Did Your Hear?')
+
+           ->setDescription('');
         if (empty($setting->getValue())) {
             $setting->setValue(['Advertisement','Personal Recommendation','World Wide Web','Others'])
             ;
@@ -195,10 +187,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue([])
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Enable Limited Years of Entry')
-            ->__set('choice', null)
-            ->__set('description', 'If yes, applicants choices for Year of Entry can be limited to specific school years.');
+            ->setDisplayName('Enable Limited Years of Entry')
+
+           ->setDescription('If yes, applicants choices for Year of Entry can be limited to specific school years.');
         if (empty($setting->getValue())) {
             $setting->setValue(['Advertisement','Personal Recommendation','World Wide Web','Others'])
             ;
@@ -223,10 +214,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('multiChoice')
             ->setValidators(null)
             ->setDefaultValue([])
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Available Years of Entry')
+            ->setDisplayName('Available Years of Entry')
             ->__set('choice', $years)
-            ->__set('description', 'Which school years should be available to apply to? Use Control, Command and/or Shift to select multiple.');
+           ->setDescription('Which school years should be available to apply to? Use Control, Command and/or Shift to select multiple.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -246,11 +236,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('array')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Required Documents')
-            ->__set('choice', null)
-            ->__set('description', 'List of documents which must be submitted electronically with the application form.');
+            ->setDisplayName('Required Documents')
+
+           ->setDescription('List of documents which must be submitted electronically with the application form.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -261,11 +249,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('array')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Internal Documents')
-            ->__set('choice', null)
-            ->__set('description', 'List of documents for internal upload and use.');
+                ->setDisplayName('Internal Documents')
+
+           ->setDescription('List of documents for internal upload and use.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -276,11 +262,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('html')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Required Documents Text')
-            ->__set('choice', null)
-            ->__set('description', 'Explanatory text to appear with the required documents?');
+             ->setDisplayName('Required Documents Text')
+
+           ->setDescription('Explanatory text to appear with the required documents?');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -292,10 +276,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Required Documents Compulsory?')
-            ->__set('choice', null)
-            ->__set('description', 'Explanatory text to appear with the required documents?');
+             ->setDisplayName('Required Documents Compulsory?')
+
+           ->setDescription('Explanatory text to appear with the required documents?');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -315,10 +298,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Language Options Active')
-            ->__set('choice', null)
-            ->__set('description', 'Should the Language Options section be turned on?');
+             ->setDisplayName('Language Options Active')
+
+           ->setDescription('Should the Language Options section be turned on?');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -330,11 +312,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('html')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Language Options Introduction')
-            ->__set('choice', null)
-            ->__set('description', 'Introductory text if Language Options section is turned on.');
+             ->setDisplayName('Language Options Introduction')
+
+           ->setDescription('Introductory text if Language Options section is turned on.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -347,10 +327,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('array')
             ->setValidators(null)
             ->setDefaultValue([])
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Language Options Language List')
-            ->__set('choice', null)
-            ->__set('description', 'List of available language selections if Language Options section is turned on.');
+             ->setDisplayName('Language Options Language List')
+
+           ->setDescription('List of available language selections if Language Options section is turned on.');
         if (empty($setting->getValue())) {
             $setting->setValue([]);
         }
@@ -371,10 +350,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Special Education Needs Active')
-            ->__set('choice', null)
-            ->__set('description', 'Should the Special Education Needs section be turned on?');
+             ->setDisplayName('Special Education Needs Active')
+
+           ->setDescription('Should the Special Education Needs section be turned on?');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -387,10 +365,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('html')
             ->setValidators(null)
             ->setDefaultValue("<p>Please indicate whether or not your child has any known, or suspected, special educational needs, or whether they have been assessed for any such needs in the past. Provide any comments or information concerning your child's development that may be relevant to your child's performance in the classroom or elsewhere? Incorrect or withheld information may affect continued enrolment.</p>")
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Special Education Application Text')
-            ->__set('choice', null)
-            ->__set('description', 'Text to appear with the Special Educational Needs section of the student application form.');
+             ->setDisplayName('Special Education Application Text')
+
+           ->setDescription('Text to appear with the Special Educational Needs section of the student application form.');
         if (empty($setting->getValue())) {
             $setting->setValue("<p>Please indicate whether or not your child has any known, or suspected, special educational needs, or whether they have been assessed for any such needs in the past. Provide any comments or information concerning your child's development that may be relevant to your child's performance in the classroom or elsewhere? Incorrect or withheld information may affect continued enrolment.</p>");
         }
@@ -403,10 +380,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Scholarship Options Active')
-            ->__set('choice', null)
-            ->__set('description', 'Should the Scholarship Options section be turned on?');
+             ->setDisplayName('Scholarship Options Active')
+
+           ->setDescription('Should the Scholarship Options section be turned on?');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -418,11 +394,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('html')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Scholarships ')
-            ->__set('choice', null)
-            ->__set('description', 'Information to display before the scholarship options.');
+             ->setDisplayName('Scholarships ')
+
+           ->setDescription('Information to display before the scholarship options.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -435,10 +409,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Payment Options Active')
-            ->__set('choice', null)
-            ->__set('description', 'Should the Payment section be turned on?');
+             ->setDisplayName('Payment Options Active')
+
+           ->setDescription('Should the Payment section be turned on?');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -458,10 +431,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('text')
             ->setValidators(null)
             ->setDefaultValue('[preferredNameInitial]. [surname]')
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'User-name Format')
-            ->__set('choice', null)
-            ->__set('description', 'How should user-names be formatted? Choose from [preferredName], [preferredNameInitial], [surname].');
+             ->setDisplayName('User-name Format')
+
+           ->setDescription('How should user-names be formatted? Choose from [preferredName], [preferredNameInitial], [surname].');
         if (empty($setting->getValue())) {
             $setting->setValue('[preferredNameInitial]. [surname]');
         }
@@ -473,10 +445,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Student Notification Default')
-            ->__set('choice', null)
-            ->__set('description', 'Should student acceptance email be turned on or off.');
+             ->setDisplayName('Student Notification Default')
+
+           ->setDescription('Should student acceptance email be turned on or off.');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -488,11 +459,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('html')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Student Notification Message')
-            ->__set('choice', null)
-            ->__set('description', 'A custom message to add to the standard email to students on acceptance.');
+             ->setDisplayName('Student Notification Message')
+
+           ->setDescription('A custom message to add to the standard email to students on acceptance.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -505,10 +474,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Parent Notification Default')
-            ->__set('choice', null)
-            ->__set('description', 'Should parent acceptance email be turned on or off.');
+             ->setDisplayName('Parent Notification Default')
+
+           ->setDescription('Should parent acceptance email be turned on or off.');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -520,11 +488,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('html')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Parent Notification Message')
-            ->__set('choice', null)
-            ->__set('description', 'A custom message to add to the standard email to parents on acceptance.');
+             ->setDisplayName('Parent Notification Message')
+
+           ->setDescription('A custom message to add to the standard email to parents on acceptance.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -536,11 +502,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('string')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Student Default Email')
-            ->__set('choice', null)
-            ->__set('description', 'Set default email for students on acceptance, using [username] to insert user-name.');
+             ->setDisplayName('Student Default Email')
+
+           ->setDescription('Set default email for students on acceptance, using [username] to insert user-name.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -551,11 +515,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->__set('role', 'ROLE_ADMIN')
             ->setSettingType('url')
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Student Default Website')
-            ->__set('choice', null)
-            ->__set('description', 'Set default website for students on acceptance, using [username] to insert user-name.');
+             ->setDisplayName('Student Default Website')
+
+           ->setDescription('Set default website for students on acceptance, using [username] to insert user-name.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -567,10 +529,9 @@ class ApplicationFormSettings implements SettingCreationInterface
             ->setSettingType('boolean')
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', false)
-            ->__set('displayName', 'Auto House Assign')
-            ->__set('choice', null)
-            ->__set('description', 'Attempt to automatically place student in a house?');
+             ->setDisplayName('Auto House Assign')
+
+           ->setDescription('Attempt to automatically place student in a house?');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }

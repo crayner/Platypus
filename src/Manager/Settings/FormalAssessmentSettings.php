@@ -67,11 +67,11 @@ class FormalAssessmentSettings implements SettingCreationInterface
             )
             ->setDefaultValue(['expected_grade','predicted_grade','target_grade'])
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Internal Assessment Types')
-            ->__set('description', 'List of types to make available in Internal Assessments.');
+            ->setDisplayName('Internal Assessment Types')
+           ->setDescription('List of types to make available in Internal Assessments.');
         if (empty($setting->getValue())) {
             $setting->setValue(['expected_grade','predicted_grade','target_grade'])
-                ->__set('choice', null)
+
             ;
         }
         $settings[] = $setting;

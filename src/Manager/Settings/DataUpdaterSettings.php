@@ -52,12 +52,11 @@ class DataUpdaterSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('displayName', 'Required Data Updates?')
-            ->__set('choice', null)
+            ->setDisplayName('Required Data Updates?')
+
             ->setValidators(null)
             ->setDefaultValue(false)
-            ->__set('translateChoice', false)
-            ->__set('description', 'Should the data updater highlight updates that are required?');
+             ->setDescription('Should the data updater highlight updates that are required?');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -69,12 +68,12 @@ class DataUpdaterSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('multiChoice')
-            ->__set('displayName', 'Required Data Update Types')
+            ->setDisplayName('Required Data Update Types')
             ->__set('choice', ['family','personal','medical','finance'])
             ->setValidators(null)
             ->setDefaultValue(['family','personal'])
             ->__set('translateChoice', 'System')
-            ->__set('description', 'Which type of data updates should be required.');
+           ->setDescription('Which type of data updates should be required.');
         if (empty($setting->getValue())) {
             $setting->setValue(['family','personal']);
         }
@@ -86,12 +85,10 @@ class DataUpdaterSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('date')
-            ->__set('displayName', 'Cutoff Date')
-            ->__set('choice', null)
+            ->setDisplayName('Cutoff Date')
+
             ->setValidators(null)
-            ->setDefaultValue(null)
-            ->__set('translateChoice', null)
-            ->__set('description', 'Earliest acceptable date when checking if data updates are required.');
+           ->setDescription('Earliest acceptable date when checking if data updates are required.');
         if (empty($setting->getValue())) {
             $setting->setValue(null);
         }
@@ -103,12 +100,12 @@ class DataUpdaterSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('multiChoice')
-            ->__set('displayName', 'Data Updater Redirect')
+            ->setDisplayName('Data Updater Redirect')
             ->__set('choice', ['staff','student','parent'])
             ->setValidators(null)
             ->setDefaultValue(['parent'])
             ->__set('translateChoice', 'System')
-            ->__set('description', 'Which types of users should be redirected to the Data Updater if updates are required.');
+           ->setDescription('Which types of users should be redirected to the Data Updater if updates are required.');
         if (empty($setting->getValue())) {
             $setting->setValue(['parent']);
         }

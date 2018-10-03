@@ -52,7 +52,7 @@ class ActivitiesSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('choice')
-            ->__set('displayName', 'Date Type')
+            ->setDisplayName('Date Type')
             ->__set('choice', ['date', 'term'])
             ->setValidators(
                 [
@@ -61,7 +61,7 @@ class ActivitiesSettings implements SettingCreationInterface
             )
             ->setDefaultValue('term')
             ->__set('translateChoice', 'Setting')
-            ->__set('description', 'Should activities be organised around dates (flexible) or terms (easy)?');
+           ->setDescription('Should activities be organised around dates (flexible) or terms (easy)?');
         if (empty($setting->getValue())) {
             $setting->setValue('term');
         }
@@ -72,7 +72,7 @@ class ActivitiesSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('integer')
-            ->__set('choice', null)
+
             ->setValidators(
                 [
                     new Range(['min' => 0, 'max' => 5]),
@@ -80,8 +80,8 @@ class ActivitiesSettings implements SettingCreationInterface
             )
             ->setDefaultValue('0')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Maximum Activities per Term')
-            ->__set('description', 'The most a student can sign up for in one term. Set to 0 for unlimited.');
+            ->setDisplayName('Maximum Activities per Term')
+           ->setDescription('The most a student can sign up for in one term. Set to 0 for unlimited.');
         if (empty($setting->getValue())) {
             $setting->setValue('0');
         }
@@ -100,8 +100,8 @@ class ActivitiesSettings implements SettingCreationInterface
             )
             ->setDefaultValue('register')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Access')
-            ->__set('description', 'System-wide access control');
+            ->setDisplayName('Access')
+           ->setDescription('System-wide access control');
         if (empty($setting->getValue())) {
             $setting->setValue('register');
         }
@@ -120,8 +120,8 @@ class ActivitiesSettings implements SettingCreationInterface
             )
             ->setDefaultValue('per_activity')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Payment')
-            ->__set('description', 'Payment system');
+            ->setDisplayName('Payment')
+           ->setDescription('Payment system');
         if (empty($setting->getValue())) {
             $setting->setValue('per_activity');
         }
@@ -140,8 +140,8 @@ class ActivitiesSettings implements SettingCreationInterface
             )
             ->setDefaultValue('competitive')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Enrolment Type')
-            ->__set('description', 'Enrolment process type');
+            ->setDisplayName('Enrolment Type')
+           ->setDescription('Enrolment process type');
         if (empty($setting->getValue())) {
             $setting->setValue('competitive');
         }
@@ -152,12 +152,12 @@ class ActivitiesSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Backup Choice')
-            ->__set('description', 'Allow students to choose a backup, in case enroled activity is full.');
+            ->setDisplayName('Backup Choice')
+           ->setDescription('Allow students to choose a backup, in case enroled activity is full.');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -168,12 +168,11 @@ class ActivitiesSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Activity Types')
-            ->__set('description', 'List of the different activity types available in school. Leave blank to disable this feature.');
+            ->setDisplayName('Activity Types')
+           ->setDescription('List of the different activity types available in school. Leave blank to disable this feature.');
         if (empty($setting->getValue())) {
             $setting->setValue(['creativity', 'action', 'service']);
         }
@@ -184,12 +183,12 @@ class ActivitiesSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Disable External Provider Signup')
-            ->__set('description', 'Should we turn off the option to sign up for activities provided by an outside agency?');
+            ->setDisplayName('Disable External Provider Signup')
+           ->setDescription('Should we turn off the option to sign up for activities provided by an outside agency?');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }
@@ -200,12 +199,12 @@ class ActivitiesSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Hide External Provider Cost')
-            ->__set('description', 'Should we hide the cost of activities provided by an outside agency from the Activities View?');
+            ->setDisplayName('Hide External Provider Cost')
+           ->setDescription('Should we hide the cost of activities provided by an outside agency from the Activities View?');
         if (empty($setting->getValue())) {
             $setting->setValue(false);
         }

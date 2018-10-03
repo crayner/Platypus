@@ -283,6 +283,7 @@ class SettingCache
      * handleArguments
      *
      * @param array $arguments
+     * @param SettingManager $settingManager
      * @return SettingCache
      */
     public function handleArguments(array $arguments, SettingManager $settingManager): SettingCache
@@ -292,15 +293,41 @@ class SettingCache
             [
                 'parameter' => false,
                 'default' => null,
+                'hideParent' => null,
+                'formAttr' => [],
             ]
         );
         $arguments = $resolver->resolve($arguments);
 
         $this->setParameter($arguments['parameter'], $settingManager, $arguments['default']);
+        $this->setHideParent($arguments['parameter']);
+        $this->setFormAttr($arguments['formAttr']);
 
         return $this;
     }
 
+    /**
+     * @var array
+     */
+    private $formAttr;
+
+    /**
+     * @return array
+     */
+    public function getFormAttr(): array
+    {
+        return $this->formAttr;
+    }
+
+    /**
+     * @param array $formAttr
+     * @return SettingCache
+     */
+    public function setFormAttr(array $formAttr): SettingCache
+    {
+        $this->formAttr = $formAttr;
+        return $this;
+    }
 
     /**
      * @var boolean
@@ -509,6 +536,26 @@ class SettingCache
      * @return mixed
      */
     private function setTextValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * getUrlValue
+     *
+     * @return mixed
+     */
+    private function getUrlValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * setUrlValue
+     *
+     * @return mixed
+     */
+    private function setUrlValue()
     {
         return $this->value;
     }

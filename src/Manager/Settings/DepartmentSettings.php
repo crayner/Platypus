@@ -50,12 +50,12 @@ class DepartmentSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Make Departments Public')
-            ->__set('description', 'Should department information be made available to the public, via the Gibbon homepage?');
+            ->setDisplayName('Make Departments Public')
+           ->setDescription('Should department information be made available to the public, via the Gibbon homepage?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;

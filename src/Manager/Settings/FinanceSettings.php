@@ -53,14 +53,13 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('email')
-            ->__set('choice', null)
+
             ->setValidators([
                 new Email(),
             ])
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Email')
-            ->__set('description', 'Send messages from this email address.');
+            ->setDisplayName('Email')
+           ->setDescription('Send messages from this email address.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -72,12 +71,12 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Enable Online Payment')
-            ->__set('description', 'Should invoices be payable online, via an encrypted link in the invoice? Requires correctly configured payment gateway in System Settings.');
+            ->setDisplayName('Enable Online Payment')
+           ->setDescription('Should invoices be payable online, via an encrypted link in the invoice? Requires correctly configured payment gateway in System Settings.');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -90,12 +89,12 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('currency')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Online Payment Threshold')
-            ->__set('description', 'If invoices are payable online, what is the maximum payment allowed? Useful for controlling payment fees. No value means unlimited. In {{setting.currency}}');
+            ->setDisplayName('Online Payment Threshold')
+           ->setDescription('If invoices are payable online, what is the maximum payment allowed? Useful for controlling payment fees. No value means unlimited. In {{setting.currency}}');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -118,12 +117,11 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Invoice Text')
-            ->__set('description', 'Text to appear in invoice, above invoice details and fees.');
+            ->setDisplayName('Invoice Text')
+           ->setDescription('Text to appear in invoice, above invoice details and fees.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -135,12 +133,11 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Invoice Notes')
-            ->__set('description', 'Text to appear in invoice, below invoice details and fees.');
+            ->setDisplayName('Invoice Notes')
+           ->setDescription('Text to appear in invoice, below invoice details and fees.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -156,8 +153,8 @@ class FinanceSettings implements SettingCreationInterface
             ->setValidators(null)
             ->setDefaultValue('surname_preferred_name')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Invoicee Name Style')
-            ->__set('description', 'Determines how invoicee name appears on invoices and receipts.');
+            ->setDisplayName('Invoicee Name Style')
+           ->setDescription('Determines how invoicee name appears on invoices and receipts.');
         if (empty($setting->getValue())) {
             $setting->setValue('surname_preferred_name')
             ;
@@ -173,8 +170,8 @@ class FinanceSettings implements SettingCreationInterface
             ->setValidators(null)
             ->setDefaultValue('invoice_id')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Invoice Number Style')
-            ->__set('description', 'How should invoice numbers be constructed?');
+            ->setDisplayName('Invoice Number Style')
+           ->setDescription('How should invoice numbers be constructed?');
         if (empty($setting->getValue())) {
             $setting->setValue('invoice_id')
             ;
@@ -194,12 +191,11 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Receipt Text')
-            ->__set('description', 'Text to appear in receipt, above receipt details and fees.');
+            ->setDisplayName('Receipt Text')
+           ->setDescription('Text to appear in receipt, above receipt details and fees.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -211,12 +207,11 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Receipt Notes')
-            ->__set('description', 'Text to appear in receipt, below receipt details and fees.');
+            ->setDisplayName('Receipt Notes')
+           ->setDescription('Text to appear in receipt, below receipt details and fees.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -228,12 +223,12 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(false)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Hide Itemisation')
-            ->__set('description', 'Hide fee and payment details in receipts?');
+            ->setDisplayName('Hide Itemisation')
+           ->setDescription('Hide fee and payment details in receipts?');
         if (empty($setting->getValue())) {
             $setting->setValue(false)
             ;
@@ -253,12 +248,11 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Reminder 1 Text')
-            ->__set('description', 'Text to appear in first level reminder level, above invoice details and fees.');
+            ->setDisplayName('Reminder 1 Text')
+           ->setDescription('Text to appear in first level reminder level, above invoice details and fees.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -270,14 +264,13 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('displayName', 'Reminder 2 Text')
-            ->__set('description', 'Text to appear in second level reminder level, above invoice details and fees.');
+            ->setDisplayName('Reminder 2 Text')
+           ->setDescription('Text to appear in second level reminder level, above invoice details and fees.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
-                ->__set('choice', null)
+
                 ->setValidators(null)
-                ->setDefaultValue(null)
-                ->__set('translateChoice', 'Setting')
+                    ->__set('translateChoice', 'Setting')
             ;
         }
         $settings[] = $setting;
@@ -287,12 +280,11 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Reminder 3 Text')
-            ->__set('description', 'Text to appear in third level reminder level, above invoice details and fees.');
+            ->setDisplayName('Reminder 3 Text')
+           ->setDescription('Text to appear in third level reminder level, above invoice details and fees.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -312,12 +304,12 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('array')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(['academic','administration','capital'])
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Budget Categories')
-            ->__set('description', 'List of budget categories.');
+            ->setDisplayName('Budget Categories')
+           ->setDescription('List of budget categories.');
         if (empty($setting->getValue())) {
             $setting->setValue(['academic','administration','capital'])
             ;
@@ -333,8 +325,8 @@ class FinanceSettings implements SettingCreationInterface
             ->setValidators(null)
             ->setDefaultValue('one_of')
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Expense Approval Type')
-            ->__set('description', 'How should expense approval be dealt with?');
+            ->setDisplayName('Expense Approval Type')
+           ->setDescription('How should expense approval be dealt with?');
         if (empty($setting->getValue())) {
             $setting->setValue('one_of')
             ;
@@ -346,12 +338,12 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Budget Level Expense Approval')
-            ->__set('description', 'Should approval from a budget member with Full access be required?');
+            ->setDisplayName('Budget Level Expense Approval')
+           ->setDescription('Should approval from a budget member with Full access be required?');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -363,12 +355,11 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('html')
-            ->__set('choice', null)
+
             ->setValidators(null)
-            ->setDefaultValue(null)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Expense Request Template')
-            ->__set('description', 'An HTML template to be used in the description field of expense requests.');
+            ->setDisplayName('Expense Request Template')
+           ->setDescription('An HTML template to be used in the description field of expense requests.');
         if (empty($setting->getValue())) {
             $setting->setValue(null)
             ;
@@ -380,12 +371,12 @@ class FinanceSettings implements SettingCreationInterface
         $setting
             ->__set('role', 'ROLE_PRINCIPAL')
             ->setSettingType('boolean')
-            ->__set('choice', null)
+
             ->setValidators(null)
             ->setDefaultValue(true)
             ->__set('translateChoice', 'Setting')
-            ->__set('displayName', 'Allow Expense Add')
-            ->__set('description', 'Allows privileged users to add expenses without going through request process.');
+            ->setDisplayName('Allow Expense Add')
+           ->setDescription('Allows privileged users to add expenses without going through request process.');
         if (empty($setting->getValue())) {
             $setting->setValue(true)
             ;
@@ -399,10 +390,9 @@ class FinanceSettings implements SettingCreationInterface
             ->setSettingType('choice')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Purchasing Officer')
+            ->setDisplayName('Purchasing Officer')
             ->__set('choice', array_flip(StaffManager::getStaffListChoice()))
-            ->__set('description', 'Staff member responsible for purchasing for the school.');
+           ->setDescription('Staff member responsible for purchasing for the school.');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }
@@ -415,10 +405,9 @@ class FinanceSettings implements SettingCreationInterface
             ->setSettingType('choice')
             ->setValidators(null)
             ->setDefaultValue(true)
-            ->__set('translateChoice', null)
-            ->__set('displayName', 'Reimbursement Officer')
+            ->setDisplayName('Reimbursement Officer')
             ->__set('choice', array_flip(StaffManager::getStaffListChoice()))
-            ->__set('description', 'Staff member responsible for reimbursing expenses.');
+           ->setDescription('Staff member responsible for reimbursing expenses.');
         if (empty($setting->getValue())) {
             $setting->setValue(true);
         }

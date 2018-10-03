@@ -5,6 +5,7 @@ use App\Entity\StringReplacement;
 use App\Repository\StringReplacementRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Exception\TableNotFoundException;
 use PhpParser\Node\Expr\Instanceof_;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -221,7 +222,11 @@ class TranslationManager implements TranslatorInterface, TranslatorBagInterface
             return $this->strings;
 
         if ((empty($this->strings) || $refresh) && $this->stringReplacementManager->isValidEntityManager())
-            $this->strings = new ArrayCollection($this->stringReplacementManager->getRepository()->findBy([],['priority' => 'DESC', 'original' => 'ASC']));
+            try {
+                $this->strings = new ArrayCollection($this->stringReplacementManager->getRepository()->findBy([], ['priority' => 'DESC', 'original' => 'ASC']));
+            } catch (TableNotFoundException $e) {
+                $this->strings = new ArrayCollection();
+            }
         else
             return $this->strings = $this->strings instanceof ArrayCollection ? $this->strings : new ArrayCollection();
 
