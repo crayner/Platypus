@@ -15,6 +15,7 @@
  */
 namespace App\Manager\Gibbon;
 
+use App\Entity\DayOfWeek;
 use App\Entity\TimetableColumn;
 
 /**
@@ -39,6 +40,7 @@ class GibbonTTColumnManager extends GibbonTransferManager
      * @var array
      */
     protected $requireBefore = [
+        'gibbonDaysOfWeek',
     ];
 
     /**
@@ -64,4 +66,67 @@ class GibbonTTColumnManager extends GibbonTransferManager
             ],
         ],
     ];
+
+    /**
+     * postRecord
+     *
+     * @param $entityName
+     * @param $newData
+     * @param $records
+     * @return array
+     */
+    public function postRecord($entityName, $newData, $records)
+    {
+        $this->getDaysoftheWeek();
+        $x = preg_replace('/[^a-zA-z]/','',$newData['name']);
+        if (isset($this->getDaysoftheWeek()[$x]))
+        {
+            $newData['day_of_week_id'] = $this->getDaysoftheWeek()[$x]['id'];
+            $records[] = $newData;
+            return $records;
+        }
+        foreach($this->getDaysoftheWeek() as $w)
+        {
+            if (mb_strpos($w['name'], $x) !== false)
+            {
+                $newData['day_of_week_id'] = $w['id'];
+                $records[] = $newData;
+                return $records;
+            }
+            if (mb_strpos($w['nameShort'], $x) !== false)
+            {
+                $newData['day_of_week_id'] = $w['id'];
+                $records[] = $newData;
+                return $records;
+            }
+        }
+        $this->getLogger()->warning(sprintf('The column %s was not linked to a day of the week.', $newData['name']));
+        $newData['day_of_week_id'] = null;
+        $records[] = $newData;
+        return $records;
+    }
+
+    /**
+     * @var array
+     */
+    private $daysoftheWeek;
+
+    /**
+     * @return array
+     */
+    private function getDaysoftheWeek(): array
+    {
+        if (! empty($this->daysoftheWeek))
+            return $this->daysoftheWeek;
+
+        $this->daysoftheWeek = $this->getObjectManager()->getRepository(DayOfWeek::class)->createQueryBuilder('d', 'd.nameShort')
+            ->getQuery()
+            ->getArrayResult();
+
+        foreach($this->daysoftheWeek as $q=>$w)
+            $this->daysoftheWeek[$q]['normDay'] = date('N', strtotime($q));
+
+        return $this->daysoftheWeek;
+    }
+
 }

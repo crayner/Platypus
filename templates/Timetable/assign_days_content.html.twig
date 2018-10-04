@@ -1,48 +1,47 @@
 {% trans_default_domain 'Timetable' %}
 
 {% for value,week in manager.getWeeks(term) %}
-
-<div class="row">
-    <div class="col-3 card">
-        <div class="row-header row small">
-            <div class="col-12 card text-center">
-                {% set fd = week|first %}
-                {% set ld = week|last %}
-                <div style="min-height: 100px">{{ fd.date|date(getSetting('date.format.long')) }}
-                    <br>{{ value }}<br>{{ ld.date|date(getSetting('date.format.long')) }}
+    <div class="row">
+        <div class="col-3 card">
+            <div class="row-header row small">
+                <div class="col-12 card text-center">
+                    {% set fd = week|first %}
+                    {% set ld = week|last %}
+                    <div style="min-height: 100px">{{ fd.date|date(getSetting('date.format.long')) }}
+                        <br>{{ value }}<br>{{ ld.date|date(getSetting('date.format.long')) }}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-9 card">
-        <div class="row small">
-            {% set offset = 1 %}
-            {% for day in week %}
-                {% for i in 0..7 if day.dayOfWeek > offset %}
-                    <div class="col-2 flex-container"></div>
+        <div class="col-9 card">
+            <div class="row small">
+                {% set offset = 1 %}
+                {% for day in week %}
+                    {% for i in 0..7 if day.dayOfWeek > offset %}
+                        <div class="col-2 flex-container"></div>
+                        {% set offset = offset + 1 %}
+                    {% endfor %}
+                    {% set alert = '' %}
                     {% set offset = offset + 1 %}
+                    {% if day.type == 'school_closure' %}{% set alert = ' alert-danger' %}{% endif %}
+                    {% if day.type == 'timing_alter' %}{% set alert = ' alertwarning' %}{% endif %}
+                    <div class="col-2 card flex-container center text-center{{ alert }}" onclick="toggleRotateStart('{{ day.id }}', '{{ app.request.get('id') }}','{{ term.id }}')" style="min-height: 100px; align-content: center">
+                        {% if day.type is not same as('') %}
+                            <div>
+                                {% if day.type is not same as('') %}
+                                    <span class="fa-calendar-check far" title="{{ day.specialDay.description|default('calendar.specialDay.label'|trans({}, 'SchoolYear')) }}" style="padding: 0 1px;"></span>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        {% if day.type is not same as('') %}
+                            <span>{{ day.specialDay.name }}</span>
+                        {% else %}
+                            <span>{{ day.timetableDay.name }}</span>{% if day.timetableDay.nameShort is not empty %}<span class="small" style="background-color: {{ day.timetableDay.colour }}; color: {{ day.timetableDay.fontColour }}">({{ day.timetableDay.nameShort }})</span>{% endif %}
+                        {% endif %}
+                        <span class="small">{{ day.date|date(getSetting('date.format.short', 'd/M Y')) }}</span>
+                    </div>
                 {% endfor %}
-                {% set alert = '' %}
-                {% set offset = offset + 1 %}
-                {% if day.type == 'school_closure' %}{% set alert = ' alert-danger' %}{% endif %}
-                {% if day.type == 'timing_alter' %}{% set alert = ' alertwarning' %}{% endif %}
-                <div class="col-2 card flex-container center text-center{{ alert }}" onclick="toggleRotateStart('{{ day.id }}', '{{ app.request.get('id') }}','{{ term.id }}')" style="min-height: 100px; align-content: center">
-                    {% if day.type is not same as('') %}
-                        <div>
-                            {% if day.type is not same as('') %}
-                                <span class="fa-calendar-check far" title="{{ day.specialDay.description|default('calendar.specialDay.label'|trans({}, 'SchoolYear')) }}" style="padding: 0 1px;"></span>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                    {% if day.type is not same as('') %}
-                        <span>{{ day.specialDay.name }}</span>
-                    {% else %}
-                        <span>{{ day.timetableDay.name }}</span>{% if day.timetableDay.nameShort is not empty %}<span class="small" style="background-color: {{ day.timetableDay.colour }}; color: {{ day.timetableDay.fontColour }}">({{ day.timetableDay.nameShort }})</span>{% endif %}
-                    {% endif %}
-                    <span class="small">{{ day.date|date(getSetting('date.format.short', 'd/M Y')) }}</span>
-                </div>
-            {% endfor %}
+            </div>
         </div>
     </div>
-</div>
 {% endfor %}

@@ -81,11 +81,15 @@ class TimetableColumnPagination extends PaginationReactManager
             'display' => false,
             'label' => false,
         ],
+        'dayOfWeek' => [
+            'name' => 'dayOfWeek',
+            'label' => 'Day of Week',
+            'class' => 'text-center',
+        ],
         'rows' => [
             'name' => 'rows',
             'label' => 'Rows',
             'class' => 'text-center',
-            'size' => 3,
         ],
     ];
 
@@ -93,7 +97,7 @@ class TimetableColumnPagination extends PaginationReactManager
      * @var array
      */
     protected $actions = [
-        'size' => 3,
+        'size' => 2,
         'buttons' => [
             [
                 'label' => 'Delete Timetable Column',
@@ -142,7 +146,7 @@ class TimetableColumnPagination extends PaginationReactManager
     public function getAllResults(): array
     {
         $result = $this->getRepository()->createQueryBuilder('c')
-            ->select('c.nameShort, c.id, c.name, COUNT(r.id) as rows')
+            ->select('c.nameShort, c.id, c.name, COUNT(r.id) as rows, d.nameShort as dayOfWeek')
             ->leftJoin('c.timetableColumnRows', 'r')
             ->leftJoin('c.dayOfWeek', 'd')
             ->orderBy('d.sequence')

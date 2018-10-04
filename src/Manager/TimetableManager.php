@@ -187,9 +187,8 @@ class TimetableManager extends TabManager
         $days = $this->getTimetableDays();
 
         $rotate = 0;
-
         $day = $term->getFirstDay();
-        while ($day<=$term->getLastDay())
+        while ($day <= $term->getLastDay())
         {
             if ($rotate >= count($days))
                 $rotate = 0;
@@ -198,11 +197,8 @@ class TimetableManager extends TabManager
             {
                 $dd = new TimetableDayDate();
                 $dd->setDate(clone $day);
-                $x = $day->format('N');
+                $x = intval($day->format('N'));
 
-                $w = $rotate;
-                $count = 0;
-                dump([$this,$days]);
                 while ($days[$rotate]->getNormalisedDayOfWeek() !== $x) {
                     $rotate++;
                     if ($rotate >= count($days))
@@ -210,9 +206,9 @@ class TimetableManager extends TabManager
                 };
 
                 $dd->setTimetableDay($days[$rotate]);
-                $dd->setStartRotation(false);
                 $this->getEntityManager()->persist($dd);
                 $results[] = $dd;
+
             }
             $day = date_add($day, date_interval_create_from_date_string('+1 Day'));
         }
@@ -238,7 +234,6 @@ class TimetableManager extends TabManager
 
         $week = [];
         $q = 0;
-
         foreach($this->getAssignedDays($term) as $day)
         {
             if ($q > $day->getDayOfWeek())
@@ -254,6 +249,7 @@ class TimetableManager extends TabManager
             }
         }
 
+        if (! empty($week))
         if (! empty($week))
             $weeks[] = $week;
 

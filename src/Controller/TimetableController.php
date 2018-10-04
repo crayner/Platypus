@@ -196,15 +196,15 @@ class TimetableController extends Controller
      */
     public function editColumn(TimetableColumnManager $manager, Request $request, TimetableColumn $id, $tabName = 'details')
     {
-        $entity = $manager->setEntity($id);
+        $manager->setEntity($id);
 
-        $form = $this->createForm(TimetableColumnType::class, $entity);
+        $form = $this->createForm(TimetableColumnType::class, $manager->getEntity());
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $manager->getEntityManager()->persist($entity);
+            $manager->getEntityManager()->persist($manager->getEntity());
             $manager->getEntityManager()->flush();
         }
 

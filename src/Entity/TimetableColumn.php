@@ -244,7 +244,7 @@ class TimetableColumn
     public function getNormalisedDayOfWeek(): ?int
     {
         if (empty($this->getDayOfWeek()))
-            return null;
+            trigger_error(sprintf('The Timetable column "%s" must be linked to a day of the week.', $this->getName()), E_USER_ERROR);
         return $this->getDayOfWeek()->getNormalisedDayOfWeek();
     }
 }
