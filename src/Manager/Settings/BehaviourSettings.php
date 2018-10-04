@@ -25,7 +25,7 @@ use Symfony\Component\Validator\Constraints\Url;
  * Class BehaviourSettings
  * @package App\Manager\Settings
  */
-class BehaviourSettings implements SettingCreationInterface
+class BehaviourSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -47,233 +47,123 @@ class BehaviourSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
+        $this->setSettingManager($sm);
 
-        $setting = $sm->createOneByName('behaviour.enable_descriptors');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('behaviour.enable_descriptors')
             ->setSettingType('boolean')
-
-            ->setValidators(null)
-            ->setDefaultValue(true)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Enable Descriptors')
-           ->setDescription('Setting to No reduces complexity of behaviour tracking.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(true)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('Setting to No reduces complexity of behaviour tracking.');
+        if (empty($setting->getValue()))
+            $setting->setValue(true);
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('behaviour.positive_descriptors');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('behaviour.positive_descriptors')
             ->setSettingType('array')
-
             ->setValidators(
                 [
                     new NotBlank(),
                     new Yaml(),
                 ]
             )
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Positive Descriptors')
-           ->setDescription('Allowable choices for positive behaviour');
-        if (empty($setting->getValue())) {
-            $setting->setValue(['Attitude to learning','Collaboration','Community spirit','Creativity','Effort','Leadership','Participation','Persistence','Problem solving','Quality of work','Values'])
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('Allowable choices for positive behaviour');
+        if (empty($setting->getValue()))
+            $setting->setValue(['Attitude to learning','Collaboration','Community spirit','Creativity','Effort','Leadership','Participation','Persistence','Problem solving','Quality of work','Values']);
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('behaviour.negative_descriptors');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('behaviour.negative_descriptors')
             ->setSettingType('array')
-
             ->setValidators(
                 [
                     new NotBlank(),
                     new Yaml(),
                 ]
             )
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Negative Descriptors')
-           ->setDescription('Allowable choices for negative behaviour.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(['Classwork - Late','Classwork - Incomplete','Classwork - Unacceptable','Disrespectful','Disruptive','Homework - Late','Homework - Incomplete','Homework - Unacceptable','ICT Misuse','Truancy','Other'])
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('Allowable choices for negative behaviour.');
+        if (empty($setting->getValue()))
+            $setting->setValue(['Classwork - Late','Classwork - Incomplete','Classwork - Unacceptable','Disrespectful','Disruptive','Homework - Late','Homework - Incomplete','Homework - Unacceptable','ICT Misuse','Truancy','Other']);
+        $this->addSetting($setting, []);
 
-        $sections = [];
+        $this->addSection('Descriptors');
 
-        $section['name'] = 'Descriptors';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->setSectionsHeader('manage_behaviour_settings');
 
-        $sections[] = $section;
-
-        $sections['header'] = 'manage_behaviour_settings';
-
-        $settings = [];
-
-        $setting = $sm->createOneByName('behaviour.enable_levels');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('behaviour.enable_levels')
             ->setSettingType('boolean')
-
-            ->setValidators(null)
-            ->setDefaultValue(true)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Enable Levels')
-           ->setDescription('Setting to No reduces complexity of behaviour tracking.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(true)
-            ;
-        }
-        $setting->setHideParent('behaviour.enable_levels');
-        $settings[] = $setting;
+            ->setDescription('Setting to No reduces complexity of behaviour tracking.');
+        if (empty($setting->getValue()))
+            $setting->setValue(true);
+        $this->addSetting($setting, ['hideParent' => 'behaviour.enable_levels']);
 
-        $setting = $sm->createOneByName('behaviour.levels');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('behaviour.levels')
             ->setSettingType('array')
-
             ->setValidators(
                 [
                     new NotBlank(),
                     new Yaml(),
                 ]
             )
-            ->setDefaultValue(['','Stage 1','Stage 1 (Actioned)','Stage 2','Stage 2 (Actioned)','Stage 3','Stage 3 (Actioned)','Actioned'])
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Levels')
-           ->setDescription('Allowable choices for severity level (from lowest to highest)');
-        if (empty($setting->getValue())) {
-            $setting->setValue(['','Stage 1','Stage 1 (Actioned)','Stage 2','Stage 2 (Actioned)','Stage 3','Stage 3 (Actioned)','Actioned'])
-            ;
-        }
-        $setting->setHideParent('behaviour.enable_levels');
-        $settings[] = $setting;
+            ->setDescription('Allowable choices for severity level (from lowest to highest)');
+        if (empty($setting->getValue()))
+            $setting->setValue(['','Stage 1','Stage 1 (Actioned)','Stage 2','Stage 2 (Actioned)','Stage 3','Stage 3 (Actioned)','Actioned']);
+        $this->addSetting($setting, ['hideParent' => 'behaviour.enable_levels']);
 
-        $section['name'] = 'Levels';
-        $section['description'] = '';
-        $section['settings'] = $settings;
 
-        $sections[] = $section;
+        $this->addSection('Levels');
 
-        $settings = [];
-
-        $setting = $sm->createOneByName('behaviour.enable_behaviour_letters');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('behaviour.enable_behaviour_letters')
             ->setSettingType('boolean')
-
-            ->setValidators(null)
-            ->setDefaultValue(false)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Enable Behaviour Letters')
-           ->setDescription('Should automated behaviour letter functionality be enabled?');
-        if (empty($setting->getValue())) {
-            $setting->setValue(false)
-            ;
-        }
-        $setting->setHideParent('behaviour.enable_behaviour_letters');
-        $settings[] = $setting;
+            ->setDescription('Should automated behaviour letter functionality be enabled?');
+        if (empty($setting->getValue()))
+            $setting->setValue(false);
+        $this->addSetting($setting, ['hideParent' => 'behaviour.enable_behaviour_letters']);
 
         $nf = new \NumberFormatter(null, \NumberFormatter::ORDINAL);
 
         for($i=1; $i<=3; $i++) {
-            $setting = $sm->createOneByName('behaviour.behaviour_letters_letter'.$i.'_count');
-
-            $setting
-                ->__set('role', 'ROLE_PRINCIPAL')
+            $setting = $sm->createOneByName('behaviour.behaviour_letters_letter'.$i.'_count')
                 ->setSettingType('integer')
-
                 ->setValidators(
                     [
                         new Range(['min' => 1, 'max' => 20])
                     ]
                 )
-                ->setDefaultValue($i*3)
-                ->__set('translateChoice', 'Setting')
                 ->setDisplayName('Letter '.$i.' Count')
-               ->setDescription('After how many negative records should letter '.$i.' be sent?');
-            if (empty($setting->getValue())) {
+                ->setDescription('After how many negative records should letter '.$i.' be sent?');
+            if (empty($setting->getValue()))
                 $setting->setValue($i*3);
-            }
-            $setting->setHideParent('behaviour.enable_behaviour_letters');
-            $settings[] = $setting;
+            $this->addSetting($setting, ['hideParent' => 'behaviour.enable_behaviour_letters']);
 
-            $setting = $sm->createOneByName('behaviour.behaviour_letters_letter'.$i.'_text');
-
-            $setting
-                ->__set('role', 'ROLE_PRINCIPAL')
+            $setting = $sm->createOneByName('behaviour.behaviour_letters_letter'.$i.'_text')
                 ->setSettingType('html')
-
-                ->setValidators(null)
-                ->setDefaultValue("Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the ".$nf->format($i)." communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor.")
-                ->__set('translateChoice', 'Setting')
                 ->setDisplayName('Letter '.$i.' Text')
-               ->setDescription('The contents of letter '.$i.', as HTML.');
-            if (empty($setting->getValue())) {
+                ->setDescription('The contents of letter '.$i.', as HTML.');
+            if (empty($setting->getValue()))
                 $setting->setValue("Dear Parent/Guardian,<br/><br/>This letter has been automatically generated to alert you to the fact that your child, [studentName], has reached [behaviourCount] negative behaviour incidents. Please see the list below for the details of these incidents:<br/><br/>[behaviourRecord]<br/><br/>This letter represents the ".$nf->format($i)." communication in a sequence of 3 potential alerts, each of which is more critical than the last.<br/><br/>If you would like more information on this matter, please contact your child's tutor.");
-            }
-            $setting->setHideParent('behaviour.enable_behaviour_letters');
-            $settings[] = $setting;
+            $this->addSetting($setting, ['hideParent' => 'behaviour.enable_behaviour_letters']);
         }
 
-        $section['name'] = 'Behaviour Letters';
-        $section['description'] = 'By using an <a href="https://docs.gibbonedu.org/administrators/misc/command-line-tools/" target="_blank">included CLI script</a>, Platypus can be configured to automatically generate and email behaviour letters to parents and tutors, once certain negative behaviour threshold levels have been reached. In your letter text you may use the following fields: [studentName], [rollGroup], [behaviourCount], [behaviourRecord]';
-        $section['settings'] = $settings;
+        $this->addSection('Behaviour Letters', 'By using an <a href="https://docs.gibbonedu.org/administrators/misc/command-line-tools/" target="_blank">included CLI script</a>, Platypus can be configured to automatically generate and email behaviour letters to parents and tutors, once certain negative behaviour threshold levels have been reached. In your letter text you may use the following fields: [studentName], [rollGroup], [behaviourCount], [behaviourRecord]');
 
-        $sections[] = $section;
-
-        $settings = [];
-
-        $setting = $sm->createOneByName('behaviour.policy_link');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('behaviour.policy_link')
             ->setSettingType('string')
-
             ->setValidators([
                 new Url(),
             ])
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Policy Link')
-           ->setDescription('A link to the school behaviour policy.');
-        if (empty($setting->getValue())) {
+            ->setDescription('A link to the school behaviour policy.');
+        if (empty($setting->getValue()))
             $setting->setValue(null);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Miscellaneous';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Miscellaneous');
 
-        $sections[] = $section;
+        $this->setSettingManager(null);
 
-        $this->sections = $sections;
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
