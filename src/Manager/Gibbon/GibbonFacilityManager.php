@@ -13,12 +13,14 @@
  * Date: 14/09/2018
  * Time: 10:27
  */
-
 namespace App\Manager\Gibbon;
-
 
 use App\Entity\Facility;
 
+/**
+ * Class GibbonFacilityManager
+ * @package App\Manager\Gibbon
+ */
 class GibbonFacilityManager extends GibbonTransferManager
 {
     /**
@@ -131,9 +133,4 @@ class GibbonFacilityManager extends GibbonTransferManager
             ],
         ],
     ];
-
-    /**
-     * @var string
-     */
-    protected $nextGibbonName = 'gibbonFileExtension';
 }

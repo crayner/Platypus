@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * Class FacilitySettings
  * @package App\Manager\Settings
  */
-class FacilitySettings implements SettingCreationInterface
+class FacilitySettings extends SettingCreationManager
 {
     /**
      * getName
@@ -44,51 +44,27 @@ class FacilitySettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
+        $this->setSettingManager($sm);
 
-        $setting = $sm->createOneByName('school_admin.facility_types');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('school_admin.facility_types')
             ->setSettingType('array')
-
             ->setValidators(
                 [
                     new NotBlank(),
                 ]
             )
-            ->setDefaultValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Facility Types')
            ->setDescription('List of types for facilities.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(['classroom','hall','laboratory','library','office','outdoor','performance','staffroom','storage','study','undercover','other'])
-            ;
-        }
-        $settings[] = $setting;
-        $sections = [];
+        if (empty($setting->getValue()))
+            $setting->setValue(['Classroom','Hall','Laboratory','Library','Office','Outdoor','Performance','Staffroom','Storage','Study','Undercover','other']);
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Facility Settings';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Facility Settings');
+        $this->setSectionsHeader('manage_facility_settings');
 
-        $sections[] = $section;
-        $sections['header'] = 'manage_facility_settings';
+        $this->setSettingManager(null);
 
-        $this->sections = $sections;
         return $this;
     }
 
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
-    }
 }
