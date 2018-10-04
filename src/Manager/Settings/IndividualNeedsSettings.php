@@ -16,14 +16,12 @@
 namespace App\Manager\Settings;
 
 use App\Manager\SettingManager;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Range;
 
 /**
  * Class IndividualNeedsSettings
  * @package App\Manager\Settings
  */
-class IndividualNeedsSettings implements SettingCreationInterface
+class IndividualNeedsSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -45,79 +43,38 @@ class IndividualNeedsSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
+        $this->setSettingManager($sm);
 
-        $setting = $sm->createOneByName('individual_needs.targets_template');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('individual_needs.targets_template')
             ->setSettingType('html')
-
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Targets Template')
-           ->setDescription('An HTML template to be used in the targets field.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('An HTML template to be used in the targets field.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('individual_needs.teaching_strategies_template');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('individual_needs.teaching_strategies_template')
             ->setSettingType('html')
-
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Teaching Strategies Template')
-           ->setDescription('An HTML template to be used in the teaching strategies field.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('An HTML template to be used in the teaching strategies field.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('individual_needs.notes_review_template');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('individual_needs.notes_review_template')
             ->setSettingType('html')
-
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Notes & Review Template')
-           ->setDescription('An HTML template to be used in the notes and review field.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('An HTML template to be used in the notes and review field.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-        $sections = [];
+        $this->addSection( 'Templates');
 
-        $section['name'] = 'Templates';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->setSectionsHeader('individual_needs_descriptor_header');
 
-        $sections[] = $section;
-        $sections['header'] = 'individual_needs_descriptor_header';
+        $this->setSettingManager(null);
 
-        $this->sections = $sections;
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
