@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 use App\Entity\ExternalAssessment;
+use App\Entity\ExternalAssessmentCategory;
 use App\Entity\ExternalAssessmentField;
 use App\Entity\YearGroup;
 use App\Manager\Traits\EntityTrait;
@@ -67,8 +68,14 @@ class ExternalAssessmentManager extends TabManager
      */
     public static function getExternalAssessmentFieldChains(): array
     {
-        $list = self::$em->createQuery('SELECT e.id as eaid, f.id, e.name, c.category FROM ' . ExternalAssessmentField::class . ' f LEFT JOIN f.externalAssessment e JOIN f.externalAssessmentCategory c WHERE e.active = :true GROUP BY e.id, c.category ORDER BY e.name, c.category')
-            ->setParameter('true', true)
+        $list = self::$em->getRepository(ExternalAssessmentCategory::class)->createQueryBuilder('c')
+            ->select('e.id as eaid, c.id, c.category, e.name')
+            ->leftJoin('c.externalAssessment', 'e')
+            ->groupBy('c.category')
+            ->addGroupBy('c.externalAssessment')
+            ->orderBy('e.name')
+            ->addOrderBy('c.category')
+            ->getQuery()
             ->getArrayResult();
 
         $results = [];
