@@ -30,7 +30,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * Class FormalAssessmentSettings
  * @package App\Manager\Settings
  */
-class FormalAssessmentSettings implements SettingCreationInterface
+class FormalAssessmentSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -52,12 +52,9 @@ class FormalAssessmentSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
+        $this->setSettingManager($sm);
 
-        $setting = $sm->createOneByName('formal_assessment.internal_assessment_types');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('formal_assessment.internal_assessment_types')
             ->setSettingType('array')
             ->setValidators(
                 [
@@ -65,39 +62,18 @@ class FormalAssessmentSettings implements SettingCreationInterface
                     new Yaml(),
                 ]
             )
-            ->setDefaultValue(['expected_grade','predicted_grade','target_grade'])
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Internal Assessment Types')
-           ->setDescription('List of types to make available in Internal Assessments.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(['expected_grade','predicted_grade','target_grade'])
-
-            ;
-        }
-        $settings[] = $setting;
-        $sections = [];
+            ->setDescription('List of types to make available in Internal Assessments.');
+        if (empty($setting->getValue()))
+            $setting->setValue(['Expected Grade','Predicted Grade','Target Grade']);
+        $this->addSetting($setting, []);
 
 
-        $section['name'] = 'Primary External Assessment';
-        $section['description'] = '';
-        $section['settings'] = $settings;
-        $sections[] = $section;
-        $sections['header'] = 'manage_formal_assessments';
+        $this->addSection('Primary External Assessment');
+        $this->setSectionsHeader('manage_formal_assessments');
 
-        $this->sections = $sections;
+        $this->setSettingManager(null);
+
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }

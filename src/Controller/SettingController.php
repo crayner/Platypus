@@ -325,11 +325,10 @@ class SettingController extends Controller
         $results = $externalAssessmentManager->getPrimaryExternalAssessment();
 
         $settings->setAssessments($results);
-        foreach ($externalAssessmentManager->getSettingManager()->createSettingDefinition('FormalAssessment')->getSections() as $name =>$section)
-            if ($name === 'header')
-                $multipleSettingManager->setHeader($section);
-            else
-                $multipleSettingManager->addSection($section);
+        foreach ($externalAssessmentManager->getSettingManager()->createSettingDefinition('FormalAssessment')->getSections() as $name =>$section) {
+            $multipleSettingManager->setHeader($section['name']);
+            $multipleSettingManager->addSection($section);
+        }
 
         $settings->setMultipleSettings($multipleSettingManager);
 
