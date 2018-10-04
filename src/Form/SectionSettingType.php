@@ -15,11 +15,11 @@
  */
 namespace App\Form;
 
+use App\Form\Subscriber\MultipleSettingSubscriber;
 use App\Organism\SettingCache;
 use App\Util\StringHelper;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Valid;
 
 /**
@@ -53,6 +53,7 @@ class SectionSettingType extends AbstractType
                         ],
                     ]
                 )
+                ->get(StringHelper::safeString($section['name']))->addEventSubscriber(new MultipleSettingSubscriber())
             ;
         }
     }

@@ -265,7 +265,6 @@ class SchoolController extends Controller
 
         $form = $this->createForm(AttendanceSettingsType::class, $settings);
 
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

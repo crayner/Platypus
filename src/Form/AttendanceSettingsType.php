@@ -16,6 +16,7 @@
 namespace App\Form;
 
 use App\Entity\AttendanceCode;
+use App\Form\Subscriber\MultipleSettingSubscriber;
 use Hillrange\Form\Type\CollectionType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

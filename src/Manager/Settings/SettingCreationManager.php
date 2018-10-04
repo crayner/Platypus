@@ -18,6 +18,7 @@ namespace App\Manager\Settings;
 use App\Entity\Setting;
 use App\Manager\SettingManager;
 use App\Organism\SettingCache;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * Class SettingCreationManager
@@ -89,13 +90,23 @@ abstract class SettingCreationManager implements SettingCreationInterface
      * @param string $description
      * @return $this
      */
-    public function addSection(string $name, string $description = '')
+    public function addSection(string $name, string $description = '', array $options = [])
     {
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults(
+            [
+                'description_parameters' => [],
+            ]
+        );
+        $options = $resolver->resolve($options);
+
         $this->getSections();
         $section = [];
         $section['name'] = $name;
         $section['description'] = $description;
         $section['settings'] = $this->getSettingsCache();
+        $section['description_parameters'] = $options['description_parameters'];
+
         $this->setSettingsCache(null);
         $this->sections[] = $section;
         return $this;

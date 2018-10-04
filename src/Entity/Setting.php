@@ -76,6 +76,7 @@ class Setting
         'html',
         'image',
         'integer',
+        'multiEnum',
         'number',
         'string',
         'system',

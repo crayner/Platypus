@@ -44,17 +44,17 @@
                 </div>
             </div>
         {% else %}
-        <div class="{{ rowClass|default('row') }}" {{ id }}>
-            <div class="col-{{ columnA }} card">
-                {{ form_label(form.value) }}
-                {{ form_errors(form.value) }}
-            </div>
-            <div class="col-{{ columnB }} card">
-                <div{% if form.vars.value is not empty and form.vars.value.settingType is same as('multiChoice') %} style="min-height: {{ 22.5 * form.vars.value.setting.choice|length }}px;"{% endif %}>
-                {{ form_widget(form.value, {div_class: toggleClass|default('')}) }}
+            <div class="{{ rowClass|default('row') }}" {{ id }}>
+                <div class="col-{{ columnA }} card">
+                    {{ form_label(form.value) }}
+                    {{ form_errors(form.value) }}
+                </div>
+                <div class="col-{{ columnB }} card">
+                    <div{% if form.vars.value is not empty and form.vars.value.settingType is same as('multiChoice') %} style="min-height: {{ 22.5 * form.vars.value.setting.choice|length }}px;"{% endif %}>
+                    {{ form_widget(form.value, {div_class: toggleClass|default('')}) }}
+                    </div>
                 </div>
             </div>
-        </div>
         {% endif %}
     {% endspaceless %}
 {% endblock multiple_settings_widget %}

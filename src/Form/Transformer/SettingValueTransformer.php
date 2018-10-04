@@ -35,8 +35,11 @@ class SettingValueTransformer implements DataTransformerInterface
         if (is_array($value) && $this->type === 'array')
             return Yaml::dump($value);
 
-        if (empty($value) && $this->type === 'multiChoice')
+        if (empty($value) && $this->type === 'multiEnum')
             return [];
+
+        if ($this->type === 'multiEnum' && ! is_array($value))
+            dd($value);
 
         if ($value instanceof File)
             return $value;
@@ -54,8 +57,9 @@ class SettingValueTransformer implements DataTransformerInterface
      */
     public function reverseTransform($value)
     {
-        if (empty($value) && $this->type === 'multiChoice')
+        if (empty($value) && $this->type === 'multiEnum')
             return [];
+
         return $value;
     }
 

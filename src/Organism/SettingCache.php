@@ -297,6 +297,7 @@ class SettingCache
                 'default' => null,
                 'hideParent' => null,
                 'formAttr' => [],
+                'placeholder' => false,
             ]
         );
         $arguments = $resolver->resolve($arguments);
@@ -304,9 +305,15 @@ class SettingCache
         $this->setParameter($arguments['parameter'], $settingManager, $arguments['default']);
         $this->setHideParent($arguments['hideParent']);
         $this->setFormAttr($arguments['formAttr']);
+        $this->setPlaceholder($arguments['placeholder']);
 
         return $this;
     }
+
+    /**
+     * @var string|boolean
+     */
+    private $placeholder;
 
     /**
      * @var array
@@ -359,6 +366,24 @@ class SettingCache
         if ($this->parameter)
             $this->setValue($settingManager->getParameter(str_replace(':', '.', $this->getSetting()->getName()), $default));
 
+        return $this;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getPlaceholder()
+    {
+        return $this->placeholder;
+    }
+
+    /**
+     * @param bool|string $placeholder
+     * @return SettingCache
+     */
+    public function setPlaceholder($placeholder)
+    {
+        $this->placeholder = $placeholder;
         return $this;
     }
 
@@ -474,9 +499,9 @@ class SettingCache
     }
 
     /**
-     * getArrayValue
+     * getColourValue
      *
-     * @return mixed
+     * @return mixed|string
      */
     private function getColourValue()
     {
@@ -486,15 +511,39 @@ class SettingCache
     }
 
     /**
-     * setArrayValue
+     * setColourValue
      *
-     * @return string
+     * @return mixed|string
      */
     private function setColourValue()
     {
         if (ColourValidator::isColour($this->value))
             return $this->value;
         return $this->value = '#000000';
+    }
+
+    /**
+     * getMultiEnumValue
+     *
+     * @return mixed
+     */
+    private function getMultiEnumValue()
+    {
+        try {
+            return unserialize($this->value);
+        } catch (\ErrorException $e) {
+            return [];
+        }
+    }
+
+    /**
+     * setMultiEnumValue
+     *
+     * @return string
+     */
+    private function setMultiEnumValue()
+    {
+        return $this->value = serialize(is_array($this->value) ? $this->value : []);
     }
 
     /**

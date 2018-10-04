@@ -17,6 +17,8 @@
 namespace App\Form;
 
 
+use App\Entity\PersonRole;
+use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;
@@ -85,12 +87,12 @@ class AttendanceCodeType extends AbstractType
                     'help' => 'attendance_code.future.help',
                 ]
             )
-            ->add('role', EnumType::class,
+            ->add('personRoles', EntityType::class,
                 [
-                    'label' => 'attendance_code.role.label',
-                    'help' => 'attendance_code.role.help',
-                    'choice_list_prefix' => 'security_role',
-                    'choice_translation_domain' => 'Security'
+                    'class' => PersonRole::class,
+                    'choice_label' => 'name',
+                    'multiple' => true,
+                    'expanded' => true,
                 ]
             )
             ->add('id', HiddenType::class,

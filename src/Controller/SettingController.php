@@ -153,7 +153,7 @@ class SettingController extends Controller
         $descriptors = new IndividualNeedsDescriptors();
         $data = new ArrayCollection($sm->getEntityManager()->getRepository(INDescriptor::class)->findBy([], ['sequence' => 'ASC']));
         $descriptors->setDescriptors($data);
-        foreach ($sm->createSettingDefinition('IndividualNeeds')->getSections() as $name =>$section)
+        foreach ($sm->createSettingDefinition('IndividualNeeds')->getSections() as $name => $section)
             if ($name === 'header')
                 $multipleSettingManager->setHeader($section);
             else

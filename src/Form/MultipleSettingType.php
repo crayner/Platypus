@@ -15,6 +15,7 @@
  */
 namespace App\Form;
 
+use App\Form\Subscriber\MultiEnumSubscriber;
 use App\Form\Transformer\SettingValueTransformer;
 use App\Manager\RouterManager;
 use App\Organism\SettingCache;
@@ -96,6 +97,13 @@ class MultipleSettingType extends AbstractType
                     $additional = [
                         'choices' => $data->getSetting()->getChoices(),
                         'placeholder' => false,
+                    ];
+                    break;
+                case 'multiEnum':
+                    $formType = ChoiceType::class;
+                    $additional = [
+                        'choices' => $data->getSetting()->getChoices(),
+                        'multiple' => true,
                     ];
                     break;
                 case 'integer':
