@@ -21,7 +21,7 @@ use App\Manager\SettingManager;
  * Class DashboardSettings
  * @package App\Manager\Settings
  */
-class DashboardSettings implements SettingCreationInterface
+class DashboardSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -43,79 +43,51 @@ class DashboardSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
+        $this->setSettingManager($sm);
 
-        $setting = $sm->createOneByName('school_admin.staff_dashboard_default_tab');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('choice')
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
+        $setting = $sm->createOneByName('school_admin.staff_dashboard_default_tab')
+            ->setSettingType('enum')
             ->setDisplayName('Staff Dashboard Default Tab')
-            ->__set('choice', ['','planner'])
-           ->setDescription('The default landing tab for the staff dashboard.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setChoices([
+                'dashboard_default_tab.' => '',
+                'dashboard_default_tab.planner' => 'planner'
+            ])
+            ->setDescription('The default landing tab for the staff dashboard.');
+        if (empty($setting->getValue()))
+            $setting->setValue('');
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('school_admin.student_dashboard_default_tab');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('choice')
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
+        $setting = $sm->createOneByName('school_admin.student_dashboard_default_tab')
+            ->setSettingType('enum')
             ->setDisplayName('Student Dashboard Default Tab')
-            ->__set('choice', ['','planner'])
-           ->setDescription('The default landing tab for the student dashboard.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setChoices([
+                'dashboard_default_tab.' => '',
+                'dashboard_default_tab.planner' => 'planner'
+            ])
+            ->setDescription('The default landing tab for the student dashboard.');
+        if (empty($setting->getValue()))
+            $setting->setValue('');
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('school_admin.parent_dashboard_default_tab');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('choice')
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
+        $setting = $sm->createOneByName('school_admin.parent_dashboard_default_tab')
+            ->setSettingType('enum')
             ->setDisplayName('Parent Dashboard Default Tab')
-            ->__set('choice', ['','learning_overview','timetable','activities'])
-           ->setDescription('The default landing tab for the parent dashboard.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setChoices([
+                'dashboard_default_tab.' => '',
+                'dashboard_default_tab.learning_overview' => 'learning_overview',
+                'dashboard_default_tab.timetable' => 'timetable',
+                'dashboard_default_tab.activities' => 'activities'
+            ])
+            ->setDescription('The default landing tab for the parent dashboard.');
+        if (empty($setting->getValue()))
+            $setting->setValue('');
+        $this->addSetting($setting, []);
 
-        $sections = [];
+        $this->addSection('Dashboard Settings');
+        $this->setSectionsHeader('manage_dashboard_settings');
 
-        $section['name'] = 'Dashboard Settings';
-        $section['description'] = '';
-        $section['settings'] = $settings;
-
-        $sections[] = $section;
-        $sections['header'] = 'manage_dashboard_settings';
-
-        $this->sections = $sections;
+        $this->setSettingManager(null);
+        
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
