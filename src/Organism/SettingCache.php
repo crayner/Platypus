@@ -665,4 +665,44 @@ class SettingCache
     {
         return $this->value;
     }
+
+    /**
+     * getEmailValue
+     *
+     * @return mixed
+     */
+    private function getEmailValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * setEmailValue
+     *
+     * @return mixed
+     */
+    private function setEmailValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * getCurrencyValue
+     *
+     * @return mixed
+     */
+    private function getCurrencyValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * setCurrencyValue
+     *
+     * @return mixed
+     */
+    private function setCurrencyValue()
+    {
+        return $this->value;
+    }
 }

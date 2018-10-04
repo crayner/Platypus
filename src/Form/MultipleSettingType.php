@@ -96,7 +96,7 @@ class MultipleSettingType extends AbstractType
                     $formType = ChoiceType::class;
                     $additional = [
                         'choices' => $data->getSetting()->getChoices(),
-                        'placeholder' => false,
+                        'placeholder' => $data->getPlaceholder(),
                     ];
                     break;
                 case 'multiEnum':
