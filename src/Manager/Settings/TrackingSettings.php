@@ -24,7 +24,7 @@ use App\Util\YearGroupHelper;
  * Class TrackingSettings
  * @package App\Manager\Settings
  */
-class TrackingSettings implements SettingCreationInterface
+class TrackingSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -46,7 +46,7 @@ class TrackingSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
+        $this->setSettingManager($sm);
 
         new YearGroupHelper($sm->getEntityManager());
 
@@ -58,75 +58,34 @@ class TrackingSettings implements SettingCreationInterface
         foreach($eaList as $ea)
         {
             $catName = $ea['category'];
-            $setting = $sm->createOneByName(strtolower('tracking.ext_ass_data_point.'.StringHelper::safeString($ea['nameShort']).'.'.StringHelper::safeString($catName)));
-
-            $setting
-                ->__set('role', 'ROLE_PRINCIPAL')
-                ->setSettingType('multiChoice')
-                ->__set('choice', YearGroupHelper::getYearGroupList())
-                ->setValidators(null)
-                ->setDefaultValue([])
-                ->__set('translateChoice', 'School')
+            $setting = $sm->createOneByName(strtolower('tracking.ext_ass_data_point.'.StringHelper::safeString($ea['nameShort']).'.'.StringHelper::safeString($catName)))
+                ->setSettingType('multiEnum')
+                ->setChoices(YearGroupHelper::getYearGroupList())
                 ->setDisplayName($ea['nameShort'] . ' - ' . $catName)
-               ->setDescription('Tracking External Assessment');
-            if (empty($setting->getValue())) {
-                $setting->setValue([])
-                ;
-            }
-            $settings[] = $setting;
+                ->setDescription('Tracking External Assessment');
+            if (empty($setting->getValue()))
+                $setting->setValue([]);
+            $this->addSetting($setting, []);
         }
-        $sections = [];
-
-        $section['name'] = 'Data Points - External Assessment';
-        $section['description'] = 'Use the options below to select the external assessments that you wish to include in your Data Points export. If duplicates of any assessment exist, only the most recent entry will be shown.';
-        $section['settings'] = $settings;
-
-        $sections[] = $section;
-        $sections['header'] = 'manage_tracking_settings';
-
-        $settings = [];
+        $this->addSection('Data Points - External Assessment', 'Use the options below to select the external assessments that you wish to include in your Data Points export. If duplicates of any assessment exist, only the most recent entry will be shown.');
+        $this->setSectionsHeader('manage_tracking_settings');
 
         foreach($sm->get('formal_assessment.internal_assessment_types', ['expected_grade','predicted_grade','target_grade']) as $ia)
         {
-            $setting = $sm->createOneByName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)));
-
-            $setting
-                ->__set('role', 'ROLE_PRINCIPAL')
-                ->setSettingType('multiChoice')
-                ->__set('choice', YearGroupHelper::getYearGroupList())
-                ->setValidators(null)
-                ->setDefaultValue([])
-                ->__set('translateChoice', 'School')
-                ->setDisplayName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
-               ->setDescription('');
-            if (empty($setting->getValue())) {
-                $setting->setValue([])
-                ;
-            }
-            $settings[] = $setting;
+            $setting = $sm->createOneByName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
+                ->setSettingType('multiEnum')
+                ->setChoices(YearGroupHelper::getYearGroupList())->setDisplayName(strtolower('school_admin.external_assessments_by_year_group.'.StringHelper::safeString($ia)))
+                ->setDescription('');
+            if (empty($setting->getValue()))
+                $setting->setValue([]);
+            $this->addSetting($setting, []);
         }
 
-        $section['name'] = 'Data Points - Internal Assessment';
-        $section['description'] = 'Use the options below to select the internal assessments that you wish to include in your Data Points export. If duplicates of any assessment exist, only the most recent entry will be shown.';
-        $section['settings'] = $settings;
+        $this->addSection('Data Points - Internal Assessment', 'Use the options below to select the internal assessments that you wish to include in your Data Points export. If duplicates of any assessment exist, only the most recent entry will be shown.');
+        $this->setSectionsHeader('manage_tracking_settings');
 
-        $sections[] = $section;
-        $sections['header'] = 'manage_tracking_settings';
-
-        $this->sections = $sections;
+        $this->setSettingManager(null);
+        
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
