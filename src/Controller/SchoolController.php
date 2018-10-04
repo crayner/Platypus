@@ -255,11 +255,10 @@ class SchoolController extends Controller
         $settings = new AttendanceCodes();
         $results = new ArrayCollection($sm->getEntityManager()->getRepository(AttendanceCode::class)->findBy([], ['sequence' => 'ASC']));
         $settings->setAttendanceCodes($results);
-        foreach ($sm->createSettingDefinition('Attendance')->getSections() as $name =>$section)
-            if ($name === 'header')
-                $multipleSettingManager->setHeader($section);
-            else
-                $multipleSettingManager->addSection($section);
+        foreach ($sm->createSettingDefinition('Attendance')->getSections() as $name =>$section) {
+            $multipleSettingManager->setHeader($section['name']);
+            $multipleSettingManager->addSection($section);
+        }
 
         $settings->setMultipleSettings($multipleSettingManager);
 
@@ -518,11 +517,10 @@ class SchoolController extends Controller
     public function departmentSettings(Request $request, DepartmentPagination $pagination, DepartmentManager $manager,
                                        MultipleSettingManager $multipleSettingManager,  SettingManager $sm)
     {
-        foreach($sm->createSettingDefinition('Department')->getSections() as $name =>$section)
-            if ($name === 'header')
-                $multipleSettingManager->setHeader($section);
-            else
-                $multipleSettingManager->addSection($section);
+        foreach($sm->createSettingDefinition('Department')->getSections() as $name => $section) {
+            $multipleSettingManager->setHeader($section['name']);
+            $multipleSettingManager->addSection($section);
+        }
 
         $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
 

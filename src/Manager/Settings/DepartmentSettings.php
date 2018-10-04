@@ -21,7 +21,7 @@ use App\Manager\SettingManager;
  * Class DepartmentSettings
  * @package App\Manager\Settings
  */
-class DepartmentSettings implements SettingCreationInterface
+class DepartmentSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -43,47 +43,21 @@ class DepartmentSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
+        $this->setSettingManager($sm);
 
-        $setting = $sm->createOneByName('departments.make_departments_public');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('departments.make_departments_public')
             ->setSettingType('boolean')
-
-            ->setValidators(null)
-            ->setDefaultValue(false)
-            ->__set('translateChoice', 'Setting')
             ->setDisplayName('Make Departments Public')
-           ->setDescription('Should department information be made available to the public, via the Gibbon homepage?');
-        if (empty($setting->getValue())) {
-            $setting->setValue(false)
-            ;
-        }
-        $settings[] = $setting;
-        $sections = [];
+            ->setDescription('Should department information be made available to the public, via the Gibbon homepage?');
+        if (empty($setting->getValue()))
+            $setting->setValue(false);
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Department Access';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Department Access');
+        $this->setSectionsHeader('manage_departments');
 
-        $sections[] = $section;
-        $sections['header'] = 'manage_departments';
+        $this->setSettingManager(null);
 
-        $this->sections = $sections;
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
