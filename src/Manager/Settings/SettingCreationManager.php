@@ -96,6 +96,7 @@ abstract class SettingCreationManager implements SettingCreationInterface
         $resolver->setDefaults(
             [
                 'description_parameters' => [],
+                'colour' => 'warning',
             ]
         );
         $options = $resolver->resolve($options);
@@ -106,6 +107,7 @@ abstract class SettingCreationManager implements SettingCreationInterface
         $section['description'] = $description;
         $section['settings'] = $this->getSettingsCache();
         $section['description_parameters'] = $options['description_parameters'];
+        $section['colour'] = $options['colour'];
 
         $this->setSettingsCache(null);
         $this->sections[] = $section;
