@@ -705,4 +705,24 @@ class SettingCache
     {
         return $this->value;
     }
+
+    /**
+     * getTwigValue
+     *
+     * @return mixed
+     */
+    private function getTwigValue()
+    {
+        return $this->value;
+    }
+
+    /**
+     * setTwigValue
+     *
+     * @return mixed
+     */
+    private function setTwigValue()
+    {
+        return $this->value;
+    }
 }

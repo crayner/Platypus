@@ -16,12 +16,13 @@
 namespace App\Manager\Settings;
 
 use App\Manager\SettingManager;
+use App\Validator\Twig;
 
 /**
  * Class StaffSettings
  * @package App\Manager\Settings
  */
-class StaffSettings implements SettingCreationInterface
+class StaffSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -43,90 +44,29 @@ class StaffSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $sections = [];
-        $sections['header'] = 'staff_settings';
-        $settings = [];
+        $this->setSettingManager($sm);
 
-        $setting = $sm->createOneByName('staff.salary_scale_positions');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.salary_scale_positions')
             ->setSettingType('array')
             ->setDisplayName('Staff Salary Scale Positions')
-
-            ->setValidators(null)
-            ->setDefaultValue(['1','2','3','4','5','6','7','8','9','10'])
-             ->setDescription('List of salary scale positions, from lowest to highest.');
-        if (empty($setting->getValue())) {
+            ->setDescription('List of salary scale positions, from lowest to highest.');
+        if (empty($setting->getValue()))
             $setting->setValue(['1','2','3','4','5','6','7','8','9','10']);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('staff.responsibility_posts');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.responsibility_posts')
             ->setSettingType('array')
             ->setDisplayName('Staff Responsibility Posts')
-
-            ->setValidators(null)
-            ->setDefaultValue([])
-             ->setDescription('List of posts carrying extra responsibilities.');
-        if (empty($setting->getValue())) {
+            ->setDescription('List of posts carrying extra responsibilities.');
+        if (empty($setting->getValue()))
             $setting->setValue([]);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('staff.job_opening_description_template');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.job_opening_description_template')
             ->setSettingType('html')
             ->setDisplayName('Staff Job Opening Description Template')
-
-            ->setValidators(null)
-            ->setDefaultValue('<table style=\'width: 100%\'>
-	<tr>
-		<td colspan=2 style=\'vertical-align: top\'>
-			<span style=\'text-decoration: underline; font-weight: bold\'>Job Description</span><br/>
-			<br/>
-		</td>
-	</tr>
-	<tr>
-		<td style=\'width: 50%; vertical-align: top\'>
-			<span style=\'text-decoration: underline; font-weight: bold\'>Responsibilities</span><br/>
-			<ul style=\'margin-top:0px\'>
-				<li></li>
-				<li></li>
-			</ul>
-		</td>
-		<td style=\'width: 50%; vertical-align: top\'>
-			<span style=\'text-decoration: underline; font-weight: bold\'>Required Skills/Characteristics</span><br/>
-			<ul style=\'margin-top:0px\'>
-				<li></li>
-				<li></li>
-			</ul>
-		</td>
-	</tr>
-	<tr>
-		<td style=\'width: 50%; vertical-align: top\'>
-			<span style=\'text-decoration: underline; font-weight: bold\'>Remuneration</span><br/>
-			<ul style=\'margin-top:0px\'>
-				<li></li>
-				<li></li>
-			</ul>
-		</td>
-		<td style=\'width: 50%; vertical-align: top\'>
-			<span style=\'text-decoration: underline; font-weight: bold\'>Other Details </span><br/>
-			<ul style=\'margin-top:0px\'>
-				<li></li>
-				<li></li>
-			</ul>
-		</td>
-	</tr>
-</table>')
-             ->setDescription('Default HTML contents for the Job Opening Description field.');
-        if (empty($setting->getValue())) {
+            ->setDescription('Default HTML contents for the Job Opening Description field.');
+        if (empty($setting->getValue()))
             $setting->setValue('<table style=\'width: 100%\'>
 	<tr>
 		<td colspan=2 style=\'vertical-align: top\'>
@@ -167,100 +107,49 @@ class StaffSettings implements SettingCreationInterface
 		</td>
 	</tr>
 </table>');
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Field Values';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->setSectionsHeader('staff_settings');
 
-        $sections[] = $section;
 
-        $this->sections = $sections;
-        $settings = [];
+        $this->addSection('Field Values');
 
-        $setting = $sm->createOneByName('system.name_format_staff_formal');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('text')
+        $setting = $sm->createOneByName('system.name_format_staff_formal')
+            ->setSettingType('twig')
             ->setDisplayName('Staff Formal Name Format')
+            ->setDescription('');
+        if (empty($setting->getValue()))
+            $setting->setValue('{{ title }} {{ preferredName|slice(1,1) }}. {{ surname }}');
+        $this->addSetting($setting, []);
 
-            ->setValidators(null)
-            ->setDefaultValue('[title] [preferredName:1]. [surname]')
-             ->setDescription('');
-        if (empty($setting->getValue())) {
-            $setting->setValue('[title] [preferredName:1]. [surname]');
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('system.name_format_staff_formal_reverse');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('text')
+        $setting = $sm->createOneByName('system.name_format_staff_formal_reverse')
+            ->setSettingType('twig')
             ->setDisplayName('Staff Formal Name Format - Reverse')
+            ->setDescription('');
+        if (empty($setting->getValue()))
+            $setting->setValue('{{ title }} {{ surname }} {{ preferredName|slice(1,1) }}.');
+        $this->addSetting($setting, []);
 
-            ->setValidators(null)
-            ->setDefaultValue('[title] [surname], [preferredName:1].')
-             ->setDescription('');
-        if (empty($setting->getValue())) {
-            $setting->setValue('[title] [surname], [preferredName:1].');
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('system.name_format_staff_in_formal');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('text')
+        $setting = $sm->createOneByName('system.name_format_staff_in_formal')
+            ->setSettingType('twig')
             ->setDisplayName('Staff Informal Name Format')
-
-            ->setValidators(null)
-            ->setDefaultValue('[preferredName] [surname]')
              ->setDescription('');
-        if (empty($setting->getValue())) {
-            $setting->setValue('[preferredName] [surname]');
-        }
-        $settings[] = $setting;
+        if (empty($setting->getValue()))
+            $setting->setValue('{{ preferredName }} {{ surname }}');
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('system.name_format_staff_in_formal_reverse');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('text')
+        $setting = $sm->createOneByName('system.name_format_staff_in_formal_reverse')
+            ->setSettingType('twig')
             ->setDisplayName('Staff Informal Name Format - Reverse')
+            ->setDescription('');
+        if (empty($setting->getValue()))
+            $setting->setValue('{{ surname}}, {{ preferredName }}');
+        $this->addSetting($setting, []);
 
-            ->setValidators(null)
-            ->setDefaultValue('[surname], [preferredName]')
-             ->setDescription('');
-        if (empty($setting->getValue())) {
-            $setting->setValue('[surname], [preferredName]');
-        }
-        $settings[] = $setting;
+        $this->addSection('Name Formats', 'How should staff names be formatted? Choose from [title], [preferredName], [surname]. Use a colon to limit the number of letters, for example [preferredName:1] will use the first initial.');
 
-        $section['name'] = 'Name Formats';
-        $section['description'] = 'How should staff names be formatted? Choose from [title], [preferredName], [surname]. Use a colon to limit the number of letters, for example [preferredName:1] will use the first initial.';
-        $section['settings'] = $settings;
-
-        $sections[] = $section;
-
-        $this->sections = $sections;
-        $settings = [];
+        $this->setSettingManager(null);
 
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }

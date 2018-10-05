@@ -16,6 +16,7 @@
 namespace App\Entity;
 
 use App\Util\PhotoHelper;
+use App\Validator\Twig;
 use Doctrine\Common\Collections\ArrayCollection;
 use Hillrange\Form\Validator\Colour;
 use Hillrange\Form\Validator\Integer;
@@ -224,6 +225,11 @@ class Setting
         switch ($this->getSettingType()) {
             case 'url':
                 $x = new Url();
+                if (! $w->contains($x))
+                    $w->add($x);
+                break;
+            case 'twig':
+                $x = new Twig();
                 if (! $w->contains($x))
                     $w->add($x);
                 break;
