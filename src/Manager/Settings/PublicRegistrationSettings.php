@@ -24,7 +24,7 @@ use Symfony\Component\Validator\Constraints\Range;
  * Class PublicRegistrationSettings
  * @package App\Manager\Settings
  */
-class PublicRegistrationSettings implements SettingCreationInterface
+class PublicRegistrationSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -46,172 +46,89 @@ class PublicRegistrationSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $sections = [];
-        $sections['header'] = 'public_registration_settings';
-        $settings = [];
+        $this->setSettingManager($sm);
+        $this->setSectionsHeader('public_registration_settings');
 
-        $setting = $sm->createOneByName('person_admin.enable_public_registration');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.enable_public_registration')
             ->setSettingType('boolean')
-            ->setValidators(null)
-            ->setDefaultValue(false)
             ->setDisplayName('Enable Public Registration')
+            ->setDescription('Allows members of the public to register to use the system.');
+        if (empty($setting->getValue()))
+            $setting->setValue(false);
+        $this->addSetting($setting, []);
 
-           ->setDescription('Allows members of the public to register to use the system.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(false)
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('person_admin.public_registration_minimum_age');
-
-        $setting->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.public_registration_minimum_age')
             ->setSettingType('number')
             ->setValidators([
                 new Range(['max' => 30, 'min' => 5])
             ])
-            ->setDefaultValue(13)
             ->setDisplayName('Public Registration Minimum Age')
+            ->setDescription('The minimum age, in years, permitted to register.');
+        if (empty($setting->getValue()))
+            $setting->setValue(13);
+        $this->addSetting($setting, []);
 
-           ->setDescription('The minimum age, in years, permitted to register.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(13)
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('person_admin.public_registration_default_status');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
-            ->setSettingType('choice')
-            ->setValidators(null)
-            ->setDefaultValue('pending')
-            ->__set('translateChoice', 'Setting')
+        $setting = $sm->createOneByName('person_admin.public_registration_default_status')
+            ->setSettingType('enum')
             ->setDisplayName('Public Registration Default Status')
-            ->__set('choice', ['full', 'pending'])
-           ->setDescription('Should new people be \'Full\' or \'Pending Approval\'?
-');
-        if (! in_array($setting->getValue(),['full', 'pending'])) {
-            $setting->setValue('pending')
-            ;
-        }
-        $settings[] = $setting;
+            ->setChoices([
+                'person_admin.public_registration_default_status.full' => 'full',
+                'person_admin.public_registration_default_status.pending' => 'pending'
+            ])
+           ->setDescription('Should new people be \'Full\' or \'Pending Approval\'?');
+        if (! in_array($setting->getValue(),['full', 'pending']))
+            $setting->setValue('pending');
+        $this->addSetting($setting, []);
 
         $prm = new PersonRoleManager($sm->getEntityManager(), new MessageManager());
 
-        $setting = $sm->createOneByName('person_admin.public_registration_default_role');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
-            ->setSettingType('choice')
-            ->setValidators(null)
-            ->setDefaultValue('student')
-            ->__set('translateChoice', 'Person')
+        $setting = $sm->createOneByName('person_admin.public_registration_default_role')
+            ->setSettingType('enum')
             ->setDisplayName('Public Registration Default Role')
-            ->__set('choice', $prm->getPersonRoleList())
-           ->setDescription('System role to be assigned to registering members of the public.');
-        if (empty($setting->getValue())) {
-            $setting->setValue('student')
-            ;
-        }
-        $settings[] = $setting;
+            ->setChoices($prm->getPersonRoleList())
+            ->setDescription('System role to be assigned to registering members of the public.');
+        if (empty($setting->getValue()))
+            $setting->setValue('student');
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'General Settings';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('General Settings');
 
-        $sections[] = $section;
-
-        $sections[] = $section;
-        $section = [];
-        $settings = [];
-
-        $setting = $sm->createOneByName('person_admin.public_registration_intro');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.public_registration_intro')
             ->setSettingType('html')
-            ->setValidators(null)
             ->setDisplayName('Public Registration Introductory Text')
+            ->setDescription('HTML text that will appear above the public registration form.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-           ->setDescription('HTML text that will appear above the public registration form.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('person_admin.public_registration_postscript');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.public_registration_postscript')
             ->setSettingType('html')
-            ->setValidators(null)
             ->setDisplayName('Public Registration Postscript')
+            ->setDescription('HTML text that will appear underneath the public registration form.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-           ->setDescription('HTML text that will appear underneath the public registration form.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('person_admin.public_registration_privacy_statement');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.public_registration_privacy_statement')
             ->setSettingType('html')
-            ->setValidators(null)
-            ->setDefaultValue('By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.')
             ->setDisplayName('Public Registration Privacy Statement')
+            ->setDescription('HTML text that will appear above the Submit button, explaining privacy policy.');
+        if (empty($setting->getValue()))
+            $setting->setValue('<p>By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.</p>');
+        $this->addSetting($setting, []);
 
-           ->setDescription('HTML text that will appear above the Submit button, explaining privacy policy.');
-        if (empty($setting->getValue())) {
-            $setting->setValue('By registering for this site you are giving permission for your personal data to be used and shared within this organisation and its websites. We will not share your personal data outside our organisation.')
-            ;
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('person_admin.public_registration_agreement');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.public_registration_agreement')
             ->setSettingType('html')
-            ->setValidators(null)
-            ->setDefaultValue('In joining this site, and checking the box below, I agree to act lawfully, ethically and with respect for others. I agree to use this site for learning purposes only, and understand that access may be withdrawn at any time, at the discretion of the site\'s administrators.')
             ->setDisplayName('Public Registration Agreement')
+            ->setDescription('Agreement that people must confirm before joining. Blank for no agreement.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-           ->setDescription('Agreement that people must confirm before joining. Blank for no agreement.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+        $this->addSection('Interface Options');
 
-        $section['name'] = 'Interface Options';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->setSettingManager(null);
 
-        $sections[] = $section;
-
-        $this->sections = $sections;
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }

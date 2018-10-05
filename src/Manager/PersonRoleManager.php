@@ -54,14 +54,21 @@ class PersonRoleManager
     public function getPersonRoleList(): array
     {
         $result = $this->getRepository()->createQueryBuilder('r', 'r.id')
-            ->orderBy('r.name')
-            ->select('r.id, r.name')
+            ->orderBy('r.category')
+            ->addOrderBy('r.name')
+            ->select('r.id, r.name, r.category')
             ->getQuery()
             ->getArrayResult();
 
-        foreach($result as $q=>$w)
-            $result[$w['id']] = StringHelper::safeString($w['name'], true);
-
-        return $result;
+        $prl = [];
+        $cat = '';
+        foreach($result as $q=>$w) {
+            if ($cat !== $w['category']) {
+                $cat = $w['category'];
+                $prl['person_role.category.' . StringHelper::safeString($w['category'])] = [];
+            }
+            $prl['person_role.category.' . StringHelper::safeString($w['category'])]['person_role.' . StringHelper::safeString($w['name'], true)] = $w['id'];
+        }
+        return $prl;
     }
 }
