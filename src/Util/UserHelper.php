@@ -88,8 +88,9 @@ class UserHelper
         if (UserHelper::getCurrentUser() instanceof UserInterface)
         {
             $settings = UserHelper::getCurrentUser()->getUserSettings();
-            if (isset($settings['school_year']))
-                self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['id' => $settings['school_year']]);
+            dump($settings);
+            if (isset($settings['currentschoolcalendar']))
+                self::$currentSchoolYear = self::$schoolYearRepository->find($settings['currentschoolcalendar']);
             else
                 self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['status' => 'current']);
         }
@@ -112,7 +113,7 @@ class UserHelper
 
         $result = self::getSchoolYearRepository()->createQueryBuilder('c')
             ->where('c.firstDay > :firstDay')
-            ->setParameter('firstDay', $schoolYear->getFirstDay()->format('Y-m-d'))
+            ->setParameter('firstDay', $schoolYear->getFirstDay())
             ->getQuery()
             ->getResult();
 

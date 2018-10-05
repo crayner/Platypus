@@ -16,9 +16,12 @@
 namespace App\Form;
 
 use App\Entity\Person;
+use App\Entity\SchoolYear;
 use App\Form\Subscriber\PreferenceSubscriber;
 use App\Manager\ThemeManager;
 use App\Manager\TranslationManager;
+use Doctrine\ORM\EntityRepository;
+use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\ImageType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\ToggleType;

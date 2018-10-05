@@ -150,7 +150,7 @@ class PersonManager extends TabManager
         $role = $person->getPrimaryRole();
         if (! $role instanceof PersonRole)
             return $this->staff = false;
-        dump($role);
+
         if ($role->getCategory() === 'staff')
             return $this->staff = true;
         return $this->staff = false;

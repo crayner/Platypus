@@ -93,7 +93,7 @@ class PersonController extends Controller
         PersonHelper::hasPerson();
         if (PersonHelper::hasPerson())
         {
-            $settingForm =  $this->createForm(PreferencesType::class, PersonHelper::getPerson(), ['deleteBackgroundImage' => $this->get('router')->generate('preference_delete_background', ['id' => PersonHelper::getPerson()->getId()])]);
+            $settingForm = $this->createForm(PreferencesType::class, PersonHelper::getPerson(), ['deleteBackgroundImage' => $this->get('router')->generate('preference_delete_background', ['id' => PersonHelper::getPerson()->getId()])]);
 
             $settingForm->handleRequest($request);
 

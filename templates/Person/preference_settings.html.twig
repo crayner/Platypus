@@ -21,11 +21,14 @@
         {{  form_row(form.receiveNotificationEmails) }}
     </div>
     {% if form.smartWorkflowHelp is defined %}
-    <div class="col-4 card">
-        {{ form_row(form.smartWorkflowHelp) }}
-    </div>
+        <div class="col-4 card">
+            {{ form_row(form.smartWorkflowHelp) }}
+        </div>
     {% endif %}
 </div>
-
+<div class="row">
+        <div class="col-4 offset-8 card">
+            {{ form_row(form.currentSchoolCalendar, {value: transformData(form.currentSchoolCalendar)}) }}
+        </div>
 {% include 'Default/panelEnd.html.twig' %}
 {{ form_end(form) }}

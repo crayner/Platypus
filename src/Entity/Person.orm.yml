@@ -226,11 +226,11 @@ App\Entity\Person:
     oneToOne:
         user:
             targetEntity: Hillrange\Security\Entity\User
+            cascade: [ 'all' ]
             joinColumn:
                 name: user_id
                 referencedColumnName: id
                 nullable: true
-            cascade: [ 'persist' ]
         staff:
             targetEntity: App\Entity\Staff
             inversedBy: person
@@ -320,3 +320,8 @@ App\Entity\Person:
                 inverseJoinColumns:
                     phone_id:
                         referencedColumnName: id
+    lifecycleCallbacks:
+        preUpdate:
+            - writeUserEmail
+        prePersist:
+            - writeUserEmail

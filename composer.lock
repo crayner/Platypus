@@ -1279,21 +1279,22 @@
         },
         {
             "name": "friendsofsymfony/ckeditor-bundle",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfSymfony/FOSCKEditorBundle.git",
-                "reference": "8f021fd3f2728f2b4286fdd7ca5f7e4d24c3c828"
+                "reference": "7d428b16154a7136e1dd4c11062573afa1bfb3df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCKEditorBundle/zipball/8f021fd3f2728f2b4286fdd7ca5f7e4d24c3c828",
-                "reference": "8f021fd3f2728f2b4286fdd7ca5f7e4d24c3c828",
+                "url": "https://api.github.com/repos/FriendsOfSymfony/FOSCKEditorBundle/zipball/7d428b16154a7136e1dd4c11062573afa1bfb3df",
+                "reference": "7d428b16154a7136e1dd4c11062573afa1bfb3df",
                 "shasum": ""
             },
             "require": {
                 "ext-zip": "*",
                 "php": "^5.6 || ^7.0",
+                "symfony/asset": "^2.7 || ^3.0 || ^4.0",
                 "symfony/config": "^2.7 || ^3.0 || ^4.0",
                 "symfony/dependency-injection": "^2.7 || ^3.0 || ^4.0",
                 "symfony/expression-language": "^2.7 || ^3.0 || ^4.0",
@@ -1315,7 +1316,6 @@
                 "matthiasnoback/symfony-dependency-injection-test": "^1.0 || ^2.0",
                 "phpunit/phpunit": "^5.0 || ^6.0",
                 "sensio/distribution-bundle": "^3.0.12 || ^4.0 || ^5.0",
-                "symfony/asset": "^2.7 || ^3.0 || ^4.0",
                 "symfony/console": "^2.7 || ^3.0 || ^4.0",
                 "symfony/phpunit-bridge": "^4.0",
                 "symfony/templating": "^2.7 || ^3.0 || ^4.0",
@@ -1355,7 +1355,7 @@
             "keywords": [
                 "CKEditor"
             ],
-            "time": "2018-05-25T18:07:58+00:00"
+            "time": "2018-10-03T20:51:58+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
@@ -1540,16 +1540,16 @@
         },
         {
             "name": "hillrange/security",
-            "version": "0.0.47",
+            "version": "0.0.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/security.git",
-                "reference": "0669a6c2815694a28a3f1f70c6c8df349043f9a4"
+                "reference": "e6b0bea6efe1911406412a5d348ad01f16e8448f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/security/zipball/0669a6c2815694a28a3f1f70c6c8df349043f9a4",
-                "reference": "0669a6c2815694a28a3f1f70c6c8df349043f9a4",
+                "url": "https://api.github.com/repos/crayner/security/zipball/e6b0bea6efe1911406412a5d348ad01f16e8448f",
+                "reference": "e6b0bea6efe1911406412a5d348ad01f16e8448f",
                 "shasum": ""
             },
             "require": {
@@ -1600,7 +1600,7 @@
             "keywords": [
                 "security"
             ],
-            "time": "2018-09-24T04:47:45+00:00"
+            "time": "2018-10-05T02:23:52+00:00"
         },
         {
             "name": "hillrange/symfony-form",

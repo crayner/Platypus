@@ -268,6 +268,8 @@ class Person
     public function setEmail(?string $email): Person
     {
         $this->email = $email;
+        if ($this->getUser() instanceof UserInterface)
+            $this->getUser()->setEmail($email);
         return $this;
     }
 
@@ -2139,9 +2141,50 @@ class Person
         $group = '';
         $en = $this->getEnrolments();
         foreach($en as $se){
-            if ($se->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear())
+            if ($se->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolCalendar())
                 $group = $se->getRollGroup()->getName();
         }
         return $this->getFullName() . ($group ? ' ('.$group.')' : '');
+    }
+
+    /**
+     * writeUserEmail
+     *
+     * @return Person
+     */
+    public function writeUserEmail(): Person
+    {
+        if ($this->getUser() === null)
+            return $this;
+
+        $this->getUser()->setEmail($this->getEmail());
+
+        return $this;
+    }
+
+    /**
+     * @var SchoolYear|integer|null
+     */
+    private $currentSchoolCalendar;
+
+    /**
+     * @return SchoolYear|integer|null
+     */
+    public function getCurrentSchoolCalendar()
+    {
+        return $this->getUser()->getUserSetting('currentSchoolCalendar', null);
+    }
+
+    /**
+     * @param SchoolYear|null $currentSchoolCalendar
+     * @return Person
+     */
+    public function setCurrentSchoolCalendar(?SchoolYear $currentSchoolCalendar): Person
+    {
+        if (empty($currentSchoolCalendar))
+            $this->getUser()->removeUserSetting('currentSchoolCalendar');
+        else
+            $this->getUser()->setUserSetting('currentSchoolCalendar', $currentSchoolCalendar, 'object');
+        return $this;
     }
 }

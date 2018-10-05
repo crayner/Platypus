@@ -15,7 +15,11 @@
  */
 namespace App\Form\Subscriber;
 
+use App\Entity\SchoolYear;
 use App\Util\PersonHelper;
+use App\Util\UserHelper;
+use Doctrine\ORM\EntityRepository;
+use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
@@ -50,13 +54,37 @@ class PreferenceSubscriber implements EventSubscriberInterface
 
         if (PersonHelper::hasStaff()) {
             $form = $event->getForm();
-            $form->add('smartWorkflowHelp', ToggleType::class,
-                [
-                    'label' => 'person.smart_workflow_help.label',
-                    'data' => PersonHelper::getStaff()->isSmartWorkflowHelp(),
-                    'mapped' => false,
-                ]
-            );
+            $form
+                ->add('smartWorkflowHelp', ToggleType::class,
+                    [
+                        'label' => 'person.smart_workflow_help.label',
+                        'data' => PersonHelper::getStaff()->isSmartWorkflowHelp(),
+                        'mapped' => false,
+                    ]
+                )->add('currentSchoolCalendar', EntityType::class,
+                    [
+                        'label' => 'Current School Calendar',
+                        'help' => 'Allows you to work in a different calendar year.',
+                        'placeholder' => 'Current School Year',
+                        'class' => SchoolYear::class,
+                        'query_builder' => function (EntityRepository $er) {
+                            return $er->createQueryBuilder('y')
+                                ->orderBy('y.firstDay')
+                                ->where('y.status != :current')
+                                ->setParameter('current', 'current')
+                                ->andWhere('y.firstDay > :startYear')
+                                ->andWhere('y.firstDay < :lastYear')
+                                ->setParameter('startYear', new \DateTime('-6 Years'))
+                                ->setParameter('lastYear', new \DateTime('+1 Years'))
+
+                                ;
+                        },
+                        'choice_label' => 'name',
+                        'data' => UserHelper::getCurrentSchoolYear(),
+                        'required' => false,
+                    ]
+                )
+            ;
         }
 
     }
