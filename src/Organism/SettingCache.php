@@ -470,10 +470,12 @@ class SettingCache
     /**
      * getArrayValue
      *
-     * @return mixed
+     * @return array
      */
-    private function getArrayValue()
+    private function getArrayValue(): array
     {
+        if (is_array($this->value))
+            return $this->value;
         if (empty(trim($this->value)))
             return [];
         $w = Yaml::parse($this->value);

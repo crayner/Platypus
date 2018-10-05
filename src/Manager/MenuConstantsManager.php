@@ -390,7 +390,7 @@ People Admin:
             role: ROLE_ACTION
             route: manage_settings
             parameters: 
-                name: ApplicationForm.orm.yml
+                name: ApplicationForm
             transDomain: System
         public_registration_settings:
             label: public_registration_settings

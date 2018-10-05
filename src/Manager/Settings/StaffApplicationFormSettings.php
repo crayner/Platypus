@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * Class StaffApplicationFormSettings
  * @package App\Manager\Settings
  */
-class StaffApplicationFormSettings implements SettingCreationInterface
+class StaffApplicationFormSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -45,111 +45,57 @@ class StaffApplicationFormSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $sections = [];
-        $sections['header'] = 'application_form_settings';
-        $settings = [];
+        $this->setSettingManager($sm);
+        $this->setSectionsHeader('application_form_settings');
 
-        $setting = $sm->createOneByName('staff.application_form_introduction');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_introduction')
             ->setSettingType('html')
             ->setDisplayName('Staff Application Introduction')
+            ->setDescription('Information to display before the form');
+        if (empty($setting->getValue()));
+        $this->addSetting($setting, []);
 
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
-           ->setDescription('Information to display before the form');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null);
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('staff.application_form_questions');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_questions')
             ->setSettingType('html')
             ->setDisplayName('Staff Application Questions')
+            ->setDescription('HTML text that will appear as questions for the applicant to answer.');
+        if (empty($setting->getValue()))
+            $setting->setValue("<span style='text-decoration: underline; font-weight: bold'>Why are you applying for this role?</span><p></p>");
+        $this->addSetting($setting, []);
 
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
-           ->setDescription('HTML text that will appear as questions for the applicant to answer.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null);
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('staff.application_form_postscript');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_postscript')
             ->setSettingType('html')
             ->setDisplayName('Staff Application Postscript')
-
-            ->setValidators(null)
-            ->__set('translateChoice', 'Setting')
-           ->setDescription('Information to display at the end of the form.');
-        if (empty($setting->getValue())) {
+            ->setDescription('Information to display at the end of the form.');
+        if (empty($setting->getValue()))
             $setting->setValue(null);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('staff.application_form_agreement');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_agreement')
             ->setSettingType('html')
             ->setDisplayName('Staff Application Agreement')
-
-            ->setValidators(null)
-            ->setDefaultValue('<p>In submitting this form, I confirm that all information provided above is accurate and complete to the best of my knowledge.</p>')
-            ->__set('translateChoice', 'Setting')
-           ->setDescription('Without this text, which is displayed above the agreement, peoples will not be asked to agree to anything.');
-        if (empty($setting->getValue())) {
+            ->setDescription('Without this text, which is displayed above the agreement, peoples will not be asked to agree to anything.');
+        if (empty($setting->getValue()))
             $setting->setValue('<p>In submitting this form, I confirm that all information provided above is accurate and complete to the best of my knowledge.</p>');
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('staff.application_form_public_applications');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_public_applications')
             ->setSettingType('boolean')
             ->setDisplayName('Staff Public Applications?')
-
-            ->setValidators(null)
-            ->setDefaultValue(true)
-            ->__set('translateChoice', 'Setting')
-           ->setDescription('If yes, members of the public can submit staff applications.');
-        if (empty($setting->getValue())) {
+            ->setDescription('If yes, members of the public can submit staff applications.');
+        if (empty($setting->getValue()))
             $setting->setValue(true);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('staff.application_form_milestones');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_milestones')
             ->setSettingType('array')
             ->setDisplayName('Staff Application Milestones')
-
-            ->setValidators(null)
-            ->setDefaultValue(['Short List','First Interview','Second Interview','Offer Made','Offer Accepted','Contact Issued','Contact Signed'])
-            ->__set('translateChoice', 'Setting')
-           ->setDescription('List of the major steps in the application process. Applicants can be tracked through the various stages.');
-        if (empty($setting->getValue())) {
+            ->setDescription('List of the major steps in the application process. Applicants can be tracked through the various stages.');
+        if (empty($setting->getValue()))
             $setting->setValue(['Short List','First Interview','Second Interview','Offer Made','Offer Accepted','Contact Issued','Contact Signed']);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'General options';
-        $section['description'] = '';
-        $section['settings'] = $settings;
-
-        $sections[] = $section;
-
-        $this->sections = $sections;
-        $settings = [];
+        $this->addSection('General options');
 
         $types = [];
         $types['Teaching'] = 'html://';
@@ -173,177 +119,88 @@ class StaffApplicationFormSettings implements SettingCreationInterface
         $resolver->setDefaults($types);
         $value = $resolver->resolve($value);
 
-        $setting = $sm->createOneByName('staff.application_form_reference_links');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_reference_links')
             ->setSettingType('array')
             ->setDisplayName('Staff Application Reference Links')
-
-            ->setValidators(null)
-            ->setDefaultValue($value)
-           ->setDescription("Link to an external form that will be emailed to a referee of the applicant's choosing.");
-        if (empty($setting->getValue())) {
+            ->setDescription("Link to an external form that will be emailed to a referee of the applicant's choosing.");
+        if (empty($setting->getValue()))
             $setting->setValue($value);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Application Form Referee Documents';
-        $section['description'] = 'Add an html link for each role as required.';
-        $section['settings'] = $settings;
+        $this->addSection('Application Form Referee Documents', 'Add an html link for each role as required.');
 
-        $sections[] = $section;
-
-        $this->sections = $sections;
-        $settings = [];
-
-        $setting = $sm->createOneByName('staff.application_form_required_documents');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_required_documents')
             ->setSettingType('array')
             ->setDisplayName('Staff Application Required Documents')
-
-            ->setValidators(null)
-            ->setDefaultValue(['Curriculum Vitae'])
-           ->setDescription("List of documents which must be submitted electronically with the application form.");
-        if (empty($setting->getValue())) {
+            ->setDescription("List of documents which must be submitted electronically with the application form.");
+        if (empty($setting->getValue()))
             $setting->setValue(['Curriculum Vitae']);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('staff.application_form_required_documents_text');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_required_documents_text')
             ->setSettingType('html')
             ->setDisplayName('Staff Application Required Documents Text')
-
-            ->setValidators(null)
-            ->setDefaultValue('<p>Please submit the following document(s) to ensure your application can be processed without delay.</p>')
-           ->setDescription("List of documents which must be submitted electronically with the application form.");
-        if (empty($setting->getValue())) {
+            ->setDescription("List of documents which must be submitted electronically with the application form.");
+        if (empty($setting->getValue()))
             $setting->setValue('<p>Please submit the following document(s) to ensure your application can be processed without delay.</p>');
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('staff.application_form_required_documents_compulsory');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_required_documents_compulsory')
             ->setSettingType('boolean')
             ->setDisplayName('Staff Application Required Documents Compulsory')
-
-            ->setValidators(null)
-            ->setDefaultValue(true)
-           ->setDescription("Are the required documents compulsory?");
-        if (empty($setting->getValue())) {
+            ->setDescription("Are the required documents compulsory?");
+        if (empty($setting->getValue()))
             $setting->setValue(true);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Required Documents Options';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Required Documents Options');
 
-        $sections[] = $section;
-
-        $this->sections = $sections;
-        $settings = [];
-
-        $setting = $sm->createOneByName('staff.application_form_username_format');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('text')
+        $setting = $sm->createOneByName('staff.application_form_username_format')
+            ->setSettingType('twig')
             ->setDisplayName('Staff User-name Format')
+            ->setDescription("How should user-names be formatted? Choose from [preferredName], [preferredNameInitial], [surname].");
+        if (empty($setting->getValue()))
+            $setting->setValue('{{ preferredNameInitial}}.{{ surname }}');
+        $this->addSetting($setting, []);
 
-            ->setValidators(null)
-            ->setDefaultValue('[preferredNameInitial].[surname]')
-           ->setDescription("How should user-names be formatted? Choose from [preferredName], [preferredNameInitial], [surname].");
-        if (empty($setting->getValue())) {
-            $setting->setValue('[preferredNameInitial].[surname]');
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('staff.application_form_notification_message');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_notification_message')
             ->setSettingType('html')
             ->setDisplayName('Staff Application Notification Message')
+            ->setDescription("A custom message to add to the standard email on acceptance.");
+        if (empty($setting->getValue()))
+            $setting->setValue('');
+        $this->addSetting($setting, []);
 
-            ->setValidators(null)
-           ->setDescription("A custom message to add to the standard email on acceptance.");
-        if (empty($setting->getValue())) {
-            $setting->setValue(null);
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('staff.application_form_notification_default');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('staff.application_form_notification_default')
             ->setSettingType('boolean')
             ->setDisplayName('Staff Application Notification Default')
+            ->setDescription("Should acceptance email be turned on or off by default.");
+        if (empty($setting->getValue()))
+            $setting->setValue(false);
+        $this->addSetting($setting, []);
 
-            ->setValidators(null)
-           ->setDescription("Should acceptance email be turned on or off by default.");
-        if (empty($setting->getValue())) {
-            $setting->setValue(null);
-        }
-        $settings[] = $setting;
-
-        $setting = $sm->createOneByName('staff.application_form_default_email');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('text')
+        $setting = $sm->createOneByName('staff.application_form_default_email')
+            ->setSettingType('twig')
             ->setDisplayName('Staff Default Email')
-
-            ->setValidators(null)
-           ->setDescription("Set default email on acceptance, using [username] to insert user-name.  e.g. [username]_staff@your-domain.com");
-        if (empty($setting->getValue())) {
+            ->setDescription("Set default email on acceptance, using {{ username }} to insert user-name.  e.g. {{ username }}_staff@your-domain.com");
+        if (empty($setting->getValue()))
             $setting->setValue(null);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('staff.application_form_default_website');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('text')
+        $setting = $sm->createOneByName('staff.application_form_default_website')
+            ->setSettingType('twig')
             ->setDisplayName('Staff Default Website')
 
             ->setValidators(null)
-           ->setDescription("Set default website on acceptance, using [username] to insert user-name.  e.g. http://your-domain.com/[username]/");
-        if (empty($setting->getValue())) {
+           ->setDescription("Set default website on acceptance, using {{ username }} to insert user-name.  e.g. http://your-domain.com/{{ username }}/");
+        if (empty($setting->getValue()))
             $setting->setValue(null);
-        }
-        $settings[] = $setting;
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Acceptance Options';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Acceptance Options');
 
-        $sections[] = $section;
-
-        $this->sections = $sections;
-        $settings = [];
+        $this->setSettingManager(null);
 
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
