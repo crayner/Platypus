@@ -52,7 +52,8 @@ class StaffApplicationFormSettings extends SettingCreationManager
             ->setSettingType('html')
             ->setDisplayName('Staff Application Introduction')
             ->setDescription('Information to display before the form');
-        if (empty($setting->getValue()));
+        if (empty($setting->getValue()))
+            $setting->setValue('');
         $this->addSetting($setting, []);
 
         $setting = $sm->createOneByName('staff.application_form_questions')

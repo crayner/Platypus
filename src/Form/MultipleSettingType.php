@@ -31,6 +31,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -74,6 +75,11 @@ class MultipleSettingType extends AbstractType
                     break;
                 case 'colour':
                     $formType = ColourType::class;
+                    break;
+                case 'url':
+                    $formType = UrlType::class;
+                    $attr = array_merge($attr, ['placeholder' => 'http://']);
+
                     break;
                 case 'date':
                     $formType = DateType::class;
