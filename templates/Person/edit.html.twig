@@ -27,9 +27,9 @@
     {{ toggle_script() }}
     {% set route = 'person_edit' %}
     {% include 'Script/formTabSubmitScript.html.twig' %}
-    {% if form.enrolments is defined %}
-        {{ collections_manage(form, ['enrolments'])|raw }}
-        {{ collection_script(form.enrolments)|raw }}
+    {% if form.currentEnrolments is defined %}
+        {{ collections_manage(form, ['currentEnrolments'])|raw }}
+        {{ collection_script(form.currentEnrolments)|raw }}
     {% endif %}
     {% set translations = translations|default({}) %}
     {% for tx in addressManager.translations %}

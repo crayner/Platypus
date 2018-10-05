@@ -1,23 +1,27 @@
 {% trans_default_domain 'Person' %}
 
 {% include 'Default/panelStart.html.twig' with {header: 'Enrolment: %name%', name: getFullName(), transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
-
 <div class="row">
-    <div class="col-6">
-        <div class="row row-header small">
-            <div class="col-4">
-                {{ 'Year Group'|trans }}
-            </div>
-            <div class="col-4">
-                {{ 'Roll Group'|trans }}
-            </div>
-            <div class="col-4">
-                {{ 'Actions'|trans }}
-            </div>
-        </div>
-        {{ collection_widget(form.enrolments) }}
+    <div class="col-12">
+        <p class="alert alert-info">{{ 'The roll groups found are linked to the current school year that you are viewing.  Adding a new roll group will also link the to the current school year.'|trans }}</p>
     </div>
-    <div class="col-6">
+</div>
+
+<div class="row row-header small">
+    <div class="col-4">
+        {{ 'Year Group'|trans }}
+    </div>
+    <div class="col-4">
+        {{ 'Roll Group'|trans }}
+    </div>
+    <div class="col-4">
+        {{ 'Actions'|trans }}
+    </div>
+</div>
+{{ collection_widget(form.currentEnrolments) }}
+<hr/>
+<div class="row">
+    <div class="col-12">
         <p>Teacher List Here @todo</p>
     </div>
 </div>

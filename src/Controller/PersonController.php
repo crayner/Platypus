@@ -41,19 +41,6 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class PersonController extends Controller
 {
     /**
-     * userEdit
-     *
-     * @param int $id
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     * @Route("/security/user/edit/{id}/", name="user_edit")
-     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
-     */
-    public function userEdit(int $id)
-    {
-        return $this->redirectToRoute('person_edit', ['id' => $id, '_fragment' => 'user']);
-    }
-
-    /**
      * preferences
      *
      * @param AuthenticationUtils $authUtils

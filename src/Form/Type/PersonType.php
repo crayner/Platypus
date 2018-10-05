@@ -447,7 +447,7 @@ class PersonType extends AbstractType
                     ],
                 ]
             )
-            ->add('enrolments', CollectionType::class,
+            ->add('currentEnrolments', CollectionType::class,
                 [
                     'label' => false,
                     'allow_add' => true,

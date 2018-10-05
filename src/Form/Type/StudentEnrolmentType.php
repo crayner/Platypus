@@ -19,10 +19,16 @@ use App\Entity\Person;
 use App\Entity\RollGroup;
 use App\Entity\StudentEnrolment;
 use App\Entity\YearGroup;
+use App\Util\RollGroupHelper;
+use App\Util\SchoolYearHelper;
+use App\Util\UserHelper;
+use App\Util\YearGroupHelper;
 use Doctrine\ORM\EntityRepository;
+use Hillrange\Form\Type\ChainedEntityType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\HiddenEntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -66,8 +72,10 @@ class StudentEnrolmentType extends AbstractType
                     'placeholder' => 'Please Select...',
                     'choice_label' => 'name',
                     'query_builder' => function(EntityRepository $er){
-                        return $er->createQueryBuilder('g')
-                            ->orderBy('g.name')
+                        return $er->createQueryBuilder('r')
+                            ->orderBy('r.nameShort')
+                            ->where('r.schoolYear = :schoolYear')
+                            ->setParameter('schoolYear', SchoolYearHelper::getCurrentSchoolYear())
                             ;
                     },
                 ]

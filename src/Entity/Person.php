@@ -2053,6 +2053,45 @@ class Person
     }
 
     /**
+     * @var ArrayCollection
+     */
+    private $currentEnrolments;
+
+    /**
+     * getCurrentEnrolments
+     *
+     * @return Collection
+     */
+    public function getCurrentEnrolments(): ArrayCollection
+    {
+        $this->currentEnrolments = new ArrayCollection();
+        foreach($this->getEnrolments() as $enrolment)
+        {
+            if ($enrolment->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear())
+                $this->currentEnrolments->add($enrolment);
+        }
+        return $this->currentEnrolments;
+    }
+
+    /**
+     * setCurrentEnrolments
+     *
+     * @param ArrayCollection|null $currentEnrolments
+     * @return Person
+     */
+    public function setCurrentEnrolments(?ArrayCollection $currentEnrolments): Person
+    {
+        if (empty($currentEnrolments))
+            return $this;
+        foreach($currentEnrolments as $enrolment)
+        {
+            $this->addEnrolment($enrolment);
+        }
+
+        return $this;
+    }
+
+    /**
      * addEnrolment
      *
      * @param StudentEnrolment|null $enrolment
@@ -2141,7 +2180,7 @@ class Person
         $group = '';
         $en = $this->getEnrolments();
         foreach($en as $se){
-            if ($se->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolCalendar())
+            if ($se->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear())
                 $group = $se->getRollGroup()->getName();
         }
         return $this->getFullName() . ($group ? ' ('.$group.')' : '');
