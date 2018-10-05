@@ -21,7 +21,7 @@ use App\Manager\SettingManager;
  * Class DataUpdaterSettings
  * @package App\Manager\Settings
  */
-class DataUpdaterSettings implements SettingCreationInterface
+class DataUpdaterSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -43,97 +43,56 @@ class DataUpdaterSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $sections = [];
-        $sections['header'] = 'data_updater_settings';
-        $settings = [];
+        $this->setSettingManager($sm);
+        $this->setSectionsHeader('data_updater_settings');
 
-        $setting = $sm->createOneByName('data_updater.required_updates');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('data_updater.required_updates')
             ->setSettingType('boolean')
             ->setDisplayName('Required Data Updates?')
-
-            ->setValidators(null)
-            ->setDefaultValue(false)
-             ->setDescription('Should the data updater highlight updates that are required?');
-        if (empty($setting->getValue())) {
+            ->setDescription('Should the data updater highlight updates that are required?');
+        if (empty($setting->getValue()))
             $setting->setValue(false);
-        }
-        $setting->setHideParent('data_updater.required_updates');
-        $settings[] = $setting;
+        $this->addSetting($setting, ['hideParent' => 'data_updater.required_updates']);
 
-        $setting = $sm->createOneByName('data_updater.required_updates_by_type');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('multiChoice')
+        $setting = $sm->createOneByName('data_updater.required_updates_by_type')
+            ->setSettingType('multiEnum')
             ->setDisplayName('Required Data Update Types')
-            ->__set('choice', ['family','personal','medical','finance'])
-            ->setValidators(null)
-            ->setDefaultValue(['family','personal'])
-            ->__set('translateChoice', 'System')
-           ->setDescription('Which type of data updates should be required.');
-        if (empty($setting->getValue())) {
+            ->setChoices([
+                'data_updater.required_updates_by_type.family' => 'family',
+                'data_updater.required_updates_by_type.personal' => 'personal',
+                'data_updater.required_updates_by_type.medical' => 'medical',
+                'data_updater.required_updates_by_type.finance' => 'finance'
+            ])
+            ->setDescription('Which type of data updates should be required.');
+        if (empty($setting->getValue()))
             $setting->setValue(['family','personal']);
-        }
-        $setting->setHideParent('data_updater.required_updates');
-        $settings[] = $setting;
+        $this->addSetting($setting, ['hideParent' => 'data_updater.required_updates']);
 
-        $setting = $sm->createOneByName('data_updater.cutoff_date');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
+        $setting = $sm->createOneByName('data_updater.cutoff_date')
             ->setSettingType('date')
             ->setDisplayName('Cutoff Date')
-
-            ->setValidators(null)
-           ->setDescription('Earliest acceptable date when checking if data updates are required.');
-        if (empty($setting->getValue())) {
+            ->setDescription('Earliest acceptable date when checking if data updates are required.');
+        if (empty($setting->getValue()))
             $setting->setValue(null);
-        }
-        $setting->setHideParent('data_updater.required_updates');
-        $settings[] = $setting;
+        $this->addSetting($setting, ['hideParent' => 'data_updater.required_updates']);
 
-        $setting = $sm->createOneByName('data_updater.redirect_by_role_category');
-
-        $setting
-            ->__set('role', 'ROLE_PRINCIPAL')
-            ->setSettingType('multiChoice')
+        $setting = $sm->createOneByName('data_updater.redirect_by_role_category')
+            ->setSettingType('multiEnum')
             ->setDisplayName('Data Updater Redirect')
-            ->__set('choice', ['staff','student','parent'])
-            ->setValidators(null)
-            ->setDefaultValue(['parent'])
-            ->__set('translateChoice', 'System')
-           ->setDescription('Which types of users should be redirected to the Data Updater if updates are required.');
-        if (empty($setting->getValue())) {
+            ->setChoices( [
+                'data_updater.redirect_by_role_category.staff' => 'staff',
+                'data_updater.redirect_by_role_category.student' => 'student',
+                'data_updater.redirect_by_role_category.parent' => 'parent'
+            ])
+            ->setDescription('Which types of users should be redirected to the Data Updater if updates are required.');
+        if (empty($setting->getValue()))
             $setting->setValue(['parent']);
-        }
-        $setting->setHideParent('data_updater.required_updates');
-        $settings[] = $setting;
+        $this->addSetting($setting, ['hideParent' => 'data_updater.required_updates']);
 
-        $section['name'] = 'Settings';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Settings');
 
-        $sections[] = $section;
-
-        $this->sections = $sections;
-        $settings = [];
+        $this->setSettingManager(null);
 
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
