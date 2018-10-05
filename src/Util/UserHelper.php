@@ -77,27 +77,14 @@ class UserHelper
 
     /**
      * getCurrentSchoolYear
-     *
+     * @deprecated
      * @return SchoolYear|null
      */
     public static function getCurrentSchoolYear(): ?SchoolYear
     {
-        if (! is_null(self::$currentSchoolYear))
-            return self::$currentSchoolYear;
+        trigger_error('Please use SchoolYearHelper::getCurrentSchoolYear', E_USER_DEPRECATED);
 
-        if (UserHelper::getCurrentUser() instanceof UserInterface)
-        {
-            $settings = UserHelper::getCurrentUser()->getUserSettings();
-            dump($settings);
-            if (isset($settings['currentschoolcalendar']))
-                self::$currentSchoolYear = self::$schoolYearRepository->find($settings['currentschoolcalendar']);
-            else
-                self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['status' => 'current']);
-        }
-        else
-            self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['status' => 'current']);
-
-        return self::$currentSchoolYear;
+        return SchoolYearHelper::getCurrentSchoolYear();
     }
 
     /**
@@ -106,20 +93,8 @@ class UserHelper
      */
     public static function getNextSchoolYear(?SchoolYear $schoolYear): ?SchoolYear
     {
-        if (self::$nextSchoolYear && is_null($schoolYear))
-            return self::$nextSchoolYear;
-
-        $schoolYear = $schoolYear ?: self::getCurrentSchoolYear();
-
-        $result = self::getSchoolYearRepository()->createQueryBuilder('c')
-            ->where('c.firstDay > :firstDay')
-            ->setParameter('firstDay', $schoolYear->getFirstDay())
-            ->getQuery()
-            ->getResult();
-
-        self::$nextSchoolYear = $result ? $result[0] : null ;
-
-        return self::$nextSchoolYear;
+        trigger_error('Please use SchoolYearHelper::getNextSchoolYear', E_USER_DEPRECATED);
+        return SchoolYearHelper::getNextSchoolYear();
     }
 
     /**

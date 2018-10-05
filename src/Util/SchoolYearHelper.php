@@ -62,8 +62,8 @@ class SchoolYearHelper
         if (UserHelper::getCurrentUser() instanceof UserInterface)
         {
             $settings = UserHelper::getCurrentUser()->getUserSettings();
-            if (isset($settings['schoolYear']))
-                self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['id' => $settings['schoolYear']]);
+            if (isset($settings['currentschoolcalendar']))
+                self::$currentSchoolYear = self::$schoolYearRepository->find($settings['currentschoolcalendar']);
             else
                 self::$currentSchoolYear = self::$schoolYearRepository->findOneBy(['status' => 'current']);
         }
