@@ -287,4 +287,25 @@
   group_by: "school_admin"
   route: "manage_formal_assessments"
   allowed_categories: "[\"staff\"]"
+-
+  id: 40
+  person_role_id: 1
+  name: "Manage Timetables"
+  group_by: "timetable_admin"
+  route: "manage_timetables"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 41
+  person_role_id: 1
+  name: "Manage Columns"
+  group_by: "timetable_admin"
+  route: "manage_columns"
+  allowed_categories: "[\"staff\"]"
+-
+  id: 42
+  person_role_id: 1
+  name: "Manage Course & Classes"
+  group_by: "timetable_admin"
+  route: "manage_courses"
+  allowed_categories: "[\"staff\"]"
 ...

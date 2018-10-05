@@ -1,64 +1,64 @@
 %YAML 1.1
 ---
-# craigray_gibbon.gibbonDaysOfWeek
+# craigray_platypus.platy_day_of_week
 -
-  id: 01
+  id: 1
   name: "Monday"
   name_short: "Mon"
   sequence: 1
   school_day: 1
   school_open: "07:45:00"
-  school_start: "08:30:00"
-  school_end: "15:30:00"
+  school_start: "08:15:00"
+  school_end: "16:30:00"
   school_close: "17:00:00"
 -
-  id: 02
+  id: 2
   name: "Tuesday"
   name_short: "Tue"
   sequence: 2
   school_day: 1
   school_open: "07:45:00"
-  school_start: "08:30:00"
+  school_start: "08:15:00"
   school_end: "15:30:00"
   school_close: "17:00:00"
 -
-  id: 03
+  id: 3
   name: "Wednesday"
   name_short: "Wed"
   sequence: 3
   school_day: 1
   school_open: "07:45:00"
-  school_start: "08:30:00"
-  school_end: "15:30:00"
+  school_start: "08:15:00"
+  school_end: "16:30:00"
   school_close: "17:00:00"
 -
-  id: 04
+  id: 4
   name: "Thursday"
   name_short: "Thu"
   sequence: 4
   school_day: 1
   school_open: "07:45:00"
-  school_start: "08:30:00"
+  school_start: "08:15:00"
   school_end: "15:30:00"
   school_close: "17:00:00"
 -
-  id: 05
+  id: 5
   name: "Friday"
   name_short: "Fri"
   sequence: 5
   school_day: 1
   school_open: "07:45:00"
-  school_start: "08:30:00"
+  school_start: "08:15:00"
   school_end: "15:30:00"
   school_close: "17:00:00"
 -
-  id: 06
+  id: 6
   name: "Saturday"
   name_short: "Sat"
   sequence: 6
   school_day: 0
 -
-  id: 07
+  id: 7
   name: "Sunday"
   name_short: "Sun"
   sequence: 7

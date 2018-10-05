@@ -190,13 +190,12 @@ class TimetableController extends Controller
      * @param $id
      * @param string $tabName
      * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
      * @Route("/timetable/column/{id}/edit/{tabName}", name="edit_column")
      * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
      */
-    public function editColumn(TimetableColumnManager $manager, Request $request, TimetableColumn $id, $tabName = 'details')
+    public function editColumn(TimetableColumnManager $manager, Request $request, $id, $tabName = 'details')
     {
-        $manager->setEntity($id);
+        $manager->find($id);
 
         $form = $this->createForm(TimetableColumnType::class, $manager->getEntity());
 

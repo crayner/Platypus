@@ -22,7 +22,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * Class PersonnelSettings
  * @package App\Manager\Settings
  */
-class PersonnelSettings implements SettingCreationInterface
+class PersonnelSettings extends SettingCreationManager
 {
     /**
      * getName
@@ -44,25 +44,18 @@ class PersonnelSettings implements SettingCreationInterface
      */
     public function getSettings(SettingManager $sm): SettingCreationInterface
     {
-        $settings = [];
-        $sections = [];
+        $this->setSettingManager($sm);
 
-        $setting = $sm->createOneByName('person_admin.ethnicity');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.ethnicity')
             ->setSettingType('array')
-
             ->setValidators(
                 [
                     new NotBlank(),
                 ]
             )
-            ->setDefaultValue([])
-            ->__set('translateChoice', 'Person')
             ->setDisplayName('List of Ethnicities')
-           ->setDescription('List of Ethnicities.  Uses the Australian Standard to create this list');
-        if (empty($setting->getValue())) {
+            ->setDescription('List of Ethnicities.  Uses the Australian Standard to create this list');
+        if (empty($setting->getValue()))
             $setting->setValue([
                 'Inadequately described' => '0000',
                 'Not stated' => '0001',
@@ -106,27 +99,19 @@ class PersonnelSettings implements SettingCreationInterface
                 'Caribbean Islander' => '8400',
                 'Sub-Saharan African' => '9000',
                 'Central and West African' => '9100',
-                'Southern and East African' => '9200',])
-            ;
-        }
-        $settings[] = $setting;
+                'Southern and East African' => '9200',]);
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('person_admin.religions');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.religions')
             ->setSettingType('array')
-
             ->setValidators(
                 [
                     new NotBlank(),
                 ]
             )
-            ->setDefaultValue([])
-            ->__set('translateChoice', 'Person')
             ->setDisplayName('List of Religions')
-           ->setDescription('List of Religions.  Uses the Australian Standard to create this list');
-        if (empty($setting->getValue())) {
+            ->setDescription('List of Religions.  Uses the Australian Standard to create this list');
+        if (empty($setting->getValue()))
             $setting->setValue([
                 'Aboriginal Evangelical Missions' => '2801',
                 'Acts 2 Alliance' => '241d',
@@ -146,7 +131,7 @@ class PersonnelSettings implements SettingCreationInterface
                 'Atheism' => '720d',
                 'Australian Aboriginal Traditional Religions' => '601d',
                 'Australian Christian Churches (Assemblies of God)' => '240d',
-                'Baha\'i' => '603d',
+                'Baha`i' => '603d',
                 'Baptist' => '203d',
                 'Bethesda Ministries International (Bethesda Churches)' => '240d',
                 'Born Again Christian' => '280d',
@@ -259,189 +244,94 @@ class PersonnelSettings implements SettingCreationInterface
                 'Worship Centre network' => '242d',
                 'Yezidi' => '690d',
                 'Zoroastrianism' => '699d',
-            ])
-            ;
-        }
-        $settings[] = $setting;
+            ]);
+        $this->addSetting($setting, []);
 
 
-        $setting = $sm->createOneByName('person_admin.residency_status');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.residency_status')
             ->setSettingType('array')
-
             ->setValidators(null)
-            ->setDefaultValue([])
-            ->__set('translateChoice', 'Person')
             ->setDisplayName('Residency Status')
-           ->setDescription('List of residency status available in system.');
-        if (empty($setting->getValue())) {
+            ->setDescription('List of residency status available in system.');
+        if (empty($setting->getValue()))
             $setting->setValue([
                 'citizen',
                 'permanent',
                 'temporary',
                 'visitor',
                 'work',
-            ])
-            ;
-        }
-        $settings[] = $setting;
+            ]);
+        $this->addSetting($setting, []);
 
 
-        $setting = $sm->createOneByName('person_admin.departure_reasons');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.departure_reasons')
             ->setSettingType('array')
-
-            ->setValidators(null)
-            ->setDefaultValue([])
-            ->__set('translateChoice', 'Person')
             ->setDisplayName('Departure Reasons')
-           ->setDescription('List of departure reasons.');
-        if (empty($setting->getValue())) {
-            $setting->setValue([])
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('List of departure reasons.');
+        if (empty($setting->getValue()))
+            $setting->setValue([]);
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Field Values';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Field Values');
 
-        $sections[] = $section;
-
-        $settings = [];
-
-        $setting = $sm->createOneByName('person_admin.privacy');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.privacy')
             ->setSettingType('boolean')
-            ->setValidators(null)
-            ->setDefaultValue(false)
             ->setDisplayName('Privacy')
-           ->setDescription('Should privacy options be turned on across the system?');
-        if (empty($setting->getValue())) {
-            $setting->setValue(false)
-            ;
-        }
-        $setting->setHideParent('person_admin.privacy');
-        $settings[] = $setting;
+            ->setDescription('Should privacy options be turned on across the system?');
+        if (empty($setting->getValue()))
+            $setting->setValue(false);
+        $this->addSetting($setting, ['hideParent' => 'person_admin.privacy']);
 
-        $setting = $sm->createOneByName('person_admin.privacy_blurb');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
-            ->setSettingType('text')
-            ->setValidators(null)
+        $setting = $sm->createOneByName('person_admin.privacy_blurb')
+            ->setSettingType('html')
             ->setDisplayName('Privacy Blurb')
-           ->setDescription('Descriptive text to accompany image privacy option when shown to people using the system.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $setting->setHideParent('person_admin.privacy');
-        $settings[] = $setting;
+            ->setDescription('Descriptive text to accompany image privacy option when shown to people using the system.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, ['hideParent' => 'person_admin.privacy']);
 
-        $setting = $sm->createOneByName('person_admin.privacy_options');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.privacy_options')
             ->setSettingType('array')
-            ->setValidators(null)
-            ->setDefaultValue([])
             ->setDisplayName('Privacy Options')
-           ->setDescription('List of choices to make available if privacy is turned on. If blank, privacy fields will not be displayed.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $setting->setHideParent('person_admin.privacy');
-        $settings[] = $setting;
+            ->setDescription('List of choices to make available if privacy is turned on. If blank, privacy fields will not be displayed.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, ['hideParent' => 'person_admin.privacy']);
 
-        $section['name'] = 'Privacy Options';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Privacy Options');
 
-        $sections[] = $section;
-
-        $settings = [];
-
-        $setting = $sm->createOneByName('person_admin.personal_background');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.personal_background')
             ->setSettingType('boolean')
-            ->setValidators(null)
-            ->setDefaultValue(true)
             ->setDisplayName('Personal Background')
-           ->setDescription('Should personnel/students be allowed to set their own personal backgrounds?');
-        if (empty($setting->getValue())) {
-            $setting->setValue(true)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('Should personnel/students be allowed to set their own personal backgrounds?');
+        if (empty($setting->getValue()))
+            $setting->setValue(true);
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Interface Options';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Interface Options');
 
-        $sections[] = $section;
-
-        $settings = [];
-
-        $setting = $sm->createOneByName('person_admin.day_type_options');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
+        $setting = $sm->createOneByName('person_admin.day_type_options')
             ->setSettingType('array')
-            ->setValidators(null)
             ->setDisplayName('Day Type Options')
-           ->setDescription('List of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('List of options to make available (e.g. half-day, full-day). If blank, this field will not show up in the application form.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-        $setting = $sm->createOneByName('person_admin.day_type_text');
-
-        $setting
-            ->__set('role', 'ROLE_ADMIN')
-            ->setSettingType('text')
-            ->setValidators(null)
+        $setting = $sm->createOneByName('person_admin.day_type_text')
+            ->setSettingType('html')
             ->setDisplayName('Day-Type Text')
-           ->setDescription('Explanatory text to include with Day Type Options.');
-        if (empty($setting->getValue())) {
-            $setting->setValue(null)
-            ;
-        }
-        $settings[] = $setting;
+            ->setDescription('Explanatory text to include with Day Type Options.');
+        if (empty($setting->getValue()))
+            $setting->setValue(null);
+        $this->addSetting($setting, []);
 
-        $section['name'] = 'Day Type Options';
-        $section['description'] = '';
-        $section['settings'] = $settings;
+        $this->addSection('Day Type Options');
 
-        $sections[] = $section;
+        $this->setSectionsHeader('manage_personal_settings');
 
-        $sections['header'] = 'manage_personal_settings';
+        $this->setSettingManager(null);
 
-        $this->sections = $sections;
         return $this;
-    }
-
-    /**
-     * @var array
-     */
-    private $sections;
-
-    /**
-     * @return array
-     */
-    public function getSections(): array
-    {
-        return $this->sections;
     }
 }
