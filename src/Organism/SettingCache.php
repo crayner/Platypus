@@ -468,6 +468,51 @@ class SettingCache
     }
 
     /**
+     * getDateValue
+     *
+     * @return mixed
+     */
+    private function getDateValue(): ?\DateTime
+    {
+        if (empty($this->value))
+            return null;
+
+        if (mb_strpos($this->value, 'DateTime') !== false)
+        {
+            return unserialize($this->value);
+        }
+        return null ;
+    }
+
+    /**
+     * setDateValue
+     *
+     * @return \DateTime|null
+     */
+    private function setDateValue(): ?string
+    {
+        if (empty($this->value))
+            return null;
+
+        if ($this->value instanceof \DateTime)
+            return serialize($this->value);
+
+        if (is_array($this->value)) {
+            $resolver = new OptionsResolver();
+            $resolver->setRequired([
+                'year', 'month', 'day'
+            ]);
+            $w = $resolver->resolve($this->value);
+            if (empty($w['year']) || empty($w['month']) || empty($w['day']))
+                return null;
+            $w = new \DateTime($w['year'].str_pad($w['month'],2, '0', STR_PAD_LEFT).str_pad($w['day'], 2, '0', STR_PAD_LEFT));
+            return serialize($w);
+        }
+
+        return null ;
+    }
+
+    /**
      * getArrayValue
      *
      * @return array
@@ -545,7 +590,7 @@ class SettingCache
      */
     private function setMultiEnumValue()
     {
-        return $this->value = serialize(is_array($this->value) ? $this->value : []);
+        return serialize(is_array($this->value) ? $this->value : []);
     }
 
     /**
