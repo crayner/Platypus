@@ -304,6 +304,22 @@ class SystemSettings extends SettingCreationManager
             ]);
         $this->addSetting($setting, ['parameter' => true, 'default' => 'en']);
 
+        $setting = $sm->createOneByName('date.format.long')
+            ->setSettingType('string')
+            ->setDisplayName('Long Date Format')
+            ->setDescription('The format used to display a long date using details as described at "https://www.w3schools.com/php/func_date_date_format.asp".');
+        if (empty($setting->getValue()))
+            $setting->setValue('D, jS M/Y');
+        $this->addSetting($setting, []);
+
+        $setting = $sm->createOneByName('date.format.short')
+            ->setSettingType('string')
+            ->setDisplayName('Short Date Format')
+            ->setDescription('The format used to display a short date using details as described at "https://www.w3schools.com/php/func_date_date_format.asp".');
+        if (empty($setting->getValue()))
+            $setting->setValue('d M/Y');
+        $this->addSetting($setting, []);
+
         $this->addSection('Localisation');
 
         // Start New Section

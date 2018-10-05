@@ -12,7 +12,7 @@ class Settings_0_1_03 implements SettingInterface
 	 */
 	public function getSettings(): string
 	{
-		return file_get_contents(__DIR__.'/Settings/setting_0.1.03.yaml');
+		return file_get_contents(__DIR__ . '/Settings/settings_0.1.03.yaml');
 	}
 
 	/**
