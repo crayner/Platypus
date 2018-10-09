@@ -55,8 +55,10 @@ class CourseClass
      */
     public function getName(bool $raw = false): ?string
     {
+        if ($this->isUseCourseName() && ! $raw && $this->getCourse() instanceof Course)
+            return $this->getCourse()->getName() . '.' . $this->name;
         if ($this->isUseCourseName() && ! $raw)
-            return $this->getCourse()->getName().'.'.$this->name;
+            return 'Course Missing.' . $this->name;
         return $this->name;
     }
 
@@ -369,5 +371,46 @@ class CourseClass
                 $this->former->add($person);
 
         return $this->former;
+    }
+
+    /**
+     * @var bool|null
+     */
+    private $currentSchoolYear;
+
+    /**
+     * isCurrentSchoolYear
+     *
+     * @return bool
+     */
+    public function isCurrentSchoolYear(): bool
+    {
+        if (is_null($this->currentSchoolYear))
+        {
+            if($this->getCourse() instanceof Course)
+                $this->currentSchoolYear = $this->getCourse()->isCurrentSchoolYear();
+        }
+
+        return $this->currentSchoolYear ? true : false;
+    }
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        return false;
+    }
+
+    /**
+     * __toString
+     *
+     * @return null|string
+     */
+    public function __toString()
+    {
+        return $this->getName();
     }
 }

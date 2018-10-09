@@ -15,11 +15,16 @@
  */
 namespace App\Controller;
 
+use App\Entity\CourseClassPerson;
+use App\Entity\Person;
 use App\Entity\StudentNoteCategory;
 use App\Form\StudentsSettingsType;
+use App\Manager\CourseClassManager;
+use App\Manager\CourseClassPersonManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\SettingManager;
 use App\Manager\StudentNoteCategoryManager;
+use App\Manager\TwigManager;
 use App\Organism\StudentNoteCategories;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -98,5 +103,29 @@ class StudentController extends Controller
                 'fullForm' => $form,
             ]
         );
+    }
+
+    /**
+     * removeStudentClass
+     *
+     * @param Person $id
+     * @param CourseClassPerson $cid
+     * @param CourseClassPersonManager $courseClassPersonManager
+     * @param TwigManager $twig
+     * @return JsonResponse
+     * @throws \Twig_Error_Loader
+     * @throws \Twig_Error_Runtime
+     * @throws \Twig_Error_Syntax
+     * @Route("/student/{id}/class/{cid}/remove/", name="remove_student_class")
+     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
+     */
+    public function removeStudentClass(Person $id, CourseClassPerson $cid, CourseClassPersonManager $courseClassPersonManager, TwigManager $twig)
+    {
+        $courseClassPersonManager->delete($cid);
+
+        return new JsonResponse([
+            'status' => $courseClassPersonManager->getMessageManager()->getStatus(),
+            'message' => $courseClassPersonManager->getMessageManager()->renderView($twig->getTwig()),
+        ],200);
     }
 }

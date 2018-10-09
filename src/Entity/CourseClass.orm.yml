@@ -47,6 +47,7 @@ App\Entity\CourseClass:
         course:
             targetEntity: App\Entity\Course
             inversedBy: classes
+            fetch: EAGER
             joinColumn:
                 name: course_id
                 referencedColumnName: id

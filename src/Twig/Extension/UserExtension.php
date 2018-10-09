@@ -5,6 +5,7 @@ use App\Entity\SchoolYear;
 use App\Manager\SchoolYearManager;
 use App\Manager\UserManager;
 use App\Util\PersonNameHelper;
+use App\Util\SchoolYearHelper;
 use App\Util\UserHelper;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Twig\Extension\AbstractExtension;
@@ -67,7 +68,7 @@ class UserExtension extends AbstractExtension
      */
     public function getCurrentSchoolYear(): ?SchoolYear
     {
-        return UserHelper::getCurrentSchoolYear();
+        return SchoolYearHelper::getCurrentSchoolYear();
     }
 
     /**

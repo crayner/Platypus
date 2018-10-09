@@ -51,6 +51,7 @@ App\Entity\Course:
     manyToMany:
         yearGroups:
             targetEntity: App\Entity\YearGroup
+            indexBy: id
             joinTable:
                 name: course_year_group
                 joinColumns:

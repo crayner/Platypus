@@ -1,0 +1,20 @@
+{% trans_default_domain "Person" %}
+
+{% block course_class_person_label %}{% endblock %}
+{% block course_class_person_errors %}{% endblock %}
+
+{% block course_class_person_widget %}
+    <div class="row row-striped small">
+        <div class="col-4">
+            {{ form_widget(form.courseClass, {value: transformData(form.courseClass), separator: '--- Other Year Group Classes ---'|trans}) }}
+        </div>
+        <div class="col-4 text-center">
+            {{ form_widget(form.reportable) }}
+            {{ form_row(form.role, {value: 'student'}) }}
+            {{ form_widget(form.person, {value: transformData(form.person)}) }}
+            {{ form_widget(form.id, {value: transformData(form)}) }}
+        </div>
+        <div class="col-4 collection-actions">
+        </div>
+    </div>
+{% endblock course_class_person_widget %}

@@ -17,6 +17,7 @@
 namespace App\Entity;
 
 
+use App\Util\SchoolYearHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
@@ -325,5 +326,24 @@ class Course
         if (! empty($class))
             $class->setCourse(null, false);
         return $this;
+    }
+
+    /**
+     * @var bool|null
+     */
+    private $currentSchoolYear;
+
+    /**
+     * isCurrentSchoolYear
+     *
+     * @return bool
+     */
+    public function isCurrentSchoolYear(): bool
+    {
+        if (is_null($this->currentSchoolYear))
+            if($this->getSchoolYear() instanceof SchoolYear)
+                $this->currentSchoolYear = $this->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear();
+
+        return $this->currentSchoolYear ? true : false;
     }
 }

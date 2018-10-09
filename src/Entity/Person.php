@@ -803,7 +803,7 @@ class Person
      */
     public function setSecondaryRoles($secondaryRoles): Person
     {
-        $this->secondaryRoles = is_array($secondaryRoles) ? new ArrayCollection($secondaryRoles) : $secondaryRoles ;
+        $this->secondaryRoles = is_array($secondaryRoles) ? new ArrayCollection($secondaryRoles) : $secondaryRoles;
 
         return $this;
     }
@@ -1245,7 +1245,7 @@ class Person
     {
         $name = trim(mb_substr($this->getSurname(), 0, 3));
         $fn = explode($this->getFirstName(), ' ');
-        foreach($fn as $n)
+        foreach ($fn as $n)
             $name .= mb_substr($n, 0, 1);
         return trim($name);
     }
@@ -1659,7 +1659,8 @@ class Person
      *
      * @return bool
      */
-    public function isCanLogin(){
+    public function isCanLogin()
+    {
         if ($this->getUser() instanceof UserInterface)
             return $this->canLogin = true;
         return $this->canLogin = false;
@@ -1686,9 +1687,9 @@ class Person
      */
     public function isForcePasswordReset(): bool
     {
-        if (! $this->isCanLogin())
+        if (!$this->isCanLogin())
             return $this->forcePasswordReset = false;
-        $this->forcePasswordReset = $this->getUser()->isCredentialsExpired() ;
+        $this->forcePasswordReset = $this->getUser()->isCredentialsExpired();
         return $this->forcePasswordReset;
     }
 
@@ -1839,7 +1840,7 @@ class Person
      */
     public function getViewSchoolCalendar(): bool
     {
-        return $this->viewSchoolCalendar ? true : false ;
+        return $this->viewSchoolCalendar ? true : false;
     }
 
     /**
@@ -1862,7 +1863,7 @@ class Person
      */
     public function getViewPersonalCalendar(): bool
     {
-        return $this->viewPersonalCalendar ? true : false ;
+        return $this->viewPersonalCalendar ? true : false;
     }
 
     /**
@@ -1885,7 +1886,7 @@ class Person
      */
     public function getViewSpaceBookingCalendar(): bool
     {
-        return $this->viewSpaceBookingCalendar ? true : false ;
+        return $this->viewSpaceBookingCalendar ? true : false;
     }
 
     /**
@@ -2017,8 +2018,8 @@ class Person
     public function getFamilies(): Collection
     {
         $families = $this->getAdultFamilies();
-        foreach($this->getChildFamilies()->getIterator() as $child)
-            if(! $families->contains($child))
+        foreach ($this->getChildFamilies()->getIterator() as $child)
+            if (!$families->contains($child))
                 $families->add($child);
         return $families;
     }
@@ -2065,8 +2066,7 @@ class Person
     public function getCurrentEnrolments(): ArrayCollection
     {
         $this->currentEnrolments = new ArrayCollection();
-        foreach($this->getEnrolments() as $enrolment)
-        {
+        foreach ($this->getEnrolments() as $enrolment) {
             if ($enrolment->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear())
                 $this->currentEnrolments->add($enrolment);
         }
@@ -2083,8 +2083,7 @@ class Person
     {
         if (empty($currentEnrolments))
             return $this;
-        foreach($currentEnrolments as $enrolment)
-        {
+        foreach ($currentEnrolments as $enrolment) {
             $this->addEnrolment($enrolment);
         }
 
@@ -2179,11 +2178,11 @@ class Person
     {
         $group = '';
         $en = $this->getEnrolments();
-        foreach($en as $se){
+        foreach ($en as $se) {
             if ($se->getRollGroup()->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear())
                 $group = $se->getRollGroup()->getName();
         }
-        return $this->getFullName() . ($group ? ' ('.$group.')' : '');
+        return $this->getFullName() . ($group ? ' (' . $group . ')' : '');
     }
 
     /**
@@ -2225,5 +2224,111 @@ class Person
         else
             $this->getUser()->setUserSetting('currentSchoolCalendar', $currentSchoolCalendar, 'object');
         return $this;
+    }
+
+    /**
+     * @var Collection|null
+     */
+    private $classList;
+
+    /**
+     * @return Collection
+     */
+    public function getClassList(): Collection
+    {
+        if (empty($this->classList))
+            $this->classList = new ArrayCollection();
+
+        if ($this->classList instanceof PersistentCollection)
+            $this->classList->initialize();
+
+        $iterator = $this->classList->getIterator();
+
+        $iterator->uasort(
+            function ($a, $b) {
+                return ($a->getCourseClass()->getName() < $b->getCourseClass()->getName()) ? -1 : 1 ;
+            }
+        );
+
+        $this->classList = new ArrayCollection(iterator_to_array($iterator, false));
+
+        return $this->classList;
+    }
+
+    /**
+     * @param Collection $classList
+     * @return Person
+     */
+    public function setClassList(?Collection $classList): Person
+    {
+        $this->classList = $classList;
+        return $this;
+    }
+
+    /**
+     * addClass
+     *
+     * @param CourseClassPerson|null $classPerson
+     * @param bool $add
+     * @return Person
+     */
+    public function addClass(?CourseClassPerson $classPerson, $add = true): Person
+    {
+        if (empty($classPerson) || $this->getClassList()->contains($classPerson))
+            return $this;
+
+        if ($add && !empty($classPerson))
+            $classPerson->setPerson($this, false);
+
+        $this->classList->add($classPerson);
+
+        return $this;
+    }
+
+    /**
+     * removeClass
+     *
+     * @param CourseClassPerson|null $classPerson
+     * @return Person
+     */
+    public function removeClass(?CourseClassPerson $classPerson): Person
+    {
+        $this->getClassList()->removeElement($classPerson);
+        if (!empty($classPerson))
+            $classPerson->setPerson(null, false);
+
+        return $this;
+    }
+
+    /**
+     * @var ArrayCollection
+     */
+    private $classListOfCurrentSchoolYear;
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getClassListOfCurrentSchoolYear(): ArrayCollection
+    {
+        $this->classListOfCurrentSchoolYear = new ArrayCollection();
+
+        foreach($this->getClassList() as $class)
+        {
+            if ($class->isCurrentSchoolYear())
+                $this->classListOfCurrentSchoolYear->add($class);
+        }
+
+        return $this->classListOfCurrentSchoolYear;
+    }
+
+    /**
+     * @param ArrayCollection $classListOfCurrentSchoolYear
+     * @return Person
+     */
+    public function setClassListOfCurrentSchoolYear(ArrayCollection $classListOfCurrentSchoolYear): Person
+    {
+        foreach ($classListOfCurrentSchoolYear as $w)
+
+            return $this;
     }
 }

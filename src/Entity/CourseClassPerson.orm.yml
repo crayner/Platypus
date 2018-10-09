@@ -24,12 +24,14 @@ App\Entity\CourseClassPerson:
         courseClass:
             targetEntity: App\Entity\CourseClass
             inversedBy: people
+            fetch: EAGER
             joinColumn:
                 name: class_id
                 referencedColumnName: id
                 nullable: false
         person:
             targetEntity: App\Entity\Person
+            inversedBy: classList
             joinColumn:
                 name: person_id
                 referencedColumnName: id

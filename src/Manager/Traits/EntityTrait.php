@@ -111,7 +111,13 @@ trait EntityTrait
     public function delete($id)
     {
         if ($id === 'ignore') return $this->getEntity();
-        $entity = $this->find($id);
+        if ($id instanceof $this->entityName)
+        {
+            $this->setEntity($id);
+            $entity = $id;
+            $id = $entity->getId();
+        } else
+            $entity = $this->find($id);
         if (empty($entity))
         {
             $this->getMessageManager()->add('warning', 'entity.not_found', ['%{entity}' => $this->getEntityName()], 'System');

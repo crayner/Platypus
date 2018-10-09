@@ -19,6 +19,8 @@ use App\Entity\CourseClass;
 use App\Entity\CourseClassPerson;
 use App\Entity\Person;
 use App\Manager\Traits\EntityTrait;
+use App\Util\SchoolYearHelper;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Connection;
 
 /**
@@ -80,5 +82,65 @@ class CourseClassManager extends TabManager
         }
         $this->getMessageManager()->addMessage('danger', 'The class or person was not found and removal do not happen!', [], 'Course');
         return $this;
+    }
+
+    /**
+     * @var array
+     */
+    private $studentCourseClassList;
+
+    /**
+     * @var array
+     */
+    private $preferredStudentCourseClassList;
+
+    /**
+     * getStudentCourseClassList
+     *
+     * @param Person $student
+     * @return array
+     */
+    public function getStudentCourseClassList(Person $student): array
+    {
+        if (! empty($this->studentCourseClassList))
+            return $this->studentCourseClassList->toArray();
+
+        $enrolments = [];
+        foreach($student->getCurrentEnrolments()->getIterator() as $w)
+            $enrolments[] = $w->getYearGroup()->getId();
+
+        $xxx = $this->getRepository()->createQueryBuilder('cc')
+            ->select('cc, yg.id as ygId')
+            ->orderBy('c.name')
+            ->addOrderBy('cc.name')
+            ->leftJoin('cc.course', 'c')
+            ->where('c.schoolYear = :schoolYear')
+            ->setParameter('schoolYear', SchoolYearHelper::getCurrentSchoolYear())
+            ->leftJoin('c.yearGroups', 'yg')
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $this->preferredStudentCourseClassList = new ArrayCollection();
+        $this->studentCourseClassList = new ArrayCollection();
+
+        foreach($xxx as $w) {
+            if (in_array($w['ygId'], $enrolments))
+                if (! $this->preferredStudentCourseClassList->contains($w[0]))
+                    $this->preferredStudentCourseClassList->add($w[0]);
+            if (! $this->studentCourseClassList->contains($w[0]))
+                 $this->studentCourseClassList->add($w[0]);
+        }
+
+        dump($this);
+        return $this->studentCourseClassList->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getPreferredStudentCourseClassList(): array
+    {
+        return $this->preferredStudentCourseClassList->toArray();
     }
 }

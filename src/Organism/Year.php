@@ -1,7 +1,8 @@
 <?php
-namespace App\Manager;
+namespace App\Organism;
 
 use App\Entity\SchoolYear;
+use App\Manager\SettingManager;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class Year

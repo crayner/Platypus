@@ -5,6 +5,7 @@ use App\Entity\SchoolYear;
 use App\Entity\SchoolYearSpecialDay;
 use App\Entity\SchoolYearTerm;
 use App\Manager\Traits\EntityTrait;
+use App\Organism\Year;
 use App\Repository\SchoolYearRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\DBAL\Driver\PDOException;

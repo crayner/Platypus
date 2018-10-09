@@ -457,6 +457,19 @@ class PersonType extends AbstractType
                     'button_merge_class' => 'btn-sm',
                 ]
             )
+            ->add('classListOfCurrentSchoolYear', CollectionType::class,
+                [
+                    'label' => false,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'entry_type' => ClassListType::class,
+                    'entry_options' => [
+                        'student' => $options['data'],
+                    ],
+                    'button_merge_class' => 'btn-sm',
+                    'remove_element_route' => 'remove_student_class'
+                ]
+            )
         ;
     }
 

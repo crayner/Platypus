@@ -249,6 +249,7 @@ App\Entity\Person:
             targetEntity: App\Entity\DepartmentStaff
             mappedBy: member
             cascade: [ all ]
+            indexedBy: 'id'
         adultFamilies:
             targetEntity: App\Entity\FamilyMemberAdult
             mappedBy: person
@@ -263,7 +264,12 @@ App\Entity\Person:
             targetEntity: App\Entity\StudentEnrolment
             mappedBy: student
             cascade: [ persist, remove ]
+            indexedBy: 'id'
             orphanRemoval: true
+        classList:
+            targetEntity: App\Entity\CourseClassPerson
+            mappedBy: person
+            cascade: [ persist, remove ]
     manyToOne:
         primaryRole:
             targetEntity: App\Entity\PersonRole

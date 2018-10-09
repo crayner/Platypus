@@ -156,9 +156,53 @@ class CourseClassPerson
      * @param Person|null $person
      * @return CourseClassPerson
      */
-    public function setPerson(?Person $person): CourseClassPerson
+    public function setPerson(?Person $person, $add = true): CourseClassPerson
     {
         $this->person = $person;
+
+        if ($add && ! empty($person))
+            $this->person->addClass($this, false);
         return $this;
+    }
+
+    /**
+     * @var bool|null
+     */
+    private $currentSchoolYear;
+
+    /**
+     * isCurrentSchoolYear
+     *
+     * @return bool
+     */
+    public function isCurrentSchoolYear(): bool
+    {
+        if (is_null($this->currentSchoolYear))
+        {
+            if($this->getCourseClass() instanceof CourseClass)
+                $this->currentSchoolYear = $this->getCourseClass()->isCurrentSchoolYear();
+        }
+
+        return $this->currentSchoolYear ? true : false;
+    }
+
+    /**
+     * canDelete
+     *
+     * @return bool
+     */
+    public function canDelete(): bool
+    {
+        return false;
+    }
+
+    /**
+     * __toString
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        return $this->getPerson()->__toString() . ' in ' . $this->getCourseClass()->__toString();
     }
 }
