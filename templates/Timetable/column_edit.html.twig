@@ -18,7 +18,6 @@
     {% set h3Content = '' %}
     {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_columns')}}) %}
     {% set h3Content = h3Content ~ saveButton() %}
-    {% include '@HillrangeForm/Script/collection_message.html.twig' %}
     {% include 'Default/tabs.html.twig' with {translation: 'Course', tabManager: manager} %}
     {{ form_end(form) }}
 {% endblock contentContainer %}
@@ -26,7 +25,6 @@
 {% block javascripts %}
     {{ parent() }}
     {{ toggle_script() }}
-    {{ collections_manage(form, ['timetableColumnRows'])|raw }}
-    {{ collection_script(form.timetableColumnRows)|raw }}
     {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_column'} %}
+    {{ collectionScript(form.timetableColumnRows, manager.template) }}
 {% endblock javascripts %}

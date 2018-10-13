@@ -7,4 +7,4 @@ twig:
     form_themes:
         - '@HillrangeForm/FormTheme/bootstrap.html.twig'
     paths:
-        '%kernel.project_dir%/templates/overwrite/HillrangeSecurity/': 'HillrangeSecurity'
+        '%kernel.project_dir%/templates/bundles/HillrangeSecurity/': 'HillrangeSecurity'

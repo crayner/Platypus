@@ -30,11 +30,23 @@ export default function Button(props) {
     if (button.type === '' || typeof(button.type) === 'undefined')
         button.type = 'button'
 
-    if (button.options === '' || typeof(button.options) === 'undefined')
-        button.type = {}
+    if (typeof(button.options) !== 'object')
+        button.options = {}
 
 
     if (url === '')
+        if (typeof buttonClickAction !== 'undefined')
+            return (
+                <button
+                    type={button.type}
+                    className={className}
+                    style={button.style}
+                    onClick={() => {buttonClickAction('', '', button.options)}}
+                    title={translateMessage(translations, button.label)}>
+                    {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
+                    <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
+                </button>
+            )
         return (
             <button
                 type={button.type}

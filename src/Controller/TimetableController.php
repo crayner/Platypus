@@ -18,6 +18,7 @@ namespace App\Controller;
 use App\Entity\SchoolYearTerm;
 use App\Entity\Timetable;
 use App\Entity\TimetableColumn;
+use App\Entity\TimetableColumnRow;
 use App\Entity\TimetableDayDate;
 use App\Form\Type\TimetableColumnType;
 use App\Form\Type\TimetableType;
@@ -29,6 +30,7 @@ use App\Manager\TimetableManager;
 use App\Manager\TwigManager;
 use App\Pagination\TimetableColumnPagination;
 use App\Pagination\TimetablePagination;
+use Hillrange\Collection\React\Manager\CollectionManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -221,21 +223,24 @@ class TimetableController extends Controller
      * deleteColumnRow
      *
      * @param TimetableColumnRowManager $manager
-     * @param int $id
-     * @param $cid
-     * @param FlashBagManager $bagManager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @param TimetableColumn $id
+     * @param int $cid
+     * @return JsonResponse
      * @throws \Exception
      * @Route("/timetable/column/{id}/row/{cid}/delete/", name="delete_timetable_column_row")
      * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
      */
-    public function deleteColumnRow(TimetableColumnRowManager $manager, TimetableColumn $id, $cid, FlashBagManager $bagManager)
+    public function deleteColumnRow(TimetableColumnRowManager $manager, TimetableColumn $id, int $cid)
     {
         $manager->delete($cid);
 
-        $bagManager->addMessages($manager->getMessageManager());
-
-        return $this->redirectToRoute('edit_column', ['id' => $id->getId(), 'tabName' => 'rows']);
+        return new JsonResponse(
+            [
+                'status' => $manager->getMessageManager()->getStatus(),
+                'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($this->get('translator')),
+            ],
+            200
+        );
     }
 
     /**

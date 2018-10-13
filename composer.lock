@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2d3b5459cd7e668996cea117f3805aae",
+    "content-hash": "25d58b1ee4d8ca2136720e118fb0b875",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1603,6 +1603,57 @@
             "time": "2018-10-05T23:11:55+00:00"
         },
         {
+            "name": "hillrange/symfony-collection-react",
+            "version": "0.0.04",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crayner/symfony-collection-react.git",
+                "reference": "eb0c4267b5d9b231623dad44800ebd9e32cbd549"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/crayner/symfony-collection-react/zipball/eb0c4267b5d9b231623dad44800ebd9e32cbd549",
+                "reference": "eb0c4267b5d9b231623dad44800ebd9e32cbd549",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.0-dev"
+                },
+                "symfony": {
+                    "allow-contrib": "true"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hillrange\\Collection\\React\\": "/"
+                },
+                "exclude-from-classmap": [
+                    "/tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Craig Rayner",
+                    "email": "craig@craigrayner.com"
+                }
+            ],
+            "description": "Integrate Symfony Collection Form elements using REACT for Symfony 4.1+",
+            "homepage": "http://www.craigrayner.com",
+            "keywords": [
+                "form"
+            ],
+            "time": "2018-10-09T21:32:56+00:00"
+        },
+        {
             "name": "hillrange/symfony-form",
             "version": "0.2.06",
             "source": {
@@ -1961,16 +2012,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v4.0.4",
+            "version": "v4.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c"
+                "reference": "d0230c5c77a7e3cfa69446febf340978540958c0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/fa6ee28600d21d49b2b4e1006b48426cec8e579c",
-                "reference": "fa6ee28600d21d49b2b4e1006b48426cec8e579c",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/d0230c5c77a7e3cfa69446febf340978540958c0",
+                "reference": "d0230c5c77a7e3cfa69446febf340978540958c0",
                 "shasum": ""
             },
             "require": {
@@ -1986,7 +2037,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "4.0-dev"
+                    "dev-master": "4.1-dev"
                 }
             },
             "autoload": {
@@ -2008,7 +2059,7 @@
                 "parser",
                 "php"
             ],
-            "time": "2018-09-18T07:03:24+00:00"
+            "time": "2018-10-10T09:24:14+00:00"
         },
         {
             "name": "nyholm/nsa",

@@ -23,12 +23,13 @@ use App\Entity\TimetableDay;
 use App\Entity\TimetableDayDate;
 use App\Manager\Traits\EntityTrait;
 use App\Util\StringHelper;
+use Hillrange\Collection\React\Util\CollectionInterface;
 
 /**
  * Class TimetableManager
  * @package App\Manager
  */
-class TimetableManager extends TabManager
+class TimetableManager extends TabManager implements CollectionInterface
 {
     use EntityTrait;
 
@@ -298,5 +299,18 @@ class TimetableManager extends TabManager
         if (empty($this->timetableDays))
             $this->timetableDays = $this->getRepository(TimetableDay::class)->findBy(['timetable' => $this->getEntity()], ['sequence' => 'ASC']);
         return $this->timetableDays;
+    }
+
+    /**
+     * getTemplate
+     *
+     * @param string $name
+     * @return array
+     */
+    public function getTemplate(string $name = 'default'): array
+    {
+        $template = [];
+
+        return $template;
     }
 }

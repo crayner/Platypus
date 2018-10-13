@@ -92,6 +92,9 @@
     "hillrange/security": {
         "version": "0.0.31"
     },
+    "hillrange/symfony-collection-react": {
+        "version": "0.0.03"
+    },
     "hillrange/symfony-form": {
         "version": "0.1.68"
     },

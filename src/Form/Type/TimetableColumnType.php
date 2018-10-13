@@ -17,7 +17,7 @@ namespace App\Form\Type;
 
 use App\Entity\DayOfWeek;
 use App\Entity\TimetableColumn;
-use Hillrange\Form\Type\CollectionType;
+use Hillrange\Collection\React\Form\Type\CollectionType;
 use Hillrange\Form\Type\EntityType;
 use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
@@ -61,9 +61,9 @@ class TimetableColumnType extends AbstractType
                     'entry_type' => TimetableColumnRowType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'button_merge_class' => 'btn-sm',
-                    'redirect_route' => 'delete_timetable_column_row',
-                    'route_params' => ['id' => $options['data']->getId()],
+//                    'button_merge_class' => 'btn-sm',
+//                    'redirect_route' => 'delete_timetable_column_row',
+//                    'route_params' => ['id' => $options['data']->getId()],
                 ]
             )
         ;
