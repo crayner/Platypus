@@ -68,14 +68,14 @@ class TimetableColumnType extends AbstractType
         ];
         $actions = [
             'class' => 'col-2 text-center align-self-center',
-            'buttons' => [
-                [
-                    'type' => 'saveButton',
-                    'mergeClass' => 'btn-sm',
-                ],
+            'save' => [
+                'mergeClass' => 'btn-sm',
             ],
             'add' => [
                 'mergeClass' => 'btn-sm',
+                'style' => [
+                    'float' => 'right',
+                ],
             ],
             'delete' => [
                 'mergeClass' => 'btn-sm',
@@ -84,6 +84,9 @@ class TimetableColumnType extends AbstractType
                     '{cid}' => 'data_id',
                 ],
                 'url_type' => 'json',
+                'options' => [
+                    'eid' => 'name',
+                ],
             ],
         ];
 
