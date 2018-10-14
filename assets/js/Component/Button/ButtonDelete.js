@@ -7,6 +7,7 @@ import Button from './Button'
 export default function ButtonDelete(props) {
     const {
         button,
+        deleteElement,
         ...otherProps,
     } = props
 
@@ -19,6 +20,7 @@ export default function ButtonDelete(props) {
     return (
         <Button
             button={button}
+            buttonClickAction={deleteElement}
             {...otherProps}
         />
     )
@@ -26,4 +28,5 @@ export default function ButtonDelete(props) {
 
 ButtonDelete.propTypes = {
     button: PropTypes.object.isRequired,
+    deleteElement: PropTypes.func.isRequired,
 }

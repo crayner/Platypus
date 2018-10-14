@@ -615,9 +615,9 @@ abstract class PaginationReactManager implements PaginationInterface
                 'type' => 'miscellaneous',
                 'label' => false,
                 'url_options' => [],
-                'classMerge' => '',
+                'mergeClass' => '',
                 'style' => ['float' => 'right'],
-                'response_type' => 'json',
+                'url_type' => 'json',
                 'icon' => false,
                 'colour' => '',
                 'options' => [],
@@ -722,17 +722,17 @@ abstract class PaginationReactManager implements PaginationInterface
                     'type' => 'miscellaneous',
                     'label' => false,
                     'url_options' => [],
-                    'classMerge' => '',
+                    'mergeClass' => '',
                     'style' => ['float' => 'right'],
-                    'response_type' => 'json',
+                    'url_type' => 'json',
                     'icon' => false,
                     'colour' => '',
                     'options' => [],
                 ]
             );
             $button = $resolver->resolve($button);
-            if (! in_array($button['response_type'], ['redirect','json']))
-                throw new InvalidOptionsException(sprintf('The response_type of \'%s\' is not valid. Accepted values are [redirect, json]', $button['response_type']));
+            if (! in_array($button['url_type'], ['redirect','json']))
+                throw new InvalidOptionsException(sprintf('The response type of \'%s\' is not valid. Accepted values are [redirect, json]', $button['url_type']));
             $this->actions['buttons'][$q] = $button;
         }
 

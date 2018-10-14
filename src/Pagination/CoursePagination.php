@@ -143,7 +143,7 @@ class CoursePagination extends PaginationReactManager
                     '__id__' => 'id',
                 ],
                 'type' => 'delete',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
             [
                 'label' => 'Edit Course',
@@ -153,7 +153,7 @@ class CoursePagination extends PaginationReactManager
                 ],
                 'type' => 'edit',
                 'response_type' => 'redirect',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
         ],
     ];

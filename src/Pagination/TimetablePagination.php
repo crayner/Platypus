@@ -110,7 +110,7 @@ class TimetablePagination extends PaginationReactManager
             'label' => 'Active',
             'name' => 'active',
             'style' => 'boolean',
-            'options' => ['classMerge' => 'btn-sm', 'on' => ['icon' => ['far','check-circle']], 'off' => ['icon' => ['far','times-circle']]],
+            'options' => ['mergeClass' => 'btn-sm', 'on' => ['icon' => ['far','check-circle']], 'off' => ['icon' => ['far','times-circle']]],
             'class' => 'text-center',
         ],
     ];
@@ -128,7 +128,7 @@ class TimetablePagination extends PaginationReactManager
                     '__id__' => 'id',
                 ],
                 'type' => 'delete',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
             [
                 'label' => 'Edit Timetable',
@@ -138,7 +138,7 @@ class TimetablePagination extends PaginationReactManager
                 ],
                 'type' => 'edit',
                 'response_type' => 'redirect',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
         ],
     ];
@@ -153,7 +153,7 @@ class TimetablePagination extends PaginationReactManager
                 'url' => '/timetable/Add/edit/',
                 'type' => 'add',
                 'response_type' => 'redirect',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
         ],
     ];

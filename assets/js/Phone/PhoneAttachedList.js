@@ -22,7 +22,7 @@ export default function PhoneAttachedList(props) {
         let button = {
             label: 'phone.remove',
             style: {float: 'right'},
-            classMerge: 'btn-sm',
+            mergeClass: 'btn-sm',
             response_type: 'json',
         }
         const url = '/phone/{id}/remove/{parentClass}/{entity_id}/'.replace('{id}', phone.id).replace('{parentClass}', parentClass)

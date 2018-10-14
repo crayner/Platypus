@@ -72,6 +72,9 @@ export default class PaginationControl extends Component {
         this.toggleOrderBy = this.toggleOrderBy.bind(this)
         this.toggleCaseSensitive = this.toggleCaseSensitive.bind(this)
         this.buttonClickAction = this.buttonClickAction.bind(this)
+        this.addElement = this.addElement.bind(this)
+        this.editElement = this.editElement.bind(this)
+        this.deleteElement = this.deleteElement.bind(this)
         this.cancelMessage = this.cancelMessage.bind(this)
         this.clearFilter = this.clearFilter.bind(this)
         this.changeFilterValue = this.changeFilterValue.bind(this)
@@ -270,8 +273,27 @@ export default class PaginationControl extends Component {
         this.handlePagination()
     }
 
-    buttonClickAction(url,response_type,options) {
-        if (response_type === 'json') {
+    addElement(options) {
+        this.buttonClickAction(options.url, options.url_type ? options.url_type : 'json', options.url_options)
+        return false
+    }
+
+    editElement(options) {
+        let edit = {...this.actions.buttons.edit}
+        let url = this.manageUrlOptions(edit.url, edit.url_options, options)
+        this.buttonClickAction(url, edit.url_type, {})
+        return false
+    }
+
+    deleteElement(options) {
+        let del = {...this.actions.buttons.delete}
+        const url = this.manageUrlOptions(del.url,del.url_options,options)
+        this.buttonClickAction(url,del.url_type, [])
+        return false
+    }
+
+    buttonClickAction(url,url_type,options) {
+        if (url_type === 'json') {
             fetchJson(url, {}, this.locale)
                 .then((data) => {
                     this.allResults = data['rows']
@@ -280,9 +302,21 @@ export default class PaginationControl extends Component {
                     this.buildSearchString()
                     this.handlePagination()
                 });
-        } else if (response_type === 'redirect')
+        } else if (url_type === 'redirect')
             openPage(url, options, this.locale)
 
+    }
+
+    manageUrlOptions(url, options, item){
+        Object.keys(options).map(key => {
+            if (typeof item[options[key]] !== 'undefined')
+            {
+                const value = item[options[key]]
+                url = url.replace(key, value)
+            }
+        })
+
+        return url
     }
 
     buildSearchString(){
@@ -459,7 +493,9 @@ export default class PaginationControl extends Component {
                     sort={this.sort}
                     orderBy={this.orderBy}
                     actions={this.actions}
-                    buttonClickAction={this.buttonClickAction}
+                    addElement={this.addElement}
+                    editElement={this.editElement}
+                    deleteElement={this.deleteElement}
                 />
             </section>
         )

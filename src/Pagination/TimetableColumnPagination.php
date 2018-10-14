@@ -99,24 +99,28 @@ class TimetableColumnPagination extends PaginationReactManager
     protected $actions = [
         'size' => 2,
         'buttons' => [
-            [
+            'delete' => [
                 'label' => 'Delete Timetable Column',
-                'url' => '/timetable/column/__id__/delete/',
+                'url' => '/timetable/column/{id}/delete/',
                 'url_options' => [
-                    '__id__' => 'id',
+                    '{id}' => 'id',
+                ],
+                'options' => [
+                    'eid' => 'id'
                 ],
                 'type' => 'delete',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
-            [
+            'edit' => [
                 'label' => 'Edit Timetable Column',
-                'url' => '/timetable/column/__id__/edit/',
+                'url' => '/timetable/column/{id}/edit/',
                 'url_options' => [
-                    '__id__' => 'id',
+                    '{id}' => 'id',
                 ],
+                'options' => [],
                 'type' => 'edit',
-                'response_type' => 'redirect',
-                'classMerge' => 'btn-sm',
+                'url_type' => 'redirect',
+                'mergeClass' => 'btn-sm',
             ],
         ],
     ];
@@ -128,12 +132,12 @@ class TimetableColumnPagination extends PaginationReactManager
         'title' => 'Timetable Column List',
         'paragraph' => 'In Busybee a column is a holder for the structure of a day. A number of columns can be defined, and these can be tied to particular timetable days in the timetable interface.',
         'buttons' => [
-            [
+            'add' => [
                 'label' => 'Add Timetable Column',
                 'url' => '/timetable/column/Add/edit/',
                 'type' => 'add',
-                'response_type' => 'redirect',
-                'classMerge' => 'btn-sm',
+                'url_type' => 'redirect',
+                'mergeClass' => 'btn-sm',
             ],
         ],
     ];

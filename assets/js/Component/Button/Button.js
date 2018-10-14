@@ -14,15 +14,14 @@ library.add(fas, far, fab)
 export default function Button(props) {
     const {
         button,
-        url,
         buttonClickAction,
         translations,
     } = props;
 
     let className = 'btn btn-' + button.colour
 
-    if (button.classMerge !== '')
-        className = className + ' ' + button.classMerge
+    if (button.mergeClass !== '')
+        className = className + ' ' + button.mergeClass
 
     if (typeof(button.style) !== 'object')
         button.style = {}
@@ -33,35 +32,22 @@ export default function Button(props) {
     if (typeof(button.options) !== 'object')
         button.options = {}
 
-
-    if (url === '')
-        if (typeof buttonClickAction !== 'undefined')
-            return (
-                <button
-                    type={button.type}
-                    className={className}
-                    style={button.style}
-                    onClick={() => {buttonClickAction('', '', button.options)}}
-                    title={translateMessage(translations, button.label)}>
-                    {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
-                    <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
-                </button>
-            )
+    if (typeof buttonClickAction !== 'undefined')
         return (
             <button
                 type={button.type}
                 className={className}
                 style={button.style}
+                onClick={() => {buttonClickAction(button.options)}}
                 title={translateMessage(translations, button.label)}>
-                    {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
-                    <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
+                {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
+                <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
             </button>
         )
     return (
         <button
             type={button.type}
             className={className}
-            onClick={() => {buttonClickAction(url, button.response_type, button.options)}}
             style={button.style}
             title={translateMessage(translations, button.label)}>
                 {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
@@ -71,7 +57,6 @@ export default function Button(props) {
 }
 
 Button.propTypes = {
-    url: PropTypes.string.isRequired,
     button: PropTypes.object.isRequired,
     translations: PropTypes.object.isRequired,
     buttonClickAction: PropTypes.func,

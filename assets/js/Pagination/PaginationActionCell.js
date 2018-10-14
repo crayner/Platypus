@@ -13,21 +13,21 @@ export default function PaginationActionCell(props) {
 
     const xxx = Object.assign(actions.buttons, {})
     const buttons = Object.keys(xxx).map((key) => {
-            let button = xxx[key]
+            let button = {...xxx[key]}
 
-            let url = button.url
+            if (typeof(button.options) !== 'object')
+                button.options = {}
 
-            if (typeof(button.url_options) !== 'object')
-                button.url_options = new Object()
-
-            Object.keys(button.url_options).map(function(key) {
-                const value = button.url_options[key]
-                url = url.replace(key, item[value])
+            let options = {}
+            Object.keys(button.options).map(key => {
+                const value = button.options[key]
+                options[key] = typeof item[value] !== 'undefined' ? item[value] : value
             })
+            delete button.options
+            button.options = Object.assign(item, options)
 
             return <ButtonManager
                 button={button}
-                url={url}
                 key={key}
                 {...otherProps}
             />

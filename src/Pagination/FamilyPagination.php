@@ -193,7 +193,7 @@ class FamilyPagination extends PaginationReactManager
                     '__id__' => 'id',
                 ],
                 'type' => 'delete',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
             [
                 'label' => 'family.action.edit',
@@ -203,7 +203,7 @@ class FamilyPagination extends PaginationReactManager
                 ],
                 'type' => 'edit',
                 'response_type' => 'redirect',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
         ],
     ];

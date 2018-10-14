@@ -7,6 +7,7 @@ import Button from './Button'
 export default function ButtonEdit(props) {
     const {
         button,
+        editElement,
         ...otherProps,
     } = props
 
@@ -19,6 +20,7 @@ export default function ButtonEdit(props) {
     return (
         <Button
             button={button}
+            buttonClickAction={editElement}
             {...otherProps}
         />
     )
@@ -26,4 +28,5 @@ export default function ButtonEdit(props) {
 
 ButtonEdit.propTypes = {
     button: PropTypes.object.isRequired,
+    editElement: PropTypes.func.isRequired,
 }

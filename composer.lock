@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "25d58b1ee4d8ca2136720e118fb0b875",
+    "content-hash": "7c06cb21075bddfb9323bfafa57003d8",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -5909,16 +5909,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.7.0",
+            "version": "v1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "22a9bf33868f0fed6cab013fe5231e8485d15e20"
+                "reference": "26643943fe19b5b47d620744907f09d1d6b3f06f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/22a9bf33868f0fed6cab013fe5231e8485d15e20",
-                "reference": "22a9bf33868f0fed6cab013fe5231e8485d15e20",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/26643943fe19b5b47d620744907f09d1d6b3f06f",
+                "reference": "26643943fe19b5b47d620744907f09d1d6b3f06f",
                 "shasum": ""
             },
             "require": {
@@ -5971,7 +5971,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2018-08-30T01:08:06+00:00"
+            "time": "2018-10-13T19:56:32+00:00"
         }
     ],
     "aliases": [],

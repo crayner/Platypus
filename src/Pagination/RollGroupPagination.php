@@ -170,7 +170,7 @@ class RollGroupPagination extends PaginationReactManager
                     '__id__' => 'id',
                 ],
                 'type' => 'delete',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
             ],
             [
                 'label' => 'school.roll_group.edit.title',
@@ -180,7 +180,7 @@ class RollGroupPagination extends PaginationReactManager
                 ],
                 'type' => 'edit',
                 'response_type' => 'redirect',
-                'classMerge' => 'btn-sm',
+                'mergeClass' => 'btn-sm',
                 'options' => [
                     'target' => 'RollGroupManage',
                     'specs' => 'width=1100,height=750',

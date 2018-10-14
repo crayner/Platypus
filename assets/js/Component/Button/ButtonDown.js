@@ -4,29 +4,26 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import Button from './Button'
 
-export default function ButtonAdd(props) {
+export default function ButtonDown(props) {
     const {
         button,
-        addElement,
         ...otherProps,
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')
-        button.colour = 'info'
+        button.colour = 'light'
 
     if (button.icon === false || typeof(button.icon) === 'undefined')
-        button.icon = ['fas','plus-circle']
+        button.icon = ['fas','arrow-down']
 
     return (
         <Button
             button={button}
-            buttonClickAction={addElement}
             {...otherProps}
         />
     )
 }
 
-ButtonAdd.propTypes = {
+ButtonDown.propTypes = {
     button: PropTypes.object.isRequired,
-    addElement: PropTypes.func.isRequired,
 }

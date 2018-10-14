@@ -26,5 +26,5 @@
     {{ parent() }}
     {{ toggle_script() }}
     {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_column'} %}
-    {{ collectionScript(form.timetableColumnRows, manager.template) }}
+    {{ collectionScript(form.timetableColumnRows) }}
 {% endblock javascripts %}

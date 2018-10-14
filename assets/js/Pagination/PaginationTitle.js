@@ -30,21 +30,15 @@ export default function PaginationTitle(props) {
         />
     )
 
-    var buttons = headerDefinition.buttons.map(function(button,key){
+    var buttons = Object.keys(headerDefinition.buttons).map(key => {
+        let button = Object.assign(headerDefinition.buttons[key], {})
 
-        let url = button.url
-
-        if (typeof(button.url_options) !== 'object')
-            button.url_options = new Object()
-
-        Object.keys(button.url_options).map(function(key) {
-            const value = button.url_options[key]
-            url = url.replace(key, item[value])
-        })
+        if (typeof button.options !== 'object')
+            button.options = {}
+        button.options = Object.assign(button.options, button)
 
         return <ButtonManager
             button={button}
-            url={url}
             key={key}
             translations={translations}
             {...otherProps}
