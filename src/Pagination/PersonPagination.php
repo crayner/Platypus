@@ -208,7 +208,7 @@ class PersonPagination extends PaginationReactManager
                     '__id__' => 'id',
                 ],
                 'type' => 'edit',
-                'response_type' => 'redirect',
+                'url_type' => 'redirect',
             ],
         ],
     ];

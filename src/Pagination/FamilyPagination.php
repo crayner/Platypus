@@ -202,7 +202,7 @@ class FamilyPagination extends PaginationReactManager
                     '__id__' => 'id',
                 ],
                 'type' => 'edit',
-                'response_type' => 'redirect',
+                'url_type' => 'redirect',
                 'mergeClass' => 'btn-sm',
             ],
         ],
@@ -218,7 +218,7 @@ class FamilyPagination extends PaginationReactManager
                 'url' => '/family/Add/edit/',
                 'url_options' => [],
                 'type' => 'add',
-                'response_type' => 'redirect',
+                'url_type' => 'redirect',
             ],
         ],
     ];

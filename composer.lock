@@ -1604,19 +1604,20 @@
         },
         {
             "name": "hillrange/symfony-collection-react",
-            "version": "0.0.04",
+            "version": "0.0.05",
             "source": {
                 "type": "git",
                 "url": "https://github.com/crayner/symfony-collection-react.git",
-                "reference": "eb0c4267b5d9b231623dad44800ebd9e32cbd549"
+                "reference": "eb089c326a3d0dd8ba07c96bdf15bb309d92db8f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/crayner/symfony-collection-react/zipball/eb0c4267b5d9b231623dad44800ebd9e32cbd549",
-                "reference": "eb0c4267b5d9b231623dad44800ebd9e32cbd549",
+                "url": "https://api.github.com/repos/crayner/symfony-collection-react/zipball/eb089c326a3d0dd8ba07c96bdf15bb309d92db8f",
+                "reference": "eb089c326a3d0dd8ba07c96bdf15bb309d92db8f",
                 "shasum": ""
             },
             "require": {
+                "hillrange/symfony-form": "^0.2",
                 "php": "^7.2"
             },
             "type": "symfony-bundle",
@@ -1651,7 +1652,7 @@
             "keywords": [
                 "form"
             ],
-            "time": "2018-10-09T21:32:56+00:00"
+            "time": "2018-10-13T01:58:29+00:00"
         },
         {
             "name": "hillrange/symfony-form",

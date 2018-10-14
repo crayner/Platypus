@@ -179,7 +179,7 @@ class RollGroupPagination extends PaginationReactManager
                     '__id__' => 'id',
                 ],
                 'type' => 'edit',
-                'response_type' => 'redirect',
+                'url_type' => 'redirect',
                 'mergeClass' => 'btn-sm',
                 'options' => [
                     'target' => 'RollGroupManage',
@@ -198,7 +198,7 @@ class RollGroupPagination extends PaginationReactManager
                 'label' => 'Refresh Roll Groups',
                 'url' => '/school/roll/group/manage/',
                 'type' => 'refresh',
-                'response_type' => 'redirect',
+                'url_type' => 'redirect',
             ],
             [
                 'label' => 'school.roll_group.add.title',
@@ -209,7 +209,7 @@ class RollGroupPagination extends PaginationReactManager
                     'target' => 'RollGroupManage',
                     'specs' => 'width=1100,height=750',
                 ],
-                'response_type' => 'redirect',
+                'url_type' => 'redirect',
             ],
         ],
     ];

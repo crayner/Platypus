@@ -39,7 +39,7 @@ export default function AddressCollection(props) {
       label: 'address.remove',
       style: { float: 'right' },
       mergeClass: 'btn-sm',
-      response_type: 'json',
+      url_type: 'json',
     };
     let url = '/address/{id}/remove/{parentClass}/{entity_id}/';
     url = url.replace('{id}', address.id);

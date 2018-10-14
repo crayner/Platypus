@@ -164,7 +164,7 @@ class DepartmentPagination extends PaginationReactManager
                     '__id__' => 'id',
                 ],
                 'type' => 'delete',
-                'response_type' => 'redirect',
+                'url_type' => 'redirect',
                 'mergeClass' => 'btn-sm',
             ],
             [
@@ -175,7 +175,7 @@ class DepartmentPagination extends PaginationReactManager
                     '{tabName}' => 'tabName',
                 ],
                 'type' => 'edit',
-                'response_type' => 'redirect',
+                'url_type' => 'redirect',
                 'mergeClass' => 'btn-sm',
             ],
         ],
