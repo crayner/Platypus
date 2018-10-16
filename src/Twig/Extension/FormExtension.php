@@ -15,6 +15,7 @@
  */
 namespace App\Twig\Extension;
 
+use App\Manager\FormManager;
 use Twig\Extension\AbstractExtension;
 
 class FormExtension extends AbstractExtension
@@ -39,6 +40,7 @@ class FormExtension extends AbstractExtension
     {
         return [
             new \Twig_SimpleFunction('formTranslations', array($this, 'formTranslations')),
+            new \Twig_SimpleFunction('renderForm', [$this->formManager, 'renderForm'], ['is_safe' => ['html']]),
         ];
     }
 
@@ -52,5 +54,19 @@ class FormExtension extends AbstractExtension
         return [
             'form.required',
         ];
+    }
+
+    /**
+     * @var FormManager
+     */
+    private $formManager;
+
+    /**
+     * FormExtension constructor.
+     * @param FormManager $formManager
+     */
+    public function __construct(FormManager $formManager)
+    {
+        $this->formManager = $formManager;
     }
 }

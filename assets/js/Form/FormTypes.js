@@ -2,14 +2,18 @@
 
 import React from "react"
 import PropTypes from 'prop-types'
-import { FormGroup, ControlLabel, FormControl, HelpBlock} from 'react-bootstrap'
+import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap'
 import {translateMessage} from '../Component/MessageTranslator'
+import FormLabel from './FormLabel'
+import FormHelp from './FormHelp'
+import FormRequired from './FormRequired'
 
 export default function FormTypes(props) {
     const {
         translations,
         form,
         style,
+        ...otherProps
     } = props
 
     const prefix = form.block_prefixes.reverse()
@@ -28,9 +32,9 @@ export default function FormTypes(props) {
                 //                validationState={this.getValidationState()}
             >
                 { textTypeWidget() }
-                <ControlLabel>Working example with validation</ControlLabel>
-                <FormControl.Feedback/>
-                <HelpBlock>Validation is based on string length.</HelpBlock>
+                <FormLabel label={form.label}/>
+                <FormRequired required={form.required}/>
+                <FormHelp help={form.help}/>
             </FormGroup>
         )
     }
@@ -56,10 +60,7 @@ export default function FormTypes(props) {
                 controlId="formBasicText"
                 //                validationState={this.getValidationState()}
             >
-                { formTypeWidget() }
-                <ControlLabel>Working example with validation</ControlLabel>
-                <FormControl.Feedback/>
-                <HelpBlock>Validation is based on string length.</HelpBlock>
+                { formTypeWidget() }{ showLabelHelp()}
             </FormGroup>
         )
     }
@@ -113,10 +114,7 @@ export default function FormTypes(props) {
                 controlId={form.id}
                 //                validationState={this.getValidationState()}
             >
-                { timeTypeWidget() }
-                <ControlLabel>Working example with validation</ControlLabel>
-                <FormControl.Feedback/>
-                <HelpBlock>Validation is based on string length.</HelpBlock>
+                { timeTypeWidget() }{ showLabelHelp()}
             </FormGroup>
         )
     }
@@ -182,6 +180,7 @@ export default function FormTypes(props) {
             </div>
         )
     }
+
     function choiceType() {
         if (style === 'widget')
             return choiceTypeWidget()
@@ -190,10 +189,7 @@ export default function FormTypes(props) {
                 controlId={form.id}
                 //                validationState={this.getValidationState()}
             >
-                { choiceTypeWidget() }
-                <ControlLabel>Working example with validation</ControlLabel>
-                <FormControl.Feedback/>
-                <HelpBlock>Validation is based on string length.</HelpBlock>
+                { choiceTypeWidget() }{ showLabelHelp()}
             </FormGroup>
         )
     }

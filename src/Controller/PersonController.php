@@ -161,7 +161,6 @@ class PersonController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/person/{id}/edit/{tabName}", name="person_edit"))
-     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
      */
     public function edit(PersonManager $manager, Request $request, AddressManager $addressManager, PhoneManager $phoneManager, $id = 'Add', $tabName = 'basic.information')
     {

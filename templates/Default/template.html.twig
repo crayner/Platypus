@@ -42,7 +42,6 @@
 
     {% if not(fullPage) %}
         {% set sections = getSection() %}
-
         {% if sections is empty %}
             {% set fullPage = true %}
             {% set alwaysFullPage = true %}
@@ -73,10 +72,11 @@
             {% block flashMessages %}
                 {% include 'Default/flash.html.twig' %}
             {% endblock flashMessages %}
-            {% block contentContainer %}
-                {{ 'No content'|trans }}
-            {% endblock contentContainer %}
-
+            <div id="pageContent">
+                {% block contentContainer %}
+                    {{ 'No content'|trans }}
+                {% endblock contentContainer %}
+            </div>
             {% if fullPage %}
                     </main>
                 </div>

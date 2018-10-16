@@ -23,7 +23,7 @@ use Hillrange\Collection\React\Util\CollectionInterface;
  * Class TimetableColumnManager
  * @package App\Manager
  */
-class TimetableColumnManager extends TabManager
+class TimetableColumnManager implements FormManagerInterface
 {
     use EntityTrait;
 
@@ -36,19 +36,48 @@ class TimetableColumnManager extends TabManager
      * @var array
      */
     public $tabs = [
-        [
+        'details' => [
             'name' => 'details',
             'label' => 'Details',
-            'include' => 'Timetable/column_details.html.twig',
+//            'include' => 'Timetable/column_details.html.twig',
             'message' => 'timetableDetailsMessage',
             'translation' => 'Timetable',
+            'rows' => [
+                [
+                    'class' => 'row',
+                    'columns' => [
+                        [
+                            'class' => 'col-4 card',
+                            'form' => ['name' => 'row'],
+                        ],
+                    ],
+                ],
+            ],
         ],
-        [
+        'rows' => [
             'name' => 'rows',
             'label' => 'Column Rows',
-            'include' => 'Timetable/column_rows.html.twig',
+//            'include' => 'Timetable/column_rows.html.twig',
             'message' => 'timetableRowMessage',
             'translation' => 'Timetable',
+            'rows' => [],
+            'container' => [],
         ],
     ];
+
+    /**
+     * getColumnTemplate
+     *
+     * @return array
+     */
+    public function getColumnTemplate(): array
+    {
+        $template = [];
+        $template['useTabs'] = true;
+        $template['tabs'] = $this->tabs;
+
+
+
+        return $template;
+    }
 }

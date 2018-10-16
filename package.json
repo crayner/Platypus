@@ -40,7 +40,9 @@
         "watch": "encore dev --watch",
         "build": "encore production"
     },
-    "dependencies": {},
+    "dependencies": {
+        "react-tabs": "^2.3.0"
+    },
     "eslintConfig": {
         "parser": "babel-eslint",
         "plugins": [
