@@ -9,6 +9,7 @@ import ButtonAdd from './ButtonAdd'
 import ButtonRefresh from './ButtonRefresh'
 import ButtonReturn from './ButtonReturn'
 import ButtonClose from './ButtonClose'
+import ButtonSave from './ButtonSave'
 
 export default function ButtonManager(props) {
     const {
@@ -16,9 +17,19 @@ export default function ButtonManager(props) {
        ...otherProps,
     } = props
 
+    if (typeof button.mergeClass === 'undefined')
+        button.mergeClass = ''
+
     if (button.type === 'edit')
         return (
             <ButtonEdit
+                button={button}
+                {...otherProps}
+            />
+        )
+    if (button.type === 'save')
+        return (
+            <ButtonSave
                 button={button}
                 {...otherProps}
             />

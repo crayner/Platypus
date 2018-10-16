@@ -115,8 +115,7 @@ class FormManager
          $props['form'] =  $this->extractForm($form->createView());
          $props['errors'] =  $this->getFormErrors($form);
          $props['translations'] = [
-             'object' => 'Must be an Object, not an array',
-             'form.required' => $this->translator->trans('form.required', [], 'FormTheme'),
+             'object' => 'Must be an Object, not an Array',
          ];
 
 
@@ -185,6 +184,7 @@ class FormManager
 
                 $w = $template['tabs'][$q];
                 $template['tabs'][$q]['rows'] = $this->isValidRows($template['tabs'][$q]['rows']);
+                $template['tabs'][$q]['container'] = $this->validateContainer($template['tabs'][$q]['container']);
             }
         } else {
             dd('Crap!');
@@ -361,10 +361,104 @@ dd($errorList);
     }
 
     /**
+     * getTranslator
+     *
      * @return TranslatorInterface
      */
     public function getTranslator(): TranslatorInterface
     {
         return $this->translator;
+    }
+
+    /**
+     * validateContainer
+     *
+     * @param $container
+     * @return array
+     */
+    private function validateContainer($container)
+    {
+        if ($container === false)
+            return $container;
+        $resolver = new OptionsResolver();
+        $resolver->setRequired([
+        ]);
+        $resolver->setDefaults([
+            'panel' => false,
+            'class' => false,
+        ]);
+        $resolver->setAllowedTypes('class', ['string', 'boolean']);
+        $resolver->setAllowedTypes('panel', ['array', 'boolean']);
+        $container = $resolver->resolve($container);
+
+        $container['panel'] = $this->validatePanel($container['panel']);
+        
+        if ($container['panel'] && $container['class'])
+            trigger_error(sprintf('Containers must specify a panel (%s) or a class (%s), not both.', $container['panel']['colour'], $container['class']), E_USER_ERROR);
+
+        return $container;
+    }
+
+    /**
+     * validatePanel
+     *
+     * @param $panel
+     * @return array
+     */
+    private function validatePanel($panel)
+    {
+        if ($panel === false)
+            return $panel;
+        $resolver = new OptionsResolver();
+        $resolver->setRequired([
+            'label',
+        ]);
+        $resolver->setDefaults([
+            'colour' => 'info',
+            'description' => false,
+            'buttons' => false,
+            'label_params' => [],
+            'description_params' => [],
+        ]);
+        $resolver->setAllowedTypes('colour', ['string']);
+        $resolver->setAllowedTypes('label', ['string']);
+        $resolver->setAllowedTypes('label_params', ['array']);
+        $resolver->setAllowedTypes('description_params', ['array']);
+        $resolver->setAllowedTypes('description', ['boolean', 'string']);
+        $resolver->setAllowedTypes('buttons', ['boolean', 'array']);
+        $panel = $resolver->resolve($panel);
+
+        $panel['buttons'] = $this->validateButtons($panel['buttons']);
+
+        if ($panel['label'])
+            $panel['label'] = $this->getTranslator()->trans($panel['label'], $panel['label_params'], $this->getTemplateManager()->getTranslationDomain());
+        if ($panel['description'])
+            $panel['description'] = $this->getTranslator()->trans($panel['description'], $panel['description_params'], $this->getTemplateManager()->getTranslationDomain());
+
+        return $panel;
+    }
+    
+    private function validateButtons($buttons)
+    {
+        if ($buttons === false)
+            return $buttons;
+
+        foreach($buttons as $q=>$w)
+        {
+            $resolver = new OptionsResolver();
+            $resolver->setRequired([
+                'type',
+            ]);
+            $resolver->setDefaults([
+                'mergeClass' => '',
+            ]);
+            $resolver->setAllowedTypes('type', ['string']);
+            $resolver->setAllowedTypes('mergeClass', ['string']);
+            $resolver->setAllowedValues('type', ['save']);
+            $w = $resolver->resolve($w);
+
+
+        }
+        return $buttons;
     }
 }

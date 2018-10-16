@@ -48,6 +48,18 @@ class TestType extends AbstractType
                     ],
                 ]
             )
+            ->add('nameShort', TextType::class,
+                [
+                    'label' => 'Abbreviated Name',
+                ]
+            )
+            ->add('dayOfWeek', EntityType::class,
+                [
+                    'class' => DayOfWeek::class,
+                    'choice_label' => 'name',
+                    'label' => 'Day of the Week'
+                ]
+            )
         ;
     }
 

@@ -3,6 +3,7 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import FormRows from './FormRows'
+import FormPanel from './FormPanel'
 
 export default function FormPage(props) {
     const {
@@ -11,8 +12,12 @@ export default function FormPage(props) {
     } = props
 
     if (page.container !== false)
+        if (page.container.panel !== false)
+            return (
+                <FormPanel page={page} {...otherProps}/>
+            )
         return (
-            <div>Do a Container</div>
+            <div className={page.container.class}><FormRows rows={page.rows} {...otherProps}/></div>
         )
 
     return (

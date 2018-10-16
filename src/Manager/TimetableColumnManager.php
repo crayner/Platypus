@@ -33,6 +33,11 @@ class TimetableColumnManager implements FormManagerInterface
     private $entityName = TimetableColumn::class;
 
     /**
+     * @var string
+     */
+    private $translationDomain = 'Timetable';
+
+    /**
      * @var array
      */
     public $tabs = [
@@ -49,6 +54,25 @@ class TimetableColumnManager implements FormManagerInterface
                         [
                             'class' => 'col-4 card',
                             'form' => ['name' => 'row'],
+                        ],
+                        [
+                            'class' => 'col-4 card',
+                            'form' => ['nameShort' => 'row'],
+                        ],
+                        [
+                            'class' => 'col-4 card',
+                            'form' => ['dayOfWeek' => 'row'],
+                        ],
+                    ],
+                ],
+            ],
+            'container' => [
+                'panel' => [
+                    'colour' => 'info',
+                    'label' => 'Manage Timetable Column',
+                    'buttons' => [
+                        [
+                            'type' => 'save',
                         ],
                     ],
                 ],
@@ -79,5 +103,15 @@ class TimetableColumnManager implements FormManagerInterface
 
 
         return $template;
+    }
+
+    /**
+     * getTranslationDomain
+     *
+     * @return string
+     */
+    public function getTranslationDomain(): string
+    {
+        return $this->translationDomain;
     }
 }

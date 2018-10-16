@@ -21,5 +21,10 @@ namespace App\Manager;
  */
 interface FormManagerInterface
 {
-
+    /**
+     * getTranslationsDomain
+     *
+     * @return string
+     */
+    public function getTranslationDomain(): string;
 }

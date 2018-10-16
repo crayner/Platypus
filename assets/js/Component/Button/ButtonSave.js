@@ -7,7 +7,7 @@ import Button from './Button'
 export default function ButtonSave(props) {
     const {
         button,
-        saveCollection,
+        saveForm,
         ...otherProps,
     } = props
 
@@ -23,7 +23,7 @@ export default function ButtonSave(props) {
     return (
         <Button
             button={button}
-            buttonClickAction={saveCollection}
+            buttonClickAction={saveForm}
             {...otherProps}
         />
     )
@@ -31,4 +31,5 @@ export default function ButtonSave(props) {
 
 ButtonSave.propTypes = {
     button: PropTypes.object.isRequired,
+    saveForm: PropTypes.func.isRequired,
 }

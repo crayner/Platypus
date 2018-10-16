@@ -18,6 +18,7 @@ export default class FormControl extends Component {
         }
 
         this.cancelMessage = this.cancelMessage.bind(this)
+        this.saveForm = this.saveForm.bind(this)
     }
 
     cancelMessage(id) {
@@ -27,11 +28,16 @@ export default class FormControl extends Component {
         })
     }
 
+    saveForm(){
+        console.log(this)
+    }
+
     render() {
         return (
             <form name={this.otherProps.form.name} method={this.otherProps.template.method}>
                 <FormRender
                     cancelMessage={this.cancelMessage}
+                    saveForm={this.saveForm}
                     messages={this.state.messages}
                     {...this.otherProps}
                 />
