@@ -31,5 +31,5 @@ export default function ButtonSave(props) {
 
 ButtonSave.propTypes = {
     button: PropTypes.object.isRequired,
-    saveForm: PropTypes.func.isRequired,
+    saveForm: PropTypes.func,
 }

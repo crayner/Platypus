@@ -4,33 +4,33 @@ import React from "react"
 import PropTypes from 'prop-types'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import '../../css/react-tabs.scss';
-import FormPage from './FormPage'
+import FormContainer from './FormContainer'
 
 export default function FormRenderTabs(props) {
     const {
-        tabs,
+        template,
         ...otherProps
     } = props
 
-    const tabTags = Object.keys(tabs).map(name => {
-        const tab = tabs[name]
+    const tabTags = Object.keys(template).map(name => {
+        const tab = template[name]
         const disabled = tab.display ? false : true
         return (
-            <Tab key={name} disabled={disabled}>{tabs[name].label}</Tab>
+            <Tab key={name} disabled={disabled}>{tab.label}</Tab>
         )
     })
 
-    const content = Object.keys(tabs).map(name => {
-        const page = tabs[name]
-            return (
-                <TabPanel key={name}>
-                    {page.display ?
-                    <FormPage
-                        page={page}
-                        {...otherProps}
-                    /> : 'Empty Tab' }
-                </TabPanel>
-            )
+    const content = Object.keys(template).map(name => {
+        const page = template[name]
+        return (
+            <TabPanel key={name}>
+                {page.display ?
+                <FormContainer
+                    template={page.container}
+                    {...otherProps}
+                /> : 'Empty Tab' }
+            </TabPanel>
+        )
     })
 
     return (
@@ -44,5 +44,5 @@ export default function FormRenderTabs(props) {
 }
 
 FormRenderTabs.propTypes = {
-    tabs: PropTypes.object.isRequired,
+    template: PropTypes.object.isRequired,
 }

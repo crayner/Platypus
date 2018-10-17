@@ -113,7 +113,7 @@ class FormManager
     public function renderForm(FormInterface $form, FormManagerInterface $templateManager, string $templateName = 'template')
     {
          $this->setTemplateManager($templateManager)
-            ->isTemplateValid($templateName);
+            ->validateTemplate($this->getTemplate($templateName));
 
          $props = [];
          $props['locale'] = $this->getRequest()->get('_locale') ?: 'en';
@@ -133,74 +133,35 @@ class FormManager
     }
 
     /**
-     * isTemplateValid
+     * validateTemplate
      *
-     * @param string $templateName
-     * @return bool
+     * @param array $template
+     * @return array
      */
-    private function isTemplateValid(string $templateName): bool
+    private function validateTemplate(array $template): array
     {
-        $template = $this->getTemplate($templateName);
-
         $resolver = new OptionsResolver();
         $resolver->setRequired([
-            'url',
+            'form',
         ]);
         $resolver->setDefaults([
-            'useTabs' => false,
             'tabs' => false,
-            'method' => 'post',
+            'container' => false,
         ]);
-        $resolver->setAllowedTypes('url', 'string');
-        $resolver->setAllowedTypes('useTabs', 'boolean');
+        $resolver->setAllowedTypes('form', 'array');
         $resolver->setAllowedTypes('tabs', ['boolean', 'array']);
-        $resolver->setAllowedValues('method', ['post', 'get']);
+        $resolver->setAllowedTypes('container', ['boolean', 'array']);
 
-        $template = $resolver->resolve($template);
+        $this->template = $resolver->resolve($template);
 
-        if ($template['useTabs'] && empty($template['tabs']))
-            trigger_error(sprintf('No tabs have been defined!'), E_USER_ERROR);
+        $this->template['form'] = $this->validateForm($this->template['form']);
+        $this->template['container'] = $this->validateContainer($this->template['container']);
+        $this->template['tabs'] = $this->validateTabs($this->template['tabs']);
 
-        if ($template['useTabs'])
-        {
-            foreach($template['tabs'] as $q=>$w)
-            {
-                $resolver = new OptionsResolver();
-                $resolver->setRequired([
-                    'label',
-                    'name',
-                ]);
-                $resolver->setDefaults([
-                    'display' => true,
-                    'message' => $w['name'].'Messages',
-                    'translation' => false,
-                    'rows' => false,
-                    'container' => false,
-                ]);
-                $resolver->setAllowedTypes('name', 'string');
-                $resolver->setAllowedTypes('display', 'boolean');
-                $resolver->setAllowedTypes('label', 'string');
-                $resolver->setAllowedTypes('rows', ['boolean', 'array']);
-                $resolver->setAllowedTypes('container', ['boolean', 'array']);
+        if ($this->template['container'] === false && $this->template['tabs'] === false)
+            trigger_error(sprintf('The form must specify a container or a set of tabs.'),E_USER_ERROR);
 
-                if (isset($w['display']) && is_string($w['display']) && method_exists($this->getTemplateManager(), $w['display'])) {
-                    $method = $w['display'];
-                    $w['display'] = $this->getTemplateManager()->$method();
-                }
-
-                $template['tabs'][$q] = $resolver->resolve($w);
-
-                $w = $template['tabs'][$q];
-                $template['tabs'][$q]['rows'] = $this->isValidRows($template['tabs'][$q]['rows']);
-                $template['tabs'][$q]['container'] = $this->validateContainer($template['tabs'][$q]['container']);
-            }
-        } else {
-            dd('Crap!');
-        }
-
-        $this->template = $template;
-
-        return true;
+        return $this->template;
     }
 
     /**
@@ -218,9 +179,14 @@ class FormManager
     {
         if (is_array($this->template))
             return $this->template;
+
+        if (property_exists($this->getTemplateManager(), $templateName))
+            return $this->getTemplateManager()->$templateName;
+
         $templateName = 'get' . ucfirst($templateName);
         if (! method_exists($this->getTemplateManager(), $templateName))
             trigger_error(sprintf('No template "%s" was found in %s Manager.', $templateName, get_class($this->getTemplateManager())), E_USER_ERROR);
+
         return $this->getTemplateManager()->$templateName();
     }
 
@@ -334,54 +300,94 @@ class FormManager
     }
 
     /**
-     * isValidRows
+     * validateRows
      *
      * @param $rows
      * @return array
      */
-    private function isValidRows($rows): array
+    private function validateRows($rows): array
     {
+        if (empty($rows))
+            return $rows ?: [];
         foreach($rows as $e=>$r){
-            $resolver = new OptionsResolver();
-            $resolver->setRequired([
-                'class',
-                'columns',
-            ]);
-            $resolver->setDefaults([
-            ]);
-            $resolver->setAllowedTypes('class', 'string');
-            $resolver->setAllowedTypes('columns', 'array');
-            $rows[$e] = $resolver->resolve($r);
-            if (empty($r['columns']))
-                trigger_error(sprintf('An array of columns is compulsory for each row.'), E_USER_ERROR);
-            $r['columns'] = $this->isValidColumns($r['columns']);
+
+            $rows[$e] = $this->validateRow($r);
         }
         return $rows;
 
     }
 
     /**
-     * isValidRows
+     * validateRow
+     *
+     * @param $row
+     * @return array
+     */
+    private function validateRow($row)
+    {
+        if ($row === false)
+            return $row;
+        $resolver = new OptionsResolver();
+        $resolver->setRequired([
+            'class',
+            'columns',
+        ]);
+        $resolver->setDefaults([
+        ]);
+        $resolver->setAllowedTypes('class', 'string');
+        $resolver->setAllowedTypes('columns', 'array');
+        $row = $resolver->resolve($row);
+        if (empty($row['columns']))
+            trigger_error(sprintf('An array of columns is compulsory for each row.'), E_USER_ERROR);
+        $row['columns'] = $this->validateColumns($row['columns']);
+        return $row;
+    }
+
+    /**
+     * validateRows
      *
      * @param $rows
      * @return array
      */
-    private function isValidColumns($columns): array
+    private function validateColumns($columns): array
     {
         foreach($columns as $e=>$r){
-            $resolver = new OptionsResolver();
-            $resolver->setRequired([
-                'class'
-            ]);
-            $resolver->setDefaults([
-                'form' => false,
-            ]);
-            $resolver->setAllowedTypes('class', 'string');
-            $resolver->setAllowedTypes('form', ['array', 'boolean']);
-            $columns[$e] = $resolver->resolve($r);
+            $columns[$e] = $this->validateColumn($r);
         }
         return $columns;
 
+    }
+
+    /**
+     * validateColumn
+     *
+     * @param $column
+     * @return mixed
+     */
+    private function validateColumn($column)
+    {
+        if ($column === false)
+            return $column;
+        $resolver = new OptionsResolver();
+        $resolver->setDefaults([
+            'form' => false,
+            'label' => false,
+            'label_params' => [],
+            'class' => false,
+            'buttons' => false,
+            'container' => false,
+        ]);
+        $resolver->setAllowedTypes('class', ['boolean','string']);
+        $resolver->setAllowedTypes('buttons', ['boolean','array']);
+        $resolver->setAllowedTypes('label', ['boolean', 'string']);
+        $resolver->setAllowedTypes('label_params', ['array']);
+        $resolver->setAllowedTypes('container', ['boolean', 'array']);
+        $resolver->setAllowedTypes('form', ['array', 'boolean']);
+        $column = $resolver->resolve($column);
+        $column['container'] = $this->validateContainer($column['container']);
+        $column['buttons'] = $this->validateButtons($column['buttons']);
+
+        return $column;
     }
 
     /**
@@ -410,15 +416,25 @@ class FormManager
         $resolver->setDefaults([
             'panel' => false,
             'class' => false,
+            'rows' => false,
+            'headerRow' => false,
+            'collectionRows' => false,
         ]);
         $resolver->setAllowedTypes('class', ['string', 'boolean']);
         $resolver->setAllowedTypes('panel', ['array', 'boolean']);
+        $resolver->setAllowedTypes('rows', ['array', 'boolean']);
+        $resolver->setAllowedTypes('headerRow', ['array', 'boolean']);
+        $resolver->setAllowedTypes('collectionRows', ['array', 'boolean']);
         $container = $resolver->resolve($container);
 
         $container['panel'] = $this->validatePanel($container['panel']);
-        
-        if ($container['panel'] && $container['class'])
-            trigger_error(sprintf('Containers must specify a panel (%s) or a class (%s), not both.', $container['panel']['colour'], $container['class']), E_USER_ERROR);
+
+        if (($container['panel'] !== false && $container['class'] !== false) || ( $container['panel'] === false && $container['class'] === false))
+            trigger_error(sprintf('Containers must specify one of a panel (%s) or a class (%s), but not both.', $container['panel']['colour'], $container['class']), E_USER_ERROR);
+
+        $container['headerRow'] = $this->validateRow($container['headerRow']);
+        $container['collectionRows'] = $this->validateRows($container['collectionRows']);
+        $container['rows'] = $this->validateRows($container['rows']);
 
         return $container;
     }
@@ -443,10 +459,12 @@ class FormManager
             'buttons' => false,
             'label_params' => [],
             'description_params' => [],
+            'rows' => [],
         ]);
         $resolver->setAllowedTypes('colour', ['string']);
         $resolver->setAllowedTypes('label', ['string']);
         $resolver->setAllowedTypes('label_params', ['array']);
+        $resolver->setAllowedTypes('rows', ['array']);
         $resolver->setAllowedTypes('description_params', ['array']);
         $resolver->setAllowedTypes('description', ['boolean', 'string']);
         $resolver->setAllowedTypes('buttons', ['boolean', 'array']);
@@ -475,20 +493,44 @@ class FormManager
 
         foreach($buttons as $q=>$w)
         {
-            $resolver = new OptionsResolver();
-            $resolver->setRequired([
-                'type',
-            ]);
-            $resolver->setDefaults([
-                'mergeClass' => '',
-            ]);
-            $resolver->setAllowedTypes('type', ['string']);
-            $resolver->setAllowedTypes('mergeClass', ['string']);
-            $resolver->setAllowedValues('type', ['save','submit']);
-            $w = $resolver->resolve($w);
-            $buttons[$q] = $w;
+            $buttons[$q] = $this->validateButton($w);
         }
         return $buttons;
+    }
+
+    /**
+     * validateButton
+     *
+     * @param $button
+     * @return mixed
+     */
+    private function validateButton($button)
+    {
+        if ($button === false)
+            return $button;
+        $resolver = new OptionsResolver();
+        $resolver->setRequired([
+            'type',
+        ]);
+        $resolver->setDefaults([
+            'mergeClass' => '',
+            'style' => false,
+            'options' => [],
+            'url' => false,
+            'url_options' => [],
+            'url_type' => 'json',
+        ]);
+        $resolver->setAllowedTypes('type', ['string']);
+        $resolver->setAllowedTypes('mergeClass', ['string']);
+        $resolver->setAllowedTypes('style', ['boolean','array']);
+        $resolver->setAllowedTypes('options', ['array']);
+        $resolver->setAllowedTypes('url_options', ['array']);
+        $resolver->setAllowedTypes('url', ['boolean','string']);
+        $resolver->setAllowedTypes('url_type', ['string']);
+        $resolver->setAllowedValues('type', ['save','submit', 'add', 'delete']);
+        $resolver->setAllowedValues('url_type', ['redirect', 'json']);
+        $button = $resolver->resolve($button);
+        return $button;
     }
 
     /**
@@ -521,4 +563,73 @@ class FormManager
         $this->data = $data;
         return $this->data;
     }
+
+    /**
+     * validateForm
+     *
+     * @param array $form
+     * @return array
+     */
+    private function validateForm(array $form): array
+    {
+        $resolver = new OptionsResolver();
+        $resolver->setRequired([
+            'url',
+        ]);
+        $resolver->setDefaults([
+            'method' => 'post',
+            'encType' => 'application/x-www-form-urlencoded',
+        ]);
+        $resolver->setAllowedTypes('url', ['string']);
+        $resolver->setAllowedTypes('method', ['string']);
+        $resolver->setAllowedTypes('encType', ['string']);
+        $resolver->setAllowedValues('encType', ['application/x-www-form-urlencoded', 'text/plain', 'multipart/form-data']);
+        $resolver->setAllowedValues('method', ['post', 'get']);
+
+        $form = $resolver->resolve($form);
+        return $form;
+    }
+
+
+    /**
+     * validateTabs
+     *
+     * @param $tabs
+     * @return array|boolean
+     */
+    private function validateTabs($tabs)
+    {
+        if ($tabs === false)
+            return $tabs;
+
+        foreach($tabs as $q=>$tab){
+            $resolver = new OptionsResolver();
+            $resolver->setRequired([
+                'name',
+                'container',
+            ]);
+            $resolver->setDefaults([
+                'label' => false,
+                'label_params' => [],
+                'display' => true,
+            ]);
+
+            if (!empty($tab['display']) && is_string($tab['display'])) {
+                $method = $tab['display'];
+                $tab['display'] = $this->$method();
+            }
+            $resolver->setAllowedTypes('label', ['boolean','string']);
+            $resolver->setAllowedTypes('display', ['boolean']);
+            $resolver->setAllowedTypes('name', ['string']);
+            $resolver->setAllowedTypes('container', ['array']);
+            $resolver->setAllowedTypes('label_params', ['array']);
+
+            $tab['container'] = $this->validateContainer($tab['container']);
+
+            $tabs[$q] = $resolver->resolve($tab);
+        }
+
+        return $tabs;
+    }
+
 }

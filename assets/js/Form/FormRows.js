@@ -6,17 +6,17 @@ import FormRow from './FormRow'
 
 export default function FormRows(props) {
     const {
-        rows,
+        template,
         ...otherProps
     } = props
 
 
-    const rowContent = rows.map((row, key) => {
+    const rowContent = template.map((row, key) => {
         return (
             <FormRow
+                template={row}
                 key={key}
                 {...otherProps}
-                row={row}
             />
         )
     })
@@ -27,5 +27,5 @@ export default function FormRows(props) {
 }
 
 FormRows.propTypes = {
-    rows: PropTypes.array.isRequired,
+    template: PropTypes.array.isRequired,
 }

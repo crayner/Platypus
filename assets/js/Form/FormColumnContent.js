@@ -6,31 +6,32 @@ import FormElementSelect from './FormElementSelect'
 
 export default function FormColumnContent(props) {
     const {
-        column,
+        template,
         ...otherProps
     } = props
 
-    if (column.form !== false)
+    if (template.form !== false)
     {
-        const formElements = Object.keys(column.form).map(key => {
-            const style = column.form[key]
+        const formElements = Object.keys(template.form).map(key => {
+            const style = template.form[key]
             return (
                 <FormElementSelect
                     style={style}
                     name={key}
-                    {...otherProps}
                     key={key}
+                    {...otherProps}
                 />
             )
         })
         return (<span>{formElements}</span>)
     }
 
+    console.log(template,otherProps)
     return (
         <div>Form Column Content</div>
     )
 }
 
 FormColumnContent.propTypes = {
-    column: PropTypes.object.isRequired,
+    template: PropTypes.object.isRequired,
 }

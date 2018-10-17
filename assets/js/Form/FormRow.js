@@ -6,25 +6,25 @@ import FormColumn from './FormColumn'
 
 export default function FormRow(props) {
     const {
-        row,
+        template,
         ...otherProps
     } = props
 
-    const columns = row.columns.map((column, key) => {
+    const columns = template.columns.map((column, key) => {
         return (
             <FormColumn
                 key={key}
-                column={column}
+                template={column}
                 {...otherProps}
             />
         )
     })
 
     return (
-        <div className={row.class}>{columns}</div>
+        <div className={template.class}>{columns}</div>
     )
 }
 
 FormRow.propTypes = {
-    row: PropTypes.object.isRequired,
+    template: PropTypes.object.isRequired,
 }

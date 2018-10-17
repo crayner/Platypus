@@ -7,14 +7,12 @@ import ButtonManager from '../Component/Button/ButtonManager'
 
 export default function FormPanel(props) {
     const {
-        page,
+        template,
         ...otherProps
     } = props
 
-    const panel = page.container.panel
-
     function getButtons(){
-        const buttons = panel.buttons.map((button, key) => {
+        const buttons = template.buttons.map((button, key) => {
             return (
                 <ButtonManager
                     button={button}
@@ -27,21 +25,21 @@ export default function FormPanel(props) {
     }
 
     return (
-        <div className={'card card-' + panel.colour}>
+        <div className={'card card-' + template.colour}>
             <div className={'card-header'}>
-                {panel.buttons === false ?
-                <h3 className={'card-title d-flex mb-12 justify-content-between'}>{panel.label}</h3>
+                {template.buttons === false ?
+                <h3 className={'card-title d-flex mb-12 justify-content-between'}>{template.label}</h3>
                     :
                     <h3 className={'card-title d-flex mb-12 justify-content-between'}>
-                        <span className={'p-6'}>{panel.label}</span>
+                        <span className={'p-6'}>{template.label}</span>
                         <span className={'p-6'}>{getButtons()}</span>
                     </h3>
                 }
-                <p>{panel.description}</p>
+                <p>{template.description}</p>
             </div>
             <div className="card-body">
                 <FormRows
-                    rows={page.rows}
+                    template={template.rows}
                     {...otherProps}
                 />
             </div>
@@ -50,5 +48,5 @@ export default function FormPanel(props) {
 }
 
 FormPanel.propTypes = {
-    page: PropTypes.object.isRequired,
+    template: PropTypes.object.isRequired,
 }

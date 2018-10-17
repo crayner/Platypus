@@ -6,14 +6,14 @@ import FormColumnContent from './FormColumnContent'
 
 export default function FormColumn(props) {
     const {
-        column,
+        template,
         ...otherProps
     } = props
 
     return (
-        <div className={column.class}>
+        <div className={template.class}>
             <FormColumnContent
-                column={column}
+                template={template}
                 {...otherProps}
             />
         </div>
@@ -21,5 +21,5 @@ export default function FormColumn(props) {
 }
 
 FormColumn.propTypes = {
-    column: PropTypes.object.isRequired,
+    template: PropTypes.object.isRequired,
 }

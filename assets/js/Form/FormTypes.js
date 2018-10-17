@@ -7,6 +7,7 @@ import FormLabel from './FormLabel'
 import FormHelp from './FormHelp'
 import FormRequired from './FormRequired'
 import FormErrors from './FormErrors'
+import RenderCollection from '../Collection/RenderCollection'
 
 export default function FormTypes(props) {
     const {
@@ -22,6 +23,7 @@ export default function FormTypes(props) {
     const content = prefix.filter(type => {
         if (isFunction(type))
             return type
+        console.log(type  + ' not found!')
     })
 
     if (content.length === 0) {
@@ -30,6 +32,8 @@ export default function FormTypes(props) {
     }
 
     switch (content[0]) {
+        case 'collection':
+            return collectionType()
         case 'hidden':
             return hiddenType()
         case 'choice':
@@ -44,6 +48,7 @@ export default function FormTypes(props) {
 
     function isFunction(type) {
         switch (type) {
+            case 'collection':
             case 'hidden':
             case 'choice':
             case 'time':
@@ -188,7 +193,6 @@ export default function FormTypes(props) {
         if (typeof form.choices === 'object')
             return Object.keys(form.choices).map(index => {
                 const option = form.choices[index]
-                console.log(option)
                 return (<option key={index} value={option.value}>{option.label}</option>)
             })
 
@@ -217,6 +221,13 @@ export default function FormTypes(props) {
                 type="hidden"
                 defaultValue={getElementData(form.full_name)}
             />
+        )
+    }
+
+    function collectionType() {
+        console.log('Handle a Collection here')
+        return (
+            <RenderCollection form={form} {...otherProps} />
         )
     }
 }

@@ -40,54 +40,7 @@ class TimetableColumnManager implements FormManagerInterface
     /**
      * @var array
      */
-    public $tabs = [
-        'details' => [
-            'name' => 'details',
-            'label' => 'Details',
-//            'include' => 'Timetable/column_details.html.twig',
-            'message' => 'timetableDetailsMessage',
-            'translation' => 'Timetable',
-            'rows' => [
-                [
-                    'class' => 'row',
-                    'columns' => [
-                        [
-                            'class' => 'col-4 card',
-                            'form' => ['name' => 'row'],
-                        ],
-                        [
-                            'class' => 'col-4 card',
-                            'form' => ['nameShort' => 'row'],
-                        ],
-                        [
-                            'class' => 'col-4 card',
-                            'form' => ['dayOfWeek' => 'row'],
-                        ],
-                    ],
-                ],
-            ],
-            'container' => [
-                'panel' => [
-                    'colour' => 'info',
-                    'label' => 'Manage Timetable Column',
-                    'buttons' => [
-                        [
-                            'type' => 'submit',
-                        ],
-                    ],
-                ],
-            ],
-        ],
-        'rows' => [
-            'name' => 'rows',
-            'label' => 'Column Rows',
-//            'include' => 'Timetable/column_rows.html.twig',
-            'message' => 'timetableRowMessage',
-            'translation' => 'Timetable',
-            'rows' => [],
-            'container' => [],
-        ],
-    ];
+    public $tabs = [];
 
     /**
      * getColumnTemplate
@@ -96,12 +49,7 @@ class TimetableColumnManager implements FormManagerInterface
      */
     public function getColumnTemplate(): array
     {
-        $template = [];
-        $template['useTabs'] = true;
-        $template['tabs'] = $this->tabs;
-        $template['url'] = str_replace('', '', '/test/post/');
-
-
+        $template = $this->getTabs();
 
         return $template;
     }
@@ -114,5 +62,191 @@ class TimetableColumnManager implements FormManagerInterface
     public function getTranslationDomain(): string
     {
         return $this->translationDomain;
+    }
+
+    /**
+     * getTabs
+     *
+     * @return array
+     */
+    public function getTabs(): array
+    {
+        return [
+            'form' => [
+                'url' => '/test/post/',
+            ],
+            'tabs' => [
+                'details' => $this->getDetailsTab(),
+                'columnRow' => $this->getColumnRowsTab(),
+            ],
+        ];
+    }
+
+    /**
+     * getDetailsTab
+     *
+     * @return array
+     */
+    private function getDetailsTab(): array
+    {
+        return [
+            'name' => 'details',
+            'label' => 'Details',
+            'container' => [
+                'panel' => [
+                    'colour' => 'info',
+                    'label' => 'Manage Timetable Column',
+                    'buttons' => [
+                        [
+                            'type' => 'submit',
+                        ],
+                    ],
+                    'rows' => [
+                        [
+                            'class' => 'row',
+                            'columns' => [
+                                [
+                                    'class' => 'col-4 card',
+                                    'form' => ['name' => 'row'],
+                                ],
+                                [
+                                    'class' => 'col-4 card',
+                                    'form' => ['nameShort' => 'row'],
+                                ],
+                                [
+                                    'class' => 'col-4 card',
+                                    'form' => ['dayOfWeek' => 'row'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * getColumnRowsTab
+     *
+     * @return array
+     */
+    private function getColumnRowsTab(): array
+    {
+        return [
+            'name' => 'rows',
+            'label' => 'Column Rows',
+            'container' => [
+                'panel' => [
+                    'colour' => 'info',
+                    'label' => 'Timetable Column Rows: %{name}',
+                    'label_params' => ['%{name}' => $this->getEntity()->getName()],
+                    'buttons' => [
+                        [
+                            'type' => 'submit',
+                        ],
+                    ],
+                ],
+                'rows' => [
+                    [
+                        'class' => 'row',
+                        'columns' => [
+                            [
+                                'class' => 'col-12',
+                                'form' => ['timetableColumnRows' => 'widget'],
+                                'container' => [
+                                    'class' => 'container',
+                                    'headerRow' => [
+                                        'class' => 'row row-header',
+                                        'columns' => [
+                                            [
+                                                'class' => 'col-2',
+                                                'label' => 'Name',
+                                            ],
+                                            [
+                                                'class' => 'col-2',
+                                                'label' => 'Abbrev.',
+                                            ],
+                                            [
+                                                'class' => 'col-2',
+                                                'label' => 'Start Time',
+                                            ],
+                                            [
+                                                'class' => 'col-2',
+                                                'label' => 'End Time',
+                                            ],
+                                            [
+                                                'class' => 'col-2 text-right',
+                                                'label' => 'Actions',
+                                            ]
+                                        ],
+                                    ],
+                                    'collectionRows' => [
+                                        [
+                                            'class' => 'small row row-striped',
+                                            'columns' => [
+                                                [
+                                                    'class' => 'col-2',
+                                                    'form' => ['name' => 'widget'],
+                                                ],
+                                                [
+                                                    'class' => 'col-2',
+                                                    'form' => ['nameShort' => 'widget'],
+                                                ],
+                                                [
+                                                    'class' => 'col-2',
+                                                    'form' => ['timeStart' => 'widget'],
+                                                ],
+                                                [
+                                                    'class' => 'col-2',
+                                                    'form' => [
+                                                        'timeEnd' => 'widget',
+                                                    ],
+                                                ],
+                                                [
+                                                    'class' => 'col-2 text-right',
+                                                    'form' => [
+                                                        'type' => 'widget',
+                                                        'id' => 'row',
+                                                        'timetableColumn' => 'row',
+                                                    ],
+                                                ],
+                                                [
+                                                    'class' => 'col-2 text-center align-self-center',
+                                                    'buttons' => [
+                                                        'save' => [
+                                                            'mergeClass' => 'btn-sm',
+                                                            'type' => 'submit',
+                                                        ],
+                                                        'add' => [
+                                                            'mergeClass' => 'btn-sm',
+                                                            'type' => 'add',
+                                                            'style' => [
+                                                                'float' => 'right',
+                                                            ],
+                                                        ],
+                                                        'delete' => [
+                                                            'mergeClass' => 'btn-sm',
+                                                            'type' => 'delete',
+                                                            'url' => '/timetable/column/'.$this->getEntity()->getId().'/row/{cid}/delete/',
+                                                            'url_options' => [
+                                                                '{cid}' => 'data_id',
+                                                            ],
+                                                            'url_type' => 'json',
+                                                            'options' => [
+                                                                'eid' => 'name',
+                                                            ],
+                                                        ],
+                                                    ],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }

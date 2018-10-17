@@ -26,6 +26,7 @@ export default class FormControl extends Component {
         this.elementChange = this.elementChange.bind(this)
         this.getElementData = this.getElementData.bind(this)
         this.setElementData = this.setElementData.bind(this)
+        this.addCollectionElement = this.addCollectionElement.bind(this)
     }
 
     cancelMessage(id) {
@@ -92,9 +93,37 @@ export default class FormControl extends Component {
         return w
     }
 
+    addCollectionElement(){
+        const key = this.state.form.children.length
+        let prototype = {...this.prototype}
+        prototype = this.setCollectionMemberKey(prototype, key)
+
+        let children = this.form.children
+        children[key] = prototype
+        this.form.children = children
+        this.setState({
+            form: this.createForm({...this.form}),
+            messages: this.messages
+        })
+    }
+
     render() {
+        const method = this.otherProps.template.form.method
+        if (method === 'post')
+            return (
+                <form name={this.otherProps.form.name} method={'post'} onSubmit={this.handleSubmit} encType={this.otherProps.template.form.encType}>
+                    <FormRender
+                        cancelMessage={this.cancelMessage}
+                        elementChange={this.elementChange}
+                        getElementData={this.getElementData}
+                        messages={this.state.messages}
+                        data={this.state.data}
+                        {...this.otherProps}
+                    />
+                </form>
+            )
         return (
-            <form name={this.otherProps.form.name} method={this.otherProps.template.method} onSubmit={this.handleSubmit}>
+            <form name={this.otherProps.form.name} method={method} onSubmit={this.handleSubmit}>
                 <FormRender
                     cancelMessage={this.cancelMessage}
                     elementChange={this.elementChange}
