@@ -2,11 +2,11 @@
 
 import React from "react"
 import PropTypes from 'prop-types'
-import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap'
-import {translateMessage} from '../Component/MessageTranslator'
+import { FormGroup,  FormControl } from 'react-bootstrap'
 import FormLabel from './FormLabel'
 import FormHelp from './FormHelp'
 import FormRequired from './FormRequired'
+import FormErrors from './FormErrors'
 
 export default function FormTypes(props) {
     const {
@@ -14,7 +14,6 @@ export default function FormTypes(props) {
         style,
         elementChange,
         getElementData,
-        data,
         ...otherProps
     } = props
 
@@ -24,61 +23,6 @@ export default function FormTypes(props) {
         if (isFunction(type))
             return type
     })
-
-    function textType() {
-        if (style === 'widget')
-            return textTypeWidget()
-        return (
-            <FormGroup
-                controlId={form.id}
-                //                validationState={this.getValidationState()}
-            >
-                { textTypeWidget() }
-                <FormLabel label={form.label}/>
-                <FormRequired required={form.required}/>
-                <FormHelp help={form.help}/>
-            </FormGroup>
-        )
-    }
-
-    function textTypeWidget(){
-        getElementData(form.full_name)
-        return (
-            <FormControl
-                type="text"
-                id={form.id}
-                defaultValue={getElementData(form.full_name)}
-                placeholder="Enter text"
-                className={form.attr.class}
-                name={form.full_name}
-                onChange={((e) => elementChange(e, form.full_name))}
-            />
-        )
-    }
-
-    function formType() {
-        if (style === 'widget')
-            return formTypeWidget()
-        return (
-            <FormGroup
-                controlId="formBasicText"
-                //                validationState={this.getValidationState()}
-            >
-                { formTypeWidget() }{ showLabelHelp()}
-            </FormGroup>
-        )
-    }
-
-    function formTypeWidget(){
-        return (
-            <FormControl
-                type="text"
-                defaultValue={form.value}
-                placeholder="Enter text"
-                //                    onChange={this.handleChange}
-            />
-        )
-    }
 
     if (content.length === 0) {
         console.error('No form type found')
@@ -110,17 +54,66 @@ export default function FormTypes(props) {
         }
     }
 
-    function timeType() {
-        if (style === 'widget')
-            return timeTypeWidget()
+    function renderFormGroup(content, style, options){
+        if (typeof options !== 'object')
+            options = {}
         return (
             <FormGroup
                 controlId={form.id}
-                //                validationState={this.getValidationState()}
+                className={form.errors.length > 0 ? 'has-danger' : ''}
+                {...options}
             >
-                { timeTypeWidget() }{ showLabelHelp()}
+                {content}
+                <FormLabel label={form.label}/>
+                <FormRequired required={form.required}/><br/>
+                <FormErrors errors={form.errors}/>
+                <FormHelp help={form.help}/>
             </FormGroup>
         )
+    }
+
+    function textType() {
+        if (style === 'widget')
+            return textTypeWidget()
+        return renderFormGroup(textTypeWidget(), 'text')
+    }
+
+    function textTypeWidget(){
+        getElementData(form.full_name)
+        return (
+            <FormControl
+                type="text"
+                id={form.id}
+                defaultValue={getElementData(form.full_name)}
+                placeholder="Enter text"
+                className={form.attr.class}
+                name={form.full_name}
+                onChange={((e) => elementChange(e, form.full_name))}
+            />
+        )
+    }
+
+    function formType() {
+        if (style === 'widget')
+            return formTypeWidget()
+        return renderFormGroup(formTypeWidget(), 'form')
+    }
+
+    function formTypeWidget(){
+        return (
+            <FormControl
+                type="text"
+                defaultValue={form.value}
+                placeholder="Enter text"
+                onChange={((e) => elementChange(e, form.full_name))}
+            />
+        )
+    }
+
+    function timeType() {
+        if (style === 'widget')
+            return timeTypeWidget()
+        return renderFormGroup(timeTypeWidget(), 'time')
     }
 
     function timeTypeWidget(){
@@ -136,10 +129,10 @@ export default function FormTypes(props) {
                 <FormControl
                     componentClass="select"
                     id={hour.id}
-                    defaultValue={hour.value}
+                    defaultValue={getElementData(form.full_name)}
                     className={hour.attr.class}
                     style={{'width': width + '%'}}
-                //                    onChange={this.handleChange}
+                    onChange={((e) => elementChange(e, form.full_name))}
                 >
                     {
                         hour.choices.map((option, index) => {
@@ -151,10 +144,10 @@ export default function FormTypes(props) {
                 <FormControl
                     componentClass="select"
                     id={minute.id}
-                    defaultValue={minute.value}
+                    defaultValue={getElementData(form.full_name)}
                     style={{'width': width + '%'}}
                     className={minute.attr.class}
-                    //                    onChange={this.handleChange}
+                    onChange={((e) => elementChange(e, form.full_name))}
                 >
                     {
                         minute.choices.map((option, index) => {
@@ -167,10 +160,10 @@ export default function FormTypes(props) {
                     <span>:<FormControl
                         componentClass="select"
                         id={second.id}
-                        defaultValue={second.value}
+                        defaultValue={getElementData(form.full_name)}
                         style={{'width': width + '%'}}
                         className={second.attr.class}
-                        //                    onChange={this.handleChange}
+                        onChange={((e) => elementChange(e, form.full_name))}
                     >
                         {
                             second.choices.map((option, index) => {
@@ -188,23 +181,14 @@ export default function FormTypes(props) {
     function choiceType() {
         if (style === 'widget')
             return choiceTypeWidget()
-        return (
-            <FormGroup
-                controlId={form.id}
-                //                validationState={this.getValidationState()}
-            >
-                { choiceTypeWidget() }
-                <FormLabel label={form.label}/>
-                <FormRequired required={form.required}/>
-                <FormHelp help={form.help}/>
-            </FormGroup>
-        )
+        return renderFormGroup(choiceTypeWidget(), 'choice')
     }
 
     function getChoiceList(){
         if (typeof form.choices === 'object')
             return Object.keys(form.choices).map(index => {
                 const option = form.choices[index]
+                console.log(option)
                 return (<option key={index} value={option.value}>{option.label}</option>)
             })
 
@@ -217,10 +201,10 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 componentClass="select"
-                defaultValue={form.value}
+                defaultValue={getElementData(form.full_name)}
                 placeholder={form.placeholder}
                 multiple={form.multiple}
-                //                    onChange={this.handleChange}
+                onChange={((e) => elementChange(e, form.full_name))}
             >
                 {getChoiceList()}
             </FormControl>
@@ -231,7 +215,7 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 type="hidden"
-                defaultValue={form.value}
+                defaultValue={getElementData(form.full_name)}
             />
         )
     }
@@ -241,7 +225,6 @@ FormTypes.propTypes = {
     elementChange: PropTypes.func.isRequired,
     getElementData: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired,
     style: PropTypes.string.isRequired,
 }
 

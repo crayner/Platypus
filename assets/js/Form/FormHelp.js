@@ -10,17 +10,18 @@ export default function FormHelp(props) {
         help,
     } = props
 
-    if (help === false || help === null)
-        return ('')
+    if (help === false || help === null || help === '')
+        return ''
 
     return (
-        <HelpBlock>{help}</HelpBlock>
+        <HelpBlock className={'text-muted form-text small'}>{help}</HelpBlock>
     )
 }
 
 FormHelp.propTypes = {
-    help: PropTypes.oneOfType([
-        PropTypes.bool,
-        PropTypes.string,
-    ]),
+    help: PropTypes.string,
+}
+
+FormHelp.defaultProps = {
+    help: ''
 }

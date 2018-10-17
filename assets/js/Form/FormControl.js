@@ -78,7 +78,6 @@ export default class FormControl extends Component {
                 data: this.data,
                 form: this.form
             })
-            console.log(data)
         })
     }
 

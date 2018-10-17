@@ -104,9 +104,6 @@ class TestType extends AbstractType
             ->add('name', TextType::class,
                 [
                     'label' => 'Name',
-                    'constraints' => [
-                        new AlwaysInValid(),
-                    ],
                 ]
             )
             ->add('nameShort', TextType::class,
@@ -118,7 +115,11 @@ class TestType extends AbstractType
                 [
                     'class' => DayOfWeek::class,
                     'choice_label' => 'name',
-                    'label' => 'Day of the Week'
+                    'label' => 'Day of the Week',
+                    'constraints' => [
+                        new AlwaysInValid(),
+                    ],
+                    'help' => 'HELP! I need someone!',
                 ]
             )
             ->add('timetableColumnRows', CollectionType::class,

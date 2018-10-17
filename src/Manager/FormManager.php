@@ -120,7 +120,7 @@ class FormManager
          $props['template'] = $this->getTemplate($templateName);
          $props['form'] =  $this->extractForm($form->createView());
          $props['data'] =  $this->extractFormData($props['form']);
-         $props['errors'] =  $this->getFormErrors($form);
+         $props['errors'] = $this->getFormErrors($form);
          $props['translations'] = [
              'object' => 'Must be an Object, not an Array',
          ];
@@ -285,6 +285,13 @@ class FormManager
         else
             $vars['help'] = '';
 
+        if ($vars['errors']->count() > 0) {
+            $errors = [];
+            foreach($vars['errors'] as $error)
+                $errors[] = $error->getMessage();
+            $vars['errors'] = $errors;
+        } else
+            $vars['errors'] = [];
         unset($vars['form']);
         return $vars;
     }
