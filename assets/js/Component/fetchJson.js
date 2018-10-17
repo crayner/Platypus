@@ -7,7 +7,7 @@ export function fetchJson(url, options, locale) {
         headers = options.headers
         delete options.headers
     }
-    headers = ({...headers, 'Content-Type': 'application/json'})
+    headers = ({...headers, 'Content-Type': 'application/json; charset=utf-8'})
 
     if (locale === null)
         locale = 'en'

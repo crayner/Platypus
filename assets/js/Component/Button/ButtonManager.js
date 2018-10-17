@@ -10,6 +10,7 @@ import ButtonRefresh from './ButtonRefresh'
 import ButtonReturn from './ButtonReturn'
 import ButtonClose from './ButtonClose'
 import ButtonSave from './ButtonSave'
+import ButtonSubmit from './ButtonSubmit'
 
 export default function ButtonManager(props) {
     const {
@@ -30,6 +31,13 @@ export default function ButtonManager(props) {
     if (button.type === 'save')
         return (
             <ButtonSave
+                button={button}
+                {...otherProps}
+            />
+        )
+    if (button.type === 'submit')
+        return (
+            <ButtonSubmit
                 button={button}
                 {...otherProps}
             />

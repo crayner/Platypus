@@ -72,6 +72,11 @@ class FormManager
     private $parser;
 
     /**
+     * @var array
+     */
+    private $data = [];
+
+    /**
      * CollectionManager constructor.
      * @param \Twig_Environment $twig
      */
@@ -81,6 +86,7 @@ class FormManager
         $this->stack = $stack;
         $this->translator = $translator;
         $this->parser = $parser;
+        $this->data = [];
     }
 
     /**
@@ -113,11 +119,11 @@ class FormManager
          $props['locale'] = $this->getRequest()->get('_locale') ?: 'en';
          $props['template'] = $this->getTemplate($templateName);
          $props['form'] =  $this->extractForm($form->createView());
+         $props['data'] =  $this->extractFormData($props['form']);
          $props['errors'] =  $this->getFormErrors($form);
          $props['translations'] = [
              'object' => 'Must be an Object, not an Array',
          ];
-
 
          return new \Twig_Markup($this->getTwig()->render('Default/renderForm.html.twig',
              [
@@ -136,14 +142,16 @@ class FormManager
     {
         $template = $this->getTemplate($templateName);
 
-
         $resolver = new OptionsResolver();
-        $resolver->setRequired([]);
+        $resolver->setRequired([
+            'url',
+        ]);
         $resolver->setDefaults([
             'useTabs' => false,
             'tabs' => false,
             'method' => 'post',
         ]);
+        $resolver->setAllowedTypes('url', 'string');
         $resolver->setAllowedTypes('useTabs', 'boolean');
         $resolver->setAllowedTypes('tabs', ['boolean', 'array']);
         $resolver->setAllowedValues('method', ['post', 'get']);
@@ -294,11 +302,20 @@ class FormManager
     {
         if (!$form->isSubmitted()) return [];
 
+        $messages = new MessageManager();
+
         $errorList = $this->parser->parseErrors($form);
+        $errorList = is_array($errorList) ? $errorList: [];
 
-dd($errorList);
+        foreach($errorList as $q=>$w) {
+            $errorList[$q]['messages'] = [];
+            foreach($w['errors'] as $error) {
+                $errorList[$q]['messages'][] = $error->getMessage();
+                $messages->addMessage('danger', $error->getMessage(), [], false);
+            }
+        }
 
-        return is_array($errorList) ? $errorList: [];
+        return $messages->serialiseTranslatedMessages($this->getTranslator());
     }
 
     /**
@@ -437,7 +454,13 @@ dd($errorList);
 
         return $panel;
     }
-    
+
+    /**
+     * validateButtons
+     *
+     * @param $buttons
+     * @return mixed
+     */
     private function validateButtons($buttons)
     {
         if ($buttons === false)
@@ -454,11 +477,41 @@ dd($errorList);
             ]);
             $resolver->setAllowedTypes('type', ['string']);
             $resolver->setAllowedTypes('mergeClass', ['string']);
-            $resolver->setAllowedValues('type', ['save']);
+            $resolver->setAllowedValues('type', ['save','submit']);
             $w = $resolver->resolve($w);
-
-
+            $buttons[$q] = $w;
         }
         return $buttons;
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        return $this->data;
+    }
+
+    /**
+     * extractFormData
+     *
+     * @param $form
+     * @return array
+     */
+    public function extractFormData($form)
+    {
+        $data = [];
+        if (count($form['children']) > 0) {
+            foreach ($form['children'] as $child) {
+                $data[$child['name']] = $this->extractFormData($child);
+            }
+        } else {
+            $data =  $form['value'];
+            if (empty($form['value']) && $form['value'] !== $form['data'])
+                $data =  $form['data'];
+        }
+
+        $this->data = $data;
+        return $this->data;
     }
 }

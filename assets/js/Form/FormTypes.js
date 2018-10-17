@@ -10,9 +10,11 @@ import FormRequired from './FormRequired'
 
 export default function FormTypes(props) {
     const {
-        translations,
         form,
         style,
+        elementChange,
+        getElementData,
+        data,
         ...otherProps
     } = props
 
@@ -40,14 +42,16 @@ export default function FormTypes(props) {
     }
 
     function textTypeWidget(){
+        getElementData(form.full_name)
         return (
             <FormControl
                 type="text"
                 id={form.id}
-                defaultValue={form.value}
+                defaultValue={getElementData(form.full_name)}
                 placeholder="Enter text"
                 className={form.attr.class}
-                //                    onChange={this.handleChange}
+                name={form.full_name}
+                onChange={((e) => elementChange(e, form.full_name))}
             />
         )
     }
@@ -189,9 +193,24 @@ export default function FormTypes(props) {
                 controlId={form.id}
                 //                validationState={this.getValidationState()}
             >
-                { choiceTypeWidget() }{ showLabelHelp()}
+                { choiceTypeWidget() }
+                <FormLabel label={form.label}/>
+                <FormRequired required={form.required}/>
+                <FormHelp help={form.help}/>
             </FormGroup>
         )
+    }
+
+    function getChoiceList(){
+        if (typeof form.choices === 'object')
+            return Object.keys(form.choices).map(index => {
+                const option = form.choices[index]
+                return (<option key={index} value={option.value}>{option.label}</option>)
+            })
+
+        return form.choices.map((option, index) => {
+            return (<option key={index} value={option.value}>{option.label}</option>)
+        })
     }
 
     function choiceTypeWidget(){
@@ -203,11 +222,7 @@ export default function FormTypes(props) {
                 multiple={form.multiple}
                 //                    onChange={this.handleChange}
             >
-                {
-                    form.choices.map((option, index) => {
-                        return (<option key={index} value={option.value}>{translateMessage(translations, option.label)}</option>)
-                    })
-                }
+                {getChoiceList()}
             </FormControl>
         )
     }
@@ -223,11 +238,10 @@ export default function FormTypes(props) {
 }
 
 FormTypes.propTypes = {
-    translations: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.array,
-    ]).isRequired,
+    elementChange: PropTypes.func.isRequired,
+    getElementData: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
+    data: PropTypes.object.isRequired,
     style: PropTypes.string.isRequired,
 }
 

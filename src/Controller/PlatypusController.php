@@ -17,8 +17,12 @@ namespace App\Controller;
 
 use App\Demonstration\PeopleFixtures;
 use App\Form\Type\TestType;
+use App\Manager\FormManager;
+use App\Manager\FormManagerInterface;
 use App\Manager\TimetableColumnManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Yaml\Yaml;
 
@@ -37,18 +41,56 @@ class PlatypusController extends Controller
 
     /**
      * test
+     *
+     * @param TimetableColumnManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      * @Route("/test/", name="test")
      */
-    public function test(TimetableColumnManager $manager)
+    public function test(TimetableColumnManager $manager, Request $request, FormManager $formManager)
     {
         $tc = $manager->find(33);
 
         $form = $this->createForm(TestType::class, $tc);
+
         return $this->render('test.html.twig',
             [
                 'form' => $form,
                 'manager' => $manager,
             ]
         );
+    }
+
+    /**
+     * testPost
+     *
+     * @param Request $request
+     * @param FormManager $formManager
+     * @param TimetableColumnManager $manager
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/test/post/", name="test_post", methods={"POST"})
+     */
+    public function testPost(Request $request, FormManager $formManager, TimetableColumnManager $manager)
+    {
+        $tc = $manager->find(33);
+
+        $form = $this->createForm(TestType::class, $tc);
+
+        $data = json_decode($request->getContent(), true);
+
+        $form->submit($data);
+
+        if ($form->isValid())
+        {
+            // Save Data here
+        }
+
+        return new JsonResponse(
+           [
+               'data' => $formManager->extractFormData($formManager->extractForm($form->createView())),
+               'messages' => $formManager->getFormErrors($form),
+           ],
+           200);
     }
 }

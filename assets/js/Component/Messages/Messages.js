@@ -6,23 +6,19 @@ import Message from './Message'
 
 export default function  Messages(props) {
     const {
-        translations,
         messages,
-        cancelMessage,
+        ...otherProps
     } = props;
 
     if (Object.keys(messages).length === 0)
-        return (
-            <section></section>
-        )
+        return ''
 
-    const cells = Object.keys(messages).map(function (key) {
+    const cells = Object.keys(messages).map(key => {
         const message = messages[key]
         return <Message
             message={message}
             key={'message_' + message.id}
-            translations={translations}
-            cancelMessage={cancelMessage}
+            {...otherProps}
         />
     })
 
@@ -38,8 +34,6 @@ Messages.propTypes = {
         PropTypes.array,
         PropTypes.object,
     ]).isRequired,
-    translations: PropTypes.object.isRequired,
-    cancelMessage: PropTypes.func.isRequired,
 }
 
 Messages.defaultProps = {

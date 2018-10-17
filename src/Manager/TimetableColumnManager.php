@@ -72,7 +72,7 @@ class TimetableColumnManager implements FormManagerInterface
                     'label' => 'Manage Timetable Column',
                     'buttons' => [
                         [
-                            'type' => 'save',
+                            'type' => 'submit',
                         ],
                     ],
                 ],
@@ -99,6 +99,7 @@ class TimetableColumnManager implements FormManagerInterface
         $template = [];
         $template['useTabs'] = true;
         $template['tabs'] = $this->tabs;
+        $template['url'] = str_replace('', '', '/test/post/');
 
 
 
