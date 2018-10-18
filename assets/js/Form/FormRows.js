@@ -10,6 +10,8 @@ export default function FormRows(props) {
         ...otherProps
     } = props
 
+    if (template === false)
+        return ''
 
     const rowContent = template.map((row, key) => {
         return (
@@ -27,5 +29,8 @@ export default function FormRows(props) {
 }
 
 FormRows.propTypes = {
-    template: PropTypes.array.isRequired,
+    template: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.bool,
+    ]).isRequired,
 }

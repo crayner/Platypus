@@ -124,7 +124,7 @@ class FormManager
          $props['translations'] = [
              'object' => 'Must be an Object, not an Array',
          ];
-
+dump($props['template']);
          return new \Twig_Markup($this->getTwig()->render('Default/renderForm.html.twig',
              [
                  'props' => $props,
@@ -251,6 +251,9 @@ class FormManager
         else
             $vars['help'] = '';
 
+        if (isset($vars['choices']))
+            $vars['choices'] = $this->translateChoices($vars);
+
         if ($vars['errors']->count() > 0) {
             $errors = [];
             foreach($vars['errors'] as $error)
@@ -303,10 +306,12 @@ class FormManager
      * validateRows
      *
      * @param $rows
-     * @return array
+     * @return array|boolean
      */
-    private function validateRows($rows): array
+    private function validateRows($rows)
     {
+        if ($rows === false)
+            return $rows;
         if (empty($rows))
             return $rows ?: [];
         foreach($rows as $e=>$r){
@@ -376,6 +381,7 @@ class FormManager
             'class' => false,
             'buttons' => false,
             'container' => false,
+            'collection_actions' => false,
         ]);
         $resolver->setAllowedTypes('class', ['boolean','string']);
         $resolver->setAllowedTypes('buttons', ['boolean','array']);
@@ -383,6 +389,7 @@ class FormManager
         $resolver->setAllowedTypes('label_params', ['array']);
         $resolver->setAllowedTypes('container', ['boolean', 'array']);
         $resolver->setAllowedTypes('form', ['array', 'boolean']);
+        $resolver->setAllowedTypes('collection_actions', ['boolean']);
         $column = $resolver->resolve($column);
         $column['container'] = $this->validateContainer($column['container']);
         $column['buttons'] = $this->validateButtons($column['buttons']);
@@ -418,13 +425,13 @@ class FormManager
             'class' => false,
             'rows' => false,
             'headerRow' => false,
-            'collectionRows' => false,
+            'collection' => false,
         ]);
         $resolver->setAllowedTypes('class', ['string', 'boolean']);
         $resolver->setAllowedTypes('panel', ['array', 'boolean']);
         $resolver->setAllowedTypes('rows', ['array', 'boolean']);
         $resolver->setAllowedTypes('headerRow', ['array', 'boolean']);
-        $resolver->setAllowedTypes('collectionRows', ['array', 'boolean']);
+        $resolver->setAllowedTypes('collection', ['array', 'boolean']);
         $container = $resolver->resolve($container);
 
         $container['panel'] = $this->validatePanel($container['panel']);
@@ -432,8 +439,9 @@ class FormManager
         if (($container['panel'] !== false && $container['class'] !== false) || ( $container['panel'] === false && $container['class'] === false))
             trigger_error(sprintf('Containers must specify one of a panel (%s) or a class (%s), but not both.', $container['panel']['colour'], $container['class']), E_USER_ERROR);
 
+        $container['collection'] = $this->validateCollection($container['collection']);
+
         $container['headerRow'] = $this->validateRow($container['headerRow']);
-        $container['collectionRows'] = $this->validateRows($container['collectionRows']);
         $container['rows'] = $this->validateRows($container['rows']);
 
         return $container;
@@ -460,17 +468,24 @@ class FormManager
             'label_params' => [],
             'description_params' => [],
             'rows' => [],
+            'collectionRows' => false,
+            'headerRow' => false,
         ]);
         $resolver->setAllowedTypes('colour', ['string']);
         $resolver->setAllowedTypes('label', ['string']);
         $resolver->setAllowedTypes('label_params', ['array']);
         $resolver->setAllowedTypes('rows', ['array']);
+        $resolver->setAllowedTypes('headerRow', ['array', 'boolean']);
+        $resolver->setAllowedTypes('collectionRows', ['array', 'boolean']);
         $resolver->setAllowedTypes('description_params', ['array']);
         $resolver->setAllowedTypes('description', ['boolean', 'string']);
         $resolver->setAllowedTypes('buttons', ['boolean', 'array']);
         $panel = $resolver->resolve($panel);
 
         $panel['buttons'] = $this->validateButtons($panel['buttons']);
+        $panel['rows'] = $this->validateRows($panel['rows']);
+        $panel['collectionRows'] = $this->validateRows($panel['collectionRows']);
+        $panel['headerRow'] = $this->validateRows($panel['headerRow']);
 
         if ($panel['label'])
             $panel['label'] = $this->getTranslator()->trans($panel['label'], $panel['label_params'], $this->getTemplateManager()->getTranslationDomain());
@@ -632,4 +647,59 @@ class FormManager
         return $tabs;
     }
 
+    /**
+     * validateCollection
+     *
+     * @param $collection
+     * @return array
+     */
+    private function validateCollection($collection)
+    {
+        if ($collection === false)
+            return $collection;
+        $resolver = new OptionsResolver();
+        $resolver->setRequired([
+            'form',
+            'rows',
+        ]);
+        $resolver->setDefaults([
+            'buttons' => [],
+        ]);
+        $resolver->setAllowedTypes('form', ['string']);
+        $resolver->setAllowedTypes('rows', ['array']);
+        $resolver->setAllowedTypes('buttons', ['array']);
+        $collection = $resolver->resolve($collection);
+        $collection['rows'] = $this->validateRows($collection['rows']);
+        $collection['buttons'] = $this->validateButtons($collection['buttons']);
+        return $collection;
+    }
+
+    /**
+     * translateChoices
+     *
+     * @param array $vars
+     * @return array
+     */
+    private function translateChoices(array $vars): array
+    {
+        $domain = $vars['choice_translation_domain'];
+        if ($domain === false)
+            return $vars['choices'];
+        if (empty($domain))
+            $domain = $vars['translation_domain'];
+        if ($domain === false)
+            return $vars['choices'];
+        if (empty($domain))
+            $domain = $this->getTemplateManager()->getTranslationDomain();
+        if ($domain === false)
+            return $vars['choices'];
+
+        foreach($vars['choices'] as $choice)
+        {
+            if (is_object($choice->data))
+                return $vars['choices'];
+            $choice->label = $this->getTranslator()->trans($choice->label, [], $domain);
+        }
+        return $vars['choices'];
+    }
 }

@@ -3,6 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import Button from './Button'
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 
 export default function ButtonUp(props) {
     const {
@@ -10,11 +11,11 @@ export default function ButtonUp(props) {
         ...otherProps,
     } = props
 
-    if (button.colour === '' || typeof(button.colour) === 'undefined')
+    if (button.colour === '' || typeof button.colour === 'undefined')
         button.colour = 'light'
 
-    if (button.icon === false || typeof(button.icon) === 'undefined')
-        button.icon = ['fas','arrow-up']
+    if (button.icon === false || typeof button.icon === 'undefined')
+        button.icon = faArrowUp
 
     return (
         <Button

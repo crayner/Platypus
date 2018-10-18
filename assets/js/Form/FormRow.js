@@ -10,6 +10,9 @@ export default function FormRow(props) {
         ...otherProps
     } = props
 
+    if (template === false)
+        return ''
+
     const columns = template.columns.map((column, key) => {
         return (
             <FormColumn
@@ -26,5 +29,8 @@ export default function FormRow(props) {
 }
 
 FormRow.propTypes = {
-    template: PropTypes.object.isRequired,
+    template: PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.bool,
+    ]).isRequired,
 }

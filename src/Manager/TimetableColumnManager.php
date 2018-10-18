@@ -145,95 +145,110 @@ class TimetableColumnManager implements FormManagerInterface
                             'type' => 'submit',
                         ],
                     ],
-                ],
-                'rows' => [
-                    [
-                        'class' => 'row',
-                        'columns' => [
-                            [
-                                'class' => 'col-12',
-                                'form' => ['timetableColumnRows' => 'widget'],
-                                'container' => [
-                                    'class' => 'container',
-                                    'headerRow' => [
-                                        'class' => 'row row-header',
-                                        'columns' => [
-                                            [
-                                                'class' => 'col-2',
-                                                'label' => 'Name',
-                                            ],
-                                            [
-                                                'class' => 'col-2',
-                                                'label' => 'Abbrev.',
-                                            ],
-                                            [
-                                                'class' => 'col-2',
-                                                'label' => 'Start Time',
-                                            ],
-                                            [
-                                                'class' => 'col-2',
-                                                'label' => 'End Time',
-                                            ],
-                                            [
-                                                'class' => 'col-2 text-right',
-                                                'label' => 'Actions',
-                                            ]
-                                        ],
-                                    ],
-                                    'collectionRows' => [
-                                        [
-                                            'class' => 'small row row-striped',
+                    'rows' => [
+                        [
+                            'class' => 'row',
+                            'columns' => [
+                                [
+                                    'container' => [
+                                        'class' => 'container',
+                                        'headerRow' => [
+                                            'class' => 'row row-header text-center',
                                             'columns' => [
                                                 [
                                                     'class' => 'col-2',
-                                                    'form' => ['name' => 'widget'],
+                                                    'label' => 'Name',
                                                 ],
                                                 [
                                                     'class' => 'col-2',
-                                                    'form' => ['nameShort' => 'widget'],
+                                                    'label' => 'Abbrev.',
                                                 ],
                                                 [
                                                     'class' => 'col-2',
-                                                    'form' => ['timeStart' => 'widget'],
+                                                    'label' => 'Start Time',
                                                 ],
                                                 [
                                                     'class' => 'col-2',
-                                                    'form' => [
-                                                        'timeEnd' => 'widget',
+                                                    'label' => 'End Time',
+                                                ],
+                                                [
+                                                    'class' => 'col-2',
+                                                    'label' => 'Column Type',
+                                                ],
+                                                [
+                                                    'class' => 'col-2',
+                                                    'label' => 'Actions',
+                                                ]
+                                            ],
+                                        ],
+                                        'collection' => [
+                                            'form' => 'timetableColumnRows',
+                                            'buttons' => [
+                                                'add' => [
+                                                    'mergeClass' => 'btn-sm',
+                                                    'type' => 'add',
+                                                    'style' => [
+                                                        'float' => 'right',
                                                     ],
                                                 ],
-                                                [
-                                                    'class' => 'col-2 text-right',
-                                                    'form' => [
-                                                        'type' => 'widget',
-                                                        'id' => 'row',
-                                                        'timetableColumn' => 'row',
+                                                'delete' => [
+                                                    'mergeClass' => 'btn-sm',
+                                                    'type' => 'delete',
+                                                    'url' => '/timetable/column/'.$this->getEntity()->getId().'/row/{cid}/delete/',
+                                                    'url_options' => [
+                                                        '{cid}' => 'data_id',
+                                                    ],
+                                                    'url_type' => 'json',
+                                                    'options' => [
+                                                        'eid' => 'name',
                                                     ],
                                                 ],
+                                            ],
+                                            'rows' => [
                                                 [
-                                                    'class' => 'col-2 text-center align-self-center',
-                                                    'buttons' => [
-                                                        'save' => [
-                                                            'mergeClass' => 'btn-sm',
-                                                            'type' => 'submit',
+                                                    'class' => 'small row row-striped',
+                                                    'columns' => [
+                                                        [
+                                                            'class' => 'col-2',
+                                                            'form' => ['name' => 'widget'],
                                                         ],
-                                                        'add' => [
-                                                            'mergeClass' => 'btn-sm',
-                                                            'type' => 'add',
-                                                            'style' => [
-                                                                'float' => 'right',
+                                                        [
+                                                            'class' => 'col-2',
+                                                            'form' => ['nameShort' => 'widget'],
+                                                        ],
+                                                        [
+                                                            'class' => 'col-2',
+                                                            'form' => ['timeStart' => 'widget'],
+                                                        ],
+                                                        [
+                                                            'class' => 'col-2',
+                                                            'form' => [
+                                                                'timeEnd' => 'widget',
                                                             ],
                                                         ],
-                                                        'delete' => [
-                                                            'mergeClass' => 'btn-sm',
-                                                            'type' => 'delete',
-                                                            'url' => '/timetable/column/'.$this->getEntity()->getId().'/row/{cid}/delete/',
-                                                            'url_options' => [
-                                                                '{cid}' => 'data_id',
+                                                        [
+                                                            'class' => 'col-2 text-right',
+                                                            'form' => [
+                                                                'type' => 'widget',
                                                             ],
-                                                            'url_type' => 'json',
-                                                            'options' => [
-                                                                'eid' => 'name',
+                                                        ],
+                                                        [
+                                                            'class' => 'hidden',
+                                                            'form' => [
+                                                                'timetableColumn' => 'row',
+                                                            ],
+                                                        ],
+                                                        [
+                                                            'class' => 'col-2 text-center align-self-center',
+                                                            'form' => [
+                                                                'id' => 'row',
+                                                            ],
+                                                            'collection_actions' => true,
+                                                            'buttons' => [
+                                                                'save' => [
+                                                                    'mergeClass' => 'btn-sm',
+                                                                    'type' => 'submit',
+                                                                ],
                                                             ],
                                                         ],
                                                     ],

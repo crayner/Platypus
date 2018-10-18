@@ -27,6 +27,17 @@ export default class FormControl extends Component {
         this.getElementData = this.getElementData.bind(this)
         this.setElementData = this.setElementData.bind(this)
         this.addCollectionElement = this.addCollectionElement.bind(this)
+        this.deleteCollectionElement = this.deleteCollectionElement.bind(this)
+        this.moveCollectionElementUp = this.moveCollectionElementUp.bind(this)
+        this.moveCollectionElementDown = this.moveCollectionElementDown.bind(this)
+
+
+        this.collectionFunctions = {
+            addCollectionElement: this.addCollectionElement,
+            deleteCollectionElement: this.deleteCollectionElement,
+            moveCollectionElementUp: this.moveCollectionElementUp,
+            moveCollectionElementDown: this.moveCollectionElementDown,
+        }
     }
 
     cancelMessage(id) {
@@ -107,6 +118,37 @@ export default class FormControl extends Component {
         })
     }
 
+    deleteCollectionElement(options){
+        const element = this.form.children[options.eid]
+        if (typeof element.data_id === 'undefined')
+            this.removeElement(options.eid)
+        else {
+            const delete_url = this.getDeleteUrl(element.data_id)
+
+            if (this.template.actions.delete.url_type === 'json') {
+                fetchJson(delete_url, {}, this.locale)
+                    .then((data) => {
+                        this.messages = typeof data.messages !== 'undefined' ? data.messages : []
+                        if (data.status === 'success' || data.status === 'default')
+                            this.removeElement(options.eid)
+                        else {
+                            this.setState({
+                                messages: this.messages
+                            })
+                        }
+                    })
+            }
+        }
+    }
+
+    moveCollectionElementUp(url, type, options){
+        const element = this.form.children[options.eid]
+    }
+
+    moveCollectionElementDown(url, type, options){
+        const element = this.form.children[options.eid]
+    }
+
     render() {
         const method = this.otherProps.template.form.method
         if (method === 'post')
@@ -119,6 +161,7 @@ export default class FormControl extends Component {
                         messages={this.state.messages}
                         data={this.state.data}
                         {...this.otherProps}
+                        {...this.collectionFunctions}
                     />
                 </form>
             )
@@ -131,6 +174,7 @@ export default class FormControl extends Component {
                     messages={this.state.messages}
                     data={this.state.data}
                     {...this.otherProps}
+                    {...this.collectionFunctions}
                 />
             </form>
         )

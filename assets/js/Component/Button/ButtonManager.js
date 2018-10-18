@@ -11,6 +11,9 @@ import ButtonReturn from './ButtonReturn'
 import ButtonClose from './ButtonClose'
 import ButtonSave from './ButtonSave'
 import ButtonSubmit from './ButtonSubmit'
+import ButtonUp from './ButtonUp'
+import ButtonDown from './ButtonDown'
+import ButtonDuplicate from './ButtonDuplicate'
 
 export default function ButtonManager(props) {
     const {
@@ -73,6 +76,27 @@ export default function ButtonManager(props) {
     if (button.type === 'close')
         return (
             <ButtonClose
+                button={button}
+                {...otherProps}
+            />
+        )
+    if (button.type === 'up')
+        return (
+            <ButtonUp
+                button={button}
+                {...otherProps}
+            />
+        )
+    if (button.type === 'down')
+        return (
+            <ButtonDown
+                button={button}
+                {...otherProps}
+            />
+        )
+    if (button.type === 'duplicate')
+        return (
+            <ButtonDuplicate
                 button={button}
                 {...otherProps}
             />
