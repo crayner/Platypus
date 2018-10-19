@@ -126,15 +126,16 @@ export default function FormTypes(props) {
             second = form.children[2]
 
         const width = 90 / form.children.length
+
         return (
             <div id={form.id} autoComplete={'off'} className={'form-inline' + (typeof form.attr.class === 'undefined' ? '' : ' ' + form.attr.class)}>
                 <FormControl
                     componentClass="select"
                     id={hour.id}
-                    defaultValue={getElementData(form.full_name)}
+                    defaultValue={getElementData(hour.full_name)}
                     className={hour.attr.class}
                     style={{'width': width + '%'}}
-                    onChange={((e) => elementChange(e, form.full_name))}
+                    onChange={((e) => elementChange(e, hour.full_name))}
                 >
                     {
                         hour.choices.map((option, index) => {
@@ -146,10 +147,10 @@ export default function FormTypes(props) {
                 <FormControl
                     componentClass="select"
                     id={minute.id}
-                    defaultValue={getElementData(form.full_name)}
+                    defaultValue={getElementData(minute.full_name)}
                     style={{'width': width + '%'}}
                     className={minute.attr.class}
-                    onChange={((e) => elementChange(e, form.full_name))}
+                    onChange={((e) => elementChange(e, minute.full_name))}
                 >
                     {
                         minute.choices.map((option, index) => {
@@ -162,10 +163,10 @@ export default function FormTypes(props) {
                     <span>:<FormControl
                         componentClass="select"
                         id={second.id}
-                        defaultValue={getElementData(form.full_name)}
+                        defaultValue={getElementData(second.full_name)}
                         style={{'width': width + '%'}}
                         className={second.attr.class}
-                        onChange={((e) => elementChange(e, form.full_name))}
+                        onChange={((e) => elementChange(e, second.full_name))}
                     >
                         {
                             second.choices.map((option, index) => {
