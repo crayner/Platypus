@@ -44,6 +44,9 @@
         background: #fff;
       }
     }
+    &:hover {
+      border: 1px solid #007bff;
+    }
   }
 
   &__tab-panel {

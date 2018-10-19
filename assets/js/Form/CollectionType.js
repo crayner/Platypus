@@ -3,6 +3,7 @@
 import React from "react"
 import PropTypes from 'prop-types'
 import CollectionMember from './CollectionMember'
+import ButtonManager from '../Component/Button/ButtonManager'
 
 export default function CollectionType(props) {
     const {
@@ -31,13 +32,14 @@ export default function CollectionType(props) {
         first:  collection[0].name,
         last: last,
         button_merge_class: form.button_merge_class,
+        collection_name: form.name,
         default_buttons: {
-            add: {type: 'add', style: {}, options: {eid: 'id'}},
+            add: {type: 'add', style: {float: 'right'}, options: {eid: 'id'}},
             delete: {type: 'delete', style: {}, options: {eid: 'id'}},
             up: {type: 'up', style: {}, options: {eid: 'id'}},
             down: {type: 'down', style: {}, options: {eid: 'id'}},
             duplicate: {type: 'duplicate', style: {}, options: {eid: 'id'}},
-        }
+        },
     }
 
     const collectionRows = Object.keys(collection).map(key => {
@@ -54,9 +56,28 @@ export default function CollectionType(props) {
         }
     )
 
+    function addButton() {
+        if (form.allow_add) {
+            let button = {...collectionProps.default_buttons.add}
+            if (typeof template.buttons.add !== 'undefined')
+                button = {...template.buttons.add}
+            button = Object.assign({id: form.id + '_add'}, {...button})
+            return (
+                <ButtonManager
+                    button={button}
+                    addElement={otherProps.addCollectionElement}
+                    {...otherProps}
+                />
+            )
+        }
+        return ''
+    }
+
     return (
         <div id={form.id} autoComplete={'off'}>
             { collectionRows }
+            { addButton() }
+            <hr />
         </div>
     )
 }

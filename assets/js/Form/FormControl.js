@@ -104,17 +104,102 @@ export default class FormControl extends Component {
         return w
     }
 
-    addCollectionElement(){
-        const key = this.state.form.children.length
-        let prototype = {...this.prototype}
+    setFormElementById(element, form) {
+        const name = element.id
+        let found = false
+        if (form.id === name)
+            return child
+
+        form.children.map((child, key) => {
+            if (element.id === name) {
+                form.children[key] = child
+                found = true
+            }
+        })
+
+        if (found)
+            return form
+
+        form.children.map((child, key) => {
+            form.children[key] = this.setFormElementById(element,child)
+        })
+
+        return form
+    }
+
+    getFormElementById(name, form) {
+
+        if (form.id === name)
+            return form
+        const xxx = form.children.find(child => {
+            if (child.id === name)
+                return child
+        })
+        if (typeof xxx !== 'undefined')
+            return xxx
+
+        form.children.map(child => {
+            return this.getFormElementById(name, child)
+        })
+        console.error('No form named ' + name + ' was found!')
+    }
+
+    setCollectionMemberKey(prototype, key)
+    {
+        let vars = {...prototype}
+        vars.children = prototype.children.map(child => {
+            return this.setCollectionMemberKey(child,key)
+        })
+
+        vars.full_name = vars.full_name.replace('__name__', key)
+        vars.id = vars.id.replace('__name__', key)
+        vars.name = vars.name.replace('__name__', key)
+        vars.label = vars.label.replace('__name__', key)
+
+        return vars;
+    }
+
+    addCollectionData(full_name, key, prototype){
+        let data = this.getElementData(full_name);
+        let x = full_name.split('[')
+        x.shift()
+        x.map((name,key) => {
+            x[key] = name.replace(']', '')
+        })
+        data[key] = {}
+        this.data = this.setElementData(x, data, this.data)
+
+        console.log(prototype,this.data)
+        prototype.children.map(child => {
+            let x = child.full_name.split('[')
+            x.shift()
+            const y = x.map((name,key) => {
+                x[key] = name.replace(']', '')
+            })
+            this.data = this.setElementData(x, child.value, this.data)
+        })
+        return this.data
+    }
+
+    addCollectionElement(button,e){
+        const name = button.id.replace('_add','')
+        let collection = this.getFormElementById(name, {...this.form})
+        const key = collection.children.length
+        let prototype = {...collection.prototype}
         prototype = this.setCollectionMemberKey(prototype, key)
 
-        let children = this.form.children
+        let children = collection.children
         children[key] = prototype
-        this.form.children = children
+        collection.children = children
+
+
+        this.form = this.setFormElementById(collection,{...this.form})
+        this.data = this.addCollectionData(collection.full_name, key, prototype)
+
         this.setState({
-            form: this.createForm({...this.form}),
-            messages: this.messages
+            form: this.form,
+            messages: this.messages,
+            data: this.data
         })
     }
 

@@ -45,19 +45,6 @@ export default function FormColumn(props) {
         })
     }
 
-    function buildButton(button, key){
-        button = Object.assign( button, {mergeClass: button_merge_class})
-        if(button.type === 'up')
-            console.log(button)
-        return (
-            <ButtonManager
-                button={button}
-                key={key}
-                {...otherProps}
-            />
-        )
-    }
-
     if (template.collection_actions){
         let button = {}
         if (allow_delete){
@@ -110,6 +97,17 @@ export default function FormColumn(props) {
                 {formElements}
                 {buttons}
             </div>
+        )
+    }
+
+    function buildButton(button, key){
+        button = Object.assign( button, {mergeClass: button_merge_class})
+        return (
+            <ButtonManager
+                button={button}
+                key={key}
+                {...otherProps}
+            />
         )
     }
 
