@@ -9,6 +9,7 @@ export default class FormControl extends Component {
         super(props)
 
         this.form = props.form
+        this.template = props.template
         this.otherProps = {...props}
 
         this.messages = []
@@ -22,13 +23,12 @@ export default class FormControl extends Component {
         this.saveForm = this.saveForm.bind(this)
         this.getElementData = this.getElementData.bind(this)
 
-
         this.formControl = {
             elementChange: this.elementChange,
             getElementData: this.getElementData,
             deleteCollectionElement: this.deleteCollectionElement,
             addCollectionElement: this.addCollectionElement,
-            saveFunction: this.saveForm,
+            saveForm: this.saveForm,
         }
         this.elementList = {}
     }
@@ -201,11 +201,18 @@ export default class FormControl extends Component {
     saveForm(){
         this.data = this.buildFormData({})
         console.log(this.data)
+
+        this.messages.push({message: 'I did something to start saving!', level: 'success'})
+        this.setState({
+            form: this.form,
+            messages: this.messages
+        })
     }
 
     render() {
         return (
             <FormRender
+                template={this.template}
                 {...this.state}
                 {...this.formControl}
                 {...this.otherProps}
@@ -216,4 +223,5 @@ export default class FormControl extends Component {
 
 FormControl.propTypes = {
     form: PropTypes.object.isRequired,
+    template: PropTypes.object.isRequired,
 }

@@ -46,6 +46,7 @@ export default function Button(props) {
                 <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
             </button>
         )
+
     return (
         <button
             type={button.type}

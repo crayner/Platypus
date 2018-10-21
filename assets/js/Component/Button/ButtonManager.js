@@ -21,89 +21,91 @@ export default function ButtonManager(props) {
        ...otherProps,
     } = props
 
-    if (typeof button.mergeClass === 'undefined')
-        button.mergeClass = ''
+    let buttonClone = {...button}
+    
+    if (typeof buttonClone.mergeClass === 'undefined')
+        buttonClone.mergeClass = ''
 
-    if (button.type === 'edit')
+    if (buttonClone.type === 'edit')
         return (
             <ButtonEdit
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'save')
+    if (buttonClone.type === 'save')
         return (
             <ButtonSave
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'submit')
+    if (buttonClone.type === 'submit')
         return (
             <ButtonSubmit
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'delete')
+    if (buttonClone.type === 'delete')
         return (
             <ButtonDelete
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'add')
+    if (buttonClone.type === 'add')
         return (
             <ButtonAdd
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'return')
+    if (buttonClone.type === 'return')
         return (
             <ButtonReturn
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'refresh')
+    if (buttonClone.type === 'refresh')
         return (
             <ButtonRefresh
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'close')
+    if (buttonClone.type === 'close')
         return (
             <ButtonClose
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'up')
+    if (buttonClone.type === 'up')
         return (
             <ButtonUp
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'down')
+    if (buttonClone.type === 'down')
         return (
             <ButtonDown
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
-    if (button.type === 'duplicate')
+    if (buttonClone.type === 'duplicate')
         return (
             <ButtonDuplicate
-                button={button}
+                button={buttonClone}
                 {...otherProps}
             />
         )
     return (
         <ButtonMiscellaneous
-            button={button}
+            button={buttonClone}
             {...otherProps}
         />
     )
