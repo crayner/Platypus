@@ -182,7 +182,6 @@ class TimetableColumnManager implements FormManagerInterface
                                         ],
                                         'collection' => [
                                             'form' => 'timetableColumnRows',
-                                            'key' => 'id',
                                             'buttons' => [
                                                 'add' => [
                                                     'mergeClass' => 'btn-sm',

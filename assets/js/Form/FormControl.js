@@ -52,39 +52,66 @@ export default class FormControl extends Component {
         const prototype = {...collection.prototype}
         let counter = 0
         let children = []
-        console.log(eid)
         if (typeof collection.children === 'object'){
             Object.keys(collection.children).map(key => {
                 if (parseInt(key) !== parseInt(eid)) {
-                   let element = {...collection.children[key]}
+                    let element = {...collection.children[key]}
+                    let was = {}
+                    was.id = element.id
+                    was.full_name = element.full_name
+                    was.name = element.name
+                    let now = {}
+                    now.id = prototype.id.replace('__name__', counter)
+                    now.full_name = prototype.full_name.replace('__name__', counter)
                     element.name = prototype.name.replace('__name__', counter)
                     element.full_name = prototype.full_name.replace('__name__', counter)
                     element.id = prototype.id.replace('__name__', counter)
                     element.name = counter.toString()
                     element.label = prototype.label.replace('__name__', counter)
+                    element = this.updateCollectionDetails(element,was,now)
                     children[counter++] = element
                 }
             })
         } else {
             collection.children.map((element, key) => {
                 if (parseInt(key) !== parseInt(eid)) {
+                    let was = {}
+                    was.id = element.id
+                    was.full_name = element.full_name
+                    was.name = element.name
+                    let now = {}
+                    now.id = prototype.id.replace('__name__', counter)
+                    now.full_name = prototype.full_name.replace('__name__', counter)
                     element.name = prototype.name.replace('__name__', counter)
                     element.full_name = prototype.full_name.replace('__name__', counter)
                     element.id = prototype.id.replace('__name__', counter)
                     element.name = counter.toString()
                     element.label = prototype.label.replace('__name__', counter)
+                    element = this.updateCollectionDetails(element,was,now)
                     children[counter++] = element
                 }
             })
         }
 
-        collection['children'] = children
-        this.getFormElementById(collection.id, true)
+        collection.children = children
+
+        this.setFormElement(collection)
+        this.getFormElementById(collection.id,true)
 
         this.setState({
             form: this.form,
             messages: this.messages,
         })
+    }
+
+    updateCollectionDetails(element,was,now)
+    {
+        element.children.map(child => {
+            child.full_name = child.full_name.replace(was.full_name,now.full_name)
+            child.id = child.id.replace(was.id,now.id)
+            child = this.updateCollectionDetails(child,was,now)
+         })
+        return element
     }
 
     addCollectionElement(button){
@@ -107,7 +134,9 @@ export default class FormControl extends Component {
     }
 
     getFormElementById(id, refresh = false) {
-        if (typeof this.elementList[id] === 'undefined' || refresh === true)
+        if (refresh === true)
+            this.elementList = {}
+        if (typeof this.elementList[id] === 'undefined')
             this.elementList = this.buildElementList({})
         return this.elementList[id]
     }
@@ -156,7 +185,7 @@ export default class FormControl extends Component {
             element.value = element.data
             this.elementList[element.id] = element
         }
-        return element.value
+        return (typeof element.value === 'undefined' || element.value === null) ? '' : element.value
     }
 
     buildFormData(data, form = this.form) {
@@ -175,7 +204,6 @@ export default class FormControl extends Component {
     }
 
     render() {
-        console.log(this.form)
         return (
             <FormRender
                 {...this.state}

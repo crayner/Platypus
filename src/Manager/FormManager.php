@@ -652,12 +652,10 @@ class FormManager
         ]);
         $resolver->setDefaults([
             'buttons' => [],
-            'key' => false,
         ]);
         $resolver->setAllowedTypes('form', ['string']);
         $resolver->setAllowedTypes('rows', ['array']);
         $resolver->setAllowedTypes('buttons', ['array']);
-        $resolver->setAllowedTypes('key', ['string','boolean']);
         $collection = $resolver->resolve($collection);
         $this->addFormTabMap($collection['form']);
         $collection['rows'] = $this->validateRows($collection['rows']);

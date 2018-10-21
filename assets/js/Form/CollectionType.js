@@ -44,13 +44,9 @@ export default function CollectionType(props) {
 
     const collectionRows = Object.keys(collection).map(key => {
             let child = collection[key]
-            let collectionKey = ''
-            if (template.key !== false)
-                collectionKey = child[template.key]
             return (
                 <FormRows
-                    key={collectionKey}
-                    collectionKey={collectionKey}
+                    key={key}
                     form={child}
                     template={template.rows}
                     {...collectionProps}

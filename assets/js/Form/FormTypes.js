@@ -83,7 +83,7 @@ export default function FormTypes(props) {
             <FormControl
                 type="text"
                 id={form.id}
-                defaultValue={getElementData(form.id)}
+                value={getElementData(form.id)}
                 placeholder="Enter text"
                 className={form.attr.class}
                 name={form.full_name}
@@ -102,7 +102,7 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 type="text"
-                defaultValue={form.value}
+                value={form.value}
                 placeholder="Enter text"
                 onChange={((e) => elementChange(e, form.id))}
             />
@@ -129,7 +129,7 @@ export default function FormTypes(props) {
                 <FormControl
                     componentClass="select"
                     id={hour.id}
-                    defaultValue={getElementData(hour.id)}
+                    value={getElementData(hour.id)}
                     className={hour.attr.class}
                     style={{'width': width + '%'}}
                     onChange={((e) => elementChange(e, hour.id))}
@@ -144,7 +144,7 @@ export default function FormTypes(props) {
                 <FormControl
                     componentClass="select"
                     id={minute.id}
-                    defaultValue={getElementData(minute.id)}
+                    value={getElementData(minute.id)}
                     style={{'width': width + '%'}}
                     className={minute.attr.class}
                     onChange={((e) => elementChange(e, minute.id))}
@@ -160,7 +160,7 @@ export default function FormTypes(props) {
                     <span>:<FormControl
                         componentClass="select"
                         id={second.id}
-                        defaultValue={getElementData(second.id)}
+                        value={getElementData(second.id)}
                         style={{'width': width + '%'}}
                         className={second.attr.class}
                         onChange={((e) => elementChange(e, second.id))}
@@ -200,7 +200,7 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 componentClass="select"
-                defaultValue={getElementData(form.id)}
+                value={getElementData(form.id)}
                 placeholder={form.placeholder}
                 multiple={form.multiple}
                 onChange={((e) => elementChange(e, form.id))}
@@ -214,7 +214,7 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 type="hidden"
-                defaultValue={getElementData(form.id)}
+                value={getElementData(form.id)}
             />
         )
     }
