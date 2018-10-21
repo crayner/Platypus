@@ -7,6 +7,7 @@ import FormRow from './FormRow'
 export default function FormRows(props) {
     const {
         template,
+        collectionKey,
         ...otherProps
     } = props
 
@@ -14,10 +15,13 @@ export default function FormRows(props) {
         return ''
 
     const rowContent = template.map((row, key) => {
+        let rowKey = key
+        if (collectionKey !== '')
+            rowKey = collectionKey + '_' + key
         return (
             <FormRow
                 template={row}
-                key={key}
+                key={rowKey}
                 {...otherProps}
             />
         )
@@ -33,4 +37,9 @@ FormRows.propTypes = {
         PropTypes.array,
         PropTypes.bool,
     ]).isRequired,
+    collectionKey: PropTypes.string,
+}
+
+FormRows.defaultProps = {
+    collectionKey: '',
 }

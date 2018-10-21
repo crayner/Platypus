@@ -77,6 +77,11 @@ class FormManager
     private $data = [];
 
     /**
+     * @var array
+     */
+    private $formTabMap = [];
+
+    /**
      * CollectionManager constructor.
      * @param \Twig_Environment $twig
      */
@@ -119,12 +124,11 @@ class FormManager
          $props['locale'] = $this->getRequest()->get('_locale') ?: 'en';
          $props['template'] = $this->getTemplate($templateName);
          $props['form'] =  $this->extractForm($form->createView());
-         $props['data'] =  $this->extractFormData($props['form']);
          $props['errors'] = $this->getFormErrors($form);
          $props['translations'] = [
              'object' => 'Must be an Object, not an Array',
          ];
-dump($props['template']);
+
          return new \Twig_Markup($this->getTwig()->render('Default/renderForm.html.twig',
              [
                  'props' => $props,
@@ -153,7 +157,7 @@ dump($props['template']);
         $resolver->setAllowedTypes('container', ['boolean', 'array']);
 
         $this->template = $resolver->resolve($template);
-
+        
         $this->template['form'] = $this->validateForm($this->template['form']);
         $this->template['container'] = $this->validateContainer($this->template['container']);
         $this->template['tabs'] = $this->validateTabs($this->template['tabs']);
@@ -276,11 +280,11 @@ dump($props['template']);
      */
     public function getFormErrors(FormInterface $form, $transDomain = 'System'): array
     {
-        if (!$form->isSubmitted()) return [];
+        if (!$form->isSubmitted() || false) return [];
 
         $messages = new MessageManager();
 
-        $errorList = $this->parser->parseErrors($form);
+        $errorList = $this->getParser()->parseErrors($form);
         $errorList = is_array($errorList) ? $errorList: [];
 
         foreach($errorList as $q=>$w) {
@@ -393,6 +397,8 @@ dump($props['template']);
         $column = $resolver->resolve($column);
         $column['container'] = $this->validateContainer($column['container']);
         $column['buttons'] = $this->validateButtons($column['buttons']);
+        if (is_array($column['form']))
+            $this->addFormTabMap(key($column['form']));
 
         return $column;
     }
@@ -557,29 +563,6 @@ dump($props['template']);
     }
 
     /**
-     * extractFormData
-     *
-     * @param $form
-     * @return array
-     */
-    public function extractFormData($form)
-    {
-        $data = [];
-        if (count($form['children']) > 0) {
-            foreach ($form['children'] as $child) {
-                $data[$child['name']] = $this->extractFormData($child);
-            }
-        } else {
-            $data =  $form['value'];
-            if (empty($form['value']) && $form['value'] !== $form['data'])
-                $data =  $form['data'];
-        }
-
-        $this->data = $data;
-        return $this->data;
-    }
-
-    /**
      * validateForm
      *
      * @param array $form
@@ -605,7 +588,11 @@ dump($props['template']);
         return $form;
     }
 
-
+    /**
+     * @var 
+     */
+    private $currentTab;
+    
     /**
      * validateTabs
      *
@@ -638,10 +625,11 @@ dump($props['template']);
             $resolver->setAllowedTypes('name', ['string']);
             $resolver->setAllowedTypes('container', ['array']);
             $resolver->setAllowedTypes('label_params', ['array']);
-
-            $tab['container'] = $this->validateContainer($tab['container']);
-
+            
             $tabs[$q] = $resolver->resolve($tab);
+            $this->setCurrentTab($tab['name']);
+            $tabs[$q]['container'] = $this->validateContainer($tab['container']);
+
         }
 
         return $tabs;
@@ -664,13 +652,17 @@ dump($props['template']);
         ]);
         $resolver->setDefaults([
             'buttons' => [],
+            'key' => false,
         ]);
         $resolver->setAllowedTypes('form', ['string']);
         $resolver->setAllowedTypes('rows', ['array']);
         $resolver->setAllowedTypes('buttons', ['array']);
+        $resolver->setAllowedTypes('key', ['string','boolean']);
         $collection = $resolver->resolve($collection);
+        $this->addFormTabMap($collection['form']);
         $collection['rows'] = $this->validateRows($collection['rows']);
         $collection['buttons'] = $this->validateButtons($collection['buttons']);
+        
         return $collection;
     }
 
@@ -701,5 +693,37 @@ dump($props['template']);
             $choice->label = $this->getTranslator()->trans($choice->label, [], $domain);
         }
         return $vars['choices'];
+    }
+
+    /**
+     * @param mixed $currentTab
+     * @return FormManager
+     */
+    public function setCurrentTab($currentTab)
+    {
+        $this->currentTab = $currentTab;
+        return $this;
+    }
+
+    /**
+     * @return
+     */
+    public function getCurrentTab(): ?string
+    {
+        return $this->currentTab;
+    }
+
+    /**
+     * addFormTabMap
+     *
+     * @param string $formTabMap
+     * @return FormManager
+     */
+    public function addFormTabMap(string $formTabMap): FormManager
+    {
+        if (empty($this->getCurrentTab()))
+            return $this;
+        $this->formTabMap[$formTabMap] = $this->getCurrentTab();
+        return $this;
     }
 }

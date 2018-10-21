@@ -16,7 +16,11 @@ export default function FormRenderTabs(props) {
         const tab = template[name]
         const disabled = tab.display ? false : true
         return (
-            <Tab key={name} disabled={disabled}>{tab.label}</Tab>
+            <Tab
+                key={name}
+                disabled={disabled}>
+                {tab.label}
+            </Tab>
         )
     })
 
@@ -25,10 +29,10 @@ export default function FormRenderTabs(props) {
         return (
             <TabPanel key={name}>
                 {page.display ?
-                <FormContainer
-                    template={page.container}
-                    {...otherProps}
-                /> : 'Empty Tab' }
+                    <FormContainer
+                        template={page.container}
+                        {...otherProps}
+                    /> : <div>Empty Tab</div> }
             </TabPanel>
         )
     })

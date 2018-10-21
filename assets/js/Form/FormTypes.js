@@ -7,7 +7,6 @@ import FormLabel from './FormLabel'
 import FormHelp from './FormHelp'
 import FormRequired from './FormRequired'
 import FormErrors from './FormErrors'
-import FormContainer from './FormContainer'
 
 export default function FormTypes(props) {
     const {
@@ -15,8 +14,6 @@ export default function FormTypes(props) {
         style,
         elementChange,
         getElementData,
-        template,
-        ...otherProps
     } = props
 
     const prefix = form.block_prefixes.reverse()
@@ -81,16 +78,16 @@ export default function FormTypes(props) {
     }
 
     function textTypeWidget(){
-        getElementData(form.full_name)
+        getElementData(form.id)
         return (
             <FormControl
                 type="text"
                 id={form.id}
-                defaultValue={getElementData(form.full_name)}
+                defaultValue={getElementData(form.id)}
                 placeholder="Enter text"
                 className={form.attr.class}
                 name={form.full_name}
-                onChange={((e) => elementChange(e, form.full_name))}
+                onChange={((e) => elementChange(e, form.id))}
             />
         )
     }
@@ -107,7 +104,7 @@ export default function FormTypes(props) {
                 type="text"
                 defaultValue={form.value}
                 placeholder="Enter text"
-                onChange={((e) => elementChange(e, form.full_name))}
+                onChange={((e) => elementChange(e, form.id))}
             />
         )
     }
@@ -132,10 +129,10 @@ export default function FormTypes(props) {
                 <FormControl
                     componentClass="select"
                     id={hour.id}
-                    defaultValue={getElementData(hour.full_name)}
+                    defaultValue={getElementData(hour.id)}
                     className={hour.attr.class}
                     style={{'width': width + '%'}}
-                    onChange={((e) => elementChange(e, hour.full_name))}
+                    onChange={((e) => elementChange(e, hour.id))}
                 >
                     {
                         hour.choices.map((option, index) => {
@@ -147,10 +144,10 @@ export default function FormTypes(props) {
                 <FormControl
                     componentClass="select"
                     id={minute.id}
-                    defaultValue={getElementData(minute.full_name)}
+                    defaultValue={getElementData(minute.id)}
                     style={{'width': width + '%'}}
                     className={minute.attr.class}
-                    onChange={((e) => elementChange(e, minute.full_name))}
+                    onChange={((e) => elementChange(e, minute.id))}
                 >
                     {
                         minute.choices.map((option, index) => {
@@ -163,10 +160,10 @@ export default function FormTypes(props) {
                     <span>:<FormControl
                         componentClass="select"
                         id={second.id}
-                        defaultValue={getElementData(second.full_name)}
+                        defaultValue={getElementData(second.id)}
                         style={{'width': width + '%'}}
                         className={second.attr.class}
-                        onChange={((e) => elementChange(e, second.full_name))}
+                        onChange={((e) => elementChange(e, second.id))}
                     >
                         {
                             second.choices.map((option, index) => {
@@ -203,10 +200,10 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 componentClass="select"
-                defaultValue={getElementData(form.full_name)}
+                defaultValue={getElementData(form.id)}
                 placeholder={form.placeholder}
                 multiple={form.multiple}
-                onChange={((e) => elementChange(e, form.full_name))}
+                onChange={((e) => elementChange(e, form.id))}
             >
                 {getChoiceList()}
             </FormControl>
@@ -217,18 +214,16 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 type="hidden"
-                defaultValue={getElementData(form.full_name)}
+                defaultValue={getElementData(form.id)}
             />
         )
     }
 
     function getCollectionForm(container){
-        const name = container.form
-        const element = form.filter(element => {
-            if (element.name === name)
+        return form.find(element => {
+            if (element.name === container.form)
                 return element
         })
-        return element[0]
     }
 }
 
@@ -236,7 +231,6 @@ FormTypes.propTypes = {
     elementChange: PropTypes.func.isRequired,
     getElementData: PropTypes.func.isRequired,
     form: PropTypes.object.isRequired,
-    template: PropTypes.object.isRequired,
     style: PropTypes.string.isRequired,
 }
 

@@ -13,7 +13,7 @@ export default function FormPanel(props) {
     } = props
 
     function getButtons(){
-        const buttons = template.buttons.map((button, key) => {
+        return template.buttons.map((button, key) => {
             return (
                 <ButtonManager
                     button={button}
@@ -22,14 +22,13 @@ export default function FormPanel(props) {
                 />
             )
         })
-        return buttons
     }
 
     return (
         <div className={'card card-' + template.colour}>
             <div className={'card-header'}>
                 {template.buttons === false ?
-                <h3 className={'card-title d-flex mb-12 justify-content-between'}>{template.label}</h3>
+                    <h3 className={'card-title d-flex mb-12 justify-content-between'}>{template.label}</h3>
                     :
                     <h3 className={'card-title d-flex mb-12 justify-content-between'}>
                         <span className={'p-6'}>{template.label}</span>

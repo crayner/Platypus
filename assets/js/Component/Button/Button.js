@@ -20,13 +20,15 @@ export default function Button(props) {
 
     let className = 'btn btn-' + button.colour
 
+    const buttonTypes = ['button','submit']
+
     if (button.mergeClass !== '')
         className = className + ' ' + button.mergeClass
 
     if (typeof(button.style) !== 'object')
         button.style = {}
 
-    if (button.type === '' || typeof(button.type) === 'undefined')
+    if (button.type === '' || typeof(button.type) === 'undefined' || ! buttonTypes.includes(button.type))
         button.type = 'button'
 
     if (typeof(button.options) !== 'object')

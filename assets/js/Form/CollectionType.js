@@ -2,8 +2,8 @@
 
 import React from "react"
 import PropTypes from 'prop-types'
-import CollectionMember from './CollectionMember'
 import ButtonManager from '../Component/Button/ButtonManager'
+import FormRows from './FormRows'
 
 export default function CollectionType(props) {
     const {
@@ -43,15 +43,19 @@ export default function CollectionType(props) {
     }
 
     const collectionRows = Object.keys(collection).map(key => {
-         let child = collection[key]
-         return (
-             <CollectionMember
-                 key={key}
-                 form={child}
-                 template={template}
-                 {...collectionProps}
-                 {...otherProps}
-             />
+            let child = collection[key]
+            let collectionKey = ''
+            if (template.key !== false)
+                collectionKey = child[template.key]
+            return (
+                <FormRows
+                    key={collectionKey}
+                    collectionKey={collectionKey}
+                    form={child}
+                    template={template.rows}
+                    {...collectionProps}
+                    {...otherProps}
+                />
             )
         }
     )

@@ -51,6 +51,7 @@ export default function FormColumn(props) {
             button = {...default_buttons.delete}
             if (typeof collection_buttons.delete !== 'undefined')
                 button = {...collection_buttons.delete}
+            button.row = form
             buttons.unshift(buildButton(button, 'delete'))
         }
         if (allow_duplicate)

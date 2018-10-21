@@ -26,7 +26,7 @@ export default function FormContainer(props) {
 
     if (template.collection !== false) {
 
-        const collection = form.children.filter(element => {
+        const collection = form.children.find(element => {
             if (element.name === template.collection.form)
                 return element
         })
@@ -41,7 +41,8 @@ export default function FormContainer(props) {
                 <CollectionType
                     template={template.collection}
                     collectionName={template.form}
-                    form={collection[0]}
+                    collection={collection}
+                    form={collection}
                     {...otherProps}
                 />
             </div>

@@ -25,7 +25,6 @@ Encore
     .addEntry('address', './assets/js/address.js')
     .addEntry('phone', './assets/js/phone.js')
     .addEntry('form', './assets/js/form.js')
-    .addEntry('collection', '../symfony-collection-react/assets/js/collection.js')
 
     /*
      * FEATURE CONFIG

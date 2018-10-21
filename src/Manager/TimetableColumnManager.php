@@ -17,7 +17,6 @@ namespace App\Manager;
 
 use App\Entity\TimetableColumn;
 use App\Manager\Traits\EntityTrait;
-use Hillrange\Collection\React\Util\CollectionInterface;
 
 /**
  * Class TimetableColumnManager
@@ -98,7 +97,7 @@ class TimetableColumnManager implements FormManagerInterface
                     'label' => 'Manage Timetable Column',
                     'buttons' => [
                         [
-                            'type' => 'submit',
+                            'type' => 'save',
                         ],
                     ],
                     'rows' => [
@@ -142,7 +141,7 @@ class TimetableColumnManager implements FormManagerInterface
                     'label_params' => ['%{name}' => $this->getEntity()->getName()],
                     'buttons' => [
                         [
-                            'type' => 'submit',
+                            'type' => 'save',
                         ],
                     ],
                     'rows' => [
@@ -183,6 +182,7 @@ class TimetableColumnManager implements FormManagerInterface
                                         ],
                                         'collection' => [
                                             'form' => 'timetableColumnRows',
+                                            'key' => 'id',
                                             'buttons' => [
                                                 'add' => [
                                                     'mergeClass' => 'btn-sm',
@@ -222,32 +222,24 @@ class TimetableColumnManager implements FormManagerInterface
                                                         ],
                                                         [
                                                             'class' => 'col-2',
-                                                            'form' => [
-                                                                'timeEnd' => 'widget',
-                                                            ],
+                                                            'form' => ['timeEnd' => 'widget'],
                                                         ],
                                                         [
                                                             'class' => 'col-2 text-right',
-                                                            'form' => [
-                                                                'type' => 'widget',
-                                                            ],
+                                                            'form' => ['type' => 'widget'],
                                                         ],
                                                         [
                                                             'class' => 'hidden',
-                                                            'form' => [
-                                                                'timetableColumn' => 'row',
-                                                            ],
+                                                            'form' => ['timetableColumn' => 'row'],
                                                         ],
                                                         [
                                                             'class' => 'col-2 text-center align-self-center',
-                                                            'form' => [
-                                                                'id' => 'row',
-                                                            ],
+                                                            'form' => ['id' => 'row'],
                                                             'collection_actions' => true,
                                                             'buttons' => [
                                                                 'save' => [
                                                                     'mergeClass' => 'btn-sm',
-                                                                    'type' => 'submit',
+                                                                    'type' => 'save',
                                                                 ],
                                                             ],
                                                         ],

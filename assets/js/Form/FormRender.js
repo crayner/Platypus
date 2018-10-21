@@ -2,9 +2,8 @@
 
 import React from "react"
 import PropTypes from 'prop-types'
+import Messages from '../Component/Messages/Messages'
 import FormRenderTabs from './FormRenderTabs'
-import FormMessages from './FormMessages'
-import FormContainer from './FormContainer'
 
 export default function FormRender(props) {
     const {
@@ -12,24 +11,25 @@ export default function FormRender(props) {
         ...otherProps
     } = props
 
-    if (template.form.tabs === false) {
+    if (template.tabs === false) {
         return (
             <div className={'container'}>
-                <FormMessages
+                <Messages
                     {...otherProps}
                 />
-                <FormContainer template={template.container} {...otherProps}/>
+                <FormContainer
+                    template={template.container}
+                    {...otherProps}/>
             </div>
         )
     }
 
     return (
         <div className={'container'}>
-            <FormMessages
+            <Messages
                 {...otherProps}
             />
             <FormRenderTabs
-                tabs={template.tabs}
                 template={template.tabs}
                 {...otherProps}
             />

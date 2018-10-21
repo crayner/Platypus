@@ -12,12 +12,10 @@ export default function FormElementSelect(props) {
         ...otherProps
     } = props
 
-    let element = form.children.filter(child => {
+    const element = form.children.find(child => {
         if (child.name === name)
             return child
     })
-
-    element = element[0]
 
     return (
         <FormTypes

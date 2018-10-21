@@ -21,6 +21,7 @@ use App\Manager\FormManager;
 use App\Manager\FormManagerInterface;
 use App\Manager\TimetableColumnManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -49,9 +50,11 @@ class PlatypusController extends Controller
      */
     public function test(TimetableColumnManager $manager, Request $request, FormManager $formManager)
     {
-        $tc = $manager->find(33);
+        $tc = $manager->find(34);
 
         $form = $this->createForm(TestType::class, $tc);
+
+        $form->get('name')->addError(new FormError('This is an error test!', 'This is an error test template!', ['template' => '']));
 
         return $this->render('test.html.twig',
             [
@@ -73,7 +76,7 @@ class PlatypusController extends Controller
      */
     public function testPost(Request $request, FormManager $formManager, TimetableColumnManager $manager)
     {
-        $tc = $manager->find(33);
+        $tc = $manager->find(34);
 
         $form = $this->createForm(TestType::class, $tc);
 

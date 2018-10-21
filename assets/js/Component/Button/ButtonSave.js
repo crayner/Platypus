@@ -7,7 +7,7 @@ import Button from './Button'
 export default function ButtonSave(props) {
     const {
         button,
-        saveForm,
+        saveFunction,
         ...otherProps,
     } = props
 
@@ -15,7 +15,7 @@ export default function ButtonSave(props) {
         button.colour = 'success'
 
     if (button.type === '' || typeof(button.type) === 'undefined')
-        button.type = 'submit'
+        button.type = 'button'
 
     if (button.icon === false || typeof(button.icon) === 'undefined')
         button.icon = ['fas','download']
@@ -23,7 +23,7 @@ export default function ButtonSave(props) {
     return (
         <Button
             button={button}
-            buttonClickAction={saveForm}
+            buttonClickAction={saveFunction}
             {...otherProps}
         />
     )
@@ -31,5 +31,5 @@ export default function ButtonSave(props) {
 
 ButtonSave.propTypes = {
     button: PropTypes.object.isRequired,
-    saveForm: PropTypes.func,
+    saveFunction: PropTypes.func.isRequired,
 }
