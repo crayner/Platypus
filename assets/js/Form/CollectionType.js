@@ -9,30 +9,33 @@ export default function CollectionType(props) {
     const {
         form,
         template,
+        getFormElementById,
         ...otherProps,
     } = props
 
-    const collection = form.children
+    const collection = getFormElementById(form.id)
+
+    const children = collection.children
     let last = null
 
-    Object.keys(collection).map(key => {
-        let child = collection[key]
+    Object.keys(children).map(key => {
+        let child = children[key]
         last = child.name
     })
 
     const collectionProps = {
         addElement: otherProps.addCollectionElement,
         deleteElement: otherProps.deleteCollectionElement,
-        allow_add: form.allow_add,
-        allow_delete: form.allow_delete,
-        allow_up: form.allow_up,
-        allow_down: form.allow_down,
-        allow_duplicate: form.allow_duplicate,
+        allow_add: collection.allow_add,
+        allow_delete: collection.allow_delete,
+        allow_up: collection.allow_up,
+        allow_down: collection.allow_down,
+        allow_duplicate: collection.allow_duplicate,
         collection_buttons: template.buttons,
-        first:  collection[0].name,
+        first:  children[0].name,
         last: last,
-        button_merge_class: form.button_merge_class,
-        collection_name: form.name,
+        button_merge_class: collection.button_merge_class,
+        collection_name: collection.name,
         default_buttons: {
             add: {type: 'add', style: {float: 'right'}, options: {eid: 'id'}},
             delete: {type: 'delete', style: {}, options: {eid: 'id'}},
@@ -42,8 +45,8 @@ export default function CollectionType(props) {
         },
     }
 
-    const collectionRows = Object.keys(collection).map(key => {
-            let child = collection[key]
+    const collectionRows = Object.keys(children).map(key => {
+            let child = children[key]
             return (
                 <FormRows
                     key={key}
@@ -57,11 +60,11 @@ export default function CollectionType(props) {
     )
 
     function addButton() {
-        if (form.allow_add) {
+        if (collection.allow_add) {
             let button = {...collectionProps.default_buttons.add}
             if (typeof template.buttons.add !== 'undefined')
                 button = {...template.buttons.add}
-            button = Object.assign({id: form.id + '_add'}, {...button})
+            button = Object.assign({id: collection.id + '_add'}, {...button})
             return (
                 <ButtonManager
                     button={button}
@@ -74,7 +77,7 @@ export default function CollectionType(props) {
     }
 
     return (
-        <div id={form.id} autoComplete={'off'}>
+        <div id={collection.id} autoComplete={'off'}>
             { collectionRows }
             { addButton() }
             <hr />
@@ -85,4 +88,5 @@ export default function CollectionType(props) {
 CollectionType.propTypes = {
     form: PropTypes.object.isRequired,
     template: PropTypes.object.isRequired,
+    getFormElementById: PropTypes.func.isRequired,
 }

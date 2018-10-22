@@ -78,7 +78,6 @@ export default function FormTypes(props) {
     }
 
     function textTypeWidget(){
-        getElementData(form.id)
         return (
             <FormControl
                 type="text"
@@ -217,13 +216,6 @@ export default function FormTypes(props) {
                 value={getElementData(form.id)}
             />
         )
-    }
-
-    function getCollectionForm(container){
-        return form.find(element => {
-            if (element.name === container.form)
-                return element
-        })
     }
 }
 

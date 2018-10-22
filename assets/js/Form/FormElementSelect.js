@@ -19,7 +19,7 @@ export default function FormElementSelect(props) {
 
     return (
         <FormTypes
-            form={element}
+            form={{...element}}
             style={style}
             {...otherProps}
         />

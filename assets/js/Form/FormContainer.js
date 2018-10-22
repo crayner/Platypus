@@ -18,7 +18,7 @@ export default function FormContainer(props) {
         return (
             <FormPanel
                 template={template.panel}
-                form={form}
+                form={{...form}}
                 {...otherProps}
             />
         )
@@ -26,6 +26,7 @@ export default function FormContainer(props) {
 
     if (template.collection !== false) {
 
+        console.log(form.children)
         const collection = form.children.find(element => {
             if (element.name === template.collection.form)
                 return element
@@ -35,14 +36,13 @@ export default function FormContainer(props) {
             <div className={template.class}>
                 <FormRow
                     template={template.headerRow}
-                    form={form}
+                    form={{...form}}
                     {...otherProps}
                 />
                 <CollectionType
                     template={template.collection}
                     collectionName={template.form}
-                    collection={collection}
-                    form={collection}
+                    form={{...collection}}
                     {...otherProps}
                 />
             </div>
@@ -53,12 +53,12 @@ export default function FormContainer(props) {
         <div className={template.class}>
             <FormRow
                 template={template.headerRow}
-                form={form}
+                form={{...form}}
                 {...otherProps}
             />
             <FormRows
                 template={template.rows}
-                form={form}
+                form={{...form}}
                 {...otherProps}
             />
         </div>

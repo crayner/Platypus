@@ -15,6 +15,7 @@ export default function  Messages(props) {
 
     const cells = Object.keys(messages).map(key => {
         const message = messages[key]
+        message.id = key
         return <Message
             message={message}
             key={'message_' + message.id}

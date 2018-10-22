@@ -3,6 +3,7 @@
 import React, { Component } from "react"
 import PropTypes from 'prop-types'
 import FormRender from './FormRender'
+import {fetchJson} from '../Component/fetchJson'
 
 export default class FormControl extends Component {
     constructor(props) {
@@ -10,6 +11,7 @@ export default class FormControl extends Component {
 
         this.form = props.form
         this.template = props.template
+        this.locale = props.locale
         this.otherProps = {...props}
 
         this.messages = []
@@ -22,6 +24,8 @@ export default class FormControl extends Component {
         this.addCollectionElement = this.addCollectionElement.bind(this)
         this.saveForm = this.saveForm.bind(this)
         this.getElementData = this.getElementData.bind(this)
+        this.cancelMessage = this.cancelMessage.bind(this)
+        this.getFormElementById = this.getFormElementById.bind(this)
 
         this.formControl = {
             elementChange: this.elementChange,
@@ -29,6 +33,8 @@ export default class FormControl extends Component {
             deleteCollectionElement: this.deleteCollectionElement,
             addCollectionElement: this.addCollectionElement,
             saveForm: this.saveForm,
+            cancelMessage:  this.cancelMessage,
+            getFormElementById: this.getFormElementById,
         }
         this.elementList = {}
     }
@@ -37,7 +43,7 @@ export default class FormControl extends Component {
     elementChange(event, id){
         let element = this.getFormElementById(id)
         element.value = event.target.value
-        this.setFormElement(element)
+        this.setFormElement(element,this.form)
         this.setState({
             messages: this.messages,
             form: this.form
@@ -46,6 +52,7 @@ export default class FormControl extends Component {
 
     deleteCollectionElement(button){
         const element = button.row
+        console.log(element)
         const eid = parseInt(element.name)
         const collectionId = element.id.replace('_' + eid, '')
         let collection = this.getFormElementById(collectionId, this.form)
@@ -93,10 +100,9 @@ export default class FormControl extends Component {
             })
         }
 
+        this.elementList = {}
         collection.children = children
-
-        this.setFormElement(collection)
-        this.getFormElementById(collection.id,true)
+        this.setFormElement(collection, this.form)
 
         this.setState({
             form: this.form,
@@ -125,8 +131,7 @@ export default class FormControl extends Component {
         children[key] = prototype
         collection.children = children
 
-        this.setFormElement(collection)
-
+        this.setFormElement(collection, this.form)
         this.setState({
             form: this.form,
             messages: this.messages,
@@ -164,7 +169,7 @@ export default class FormControl extends Component {
         return vars;
     }
 
-    setFormElement(element, form = this.form) {
+    setFormElement(element, form) {
         if (element.id === form.id)
         {
             form = {...element}
@@ -177,8 +182,12 @@ export default class FormControl extends Component {
 
     getElementData(id){
         let element = this.getFormElementById(id)
-        if (element.id !== id)
-            console.error('The element ' + element.id + ' returned does not match the requested element ' + id)
+
+        if (typeof element === 'undefined' || element.id !== id) {
+            console.error('The element returned does not match the requested element named: ' + id)
+            console.log(this.form)
+            return ''
+        }
 
         if ((element.value === '' || element.value === 'undefined' || element.value === null) && element.value !== element.data)
         {
@@ -188,7 +197,7 @@ export default class FormControl extends Component {
         return (typeof element.value === 'undefined' || element.value === null) ? '' : element.value
     }
 
-    buildFormData(data, form = this.form) {
+    buildFormData(data, form) {
         if (form.children.length > 0){
             form.children.map(child => {
                 data[child.name] = this.buildFormData({}, child)
@@ -199,13 +208,35 @@ export default class FormControl extends Component {
     }
 
     saveForm(){
-        this.data = this.buildFormData({})
-        console.log(this.data)
+        this.data = this.buildFormData({}, this.form)
+        fetchJson(
+            this.template.form.url,
+            {method: this.template.form.method, body: JSON.stringify(this.data)},
+            this.locale)
+            .then(data => {
+                this.elementList = {}
+                this.messages = this.messages.concat(data.messages)
+                this.form = data.form
+                this.setState({
+                    form: this.form,
+                    messages: this.messages
+                })
+            }).catch(error => {
+                console.error('Error: ', error)
+                this.messages.push({level: 'danger', message: error})
+                this.setState({
+                    form: this.form,
+                    messages: this.messages
+                })
+            })
 
-        this.messages.push({message: 'I did something to start saving!', level: 'success'})
+    }
+
+    cancelMessage(id) {
+        this.messages.splice(id,1)
         this.setState({
+            messages: this.messages,
             form: this.form,
-            messages: this.messages
         })
     }
 
@@ -213,7 +244,8 @@ export default class FormControl extends Component {
         return (
             <FormRender
                 template={this.template}
-                {...this.state}
+                form={{...this.state.form}}
+                messages={this.messages}
                 {...this.formControl}
                 {...this.otherProps}
             />
@@ -224,4 +256,5 @@ export default class FormControl extends Component {
 FormControl.propTypes = {
     form: PropTypes.object.isRequired,
     template: PropTypes.object.isRequired,
+    locale: PropTypes.string.isRequired,
 }

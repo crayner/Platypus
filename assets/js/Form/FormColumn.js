@@ -26,7 +26,7 @@ export default function FormColumn(props) {
         return (
             <FormContainer
                 template={template.container}
-                form={form}
+                form={{...form}}
                 {...otherProps}
             />
         )
@@ -86,7 +86,7 @@ export default function FormColumn(props) {
                     style={style}
                     name={key}
                     key={key}
-                    form={form}
+                    form={{...form}}
                     template={template}
                     {...otherProps}
                 />

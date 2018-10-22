@@ -12,7 +12,6 @@ export default function FormPanel(props) {
         ...otherProps
     } = props
 
-    console.log(template)
     function getButtons(){
         return template.buttons.map((button, key) => {
             return (

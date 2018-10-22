@@ -91,7 +91,7 @@ class PlatypusController extends Controller
 
         return new JsonResponse(
            [
-               'data' => $formManager->extractFormData($formManager->extractForm($form->createView())),
+               'form' => $formManager->extractForm($form->createView()),
                'messages' => $formManager->getFormErrors($form),
            ],
            200);
