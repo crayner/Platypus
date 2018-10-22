@@ -279,9 +279,8 @@ export default class PaginationControl extends Component {
     }
 
     editElement(options) {
-        let edit = {...this.actions.buttons.edit}
-        let url = this.manageUrlOptions(edit.url, edit.url_options, options)
-        this.buttonClickAction(url, edit.url_type, {})
+        let url = this.manageUrlOptions(options)
+        this.buttonClickAction(url, options.url_type, {})
         return false
     }
 
@@ -307,15 +306,16 @@ export default class PaginationControl extends Component {
 
     }
 
-    manageUrlOptions(url, options, item){
-        Object.keys(options).map(key => {
-            if (typeof item[options[key]] !== 'undefined')
+    manageUrlOptions(options){
+        let url = options.url
+        const item = options.options
+        Object.keys(options.url_options).map(key => {
+            if (typeof item[options.url_options[key]] !== 'undefined')
             {
-                const value = item[options[key]]
+                const value = item[options.url_options[key]]
                 url = url.replace(key, value)
             }
         })
-
         return url
     }
 

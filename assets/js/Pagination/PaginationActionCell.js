@@ -35,7 +35,7 @@ export default function PaginationActionCell(props) {
     )
 
     return (
-        <div className={actions.class + ' card-text col-' + actions.size}>
+        <div className={actions.class === '' ? ('card-text col-' + actions.size) : (actions.class + ' ' + 'card-text col-' + actions.size)}>
             {buttons}
         </div>
     )

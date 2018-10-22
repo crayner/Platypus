@@ -161,6 +161,7 @@ class PersonController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/person/{id}/edit/{tabName}", name="person_edit"))
+     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
      */
     public function edit(PersonManager $manager, Request $request, AddressManager $addressManager, PhoneManager $phoneManager, $id = 'Add', $tabName = 'basic.information')
     {
@@ -197,7 +198,7 @@ class PersonController extends Controller
      * @param PersonHelper $personHelper
      * @param int $id
      * @Route("/user/preference/{id}/delete_personal_background/", name="preference_delete_background")
-     * @IsGranted("IS_AUTHENTICATED_FULLY")
+     * @Security("is_granted('USE_ROUTE', ['manage_people'])")
      */
     public function deletePersonalBackground(AssetHelper $assetHelper, PersonManager $manager, int $id)
     {

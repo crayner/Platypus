@@ -118,7 +118,7 @@ class PersonPagination extends PaginationReactManager
             'label' => 'person.photo.label',
             'name' => 'photo',
             'style' => 'photo',
-            'class' => 'text-center',
+            'class' => 'text-center align-self-center',
             'options' => [
                 'width' => '75',
                 'default' => 'build/static/images/DefaultPerson.png'
@@ -129,6 +129,7 @@ class PersonPagination extends PaginationReactManager
             'name' => 'fullName',
             'size' => 3,
             'style' => 'combine',
+            'class' => 'text-center align-self-center',
             'options' => [
                 'combine' => ['surname' => [], 'firstName' => ['join' => ': ']],
             ],
@@ -183,24 +184,8 @@ class PersonPagination extends PaginationReactManager
      */
     protected $actions = [
         'size' => 3,
+        'class' => 'text-center align-self-center',
         'buttons' => [
-            [
-                'label' => 'person.action.password.change',
-                'url' => '/person/__id__/password/change/',
-                'url_options' => [
-                    '__id__' => 'id',
-                ],
-                'icon' => ['fas', 'unlock-alt'],
-                'colour' => 'light',
-            ],
-            [
-                'label' => 'person.action.delete',
-                'url' => '/person/__id__/delete/',
-                'url_options' => [
-                    '__id__' => 'id',
-                ],
-                'type' => 'delete',
-            ],
             [
                 'label' => 'person.action.edit',
                 'url' => '/person/__id__/edit/',
@@ -209,6 +194,29 @@ class PersonPagination extends PaginationReactManager
                 ],
                 'type' => 'edit',
                 'url_type' => 'redirect',
+                'mergeClass' => 'btn-sm',
+                'style' => [],
+            ],
+            [
+                'label' => 'person.action.delete',
+                'url' => '/person/__id__/delete/',
+                'url_options' => [
+                    '__id__' => 'id',
+                ],
+                'type' => 'delete',
+                'mergeClass' => 'btn-sm',
+                'style' => [],
+            ],
+            [
+                'label' => 'person.action.password.change',
+                'url' => '/person/__id__/password/change/',
+                'url_options' => [
+                    '__id__' => 'id',
+                ],
+                'icon' => ['fas', 'unlock-alt'],
+                'colour' => 'light',
+                'mergeClass' => 'btn-sm',
+                'style' => [],
             ],
         ],
     ];
