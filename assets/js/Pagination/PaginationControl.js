@@ -50,8 +50,8 @@ export default class PaginationControl extends Component {
         this.headerDefinition = props.headerDefinition
         this.searchDefinition = props.searchDefinition
         this.orderBy = props.orderBy === 'ASC' ? 1 : -1
-        this.caseSensitive = props.caseSensitive === '1' ? true : false
-        this.messages = new Object()
+        this.caseSensitive = props.caseSensitive === '1'
+        this.messages = {}
         this.filterValue = props.filterValue
 
         this.filterLabels = this.createFilterLabels(this.filter)
@@ -71,10 +71,10 @@ export default class PaginationControl extends Component {
         this.changeTheSearch = this.changeTheSearch.bind(this)
         this.toggleOrderBy = this.toggleOrderBy.bind(this)
         this.toggleCaseSensitive = this.toggleCaseSensitive.bind(this)
-        this.buttonClickAction = this.buttonClickAction.bind(this)
-        this.addElement = this.addElement.bind(this)
-        this.editElement = this.editElement.bind(this)
-        this.deleteElement = this.deleteElement.bind(this)
+        this.buttonHandler = this.buttonHandler.bind(this)
+        this.addButtonHandler = this.addButtonHandler.bind(this)
+        this.editButtonHandler = this.editButtonHandler.bind(this)
+        this.deleteButtonHandler = this.deleteButtonHandler.bind(this)
         this.cancelMessage = this.cancelMessage.bind(this)
         this.clearFilter = this.clearFilter.bind(this)
         this.changeFilterValue = this.changeFilterValue.bind(this)
@@ -268,30 +268,30 @@ export default class PaginationControl extends Component {
     }
 
     toggleCaseSensitive(){
-        this.caseSensitive = this.caseSensitive ? false : true
+        this.caseSensitive = this.caseSensitive === true
         this.searchChange = true
         this.handlePagination()
     }
 
-    addElement(options) {
-        this.buttonClickAction(options.url, options.url_type ? options.url_type : 'json', options.url_options)
+    addButtonHandler(options) {
+        this.buttonHandler(options.url, options.url_type ? options.url_type : 'json', options.url_options)
         return false
     }
 
-    editElement(options) {
+    editButtonHandler(options) {
         let url = this.manageUrlOptions(options)
-        this.buttonClickAction(url, options.url_type, {})
+        this.buttonHandler(url, options.url_type, {})
         return false
     }
 
-    deleteElement(options) {
+    deleteButtonHandler(options) {
         let del = {...this.actions.buttons.delete}
         const url = this.manageUrlOptions(del.url,del.url_options,options)
-        this.buttonClickAction(url,del.url_type, [])
+        this.buttonHandler(url,del.url_type, [])
         return false
     }
 
-    buttonClickAction(url,url_type,options) {
+    buttonHandler(url,url_type,options) {
         if (url_type === 'json') {
             fetchJson(url, {}, this.locale)
                 .then((data) => {
@@ -493,9 +493,9 @@ export default class PaginationControl extends Component {
                     sort={this.sort}
                     orderBy={this.orderBy}
                     actions={this.actions}
-                    addElement={this.addElement}
-                    editElement={this.editElement}
-                    deleteElement={this.deleteElement}
+                    addButtonHandler={this.addButtonHandler}
+                    editButtonHandler={this.editButtonHandler}
+                    deleteButtonHandler={this.deleteButtonHandler}
                 />
             </section>
         )

@@ -2,29 +2,18 @@
 
 {% extends "Default/template.html.twig" %}
 
-{% form_theme form
-    'Timetable/column_row.html.twig'
-    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
-    '@HillrangeForm/FormTheme/bootstrap.html.twig'
-%}
-
 {% block title %}{{ parent() }}{{ 'Edit Timetable Column'|trans }}{% endblock title %}
 {% block headerTitle %}{{ 'Edit Timetable Column'|trans }}{% endblock headerTitle %}
-{% block headerLead %}{{ '' }}{% endblock headerLead %}
+{% block headerLead %}{% endblock headerLead %}
 
 {% block contentContainer %}
-    {{ form_start(form) }}
-    {{ all_form_errors(fullForm) }}
-    {% set h3Content = '' %}
-    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_columns')}}) %}
-    {% set h3Content = h3Content ~ saveButton() %}
-    {% include 'Default/tabs.html.twig' with {translation: 'Course', tabManager: manager} %}
-    {{ form_end(form) }}
+    <div style="width: 100%; background-color: deeppink; vertical-align: center;">
+        <h3 class="text-center align-self-center">{{ 'Collecting data. Please be patient...'|trans({}, 'System') }}</h3>
+    </div>
 {% endblock contentContainer %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ toggle_script() }}
-    {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_column'} %}
-    {{ collectionScript(form.timetableColumnRows) }}
+    {{ renderForm(form, manager, 'columnTemplate')|raw }}
 {% endblock javascripts %}

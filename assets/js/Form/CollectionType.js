@@ -24,8 +24,8 @@ export default function CollectionType(props) {
     })
 
     const collectionProps = {
-        addElement: otherProps.addCollectionElement,
-        deleteElement: otherProps.deleteCollectionElement,
+        addButtonHandler: otherProps.addButtonHandler,
+        deleteButtonHandler: otherProps.deleteButtonHandler,
         allow_add: collection.allow_add,
         allow_delete: collection.allow_delete,
         allow_up: collection.allow_up,
@@ -34,7 +34,6 @@ export default function CollectionType(props) {
         collection_buttons: template.buttons,
         first:  children[0].name,
         last: last,
-        button_merge_class: collection.button_merge_class,
         collection_name: collection.name,
         default_buttons: {
             add: {type: 'add', style: {float: 'right'}, options: {eid: 'id'}},
@@ -68,7 +67,7 @@ export default function CollectionType(props) {
             return (
                 <ButtonManager
                     button={button}
-                    addElement={otherProps.addCollectionElement}
+                    addButtonHandler={otherProps.addButtonHandler}
                     {...otherProps}
                 />
             )

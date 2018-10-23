@@ -7,6 +7,7 @@ import Button from './Button'
 export default function ButtonMiscellaneous(props) {
     const {
         button,
+        miscButtonHandler,
         ...otherProps,
     } = props
 
@@ -19,6 +20,7 @@ export default function ButtonMiscellaneous(props) {
     return (
         <Button
             button={button}
+            buttonHandler={miscButtonHandler}
             {...otherProps}
         />
     )
@@ -26,4 +28,5 @@ export default function ButtonMiscellaneous(props) {
 
 ButtonMiscellaneous.propTypes = {
     button: PropTypes.object.isRequired,
+    miscButtonHandler: PropTypes.func,
 }

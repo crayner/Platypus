@@ -72,7 +72,10 @@ class TimetableColumnManager implements FormManagerInterface
     {
         return [
             'form' => [
-                'url' => '/test/post/',
+                'url' => '/timetable/column/{id}/save/',
+                'url_options' => [
+                    '{id}' => 'id'
+                ],
             ],
             'tabs' => [
                 'details' => $this->getDetailsTab(),
@@ -98,6 +101,11 @@ class TimetableColumnManager implements FormManagerInterface
                     'buttons' => [
                         [
                             'type' => 'save',
+                        ],
+                        [
+                            'type' => 'return',
+                            'url' => '/timetable/column/list/',
+                            'url_type' => 'redirect',
                         ],
                     ],
                     'rows' => [
@@ -142,6 +150,11 @@ class TimetableColumnManager implements FormManagerInterface
                     'buttons' => [
                         [
                             'type' => 'save',
+                        ],
+                        [
+                            'type' => 'return',
+                            'url' => '/timetable/column/list/',
+                            'url_type' => 'redirect',
                         ],
                     ],
                     'rows' => [

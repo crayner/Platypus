@@ -82,6 +82,11 @@ class FormManager
     private $formTabMap = [];
 
     /**
+     * @var array
+     */
+    private $buttonTypeList = ['save','submit', 'add', 'delete', 'return'];
+
+    /**
      * CollectionManager constructor.
      * @param \Twig_Environment $twig
      */
@@ -548,7 +553,7 @@ class FormManager
         $resolver->setAllowedTypes('url_options', ['array']);
         $resolver->setAllowedTypes('url', ['boolean','string']);
         $resolver->setAllowedTypes('url_type', ['string']);
-        $resolver->setAllowedValues('type', ['save','submit', 'add', 'delete']);
+        $resolver->setAllowedValues('type', $this->getButtonTypeList());
         $resolver->setAllowedValues('url_type', ['redirect', 'json']);
         $button = $resolver->resolve($button);
         return $button;
@@ -577,14 +582,39 @@ class FormManager
         $resolver->setDefaults([
             'method' => 'post',
             'encType' => 'application/x-www-form-urlencoded',
+            'url_options' => [],
         ]);
         $resolver->setAllowedTypes('url', ['string']);
+        $resolver->setAllowedTypes('url_options', ['array']);
         $resolver->setAllowedTypes('method', ['string']);
         $resolver->setAllowedTypes('encType', ['string']);
         $resolver->setAllowedValues('encType', ['application/x-www-form-urlencoded', 'text/plain', 'multipart/form-data']);
         $resolver->setAllowedValues('method', ['post', 'get']);
 
         $form = $resolver->resolve($form);
+
+        if (! empty($form['url_options']))
+        {
+            foreach($form['url_options'] as $q=>$w)
+            {
+                $method = 'get' . ucfirst($w);
+                $found = false;
+                if (method_exists($this->getTemplateManager()->getEntity(), $method))
+                {
+                    $form['url'] = str_replace($q, $this->getTemplateManager()->getEntity()->$method(), $form['url']);
+                    $found = true;
+                }
+                $method = 'is' . ucfirst($w);
+                if (method_exists($this->getTemplateManager()->getEntity(), $method) && ! $found)
+                {
+                    $form['url'] = str_replace($q, $this->getTemplateManager()->getEntity()->$method(), $form['url']);
+                    $found = true;
+                }
+                if (! $found)
+                    trigger_error(sprintf('The form url does not have an option %s in the entity.', $w), E_USER_ERROR);
+            }
+        }
+
         return $form;
     }
 
@@ -723,5 +753,13 @@ class FormManager
             return $this;
         $this->formTabMap[$formTabMap] = $this->getCurrentTab();
         return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getButtonTypeList(): array
+    {
+        return $this->buttonTypeList;
     }
 }

@@ -8,6 +8,7 @@ import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 export default function ButtonUp(props) {
     const {
         button,
+        upButtonHandler,
         ...otherProps,
     } = props
 
@@ -20,6 +21,7 @@ export default function ButtonUp(props) {
     return (
         <Button
             button={button}
+            upButtonHandler={upButtonHandler}
             {...otherProps}
         />
     )
@@ -27,4 +29,5 @@ export default function ButtonUp(props) {
 
 ButtonUp.propTypes = {
     button: PropTypes.object.isRequired,
+    upButtonHandler: PropTypes.func,
 }

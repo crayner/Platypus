@@ -7,6 +7,7 @@ import Button from './Button'
 export default function ButtonDuplicate(props) {
     const {
         button,
+        duplicateButtonHandler,
         ...otherProps,
     } = props
 
@@ -19,6 +20,7 @@ export default function ButtonDuplicate(props) {
     return (
         <Button
             button={button}
+            buttonHandler={duplicateButtonHandler}
             {...otherProps}
         />
     )
@@ -26,4 +28,5 @@ export default function ButtonDuplicate(props) {
 
 ButtonDuplicate.propTypes = {
     button: PropTypes.object.isRequired,
+    duplicateButtonHandler: PropTypes.func,
 }

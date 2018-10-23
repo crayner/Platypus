@@ -25,8 +25,6 @@ export default function FormContainer(props) {
     }
 
     if (template.collection !== false) {
-
-        console.log(form.children)
         const collection = form.children.find(element => {
             if (element.name === template.collection.form)
                 return element

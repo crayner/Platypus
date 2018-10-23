@@ -22,7 +22,8 @@ export default function ButtonManager(props) {
     } = props
 
     let buttonClone = {...button}
-    
+    buttonClone.buttonType = button.type
+
     if (typeof buttonClone.mergeClass === 'undefined')
         buttonClone.mergeClass = ''
 

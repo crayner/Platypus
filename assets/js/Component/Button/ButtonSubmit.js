@@ -7,6 +7,7 @@ import Button from './Button'
 export default function ButtonSubmit(props) {
     const {
         button,
+        submitButtonHandler,
         ...otherProps,
     } = props
 
@@ -22,6 +23,7 @@ export default function ButtonSubmit(props) {
     return (
         <Button
             button={button}
+            submitButtonHandler={submitButtonHandler}
             {...otherProps}
         />
     )
@@ -29,4 +31,5 @@ export default function ButtonSubmit(props) {
 
 ButtonSubmit.propTypes = {
     button: PropTypes.object.isRequired,
+    submitButtonHandler: PropTypes.func,
 }

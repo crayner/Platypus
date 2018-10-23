@@ -54,7 +54,7 @@ export default function AddressCollection(props) {
               <ButtonDelete
                 button={button}
                 url={url}
-                buttonClickAction={removeAddress}
+                buttonHandler={removeAddress}
                 translations={translations}
                 style={{ float: 'right' }}
               />) : <div className="btn btn-light btn-sm" style={{ float: 'right' }} title={translateMessage(translations, 'family.button.link')}><FontAwesomeIcon icon={faLink} fixedWidth /></div> }

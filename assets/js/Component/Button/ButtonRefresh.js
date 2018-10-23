@@ -7,6 +7,7 @@ import Button from './Button'
 export default function ButtonRefresh(props) {
     const {
         button,
+        refreshButtonHandler,
         ...otherProps,
     } = props
 
@@ -19,6 +20,7 @@ export default function ButtonRefresh(props) {
     return (
         <Button
             button={button}
+            refreshButtonHandler={refreshButtonHandler}
             {...otherProps}
         />
     )
@@ -26,4 +28,5 @@ export default function ButtonRefresh(props) {
 
 ButtonRefresh.propTypes = {
     button: PropTypes.object.isRequired,
+    refreshButtonHandler: PropTypes.func,
 }

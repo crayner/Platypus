@@ -72,7 +72,7 @@ class PlatypusController extends Controller
      * @param TimetableColumnManager $manager
      * @return JsonResponse
      * @throws \Exception
-     * @Route("/test/post/", name="test_post", methods={"POST"})
+     * @Route("/test/_/post/", name="test__post", methods={"POST"})
      */
     public function testPost(Request $request, FormManager $formManager, TimetableColumnManager $manager)
     {

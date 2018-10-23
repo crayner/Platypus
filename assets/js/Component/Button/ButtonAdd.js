@@ -7,7 +7,7 @@ import Button from './Button'
 export default function ButtonAdd(props) {
     const {
         button,
-        addElement,
+        addButtonHandler,
         ...otherProps,
     } = props
 
@@ -20,7 +20,7 @@ export default function ButtonAdd(props) {
     return (
         <Button
             button={button}
-            buttonClickAction={addElement}
+            buttonHandler={addButtonHandler}
             {...otherProps}
         />
     )
@@ -28,5 +28,5 @@ export default function ButtonAdd(props) {
 
 ButtonAdd.propTypes = {
     button: PropTypes.object.isRequired,
-    addElement: PropTypes.func.isRequired,
+    addButtonHandler: PropTypes.func.isRequired,
 }

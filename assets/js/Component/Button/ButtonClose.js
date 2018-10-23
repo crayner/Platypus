@@ -7,6 +7,7 @@ import Button from './Button'
 export default function ButtonClose(props) {
     const {
         button,
+        closeButtonHandler,
         ...otherProps,
     } = props
 
@@ -19,6 +20,7 @@ export default function ButtonClose(props) {
     return (
         <Button
             button={button}
+            buttonHandler={closeButtonHandler}
             {...otherProps}
         />
     )
@@ -26,4 +28,5 @@ export default function ButtonClose(props) {
 
 ButtonClose.propTypes = {
     button: PropTypes.object.isRequired,
+    closeButtonHandler: PropTypes.func,
 }

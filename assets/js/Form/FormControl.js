@@ -4,6 +4,7 @@ import React, { Component } from "react"
 import PropTypes from 'prop-types'
 import FormRender from './FormRender'
 import {fetchJson} from '../Component/fetchJson'
+import {openPage} from '../Component/openPage'
 
 export default class FormControl extends Component {
     constructor(props) {
@@ -20,21 +21,23 @@ export default class FormControl extends Component {
             form: this.form
         }
         this.elementChange = this.elementChange.bind(this)
-        this.deleteCollectionElement = this.deleteCollectionElement.bind(this)
-        this.addCollectionElement = this.addCollectionElement.bind(this)
-        this.saveForm = this.saveForm.bind(this)
+        this.deleteButtonHandler = this.deleteButtonHandler.bind(this)
+        this.addButtonHandler = this.addButtonHandler.bind(this)
+        this.saveButtonHandler = this.saveButtonHandler.bind(this)
         this.getElementData = this.getElementData.bind(this)
         this.cancelMessage = this.cancelMessage.bind(this)
         this.getFormElementById = this.getFormElementById.bind(this)
+        this.returnButtonHandler = this.returnButtonHandler.bind(this)
 
         this.formControl = {
             elementChange: this.elementChange,
             getElementData: this.getElementData,
-            deleteCollectionElement: this.deleteCollectionElement,
-            addCollectionElement: this.addCollectionElement,
-            saveForm: this.saveForm,
+            deleteButtonHandler: this.deleteButtonHandler,
+            addButtonHandler: this.addButtonHandler,
+            saveButtonHandler: this.saveButtonHandler,
             cancelMessage:  this.cancelMessage,
             getFormElementById: this.getFormElementById,
+            returnButtonHandler: this.returnButtonHandler,
         }
         this.elementList = {}
     }
@@ -50,9 +53,9 @@ export default class FormControl extends Component {
         })
     }
 
-    deleteCollectionElement(button){
+    deleteButtonHandler(button){
+        console.log(button)
         const element = button.row
-        console.log(element)
         const eid = parseInt(element.name)
         const collectionId = element.id.replace('_' + eid, '')
         let collection = this.getFormElementById(collectionId, this.form)
@@ -99,7 +102,7 @@ export default class FormControl extends Component {
                 }
             })
         }
-
+console.log(children)
         this.elementList = {}
         collection.children = children
         this.setFormElement(collection, this.form)
@@ -115,12 +118,12 @@ export default class FormControl extends Component {
         element.children.map(child => {
             child.full_name = child.full_name.replace(was.full_name,now.full_name)
             child.id = child.id.replace(was.id,now.id)
-            child = this.updateCollectionDetails(child,was,now)
+            this.updateCollectionDetails(child,was,now)
          })
         return element
     }
 
-    addCollectionElement(button){
+    addButtonHandler(button){
         const id = button.id.replace('_add','')
         let collection = this.getFormElementById(id)
         const key = collection.children.length
@@ -207,7 +210,12 @@ export default class FormControl extends Component {
             return form.value
     }
 
-    saveForm(){
+    returnButtonHandler(options)
+    {
+        openPage(options.url)
+    }
+
+    saveButtonHandler() {
         this.data = this.buildFormData({}, this.form)
         fetchJson(
             this.template.form.url,

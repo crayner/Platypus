@@ -18,7 +18,6 @@ export default function FormColumn(props) {
         form,
         collection_buttons,
         default_buttons,
-        button_merge_class,
         ...otherProps
     } = props
 
@@ -34,11 +33,10 @@ export default function FormColumn(props) {
     let buttons = []
     if (template.buttons !== false) {
         buttons = Object.keys(template.buttons).map(key => {
-            const button = Object.assign(template.buttons[key],{mergeClass: button_merge_class})
             return (
                 <ButtonManager
                     key={key}
-                    button={button}
+                    button={{...template.buttons[key]}}
                     {...otherProps}
                 />
             )
@@ -102,7 +100,6 @@ export default function FormColumn(props) {
     }
 
     function buildButton(button, key){
-        button = Object.assign( button, {mergeClass: button_merge_class})
         return (
             <ButtonManager
                 button={button}
@@ -131,11 +128,9 @@ FormColumn.propTypes = {
     allow_duplicate: PropTypes.bool,
     first: PropTypes.string,
     last: PropTypes.string,
-    button_merge_class: PropTypes.string,
 }
 
 FormColumn.defaultProps = {
-    button_merge_class: '',
     allow_delete: false,
     allow_up: false,
     allow_down: false,

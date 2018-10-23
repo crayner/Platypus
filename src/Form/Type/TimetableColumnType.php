@@ -38,68 +38,6 @@ class TimetableColumnType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $columns = [];
-
-        $columns[] = [
-            'class' => 'col-2',
-            'form' => ['name'],
-        ];
-        $columns[] = [
-            'class' => 'col-2',
-            'form' => ['nameShort'],
-        ];
-        $columns[] = [
-            'class' => 'col-2',
-            'form' => ['timeStart'],
-        ];
-        $columns[] = [
-            'class' => 'col-2',
-            'form' => [
-                'timeEnd',
-            ],
-        ];
-        $columns[] = [
-            'class' => 'col-2 text-right',
-            'form' => [
-                'type',
-                'id',
-                'timetableColumn',
-            ],
-        ];
-        $actions = [
-            'class' => 'col-2 text-center align-self-center',
-            'save' => [
-                'mergeClass' => 'btn-sm',
-            ],
-            'add' => [
-                'mergeClass' => 'btn-sm',
-                'style' => [
-                    'float' => 'right',
-                ],
-            ],
-            'delete' => [
-                'mergeClass' => 'btn-sm',
-                'url' => '/timetable/column/'.$options['data']->getId().'/row/{cid}/delete/',
-                'url_options' => [
-                    '{cid}' => 'data_id',
-                ],
-                'url_type' => 'json',
-                'options' => [
-                    'eid' => 'name',
-                ],
-            ],
-        ];
-
-        $template = [
-            'rows' => [
-                [
-                    'class' => 'small row row-striped',
-                    'columns' => $columns,
-                ],
-            ],
-            'actions' => $actions,
-        ];
-
         $builder
             ->add('name', TextType::class,
                 [
@@ -123,7 +61,7 @@ class TimetableColumnType extends AbstractType
                     'entry_type' => TimetableColumnRowType::class,
                     'allow_add' => true,
                     'allow_delete' => true,
-                    'template' => $template,
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
         ;

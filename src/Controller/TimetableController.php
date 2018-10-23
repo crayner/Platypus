@@ -21,6 +21,7 @@ use App\Entity\TimetableColumn;
 use App\Entity\TimetableDayDate;
 use App\Form\Type\TimetableColumnType;
 use App\Form\Type\TimetableType;
+use App\Manager\FormManager;
 use App\Manager\TimetableColumnManager;
 use App\Manager\TimetableColumnRowManager;
 use App\Manager\TimetableDayManager;
@@ -185,35 +186,63 @@ class TimetableController extends Controller
      * editColumn
      *
      * @param TimetableColumnManager $manager
-     * @param Request $request
      * @param $id
      * @param string $tabName
      * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      * @Route("/timetable/column/{id}/edit/{tabName}", name="edit_column")
      * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
      */
-    public function editColumn(TimetableColumnManager $manager, Request $request, $id, $tabName = 'details')
+    public function editColumn(TimetableColumnManager $manager, $id, $tabName = 'details')
     {
         $manager->find($id);
 
         $form = $this->createForm(TimetableColumnType::class, $manager->getEntity());
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $manager->getEntityManager()->persist($manager->getEntity());
-            $manager->getEntityManager()->flush();
-        }
-
         return $this->render(
             'Timetable/column_edit.html.twig',
             [
-                'form' => $form->createView(),
-                'fullForm' => $form,
+                'form' => $form,
                 'manager' => $manager,
+                'tabName' => $tabName,
             ]
         );
+    }
+
+    /**
+     * editColumnSave
+     *
+     * @param int $id
+     * @param Request $request
+     * @param FormManager $formManager
+     * @param TimetableColumnManager $manager
+     * @return JsonResponse
+     * @throws \Exception
+     * @Route("/timetable/column/{id}/save/", name="edit_column_save")
+     * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
+     */
+    public function editColumnSave(int $id, Request $request, FormManager $formManager, TimetableColumnManager $manager)
+    {
+        $entity = $manager->find($id);
+
+        $form = $this->createForm(TimetableColumnType::class, $entity);
+
+        $data = json_decode($request->getContent(), true);
+
+        $form->submit($data);
+
+        if ($form->isValid())
+        {
+            $manager->getEntityManager()->persist($entity);
+            $manager->getEntityManager()->flush();
+        }
+
+        return new JsonResponse(
+            [
+                'form' => $formManager->extractForm($form->createView()),
+                'messages' => $formManager->getFormErrors($form),
+            ],
+            200);
     }
 
     /**

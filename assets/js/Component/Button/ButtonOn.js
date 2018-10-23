@@ -7,6 +7,7 @@ import Button from './Button'
 export default function ButtonOn(props) {
     const {
         button,
+        onButtonHandler,
         ...otherProps,
     } = props
 
@@ -19,6 +20,7 @@ export default function ButtonOn(props) {
     return (
         <Button
             button={button}
+            buttonHandler={onButtonHandler}
             {...otherProps}
         />
     )
@@ -26,4 +28,5 @@ export default function ButtonOn(props) {
 
 ButtonOn.propTypes = {
     button: PropTypes.object.isRequired,
+    onButtonHandler: PropTypes.func,
 }

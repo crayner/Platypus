@@ -14,7 +14,7 @@ library.add(fas, far, fab)
 export default function Button(props) {
     const {
         button,
-        buttonClickAction,
+        buttonHandler,
         translations,
     } = props;
 
@@ -34,13 +34,13 @@ export default function Button(props) {
     if (typeof(button.options) !== 'object')
         button.options = {}
 
-    if (typeof buttonClickAction !== 'undefined')
+    if (typeof buttonHandler !== 'undefined')
         return (
             <button
                 type={button.type}
                 className={className}
                 style={button.style}
-                onClick={(e) => buttonClickAction(button, e)}
+                onClick={(e) => buttonHandler(button, e)}
                 title={translateMessage(translations, button.label)}>
                 {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
                 <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
@@ -62,5 +62,5 @@ export default function Button(props) {
 Button.propTypes = {
     button: PropTypes.object.isRequired,
     translations: PropTypes.object.isRequired,
-    buttonClickAction: PropTypes.func,
+    buttonHandler: PropTypes.func,
 };
