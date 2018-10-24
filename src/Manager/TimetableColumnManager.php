@@ -17,6 +17,7 @@ namespace App\Manager;
 
 use App\Entity\TimetableColumn;
 use App\Manager\Traits\EntityTrait;
+use Hillrange\Form\Util\FormManagerInterface;
 
 /**
  * Class TimetableColumnManager
@@ -195,6 +196,9 @@ class TimetableColumnManager implements FormManagerInterface
                                         ],
                                         'collection' => [
                                             'form' => 'timetableColumnRows',
+                                            'sortBy' => [
+                                                'timeStart' => 'ASC',
+                                            ],
                                             'buttons' => [
                                                 'add' => [
                                                     'mergeClass' => 'btn-sm',

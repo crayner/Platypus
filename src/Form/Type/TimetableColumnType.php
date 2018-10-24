@@ -17,8 +17,8 @@ namespace App\Form\Type;
 
 use App\Entity\DayOfWeek;
 use App\Entity\TimetableColumn;
-use Hillrange\Collection\React\Form\Type\CollectionType;
 use Hillrange\Form\Type\EntityType;
+use Hillrange\Form\Type\ReactCollectionType;
 use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -66,7 +66,7 @@ class TimetableColumnType extends AbstractType
                     'label' => 'Day of the Week'
                 ]
             )
-            ->add('timetableColumnRows', CollectionType::class,
+            ->add('timetableColumnRows', ReactCollectionType::class,
                 [
                     'entry_type' => TimetableColumnRowType::class,
                     'allow_add' => true,

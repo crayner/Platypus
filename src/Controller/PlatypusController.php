@@ -15,18 +15,15 @@
  */
 namespace App\Controller;
 
-use App\Demonstration\PeopleFixtures;
 use App\Form\Type\TestType;
 use App\Form\Type\TimetableColumnType;
-use App\Manager\FormManager;
-use App\Manager\FormManagerInterface;
+use Hillrange\Form\Util\FormManager;
 use App\Manager\TimetableColumnManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Yaml\Yaml;
 
 class PlatypusController extends Controller
 {

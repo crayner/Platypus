@@ -21,7 +21,7 @@ use App\Entity\TimetableColumn;
 use App\Entity\TimetableDayDate;
 use App\Form\Type\TimetableColumnType;
 use App\Form\Type\TimetableType;
-use App\Manager\FormManager;
+use Hillrange\Form\Util\FormManager;
 use App\Manager\TimetableColumnManager;
 use App\Manager\TimetableColumnRowManager;
 use App\Manager\TimetableDayManager;
