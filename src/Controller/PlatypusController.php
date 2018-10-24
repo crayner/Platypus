@@ -17,6 +17,7 @@ namespace App\Controller;
 
 use App\Demonstration\PeopleFixtures;
 use App\Form\Type\TestType;
+use App\Form\Type\TimetableColumnType;
 use App\Manager\FormManager;
 use App\Manager\FormManagerInterface;
 use App\Manager\TimetableColumnManager;
@@ -52,7 +53,7 @@ class PlatypusController extends Controller
     {
         $tc = $manager->find(34);
 
-        $form = $this->createForm(TestType::class, $tc);
+        $form = $this->createForm(TimetableColumnType::class, $tc);
 
         $form->get('name')->addError(new FormError('This is an error test!', 'This is an error test template!', ['template' => '']));
 
@@ -91,7 +92,7 @@ class PlatypusController extends Controller
 
         return new JsonResponse(
            [
-               'form' => $formManager->extractForm($form->createView()),
+               'form' => $formManager->extractForm($form),
                'messages' => $formManager->getFormErrors($form),
            ],
            200);

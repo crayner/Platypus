@@ -25,6 +25,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class TimetableColumnRowType
@@ -47,6 +49,10 @@ class TimetableColumnRowType extends AbstractType
                     'attr' => [
                         'class' => 'form-control-sm',
                     ],
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length(['max' => 12]),
+                    ],
                 ]
             )
             ->add('nameShort', TextType::class,
@@ -54,6 +60,10 @@ class TimetableColumnRowType extends AbstractType
                     'label' => 'Abbreviated Name',
                     'attr' => [
                         'class' => 'form-control-sm',
+                    ],
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length(['max' => 4]),
                     ],
                 ]
             )

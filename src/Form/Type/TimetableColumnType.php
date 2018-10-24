@@ -23,6 +23,8 @@ use Hillrange\Form\Type\TextType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class TimetableColumnType
@@ -42,11 +44,19 @@ class TimetableColumnType extends AbstractType
             ->add('name', TextType::class,
                 [
                     'label' => 'Name',
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length(['max' => 30])
+                    ],
                 ]
             )
             ->add('nameShort', TextType::class,
                 [
                     'label' => 'Abbreviated Name',
+                    'constraints' => [
+                        new NotBlank(),
+                        new Length(['max' => 12])
+                    ],
                 ]
             )
             ->add('dayOfWeek', EntityType::class,

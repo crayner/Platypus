@@ -7,6 +7,8 @@ import FormLabel from './FormLabel'
 import FormHelp from './FormHelp'
 import FormRequired from './FormRequired'
 import FormErrors from './FormErrors'
+import '../../css/form.scss';
+
 
 export default function FormTypes(props) {
     const {
@@ -16,19 +18,27 @@ export default function FormTypes(props) {
         getElementData,
     } = props
 
-    const prefix = form.block_prefixes.reverse()
+    let element = {...form}
+    
+    const prefix = element.block_prefixes.reverse()
 
-    const content = prefix.filter(type => {
+    const content = prefix.find(type => {
         if (isFunction(type))
             return type
     })
 
-    if (content.length === 0) {
-        console.error('No form type found')
+    if (!content || /^\s*$/.test(content)){
+        console.error('No element type found')
         console.log(prefix)
     }
 
-    switch (content[0]) {
+    if (element.errors.length > 0) {
+        element.attr.class = typeof element.attr.class !== 'undefined' ? element.attr.class.replace(' has-error', '').replace('has-error', '') + ' has-error' : 'has-error'
+    } else {
+        element.attr.class = typeof element.attr.class !== 'undefined' ? element.attr.class.replace(' has-error', '').replace('has-error', '') : ''
+    }
+
+    switch (content) {
         case 'hidden':
             return hiddenType()
         case 'choice':
@@ -38,7 +48,7 @@ export default function FormTypes(props) {
         case 'time':
             return timeType()
         default:
-            return formType()
+            return elementType()
     }
 
     function isFunction(type) {
@@ -53,20 +63,20 @@ export default function FormTypes(props) {
         }
     }
 
-    function renderFormGroup(content, style, options){
+    function renderElementGroup(content, style, options){
         if (typeof options !== 'object')
             options = {}
         return (
             <FormGroup
-                controlId={form.id}
-                className={form.errors.length > 0 ? 'has-danger' : ''}
+                controlId={element.id}
+                className={element.errors.length > 0 ? 'has-danger' : ''}
                 {...options}
             >
                 {content}
-                <FormLabel label={form.label}/>
-                <FormRequired required={form.required}/><br/>
-                <FormErrors errors={form.errors}/>
-                <FormHelp help={form.help}/>
+                <FormLabel label={element.label}/>
+                <FormRequired required={element.required}/><br/>
+                <FormErrors errors={element.errors}/>
+                <FormHelp help={element.help}/>
             </FormGroup>
         )
     }
@@ -74,36 +84,36 @@ export default function FormTypes(props) {
     function textType() {
         if (style === 'widget')
             return textTypeWidget()
-        return renderFormGroup(textTypeWidget(), 'text')
+        return renderElementGroup(textTypeWidget(), 'text')
     }
 
     function textTypeWidget(){
         return (
             <FormControl
                 type="text"
-                id={form.id}
-                value={getElementData(form.id)}
+                id={element.id}
+                value={getElementData(element.id)}
                 placeholder="Enter text"
-                className={form.attr.class}
-                name={form.full_name}
-                onChange={((e) => elementChange(e, form.id))}
+                className={element.attr.class}
+                name={element.full_name}
+                onChange={((e) => elementChange(e, element.id))}
             />
         )
     }
 
-    function formType() {
+    function elementType() {
         if (style === 'widget')
-            return formTypeWidget()
-        return renderFormGroup(formTypeWidget(), 'form')
+            return elementTypeWidget()
+        return renderElementGroup(elementTypeWidget(), 'element')
     }
 
-    function formTypeWidget(){
+    function elementTypeWidget(){
         return (
             <FormControl
                 type="text"
-                value={form.value}
+                value={element.value}
                 placeholder="Enter text"
-                onChange={((e) => elementChange(e, form.id))}
+                onChange={((e) => elementChange(e, element.id))}
             />
         )
     }
@@ -111,20 +121,20 @@ export default function FormTypes(props) {
     function timeType() {
         if (style === 'widget')
             return timeTypeWidget()
-        return renderFormGroup(timeTypeWidget(), 'time')
+        return renderElementGroup(timeTypeWidget(), 'time')
     }
 
     function timeTypeWidget(){
-        const hour = form.children[0]
-        const minute = form.children[1]
+        const hour = element.children[0]
+        const minute = element.children[1]
         let second = 'undefined'
-        if (typeof form.children[2] !== 'undefined')
-            second = form.children[2]
+        if (typeof element.children[2] !== 'undefined')
+            second = element.children[2]
 
-        const width = 90 / form.children.length
+        const width = 90 / element.children.length
 
         return (
-            <div id={form.id} autoComplete={'off'} className={'form-inline' + (typeof form.attr.class === 'undefined' ? '' : ' ' + form.attr.class)}>
+            <div id={element.id} autoComplete={'off'} className={'form-inline' + (typeof element.attr.class === 'undefined' ? '' : ' ' + element.attr.class)}>
                 <FormControl
                     componentClass="select"
                     id={hour.id}
@@ -180,17 +190,17 @@ export default function FormTypes(props) {
     function choiceType() {
         if (style === 'widget')
             return choiceTypeWidget()
-        return renderFormGroup(choiceTypeWidget(), 'choice')
+        return renderElementGroup(choiceTypeWidget(), 'choice')
     }
 
     function getChoiceList(){
-        if (typeof form.choices === 'object')
-            return Object.keys(form.choices).map(index => {
-                const option = form.choices[index]
+        if (typeof element.choices === 'object')
+            return Object.keys(element.choices).map(index => {
+                const option = element.choices[index]
                 return (<option key={index} value={option.value}>{option.label}</option>)
             })
 
-        return form.choices.map((option, index) => {
+        return element.choices.map((option, index) => {
             return (<option key={index} value={option.value}>{option.label}</option>)
         })
     }
@@ -199,10 +209,11 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 componentClass="select"
-                value={getElementData(form.id)}
-                placeholder={form.placeholder}
-                multiple={form.multiple}
-                onChange={((e) => elementChange(e, form.id))}
+                value={getElementData(element.id)}
+                placeholder={element.placeholder}
+                multiple={element.multiple}
+                className={element.attr.class}
+                onChange={((e) => elementChange(e, element.id))}
             >
                 {getChoiceList()}
             </FormControl>
@@ -213,7 +224,7 @@ export default function FormTypes(props) {
         return (
             <FormControl
                 type="hidden"
-                value={getElementData(form.id)}
+                value={getElementData(element.id)}
             />
         )
     }

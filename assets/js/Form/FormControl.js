@@ -3,8 +3,10 @@
 import React, { Component } from "react"
 import PropTypes from 'prop-types'
 import FormRender from './FormRender'
+import FormValidation from './FormValidation'
 import {fetchJson} from '../Component/fetchJson'
 import {openPage} from '../Component/openPage'
+import {translateMessage} from '../Component/MessageTranslator'
 
 export default class FormControl extends Component {
     constructor(props) {
@@ -12,6 +14,7 @@ export default class FormControl extends Component {
 
         this.form = props.form
         this.template = props.template
+        this.translations = props.translations
         this.locale = props.locale
         this.otherProps = {...props}
 
@@ -30,6 +33,7 @@ export default class FormControl extends Component {
         this.returnButtonHandler = this.returnButtonHandler.bind(this)
 
         this.formControl = {
+            translations: this.translations,
             elementChange: this.elementChange,
             getElementData: this.getElementData,
             deleteButtonHandler: this.deleteButtonHandler,
@@ -42,10 +46,16 @@ export default class FormControl extends Component {
         this.elementList = {}
     }
 
-
     elementChange(event, id){
         let element = this.getFormElementById(id)
         element.value = event.target.value
+        element = FormValidation(element)
+        if (element.errors.length > 0)
+            element.errors.map(error => {
+                this.setMessageByName(element.id, element.label + ' (' + element.value.toString() + '): ' + error)
+            })
+        else
+            this.cancelMessageByName(element.id)
         this.setFormElement(element,this.form)
         this.setState({
             messages: this.messages,
@@ -102,7 +112,7 @@ export default class FormControl extends Component {
                 }
             })
         }
-console.log(children)
+
         this.elementList = {}
         collection.children = children
         this.setFormElement(collection, this.form)
@@ -204,10 +214,13 @@ console.log(children)
         if (form.children.length > 0){
             form.children.map(child => {
                 data[child.name] = this.buildFormData({}, child)
+                this.setMessageByElementErrors(child)
             })
             return data
-        } else
+        } else {
+            this.setMessageByElementErrors(form)
             return form.value
+        }
     }
 
     returnButtonHandler(options)
@@ -217,19 +230,20 @@ console.log(children)
 
     saveButtonHandler() {
         this.data = this.buildFormData({}, this.form)
-        fetchJson(
-            this.template.form.url,
-            {method: this.template.form.method, body: JSON.stringify(this.data)},
-            this.locale)
-            .then(data => {
-                this.elementList = {}
-                this.messages = this.messages.concat(data.messages)
-                this.form = data.form
-                this.setState({
-                    form: this.form,
-                    messages: this.messages
-                })
-            }).catch(error => {
+        if (this.messages.length === 0) {
+            fetchJson(
+                this.template.form.url,
+                {method: this.template.form.method, body: JSON.stringify(this.data)},
+                this.locale)
+                .then(data => {
+                    this.elementList = {}
+                    this.messages = this.messages.concat(data.messages)
+                    this.form = data.form
+                    this.setState({
+                        form: this.form,
+                        messages: this.messages
+                    })
+                }).catch(error => {
                 console.error('Error: ', error)
                 this.messages.push({level: 'danger', message: error})
                 this.setState({
@@ -237,7 +251,14 @@ console.log(children)
                     messages: this.messages
                 })
             })
-
+        } else {
+            const message = {level: 'danger', message: translateMessage(this.translations, 'All errors must be cleared before the form can be saved!')}
+            this.messages.push(message)
+            this.setState({
+                form: this.form,
+                messages: this.messages,
+            })
+        }
     }
 
     cancelMessage(id) {
@@ -245,6 +266,26 @@ console.log(children)
         this.setState({
             messages: this.messages,
             form: this.form,
+        })
+    }
+
+    cancelMessageByName(name) {
+        Object.keys(this.messages).map(key => {
+            const message = this.messages[key]
+            if (typeof message.name !== 'undefined' && message.name === name)
+                this.messages.splice(key,1)
+        })
+    }
+
+    setMessageByName(name, error) {
+        this.cancelMessageByName(name)
+        let message = {name: name, level: 'danger', message: error}
+        this.messages.push(message)
+    }
+
+    setMessageByElementErrors(element){
+        element.errors.map(error => {
+            this.setMessageByName(element.id, element.label + ' (' + element.value.toString() + '): ' + error)
         })
     }
 
@@ -264,5 +305,6 @@ console.log(children)
 FormControl.propTypes = {
     form: PropTypes.object.isRequired,
     template: PropTypes.object.isRequired,
+    translations: PropTypes.object.isRequired,
     locale: PropTypes.string.isRequired,
 }

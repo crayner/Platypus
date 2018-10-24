@@ -239,7 +239,7 @@ class TimetableController extends Controller
 
         return new JsonResponse(
             [
-                'form' => $formManager->extractForm($form->createView()),
+                'form' => $formManager->extractForm($form),
                 'messages' => $formManager->getFormErrors($form),
             ],
             200);

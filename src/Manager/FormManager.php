@@ -82,6 +82,11 @@ class FormManager
     private $formTabMap = [];
 
     /**
+     * @var FormInterface
+     */
+    private $form;
+
+    /**
      * @var array
      */
     private $buttonTypeList = ['save','submit', 'add', 'delete', 'return'];
@@ -125,6 +130,8 @@ class FormManager
          $this->setTemplateManager($templateManager)
             ->validateTemplate($this->getTemplate($templateName));
 
+         $this->form = $form;
+
          $props = [];
          $props['locale'] = $this->getRequest()->get('_locale') ?: 'en';
          $props['template'] = $this->getTemplate($templateName);
@@ -132,6 +139,7 @@ class FormManager
          $props['errors'] = $this->getFormErrors($form);
          $props['translations'] = [
              'object' => 'Must be an Object, not an Array',
+             'All errors must be cleared before the form can be saved!' => $this->getTranslator()->trans('All errors must be cleared before the form can be saved!', [], 'System'),
          ];
 
          return new \Twig_Markup($this->getTwig()->render('Default/renderForm.html.twig',
@@ -218,11 +226,19 @@ class FormManager
     /**
      * extractForm
      *
-     * @param FormView $formView
+     * @param FormView|FormInterface $formView
      * @return array
      */
-    public function extractForm(FormView $formView): array
+    public function extractForm($formView, $prototype = false): array
     {
+        if ($formView instanceof FormInterface)
+        {
+            $this->form = $formView;
+            $formView = $this->form->createView();
+        }
+        if (! $formView instanceof FormView)
+            trigger_error(sprintf('Argument 1 passed to %s() must be an instance of Symfony\Component\Form\FormView or Symfony\Component\Form\Form, instance of %s given.', __METHOD__, get_class($formView)), E_USER_ERROR);
+
         $vars = $formView->vars;
         $vars['children'] = [];
         foreach($formView->children as $child)
@@ -242,7 +258,7 @@ class FormManager
         }
         if (isset($vars['prototype']) && $vars['prototype'] instanceof FormView)
         {
-            $vars['prototype'] = $this->extractForm($vars['prototype']);
+            $vars['prototype'] = $this->extractForm($vars['prototype'], true);
         }
 
         if ($vars['required'])
@@ -270,8 +286,88 @@ class FormManager
             $vars['errors'] = $errors;
         } else
             $vars['errors'] = [];
+
         unset($vars['form']);
+
+        if (! $prototype)
+            $vars['constraints'] = $this->extractConstraints($vars);
+        else
+            $vars['constraints'] = [];
+
         return $vars;
+    }
+
+    /**
+     * extractConstraints
+     *
+     * @param $vars
+     * @return array
+     */
+    private function extractConstraints($vars): array
+    {
+        $form = $this->getFormInterface($this->form, $vars['id']);
+        $result = [];
+        $required = false;
+        $constraints = $form->getConfig()->getOption('constraints');
+        foreach($constraints as $q=>$constraint)
+        {
+            $result[$q] = (array) $constraint;
+            $name = explode('\\',get_class($constraint));
+            $result[$q]['class'] = end($name);
+
+            switch($result[$q]['class']) {
+                case 'NotBlank':
+                    $result[$q]['message'] = $this->getTranslator()->trans($result[$q]['message'], [], 'validators');
+                    $required = true;
+                    break;
+                case 'Length':
+                    $result[$q]['maxMessage'] = $this->getTranslator()->transChoice($result[$q]['maxMessage'], $result[$q]['max'], ['{{ limit }}' => $result[$q]['max']], 'validators');
+                    $result[$q]['minMessage'] = $this->getTranslator()->transChoice($result[$q]['minMessage'], $result[$q]['min'], ['{{ limit }}' => $result[$q]['min']], 'validators');
+                    $result[$q]['exactMessage'] = $this->getTranslator()->transChoice($result[$q]['exactMessage'], $result[$q]['min'], ['{{ limit }}' => $result[$q]['max']], 'validators');
+                    break;
+                case 'Choice':
+                    $result[$q]['message'] = $this->getTranslator()->trans($result[$q]['message'], [], 'validators');
+                    $result[$q]['multipleMessage'] = $this->getTranslator()->trans($result[$q]['multipleMessage'], [], 'validators');
+                    $result[$q]['maxMessage'] = $this->getTranslator()->transChoice($result[$q]['maxMessage'], $result[$q]['max'], ['{{ limit }}' => $result[$q]['max']], 'validators');
+                    $result[$q]['minMessage'] = $this->getTranslator()->transChoice($result[$q]['minMessage'], $result[$q]['min'], ['{{ limit }}' => $result[$q]['min']], 'validators');
+                    break;
+                default:
+                    dump($result[$q]);
+                    trigger_error(sprintf('The constraint (%s) has no handler in the React Form Manager', $result[$q]['class']), E_USER_ERROR);
+            }
+
+        }
+        if ($vars['required'] === 'required' && ! $required)
+        {
+            $notBlank['message'] = $this->getTranslator()->trans($result[$q]['message'], [], 'validators');
+            $notBlank['class'] = 'NotBlank';
+            $result[] = $notBlank;
+        }
+        return $result;
+    }
+
+    /**
+     * getFormInterface
+     *
+     * @param FormInterface $form
+     * @param $id
+     * @return FormInterface
+     */
+    private function getFormInterface(FormInterface $form, $id): FormInterface
+    {
+        $name = $form->getName();
+        if ($id === $name)
+            return $form;
+        if (mb_strpos($id, $name.'_') === 0) {
+            $id = mb_substr($id, mb_strlen($name . '_'));
+            foreach ($form->all() as $name => $child) {
+                if ($id === $name)
+                    return $child;
+                if (mb_strpos($id, $name.'_') === 0)
+                    return $this->getFormInterface($child, $id);
+            }
+        }
+        return $form;
     }
 
     /**
@@ -299,6 +395,8 @@ class FormManager
                 $messages->addMessage('danger', $error->getMessage(), [], false);
             }
         }
+        if (empty($errorList))
+            $messages->addMessage('success', 'All details were saved successfully.', [], 'System');
 
         return $messages->serialiseTranslatedMessages($this->getTranslator());
     }
