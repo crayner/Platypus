@@ -9,7 +9,7 @@
         "doctrine/doctrine-cache-bundle": "^1.3",
         "friendsofsymfony/ckeditor-bundle": "^1.1",
         "hillrange/security": "^0.0",
-        "hillrange/symfony-form": "^0.2",
+        "hillrange/symfony-form": "^0.3",
         "knpuniversity/oauth2-client-bundle": "^1.16",
         "league/oauth2-google": "^2.2",
         "php-translation/symfony-bundle": "^0.8",
