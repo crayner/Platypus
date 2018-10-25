@@ -17,13 +17,13 @@ namespace App\Manager;
 
 use App\Entity\TimetableColumn;
 use App\Manager\Traits\EntityTrait;
-use Hillrange\Form\Util\FormManagerInterface;
+use Hillrange\Form\Util\TemplateManagerInterface;
 
 /**
  * Class TimetableColumnManager
  * @package App\Manager
  */
-class TimetableColumnManager implements FormManagerInterface
+class TimetableColumnManager implements TemplateManagerInterface
 {
     use EntityTrait;
 
@@ -38,9 +38,9 @@ class TimetableColumnManager implements FormManagerInterface
     private $translationDomain = 'Timetable';
 
     /**
-     * @var array
+     * @var bool
      */
-    public $tabs = [];
+    private $locale = true;
 
     /**
      * getColumnTemplate
@@ -48,28 +48,6 @@ class TimetableColumnManager implements FormManagerInterface
      * @return array
      */
     public function getColumnTemplate(): array
-    {
-        $template = $this->getTabs();
-
-        return $template;
-    }
-
-    /**
-     * getTranslationDomain
-     *
-     * @return string
-     */
-    public function getTranslationDomain(): string
-    {
-        return $this->translationDomain;
-    }
-
-    /**
-     * getTabs
-     *
-     * @return array
-     */
-    public function getTabs(): array
     {
         return [
             'form' => [
@@ -83,6 +61,16 @@ class TimetableColumnManager implements FormManagerInterface
                 'columnRow' => $this->getColumnRowsTab(),
             ],
         ];
+    }
+
+    /**
+     * getTranslationDomain
+     *
+     * @return string
+     */
+    public function getTranslationDomain(): string
+    {
+        return $this->translationDomain;
     }
 
     /**
@@ -271,5 +259,13 @@ class TimetableColumnManager implements FormManagerInterface
                 ],
             ],
         ];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isLocale(): bool
+    {
+        return $this->locale;
     }
 }

@@ -10,9 +10,12 @@ export function fetchJson(url, options, locale) {
     headers = ({...headers, 'Content-Type': 'application/json; charset=utf-8'})
 
     if (locale === null)
-        locale = 'en'
+        locale = '/en'
 
-    return fetch('/' + locale + url, ({
+    if (locale === false)
+        locale = ''
+
+    return fetch(locale + url, ({
         ...options,
         credentials: 'same-origin',
         headers: headers,
