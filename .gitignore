@@ -16,3 +16,4 @@ yarn-error.log
 #Remove Settings from
 platypus.yaml
 /public/uploads/*
+*.lock
