@@ -1,12 +1,10 @@
 {
-  "build/address.js": "/build/address.58815e88.js",
-  "build/alarm.js": "/build/alarm.d212f17e.js",
+  "build/address.js": "/build/address.2fc0c129.js",
+  "build/alarm.js": "/build/alarm.0ef1599f.js",
   "build/core.css": "/build/core.5a273f5e.css",
-  "build/core.js": "/build/core.9953f828.js",
-  "build/form.css": "/build/form.f18258ce.css",
-  "build/form.js": "/build/form.c6ff867b.js",
+  "build/core.js": "/build/core.61ea6ccc.js",
   "build/manifest.js": "/build/manifest.d41d8cd9.js",
-  "build/notifications.js": "/build/notifications.64729aa8.js",
-  "build/pagination.js": "/build/pagination.5e73b7ca.js",
-  "build/phone.js": "/build/phone.18ef2cbe.js"
+  "build/notifications.js": "/build/notifications.810225ba.js",
+  "build/pagination.js": "/build/pagination.c4a5327e.js",
+  "build/phone.js": "/build/phone.0dc72f44.js"
 }

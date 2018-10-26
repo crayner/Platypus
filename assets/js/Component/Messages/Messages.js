@@ -12,10 +12,9 @@ export default function  Messages(props) {
 
     if (Object.keys(messages).length === 0)
         return ''
-
     const cells = Object.keys(messages).map(key => {
         const message = messages[key]
-        message.id = key
+        message['id'] = key
         return <Message
             message={message}
             key={'message_' + message.id}

@@ -268,4 +268,14 @@ class TimetableColumnManager implements TemplateManagerInterface
     {
         return $this->locale;
     }
+
+    /**
+     * getTargetDivision
+     *
+     * @return string
+     */
+    public function getTargetDivision(): string
+    {
+        return 'pageContent';
+    }
 }

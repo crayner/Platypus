@@ -19,6 +19,7 @@ use App\Form\Type\ActionType;
 use App\Form\Type\PersonRoleType;
 use App\Manager\ActionManager;
 use App\Manager\PersonRoleManager;
+use Hillrange\Form\Util\FormManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -87,31 +88,45 @@ class SecurityController extends Controller
      * createEditPermission
      *
      * @param ActionManager $manager
+     * @param FormManager $formManager
      * @param Request $request
      * @param string $id
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/security/permission/{id}/edit/", name="create_edit_permission")
      * @Security("is_granted('USE_ROUTE', ['manage_permissions', {}])")
      */
-    public function createEditPermission(ActionManager $manager, Request $request, $id = '0')
+    public function createEditPermission(ActionManager $manager, FormManager $formManager, Request $request, $id = 'Add')
     {
-        $entity = $manager->find($id ?: 'Add');
-        $form = $this->createForm(ActionType::class, $entity);
+        $manager->find($id);
 
-        $form->handleRequest($request);
+        $form = $this->createForm(ActionType::class, $manager->getEntity());
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $manager->saveEntity();
+        if ($request->getContentType() === 'json')
+        {
+            $form->submit(json_decode($request->getContent(), true));
+
+            if ($form->isValid())
+            {
+                $manager->saveEntity();
+            }
+
+            return new JsonResponse(
+                [
+                    'form' => $formManager->setTemplateManager($manager)->extractForm($form),
+                    'messages' => $formManager->getFormErrors($form),
+                ],
+            200);
         }
 
-        return $this->render('Security/create_edit_permission.html.twig',
-            array(
-                'manager'    => $manager,
-                'fullForm' => $form,
-                'form' => $form->createView(),
-            )
+        return $this->render(
+            'Security/create_edit_permission.html.twig',
+            [
+                'form' => $form,
+                'manager' => $manager,
+            ]
         );
+
     }
 
     /**

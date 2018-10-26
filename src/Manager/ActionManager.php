@@ -19,10 +19,11 @@ use App\Entity\Action;
 use App\Entity\PersonRole;
 use App\Manager\Traits\EntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Hillrange\Form\Util\TemplateManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class ActionManager
+class ActionManager implements TemplateManagerInterface
 {
     use EntityTrait;
 
@@ -106,5 +107,180 @@ class ActionManager
         $this->saveEntity();
         $this->getMessageManager()->add('success', 'action.permission.toggle', ["%{action}" => $this->entity->getName(), '%{permission}' => $role->getName()], 'Security');
         return;
+    }
+
+    /**
+     * isLocale
+     *
+     * @return bool
+     */
+    public function isLocale(): bool
+    {
+        return true;
+    }
+
+    /**
+     * getTargetDivision
+     *
+     * @return string
+     */
+    public function getTargetDivision(): string
+    {
+        return 'pageContent';
+    }
+
+    /**
+     * getTranslationDomain
+     *
+     * @return string
+     */
+    public function getTranslationDomain(): string
+    {
+        return 'Security';
+    }
+
+    /**
+     * getColumnTemplate
+     *
+     * @return array
+     */
+    public function getTemplate(): array
+    {
+        return [
+            'form' => [
+                'url' => '/security/permission/{id}/edit/',
+                'url_options' => [
+                    '{id}' => 'id',
+                ],
+            ],
+            'container' => [
+                'panel' => [
+                    'label' => 'action.title',
+                    'colour' => 'info',
+                    'buttons' => [
+                        [
+                            'type' => 'save',
+                        ],
+                        [
+                            'type' => 'close',
+                        ],
+                    ],
+                    'rows' => [
+                        [
+                            'class' => 'row',
+                            'columns' => [
+                                [
+                                    'class' => 'col-6 card',
+                                    'form' => ['name' => 'row'],
+                                ],
+                                [
+                                    'class' => 'col-6 card',
+                                    'form' => ['groupBy' => 'row'],
+                                ],
+                            ],
+                        ],
+                        [
+                            'class' => 'row',
+                            'columns' => [
+                                [
+                                    'class' => 'col-6 card',
+                                    'rows' => [
+                                        [
+                                            'class' => 'row',
+                                            'columns' => [
+                                                [
+                                                    'form' => ['route' => 'row'],
+                                                    'class' => 'col-12',
+                                                ],
+                                            ],
+                                        ],
+                                        [
+                                            'class' => 'row',
+                                            'columns' => [
+                                                [
+                                                    'form' => ['role' => 'row'],
+                                                    'class' => 'col-12',
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                                [
+                                    'class' => 'col-6 card',
+                                    'container' => [
+                                        'class' => '',
+                                        'headerRow' => [
+                                            'class' => 'row row-header small',
+                                            'columns' => [
+                                                [
+                                                    'class' => 'col-5 text-center',
+                                                    'label' => 'action.route_param.name.label',
+                                                ],
+                                                [
+                                                    'class' => 'col-5 text-center',
+                                                    'label' => 'action.route_param.value.label',
+                                                ],
+                                                [
+                                                    'class' => 'col-2 text-center',
+                                                    'label' => 'Actions',
+                                                ],
+                                            ],
+                                        ],
+                                        'collection' => [
+                                            'form' => 'routeParams',
+                                            'buttons' => [
+                                                'add' => [
+                                                    'mergeClass' => 'btn-sm',
+                                                    'type' => 'add',
+                                                    'style' => [
+                                                        'float' => 'right',
+                                                    ],
+                                                ],
+                                                'delete' => [
+                                                    'mergeClass' => 'btn-sm',
+                                                    'type' => 'delete',
+                                                ],
+                                            ],
+                                            'rows' => [
+                                                [
+                                                    'class' => 'row row-striped',
+                                                    'columns' => [
+                                                        [
+                                                            'class' => 'col-5',
+                                                            'form' => ['name' => 'widget'],
+                                                        ],
+                                                        [
+                                                            'class' => 'col-5',
+                                                            'form' => ['value' => 'widget'],
+                                                        ],
+                                                        [
+                                                            'class' => 'col-2',
+                                                            'collection_actions' => true,
+                                                        ],
+                                                   ],
+                                                ],
+                                            ],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'class' => 'row',
+                            'columns' => [
+                                [
+                                    'class' => 'col-6 card',
+                                    'form' => ['allowedCategories' => 'row'],
+                                ],
+                                [
+                                    'class' => 'col-6 card',
+                                    'form' => ['personRoles' => 'row'],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }

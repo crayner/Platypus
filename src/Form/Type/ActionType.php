@@ -47,7 +47,6 @@ class ActionType extends AbstractType
         if ($route instanceof Route && !empty($route->getPath())) {
             $matches = [];
             preg_match_all('#\{[0-9A-Za-z_]*\}#', $route->getPath(), $matches);
-            dump($matches[0]);
             $rp = implode(',',$matches[0]);
             $rp = trim(str_replace(['_locale','{','}'], '', $rp), ', ');
         }
