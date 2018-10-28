@@ -51,7 +51,7 @@ class TimetableColumnManager implements TemplateManagerInterface
     {
         return [
             'form' => [
-                'url' => '/timetable/column/{id}/save/',
+                'url' => '/timetable/column/{id}/edit',
                 'url_options' => [
                     '{id}' => 'id'
                 ],

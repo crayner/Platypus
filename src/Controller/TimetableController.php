@@ -186,18 +186,43 @@ class TimetableController extends Controller
      * editColumn
      *
      * @param TimetableColumnManager $manager
+     * @param Request $request
+     * @param FormManager $formManager
      * @param $id
      * @param string $tabName
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
-     * @Route("/timetable/column/{id}/edit/{tabName}", name="edit_column")
+     * @Route("/timetable/column/{id}/edit/{tabName}", name="edit_column", methods={"post","get"})
      * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
      */
-    public function editColumn(TimetableColumnManager $manager, $id, $tabName = 'details')
+    public function editColumn(TimetableColumnManager $manager, Request $request, FormManager $formManager, $id, $tabName = 'details')
     {
+        $formManager->setTemplateManager($manager);
+
         $manager->find($id);
 
         $form = $this->createForm(TimetableColumnType::class, $manager->getEntity());
+
+        if ($request->getContentType() === 'json')
+        {
+            if ($request->getMethod() === 'POST')
+            {
+                $form->submit(json_decode($request->getContent(), true));
+
+                if ($form->isValid())
+                {
+                    $manager->getEntityManager()->persist($manager->getEntity());
+                    $manager->getEntityManager()->flush();
+                }
+
+                return new JsonResponse(
+                    [
+                        'form' => $formManager->extractForm($form),
+                        'messages' => $formManager->getFormErrors($form),
+                    ],
+                    200);
+            }
+        }
 
         return $this->render(
             'Timetable/column_edit.html.twig',
@@ -207,42 +232,6 @@ class TimetableController extends Controller
                 'tabName' => $tabName,
             ]
         );
-    }
-
-    /**
-     * editColumnSave
-     *
-     * @param int $id
-     * @param Request $request
-     * @param FormManager $formManager
-     * @param TimetableColumnManager $manager
-     * @return JsonResponse
-     * @throws \Exception
-     * @Route("/timetable/column/{id}/save/", name="edit_column_save")
-     * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
-     */
-    public function editColumnSave(int $id, Request $request, FormManager $formManager, TimetableColumnManager $manager)
-    {
-        $entity = $manager->find($id);
-
-        $form = $this->createForm(TimetableColumnType::class, $entity);
-
-        $data = json_decode($request->getContent(), true);
-
-        $form->submit($data);
-
-        if ($form->isValid())
-        {
-            $manager->getEntityManager()->persist($entity);
-            $manager->getEntityManager()->flush();
-        }
-
-        return new JsonResponse(
-            [
-                'form' => $formManager->extractForm($form),
-                'messages' => $formManager->getFormErrors($form),
-            ],
-            200);
     }
 
     /**

@@ -263,7 +263,7 @@ class PersonController extends Controller
 
             return new JsonResponse(
                 [
-                    'form' => $formManager->setTemplateManager($manager)->extractForm($form),
+                    'form' => $formManager->extractForm($form),
                     'messages' => $formManager->getFormErrors($form),
                 ],
                 200);
