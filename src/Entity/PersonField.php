@@ -32,11 +32,6 @@ class PersonField
     }
 
     /**
-     * @var int|null
-     */
-    private $id;
-
-    /**
      * @return array
      */
     public static function getTypeList(): array
@@ -45,11 +40,16 @@ class PersonField
     }
 
     /**
-     * @return int|null
+     * @var int|null
      */
-    public function getId(): ?int
+    private $id;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
     {
-        return $this->id;
+        return is_int($this->id) ? $this->id : 0;
     }
 
     /**

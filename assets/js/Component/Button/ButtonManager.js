@@ -21,6 +21,9 @@ export default function ButtonManager(props) {
        ...otherProps,
     } = props
 
+    if (button.display === false)
+        return ''
+
     let buttonClone = {...button}
     buttonClone.buttonType = button.type
 

@@ -17,3 +17,4 @@ yarn-error.log
 platypus.yaml
 /public/uploads/*
 *.lock
+*.log

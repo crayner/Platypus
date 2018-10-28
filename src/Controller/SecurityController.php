@@ -126,7 +126,6 @@ class SecurityController extends Controller
                 'manager' => $manager,
             ]
         );
-
     }
 
     /**

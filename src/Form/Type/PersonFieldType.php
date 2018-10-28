@@ -44,6 +44,7 @@ class PersonFieldType extends AbstractType
             ->add('fieldList', EntityType::class,
                 [
                     'mapped' => false,
+                    'help' => 'Select a custom field name to edit that custom field.',
                     'class' => PersonField::class,
                     'choice_label' => 'name',
                     'placeholder' => 'field.list.placeholder',
@@ -54,8 +55,16 @@ class PersonFieldType extends AbstractType
                             ;
                     },
                     'attr' => [
-                        'onchange' => 'loadPersonField()',
+                        'class' => 'form-control-sm',
+                        'onChange' => [
+                            'url' => '/person/custom/field/{id}/manage/',
+                            'url_options' => [
+                                '{id}' => 'value'
+                            ],
+                            'url_type' => 'redirect',
+                        ],
                     ],
+                    'data' => $options['data']->getId() ?: 'Add',
                 ]
             )
             ->add('description', TextareaType::class,
@@ -74,11 +83,13 @@ class PersonFieldType extends AbstractType
             ->add('active', ToggleType::class,
                 [
                     'label' => 'field.active.label',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
             ->add('required', ToggleType::class,
                 [
                     'label' => 'field.required.label',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
             ->add('type', EnumType::class,
@@ -90,36 +101,43 @@ class PersonFieldType extends AbstractType
             ->add('forStudent', ToggleType::class,
                 [
                     'label' => 'field.for_student.label',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
             ->add('forStaff', ToggleType::class,
                 [
+                    'button_merge_class' => 'btn-sm',
                     'label' => 'field.for_staff.label',
                 ]
             )
             ->add('forParent', ToggleType::class,
                 [
+                    'button_merge_class' => 'btn-sm',
                     'label' => 'field.for_parent.label',
                 ]
             )
             ->add('forOther', ToggleType::class,
                 [
+                    'button_merge_class' => 'btn-sm',
                     'label' => 'field.for_other.label',
                 ]
             )
             ->add('forDataUpdater', ToggleType::class,
                 [
                     'label' => 'field.for_data_updater.label',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
             ->add('forApplicationForm', ToggleType::class,
                 [
                     'label' => 'field.for_application_form.label',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
             ->add('forPublicRegistration', ToggleType::class,
                 [
                     'label' => 'field.for_public_registration.label',
+                    'button_merge_class' => 'btn-sm',
                 ]
             )
         ;

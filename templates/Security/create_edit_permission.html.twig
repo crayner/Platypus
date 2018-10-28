@@ -10,53 +10,6 @@
 {% block headerLead %}{{ 'action.description'|trans }}{% endblock headerLead %}
 
 {% block contentContainer %}
-{#
-    {{ form_start(form) }}
-    {{ all_form_errors(fullForm) }}
-    {% set h3Content = closeButton() %}
-    {% set h3Content = h3Content ~ saveButton() %}
-    {% include 'Default/panelStart.html.twig' with {header: 'action.title', transDomain: 'Security', colour: 'info'} %}
-    <div class="row">
-        <div class="col-6 card">
-            {{ form_row(form.name) }}
-        </div>
-        <div class="col-6 card">
-            {{ form_row(form.groupBy) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 card">
-            <div class="row">
-                <div class="col-12">
-                    {{ form_row(form.route) }}
-                </div>
-            </div>
-            <hr/>
-            <div class="row">
-                <div class="col-12">
-                    {{ form_row(form.role, {value: transformData(form.role)}) }}
-                </div>
-            </div>
-        </div>
-        <div class="col-6 card">
-            <div class="row row-header">
-                <div class="col-5">{{ 'action.route_param.name.label'|trans }}</div>
-                <div class="col-5">{{ 'action.route_param.value.label'|trans }}</div>
-                <div class="col-2">{{ 'actions'|trans({}, 'System') }}</div>
-            </div>
-            {{ collection_row(form.routeParams) }}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6 card">
-            {{ form_row(form.allowedCategories) }}
-        </div>
-        <div class="col-6 card">
-            {{ form_row(form.personRoles) }}
-        </div>
-    </div>
-    {% include 'Default/panelEnd.html.twig' %}
-    {{ form_end(form) }} #}
     {% include 'Default/wait.html.twig' %}
 {% endblock contentContainer %}
 

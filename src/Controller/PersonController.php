@@ -26,6 +26,7 @@ use App\Manager\ThemeManager;
 use App\Pagination\PersonPagination;
 use App\Util\AssetHelper;
 use App\Util\PersonHelper;
+use Hillrange\Form\Util\FormManager;
 use Hillrange\Security\Exception\UserException;
 use Hillrange\Security\Form\ChangePasswordType;
 use Hillrange\Security\Util\PasswordManager;
@@ -241,8 +242,43 @@ class PersonController extends Controller
      * @Route("/person/custom/field/{id}/manage/", name="manage_custom_fields")
      * @Security("is_granted('ROLE_ACTION', request)")
      */
-    public function manageCustomFields(PersonFieldManager $manager, Request $request, $id = 0)
+    public function manageCustomFields(PersonFieldManager $manager, FormManager $formManager, Request $request, $id = 'Add')
     {
+        $formManager->setTemplateManager($manager);
+
+        $manager->find($id ?: 'Add');
+
+        $form = $this->createForm(PersonFieldType::class, $manager->getEntity());
+
+        if ($request->getContentType() === 'json')
+        {
+            if ($request->getMethod() === 'POST')
+            {
+                $form->submit(json_decode($request->getContent(), true));
+
+                if ($form->isValid()) {
+                    $manager->saveEntity();
+                }
+            }
+
+            return new JsonResponse(
+                [
+                    'form' => $formManager->setTemplateManager($manager)->extractForm($form),
+                    'messages' => $formManager->getFormErrors($form),
+                ],
+                200);
+        }
+
+        return $this->render(
+            'Person/custom_fields.html.twig',
+            [
+                'form' => $form,
+                'manager' => $manager,
+            ]
+        );
+
+
+
         $form = $this->createForm(PersonFieldType::class, $manager->find($id ?: 'Add'));
 
         $form->handleRequest($request);
@@ -253,8 +289,7 @@ class PersonController extends Controller
         return $this->render('Person/custom_fields.html.twig',
             array(
                 'manager'    => $manager,
-                'fullForm' => $form,
-                'form' => $form->createView(),
+                'form' => $form,
             )
         );
     }
