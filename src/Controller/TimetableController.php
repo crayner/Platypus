@@ -18,6 +18,7 @@ namespace App\Controller;
 use App\Entity\SchoolYearTerm;
 use App\Entity\Timetable;
 use App\Entity\TimetableColumn;
+use App\Entity\TimetableColumnRow;
 use App\Entity\TimetableDayDate;
 use App\Form\Type\TimetableColumnType;
 use App\Form\Type\TimetableType;
@@ -207,6 +208,7 @@ class TimetableController extends Controller
         {
             if ($request->getMethod() === 'POST')
             {
+                dump(json_decode($request->getContent(), true));
                 $form->submit(json_decode($request->getContent(), true));
 
                 if ($form->isValid())
@@ -223,7 +225,6 @@ class TimetableController extends Controller
                     200);
             }
         }
-
         return $this->render(
             'Timetable/column_edit.html.twig',
             [
@@ -245,13 +246,17 @@ class TimetableController extends Controller
      * @Route("/timetable/column/{id}/row/{cid}/delete/", name="delete_timetable_column_row")
      * @Security("is_granted('USE_ROUTE', ['manage_columns'])")
      */
-    public function deleteColumnRow(TimetableColumnRowManager $manager, TimetableColumn $id, int $cid)
+    public function deleteColumnRow(FormManager $formManager, TimetableColumnManager $manager,  TimetableColumnRowManager $timetableColumnRowManager,  TimetableColumn $id, TimetableColumnRow $cid)
     {
-        $manager->delete($cid);
+        $formManager->setTemplateManager($manager->setEntity($id));
+
+        $manager->deleteTimetableColumnRow($timetableColumnRowManager->setEntity($cid));
+
+        $form = $this->createForm(TimetableColumnType::class, $manager->getEntity());
 
         return new JsonResponse(
             [
-                'status' => $manager->getMessageManager()->getStatus(),
+                'form' => $formManager->extractForm($form),
                 'messages' => $manager->getMessageManager()->serialiseTranslatedMessages($this->get('translator')),
             ],
             200
@@ -273,6 +278,8 @@ class TimetableController extends Controller
     {
         $manager->find($id);
         $manager->nextDayDate($dayDate);
+
+
         return new JsonResponse(
             [
                 'data' => $this->renderView('Timetable/assign_days_content.html.twig',

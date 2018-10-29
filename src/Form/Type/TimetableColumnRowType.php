@@ -17,6 +17,7 @@ namespace App\Form\Type;
 
 use App\Entity\TimetableColumn;
 use App\Entity\TimetableColumnRow;
+use App\Form\Subscriber\TimetableColumnInRowSubscriber;
 use Hillrange\Form\Type\EnumType;
 use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\TextType;
@@ -98,6 +99,8 @@ class TimetableColumnRowType extends AbstractType
                 ]
             )
         ;
+
+        $builder->get('timetableColumn')->addEventSubscriber(new TimetableColumnInRowSubscriber($options['timetable_column']));
     }
 
     /**
@@ -107,6 +110,11 @@ class TimetableColumnRowType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(
+            [
+                'timetable_column',
+            ]
+        );
         $resolver->setDefaults(
             [
                 'translation_domain' => 'Timetable',

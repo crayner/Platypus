@@ -35,7 +35,7 @@ class TimetableColumnValidator extends ConstraintValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (empty($value)) return ;
+        if (empty($value)) return $value;
 
         $rows = $value->getTimetableColumnRows();
 

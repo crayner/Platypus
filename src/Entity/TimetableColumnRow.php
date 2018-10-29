@@ -205,7 +205,8 @@ class TimetableColumnRow
      */
     public function canDelete(): bool
     {
-        return false;
+        //Are classes allocated then false...
+        return true;
     }
 
     /**

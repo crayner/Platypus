@@ -10,3 +10,5 @@ App\Entity\TimetableColumn:
             - NotBlank: ~
             - Length:
                   max: 12
+        timetableColumnRows:
+            - Valid: ~

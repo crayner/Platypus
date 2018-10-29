@@ -72,6 +72,9 @@ class TimetableColumnType extends AbstractType
                     'allow_add' => true,
                     'allow_delete' => true,
                     'button_merge_class' => 'btn-sm',
+                    'entry_options' => [
+                        'timetable_column' => $options['data'],
+                    ],
                 ]
             )
         ;

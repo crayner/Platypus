@@ -278,4 +278,20 @@ class TimetableColumnManager implements TemplateManagerInterface
     {
         return 'pageContent';
     }
+
+    /**
+     * deleteTimetableColumnRow
+     *
+     * @param TimetableColumnRowManager $tcrm
+     */
+    public function deleteTimetableColumnRow(TimetableColumnRowManager $tcrm)
+    {
+        $tcr = $tcrm->delete($tcrm->getEntity());
+        if (in_array($tcrm->getMessageManager()->getStatus(), ['warning','danger']))
+            return;
+
+        $this->getEntity()->removeTimetableColumnRow($tcr);
+        $this->getEntityManager()->persist($this->getEntity());
+        $this->getEntityManager()->flush();
+    }
 }
