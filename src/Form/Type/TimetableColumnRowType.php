@@ -17,8 +17,8 @@ namespace App\Form\Type;
 
 use App\Entity\TimetableColumn;
 use App\Entity\TimetableColumnRow;
-use App\Form\Subscriber\TimetableColumnInRowSubscriber;
 use Hillrange\Form\Type\EnumType;
+use Hillrange\Form\Type\EventSubscriber\ChildParentSubscriber;
 use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\TextType;
 use Hillrange\Form\Type\TimeType;
@@ -100,7 +100,7 @@ class TimetableColumnRowType extends AbstractType
             )
         ;
 
-        $builder->get('timetableColumn')->addEventSubscriber(new TimetableColumnInRowSubscriber($options['timetable_column']));
+        $builder->get('timetableColumn')->addEventSubscriber(new ChildParentSubscriber($options['timetable_column']->getId()));
     }
 
     /**

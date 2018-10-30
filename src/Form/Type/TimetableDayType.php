@@ -20,12 +20,15 @@ use App\Entity\TimetableColumn;
 use App\Entity\TimetableDay;
 use Hillrange\Form\Type\ColourType;
 use Hillrange\Form\Type\EntityType;
+use Hillrange\Form\Type\EventSubscriber\ChildParentSubscriber;
 use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\TextType;
+use Hillrange\Form\Validator\Colour;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 
 /**
  * Class TimetableDayType
@@ -45,16 +48,23 @@ class TimetableDayType extends AbstractType
             ->add('name', TextType::class,
                 [
                     'label' => false,
+                    'constraints' => [
+                        new Length(['max' => 12])
+                    ],
                 ]
             )
             ->add('nameShort', TextType::class,
                 [
                     'label' => false,
+                    'constraints' => [
+                        new Length(['max' => 4])
+                    ],
                 ]
             )
             ->add('timetableColumn', EntityType::class,
                 [
                     'label' => false,
+                    'placeholder' => 'Select...',
                     'class' => TimetableColumn::class,
                     'choice_label' => 'name',
                 ]
@@ -66,12 +76,18 @@ class TimetableDayType extends AbstractType
                     'attr' => [
                         'class' => 'form-control-sm',
                     ],
+                    'constraints' => [
+                        new Colour(),
+                    ],
                 ]
             )
             ->add('fontColour', ColourType::class,
                 [
                     'label' => false,
                     'required' => false,
+                    'constraints' => [
+                        new Colour(),
+                    ],
                 ]
             )
             ->add('id', HiddenType::class,
@@ -87,6 +103,7 @@ class TimetableDayType extends AbstractType
                 ]
             )
         ;
+        $builder->get('timetable')->addEventSubscriber(new ChildParentSubscriber($options['timetable']->getId()));
     }
 
     /**
@@ -96,6 +113,7 @@ class TimetableDayType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        $resolver->setRequired(['timetable']);
         $resolver->setDefaults(
             [
                 'translation_domain' => 'Timetable',

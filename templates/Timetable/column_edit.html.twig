@@ -12,6 +12,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ toggle_script() }}
     {{ renderForm(form, manager, 'columnTemplate')|raw }}
 {% endblock javascripts %}

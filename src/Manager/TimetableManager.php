@@ -23,13 +23,13 @@ use App\Entity\TimetableDay;
 use App\Entity\TimetableDayDate;
 use App\Manager\Traits\EntityTrait;
 use App\Util\StringHelper;
-use Hillrange\Collection\React\Util\CollectionInterface;
+use Hillrange\Form\Util\TemplateManagerInterface;
 
 /**
  * Class TimetableManager
  * @package App\Manager
  */
-class TimetableManager extends TabManager implements CollectionInterface
+class TimetableManager implements TemplateManagerInterface
 {
     use EntityTrait;
 
@@ -307,10 +307,295 @@ class TimetableManager extends TabManager implements CollectionInterface
      * @param string $name
      * @return array
      */
-    public function getTemplate(string $name = 'default'): array
+    public function getTemplate(): array
     {
-        $template = [];
+        $template = [
+            'form' => [
+                'url' => '/timetable/{id}/edit',
+                'url_options' => [
+                    '{id}' => 'id'
+                ],
+            ],
+            'tabs' => [
+                'details' => $this->getDetailsTab(),
+                'days' => $this->getDaysTab(),
+            ],
+        ];
 
         return $template;
     }
+
+    /**
+     * getTranslationDomain
+     *
+     * @return string
+     */
+    public function getTranslationDomain(): string
+    {
+        return 'Timetable';
+    }
+
+    /**
+     * isLocale
+     *
+     * @return bool
+     */
+    public function isLocale(): bool
+    {
+        return true;
+    }
+
+    /**
+     * getTargetDivision
+     *
+     * @return string
+     */
+    public function getTargetDivision(): string
+    {
+        return 'pageContent';
+    }
+
+    private function getDetailsTab(): array
+    {
+        return [
+            'name' => 'details',
+            'label' => 'Details',
+            'container' => [
+                'panel' => $this->getDetailsPanel(),
+            ],
+        ];
+    }
+
+    private function getDetailsPanel(): array
+    {
+        return [
+            'label' => 'Manage Timetable: %name%',
+            'label_params' => [
+                '%name%' => $this->getEntity()->getName(),
+            ],
+            'buttons' => [
+                [
+                    'type' => 'save',
+                ],
+            ],
+            'rows' => [
+                [
+                    'class' => 'row',
+                    'columns' => [
+                        [
+                            'class' => 'card col-8',
+                            'rows' => [
+                                [
+                                    'class' => 'row',
+                                    'columns' => [
+                                        [
+                                            'class' => 'card col-6',
+                                            'form' => ['name' => 'row'],
+                                        ],
+                                        [
+                                            'class' => 'card col-6',
+                                            'form' => ['nameShort' => 'row'],
+                                        ],
+                                    ],
+                                ],
+                                [
+                                    'class' => 'row',
+                                    'columns' => [
+                                        [
+                                            'class' => 'card col-6',
+                                            'form' => ['nameShortDisplay' => 'row'],
+                                        ],
+                                        [
+                                            'class' => 'card col-6',
+                                            'form' => ['active' => 'row'],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'class' => 'card col-4',
+                            'rows' => [
+                                [
+                                    'class' => 'row',
+                                    'columns' => [
+                                        [
+                                            'class' => 'col-12',
+                                            'form' => ['yearGroups' => 'row'],
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        [
+                            'class' => 'hidden',
+                            'form' => ['schoolYear' => 'widget'],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        /*
+        {% include 'Default/panelStart.html.twig' with {header: 'Manage Timetable: %name%', name: manager.entity.name, transDomain: 'Timetable', panelParagraph: 'The timetable is locked to the school year in which you are currently working.', panelStyle: 'info'} %}
+<div class="row">
+    <div class="col-8 card">
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.name) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.nameShort) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 card">
+                {{ form_row(form.nameShortDisplay) }}
+            </div>
+            <div class="col-6 card">
+                {{ form_row(form.active) }}
+            </div>
+        </div>
+    </div>
+    <div class="col-4 card">
+        <div class="row">
+            <div class="col-12">
+                {{ form_row(form.yearGroups) }}
+                {{ form_row(form.schoolYear, {value: getCurrentSchoolYear().id}) }}
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'Default/panelEnd.html.twig' %}
+        */
+    }
+
+    private function getDaysTab(): array
+    {
+        return [
+            'name' => 'days',
+            'label' => 'Days',
+            'container' => [
+                'panel' => $this->getDaysPanel(),
+            ],
+        ];
+    }
+
+    private function getDaysPanel(): array
+    {
+        return [
+            'label' => 'Timetable Days: %name%',
+            'label_params' => [
+                '%name%' => $this->getEntity()->getName(),
+            ],
+            'colour' => 'primary',
+            'buttons' => [
+                [
+                    'type' => 'save',
+                ],
+            ],
+            'collection' => [
+                'form' => 'timetableDays',
+                'headerRow' => [
+                    'class' => 'row row-header text-center small',
+                    'columns' => [
+                        [
+                            'label' => 'Name',
+                            'class' => 'col-2 align-self-center',
+                        ],
+                        [
+                            'class' => 'col-2 align-self-center',
+                            'label' => 'Abbrev.',
+                        ],
+                        [
+                            'class' => 'col-2 text-center align-self-center',
+                            'label' => 'Column',
+                        ],
+                        [
+                            'class' => 'col-2 align-self-center',
+                            'label' => 'Header Background Colour',
+                        ],
+                        [
+                            'class' => 'col-2 align-self-center',
+                            'label' => 'Header Font Colour',
+                        ],
+                        [
+                            'class' => 'col-2 align-self-center',
+                            'label' => 'Actions',
+                        ],
+                    ],
+                ],
+                'rows' => [
+                    [
+                        'class' => 'row row-striped small',
+                        'columns' => [
+                            [
+                                'class' => 'col-2 align-self-center',
+                                'form' => ['name' => 'widget'],
+                            ],
+                            [
+                                'class' => 'col-2 align-self-center',
+                                'form' => ['nameShort' => 'widget'],
+                            ],
+                            [
+                                'class' => 'col-2 text-center align-self-center',
+                                'form' => ['timetableColumn' => 'widget'],
+                            ],
+                            [
+                                'class' => 'col-2 text-center align-self-center',
+                                'form' => ['colour' => 'widget'],
+                            ],
+                            [
+                                'class' => 'col-2 text-center align-self-center',
+                                'form' => ['fontColour' => 'widget'],
+                            ],
+                            [
+                                'class' => 'hidden',
+                                'form' => ['id' => 'widget'],
+                            ],
+                            [
+                                'class' => 'hidden',
+                                'form' => ['timetable' => 'widget'],
+                            ],
+                            [
+                                'class' => 'col-2 text-right text-small align-self-center',
+                                'collection_actions' => true,
+                            ],
+                        ],
+                    ],
+                ],
+                'buttons' => [
+                    'add' => [
+                        'mergeClass' => 'btn-sm',
+                        'type' => 'add',
+                        'style' => [
+                            'float' => 'right',
+                        ],
+                    ],
+                    'delete' => [
+                        'mergeClass' => 'btn-sm',
+                        'type' => 'delete',
+                        'url' => '/timetable/'.$this->getEntity()->getId().'/day/{cid}/delete/',
+                        'url_options' => [
+                            '{cid}' => 'data_id',
+                        ],
+                        'url_type' => 'json',
+                        'options' => [
+                            'eid' => 'name',
+                        ],
+                    ],
+                    'up' => [
+                        'mergeClass' => 'btn-sm',
+                        'type' => 'up',
+                    ],
+                    'down' => [
+                        'mergeClass' => 'btn-sm',
+                        'type' => 'down',
+                    ],
+                ],
+                'sortBy' => true,
+            ],
+        ];
+    }
+
 }

@@ -97,6 +97,9 @@ class TimetableType extends AbstractType
                     'button_merge_class' => 'btn-sm',
                     'remove_element_route' => 'delete_timetable_day',
                     'sort_manage' => true,
+                    'entry_options' => [
+                        'timetable' => $options['data'],
+                    ],
                 ]
             )
         ;

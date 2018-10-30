@@ -88,9 +88,9 @@ class TimetableController extends Controller
         return $this->render(
             'Timetable/edit.html.twig',
             [
-                'form' => $form->createView(),
-                'fullForm' => $form,
+                'form' => $form,
                 'manager' => $manager,
+                'tabName' => $tabName,
             ]
         );
     }

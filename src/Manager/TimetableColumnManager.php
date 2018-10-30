@@ -18,7 +18,6 @@ namespace App\Manager;
 use App\Entity\TimetableColumn;
 use App\Manager\Traits\EntityTrait;
 use Hillrange\Form\Util\TemplateManagerInterface;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Validator\TraceableValidator;
 

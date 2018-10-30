@@ -2,31 +2,24 @@
 
 {% extends "Default/template.html.twig" %}
 
-{% form_theme form
+{# form_theme form
     'Timetable/timetable_day.html.twig'
     '@HillrangeForm/FormTheme/jquery.collection.html.twig'
     '@HillrangeForm/FormTheme/bootstrap.html.twig'
-%}
+#}
 
 {% block title %}{{ parent() }}{{ 'Edit Timetable'|trans }}{% endblock title %}
 {% block headerTitle %}{{ 'Edit Timetable'|trans }}{% endblock headerTitle %}
 {% block headerLead %}{{ '' }}{% endblock headerLead %}
 
 {% block contentContainer %}
-    {{ form_start(form) }}
-    {{ all_form_errors(fullForm) }}
-    {% set h3Content = '' %}
-    {% set h3Content = h3Content ~ returnButton({windowOpen: {route: path('manage_timetables')}}) %}
-    {% set h3Content = h3Content ~ saveButton() %}
-    {% include 'Default/tabs.html.twig' with {translation: 'Timetable', tabManager: manager} %}
-    {{ form_end(form) }}
+    {% include 'Default/wait.html.twig' %}
+
 {% endblock contentContainer %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ toggle_script() }}
-    {{ collectionScript(form.timetableDays, manager.template())|raw }}
-    {% include 'Script/formTabSubmitScript.html.twig' with {route: 'edit_timetable'} %}
+    {{ renderForm(form, manager)|raw }}
     <script type="text/javascript">
         function toggleRotateStart(dayDate, timetable, term) {
             var path = '{{ path('next_day_date', {id: '__timetable__', dayDate: '__dayDate__', term: '__term__'}) }}';
@@ -45,23 +38,5 @@
                 }
             });
         }
-        $(document).ready(function () {
-            {% for tab in manager.tabs %}
-                {% if tab.with.term is defined %}
-                    var path = '{{ path('display_term_dates', {id: app.request.get('id'), term: tab.with.term.id}) }}';
-
-                    $.ajax({
-                        url: path,
-                        type: 'POST',
-                        success: function (result) {
-                            $('#messageNotice{{ tab.with.term.id }}').html(result.message);
-                            if (result.data !== undefined) {
-                                $('#assignDays{{ tab.with.term.id }}').html(result.data);
-                            }
-                        }
-                    });
-                {% endif %}
-            {% endfor %}
-        });
     </script>
 {% endblock javascripts %}
