@@ -49,7 +49,6 @@ class TimetableColumnValidator extends ConstraintValidator
         $start = $value->getDayOfWeek()->getSchoolStart();
         $end = $value->getDayOfWeek()->getSchoolEnd();
 
-
         $row = $rows->first();
         $previous = null;
         do {
@@ -91,7 +90,7 @@ class TimetableColumnValidator extends ConstraintValidator
                 ->addViolation();
         }
         if ($start > $rows->first()->getTimeStart()) {
-            $this->context->buildViolation('The rows starts at %start% before the school starts teaching at %opens%. <a href="%route%" target="_blank">Days of the week can be altered here. </a>')
+            $this->context->buildViolation('The rows start at %start% before the school started teaching at %opens%. <a href="%route%" target="_blank">Days of the week can be altered here. </a>')
                 ->setParameter('%start%', $rows->first()->getTimeStart()->format('H:i'))
                 ->setParameter('%opens%', $start->format('H:i'))
                 ->setParameter('%route%', $this->router->generate('days_of_week_manage'))
@@ -100,7 +99,7 @@ class TimetableColumnValidator extends ConstraintValidator
         }
 
         if ($end < $rows->last()->getTimeEnd()) {
-            $this->context->buildViolation('The rows ends at %end% after the school finished teaching at %closes%. <a href="%route%" target="_blank">Days of the week can be altered here. </a>')
+            $this->context->buildViolation('The rows end at %end% after the school finished teaching at %closes%. <a href="%route%" target="_blank">Days of the week can be altered here. </a>')
                 ->setParameter('%end%', $rows->last()->getTimeEnd()->format('H:i'))
                 ->setParameter('%closes%', $end->format('H:i'))
                 ->setParameter('%route%', $this->router->generate('days_of_week_manage'))

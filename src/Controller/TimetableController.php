@@ -198,18 +198,18 @@ class TimetableController extends Controller
      */
     public function editColumn(TimetableColumnManager $manager, Request $request, FormManager $formManager, $id, $tabName = 'details')
     {
-        $formManager->setTemplateManager($manager);
-
         $manager->find($id);
 
         $form = $this->createForm(TimetableColumnType::class, $manager->getEntity());
-
         if ($request->getContentType() === 'json')
         {
             if ($request->getMethod() === 'POST')
             {
-                dump(json_decode($request->getContent(), true));
+                $formManager->setTemplateManager($manager);
+
                 $form->submit(json_decode($request->getContent(), true));
+
+                dump($form,json_decode($request->getContent(), true));
 
                 if ($form->isValid())
                 {
@@ -225,6 +225,7 @@ class TimetableController extends Controller
                     200);
             }
         }
+
         return $this->render(
             'Timetable/column_edit.html.twig',
             [
@@ -253,6 +254,8 @@ class TimetableController extends Controller
         $manager->deleteTimetableColumnRow($timetableColumnRowManager->setEntity($cid));
 
         $form = $this->createForm(TimetableColumnType::class, $manager->getEntity());
+
+        $manager->validateTimetableColumnRows($this->get('validator'), $form);
 
         return new JsonResponse(
             [

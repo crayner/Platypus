@@ -18,6 +18,9 @@ namespace App\Manager;
 use App\Entity\TimetableColumn;
 use App\Manager\Traits\EntityTrait;
 use Hillrange\Form\Util\TemplateManagerInterface;
+use Symfony\Component\Form\FormError;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Validator\Validator\TraceableValidator;
 
 /**
  * Class TimetableColumnManager
@@ -293,5 +296,19 @@ class TimetableColumnManager implements TemplateManagerInterface
         $this->getEntity()->removeTimetableColumnRow($tcr);
         $this->getEntityManager()->persist($this->getEntity());
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * validateTimetableColumnRows
+     *
+     * @param TraceableValidator $validator
+     * @param FormInterface $form
+     */
+    public function validateTimetableColumnRows(TraceableValidator $validator, FormInterface $form)
+    {
+        $errors = $validator->validate($this->getEntity(), new \App\Validator\TimetableColumn());
+
+        foreach($errors as $error)
+            $this->getMessageManager()->add('danger', $error->getMessage(), [], 'Timetable');
     }
 }
