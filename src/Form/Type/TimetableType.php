@@ -71,9 +71,7 @@ class TimetableType extends AbstractType
                     'multiple' => true,
                     'expanded' => true,
                     'choice_label' => 'name',
-                    'attr' => [
-                        'class' => 'text-right',
-                    ],
+                    'justify' => 'right',
                     'class' => YearGroup::class,
                     'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('g')

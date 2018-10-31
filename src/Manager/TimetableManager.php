@@ -377,6 +377,10 @@ class TimetableManager implements TemplateManagerInterface
                 [
                     'type' => 'save',
                 ],
+                [
+                    'type' => 'return',
+                    'url' => '/timetable/list/',
+                ],
             ],
             'rows' => [
                 [
@@ -435,39 +439,6 @@ class TimetableManager implements TemplateManagerInterface
                 ],
             ],
         ];
-
-        /*
-        {% include 'Default/panelStart.html.twig' with {header: 'Manage Timetable: %name%', name: manager.entity.name, transDomain: 'Timetable', panelParagraph: 'The timetable is locked to the school year in which you are currently working.', panelStyle: 'info'} %}
-<div class="row">
-    <div class="col-8 card">
-        <div class="row">
-            <div class="col-6 card">
-                {{ form_row(form.name) }}
-            </div>
-            <div class="col-6 card">
-                {{ form_row(form.nameShort) }}
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6 card">
-                {{ form_row(form.nameShortDisplay) }}
-            </div>
-            <div class="col-6 card">
-                {{ form_row(form.active) }}
-            </div>
-        </div>
-    </div>
-    <div class="col-4 card">
-        <div class="row">
-            <div class="col-12">
-                {{ form_row(form.yearGroups) }}
-                {{ form_row(form.schoolYear, {value: getCurrentSchoolYear().id}) }}
-            </div>
-        </div>
-    </div>
-</div>
-{% include 'Default/panelEnd.html.twig' %}
-        */
     }
 
     private function getDaysTab(): array
@@ -492,6 +463,10 @@ class TimetableManager implements TemplateManagerInterface
             'buttons' => [
                 [
                     'type' => 'save',
+                ],
+                [
+                    'type' => 'return',
+                    'url' => '/timetable/list/',
                 ],
             ],
             'collection' => [

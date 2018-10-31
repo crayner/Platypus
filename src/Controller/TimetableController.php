@@ -63,30 +63,46 @@ class TimetableController extends Controller
      * edit
      *
      * @param TimetableManager $manager
+     * @param FormManager $formManager
      * @param Request $request
      * @param $id
      * @param string $tabName
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return JsonResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/timetable/{id}/edit/{tabName}", name="edit_timetable")
      * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
      */
-    public function edit(TimetableManager $manager, Request $request, $id, $tabName = 'details')
+    public function edit(TimetableManager $manager, FormManager $formManager, Request $request, $id, $tabName = 'details')
     {
         $entity = $manager->find($id);
 
         $form = $this->createForm(TimetableType::class, $entity);
 
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
+        if ($request->getContentType() === 'json')
         {
-            $manager->getEntityManager()->persist($entity);
-            $manager->getEntityManager()->flush();
+            if ($request->getMethod() === 'POST')
+            {
+                $formManager->setTemplateManager($manager);
+
+                $form->submit(json_decode($request->getContent(), true));
+                dump(json_decode($request->getContent(), true));
+
+                if ($form->isValid())
+                {
+                    $manager->getEntityManager()->persist($manager->getEntity());
+                    $manager->getEntityManager()->flush();
+                }
+
+                return new JsonResponse(
+                    [
+                        'form' => $formManager->extractForm($form),
+                        'messages' => $formManager->getFormErrors($form),
+                    ],
+                    200);
+            }
         }
 
-        return $this->render(
-            'Timetable/edit.html.twig',
+        return $this->render('Timetable/edit.html.twig',
             [
                 'form' => $form,
                 'manager' => $manager,
@@ -208,8 +224,6 @@ class TimetableController extends Controller
                 $formManager->setTemplateManager($manager);
 
                 $form->submit(json_decode($request->getContent(), true));
-
-                dump($form,json_decode($request->getContent(), true));
 
                 if ($form->isValid())
                 {
