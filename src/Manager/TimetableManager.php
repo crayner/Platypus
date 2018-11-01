@@ -272,12 +272,21 @@ class TimetableManager implements TemplateManagerInterface
     {
         $days = $this->getTimetableDays();
 
-        $x = array_search($dayDate->getTimetableDay(), $days);
+        $dayDate->incrementOffset(count($days));
+        $this->getEntityManager()->persist($dayDate);
+        $this->getEntityManager()->flush();
+        return $this;
+    }
 
-        $x++;
-        if ($x >= count($days))
-            $x=0;
-        $dayDate->setTimetableDay($days[$x]);
+    /**
+     * resetDayDate
+     *
+     * @param TimetableDayDate $dayDate
+     * @return TimetableManager
+     */
+    public function resetDayDate(TimetableDayDate $dayDate): TimetableManager
+    {
+        $dayDate->setOffset(0);
         $this->getEntityManager()->persist($dayDate);
         $this->getEntityManager()->flush();
         return $this;
@@ -311,16 +320,15 @@ class TimetableManager implements TemplateManagerInterface
     {
         $template = [
             'form' => [
-                'url' => '/timetable/{id}/edit',
-                'url_options' => [
-                    '{id}' => 'id'
-                ],
+                'url' => '/timetable/'.$this->getEntity()->getId().'/edit',
             ],
             'tabs' => [
                 'details' => $this->getDetailsTab(),
                 'days' => $this->getDaysTab(),
             ],
         ];
+
+        $template['tabs'] = array_merge($template['tabs'], $this->getTermTabs());
 
         return $template;
     }
@@ -355,6 +363,11 @@ class TimetableManager implements TemplateManagerInterface
         return 'pageContent';
     }
 
+    /**
+     * getDetailsTab
+     *
+     * @return array
+     */
     private function getDetailsTab(): array
     {
         return [
@@ -366,6 +379,11 @@ class TimetableManager implements TemplateManagerInterface
         ];
     }
 
+    /**
+     * getDetailsPanel
+     *
+     * @return array
+     */
     private function getDetailsPanel(): array
     {
         return [
@@ -441,6 +459,11 @@ class TimetableManager implements TemplateManagerInterface
         ];
     }
 
+    /**
+     * getDaysTab
+     *
+     * @return array
+     */
     private function getDaysTab(): array
     {
         return [
@@ -452,6 +475,11 @@ class TimetableManager implements TemplateManagerInterface
         ];
     }
 
+    /**
+     * getDaysPanel
+     *
+     * @return array
+     */
     private function getDaysPanel(): array
     {
         return [
@@ -573,4 +601,271 @@ class TimetableManager implements TemplateManagerInterface
         ];
     }
 
+    /**
+     * getTermTabs
+     *
+     * @return array
+     */
+    private function getTermTabs(): array
+    {
+        $terms = [];
+        foreach ($this->getTerms()->getIterator() as $term) {
+            $terms[StringHelper::safeString($term->getName(), true)] = [
+                'name' => StringHelper::safeString($term->getName(), true),
+                'label' => $term->getName(),
+                'container' => [
+                    'panel' => $this->getTermPanel($term),
+                ],
+            ];
+        }
+        return $terms;
+    }
+
+    /**
+     * getTermPanel
+     *
+     * @param $term
+     * @return array
+     * @throws \Exception
+     */
+    private function getTermPanel($term): array
+    {
+        return [
+            'label' => 'Term Days: %tt_name% - %term%',
+            'label_params' => [
+                '%tt_name%'=> $this->getEntity()->getName(),
+                '%term%' => $term->getName(),
+            ],
+            'description' => 'Click on any day to cycle to the next timetable day.  Changes to timetable days are saved immediately.',
+            'colour' => 'primary',
+            'buttons' => [
+                [
+                    'type' => 'save',
+                ],
+                [
+                    'type' => 'return',
+                    'url' => '/timetable/list/',
+                ],
+            ],
+            'headerRow' => [
+                'class' => 'row',
+                'columns' => [
+                    [
+                        'class' => 'col-9 offset-3',
+                        'rows' => [
+                            [
+                                'class' => 'row row-header small',
+                                'columns' => $this->getSchoolDayHeaders(),
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            'rows' => $this->getWeeksOfTerm($term),
+        ];
+    }
+
+    /**
+     * getSchoolDayHeaders
+     *
+     * @return array
+     * @throws \Exception
+     */
+    private function getSchoolDayHeaders(): array
+    {
+        $columns = [];
+        foreach($this->getSchoolDays() as $day)
+        {
+            $column = [
+                'class' => 'col-2 card text-center align-self-center',
+                'label' => 'school_day_header',
+                'label_params' => ['school_day_header' => $day->getName() . '<br/><span className="small text-muted">'.$day->getNameShort().'</span>'],
+            ];
+            $columns[] = $column;
+        }
+        return $columns;
+    }
+
+    /**
+     * getWeeksOfTerm
+     *
+     * @param SchoolYearTerm $term
+     * @return array
+     */
+    private function getWeeksOfTerm(SchoolYearTerm $term): array
+    {
+        foreach($this->getWeeks($term) as $value=>$week)
+        {
+            $row = [
+                'class' => 'row',
+                'columns' => [
+                    [
+                        'class' => 'col-3 card',
+                        'rows' => [
+                            [
+                                'class' => 'row-header row small',
+                                'columns' => [
+                                    [
+                                        'class' => 'col-12 card text-center align-self-center',
+                                        'style' => ['minHeight' => '100px'],
+                                        'label' => 'week_header',
+                                        'label_params' => ['week_header' => $this->getWeekHeader($week)],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                    [
+                        'class' => 'col-9 card',
+                        'rows' => [
+                            [
+                                'class' => 'row small',
+                                'columns' => $this->getDayColumns($week,$term),
+                            ],
+                        ],
+                    ],
+                ],
+            ];
+            $weeks[] = $row;
+        }
+
+        return $weeks;
+    }
+
+    /**
+     * getWeekHeader
+     *
+     * @param $week
+     * @return string
+     */
+    private function getWeekHeader(array $week): string
+    {
+        $first =  reset($week);
+        $last = end($week);
+        return $first->getDate()->format($this->getSettingManager()->get('date.format.long')) . '<br />' . $last->getDate()->format($this->getSettingManager()->get('date.format.long'));
+    }
+
+    /**
+     * getDayColumns
+     *
+     * @param $week
+     * @return array
+     */
+    private function getDayColumns(array $week, SchoolYearTerm $term): array
+    {
+        $columns = [];
+        $offset = 1;
+        foreach($week as $day){
+            for($i=0; $i<=7; $i++){
+                if ($day->getDayOfWeek() > $offset)
+                {
+                    $offset++;
+                    $column = [
+                        'class' => 'col-2 flex-container',
+                        'label' => '',
+                    ];
+                    $columns[] = $column;
+                }
+            }
+
+            $offset++;
+            $columns[] = $this->getDayDetails($day,$term);
+        }
+        return $columns;
+    }
+
+    /**
+     * getDayDetails
+     *
+     * @return array
+     */
+    private function getDayDetails(TimetableDayDate $day, SchoolYearTerm $term): array
+    {
+        $alert = '';
+        if ($day->getType() === 'school_closure') $alert = ' alert-danger';
+        if ($day->getType() === 'school_alter') $alert = ' alert-warning';
+
+        $column = [
+            'class' => 'col-2 card align-self-center text-center' . $alert,
+            'style' => ['minHeight' => '100px'],
+            'onClick' => [
+                'url' => '/timetable/'.$this->getEntity()->getId().'/term/'.$term->getId().'/day/date/'.$day->getId().'/increment/',
+            ],
+            'label' => 'day_label',
+            'label_params' => ['day_label' => $this->getDayLabel($day)],
+        ];
+
+        if ($day->getType() !== ''){
+            $button = [
+                'type' => 'misc',
+                'icon' => ['far','calendar-check'],
+                'title' => 'name',
+                'title_params' => ['name' => $day->getSpecialDay()->getDescription() ?: $day->getSpecialDay()->getName()],
+                'colour' => 'transparent',
+                'style' => ['padding' => '0 1px', 'float: right'],
+            ];
+            $column['buttons'][] = $button;
+        }
+
+        if ($day->getOffset() > 0)
+        {
+            $button = [
+                'type' => 'misc',
+                'icon' => ['fas','undo'],
+                'title' => 'Undo changes to timetable day by clicking here.',
+                'colour' => 'transparent',
+                'style' => ['padding' => '0 1px', 'float: right'],
+                'url' => '/timetable/'.$this->getEntity()->getId().'/term/'.$term->getId().'/day/date/'.$day->getId().'/reset/',
+            ];
+            $column['buttons'][] = $button;
+        }
+
+        return $column;
+    }
+
+    /**
+     * getDayLabel
+     *
+     * @param $day
+     * @return string
+     */
+    private function getDayLabel(TimetableDayDate $day): string
+    {
+        $label = '';
+        if ($day->getType() !== '') {
+            $label .= $day->getSpecialDay()->getName();
+        } else {
+            $timetableDay = $day->getTimetableDay($this->getRepository(TimetableDay::class));
+            $label .= $timetableDay->getName();
+            if (! empty($timetableDay->getNameShort())) {
+                $label .= '<br/><span class="small" style="background-color: ' . $timetableDay->getColour() . '; color: ' . $timetableDay->getFontColour() . ';" >(' . $timetableDay->getNameShort() . ')</span>';
+            }
+        }
+        $label .= '<span class="small">' . $day->getDate()->format($this->getSettingManager()->get('date.format.short')) . '</span>';
+
+        return $label ;
+    }
+
+    /**
+     * @var SettingManager
+     */
+    private $settingManager;
+
+    /**
+     * @return SettingManager
+     */
+    public function getSettingManager(): SettingManager
+    {
+        return $this->settingManager;
+    }
+
+    /**
+     * @param SettingManager $settingManager
+     * @return TimetableManager
+     */
+    public function setSettingManager(SettingManager $settingManager): TimetableManager
+    {
+        $this->settingManager = $settingManager;
+        return $this;
+    }
 }

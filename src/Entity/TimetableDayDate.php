@@ -17,6 +17,8 @@
 namespace App\Entity;
 
 
+use App\Repository\TimetableDayRepository;
+
 class TimetableDayDate
 {
     /**
@@ -71,11 +73,23 @@ class TimetableDayDate
     private $timetableDay;
 
     /**
+     * getTimetableDay
+     *
+     * @param TimetableDayRepository|null $repository
      * @return TimetableDay|null
      */
-    public function getTimetableDay(): ?TimetableDay
+    public function getTimetableDay(?TimetableDayRepository $repository = null): ?TimetableDay
     {
-        return $this->timetableDay;
+        if (empty($repository) || $this->getOffset() === 0 || empty($this->timetableDay))
+            return $this->timetableDay;
+
+        $days = $repository->findAll(['timetable' => $this->timetableDay->getTimetable()], ['sequence']);
+        while ($days[0] !== $this->timetableDay)
+            $days[] = array_shift($days);
+        for($i=0; $i<=$this->getOffset(); $i++)
+            $day = array_shift($days);
+
+        return $day;
     }
 
     /**
@@ -134,5 +148,43 @@ class TimetableDayDate
         if (! empty($this->getSpecialDay()))
             return $this->getSpecialDay()->getType();
         return '';
+    }
+
+    /**
+     * @var integer
+     */
+    private $offset;
+
+    /**
+     * @return int
+     */
+    public function getOffset(): int
+    {
+        return $this->offset = is_int($this->offset) ? $this->offset : 0;
+    }
+
+    /**
+     * @param int $offset
+     * @return TimetableDayDate
+     */
+    public function setOffset(int $offset): TimetableDayDate
+    {
+        $this->offset = $offset;
+        return $this;
+    }
+
+    /**
+     * incrementOffset
+     *
+     * @param int $max
+     * @return TimetableDayDate
+     */
+    public function incrementOffset(int $max): TimetableDayDate
+    {
+        $this->getOffset();
+        $this->offset++;
+        if ($this->offset >= $max)
+            $this->offset = 0;
+        return $this;
     }
 }

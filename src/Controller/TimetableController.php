@@ -22,6 +22,7 @@ use App\Entity\TimetableColumnRow;
 use App\Entity\TimetableDayDate;
 use App\Form\Type\TimetableColumnType;
 use App\Form\Type\TimetableType;
+use App\Manager\SettingManager;
 use Hillrange\Form\Util\FormManager;
 use App\Manager\TimetableColumnManager;
 use App\Manager\TimetableColumnRowManager;
@@ -72,9 +73,9 @@ class TimetableController extends Controller
      * @Route("/timetable/{id}/edit/{tabName}", name="edit_timetable")
      * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
      */
-    public function edit(TimetableManager $manager, FormManager $formManager, Request $request, $id, $tabName = 'details')
+    public function edit(TimetableManager $manager, FormManager $formManager, SettingManager $settingManager, Request $request, $id, $tabName = 'details')
     {
-        $entity = $manager->find($id);
+        $entity = $manager->setSettingManager($settingManager)->find($id);
 
         $form = $this->createForm(TimetableType::class, $entity);
 
@@ -85,7 +86,6 @@ class TimetableController extends Controller
                 $formManager->setTemplateManager($manager);
 
                 $form->submit(json_decode($request->getContent(), true));
-                dump(json_decode($request->getContent(), true));
 
                 if ($form->isValid())
                 {
@@ -97,6 +97,7 @@ class TimetableController extends Controller
                     [
                         'form' => $formManager->extractForm($form),
                         'messages' => $formManager->getFormErrors($form),
+                        'template' => $formManager->validateTemplate($manager->getTemplate()),
                     ],
                     200);
             }
@@ -283,43 +284,74 @@ class TimetableController extends Controller
     /**
      * timetableDayIncrement
      *
-     * @param Timetable $timetable
+     * @param Timetable $id
      * @param SchoolYearTerm $term
      * @param TimetableDayDate $dayDate
      * @param TimetableManager $manager
+     * @param FormManager $formManager
+     * @param SettingManager $settingManager
+     * @return JsonResponse
+     * @throws \Exception
      * @Route("/timetable/{id}/term/{term}/day/date/{dayDate}/increment/", name="next_day_date")
      * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
-     * @return JsonResponse
      */
-    public function timetableDayIncrement(int $id, SchoolYearTerm $term, TimetableDayDate $dayDate, TimetableManager $manager)
+    public function timetableDayIncrement(Timetable $id, SchoolYearTerm $term, TimetableDayDate $dayDate, TimetableManager $manager, FormManager $formManager, SettingManager $settingManager)
     {
-        $manager->find($id);
+        $formManager->setTemplateManager($manager);
+        $manager->setEntity($id)->setSettingManager($settingManager);
         $manager->nextDayDate($dayDate);
 
+        $form = $this->createForm(TimetableType::class, $id);
 
         return new JsonResponse(
             [
-                'data' => $this->renderView('Timetable/assign_days_content.html.twig',
-                    [
-                        'term' => $term,
-                        'manager' => $manager,
-                    ]
-                ),
-                'messages' => [],
+                'template'  => $formManager->validateTemplate($manager->getTemplate()),
+                'form'      => $formManager->extractForm($form),
+                'messages'  => $formManager->getFormErrors($form),
             ],
             200);
     }
 
     /**
-     * timetableDayIncrement
+     * timetableDayReset
      *
-     * @param Timetable $timetable
+     * @param Timetable $id
      * @param SchoolYearTerm $term
      * @param TimetableDayDate $dayDate
      * @param TimetableManager $manager
+     * @param FormManager $formManager
+     * @param SettingManager $settingManager
+     * @return JsonResponse
+     * @Route("/timetable/{id}/term/{term}/day/date/{dayDate}/reset/", name="reset_day_date")
+     * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
+     */
+    public function timetableDayReset(Timetable $id, SchoolYearTerm $term, TimetableDayDate $dayDate, TimetableManager $manager, FormManager $formManager, SettingManager $settingManager)
+    {
+        $formManager->setTemplateManager($manager);
+        $manager->setEntity($id)->setSettingManager($settingManager);
+        $manager->resetDayDate($dayDate);
+
+        $form = $this->createForm(TimetableType::class, $id);
+
+        return new JsonResponse(
+            [
+                'template'  => $formManager->validateTemplate($manager->getTemplate()),
+                'form'      => $formManager->extractForm($form),
+                'messages'  => $formManager->getFormErrors($form),
+            ],
+            200);
+    }
+
+    /**
+     * displayTermDays
+     *
+     * @param int $id
+     * @param SchoolYearTerm $term
+     * @param TimetableManager $manager
+     * @return JsonResponse
+     * @throws \Exception
      * @Route("/timetable/{id}/term/{term}/days/display/", name="display_term_dates")
      * @Security("is_granted('USE_ROUTE', ['manage_timetables'])")
-     * @return JsonResponse
      */
     public function displayTermDays(int $id, SchoolYearTerm $term, TimetableManager $manager)
     {

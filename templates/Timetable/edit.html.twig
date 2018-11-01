@@ -2,12 +2,6 @@
 
 {% extends "Default/template.html.twig" %}
 
-{# form_theme form
-    'Timetable/timetable_day.html.twig'
-    '@HillrangeForm/FormTheme/jquery.collection.html.twig'
-    '@HillrangeForm/FormTheme/bootstrap.html.twig'
-#}
-
 {% block title %}{{ parent() }}{{ 'Edit Timetable'|trans }}{% endblock title %}
 {% block headerTitle %}{{ 'Edit Timetable'|trans }}{% endblock headerTitle %}
 {% block headerLead %}{{ '' }}{% endblock headerLead %}
@@ -20,23 +14,4 @@
 {% block javascripts %}
     {{ parent() }}
     {{ renderForm(form, manager)|raw }}
-    <script type="text/javascript">
-        function toggleRotateStart(dayDate, timetable, term) {
-            var path = '{{ path('next_day_date', {id: '__timetable__', dayDate: '__dayDate__', term: '__term__'}) }}';
-            path = path.replace('__dayDate__', dayDate);
-            path = path.replace('__timetable__', timetable);
-            path = path.replace('__term__', term);
-
-            $.ajax({
-                url: path,
-                type: 'POST',
-                success: function (result) {
-                    $('#messageNotice' + term).html(result.message);
-                    if (result.data !== undefined) {
-                        $('#assignDays' + term).html(result.data);
-                    }
-                }
-            });
-        }
-    </script>
 {% endblock javascripts %}

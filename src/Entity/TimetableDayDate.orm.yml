@@ -16,6 +16,10 @@ App\Entity\TimetableDayDate:
         date:
             type: date
             column: day_date
+        offset:
+            type: smallint
+            options:
+                default: 0
     manyToOne:
         timetableDay:
             targetEntity: App\Entity\TimetableDay
