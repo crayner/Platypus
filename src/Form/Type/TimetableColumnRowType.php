@@ -83,6 +83,9 @@ class TimetableColumnRowType extends AbstractType
             ->add('type', EnumType::class,
                 [
                     'label' => false,
+                    'attr' => [
+                        'class' => 'form-control-sm',
+                    ],
                 ]
             )
             ->add('timetableColumn', HiddenEntityType::class,

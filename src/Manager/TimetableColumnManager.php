@@ -212,7 +212,7 @@ class TimetableColumnManager implements TemplateManagerInterface
                                             ],
                                             'rows' => [
                                                 [
-                                                    'class' => 'small row row-striped',
+                                                    'class' => 'row row-striped',
                                                     'columns' => [
                                                         [
                                                             'class' => 'col-2',
@@ -223,11 +223,11 @@ class TimetableColumnManager implements TemplateManagerInterface
                                                             'form' => ['nameShort' => 'widget'],
                                                         ],
                                                         [
-                                                            'class' => 'col-2',
+                                                            'class' => 'col-2 small',
                                                             'form' => ['timeStart' => 'widget'],
                                                         ],
                                                         [
-                                                            'class' => 'col-2',
+                                                            'class' => 'col-2 small',
                                                             'form' => ['timeEnd' => 'widget'],
                                                         ],
                                                         [
