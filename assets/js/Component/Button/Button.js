@@ -18,43 +18,47 @@ export default function Button(props) {
         translations,
     } = props;
 
-    let className = 'btn btn-' + button.colour
+    let attr = {}
+
+    if (button.class === false)
+        attr.className = 'btn btn-' + button.colour
+    else
+        attr.className = button.class
 
     const buttonTypes = ['button','submit']
 
-    if (button.mergeClass !== '')
-        className = className + ' ' + button.mergeClass
+    if (button.mergeClass !== '' && (button.class === false))
+        attr.className = attr.className + ' ' + button.mergeClass
 
-    if (typeof(button.style) !== 'object')
-        button.style = {}
+    if (typeof(button.style) === 'object')
+        attr.style = button.style
 
-    if (button.type === '' || typeof(button.type) === 'undefined' || ! buttonTypes.includes(button.type))
-        button.type = 'button'
+    if (button.type === '' || typeof button.type === 'undefined' || ! buttonTypes.includes(button.type))
+        attr.type = 'button'
+    else
+        attr.type = button.type
 
-    if (typeof(button.options) !== 'object')
-        button.options = {}
+    if (typeof button.options === 'object')
+        attr.options = button.options
 
-    if (typeof buttonHandler !== 'undefined')
+    if (typeof button.title === 'string')
+        attr.title = button.title
+
+    if (button.colour === 'transparent') {
+        delete attr.className
+        delete attr.type
         return (
-            <button
-                type={button.type}
-                className={className}
-                style={button.style}
-                onClick={(e) => buttonHandler(button, e)}
-                title={translateMessage(translations, button.label)}>
-                {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
-                <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
-            </button>
+            <i {...attr} onClick={(e) => buttonHandler(button, e)}>
+                {button.prompt ? translateMessage(translations, button.prompt) : null}
+                {button.icon ? <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
+            </i>
         )
+    }
 
     return (
-        <button
-            type={button.type}
-            className={className}
-            style={button.style}
-            title={translateMessage(translations, button.label)}>
-                {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
-                <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
+        <button {...attr} onClick={(e) => buttonHandler(button, e)}>
+            {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
+            <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
         </button>
     )
 }
