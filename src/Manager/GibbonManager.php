@@ -43,7 +43,7 @@ class GibbonManager
      */
     public function transfer(string $section, LoggerInterface $logger)
     {
-        $path = "App\Manager\Gibbon\\".ucfirst($section). 'Manager';
+        $path = "App\Manager\Gibbon\\".ucfirst(str_replace('Manager','',$section)). 'Manager';
 
         if (! class_exists($path)) {
             $logger->info(sprintf('No! No! No! %s does not exist.', $section));
@@ -55,6 +55,8 @@ class GibbonManager
         foreach ($this->requireBefore() as $w)
             $this->transfer($w, $logger);
 
+        if (! $this->getSession()->has('gibbon_transfer'))
+            $this->getSession()->set('gibbon_transfer', []);
         //Test if transfer has already happened..
         if (! in_array($section, $this->getSession()->get('gibbon_transfer'))) {
 

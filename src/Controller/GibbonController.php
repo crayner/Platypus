@@ -29,6 +29,12 @@ class GibbonController extends Controller
 {
     /**
      * transfer
+     *
+     * @param GibbonManager $manager
+     * @param Request $request
+     * @param string $section
+     * @param string $only
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
      * @Route("/gibbon/transfer/{section}/{only}", name="gibbon_transfer")
      * @IsGranted("ROLE_SYSTEM_ADMIN")
      */
