@@ -23,13 +23,14 @@ use App\Entity\TimetableDay;
 use App\Entity\TimetableDayDate;
 use App\Manager\Traits\EntityTrait;
 use App\Util\StringHelper;
+use Hillrange\Form\Util\ButtonReactInterface;
 use Hillrange\Form\Util\TemplateManagerInterface;
 
 /**
  * Class TimetableManager
  * @package App\Manager
  */
-class TimetableManager implements TemplateManagerInterface
+class TimetableManager implements TemplateManagerInterface, ButtonReactInterface
 {
     use EntityTrait;
 

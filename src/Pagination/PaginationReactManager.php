@@ -19,17 +19,20 @@ use App\Manager\MessageManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Hillrange\Form\Util\ButtonReactInterface;
+use Hillrange\Form\Util\ButtonReactManager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\OptionsResolver\Exception\InvalidOptionsException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class PaginationReactManager
  * @package App\Pagination
  */
-abstract class PaginationReactManager implements PaginationInterface
+abstract class PaginationReactManager implements PaginationInterface, ButtonReactInterface
 {
     /**
      * @var Request
@@ -52,15 +55,20 @@ abstract class PaginationReactManager implements PaginationInterface
     private $messageManager;
 
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
      * PaginationReactManager constructor.
      * @param RequestStack $request
      */
-    public function __construct(RequestStack $request, EntityManagerInterface $entityManager, MessageManager $messageManager)
+    public function __construct(RequestStack $request, EntityManagerInterface $entityManager, MessageManager $messageManager, TranslatorInterface $translator)
     {
         $this->request = $request->getCurrentRequest();
         $this->entityManager = $entityManager;
         $this->messageManager = $messageManager;
-
+        $this->translator = $translator;
         if (method_exists($this, 'setSpecificTranslations'))
             $this->setSpecificTranslations();
     }
@@ -423,6 +431,14 @@ abstract class PaginationReactManager implements PaginationInterface
     }
 
     /**
+     * @return TranslatorInterface
+     */
+    public function getTranslator(): TranslatorInterface
+    {
+        return $this->translator;
+    }
+
+    /**
      * set Join
      *
      * @version     13th February 2018
@@ -483,6 +499,8 @@ abstract class PaginationReactManager implements PaginationInterface
     }
 
     /**
+     * getTransDomain
+     *
      * @return string
      */
     public function getTransDomain(): string
@@ -490,6 +508,16 @@ abstract class PaginationReactManager implements PaginationInterface
         if (! property_exists($this, 'transDomain'))
             return 'pagination';
         return $this->transDomain;
+    }
+
+    /**
+     * getTranslationDomain
+     *
+     * @return string
+     */
+    public function getTranslationDomain(): string
+    {
+        return $this->getTransDomain();
     }
 
     /**
@@ -592,7 +620,7 @@ abstract class PaginationReactManager implements PaginationInterface
             return [
                 'title' => $this->getHeaderTitle().'.title',
                 'paragraph' => false,
-                'buttons' => [],
+                'buttons' => false,
             ];
 
         $resolver = new OptionsResolver();
@@ -600,7 +628,7 @@ abstract class PaginationReactManager implements PaginationInterface
             [
                 'title' => $this->getHeaderTitle().'.title',
                 'paragraph' => false,
-                'buttons' => [],
+                'buttons' => false,
             ]
         );
         $headerDefinition = $resolver->resolve($this->headerDefinition);
@@ -625,7 +653,7 @@ abstract class PaginationReactManager implements PaginationInterface
         );
 
         foreach($headerDefinition['buttons'] as $q=>$button)
-            $headerDefinition['buttons'][$q] = $resolver->resolve($button);
+            $headerDefinition['buttons'][$q] = ButtonReactManager::validateButton($button, $this->getTranslator(), $this);
 
 
 
@@ -711,29 +739,7 @@ abstract class PaginationReactManager implements PaginationInterface
 
         foreach($this->actions['buttons'] as $q=>$button)
         {
-            $resolver = new OptionsResolver();
-            $resolver->setRequired(
-                [
-                    'url',
-                ]
-            );
-            $resolver->setDefaults(
-                [
-                    'type' => 'miscellaneous',
-                    'label' => false,
-                    'url_options' => [],
-                    'mergeClass' => '',
-                    'style' => ['float' => 'right'],
-                    'url_type' => 'json',
-                    'icon' => false,
-                    'colour' => '',
-                    'options' => [],
-                ]
-            );
-            $button = $resolver->resolve($button);
-            if (! in_array($button['url_type'], ['redirect','json']))
-                throw new InvalidOptionsException(sprintf('The response type of \'%s\' is not valid. Accepted values are [redirect, json]', $button['url_type']));
-            $this->actions['buttons'][$q] = $button;
+            $this->actions['buttons'][$q] = ButtonReactManager::validateButton($button, $this->getTranslator(), $this);
         }
 
         return $this->actions;

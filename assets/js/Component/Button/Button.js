@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fas } from '@fortawesome/free-solid-svg-icons'
-import {translateMessage} from '../MessageTranslator'
 
 library.add(fas, far, fab)
 
@@ -15,19 +14,18 @@ export default function Button(props) {
     const {
         button,
         buttonHandler,
-        translations,
     } = props;
 
     let attr = {}
 
-    if (button.class === false)
+    if (button.class === false || button.class === undefined)
         attr.className = 'btn btn-' + button.colour
     else
         attr.className = button.class
 
     const buttonTypes = ['button','submit']
 
-    if (button.mergeClass !== '' && (button.class === false))
+    if (button.mergeClass !== '' && (button.class === false || button.class === undefined))
         attr.className = attr.className + ' ' + button.mergeClass
 
     if (typeof(button.style) === 'object')
@@ -49,7 +47,7 @@ export default function Button(props) {
         delete attr.type
         return (
             <i {...attr} onClick={(e) => buttonHandler(button, e)}>
-                {button.prompt ? translateMessage(translations, button.prompt) : null}
+                {button.prompt ? button.prompt : null}
                 {button.icon ? <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
             </i>
         )
@@ -57,14 +55,13 @@ export default function Button(props) {
 
     return (
         <button {...attr} onClick={(e) => buttonHandler(button, e)}>
-            {button.prompt ? translateMessage(translations, button.prompt) : null}{button.icon ?
-            <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
+            {button.prompt ? button.prompt : null}
+            {button.icon ? <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
         </button>
     )
 }
 
 Button.propTypes = {
     button: PropTypes.object.isRequired,
-    translations: PropTypes.object.isRequired,
     buttonHandler: PropTypes.func,
 };

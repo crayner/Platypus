@@ -122,7 +122,7 @@ class TimetablePagination extends PaginationReactManager
         'size' => 2,
         'buttons' => [
             [
-                'label' => 'Delete Timetable',
+                'title' => 'Delete Timetable',
                 'url' => '/timetable/__id__/delete/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -131,7 +131,7 @@ class TimetablePagination extends PaginationReactManager
                 'mergeClass' => 'btn-sm',
             ],
             [
-                'label' => 'Edit Timetable',
+                'title' => 'Edit Timetable',
                 'url' => '/timetable/__id__/edit/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -149,7 +149,7 @@ class TimetablePagination extends PaginationReactManager
     protected $headerDefinition = [
         'buttons' => [
             [
-                'label' => 'Add Timetable',
+                'title' => 'Add Timetable',
                 'url' => '/timetable/Add/edit/',
                 'type' => 'add',
                 'url_type' => 'redirect',
