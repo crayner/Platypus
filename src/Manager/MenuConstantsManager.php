@@ -254,13 +254,6 @@ School Admin:
             parameters:
                 id: "%"
 System Admin:
-    alarm:
-        manage_alarm:
-            label: manage_alarm_label
-            role: ROLE_SYSTEM_ADMIN
-            route: manage_alarm
-            parameters: {}
-            transDomain: System
     extend_and_update:
         manage_themes:
             label: manage_themes_label

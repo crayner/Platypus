@@ -15,13 +15,9 @@
  */
 namespace App\Controller;
 
-use App\Entity\AlarmConfirm;
-use App\Entity\Person;
-use App\Form\AlarmType;
 use App\Form\Type\NotificationEventType;
 use App\Form\SectionSettingType;
 use App\Form\StringReplacementType;
-use App\Manager\AlarmManager;
 use App\Manager\FlashBagManager;
 use App\Manager\MultipleSettingManager;
 use App\Manager\NotificationEventManager;
@@ -32,13 +28,10 @@ use App\Manager\ThemeManager;
 use App\Manager\VersionManager;
 use App\Pagination\NotificationEventPagination;
 use App\Pagination\StringReplacementPagination;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Util\ScriptManager;
-use Hillrange\Form\Util\UploadFileManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -312,81 +305,6 @@ dd($entity);
         return $this->render('System/theme_manage.html.twig',
             [
                 'manager' => $manager,
-            ]
-        );
-    }
-
-    /**
-     * alarmAction
-     *
-     * @param SettingManager $sm
-     * @param AlarmManager $manager
-     * @param string $id
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
-     * @Route("/system/alarm/manage/", name="manage_alarm")
-     * @Security("is_granted('ROLE_ACTION', request)")
-     */
-    public function alarmAction(SettingManager $sm, AlarmManager $manager, Request $request, UploadFileManager $fileManager, $id = 'Add')
-    {
-        $entity = $manager->find($id);
-
-        $form = $this->createForm(AlarmType::class, $entity);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            if ($form->get('customAlarm')->getData()) {
-                $file = $form->get('customAlarm')->getData();
-
-                $sm->set('alarm.custom.name', $file);
-            }
-
-            if ($form->get('type')->getData() === 'custom') {
-                $file = $sm->get('alarm.custom.name');
-
-                if (empty($file)) {
-                    $form->get('type')->addError(new FormError($this->get('translator')->trans('alarm.type.custom.invalid', [], 'System')));
-                }
-                elseif (! file_exists($sm->getParameter('kernel.project_dir').DIRECTORY_SEPARATOR.'public'.DIRECTORY_SEPARATOR.$file))
-                {
-                    $form->get('type')->addError(new FormError($this->get('translator')->trans('alarm.type.custom.invalid', [], 'System')));
-                }
-            }
-
-            if ($form->isValid() && $form->get('type')->getData() !== 'none')
-            {
-                $em = $this->get('doctrine')->getManager();
-                $em->persist($entity);
-                $em->flush();
-
-                $list = new ArrayCollection($manager->getAlarmConfirmList());
-
-                $person = $em->getRepository(Person::class)->findOneByUser($entity->getUser());
-
-                if ($person instanceof Person)
-                    foreach($list as $key=>$value) {
-                        if ($person->getId() === $value['id']) {
-                            $value['confirmed'] = true;
-                            $confirm = new AlarmConfirm();
-                            $confirm->setAlarm($entity);
-                            $confirm->setPerson($person);
-                            $em->persist($confirm);
-                            $em->flush();
-                        } else
-                            $value['confirmed'] = false;
-                        $list->set($key, $value);
-                    }
-
-                $request->getSession()->set('alarm_confirm_list', $list);
-            }
-        }
-        return $this->render('System/alarm.html.twig',
-            [
-                'manager' => $manager,
-                'form' => $form->createView(),
-                'fullForm' => $form,
             ]
         );
     }

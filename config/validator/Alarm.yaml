@@ -1,7 +1,0 @@
-App\Entity\Alarm:
-    constraints:
-        - App\Validator\OnlyOneCanBe:
-            fieldName: 'status'
-            atPath: 'type'
-            fieldContent: 'current'
-            translationDomain: 'System'
