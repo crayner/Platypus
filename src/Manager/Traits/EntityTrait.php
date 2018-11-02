@@ -247,4 +247,18 @@ trait EntityTrait
             return $this->validEntityManager = false;
         return $this->validEntityManager = true;
     }
+
+    /**
+     * isValidEntity
+     *
+     * @return bool
+     */
+    public function isValidEntity(): bool
+    {
+        if ($this->getEntity() instanceof $this->entityName && intval($this->getEntity()->getId()) > 0)
+            return true;
+
+        // a new entity is NOT valid until saved.
+        return false;
+    }
 }

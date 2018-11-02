@@ -149,10 +149,7 @@ class ActionManager implements TemplateManagerInterface,ButtonReactInterface
     {
         return [
             'form' => [
-                'url' => '/security/permission/{id}/edit/',
-                'url_options' => [
-                    '{id}' => 'id',
-                ],
+                'url' => '/security/permission/'.($this->isValidEntity() ? $this->getEntity()->getId() : 'Add').'/edit/',
             ],
             'container' => [
                 'panel' => [

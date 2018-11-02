@@ -30,6 +30,7 @@
 
 <script>
     window.NOTIFICATION_PROPS = {{ notificationProps|json_encode|raw }};
+    window.CORE_PROPS = {{ {locale: app.request.get('_locale')}|json_encode|raw  }}
 </script>
 
 <script src="{{ asset('build/manifest.js') }}" language="JavaScript" type="text/javascript"></script>

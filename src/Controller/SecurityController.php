@@ -107,14 +107,13 @@ class SecurityController extends Controller
             $form->submit(json_decode($request->getContent(), true));
 
             if ($form->isValid())
-            {
                 $manager->saveEntity();
-            }
 
             return new JsonResponse(
                 [
                     'form' => $formManager->setTemplateManager($manager)->extractForm($form),
                     'messages' => $formManager->getFormErrors($form),
+                    'template' => $formManager->validateTemplate($manager->getTemplate()),
                 ],
             200);
         }

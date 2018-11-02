@@ -219,6 +219,7 @@ class Action
         'system_admin',
         'personnel_admin',
         'timetable_admin',
+        'timetable',
     ];
 
     /**
