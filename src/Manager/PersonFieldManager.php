@@ -17,13 +17,14 @@ namespace App\Manager;
 
 use App\Entity\PersonField;
 use App\Manager\Traits\EntityTrait;
+use Hillrange\Form\Util\ButtonReactInterface;
 use Hillrange\Form\Util\TemplateManagerInterface;
 
 /**
  * Class PersonFieldManager
  * @package App\Manager
  */
-class PersonFieldManager implements TemplateManagerInterface
+class PersonFieldManager implements TemplateManagerInterface, ButtonReactInterface
 {
     use EntityTrait;
 
@@ -69,15 +70,14 @@ class PersonFieldManager implements TemplateManagerInterface
      */
     public function getTemplate(): array
     {
-        return [
+        $template =  [
             'form' => [
-                'url' => '/person/custom/field/{id}/manage/',
-                'url_options' => [
-                    '{id}' => 'id'
-                ],
+                'url' => '/person/custom/field/'.($this->isValidEntity() ? $this->getEntity()->getId() : 'Add').'/manage/',
             ],
             'container' => $this->getContainer(),
         ];
+        dump($template);
+        return $template;
     }
 
     /**
@@ -253,7 +253,6 @@ class PersonFieldManager implements TemplateManagerInterface
      */
     public function isValidEntity(): bool
     {
-        dump($this->getEntity()->getId());
         if (is_int($this->getEntity()->getId()) && $this->getEntity()->getId() > 0)
             return true;
         return false;

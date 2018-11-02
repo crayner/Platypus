@@ -19,11 +19,12 @@ use App\Entity\Action;
 use App\Entity\PersonRole;
 use App\Manager\Traits\EntityTrait;
 use Doctrine\Common\Collections\ArrayCollection;
+use Hillrange\Form\Util\ButtonReactInterface;
 use Hillrange\Form\Util\TemplateManagerInterface;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
-class ActionManager implements TemplateManagerInterface
+class ActionManager implements TemplateManagerInterface,ButtonReactInterface
 {
     use EntityTrait;
 

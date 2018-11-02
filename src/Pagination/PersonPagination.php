@@ -8,6 +8,7 @@ use App\Manager\MessageManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class PersonPagination extends PaginationReactManager
 {
@@ -187,7 +188,7 @@ class PersonPagination extends PaginationReactManager
         'class' => 'text-center align-self-center',
         'buttons' => [
             [
-                'label' => 'person.action.edit',
+                'title' => 'person.action.edit',
                 'url' => '/person/__id__/edit/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -198,7 +199,7 @@ class PersonPagination extends PaginationReactManager
                 'style' => [],
             ],
             [
-                'label' => 'person.action.delete',
+                'title' => 'person.action.delete',
                 'url' => '/person/__id__/delete/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -208,7 +209,7 @@ class PersonPagination extends PaginationReactManager
                 'style' => [],
             ],
             [
-                'label' => 'person.action.password.change',
+                'title' => 'person.action.password.change',
                 'url' => '/person/__id__/password/change/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -217,6 +218,7 @@ class PersonPagination extends PaginationReactManager
                 'colour' => 'light',
                 'mergeClass' => 'btn-sm',
                 'style' => [],
+                'type' => 'misc',
             ],
         ],
     ];
@@ -282,10 +284,11 @@ class PersonPagination extends PaginationReactManager
      * @param EntityManagerInterface $entityManager
      * @param MessageManager $messageManager
      * @param RouterInterface $router
+     * @param TranslatorInterface $translator
      */
-    public function __construct(RequestStack $request, EntityManagerInterface $entityManager, MessageManager $messageManager, RouterInterface $router)
+    public function __construct(RequestStack $request, EntityManagerInterface $entityManager, MessageManager $messageManager, RouterInterface $router, TranslatorInterface $translator)
     {
-        parent::__construct($request,  $entityManager,  $messageManager);
+        parent::__construct($request,  $entityManager,  $messageManager, $translator);
         $this->router = $router;
 
     }

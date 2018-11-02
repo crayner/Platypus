@@ -620,7 +620,7 @@ abstract class PaginationReactManager implements PaginationInterface, ButtonReac
             return [
                 'title' => $this->getHeaderTitle().'.title',
                 'paragraph' => false,
-                'buttons' => false,
+                'buttons' => [],
             ];
 
         $resolver = new OptionsResolver();
@@ -628,7 +628,7 @@ abstract class PaginationReactManager implements PaginationInterface, ButtonReac
             [
                 'title' => $this->getHeaderTitle().'.title',
                 'paragraph' => false,
-                'buttons' => false,
+                'buttons' => [],
             ]
         );
         $headerDefinition = $resolver->resolve($this->headerDefinition);

@@ -20,7 +20,6 @@ Encore
      */
     .createSharedEntry('core', './assets/js/core.js')
     .addEntry('notifications', './assets/js/notifications.js')
-    .addEntry('alarm', './assets/js/alarm.js')
     .addEntry('pagination', './assets/js/pagination.js')
     .addEntry('address', './assets/js/address.js')
     .addEntry('phone', './assets/js/phone.js')

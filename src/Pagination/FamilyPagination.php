@@ -23,6 +23,7 @@ use App\Manager\MessageManager;
 use App\Util\PersonNameHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class FamilyPagination
@@ -120,9 +121,9 @@ class FamilyPagination extends PaginationReactManager
      * PaginationReactManager constructor.
      * @param RequestStack $request
      */
-    public function __construct(RequestStack $request, EntityManagerInterface $entityManager, MessageManager $messageManager, FamilyManager $familyManager)
+    public function __construct(RequestStack $request, EntityManagerInterface $entityManager, MessageManager $messageManager, FamilyManager $familyManager, TranslatorInterface $translator)
     {
-        parent::__construct($request,  $entityManager, $messageManager);
+        parent::__construct($request,  $entityManager, $messageManager, $translator);
         $this->familyManager = $familyManager;
     }
 
@@ -187,7 +188,7 @@ class FamilyPagination extends PaginationReactManager
         'size' => 2,
         'buttons' => [
             [
-                'label' => 'family.action.delete',
+                'title' => 'family.action.delete',
                 'url' => '/family/__id__/delete/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -196,7 +197,7 @@ class FamilyPagination extends PaginationReactManager
                 'mergeClass' => 'btn-sm',
             ],
             [
-                'label' => 'family.action.edit',
+                'title' => 'family.action.edit',
                 'url' => '/family/__id__/edit/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -214,7 +215,7 @@ class FamilyPagination extends PaginationReactManager
     protected $headerDefinition = [
         'buttons' => [
             [
-                'label' => 'Add Family',
+                'title' => 'Add Family',
                 'url' => '/family/Add/edit/',
                 'url_options' => [],
                 'type' => 'add',
