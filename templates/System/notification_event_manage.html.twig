@@ -25,7 +25,7 @@
             </div>
             <div class="col-2 text-center">
                 {{ 'actions'|trans({}, 'System') }}<br/>
-                {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_string_replacement', {id: 'Add'})}})|raw }}
+                {{ addButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_notification_event', {id: 'Add'})}})|raw }}
             </div>
         </div>
         {% for event in pagination.getResult %}
@@ -43,7 +43,7 @@
                     {{ yesNo(event.active)|trans }}
                 </div>
                 <div class="col-2 text-center">
-                    {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: 'edit_notification_event'}, title: 'notification.event.edit', transDomain: 'System'})|raw }}
+                    {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_notification_event', {id: event.id})}, title: 'notification.event.edit', transDomain: 'System'})|raw }}
                 </div>
             </div>
         {% endfor %}

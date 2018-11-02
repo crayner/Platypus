@@ -18,7 +18,7 @@ namespace App\Controller;
 use App\Entity\AlarmConfirm;
 use App\Entity\Person;
 use App\Form\AlarmType;
-use App\Form\NotificationEventType;
+use App\Form\Type\NotificationEventType;
 use App\Form\SectionSettingType;
 use App\Form\StringReplacementType;
 use App\Manager\AlarmManager;
@@ -36,7 +36,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Hillrange\Form\Util\ScriptManager;
 use Hillrange\Form\Util\UploadFileManager;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
@@ -139,7 +138,7 @@ class SystemController extends Controller
      * @param Request $request
      * @param StringReplacementPagination $pagination
      * @param StringReplacementManager $manager
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/system/string_replacement/manage/", name="manage_string_replacement")
      * @Security("is_granted('ROLE_ACTION', request)")
      */
@@ -162,9 +161,11 @@ class SystemController extends Controller
      *
      * @param Request $request
      * @param StringReplacementManager $manager
-     * @param mixed $id
+     * @param string $id
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \Exception
      * @Route("/system/string_replacement/{id}/edit/", name="edit_string_replacement")
-     * @Security("is_granted('ROLE_ACTION', request)")
+     * @Security("is_granted('USE_ROUTE', ['manage_string_replacement'])")
      */
     public function stringReplacementEdit(Request $request, StringReplacementManager $manager, $id = 'Add')
     {
@@ -201,8 +202,9 @@ class SystemController extends Controller
      * @param int $id
      * @param FlashBagManager $flashBagManager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @throws \Exception
      * @Route("/system/string_replacement/{id}/delete/", name="delete_string_replacement")
-     * @Security("is_granted('ROLE_ACTION', request)")
+     * @Security("is_granted('USE_ROUTE', ['manage_string_replacement'])")
      */
     public function stringReplacementDelete(StringReplacementManager $manager, int $id, FlashBagManager $flashBagManager)
     {
@@ -249,22 +251,22 @@ class SystemController extends Controller
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \Exception
      * @Route("/system/notification_event/{id}/edit/", name="edit_notification_event")
-     * @IsGranted("ROLE_REGISTRAR")
+     * @Security("is_granted('USE_ROUTE', ['manage_notification_events'])")
      */
-    public function notificationEventEdit(Request $request, NotificationEventManager $manager, int $id, $tabName = 'details')
+    public function notificationEventEdit(Request $request, NotificationEventManager $manager, $id = 'Add', $tabName = 'details')
     {
-        $scale = $manager->find($id);
-
-        $form = $this->createForm(NotificationEventType::class, $scale, ['manager' => $manager]);
+        $entity = $manager->find($id);
+dd($entity);
+        $form = $this->createForm(NotificationEventType::class, $entity, ['manager' => $manager]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $manager->getEntityManager()->persist($scale);
+            $manager->getEntityManager()->persist($entity);
             $manager->getEntityManager()->flush();
 
-            return $this->redirectToRoute('edit_notification_event', ['id' => $scale->getId(), 'tabName' => $tabName]);
+            return $this->redirectToRoute('edit_notification_event', ['id' => $entity->getId(), 'tabName' => $tabName]);
         }
 
         return $this->render('System/notification_event_edit.html.twig',

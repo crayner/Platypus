@@ -137,7 +137,7 @@ class CoursePagination extends PaginationReactManager
         'size' => 2,
         'buttons' => [
             [
-                'label' => 'Delete Course',
+                'title' => 'Delete Course',
                 'url' => '/course/__id__/delete/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -146,7 +146,7 @@ class CoursePagination extends PaginationReactManager
                 'mergeClass' => 'btn-sm',
             ],
             [
-                'label' => 'Edit Course',
+                'title' => 'Edit Course',
                 'url' => '/course/__id__/edit/',
                 'url_options' => [
                     '__id__' => 'id',

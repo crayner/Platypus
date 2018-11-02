@@ -584,7 +584,7 @@ class TimetableManager implements TemplateManagerInterface, ButtonReactInterface
                             '{cid}' => 'data_id',
                         ],
                         'url_type' => 'json',
-                        'options' => [
+                        'collection_options' => [
                             'eid' => 'name',
                         ],
                     ],

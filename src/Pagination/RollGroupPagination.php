@@ -164,7 +164,7 @@ class RollGroupPagination extends PaginationReactManager
     protected $actions = [
         'buttons' => [
             [
-                'label' => 'school.roll_group.delete.title',
+                'title' => 'school.roll_group.delete.title',
                 'url' => '/school/roll/group/__id__/delete/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -173,7 +173,7 @@ class RollGroupPagination extends PaginationReactManager
                 'mergeClass' => 'btn-sm',
             ],
             [
-                'label' => 'school.roll_group.edit.title',
+                'title' => 'school.roll_group.edit.title',
                 'url' => '/school/roll/group/__id__/edit/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -181,7 +181,7 @@ class RollGroupPagination extends PaginationReactManager
                 'type' => 'edit',
                 'url_type' => 'redirect',
                 'mergeClass' => 'btn-sm',
-                'options' => [
+                'redirect_options' => [
                     'target' => 'RollGroupManage',
                     'specs' => 'width=1100,height=750',
                 ],
@@ -195,17 +195,17 @@ class RollGroupPagination extends PaginationReactManager
     protected $headerDefinition = [
         'buttons' => [
             [
-                'label' => 'Refresh Roll Groups',
+                'title' => 'Refresh Roll Groups',
                 'url' => '/school/roll/group/manage/',
                 'type' => 'refresh',
                 'url_type' => 'redirect',
             ],
             [
-                'label' => 'school.roll_group.add.title',
+                'title' => 'school.roll_group.add.title',
                 'url' => '/school/roll/group/Add/edit/',
                 'url_options' => [],
                 'type' => 'add',
-                'options' => [
+                'redirect_options' => [
                     'target' => 'RollGroupManage',
                     'specs' => 'width=1100,height=750',
                 ],

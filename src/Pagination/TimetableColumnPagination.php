@@ -100,24 +100,23 @@ class TimetableColumnPagination extends PaginationReactManager
         'size' => 2,
         'buttons' => [
             'delete' => [
-                'label' => 'Delete Timetable Column',
+                'title' => 'Delete Timetable Column',
                 'url' => '/timetable/column/{id}/delete/',
                 'url_options' => [
                     '{id}' => 'id',
                 ],
-                'options' => [
+                'collection_options' => [
                     'eid' => 'id'
                 ],
                 'type' => 'delete',
                 'mergeClass' => 'btn-sm',
             ],
             'edit' => [
-                'label' => 'Edit Timetable Column',
+                'title' => 'Edit Timetable Column',
                 'url' => '/timetable/column/{id}/edit/',
                 'url_options' => [
                     '{id}' => 'id',
                 ],
-                'options' => [],
                 'type' => 'edit',
                 'url_type' => 'redirect',
                 'mergeClass' => 'btn-sm',
@@ -133,7 +132,7 @@ class TimetableColumnPagination extends PaginationReactManager
         'paragraph' => 'In Busybee a column is a holder for the structure of a day. A number of columns can be defined, and these can be tied to particular timetable days in the timetable interface.',
         'buttons' => [
             'add' => [
-                'label' => 'Add Timetable Column',
+                'title' => 'Add Timetable Column',
                 'url' => '/timetable/column/Add/edit/',
                 'type' => 'add',
                 'url_type' => 'redirect',

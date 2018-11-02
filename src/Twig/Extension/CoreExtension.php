@@ -17,6 +17,7 @@ namespace App\Twig\Extension;
 
 use App\Manager\VersionManager;
 use App\Util\StringHelper;
+use Symfony\Component\Translation\TranslatorInterface;
 use Twig\Extension\AbstractExtension;
 
 /**
@@ -25,6 +26,20 @@ use Twig\Extension\AbstractExtension;
  */
 class CoreExtension extends AbstractExtension
 {
+    /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * CoreExtension constructor.
+     * @param TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
     /**
      * getFunctions
      *
@@ -38,6 +53,7 @@ class CoreExtension extends AbstractExtension
             new \Twig_SimpleFunction('isInstanceof', array($this, 'isInstanceof')),
             new \Twig_SimpleFunction('camelCase', array($this, 'camelCase')),
             new \Twig_SimpleFunction('yesNo', array($this, 'yesNo')),
+            new \Twig_SimpleFunction('humanBoolean', array($this, 'humanBoolean')),
         ];
     }
 
@@ -106,5 +122,18 @@ class CoreExtension extends AbstractExtension
     public function yesNo(?bool $data = false): string
     {
         return $data ? 'display.true' : 'display.false';
+    }
+
+    /**
+     * humanBoolean
+     *
+     * @param bool $value
+     * @param string $true
+     * @param string $false
+     * @return string
+     */
+    public function humanBoolean(bool $value, $true = 'Yes', $false = 'No'): string
+    {
+        return $value ? $this->translator->trans($true, [], 'Core') : $this->translator->trans($false, [], 'Core') ;
     }
 }

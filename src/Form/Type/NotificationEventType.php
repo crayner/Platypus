@@ -13,14 +13,13 @@
  * Date: 2/08/2018
  * Time: 17:33
  */
-namespace App\Form;
+namespace App\Form\Type;
 
 use App\Entity\Action;
 use App\Entity\Module;
 use App\Entity\NotificationEvent;
 use App\Form\Subscriber\NotificationEventSubscriber;
-use Hillrange\Form\Type\CollectionType;
-use Hillrange\Form\Type\HiddenEntityType;
+    use Hillrange\Form\Type\HiddenEntityType;
 use Hillrange\Form\Type\ToggleType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -44,13 +43,6 @@ class NotificationEventType extends AbstractType
             ->add('active', ToggleType::class,
                 [
                     'label' => 'notification.active.label',
-                ]
-            )
-            ->add('module', HiddenEntityType::class,
-                [
-                    'label' => 'notification.module.label',
-                    'class' => Module::class,
-                    'help' => 'notification.module.help',
                 ]
             )
             ->add('action', HiddenEntityType::class,

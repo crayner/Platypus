@@ -34,7 +34,7 @@
                     {{ string.replacement}}
                 </div>
                 <div class="col-3 small text-center">
-                    {{ string.replaceMode }} / {{ string.caseSensitive }} / {{ string.priority }}
+                    {{ ('stringreplacement.mode.' ~ string.replaceMode)|trans }} / {{ humanBoolean(string.caseSensitive) }} / {{ string.priority }}
                 </div>
                 <div class="col-2 text-center">
                     {{ editButton({mergeClass: 'btn-sm', windowOpen: {route: path('edit_string_replacement', {id: string.id})}})|raw }}

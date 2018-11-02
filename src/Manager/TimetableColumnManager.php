@@ -17,6 +17,7 @@ namespace App\Manager;
 
 use App\Entity\TimetableColumn;
 use App\Manager\Traits\EntityTrait;
+use Hillrange\Form\Util\ButtonReactInterface;
 use Hillrange\Form\Util\TemplateManagerInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Validator\TraceableValidator;
@@ -25,7 +26,7 @@ use Symfony\Component\Validator\Validator\TraceableValidator;
  * Class TimetableColumnManager
  * @package App\Manager
  */
-class TimetableColumnManager implements TemplateManagerInterface
+class TimetableColumnManager implements TemplateManagerInterface, ButtonReactInterface
 {
     use EntityTrait;
 
@@ -205,7 +206,7 @@ class TimetableColumnManager implements TemplateManagerInterface
                                                         '{cid}' => 'data_id',
                                                     ],
                                                     'url_type' => 'json',
-                                                    'options' => [
+                                                    'collection_options' => [
                                                         'eid' => 'name',
                                                     ],
                                                 ],

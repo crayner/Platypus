@@ -896,7 +896,7 @@ class SettingManager implements ContainerAwareInterface
     {
         $sss = $this->findOneByName($name);
 
-        if ($sss->getSetting()->getName() === $name) {
+        if ($sss !== null && $sss->getSetting()->getName() === $name) {
             $this->addSetting($sss);
             return $sss->getSetting();
         }

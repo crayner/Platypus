@@ -42,11 +42,14 @@ export default function Button(props) {
     if (typeof button.title === 'string')
         attr.title = button.title
 
+    if (typeof buttonHandler === 'function')
+        attr.onClick = (e) => buttonHandler(button,e)
+
     if (button.colour === 'transparent') {
         delete attr.className
         delete attr.type
         return (
-            <i {...attr} onClick={(e) => buttonHandler(button, e)}>
+            <i {...attr}>
                 {button.prompt ? button.prompt : null}
                 {button.icon ? <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
             </i>
@@ -54,7 +57,7 @@ export default function Button(props) {
     }
 
     return (
-        <button {...attr} onClick={(e) => buttonHandler(button, e)}>
+        <button {...attr}>
             {button.prompt ? button.prompt : null}
             {button.icon ? <FontAwesomeIcon icon={button.icon} fixedWidth={true}/> : null}
         </button>

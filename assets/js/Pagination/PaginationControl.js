@@ -71,13 +71,19 @@ export default class PaginationControl extends Component {
         this.changeTheSearch = this.changeTheSearch.bind(this)
         this.toggleOrderBy = this.toggleOrderBy.bind(this)
         this.toggleCaseSensitive = this.toggleCaseSensitive.bind(this)
-        this.buttonHandler = this.buttonHandler.bind(this)
+        this.refreshButtonHandler = this.refreshButtonHandler.bind(this)
         this.addButtonHandler = this.addButtonHandler.bind(this)
         this.editButtonHandler = this.editButtonHandler.bind(this)
         this.deleteButtonHandler = this.deleteButtonHandler.bind(this)
         this.cancelMessage = this.cancelMessage.bind(this)
         this.clearFilter = this.clearFilter.bind(this)
         this.changeFilterValue = this.changeFilterValue.bind(this)
+        this.buttons = {
+            refreshButtonHandler: this.refreshButtonHandler,
+            addButtonHandler: this.addButtonHandler,
+            editButtonHandler: this.editButtonHandler,
+            deleteButtonHandler: this.deleteButtonHandler,
+        }
     }
 
     componentWillMount(){
@@ -95,8 +101,8 @@ export default class PaginationControl extends Component {
 
         this.rows = results.slice(this.offset, (this.limit + this.offset))
 
-        if (typeof(this.messages) !== 'object')
-            this.messages = new Object()
+        if (typeof this.messages  !== 'object')
+            this.messages = {}
 
         this.setState({
             offset: this.offset,
@@ -274,35 +280,41 @@ export default class PaginationControl extends Component {
     }
 
     addButtonHandler(options) {
-        this.buttonHandler(options.url, options.url_type ? options.url_type : 'json', options.url_options)
+        this.buttonHandler(options.url, options.url_type ? options.url_type : 'json', options)
         return false
     }
 
     editButtonHandler(options) {
         let url = this.manageUrlOptions(options)
-        this.buttonHandler(url, options.url_type, {})
+        this.buttonHandler(url, options.url_type, options)
         return false
     }
 
-    deleteButtonHandler(options) {
-        let del = {...this.actions.buttons.delete}
-        const url = this.manageUrlOptions(del.url,del.url_options,options)
-        this.buttonHandler(url,del.url_type, [])
+    deleteButtonHandler(button) {
+        const url = this.manageUrlOptions(button)
+        this.buttonHandler(url,button.url_type, button)
+        return false
+    }
+
+    refreshButtonHandler(button) {
+        const url = this.manageUrlOptions(button)
+        this.buttonHandler(url,button.url_type, button)
         return false
     }
 
     buttonHandler(url,url_type,options) {
         if (url_type === 'json') {
-            fetchJson(url, {}, this.locale)
+            fetchJson(url, options.json_options, this.locale)
                 .then((data) => {
                     this.allResults = data['rows']
                     this.searchChange = true
                     this.messages = data['messages']
+                    console.log(url,options,this)
                     this.buildSearchString()
                     this.handlePagination()
                 });
         } else if (url_type === 'redirect')
-            openPage(url, options, this.locale)
+            openPage(url, options.redirect_options, this.locale)
 
     }
 
@@ -486,6 +498,7 @@ export default class PaginationControl extends Component {
                     />
                 </div>
                 <PaginationTitle
+                    {...this.buttons}
                     rows={this.state.rows}
                     translations={this.translations}
                     columnDefinitions={this.columnDefinitions}
@@ -493,9 +506,6 @@ export default class PaginationControl extends Component {
                     sort={this.sort}
                     orderBy={this.orderBy}
                     actions={this.actions}
-                    addButtonHandler={this.addButtonHandler}
-                    editButtonHandler={this.editButtonHandler}
-                    deleteButtonHandler={this.deleteButtonHandler}
                 />
             </section>
         )

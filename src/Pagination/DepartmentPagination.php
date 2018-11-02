@@ -158,7 +158,7 @@ class DepartmentPagination extends PaginationReactManager
         'size' => 3,
         'buttons' => [
             [
-                'label' => 'Delete Department',
+                'title' => 'Delete Department',
                 'url' => '/school/department/{id}/delete/',
                 'url_options' => [
                     '__id__' => 'id',
@@ -168,7 +168,7 @@ class DepartmentPagination extends PaginationReactManager
                 'mergeClass' => 'btn-sm',
             ],
             [
-                'label' => 'Edit Department',
+                'title' => 'Edit Department',
                 'url' => '/school/department/{id}/edit/{tabName}/',
                 'url_options' => [
                     '{id}' => 'id',

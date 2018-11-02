@@ -279,7 +279,7 @@ class Course
             $this->classes = new ArrayCollection();
 
         if ($this->classes instanceof PersistentCollection)
-            $this->classes-> initialize();
+            $this->classes->initialize();
 
         return $this->classes;
     }
@@ -345,5 +345,12 @@ class Course
                 $this->currentSchoolYear = $this->getSchoolYear() === SchoolYearHelper::getCurrentSchoolYear();
 
         return $this->currentSchoolYear ? true : false;
+    }
+
+    public function canDelete(): bool
+    {
+        if ($this->getClasses()->count() > 0)
+            return false;
+        return true;
     }
 }

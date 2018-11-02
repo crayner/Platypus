@@ -19,9 +19,9 @@ export default function ButtonRefresh(props) {
 
     return (
         <Button
-            button={button}
-            refreshButtonHandler={refreshButtonHandler}
             {...otherProps}
+            button={button}
+            buttonHandler={refreshButtonHandler}
         />
     )
 }
