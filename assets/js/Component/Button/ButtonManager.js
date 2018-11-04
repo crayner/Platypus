@@ -33,29 +33,29 @@ export default function ButtonManager(props) {
     if (buttonClone.type === 'edit')
         return (
             <ButtonEdit
-                button={buttonClone}
                 {...otherProps}
+                button={buttonClone}
             />
         )
     if (buttonClone.type === 'save')
         return (
             <ButtonSave
-                button={buttonClone}
                 {...otherProps}
+                button={buttonClone}
             />
         )
     if (buttonClone.type === 'submit')
         return (
             <ButtonSubmit
-                button={buttonClone}
                 {...otherProps}
+                button={buttonClone}
             />
         )
     if (buttonClone.type === 'delete')
         return (
             <ButtonDelete
-                button={buttonClone}
                 {...otherProps}
+                button={buttonClone}
             />
         )
     if (buttonClone.type === 'add')
@@ -68,8 +68,8 @@ export default function ButtonManager(props) {
     if (buttonClone.type === 'return')
         return (
             <ButtonReturn
-                button={buttonClone}
                 {...otherProps}
+                button={buttonClone}
             />
         )
     if (buttonClone.type === 'refresh')
@@ -82,22 +82,22 @@ export default function ButtonManager(props) {
     if (buttonClone.type === 'close')
         return (
             <ButtonClose
-                button={buttonClone}
                 {...otherProps}
+                button={buttonClone}
             />
         )
     if (buttonClone.type === 'up')
         return (
             <ButtonUp
-                button={buttonClone}
                 {...otherProps}
+                button={buttonClone}
             />
         )
     if (buttonClone.type === 'down')
         return (
             <ButtonDown
-                button={buttonClone}
                 {...otherProps}
+                button={buttonClone}
             />
         )
     if (buttonClone.type === 'duplicate')
@@ -109,8 +109,8 @@ export default function ButtonManager(props) {
         )
     return (
         <ButtonMiscellaneous
-            button={buttonClone}
             {...otherProps}
+            button={buttonClone}
         />
     )
 }

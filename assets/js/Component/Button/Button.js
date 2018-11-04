@@ -45,6 +45,12 @@ export default function Button(props) {
     if (typeof buttonHandler === 'function')
         attr.onClick = (e) => buttonHandler(button,e)
 
+    if (typeof button.attr === 'object')
+        attr = {...attr, ...button.attr}
+
+    if (button.disabled !== undefined && button.disabled === true)
+        attr.disabled = true
+
     if (button.colour === 'transparent') {
         delete attr.className
         delete attr.type
