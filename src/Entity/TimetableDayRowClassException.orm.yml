@@ -1,0 +1,22 @@
+App\Entity\TimetableDayRowClassException:
+    type: entity
+    table: timetable_day_row_class_exception
+    repositoryClass: App\Repository\TimetableDayRowClassExceptionRepository
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    manyToOne:
+        timetableDayRowClass:
+            targetEntity: App\Entity\TimetableDayRowClass
+            joinColumn:
+                name: timetable_day_row_class_id
+                referencedColumnName: id
+                nullable: false
+        person:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: person_id
+                referencedColumnName: id
+                nullable: false

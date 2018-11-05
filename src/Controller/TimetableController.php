@@ -23,6 +23,7 @@ use App\Entity\TimetableDayDate;
 use App\Form\Type\TimetableColumnType;
 use App\Form\Type\TimetableType;
 use App\Manager\SettingManager;
+use App\Manager\TimetableDisplayManager;
 use Hillrange\Form\Util\FormManager;
 use App\Manager\TimetableColumnManager;
 use App\Manager\TimetableColumnRowManager;
@@ -366,5 +367,21 @@ class TimetableController extends Controller
                 ),
             ],
             200);
+    }
+
+    /**
+     * display
+     *
+     * @return JsonResponse
+     * @Route("/timetable/display/", name="display_timetable")
+     */
+    public function display(TimetableDisplayManager $manager, Request $request)
+    {
+        $manager->handleData(json_decode($request->getContent(), true) ?: []);
+
+        return new JsonResponse([
+            'data' => $manager->getData(),
+            'messages' => $manager->getMessages(),
+        ],200);
     }
 }
