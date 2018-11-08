@@ -7,14 +7,15 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'promise-polyfill/src/polyfill'
 import React from 'react'
 import { render } from 'react-dom'
-import TimetableControl from './Timetable/TimetableControl'
+import TimetableApp from './Timetable/TimetableApp'
 import DoNothing from './DoNothing'
 
-var timetable = document.getElementById("timetableDisplay");
-console.log(timetable)
+const timetable = document.getElementById("timetableDisplay")
+const content = timetable.innerHTML
+
 if (timetable !== null) {
     render(
-        <TimetableControl {...window.CORE_PROPS} />,
+        <TimetableApp content={content} />,
         timetable
     )
 }

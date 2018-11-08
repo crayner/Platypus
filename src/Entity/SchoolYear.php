@@ -267,6 +267,11 @@ class SchoolYear extends SchoolYearExtension
         if ($this->specialDays instanceof PersistentCollection)
             $this->specialDays->initialize();
 
+        $sd = clone $this->specialDays;
+        $this->specialDays = new ArrayCollection();
+        foreach($sd as $day)
+            $this->specialDays->set($day->getDate()->format('Ymd'), $day);
+
         return $this->specialDays;
     }
 
@@ -295,7 +300,7 @@ class SchoolYear extends SchoolYearExtension
         if ($add)
             $specialDay->setSchoolYear($this, false);
 
-        $this->specialDays->add($specialDay);
+        $this->specialDays->set($specialDay->getDate()->format('Ymd'), $specialDay);
 
         return $this;
     }

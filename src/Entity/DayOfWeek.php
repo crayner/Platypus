@@ -234,10 +234,10 @@ class DayOfWeek
     public function getNormalisedDayOfWeek(): ?int
     {
         if (false !== strtotime($this->getName()))
-            return date('N', strtotime($this->getName()));
+            return intval(date('N', strtotime($this->getName())));
 
         if (false !== strtotime($this->getNameShort()))
-            return date('N', strtotime($this->getNameShort()));
+            return intval(date('N', strtotime($this->getNameShort())));
 
         return null;
     }

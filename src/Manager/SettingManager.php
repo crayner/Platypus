@@ -972,4 +972,12 @@ class SettingManager implements ContainerAwareInterface
 
         return $parameters;
     }
+
+    public function getLocale(): string
+    {
+        $locale = $this->getRequest()->get('_locale');
+        if (empty($locale))
+            $locale = $this->getParameter('locale');
+        return $locale ?: 'en';
+    }
 }

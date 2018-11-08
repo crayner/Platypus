@@ -1,0 +1,40 @@
+.period {
+    border: 1px solid black;
+    margin-top: -1px;
+    margin-left: -1px;
+    overflow: hidden;
+    line-height: 15px;
+    font-size: 11px;
+}
+.column {
+    margin: 0;
+    padding: 0;
+}
+.period p {
+    line-height: 15px;
+    height: 15px;
+    margin: 0;
+    padding: 0;
+}
+.column-header {
+    border-radius: 0px;
+}
+.period-class-name {
+    color: red;
+    font-weight: bolder;
+}
+.period-class {
+    background-color: rgba(150, 190, 234, 0.3);
+}
+.period-now {
+    background-color: rgba(147, 237, 169, 0.3);
+}
+.timetable-display {
+    border: 1px solid darkgray;
+}
+.timetable-row {
+    margin: 0 -16px;
+}
+.timeHour {
+    height: 60px;
+}

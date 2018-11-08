@@ -22,6 +22,7 @@ App\Entity\TimetableDayRowClass:
                 nullable: false
         courseClass:
             targetEntity: App\Entity\CourseClass
+            inversedBy: timetableDayRowClasses
             joinColumn:
                 name: course_class_id
                 referencedColumnName: id

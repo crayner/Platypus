@@ -19,6 +19,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 
 class CourseClass
 {
@@ -412,5 +413,38 @@ class CourseClass
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * @var Collection
+     */
+    private $timetableDayRowClasses;
+
+    /**
+     * getTimetableDayRowClasses
+     *
+     * @return Collection
+     */
+    public function getTimetableDayRowClasses(): Collection
+    {
+        if (empty($this->timetableDayRowClasses))
+            $this->timetableDayRowClasses = new ArrayCollection();
+
+        if ($this->timetableDayRowClasses instanceof PersistentCollection)
+            $this->timetableDayRowClasses->initialize();
+
+        return $this->timetableDayRowClasses;
+    }
+
+    /**
+     * setTimetableDayRowClasses
+     *
+     * @param Collection $timetableDayRowClasses
+     * @return CourseClass
+     */
+    public function setTimetableDayRowClasses(Collection $timetableDayRowClasses): CourseClass
+    {
+        $this->timetableDayRowClasses = $timetableDayRowClasses;
+        return $this;
     }
 }

@@ -15,6 +15,12 @@
  */
 namespace App\Entity;
 
+use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+
 /**
  * Class TimetableColumnRow
  * @package App\Entity
@@ -217,5 +223,35 @@ class TimetableColumnRow
     public function __toString(): ?string
     {
         return $this->getTimetableColumn()->getName() . ' ' . $this->getName();
+    }
+
+    /**
+     * serialise
+     *
+     * @return string
+     */
+    public function serialise(): string
+    {
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new DateTimeNormalizer('H:i:s'), new ObjectNormalizer()];
+        $serialiser = new Serializer($normalizers, $encoders);
+
+        return $serialiser->serialize($this, 'json', ['attributes' => ['id','name','nameShort','timeStart','timeEnd','type','timetableColumn' => ['name','id','nameShort','timetableDays' => ['id','name','nameShort','colour','fontColour'], 'dayOfWeek' => ['id','name', 'nameShort','schoolOpen','schoolStart','schoolEnd','schoolClose']]]]);
+    }
+
+    /**
+     * deSerialise
+     *
+     * @param string $data
+     * @return TimetableColumnRow
+     */
+    public function deSerialise(string $data): TimetableColumnRow
+    {
+        $encoders = [new JsonEncoder()];
+        $normalizers = [new DateTimeNormalizer('H:i:s'), new ObjectNormalizer()];
+        $serialiser = new Serializer($normalizers, $encoders);
+
+        $serialiser->deserialize($data, TimetableColumnRow::class, 'json');
+        return $this;
     }
 }

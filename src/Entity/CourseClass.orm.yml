@@ -47,7 +47,6 @@ App\Entity\CourseClass:
         course:
             targetEntity: App\Entity\Course
             inversedBy: classes
-            fetch: EAGER
             joinColumn:
                 name: course_id
                 referencedColumnName: id
@@ -57,3 +56,6 @@ App\Entity\CourseClass:
             targetEntity: App\Entity\CourseClassPerson
             mappedBy: courseClass
             cascade: [ 'persist', 'remove' ]
+        timetableDayRowClasses:
+            targetEntity: App\Entity\TimetableDayRowClass
+            mappedBy: courseClass

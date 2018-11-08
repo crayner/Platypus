@@ -82,6 +82,8 @@ class PersonHelper
      */
     public static function getPerson(): ?Person
     {
+        if (is_null(self::$person))
+            self::hasPerson();
         return self::$person;
     }
 
