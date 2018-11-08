@@ -8,7 +8,7 @@ export default function ButtonOff(props) {
     const {
         button,
         offButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')

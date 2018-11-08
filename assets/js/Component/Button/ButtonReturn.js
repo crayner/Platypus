@@ -8,7 +8,7 @@ export default function ButtonReturn(props) {
     const {
         button,
         returnButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')

@@ -8,7 +8,7 @@ export default function ButtonDuplicate(props) {
     const {
         button,
         duplicateButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')

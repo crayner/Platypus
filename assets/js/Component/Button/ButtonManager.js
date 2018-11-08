@@ -18,7 +18,7 @@ import ButtonDuplicate from './ButtonDuplicate'
 export default function ButtonManager(props) {
     const {
         button,
-       ...otherProps,
+       ...otherProps
     } = props
 
     if (button.display === false)

@@ -8,7 +8,7 @@ export default function PaginationActionCell(props) {
     const {
         actions,
         item,
-        ...otherProps,
+        ...otherProps
     } = props
 
     const xxx = Object.assign(actions.buttons, {})

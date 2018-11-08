@@ -8,7 +8,7 @@ export default function ButtonDelete(props) {
     const {
         button,
         deleteButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')

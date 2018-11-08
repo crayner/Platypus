@@ -8,7 +8,7 @@ export default function ButtonSubmit(props) {
     const {
         button,
         submitButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')

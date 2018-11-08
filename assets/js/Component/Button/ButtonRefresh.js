@@ -8,7 +8,7 @@ export default function ButtonRefresh(props) {
     const {
         button,
         refreshButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')

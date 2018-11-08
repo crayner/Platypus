@@ -10,7 +10,7 @@ export default function AddressRow(props) {
     const {
         translations,
         removeAddress,
-        address,
+        address
     } = props
     return (
         <div className={'row'}>

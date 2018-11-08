@@ -13,7 +13,7 @@ library.add(fas, far, fab)
 export default function Button(props) {
     const {
         button,
-        buttonHandler,
+        buttonHandler
     } = props;
 
     let attr = {}

@@ -1,5 +1,4 @@
 var Encore = require('@symfony/webpack-encore');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 Encore
     // directory where compiled assets will be stored
@@ -18,11 +17,13 @@ Encore
      * Each entry will result in one JavaScript file (e.g. app.js)
      * and one CSS file (e.g. app.css) if you JavaScript imports CSS.
      */
-    .createSharedEntry('core', './assets/js/core.js')
+    .addEntry('core', './assets/js/core.js')
     .addEntry('notifications', './assets/js/notifications.js')
     .addEntry('pagination', './assets/js/pagination.js')
     .addEntry('address', './assets/js/address.js')
     .addEntry('phone', './assets/js/phone.js')
+    .addEntry('timetable', './assets/js/timetable.js')
+    .splitEntryChunks()
 
     /*
      * FEATURE CONFIG
@@ -48,10 +49,11 @@ Encore
             'babel-plugin-transform-object-rest-spread'
         );
     })
-    .addPlugin(new CopyWebpackPlugin([
-        // copies to {output}/static
-        { from: './assets/static', to: 'static' }
-    ]))
+    .copyFiles({
+        from: './assets/static',
+        to: 'static/[path][name].[ext]',
+        pattern: /\.(png|gif|jpg|jpeg)$/
+    })
 
 
     // enables Sass/SCSS support
@@ -62,6 +64,7 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     .autoProvidejQuery()
+    .enableSingleRuntimeChunk()
 ;
 
 module.exports = Encore.getWebpackConfig();

@@ -8,7 +8,7 @@ export default function ButtonSave(props) {
     const {
         button,
         saveButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')

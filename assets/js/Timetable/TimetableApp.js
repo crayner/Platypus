@@ -4,7 +4,6 @@ import React, { Component } from "react"
 import PropTypes from 'prop-types'
 import {fetchJson} from '../Component/fetchJson'
 import TimetableRender from './TimetableRender'
-import Parser from 'html-react-parser';
 
 export default class TimetableApp extends Component {
     constructor(props) {
@@ -48,7 +47,10 @@ export default class TimetableApp extends Component {
     }
 
     componentDidMount() {
-        this.loadTimetable(...this.data)
+        if (Object.keys(this.data).length === 0)
+            this.loadTimetable(this.data)
+        else
+            this.loadTimetable(...this.data)
         this.interval = setInterval(this.checkTime, 1000)
     }
 

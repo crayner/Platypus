@@ -21,7 +21,7 @@ export default function AddressCollection(props) {
         removeAddress,
         inputSearch,
         newAddress,
-        editAddress,
+        editAddress
     } = props;
 
     let search = '';

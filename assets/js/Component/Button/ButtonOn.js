@@ -8,7 +8,7 @@ export default function ButtonOn(props) {
     const {
         button,
         onButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof(button.colour) === 'undefined')

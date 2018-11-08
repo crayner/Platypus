@@ -9,7 +9,7 @@ export default function ButtonUp(props) {
     const {
         button,
         upButtonHandler,
-        ...otherProps,
+        ...otherProps
     } = props
 
     if (button.colour === '' || typeof button.colour === 'undefined')

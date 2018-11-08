@@ -18,7 +18,7 @@ export default function LocalityEdit(props) {
         saveLocality,
         exitLocality,
         messages,
-        cancelMessage,
+        cancelMessage
     } = props
 
     return (

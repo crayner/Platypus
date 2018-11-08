@@ -28,7 +28,7 @@ export default function AddressEdit(props) {
         exitAddress,
         currentAddress,
         saveAddress,
-        newAddress,
+        newAddress
     } = props
 
 

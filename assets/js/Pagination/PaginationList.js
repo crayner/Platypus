@@ -10,7 +10,7 @@ export default function PaginationList(props) {
         translations,
         columnDefinitions,
         actions,
-        ...otherProps,
+        ...otherProps
     } = props
 
 
