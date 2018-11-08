@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import Notifications from "./Notifications";
 import { fetchJson } from "../Component/fetchJson";
 
-
 export default class NotificationApp extends Component {
     constructor(props) {
         super(props)
