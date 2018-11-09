@@ -1,6 +1,6 @@
 {% trans_default_domain 'Person' %}
 
-{% include 'Default/panelStart.html.twig' with {header: 'basic.information.title', name: getFullName(),  transDomain: 'Person', panelParagraph: '', panelStyle: 'info'} %}
+{% include 'Default/panelStart.html.twig' with {header: 'basic.information.title', name: getFullName(),  transDomain: 'Person', panelParagraph: 'person.edit.description', panelStyle: 'info'} %}
 <div class="row">
     <div class="col-2 card">
         {{ form_row(form.title) }}

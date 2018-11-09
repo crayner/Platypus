@@ -220,6 +220,7 @@ class Action
         'personnel_admin',
         'timetable_admin',
         'timetable',
+        'department',
     ];
 
     /**

@@ -23,6 +23,7 @@ Encore
     .addEntry('address', './assets/js/address.js')
     .addEntry('phone', './assets/js/phone.js')
     .addEntry('timetable', './assets/js/timetable.js')
+    .addEntry('form', '../hillrange/symfony-form/assets/js/form.js')
     .splitEntryChunks()
 
     /*

@@ -8,6 +8,7 @@ export default function TimetableColumn(props) {
     const {
         column,
         data,
+        ...otherProps
     } = props
 
     let today = new Date()
@@ -21,7 +22,7 @@ export default function TimetableColumn(props) {
         today = false
 
     const periods = column.periods.map((period, key) => {
-        return (<TimetablePeriod today={today} period={period} key={key} data={data}  />)
+        return (<TimetablePeriod {...otherProps} today={today} period={period} key={key} data={data}  />)
     })
 
     return (

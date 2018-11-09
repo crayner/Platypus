@@ -21,7 +21,7 @@ export default function TimetableManagement(props) {
 
     const columns = Object.keys(control.columns).map(key => {
         const column = control.columns[key]
-        return (<TimetableColumn data={data} column={column} key={key} />)
+        return (<TimetableColumn {...otherProps} data={data} column={column} key={key} />)
     })
 
     return (

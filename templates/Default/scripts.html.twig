@@ -35,11 +35,7 @@
 
 {{ encore_entry_script_tags('timetable') }}
 {{ encore_entry_script_tags('notifications') }}
-{#
-<script src="{{ asset('build/manifest.js') }}" language="JavaScript" type="text/javascript"></script>
-<script src="{{ asset('build/core.js') }}" language="JavaScript" type="text/javascript"></script>
-<script src="{{ asset('build/notifications.js') }}" language="JavaScript" type="text/javascript"></script>
-#}
+
 {% if app is defined %}
     {% if app.user is defined %}
         {% include '@HillrangeSecurity/security/scripts.html.twig' %}
@@ -49,8 +45,7 @@
 <!-- fold Menu -->
 <script type="text/javascript" charset="utf-8">
     $(".alert").alert();
-    $('.foldMenu').on('click', function(){
-    });
+    $('.foldMenu').on('click', function(){});
 
     function iconDoneRendering () {
         {% if not app.session.has('showSectionMenu') %}

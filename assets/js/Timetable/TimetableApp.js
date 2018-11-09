@@ -4,18 +4,20 @@ import React, { Component } from "react"
 import PropTypes from 'prop-types'
 import {fetchJson} from '../Component/fetchJson'
 import TimetableRender from './TimetableRender'
+import {openPage} from '../Component/openPage'
 
 export default class TimetableApp extends Component {
     constructor(props) {
         super(props)
         this.content = props.content
-        this.locale = 'en'
+        this.locale = props.locale ? props.locale : 'en'
 
         this.data = {}
         this.messages = {}
 
         this.changeDate = this.changeDate.bind(this)
         this.checkTime = this.checkTime.bind(this)
+        this.callUrl = this.handleURLCall.bind(this)
 
         this.control = this.getControl()
 
@@ -29,6 +31,9 @@ export default class TimetableApp extends Component {
             control: this.control,
             content: this.content,
             time: this.time,
+        }
+        this.calls = {
+            callUrl: this.callUrl,
         }
     }
 
@@ -108,9 +113,50 @@ export default class TimetableApp extends Component {
         return this.control
     }
 
+    handleURLCall(url,options,type,element) {
+        if (typeof options !== 'object')
+            options = {}
+        let found = true
+        Object.keys(options).map(search => {
+            let replace = element[options[search]]
+            if (search === '{id}' && (!replace || /^\s*$/.test(replace)))
+                replace = 'Add'
+            url = url.replace(search, replace)
+            if (replace === undefined || replace === null)
+                found = false
+        })
+        if (!found) return false
+        if (type === 'redirect') {
+            openPage(url, {method: 'GET'}, this.locale)
+        } else {
+            fetchJson(url, {method: 'GET'}, this.locale)
+                .then(data => {
+                    this.elementList = {}
+                    this.messages = this.messages.concat(data.messages)
+                    this.form = data.form
+                    if (!(!data.template || /^\s*$/.test(data.template)))
+                        this.template = data.template
+                    this.setState({
+                        form: this.form,
+                        messages: this.messages,
+                        template: this.template,
+                    })
+                }).catch(error => {
+                console.error('Error: ', error)
+                this.messages.push({level: 'danger', message: error})
+                this.setState({
+                    form: this.form,
+                    messages: this.messages,
+                    template: this.template,
+                })
+            })
+        }
+        return true
+    }
+
     render() {
         return (
-            <TimetableRender {...this.state} />
+            <TimetableRender  {...this.calls} {...this.state} />
         )
     }
 }
@@ -118,6 +164,7 @@ export default class TimetableApp extends Component {
 
 TimetableApp.propTypes = {
     locale: PropTypes.string,
+    content: PropTypes.string,
 }
 
 TimetableApp.defaultTypes = {
