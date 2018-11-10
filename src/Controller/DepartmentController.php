@@ -21,6 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Class DepartmentController
@@ -31,15 +32,16 @@ class DepartmentController extends Controller
     /**
      * courseClass
      *
-     * @param CourseClass $id
+     * @param CourseClass $entity
      * @param CourseClassManager $manager
+     * @param TranslatorInterface $translator
      * @return Response
      * @Route("/department/course/class/{entity}/", name="course_class")
      * @Security("is_granted('USE_ROUTE', ['view_departments'])")
      */
-    public function courseClass(CourseClass $entity, CourseClassManager $manager)
+    public function courseClass(CourseClass $entity, CourseClassManager $manager, TranslatorInterface $translator)
     {
-        $manager->setEntity($entity);
+        $manager->setTranslator($translator)->setEntity($entity);
         return $this->render('Department/course_class.html.twig',
             [
                 'manager' => $manager,

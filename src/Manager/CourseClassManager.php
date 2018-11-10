@@ -22,6 +22,7 @@ use App\Manager\Traits\EntityTrait;
 use App\Util\SchoolYearHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class CourseClassManager
@@ -210,5 +211,65 @@ class CourseClassManager extends TabManager
             $manage[] = $action;
         }
         return new ArrayCollection($manage);
+    }
+
+    /**
+     * getPreSidebarContent
+     *
+     * @return string
+     */
+    public function getPreSidebarContent(?Request $request = null): string
+    {
+        $result = '';
+        $result .= '<h4 class="sectionHeader">' . $this->getTranslator()->trans('Related Classes', [], 'Course') . '</h4>';
+        foreach($this->getRelatedClasses() as $class)
+        {
+            $result .= '<div class="sectionLink"><button title="' . $class->getName() . '" type="button" class="btn btn-link btn-sm" style="float: left;" onclick="window.open(\''.$this->getRouter()->generate('course_class', ['entity' => $class->getId()]).'\',\'_self\')">' . $class->getNameShort() . '</button></div>';
+        }
+
+        $result .= '<h4 class="sectionHeader">' . $this->getTranslator()->trans('Current Classes', [], 'Course') . '</h4>';
+        $start = false;
+        foreach($this->getAllClasses() as $class)
+        {
+            if (! $start) {
+                $start = true;
+                $result .= '<div class="input-group-sm input-group" style="width: 80%; "><select class="form-control form-control-sm" onchange="if (this.value) window.location.href=this.value">';
+            }
+            $result .= '<option value="'.$this->getRouter()->generate('course_class', ['entity' => $class->getId()]).'"' . ($class->getId() === $this->getEntity()->getId() ? " selected" : "").'>'.$class->getNameShort().'</option>';
+        }
+        if ($start)
+            $result .= '</select><div class="input-group-append"><div class="input-group-text">'.$this->getTranslator()->trans('Goto', [], 'Course').'</div></div></div>';
+        return $result;
+    }
+
+    /**
+     * getRelatedClasses
+     *
+     * @return array
+     */
+    private function getRelatedClasses(): array
+    {
+        $course = $this->getEntity()->getCourse();
+        return $this->getEntityManager()->getRepository(CourseClass::class)->createQueryBuilder('cc')
+            ->where('cc.course = :course')
+            ->setParameter('course', $course)
+            ->orderBy('cc.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * getAllClasses
+     *
+     * @return array
+     */
+    private function getAllClasses(): array
+    {
+        return $this->getEntityManager()->getRepository(CourseClass::class)->createQueryBuilder('cc')
+            ->leftJoin('cc.course', 'c')
+            ->orderBy('c.name', 'ASC')
+            ->addOrderBy('cc.name', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

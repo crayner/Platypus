@@ -20,7 +20,9 @@ use App\Manager\MessageManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * Trait EntityTrait
@@ -54,17 +56,33 @@ trait EntityTrait
     private $authorizationChecker;
 
     /**
+     * @var TranslatorInterface
+     */
+    private $translator;
+
+    /**
+     * @var RouterInterface
+     */
+    private $router;
+
+    /**
      * EntityTrait constructor.
      * @param EntityManagerInterface $entityManager
      * @param MessageManager $messageManager
+     * @param AuthorizationCheckerInterface $authorizationChecker
+     * @param TranslatorInterface $translator
+     * @param RouterInterface $router
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, MessageManager $messageManager, AuthorizationCheckerInterface $authorizationChecker)
+    public function __construct(EntityManagerInterface $entityManager, MessageManager $messageManager,
+                                AuthorizationCheckerInterface $authorizationChecker,
+                                RouterInterface $router)
     {
         $this->entityManager = $entityManager;
         $this->messageManager = $messageManager;
         self::$entityRepository = $this->getRepository();
         $this->authorizationChecker = $authorizationChecker;
+        $this->router = $router;
     }
 
     /**
@@ -273,5 +291,37 @@ trait EntityTrait
     public function getAuthorizationChecker(): AuthorizationCheckerInterface
     {
         return $this->authorizationChecker;
+    }
+
+    /**
+     * getTranslator
+     *
+     * @return TranslatorInterface
+     */
+    public function getTranslator(): TranslatorInterface
+    {
+        return $this->translator;
+    }
+
+    /**
+     * setTranslator
+     *
+     * @param TranslatorInterface $translator
+     * @return EntityTrait
+     */
+    public function setTranslator(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+        return $this;
+    }
+
+    /**
+     * getRouter
+     *
+     * @return RouterInterface
+     */
+    public function getRouter(): RouterInterface
+    {
+        return $this->router;
     }
 }
