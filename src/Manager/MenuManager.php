@@ -402,14 +402,6 @@ class MenuManager extends MenuConstantsManager
 	}
 
 	/**
-	 * @return array
-	 */
-	private function getSections()
-	{
-		return Yaml::parse(str_replace("\t", "    ", MenuConstantsManager::SECTIONS)) ?: [];
-	}
-
-	/**
 	 * @param $sections
 	 *
 	 * @return array

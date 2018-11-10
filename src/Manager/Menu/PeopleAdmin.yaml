@@ -1,0 +1,89 @@
+section:
+    People Admin:
+        data_updater:
+            data_updater_settings:
+                label: "Data Updater Settings"
+                role: ROLE_ACTION
+                route: manage_settings
+                parameters:
+                    name: DataUpdater
+                transDomain: System
+        staff_management:
+            staff_settings:
+                label: "Manage Staff Settings"
+                role: ROLE_ACTION
+                route: manage_settings
+                parameters:
+                    name: Staff
+                transDomain: System
+            staff_application_form_settings:
+                label: "Staff Application Form Settings"
+                role: ROLE_ACTION
+                route: manage_settings
+                parameters:
+                    name: StaffApplicationForm
+                transDomain: System
+        student_management:
+            application_form_settings:
+                label: "Application Form Settings"
+                role: ROLE_ACTION
+                route: manage_settings
+                parameters:
+                    name: ApplicationForm
+                transDomain: System
+            public_registration_settings:
+                label: public_registration_settings
+                role: ROLE_ACTION
+                route: manage_settings
+                parameters:
+                    name: PublicRegistration
+                transDomain: System
+        people_management:
+            manage_families:
+                label: manage_families
+                role: ROLE_ADMIN
+                route: manage_families
+                parameters: {}
+                transDomain: Person
+            manage_permissions:
+                label: manage_permissions
+                role: ROLE_ADMIN
+                route: manage_permissions
+                parameters: {}
+                transDomain: Security
+            manage_roles:
+                label: manage_roles
+                role: ROLE_ADMIN
+                route: manage_roles
+                parameters:
+                    id: "%"
+                transDomain: Security
+            manage_custom_fields:
+                label: manage_custom_fields
+                role: ROLE_ADMIN
+                route: manage_custom_fields
+                parameters:
+                    id: "%"
+                transDomain: Person
+            personnel_settings:
+                label: personnel_settings
+                role: ROLE_SYSTEM_ADMIN
+                route: manage_settings
+                parameters:
+                    name: Personnel
+                transDomain: Person
+            manage_people:
+                label: manage_people_label
+                role: ROLE_MENU
+                route: manage_people
+                parameters: {}
+                transDomain: Person
+        hidden:
+            person_edit:
+                route: person_edit
+                parameters:
+                    id: "%"
+            family_edit:
+                route: family_edit
+                parameters:
+                    id: "%"

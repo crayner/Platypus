@@ -1,6 +1,11 @@
 <?php
 namespace App\Manager;
 
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Config\Loader\FileLoader;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Yaml\Yaml;
+
 class MenuConstantsManager
 {
     CONST NODES = '
@@ -42,217 +47,6 @@ class MenuConstantsManager
     route: manage_people
 ';
     CONST SECTIONS = '
-School Admin:
-    assessment:
-        manage_formal_assessments:
-            label: manage_formal_assessments
-            role: ROLE_PRINCIPAL
-            route: manage_formal_assessments
-            parameters: {}
-            transDomain: System
-        manage_external_assessments:
-            label: manage_external_assessments
-            role: ROLE_PRINCIPAL
-            route: manage_external_assessments
-            parameters: {}
-            transDomain: School
-        manage_scales:
-            label: manage_scales
-            role: ROLE_PRINCIPAL
-            route: manage_scales
-            parameters: {}
-            transDomain: School
-        markbook_settings:
-            label: manage_markbook_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Markbook
-            transDomain: System
-        tracking_settings:
-            label: manage_tracking_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Tracking
-            transDomain: System
-    groupings:
-        manage_departments:
-            label: manage_departments
-            role: ROLE_REGISTRAR
-            route: manage_departments
-            parameters: {}
-            transDomain: School
-        houses_edit:
-            label: menu.houses.manage
-            role: ROLE_REGISTRAR
-            route: houses_edit
-            parameters: {}
-            transDomain: School
-        manage_roll_groups:
-            label: manage_roll_groups
-            role: ROLE_PRINCIPAL
-            route: manage_roll_groups
-            parameters: {}
-            transDomain: School
-        manage_year_groups:
-            label: menu.year_groups.manage
-            role: ROLE_REGISTRAR
-            route: year_groups_manage
-            parameters: {}
-            transDomain: School
-    other:
-        dashboard_settings:
-            label: manage_dashboard_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Dashboard
-            transDomain: System
-        manage_facilities:
-            label: manage_facilities
-            role: ROLE_PRINCIPAL
-            route: manage_facilities
-            parameters: {}
-            transDomain: System
-        facility_settings:
-            label: manage_facility_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Facility
-            transDomain: System
-        file_extension:
-            label: manage_file_extension
-            role: ROLE_PRINCIPAL
-            route: manage_file_extensions
-            parameters: {}
-            transDomain: System
-        finance_settings:
-            label: manage_finance_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Finance
-            transDomain: System
-        messenger_settings:
-            label: manage_messenger_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Messenger
-            transDomain: System
-    people:
-        alert_levels:
-            label: manage_alert_levels
-            role: ROLE_PRINCIPAL
-            route: manage_alert_levels
-            parameters: {}
-            transDomain: System
-        attendance_settings:
-            label: manage_attendance_settings
-            role: ROLE_PRINCIPAL
-            route: manage_attendance_settings
-            parameters: {}
-            transDomain: System
-        behaviour_settings:
-            label: manage_behaviour_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Behaviour
-            transDomain: System
-        individual_needs:
-            label: manage_individual_need_settings
-            role: ROLE_PRINCIPAL
-            route: manage_individual_need_settings
-            parameters: {}
-            transDomain: System
-        student_settings:
-            label: manage_student_settings
-            role: ROLE_PRINCIPAL
-            route: manage_student_settings
-            parameters: {}
-            transDomain: System
-    teaching_learning:
-        activities_settings:
-            label: manage_activities_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Activities
-            transDomain: System
-        library_settings:
-            label: manage_library_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Library
-            transDomain: System
-        planner_settings:
-            label: manage_planner_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Planner
-            transDomain: System
-        resource_settings:
-            label: manage_resource_settings
-            role: ROLE_PRINCIPAL
-            route: manage_settings
-            parameters: 
-                name: Resources
-            transDomain: System
-    years_days_times:
-        school_days_times:
-            label: menu.school.days_of_week
-            transDomain: School
-            route: days_of_week_manage
-            parameters: {}
-            role: ROLE_REGISTRAR
-        school_year_manage:
-            label: menu.school_year.manage
-            role: ROLE_REGISTRAR
-            route: school_year_manage
-            parameters: {}
-            transDomain: SchoolYear 
-        manage_year_special_days:
-            label: menu.school_year.special_days
-            role: ROLE_REGISTRAR
-            route: school_year_edit
-            parameters:
-                id: current
-                tabName: specialdays
-            transDomain: SchoolYear 
-        manage_year_terms:
-            label: menu.school_year.terms
-            role: ROLE_REGISTRAR
-            route: school_year_edit
-            parameters:
-                id: current
-                tabName: terms
-            transDomain: SchoolYear 
-    hidden:
-        school_year_edit:
-            route: school_year_edit
-            parameters:
-                id: "%"
-        roll_group_edit:
-            route: roll_group_edit
-            parameters:
-                id: "%"
-        department_edit:
-            route: department_edit
-            parameters:
-                id: "%"
-        scale_edit:
-            route: scale_edit
-            parameters:
-                id: "%"
-        external_assessment_edit:
-            route: external_assessment_edit
-            parameters:
-                id: "%"
 System Admin:
     extend_and_update:
         manage_themes:
@@ -353,106 +147,28 @@ Timetable Admin:
             parameters:
                 id: "%"
                 course_id: "%"
-People Admin:
-    data_updater:
-        data_updater_settings:
-            label: "Data Updater Settings"
-            role: ROLE_ACTION
-            route: manage_settings
-            parameters: 
-                name: DataUpdater
-            transDomain: System
-    staff_management:
-        staff_settings:
-            label: "Manage Staff Settings"
-            role: ROLE_ACTION
-            route: manage_settings
-            parameters: 
-                name: Staff
-            transDomain: System
-        staff_application_form_settings:
-            label: "Staff Application Form Settings"
-            role: ROLE_ACTION
-            route: manage_settings
-            parameters: 
-                name: StaffApplicationForm
-            transDomain: System
-    student_management:
-        application_form_settings:
-            label: "Application Form Settings"
-            role: ROLE_ACTION
-            route: manage_settings
-            parameters: 
-                name: ApplicationForm
-            transDomain: System
-        public_registration_settings:
-            label: public_registration_settings
-            role: ROLE_ACTION
-            route: manage_settings
-            parameters: 
-                name: PublicRegistration
-            transDomain: System
-    people_management:
-        manage_families:
-            label: manage_families
-            role: ROLE_ADMIN
-            route: manage_families
-            parameters: {}
-            transDomain: Person
-        manage_permissions:
-            label: manage_permissions
-            role: ROLE_ADMIN
-            route: manage_permissions
-            parameters: {}
-            transDomain: Security
-        manage_roles:
-            label: manage_roles
-            role: ROLE_ADMIN
-            route: manage_roles
-            parameters: 
-                id: "%"
-            transDomain: Security
-        manage_custom_fields:
-            label: manage_custom_fields
-            role: ROLE_ADMIN
-            route: manage_custom_fields
-            parameters: 
-                id: "%"
-            transDomain: Person
-        personnel_settings:
-            label: personnel_settings
-            role: ROLE_SYSTEM_ADMIN
-            route: manage_settings
-            parameters: 
-                name: Personnel
-            transDomain: Person
-        manage_people:
-            label: manage_people_label
-            role: ROLE_MENU
-            route: manage_people
-            parameters: {}
-            transDomain: Person
-    hidden:
-        person_edit:
-            route: person_edit
-            parameters:
-                id: "%"
-        family_edit:
-            route: family_edit
-            parameters:
-                id: "%"
-Department:
-    departments:
-        view_departments:
-            label: "View Departments"
-            role: ROLE_ACTION
-            route: view_departments
-            parameters: {}
-            transDomain: Department
-    hidden:
-        person_edit:
-            route: course_class
-            parameters:
-                entity: "%"
+
 ';
+
+    /**
+     * getSections
+     *
+     * @return array
+     */
+    public function getSections(): array
+    {
+        $result = Yaml::parse(str_replace("\t", "    ", MenuConstantsManager::SECTIONS)) ?: [];
+        $finder = new Finder();
+        $finder->files()->in(__DIR__ . '/Menu');
+        foreach ($finder as $file) {
+
+            if (in_array($file->getExtension(), ['yml', 'yaml']))
+            {
+                $content = Yaml::parse(file_get_contents($file->getRealPath()));
+                if ($content['section'])
+                    $result = array_merge($result, $content['section']);
+            }
+        }
+        return $result;
+    }
 }
