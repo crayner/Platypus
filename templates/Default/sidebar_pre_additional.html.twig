@@ -1,0 +1,5 @@
+{% trans_default_domain "Template" %}
+
+{% if manager is defined and manager.preSidebarContent is defined %}
+    {{ manager.preSidebarContent(app.request)|raw }}
+{% endif %}

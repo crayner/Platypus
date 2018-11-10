@@ -26,8 +26,6 @@
     </head>
 
     <body>
-
-
     {% if app.request.get('closeWindow') is not empty %}
         {% set fullPage = true %}
         {% set headerOff = true %}
@@ -84,9 +82,15 @@
                     </main>
                     <nav class="col-3 collapse show" id="sidebar">
                         <div id="sectionMenuContainer">
+                            {% block preSidebarContent %}
+                                {% include 'Default/sidebar_pre_additional.html.twig' %}
+                            {% endblock preSidebarContent %}
                             {% block sectionMenu %}
                                 {% include 'Menu/section-menu.html.twig' %}
                             {% endblock sectionMenu %}
+                            {% block postSidebarContent %}
+                                {% include 'Default/sidebar_post_additional.html.twig' %}
+                            {% endblock postSidebarContent %}
                         </div>
                     </nav>
             </div>
