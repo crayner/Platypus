@@ -221,6 +221,8 @@ class Action
         'timetable_admin',
         'timetable',
         'department',
+        'take_attendance',
+        'planner',
     ];
 
     /**

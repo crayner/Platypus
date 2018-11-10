@@ -13,14 +13,16 @@
  * Date: 21/09/2018
  * Time: 09:09
  */
-
 namespace App\Entity;
-
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\PersistentCollection;
 
+/**
+ * Class CourseClass
+ * @package App\Entity
+ */
 class CourseClass
 {
     /**

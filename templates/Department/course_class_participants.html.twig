@@ -1,0 +1,24 @@
+{% trans_default_domain 'Course' %}
+
+<div class="container-fluid">
+    <h3>{{ 'Participants'|trans }}</h3>
+    {% set rowCount = 0 %}
+    {% for member in manager.participants %}
+        {% if rowCount is same as (0) %}
+            <div class="row" style="border: 1px solid darkgrey; margin: -1px 0 0 0; padding: 5px 0; ">
+        {% endif %}
+        <div class="col-3 text-center">
+            {{ member.person.displayPhoto(100, 150)|raw }}
+            <div class="small">{{ member.person.fullName({preferredOnly: true, surnameOnly: true}) }}</div>
+            <div class="small text-muted font-italic">{{('courseclassperson.role.' ~ member.role)|trans }}</div>
+        </div>
+        {% set rowCount = rowCount + 1 %}
+        {% if rowCount is same as (4) %}
+            {% set rowCount = 0 %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if rowCount > 0 %}
+        </div>
+    {% endif %}
+</div>

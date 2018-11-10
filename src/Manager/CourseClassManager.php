@@ -21,7 +21,7 @@ use App\Entity\Person;
 use App\Manager\Traits\EntityTrait;
 use App\Util\SchoolYearHelper;
 use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\DBAL\Connection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * Class CourseClassManager
@@ -132,15 +132,83 @@ class CourseClassManager extends TabManager
                  $this->studentCourseClassList->add($w[0]);
         }
 
-        dump($this);
         return $this->studentCourseClassList->toArray();
     }
 
     /**
+     * getPreferredStudentCourseClassList
+     *
      * @return array
      */
     public function getPreferredStudentCourseClassList(): array
     {
         return $this->preferredStudentCourseClassList->toArray();
+    }
+
+    /**
+     * getParticipants
+     *
+     * @return array
+     */
+    public function getParticipants(): Collection
+    {
+        $participants = new ArrayCollection(array_merge($this->getEntity()->getTutors()->toArray(),$this->getEntity()->getStudents()->toArray()));
+        return $participants;
+    }
+
+    /**
+     * getManagement
+     *
+     * @return Collection
+     */
+    public function getManagement(): Collection
+    {
+        $manage = [];
+        if ($this->getAuthorizationChecker()->isGranted('USE_ROUTE', ['attendance_by_class']))
+        {
+            $action = [];
+            $action['name'] = 'Attendance';
+            $action['route'] = 'attendance_by_class';
+            $action['route_params'] = ['entity' => $this->getEntity()->getId()];
+            $action['icon'] = 'fas fa-users fa-fw';
+            $manage[] = $action;
+        }
+        if ($this->getAuthorizationChecker()->isGranted('USE_ROUTE', ['attendance_by_class']))
+        {
+            $action = [];
+            $action['name'] = 'Planner';
+            $action['route'] = 'attendance_by_class';
+            $action['route_params'] = ['entity' => $this->getEntity()->getId()];
+            $action['icon'] = 'far fa-calendar-check fa-fw';
+            $manage[] = $action;
+        }
+        if ($this->getAuthorizationChecker()->isGranted('USE_ROUTE', ['attendance_by_class']))
+        {
+            $action = [];
+            $action['name'] = 'Markbook';
+            $action['route'] = 'attendance_by_class';
+            $action['route_params'] = ['entity' => $this->getEntity()->getId()];
+            $action['icon'] = 'fas fa-book fa-flip-horizontal fa-fw';
+            $manage[] = $action;
+        }
+        if ($this->getAuthorizationChecker()->isGranted('USE_ROUTE', ['attendance_by_class']))
+        {
+            $action = [];
+            $action['name'] = 'Homework';
+            $action['route'] = 'attendance_by_class';
+            $action['route_params'] = ['entity' => $this->getEntity()->getId()];
+            $action['icon'] = 'fas fa-home fa-fw';
+            $manage[] = $action;
+        }
+        if ($this->getAuthorizationChecker()->isGranted('USE_ROUTE', ['attendance_by_class']))
+        {
+            $action = [];
+            $action['name'] = 'Internal Assessment ';
+            $action['route'] = 'attendance_by_class';
+            $action['route_params'] = ['entity' => $this->getEntity()->getId()];
+            $action['icon'] = 'fas fa-file-alt fa-fw';
+            $manage[] = $action;
+        }
+        return new ArrayCollection($manage);
     }
 }

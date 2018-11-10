@@ -1,0 +1,23 @@
+{% trans_default_domain 'Course' %}
+
+<div class="container-fluid" >
+        {% set rowCount = 0 %}
+        {% for member in manager.management %}
+            {% if rowCount is same as (0) %}
+                <div class="row">
+            {% endif %}
+            <div class="col-4 text-center">
+                <a href="{{ path(member.route,member.route_params) }}">
+                {{ miscButton({class: 'btn btn-outline-light text-muted', icon: {class: member.icon}, style: 'font-size: 7rem; ', title: member.name, transDomain: 'Course' })|raw }}
+                <div>{{ member.name|trans }}</div></a>
+            </div>
+            {% set rowCount = rowCount + 1 %}
+            {% if rowCount is same as (3) %}
+                {% set rowCount = 0 %}
+                </div>
+            {% endif %}
+        {% endfor %}
+        {% if rowCount > 0 %}
+        </div>
+    {% endif %}
+</div>

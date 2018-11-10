@@ -515,11 +515,11 @@ class Person
     private $photo;
 
     /**
-     * @return string|null
+     * @return string
      */
-    public function getPhoto(): ?string
+    public function getPhoto(): string
     {
-        return $this->photo;
+        return $this->photo ?: 'build/static/images/DefaultPerson.png';
     }
 
     /**
@@ -2330,5 +2330,20 @@ class Person
         foreach ($classListOfCurrentSchoolYear as $w)
 
             return $this;
+    }
+
+    /**
+     * displayPhoto
+     *
+     * @param int $width
+     * @return string
+     */
+    public function displayPhoto(int $width = 100, ?int $height = null): string
+    {
+
+        if (is_int($height))
+            return '<img height="' . $height . '" src="/'.$this->getPhoto().'" title="'.$this->getFullName().'" />';
+
+        return '<img width="' . $width . '" src="/'.$this->getPhoto().'" title="'.$this->getFullName().'" />';
     }
 }

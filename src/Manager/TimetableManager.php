@@ -501,56 +501,56 @@ class TimetableManager implements TemplateManagerInterface, ButtonReactInterface
             'collection' => [
                 'form' => 'timetableDays',
                 'headerRow' => [
-                    'class' => 'row row-header text-center small',
+                    'class' => 'row row-header text-center',
                     'columns' => [
                         [
                             'label' => 'Name',
-                            'class' => 'col-2 align-self-center',
+                            'class' => 'col-2 align-self-center small',
                         ],
                         [
-                            'class' => 'col-2 align-self-center',
+                            'class' => 'col-2 align-self-center small',
                             'label' => 'Abbrev.',
                         ],
                         [
-                            'class' => 'col-2 text-center align-self-center',
+                            'class' => 'col-2 text-center align-self-center small',
                             'label' => 'Column',
                         ],
                         [
-                            'class' => 'col-2 align-self-center',
+                            'class' => 'col-2 align-self-center small',
                             'label' => 'Header Background Colour',
                         ],
                         [
-                            'class' => 'col-2 align-self-center',
+                            'class' => 'col-2 align-self-center small',
                             'label' => 'Header Font Colour',
                         ],
                         [
-                            'class' => 'col-2 align-self-center',
+                            'class' => 'col-2 align-self-center small',
                             'label' => 'Actions',
                         ],
                     ],
                 ],
                 'rows' => [
                     [
-                        'class' => 'row row-striped small',
+                        'class' => 'row row-striped',
                         'columns' => [
                             [
-                                'class' => 'col-2 align-self-center',
+                                'class' => 'col-2 align-self-center text-small',
                                 'form' => ['name' => 'widget'],
                             ],
                             [
-                                'class' => 'col-2 align-self-center',
+                                'class' => 'col-2 align-self-center text-small',
                                 'form' => ['nameShort' => 'widget'],
                             ],
                             [
-                                'class' => 'col-2 text-center align-self-center',
+                                'class' => 'col-2 text-center align-self-center text-small',
                                 'form' => ['timetableColumn' => 'widget'],
                             ],
                             [
-                                'class' => 'col-2 text-center align-self-center',
+                                'class' => 'col-2 text-center align-self-center text-small',
                                 'form' => ['colour' => 'widget'],
                             ],
                             [
-                                'class' => 'col-2 text-center align-self-center',
+                                'class' => 'col-2 text-center align-self-center text-small',
                                 'form' => ['fontColour' => 'widget'],
                             ],
                             [
@@ -678,9 +678,9 @@ class TimetableManager implements TemplateManagerInterface, ButtonReactInterface
         foreach($this->getSchoolDays() as $day)
         {
             $column = [
-                'class' => 'col-2 card text-center align-self-center',
+                'class' => 'col-2 text-center small align-self-center',
                 'label' => 'school_day_header',
-                'label_params' => ['school_day_header' => $day->getName() . '<br/><span className="small text-muted">'.$day->getNameShort().'</span>'],
+                'label_params' => ['school_day_header' => '<div className="small font-weight-bold" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">' . $day->getName() . '</div><div className="small text-muted">'.$day->getNameShort().'</div>'],
             ];
             $columns[] = $column;
         }
@@ -704,11 +704,11 @@ class TimetableManager implements TemplateManagerInterface, ButtonReactInterface
                         'class' => 'col-3 card',
                         'rows' => [
                             [
-                                'class' => 'row-header row small',
+                                'class' => 'row-header row',
                                 'columns' => [
                                     [
-                                        'class' => 'col-12 card text-center align-self-center',
-                                        'style' => ['minHeight' => '100px'],
+                                        'class' => 'col-12 card text-center small align-self-center',
+                                        'style' => ['height' => '100px', 'display' => 'flex', 'margin' => 'auto'],
                                         'label' => 'week_header',
                                         'label_params' => ['week_header' => $this->getWeekHeader($week)],
                                     ],
@@ -743,7 +743,7 @@ class TimetableManager implements TemplateManagerInterface, ButtonReactInterface
     {
         $first =  reset($week);
         $last = end($week);
-        return $first->getDate()->format($this->getSettingManager()->get('date.format.long')) . '<br />' . $last->getDate()->format($this->getSettingManager()->get('date.format.long'));
+        return '<span className="small font-weight-bold" style="margin: auto; text-align: center;">' . $first->getDate()->format($this->getSettingManager()->get('date.format.long')) . '<br/>---<br/>' . $last->getDate()->format($this->getSettingManager()->get('date.format.long')).'</span>';
     }
 
     /**

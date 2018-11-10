@@ -16,14 +16,11 @@
 namespace App\Manager\Traits;
 
 use App\Listener\InstallSubscriber;
-use App\Manager\InstallationManager;
 use App\Manager\MessageManager;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Hillrange\Security\Util\ParameterInjector;
-use PhpParser\Node\Expr\Cast\Object_;
-use Symfony\Component\Form\Exception\AlreadySubmittedException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * Trait EntityTrait
@@ -52,16 +49,22 @@ trait EntityTrait
     private $entity;
 
     /**
+     * @var AuthorizationCheckerInterface
+     */
+    private $authorizationChecker;
+
+    /**
      * EntityTrait constructor.
      * @param EntityManagerInterface $entityManager
      * @param MessageManager $messageManager
      * @throws \Exception
      */
-    public function __construct(EntityManagerInterface $entityManager, MessageManager $messageManager)
+    public function __construct(EntityManagerInterface $entityManager, MessageManager $messageManager, AuthorizationCheckerInterface $authorizationChecker)
     {
         $this->entityManager = $entityManager;
         $this->messageManager = $messageManager;
         self::$entityRepository = $this->getRepository();
+        $this->authorizationChecker = $authorizationChecker;
     }
 
     /**
@@ -260,5 +263,15 @@ trait EntityTrait
 
         // a new entity is NOT valid until saved.
         return false;
+    }
+
+    /**
+     * getAuthorizationChecker
+     *
+     * @return AuthorizationCheckerInterface
+     */
+    public function getAuthorizationChecker(): AuthorizationCheckerInterface
+    {
+        return $this->authorizationChecker;
     }
 }

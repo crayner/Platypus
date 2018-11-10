@@ -1,0 +1,12 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'Course' %}
+
+{% block title %}{{ manager.entity.name }}{% endblock title %}
+{% block headerTitle %}{{ 'Class: %{name}'|trans({'%{name}': manager.entity.nameShort}) }}{% endblock headerTitle %}
+{% block headerLead %}{{ 'Course: %{name}'|trans({'%{name}': manager.entity.course.name}) }}{% endblock headerLead %}
+
+{% block contentContainer %}
+    {% include 'Department/course_class_management.html.twig' %}
+    {% include 'Department/course_class_participants.html.twig' %}
+{% endblock contentContainer %}

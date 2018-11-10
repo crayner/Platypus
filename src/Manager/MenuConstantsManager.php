@@ -441,5 +441,18 @@ People Admin:
             route: family_edit
             parameters:
                 id: "%"
+Department:
+    departments:
+        view_departments:
+            label: "View Departments"
+            role: ROLE_ACTION
+            route: view_departments
+            parameters: {}
+            transDomain: Department
+    hidden:
+        person_edit:
+            route: course_class
+            parameters:
+                entity: "%"
 ';
 }
