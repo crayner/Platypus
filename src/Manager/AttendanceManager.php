@@ -60,6 +60,11 @@ class AttendanceManager
             $this->getCourseClassManager()->getMessageManager()->add('warning', 'The date "%{date}" is in the future, and is not acceptable', ['%{date}' => $longDate], 'Attendance');
             return ;
         }
+        if (empty($this->getCourseClass()->getId()))
+        {
+            $this->getCourseClassManager()->getMessageManager()->add('warning', 'Select a class to begin taking attendance.', [], 'Attendance');
+            return ;
+        }
         if (! $this->getCourseClass()->isCurrentSchoolYear())
         {
             $this->getCourseClassManager()->getMessageManager()->add('warning', 'The class "%{class}" is not in the current school year "%{year}"', ['%{class}' => $this->getCourseClass()->getName(), '%{year}' => SchoolYearHelper::getCurrentSchoolYear()->getName()], 'Attendance');
@@ -78,6 +83,9 @@ class AttendanceManager
         if (! $this->hasAttendanceBeenTaken())
         {
             $this->getCourseClassManager()->getMessageManager()->add('primary', 'Attendance has not been taken for %{class} yet for the %{date}. The entries below are a best-guess based on defaults and information put into the system in advance, not actual data.', ['%{date}' => $longDate, '%{class}' => $this->getCourseClass()->getName()], 'Attendance');
+            return ;
+        } else {
+            $this->getCourseClassManager()->getMessageManager()->add('success', 'Attendance has been taken on %{date} for %{specifiedDate} by %{taken}', ['%{date}' => $this->getLogCourseClass()->getTimestampTaken()->format($this->getLongDateFormat() . ' H:i:s'), '%{taken}' => $this->getLogCourseClass()->getTaker()->getFullName(['preferredOnly' => true, 'surnameFirst' => false]), '%{specifiedDate}' => $longDate], 'Attendance');
             return ;
         }
     }
@@ -104,16 +112,16 @@ class AttendanceManager
      */
     public function getCourseClass(): CourseClass
     {
-        return $this->courseClass;
+        return $this->courseClass ?: new CourseClass();
     }
 
     /**
      * setCourseClass
      *
-     * @param CourseClass $courseClass
+     * @param CourseClass|null $courseClass
      * @return AttendanceManager
      */
-    public function setCourseClass(CourseClass $courseClass): AttendanceManager
+    public function setCourseClass(?CourseClass $courseClass): AttendanceManager
     {
         $this->courseClass = $courseClass;
         return $this;
@@ -195,7 +203,7 @@ class AttendanceManager
      */
     private function isValidDate($testDate = '+1 Day'): bool
     {
-        if ($this->getDate()->getTimestamp() >= strtotime($testDate))
+        if ($this->getDate()->getTimestamp() >= strtotime('tomorrow'))
             return false;
         return true;
     }
@@ -293,6 +301,11 @@ class AttendanceManager
     }
 
     /**
+     * @var AttendanceLogCourseClass|null
+     */
+    private $logCourseClass;
+
+    /**
      * @var bool|null
      */
     private $attendanceBeenTaken = null;
@@ -306,17 +319,10 @@ class AttendanceManager
     private function hasAttendanceBeenTaken(): bool
     {
         if (is_null($this->attendanceBeenTaken))
-            if (intval($this->getCourseClassManager()->getRepository(AttendanceLogCourseClass::class)->createQueryBuilder('alcc')
-                ->select(['COUNT(alcc.id) AS stuff'])
-                ->where('alcc.courseClass = :courseClass')
-                ->andWhere('alcc.classDate = :classDate')
-                ->setParameter('courseClass', $this->getCourseClass())
-                ->setParameter('classDate', $this->getDate())
-                ->getQuery()
-                ->getSingleScalarResult()) === 1)
-                    $this->attendanceBeenTaken = true;
+            if ($this->getLogCourseClass() === null)
+                    $this->attendanceBeenTaken = false;
             else
-                $this->attendanceBeenTaken = false;
+                $this->attendanceBeenTaken = true;
 
         return $this->attendanceBeenTaken;
     }
@@ -382,6 +388,8 @@ class AttendanceManager
             $this->attendanceCodeList = $this->getCourseClassManager()->getRepository(AttendanceCode::class)->createQueryBuilder('ac', 'ac.id')
                 ->select(['ac.name', 'ac.id'])
                 ->orderBy('ac.sequence', 'ASC')
+                ->where('ac.active = :true')
+                ->setParameter('true', true)
                 ->getQuery()
                 ->getArrayResult();
         }
@@ -434,7 +442,7 @@ class AttendanceManager
     public function getStudentComment(AttendanceLogPerson $student)
     {
         $element = '<div class="form-group">';
-        $element .= '<input type="text" name="attendanceByClass['.$student->getAttendee()->getId().'][comment]" id="attendance_by_class_'.$student->getId().'_comment" class="form-control form-control-sm" value="'.$student->getComment().'">';
+        $element .= '<input type="text" name="attendanceByClass['.$student->getAttendee()->getId().'][comment]" id="attendance_by_class_'.$student->getId().'_comment" class="form-control form-control-sm" value="'.$student->getComment().'" />';
         $element .= '</div>';
         return $element;
     }
@@ -483,7 +491,7 @@ class AttendanceManager
         $this->getLogCourseClassManager()->setEntity($logCC)->saveEntity($validator);
         if (in_array($this->getLogCourseClassManager()->getMessageManager()->getStatus(), ['warning', 'danger']))
             return ;
-
+        $attendanceCodes = [];
         foreach($logs as $log)
         {
             $attendee = $this->getCourseClassManager()->getRepository(Person::class)->find($log['attendee']);
@@ -491,10 +499,13 @@ class AttendanceManager
             $logP->setCourseClass($this->getCourseClass());
             $logP->setClassDate($this->getDate());
             $logP->setAttendee($attendee);
-            $logP->setAttendanceCode($this->getCourseClassManager()->getRepository(AttendanceCode::class)->find($log['attendance_code']));
+            $attendanceCode = ! empty($attendanceCodes[$log['attendance_code']]) ? $attendanceCodes[$log['attendance_code']] : $this->getCourseClassManager()->getRepository(AttendanceCode::class)->find($log['attendance_code']);
+            $attendanceCodes[$log['attendance_code']] = $attendanceCode;
+            $logP->setAttendanceCode($attendanceCode);
             $logP->setReason($log['reason']);
             $logP->setComment($log['comment']);
-
+            $logP->setDirection($attendanceCode->getDirection());
+            $logP->setContext('class');
             $this->getLogPersonManager()->setEntity($logP)->saveEntity($validator);
         }
     }
@@ -527,5 +538,56 @@ class AttendanceManager
     public function getLogPersonManager(): AttendanceLogPersonManager
     {
         return $this->logPersonManager;
+    }
+
+    /**
+     * getAttendanceStatus
+     *
+     * @param AttendanceLogPerson $student
+     * @return string
+     */
+    public function getAttendanceStatus(AttendanceLogPerson $student): string
+    {
+        if (is_null($student->getAttendanceCode()))
+            return '';
+        if ($student->getAttendanceCode()->isTypeAbsent())
+            return ' alert-danger';
+        if ($student->getAttendanceCode()->isTypeLate())
+            return ' alert-warning';
+        if ($student->getAttendanceCode()->isTypeOffsite())
+            return ' alert-info';
+        return '';
+    }
+
+    /**
+     * getLogCourseClass
+     *
+     * @return AttendanceLogCourseClass|null
+     * @throws \Exception
+     */
+    public function getLogCourseClass(): ?AttendanceLogCourseClass
+    {
+        if (! empty($this->logCourseClass))
+            return $this->logCourseClass;
+        $this->logCourseClass = $this->getCourseClassManager()->getRepository(AttendanceLogCourseClass::class)->createQueryBuilder('alcc')
+            ->where('alcc.courseClass = :courseClass')
+            ->andWhere('alcc.classDate = :classDate')
+            ->setParameter('courseClass', $this->getCourseClass())
+            ->setParameter('classDate', $this->getDate())
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        return $this->logCourseClass;
+    }
+
+    public function changeAllAttendees(array $attendees, array $changeTo)
+    {
+        foreach($attendees as $q=>$attendee)
+        {
+            $attendees[$q]['attendance_code'] = $changeTo['attendance_code'];
+            $attendees[$q]['reason'] = $changeTo['reason'];
+            $attendees[$q]['comment'] = $changeTo['comment'];
+        }
+        return $attendees;
     }
 }

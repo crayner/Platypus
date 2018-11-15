@@ -16,6 +16,7 @@
                 <div class="form-group">
                     {% set selected = false %}
                     <select name="classByAttendance[class]" id="classByAttendance_class" class="form-control" onChange="if (this.value) changeClass(this.value)">
+                        <option value="">{{ 'Select Class...'|trans }}</option>
                         <optgroup label="---{{ 'my Classes'|trans }}---">
                             {% for class in manager.myClasses %}
                                 <option value="{{ class.id }}"{% if class.id is same as(manager.courseClass.id) %} selected{% set selected = true %}{% endif %}>{{ class.nameShort }}</option>
@@ -42,14 +43,47 @@
         {% include 'Default/flash.html.twig' %}
     {% endblock flashMessages %}
     <form name="attendanceByClass" method="post" novalidate="1" autocomplete="off">
-        {% set h3Content = saveButton() %}
         {% include 'Default/panelStart.html.twig' with {header: 'Attendance by Class', panelParagraph: '%{name} on %{date}',panelParams: {'%{name}': manager.courseClass.name, '%{date}': manager.date|date(getSetting('date.format.long'))},  transDomain: 'Attendance'} %}
+
+        <div class="row row-primary">
+            <div class="card col-3">
+                <div class="form-group">
+                    <select name="changeAllAttendee[attendance_code]" id="attendance_all_attendee_attendance_code" class="form-control">
+                        {% for code in manager.attendanceCodeList %}
+                            <option value="{{ code.id }}">{{ code.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card col-3">
+                <div class="form-group">
+                    <select name="changeAllAttendee[reason]" id="attendance_all_attendee_reason" class="form-control">';
+                        <option value="">{{ 'Select Reason ...'|trans }}</option>
+                        {% for reason in getSetting('attendance.attendance_reasons') %}
+                            <option value="{{ reason }}">{{ reason }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card col-3">
+                <div class="form-group">
+                    <input type="text" name="changeAllAttendee[comment]" id="attendance_all_attendee_comment" class="form-control" title="{{ 'Comment'|trans }}" />
+                </div>
+            </div>
+            <div class="card col-3 text-center">
+                <div>
+                    {{ saveButton({name: 'changeAll', id: 'changeAll', style: '', class: 'btn btn-warning fas fa-cloud-upload-alt', title: 'Change All', transDomain: 'Attendance'})|raw }}
+                    {{ saveButton({style: ''})|raw }}
+                </div>
+            </div>
+        </div>
+
         {% set column = 0 %}
         {% for student in manager.getClassStudents %}
             {% if column is same as(0) %}
                 <div class="row small">
             {% endif %}
-                <div class="col-3 card text-center">
+                <div class="col-3 card text-center{{ manager.attendanceStatus(student) }}">
                     <a href="#" title="{{ student.attendee.fullName }}">
                         {{ student.attendee.displayPhoto(0, 100)|raw }}<br/>
                         {{ student.attendee.fullName({preferredOnly: true, surnameFirst: false}) }}
@@ -71,6 +105,38 @@
             </div>
         {% endif %}
         <input type="hidden" name="_token" id="_token" value="{{ csrf_token('attendanceByClass') }}" />
+
+        <div class="row row-primary">
+            <div class="card col-3">
+                <div class="form-group">
+                    <select name="changeAllAttendee2[attendance_code]" id="attendance_all_attendee2_attendance_code" class="form-control">
+                        {% for code in manager.attendanceCodeList %}
+                            <option value="{{ code.id }}">{{ code.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card col-3">
+                <div class="form-group">
+                    <select name="changeAllAttendee2[reason]" id="attendance_all_attendee2_reason" class="form-control">';
+                        <option value="">{{ 'Select Reason ...'|trans }}</option>
+                        {% for reason in getSetting('attendance.attendance_reasons') %}
+                            <option value="{{ reason }}">{{ reason }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="card col-3">
+                <div class="form-group">
+                    <input type="text" name="changeAllAttendee2[comment]" id="attendance_all_attendee2_comment" class="form-control" title="{{ 'Comment'|trans }}" />
+                </div>
+            </div>
+            <div class="card col-3 text-center">
+                <div>{{ saveButton({name: 'changeAll2', id: 'changeAll2', style: '', class: 'btn btn-warning fas fa-cloud-upload-alt', title: 'Change All', transDomain: 'Attendance'})|raw }}
+                {{ saveButton({style: ''})|raw }}</div>
+            </div>
+        </div>
+
         {% include 'Default/panelEnd.html.twig' %}
     </form>
 {% endblock contentContainer %}
@@ -84,7 +150,7 @@
             window.open(path, '_self')
         }
         function changeDate(value) {
-            let path = '{{ path('attendance_by_class', {entity: manager.courseClass.id, date: '__date__'}) }}'
+            let path = '{{ path('attendance_by_class', {entity: manager.courseClass.id|default('0'), date: '__date__'}) }}'
             path = path.replace('__date__', value)
             window.open(path, '_self')
         }

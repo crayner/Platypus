@@ -398,4 +398,82 @@ class AttendanceCode
 
         return $this;
     }
+
+    /**
+     * isTypePresent
+     *
+     * @return bool
+     */
+    public function isTypePresent(): bool
+    {
+        if (empty($this->getType()))
+            return false;
+
+        return ($this->getDirection() == 'in');
+    }
+
+    /**
+     * isTypeLate
+     *
+     * @return bool
+     */
+    public function isTypeLate(): bool
+    {
+        if (empty($this->getType()))
+            return false;
+
+        return (mb_strpos($this->getScope(), '_late') !== false);
+    }
+
+    /**
+     * isTypeLeft
+     *
+     * @return bool
+     */
+    public function isTypeLeft(): bool
+    {
+        if (empty($this->getType()))
+            return false;
+
+        return (mb_strpos($this->getScope(), '_left') !== false);
+    }
+
+    /**
+     * isTypeAbsent
+     *
+     * @return bool
+     */
+    public function isTypeAbsent(): bool
+    {
+        if (empty($this->getType()))
+            return false;
+
+        return (mb_strpos($this->getDirection(), 'out') !== false && $this->isTypeOffsite());
+    }
+
+    /**
+     * isTypeOnsite
+     *
+     * @return bool
+     */
+    public function isTypeOnsite(): bool
+    {
+        if (empty($this->getType()))
+            return false;
+
+        return (mb_strpos($this->getScope(), 'onsite') !== false);
+    }
+
+    /**
+     * isTypeOffsite
+     *
+     * @return bool
+     */
+    public function isTypeOffsite(): bool
+    {
+        if (empty($this->getType()))
+            return false;
+
+        return (mb_strpos($this->getScope(), 'offsite') !== false);
+    }
 }

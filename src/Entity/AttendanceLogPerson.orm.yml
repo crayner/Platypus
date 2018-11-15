@@ -22,9 +22,6 @@ App\Entity\AttendanceLogPerson:
         direction:
             length: 8
             nullable: true
-        type:
-            length: 30
-            nullable: true
         reason:
             length: 30
             nullable: true

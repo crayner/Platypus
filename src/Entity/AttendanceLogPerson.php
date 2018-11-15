@@ -33,9 +33,9 @@ class AttendanceLogPerson
      *
      * @return array
      */
-    public static function getContextTypeList(): array
+    public static function getContextList(): array
     {
-        return self::$contextTypeList;
+        return self::$contextList;
     }
 
     /**
@@ -43,9 +43,9 @@ class AttendanceLogPerson
      *
      * @return array
      */
-    public static function getDirectionTypeList(): array
+    public static function getDirectionList(): array
     {
-        return self::$directionTypeList;
+        return self::$directionList;
     }
 
     /**
@@ -120,7 +120,7 @@ class AttendanceLogPerson
     /**
      * @var array
      */
-    private static $directionTypeList = [
+    private static $directionList = [
         'in',
         'out'
     ];
@@ -139,30 +139,7 @@ class AttendanceLogPerson
      */
     public function setDirection(?string $direction): AttendanceLogPerson
     {
-        $this->direction = in_array($direction, self::getDirectionTypeList()) ? $direction : null;
-        return $this;
-    }
-
-    /**
-     * @var null|string
-     */
-    private $type;
-
-    /**
-     * @return null|string
-     */
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    /**
-     * @param null|string $type
-     * @return AttendanceLogPerson
-     */
-    public function setType(?string $type): AttendanceLogPerson
-    {
-        $this->type = $type ?: null;
+        $this->direction = in_array($direction, self::getDirectionList()) ? $direction : null;
         return $this;
     }
 
@@ -197,7 +174,7 @@ class AttendanceLogPerson
     /**
      * @var array
      */
-    private static $contextTypeList = [
+    private static $contextList = [
             'roll_group',
             'class',
             'person',
@@ -210,7 +187,7 @@ class AttendanceLogPerson
      */
     public function getContext(): ?string
     {
-        return $this->context ?: null ;
+        return in_array($this->context, self::getContextList()) ? $this->context : null ;
     }
 
     /**
@@ -219,7 +196,7 @@ class AttendanceLogPerson
      */
     public function setContext(?string $context): AttendanceLogPerson
     {
-        $this->context = in_array($context, self::getContextTypeList()) ? $context : null ;
+        $this->context = in_array($context, self::getContextList()) ? $context : null ;
         return $this;
     }
 
@@ -227,6 +204,11 @@ class AttendanceLogPerson
      * @var null|string
      */
     private $comment;
+
+    private static $commentList = [
+        'class',
+        'Roll Group','Class','Person','Future','Self Registration'
+    ];
 
     /**
      * @return null|string

@@ -16,7 +16,6 @@
 namespace App\Controller;
 
 use App\Entity\CourseClass;
-use App\Form\Type\AttendanceByClassType;
 use App\Manager\AttendanceManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,8 +47,21 @@ class AttendanceController extends Controller
     {
         $manager->setTranslator($translator)->takeAttendanceByClass($entity, $date);
 
-        if ($request->getMethod() === 'POST' && $this->isCsrfTokenValid('attendanceByClass', $request->request->get('_token'))) {
-            $manager->saveAttendanceLogs($request->get('attendanceByClass'), $validator);
+        if ($request->getMethod() === 'POST' && $this->isCsrfTokenValid('attendanceByClass', $request->get('_token'))) {
+            if ($request->get('Save') === '') {
+                $manager->getCourseClassManager()->getMessageManager()->clearMessages();
+                $manager->saveAttendanceLogs($request->get('attendanceByClass'), $validator);
+            }
+            if ($request->get('changeAll') === '') {
+                $attendees =  $manager->changeAllAttendees($request->get('attendanceByClass'), $request->get('changeAllAttendee'));
+                $manager->getCourseClassManager()->getMessageManager()->clearMessages();
+                $manager->saveAttendanceLogs($attendees, $validator);
+            }
+            if ($request->get('changeAll2') === '') {
+                $attendees =  $manager->changeAllAttendees($request->get('attendanceByClass'), $request->get('changeAllAttendee2'));
+                $manager->getCourseClassManager()->getMessageManager()->clearMessages();
+                $manager->saveAttendanceLogs($attendees, $validator);
+            }
             $manager->takeAttendanceByClass($entity, $date);
         }
         return $this->render('Attendance/take_by_class.html.twig',
