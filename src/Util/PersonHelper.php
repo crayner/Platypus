@@ -68,7 +68,6 @@ class PersonHelper
         if (self::hasUser())
             self::$person = self::getRepository(Person::class)->findOneByUser(self::getUser());
 
-
         if (self::$person instanceof Person)
             return true;
 
@@ -239,5 +238,26 @@ class PersonHelper
         $photo = 'build/static/images/DefaultPerson.png';
 
         return $photo;
+    }
+
+    /**
+     * @var integer|null
+     */
+    private static $currentPerson;
+
+    /**
+     * getCurrentPerson
+     *
+     * @return Person|null
+     */
+    public static function getCurrentPerson(): ?Person
+    {
+        if (! empty(self::$currentPerson) && self::$currentPerson === self::$person->getId())
+            return self::getPerson();
+        self::setUser(UserHelper::getCurrentUser());
+        self::$person = null;
+        self::getPerson();
+        self::$currentPerson = self::$person->getId();
+        return self::$person;
     }
 }

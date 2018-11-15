@@ -19,7 +19,9 @@ use App\Entity\CourseClass;
 use App\Entity\CourseClassPerson;
 use App\Entity\Person;
 use App\Manager\Traits\EntityTrait;
+use App\Util\PersonHelper;
 use App\Util\SchoolYearHelper;
+use App\Util\TimetableHelper;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
@@ -247,7 +249,7 @@ class CourseClassManager extends TabManager
      *
      * @return array
      */
-    private function getRelatedClasses(): array
+    public function getRelatedClasses(): array
     {
         $course = $this->getEntity()->getCourse();
         return $this->getEntityManager()->getRepository(CourseClass::class)->createQueryBuilder('cc')
@@ -263,13 +265,48 @@ class CourseClassManager extends TabManager
      *
      * @return array
      */
-    private function getAllClasses(): array
+    public function getAllClasses(): array
     {
         return $this->getEntityManager()->getRepository(CourseClass::class)->createQueryBuilder('cc')
             ->leftJoin('cc.course', 'c')
             ->orderBy('c.name', 'ASC')
             ->addOrderBy('cc.name', 'ASC')
+            ->where('c.schoolYear = :schoolYear')
+            ->setParameter('schoolYear', SchoolYearHelper::getCurrentSchoolYear())
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * getMyClasses
+     *
+     * @return array
+     */
+    public function getMyClasses(): array
+    {
+        $person = PersonHelper::getCurrentPerson();
+        if (empty($person))
+            return [];
+        return $this->getEntityManager()->getRepository(CourseClass::class)->createQueryBuilder('cc')
+            ->leftJoin('cc.course', 'c')
+            ->orderBy('c.name', 'ASC')
+            ->addOrderBy('cc.name', 'ASC')
+            ->leftJoin('cc.people', 'p')
+            ->where('p.person = :person')
+            ->setParameter('person', $person)
+            ->andWhere('c.schoolYear = :schoolYear')
+            ->setParameter('schoolYear', SchoolYearHelper::getCurrentSchoolYear())
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * isSchoolDay
+     *
+     * @return bool
+     */
+    public function isSchoolDay(): bool
+    {
+        return TimetableHelper::isSchoolDay();
     }
 }

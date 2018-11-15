@@ -1,4 +1,4 @@
-{% trans_default_domain "System" %}
+{% trans_default_domain "Menu" %}
 {% set bad_routes = [getParameter('security.routes.security_user_login'), getParameter('security.routes.security_forced_password_change')] %}
 {% if app.request.get('_route') not in bad_routes %}
 <section class="hideSection">

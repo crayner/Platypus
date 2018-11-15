@@ -185,7 +185,7 @@ class MarkbookSettings extends SettingCreationManager
 
         $this->addSection('Warnings');
 
-        $this->setSectionsHeader('manage_markbook_settings');
+        $this->setSectionsHeader('Manage Markbook Settings');
 
         $this->setSettingManager(null);
 

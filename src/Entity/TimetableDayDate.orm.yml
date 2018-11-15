@@ -23,6 +23,7 @@ App\Entity\TimetableDayDate:
     manyToOne:
         timetableDay:
             targetEntity: App\Entity\TimetableDay
+            inversedBy: timetableDayDates
             joinColumn:
                 name: timetable_day_id
                 referencedColumnName: id

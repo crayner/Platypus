@@ -118,7 +118,6 @@ class SettingController extends Controller
             $multipleSettingManager->addSection($section);
 
         $form = $this->createForm(SectionSettingType::class, $multipleSettingManager);
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

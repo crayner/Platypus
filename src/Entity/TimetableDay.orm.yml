@@ -50,3 +50,7 @@ App\Entity\TimetableDay:
                 name: timetable_id
                 referencedColumnName: id
                 nullable: false
+    oneToMany:
+        timetableDayDates:
+            targetEntity: App\Entity\TimetableDayDate
+            mappedBy: timetableDay

@@ -1,0 +1,12 @@
+section:
+    Attendance:
+        take:
+            by_class:
+                label: "Attendance by CLass"
+                role: ROLE_ACTION
+                route: attendance_by_class
+                parameters: {}
+                default_params:
+                    entity: '0'
+                    date: 'now'
+                transDomain: Attendance

@@ -1,4 +1,4 @@
-{% trans_default_domain "System" %}
+{% trans_default_domain "Menu" %}
 {% if (menu.role is defined and is_granted(menu.role)) or menu.role is not defined %}
     {% if (menu.test is defined and testMenuItem(menu.test)) or menu.test is not defined %}
         {% if menuRequired(menu.menu) %}

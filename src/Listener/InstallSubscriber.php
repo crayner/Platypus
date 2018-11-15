@@ -17,6 +17,7 @@ namespace App\Listener;
 
 use App\Manager\InstallationManager;
 use Doctrine\DBAL\Exception\TableNotFoundException;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;

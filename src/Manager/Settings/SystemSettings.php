@@ -362,7 +362,7 @@ class SystemSettings extends SettingCreationManager
 
         $this->addSection('Miscellaneous');
 
-        $this->setSectionsHeader('manage_system_settings');
+        $this->setSectionsHeader('Manage System Settings');
 
         $this->setSettingManager(null);
         return $this;

@@ -15,6 +15,10 @@
  */
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
+
 /**
  * Class TimetableDay
  * @package App\Entity
@@ -232,5 +236,33 @@ class TimetableDay
             return null;
 
         return $this->getTimetableColumn()->getNormalisedDayOfWeek();
+    }
+
+    /**
+     * @var Collection
+     */
+    private $timetableDayDates;
+
+    /**
+     * @return Collection
+     */
+    public function getTimetableDayDates(): Collection
+    {
+        if (empty($this->timetableDayDates))
+            $this->timetableDayDates = new ArrayCollection();
+        if ($this->timetableDayDates instanceof PersistentCollection)
+            $this->timetableDayDates->initialize();
+
+        return $this->timetableDayDates;
+    }
+
+    /**
+     * @param Collection $timetableDayDates
+     * @return TimetableDay
+     */
+    public function setTimetableDayDates(Collection $timetableDayDates): TimetableDay
+    {
+        $this->timetableDayDates = $timetableDayDates;
+        return $this;
     }
 }

@@ -16,6 +16,7 @@
 namespace App\Manager;
 
 use App\Entity\Setting;
+use App\Form\Transformer\SettingValueTransformer;
 use App\Manager\Settings\SettingCreationInterface;
 use App\Organism\SettingCache;
 use App\Validator\Regex;
@@ -919,7 +920,7 @@ class SettingManager implements ContainerAwareInterface
     public function createSetting(Setting $setting): SettingManager
     {
         if ($setting->getSettingType() === 'array')
-            $setting->setValue(str_replace(array("\\r", "\\n", '"'), array('', "\n", ''),$setting->getValue()));
+            $setting->setValue(SettingValueTransformer::handleArrayValue($setting->getValue()));
 
         $this->getEntityManager()->persist($setting);
         $this->getEntityManager()->flush();

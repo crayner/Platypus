@@ -2,32 +2,32 @@ section:
     School Admin:
         assessment:
             manage_formal_assessments:
-                label: manage_formal_assessments
+                label: Manage Formal Assessments
                 role: ROLE_PRINCIPAL
                 route: manage_formal_assessments
                 parameters: {}
                 transDomain: System
             manage_external_assessments:
-                label: manage_external_assessments
+                label: Manage External Assessments
                 role: ROLE_PRINCIPAL
                 route: manage_external_assessments
                 parameters: {}
                 transDomain: School
             manage_scales:
-                label: manage_scales
+                label: Manage Scales
                 role: ROLE_PRINCIPAL
                 route: manage_scales
                 parameters: {}
                 transDomain: School
             markbook_settings:
-                label: manage_markbook_settings
+                label: Manage Markbook Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
                     name: Markbook
                 transDomain: System
             tracking_settings:
-                label: manage_tracking_settings
+                label: Manage Tracking Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
@@ -35,65 +35,65 @@ section:
                 transDomain: System
         groupings:
             manage_departments:
-                label: manage_departments
+                label: Manage Departments
                 role: ROLE_REGISTRAR
                 route: manage_departments
                 parameters: {}
                 transDomain: School
             houses_edit:
-                label: menu.houses.manage
+                label: Manage Houses
                 role: ROLE_REGISTRAR
                 route: houses_edit
                 parameters: {}
                 transDomain: School
             manage_roll_groups:
-                label: manage_roll_groups
+                label: Manage Roll Groups
                 role: ROLE_PRINCIPAL
                 route: manage_roll_groups
                 parameters: {}
                 transDomain: School
             manage_year_groups:
-                label: menu.year_groups.manage
+                label: Manage Year Grups
                 role: ROLE_REGISTRAR
                 route: year_groups_manage
                 parameters: {}
                 transDomain: School
         other:
             dashboard_settings:
-                label: manage_dashboard_settings
+                label: Manage Dashboard Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
                     name: Dashboard
                 transDomain: System
             manage_facilities:
-                label: manage_facilities
+                label: Manage Facilities
                 role: ROLE_PRINCIPAL
                 route: manage_facilities
                 parameters: {}
                 transDomain: System
             facility_settings:
-                label: manage_facility_settings
+                label: Manage Facility Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
                     name: Facility
                 transDomain: System
             file_extension:
-                label: manage_file_extension
+                label: Manage File Extensions
                 role: ROLE_PRINCIPAL
                 route: manage_file_extensions
                 parameters: {}
                 transDomain: System
             finance_settings:
-                label: manage_finance_settings
+                label: Manage Finance Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
                     name: Finance
                 transDomain: System
             messenger_settings:
-                label: manage_messenger_settings
+                label: Manage Messenger Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
@@ -101,60 +101,60 @@ section:
                 transDomain: System
         people:
             alert_levels:
-                label: manage_alert_levels
+                label: Manage Alert Levels
                 role: ROLE_PRINCIPAL
                 route: manage_alert_levels
                 parameters: {}
                 transDomain: System
             attendance_settings:
-                label: manage_attendance_settings
+                label: Manage Attendance Settings
                 role: ROLE_PRINCIPAL
                 route: manage_attendance_settings
                 parameters: {}
                 transDomain: System
             behaviour_settings:
-                label: manage_behaviour_settings
+                label: Manage Behaviour Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
                     name: Behaviour
                 transDomain: System
             individual_needs:
-                label: manage_individual_need_settings
+                label: Manage IN Settings
                 role: ROLE_PRINCIPAL
                 route: manage_individual_need_settings
                 parameters: {}
                 transDomain: System
             student_settings:
-                label: manage_student_settings
+                label: Manage Student Settings
                 role: ROLE_PRINCIPAL
                 route: manage_student_settings
                 parameters: {}
                 transDomain: System
         teaching_learning:
             activities_settings:
-                label: manage_activities_settings
+                label: Manage Activities Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
                     name: Activities
                 transDomain: System
             library_settings:
-                label: manage_library_settings
+                label: Manage Library Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
                     name: Library
                 transDomain: System
             planner_settings:
-                label: manage_planner_settings
+                label: Manage Planner Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
                     name: Planner
                 transDomain: System
             resource_settings:
-                label: manage_resource_settings
+                label: Manage Resource Settings
                 role: ROLE_PRINCIPAL
                 route: manage_settings
                 parameters:
@@ -168,13 +168,13 @@ section:
                 parameters: {}
                 role: ROLE_REGISTRAR
             school_year_manage:
-                label: menu.school_year.manage
+                label: Mange School Year
                 role: ROLE_REGISTRAR
                 route: school_year_manage
                 parameters: {}
                 transDomain: SchoolYear
             manage_year_special_days:
-                label: menu.school_year.special_days
+                label: Manage Special Days
                 role: ROLE_REGISTRAR
                 route: school_year_edit
                 parameters:
@@ -182,7 +182,7 @@ section:
                     tabName: specialdays
                 transDomain: SchoolYear
             manage_year_terms:
-                label: menu.school_year.terms
+                label: Manage School Year Terms
                 role: ROLE_REGISTRAR
                 route: school_year_edit
                 parameters:

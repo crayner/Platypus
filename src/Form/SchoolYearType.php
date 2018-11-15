@@ -41,27 +41,23 @@ class SchoolYearType extends AbstractType
 		$builder
 			->add('name', TextType::class,
 				[
-					'label' => 'school_year.name.label',
-					'help' => 'school_year.name.help',
+					'label' => 'Name',
 				]
 			)
             ->add('firstDay', DateType::class,
                 [
-                    'label' => 'school_year.firstDay.label',
-                    'help' => 'school_year.firstDay.help',
+                    'label' => 'First Day',
                 ]
             )
             ->add('sequence', HiddenType::class)
 			->add('lastDay', DateType::class,
 				array(
-					'label'       => 'school_year.lastDay.label',
-					'help' => 'school_year.lastDay.help',
+					'label'       => 'Last Day',
 				)
 			)
 			->add('status', EnumType::class,
 				array(
-					'label'         => 'school_year.status.label',
-					'help'          => 'school_year.status.help',
+					'label'         => 'Status',
 					'constraints'   => [
 						new SchoolYearStatus(array('id' => is_null($options['data']->getId()) ? 'Add' : $options['data']->getId())),
 					],

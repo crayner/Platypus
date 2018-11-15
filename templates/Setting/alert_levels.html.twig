@@ -9,7 +9,7 @@
 %}
 
 {% block title %}{{ parent() }} {{ 'School Admin'|trans({}, 'System') }}{% endblock title %}
-{% block headerTitle %}{{ 'alert_level_header'|trans }}{% endblock headerTitle %}
+{% block headerTitle %}{{ 'Alert Levels'|trans }}{% endblock headerTitle %}
 {% block headerLead %}{% endblock headerLead %}
 
 {% block contentContainer %}
@@ -17,7 +17,7 @@
     {{ form_start(form) }}
 
         {% include '@HillrangeForm/Script/collection_message.html.twig' %}
-        {% include 'Default/panelStart.html.twig' with {header: 'alert_level_header', transDomain: 'System', colour: 'light'} %}
+        {% include 'Default/panelStart.html.twig' with {header: 'Alert Levels', transDomain: 'System', colour: 'light'} %}
         {{ collection_widget(form.alertLevels, 0, 0) }}
         {% include 'Default/panelEnd.html.twig' %}
     {{ form_end(form) }}

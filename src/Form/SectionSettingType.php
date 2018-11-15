@@ -36,7 +36,7 @@ class SectionSettingType extends AbstractType
         {
             $collectionManager = $data->getNewCollection($section);
             $builder
-                ->add(StringHelper::safeString($section['name']),CollectionManagerType::class,
+                ->add(StringHelper::safeString($section['name'], true),CollectionManagerType::class,
                     [
                         'allow_up' => false,
                         'allow_down' => false,
@@ -53,7 +53,7 @@ class SectionSettingType extends AbstractType
                         ],
                     ]
                 )
-                ->get(StringHelper::safeString($section['name']))->addEventSubscriber(new MultipleSettingSubscriber())
+                ->get(StringHelper::safeString($section['name'], true))->addEventSubscriber(new MultipleSettingSubscriber())
             ;
         }
     }

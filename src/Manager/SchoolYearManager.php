@@ -258,21 +258,21 @@ class SchoolYearManager extends TabManager
 	protected $tabs = [
         [
             'name' => 'schoolYear',
-            'label' => 'school_year.details.tab',
+            'label' => 'Details',
             'include' => 'SchoolYear/school_year_tab.html.twig',
             'message' => 'schoolYearMessage',
             'translation' => 'SchoolYear',
         ],
         [
             'name' => 'terms',
-            'label' => 'school_year.terms.tab',
+            'label' => 'Terms',
             'include' => 'SchoolYear/terms.html.twig',
             'message' => 'termMessage',
             'translation' => 'SchoolYear',
         ],
         [
             'name' => 'specialDays',
-            'label' => 'school_year.specialDays.tab',
+            'label' => 'Special Days',
             'include' => 'SchoolYear/special_days.html.twig',
             'message' => 'specialDayMessage',
             'translation' => 'SchoolYear',

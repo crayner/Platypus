@@ -13,6 +13,7 @@ doctrine:
                 default_table_options:
                     charset: utf8mb4
                     collate: utf8mb4_unicode_ci
+                server_version: 'mariadb-10.3.10'
             gibbon:
                 driver:     '%db_driver%'
                 host:       '%db_host%'
@@ -24,6 +25,9 @@ doctrine:
                 default_table_options:
                     charset: utf8mb4
                     collate: utf8mb4_unicode_ci
+                server_version: 'mariadb-10.3.10'
+        types:
+            datetime: Hillrange\Form\Doctrine\Extension\Type\TimezoneDateTimeType
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
         default_entity_manager: default

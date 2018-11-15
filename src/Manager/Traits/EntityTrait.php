@@ -23,6 +23,7 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Trait EntityTrait
@@ -225,10 +226,17 @@ trait EntityTrait
     /**
      * saveEntity
      *
-     * @return Object
+     * @param null|ValidatorInterface $validator
+     * @return $this
      */
-    public function saveEntity()
+    public function saveEntity(?ValidatorInterface $validator = null)
     {
+        if ($validator && ($list = $validator->validate($this->getEntity()))->count() > 0)
+        {
+            foreach($list as $error)
+                $this->getMessageManager()->add('danger', $error->getMessage(), [], false);
+            return $this;
+        }
         $this->getEntityManager()->persist($this->getEntity());
         $this->getEntityManager()->flush();
         return $this;
@@ -323,5 +331,20 @@ trait EntityTrait
     public function getRouter(): RouterInterface
     {
         return $this->router;
+    }
+
+    /**
+     * findOneBy
+     *
+     * @param array $criteria
+     * @return null|Object
+     * @throws \Exception
+     */
+    public function findOneBy(array $criteria)
+    {
+        $this->entity = null;
+        if ($this->getRepository() !== null)
+            $this->entity = $this->getRepository()->findOneBy($criteria);
+        return $this->entity;
     }
 }

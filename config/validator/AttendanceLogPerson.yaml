@@ -1,0 +1,18 @@
+App\Entity\AttendanceLogPerson:
+    constraints:
+        -   Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+                fields: [classDate, courseClass, attendee]
+    properties:
+        taker:
+            - Valid: ~
+        attendee:
+            - NotBlank: ~
+        attendanceCode:
+            - Valid: ~
+            - NotBlank: ~
+        courseClass:
+            - NotBlank: ~
+            - Valid: ~
+        classDate:
+            - NotBlank: ~
+            - Date: ~

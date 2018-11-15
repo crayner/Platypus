@@ -1,0 +1,92 @@
+{% extends "Default/template.html.twig" %}
+
+{% trans_default_domain 'Attendance' %}
+
+{% block title %}{{ 'Attendance by Class'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Attendance by Class'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{% endblock headerLead %}
+
+{% block contentContainer %}
+    <div class="container">
+        <div class="row">
+            <div class="col-6 card alert-info text-center">
+                <h5>{{ 'Select the class and date'|trans }}</h5>
+            </div>
+            <div class="col-3 card">
+                <div class="form-group">
+                    {% set selected = false %}
+                    <select name="classByAttendance[class]" id="classByAttendance_class" class="form-control" onChange="if (this.value) changeClass(this.value)">
+                        <optgroup label="---{{ 'my Classes'|trans }}---">
+                            {% for class in manager.myClasses %}
+                                <option value="{{ class.id }}"{% if class.id is same as(manager.courseClass.id) %} selected{% set selected = true %}{% endif %}>{{ class.nameShort }}</option>
+                            {% endfor %}
+                        </optgroup>
+                        <optgroup label="---{{ 'all classes'|trans }}---">
+                            {% for class in manager.allClasses %}
+                                <option value="{{ class.id }}"{% if class.id is same as(manager.courseClass.id) and not selected %} selected{% endif %}>{{ class.nameShort }}</option>
+                            {% endfor %}
+                        </optgroup>
+                    </select>
+                    <label for="classByAttendance_class">{{ 'class'|trans }}</label>
+                </div>
+            </div>
+            <div class="col-3 card">
+                <div class="form-group">
+                    <input type="date" min="{{ getCurrentSchoolYear().firstDay|date('Y-m-d', app.request.get('timezone')) }}" max="{{ getCurrentSchoolYear().lastDay|date('Y-m-d', app.request.get('timezone')) }}" name="classByAttendance[date]" id="classByAttendance_date" class="form-control" onChange="if (this.value) changeDate(this.value)" value="{{ manager.date|date('Y-m-d') }}" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+                    <label for="classByAttendance_date">{{ 'date'|trans }}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block flashMessages %}
+        {% include 'Default/flash.html.twig' %}
+    {% endblock flashMessages %}
+    <form name="attendanceByClass" method="post" novalidate="1" autocomplete="off">
+        {% set h3Content = saveButton() %}
+        {% include 'Default/panelStart.html.twig' with {header: 'Attendance by Class', panelParagraph: '%{name} on %{date}',panelParams: {'%{name}': manager.courseClass.name, '%{date}': manager.date|date(getSetting('date.format.long'))},  transDomain: 'Attendance'} %}
+        {% set column = 0 %}
+        {% for student in manager.getClassStudents %}
+            {% if column is same as(0) %}
+                <div class="row small">
+            {% endif %}
+                <div class="col-3 card text-center">
+                    <a href="#" title="{{ student.attendee.fullName }}">
+                        {{ student.attendee.displayPhoto(0, 100)|raw }}<br/>
+                        {{ student.attendee.fullName({preferredOnly: true, surnameFirst: false}) }}
+                    </a>
+                    <span class="text-muted font-italic">{{ 'class.absent.count'|transchoice(manager.studentAbsentCount(student)) }}</span>
+                    {{ manager.studentAbsentCode(student)|raw }}
+                    {{ manager.studentReason(student, getSetting('attendance.attendance_reasons'))|raw }}
+                    {{ manager.studentComment(student)|raw }}
+                    <input type="hidden" id="attendanceByClass_{{ student.attendee.id }}_attendee" name="attendanceByClass[{{ student.attendee.id }}][attendee]" value="{{ student.attendee.id }}"/>
+                    <input type="hidden" id="attendanceByClass_{{ student.attendee.id }}_id" name="attendanceByClass[{{ student.attendee.id }}][id]" value="{{ student.id|default('0') }}"/>
+                </div>
+                {% set column = column + 1 %}
+            {% if column is same as(4) %}
+                </div>
+                {% set column = 0 %}
+            {% endif %}
+        {% endfor %}
+        {% if column is not same as(0) %}
+            </div>
+        {% endif %}
+        <input type="hidden" name="_token" id="_token" value="{{ csrf_token('attendanceByClass') }}" />
+        {% include 'Default/panelEnd.html.twig' %}
+    </form>
+{% endblock contentContainer %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" language="JavaScript">
+        function changeClass(value) {
+            let path = '{{ path('attendance_by_class', {entity: '__entity__', date: manager.date|date('Y-m-d')}) }}'
+            path = path.replace('__entity__', value)
+            window.open(path, '_self')
+        }
+        function changeDate(value) {
+            let path = '{{ path('attendance_by_class', {entity: manager.courseClass.id, date: '__date__'}) }}'
+            path = path.replace('__date__', value)
+            window.open(path, '_self')
+        }
+    </script>
+{% endblock javascripts %}

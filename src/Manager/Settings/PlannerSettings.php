@@ -150,7 +150,7 @@ class PlannerSettings extends SettingCreationManager
 
         $this->addSection('Miscellaneous');
 
-        $this->setSectionsHeader('manage_planner_settings');
+        $this->setSectionsHeader('Planner Settings');
 
         $this->setSettingManager(null);
         return $this;

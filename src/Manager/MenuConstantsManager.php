@@ -11,35 +11,35 @@ class MenuConstantsManager
     CONST NODES = '
 1:
 	name: Admin
-	label: menu.admin.node
+	label: Admin
 	role: ROLE_USER
 	order: 1
 	menu: 1
 ';
     CONST ITEMS = '
 10:
-    label: menu.admin.school
+    label: School Admin
     name: School Admin
     role: ROLE_REGISTRAR
     node: 1
     order: 10
     route: school_year_manage
 11:
-    label: menu.admin.system
+    label: System Admin
     name: System Admin
     role: ROLE_REGISTRAR
     node: 1
     order: 11
     route: manage_system_settings
 12:
-    label: menu.admin.timetable
+    label: Timetable Admin
     name: Timetable Admin
     role: ROLE_ADMIN
     node: 1
     order: 12
     route: manage_timetables
 13:
-    label: menu.admin.people
+    label: People Admin
     name: People Admin
     role: ROLE_STAFF
     node: 1
@@ -50,13 +50,13 @@ class MenuConstantsManager
 System Admin:
     extend_and_update:
         manage_themes:
-            label: manage_themes_label
+            label: Manage Themes
             role: ROLE_SYSTEM_ADMIN
             route: manage_themes
             parameters: {}
             transDomain: System
         system_check:
-            label: system_check_label
+            label: System Check
             role: ROLE_SYSTEM_ADMIN
             route: system_check
             parameters: {}
@@ -69,32 +69,32 @@ System Admin:
             transDomain: System
     settings:
         manage_language_setting:
-            label: manage_lanuage_setting
+            label: Manage Language Settings
             role: ROLE_REGISTRAR
             route: manage_system_settings
             parameters: 
                 _fragment: section_Localisation_collection_4
             transDomain: System
         manage_notification_events:
-            label: notification_event_settings
+            label: Notification Event Settings
             role: ROLE_REGISTRAR
             route: manage_notification_events
             parameters: {}
             transDomain: System
         string_replacement:
-            label: string_replacement
+            label: String Replacement
             role: ROLE_REGISTRAR
             route: manage_string_replacement
             parameters: {}
             transDomain: System
         manage_system_settings:
-            label: manage_system_settings
+            label: Manage System Settings
             role: ROLE_REGISTRAR
             route: manage_system_settings
             parameters: {}
             transDomain: System
         third_party_settings:
-            label: third_party_settings
+            label: Third Party Settings
             role: ROLE_REGISTRAR
             route: third_party_settings
             parameters: {}
@@ -108,45 +108,6 @@ System Admin:
             route: edit_notification_event
             parameters:
                 id: "%"
-Timetable Admin:
-    course_classes:
-        manage_course_classes:
-            label: "Manage Course & Classes"
-            role: ROLE_ACTION
-            route: manage_courses
-            parameters: {}
-            transDomain: System
-    timetable:
-        manage_timetable_columns:
-            label: "Manage Columns"
-            role: ROLE_ACTION
-            route: manage_columns
-            parameters: {}
-            transDomain: Timetable         
-        manage_timetables:
-            label: "Manage Timetables"
-            role: ROLE_ACTION
-            route: manage_timetables
-            parameters: {}
-            transDomain: Timetable         
-    hidden:
-        course_edit:
-            route: edit_course
-            parameters:
-                id: "%"
-        timetable_edit:
-            route: edit_timetable
-            parameters:
-                id: "%"
-        column_edit:
-            route: edit_column
-            parameters:
-                id: "%"
-        edit_class:
-            route: edit_class
-            parameters:
-                id: "%"
-                course_id: "%"
 
 ';
 

@@ -141,7 +141,7 @@ class MultipleSettingManager
      */
     public function addCollection(string $name, CollectionManager $collection): MultipleSettingManager
     {
-        $this->getCollections()->set($this->safeName($name), $collection);
+        $this->getCollections()->set($this->safeName($name, true), $collection);
 
         return $this;
     }
@@ -154,7 +154,7 @@ class MultipleSettingManager
      */
     public function __get($name): CollectionManager
     {
-        return $this->getCollections()->get($this->safeName($name));
+        return $this->getCollections()->get($this->safeName($name, true));
     }
 
     /**
@@ -184,11 +184,12 @@ class MultipleSettingManager
      * safeName
      *
      * @param $name
+     * @param bool $lower
      * @return string
      */
-    public function safeName($name): string
+    public function safeName($name, bool $lower = true): string
     {
-        return StringHelper::safeString($name);
+        return StringHelper::safeString($name, $lower);
     }
 
     /**

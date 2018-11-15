@@ -10,7 +10,7 @@
 %}
 
 {% block title %}{{ parent() }} {{ 'School Admin'|trans({}, 'System') }}{% endblock title %}
-{% block headerTitle %}{{ 'individual_need_descriptior_header'|trans }}{% endblock headerTitle %}
+{% block headerTitle %}{{ 'Individual Needs Descriptor'|trans }}{% endblock headerTitle %}
 {% block headerLead %}{% endblock headerLead %}
 
 {% set manager = form.multipleSettings.vars.data %}
@@ -24,14 +24,14 @@
         {% include '@HillrangeForm/Script/collection_message.html.twig' %}
         <div class="row row-header">
             <div class="col-4 text-center">
-                {{ 'individual_need_descriptor.description.name.label'|trans }}<br/>
-                <small>{{ 'individual_need_descriptor.description.name_short.label'|trans }}</small>
+                {{ 'Name'|trans }}<br/>
+                <small>{{ 'Abbrev.'|trans }}</small>
             </div>
             <div class="col-5 text-center">
-                {{ 'individual_need_descriptor.description.label'|trans }}
+                {{ 'Description'|trans }}
             </div>
             <div class="col-3 text-center">
-                {{ 'actions'|trans }}
+                {{ 'Actions'|trans }}
             </div>
         </div>
         {{ collection_widget(form.descriptors, 0, 0) }}

@@ -353,7 +353,7 @@ class MenuManager extends MenuConstantsManager
 
 		$sections = $sections[$route['section']];
 
-		foreach ($sections as $q => $w)
+        foreach ($sections as $q => $w)
 		{
 			if ($q !== 'hidden')
 			{
@@ -482,10 +482,15 @@ class MenuManager extends MenuConstantsManager
      */
     private function isCurrentRoute($r): bool
     {
+
         $currentRoute = $this->routerManager->getCurrentRoute();
         if ($currentRoute !== $r['route'])
             return false;
         $currentRouteParams = $this->routerManager->getCurrentRouteParams();
+        if (empty($r['parameters']))
+            $r['parameters'] = $currentRouteParams;
+        if (empty($r['parameters']))
+            return true;
 
         if (isset($currentRouteParams['_locale']))
             unset($currentRouteParams['_locale']);

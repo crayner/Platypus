@@ -2,27 +2,27 @@
 
 {% extends "/Default/template.html.twig" %}
 
-{% block title %}{{ parent() }}{{ 'school_years.title'|trans }}{% endblock title %}
-{% block headerTitle %}{{ 'school_years.title'|trans }}{% endblock headerTitle %}
-{% block headerLead %}{{ 'school_years.description'|trans }}{% endblock headerLead %}
+{% block title %}{{ parent() }}{{ 'Manage School Years'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Manage School Years'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{% endblock headerLead %}
 
 {% block contentContainer %}
     {% set h3Content = addButton({windowOpen: {route: path('school_year_edit', {id: 'Add'})}}) %}
-    {% include 'Default/panelStart.html.twig' with {transDomain: 'SchoolYear', header: 'school_years.list'} %}
+    {% include 'Default/panelStart.html.twig' with {transDomain: 'SchoolYear', header: 'Manage School Years'} %}
     <div class="container-fluid">
         {% if school_years|length > 0 %}
         <div class="row row-header">
             <div class="col-2">
-                {{ 'school_year.name.header'|trans }}
+                {{ 'Name'|trans }}
             </div>
             <div class="col-3">
-                {{ 'school_year.firstDay.header'|trans }}
+                {{ 'First Day'|trans }}
             </div>
             <div class="col-3">
-                {{ 'school_year.lastDay.header'|trans }}
+                {{ 'Last Day'|trans }}
             </div>
             <div class="col-4 col-4">
-                {{ 'school_year.action.header'|trans }}
+                {{ 'Actions'|trans({}, 'System') }}
             </div>
         </div>
         {% for SchoolYear in school_years %}

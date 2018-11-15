@@ -90,7 +90,7 @@ class LibrarySettings extends SettingCreationManager
 
         $this->addSection('Descriptors');
 
-        $this->setSectionsHeader('manage_library_settings');
+        $this->setSectionsHeader('Library Settings');
 
         $this->setSettingManager(null);
 

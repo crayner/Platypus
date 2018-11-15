@@ -869,4 +869,27 @@ class TimetableManager implements TemplateManagerInterface, ButtonReactInterface
         $this->settingManager = $settingManager;
         return $this;
     }
+
+    /**
+     * isSchoolDay
+     *
+     * @param null $date
+     * @param string $timezone
+     * @return bool
+     * @throws \Exception
+     */
+    public function isSchoolDay($date = null, $timezone = 'UTC'): bool
+    {
+        if (is_null($date))
+            $date = new \DateTime('now', new \DateTimeZone($timezone));
+        if (! $date instanceof \DateTime)
+            $date = new \DateTime($date, new \DateTimeZone($timezone));
+
+        foreach($this->getSchoolDays() as $day)
+        {
+            if ($day->getName() === $date->format('l') || $day->getNameShort() === $date->format('D'))
+                return $day->isSchoolDay();
+        }
+        return false;
+    }
 }

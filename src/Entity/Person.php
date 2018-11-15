@@ -519,6 +519,10 @@ class Person
      */
     public function getPhoto(): string
     {
+        if (empty($this->photo))
+            'build/static/images/DefaultPerson.png';
+        if (! file_exists('../public/' . $this->photo))
+            return 'build/static/images/DefaultPerson.png';
         return $this->photo ?: 'build/static/images/DefaultPerson.png';
     }
 

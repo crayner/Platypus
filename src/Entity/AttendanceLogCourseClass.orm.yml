@@ -1,0 +1,34 @@
+App\Entity\AttendanceLogCourseClass:
+    type: entity
+    table: attendance_log_course_class
+    repositoryClass: App\Repository\AttendanceLogCourseClassRepository
+    uniqueConstraints:
+        class_date:
+            columns:
+                - course_class_id
+                - class_date
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        classDate:
+            type: date
+            column: class_date
+        timestampTaken:
+            type: datetime
+    manyToOne:
+        courseClass:
+            targetEntity: App\Entity\CourseClass
+            joinColumn:
+                name: course_class_id
+                referencedColumnName: id
+        taker:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: taker_id
+                referencedColumnName: id
+    lifecycleCallbacks:
+        prePersist:
+            - prePersist

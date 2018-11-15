@@ -1,0 +1,40 @@
+section:
+    Timetable Admin:
+        course_classes:
+            manage_course_classes:
+                label: "Manage Course & Classes"
+                role: ROLE_ACTION
+                route: manage_courses
+                parameters: {}
+                transDomain: Timetable
+        timetable:
+            manage_timetable_columns:
+                label: "Manage Columns"
+                role: ROLE_ACTION
+                route: manage_columns
+                parameters: {}
+                transDomain: Timetable
+            manage_timetables:
+                label: "Manage Timetables"
+                role: ROLE_ACTION
+                route: manage_timetables
+                parameters: {}
+                transDomain: Timetable
+        hidden:
+            course_edit:
+                route: edit_course
+                parameters:
+                    id: "%"
+            timetable_edit:
+                route: edit_timetable
+                parameters:
+                    id: "%"
+            column_edit:
+                route: edit_column
+                parameters:
+                    id: "%"
+            edit_class:
+                route: edit_class
+                parameters:
+                    id: "%"
+                    course_id: "%"

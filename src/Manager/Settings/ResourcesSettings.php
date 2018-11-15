@@ -93,7 +93,7 @@ class ResourcesSettings extends SettingCreationManager
 
         $this->addSection('Resource Settings');
 
-        $this->setSectionsHeader('manage_resource_settings');
+        $this->setSectionsHeader('Resource Settings');
 
         $this->setSettingManager(null);
 

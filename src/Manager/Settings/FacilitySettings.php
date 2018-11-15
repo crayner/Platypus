@@ -60,7 +60,7 @@ class FacilitySettings extends SettingCreationManager
         $this->addSetting($setting, []);
 
         $this->addSection('Facility Settings');
-        $this->setSectionsHeader('manage_facility_settings');
+        $this->setSectionsHeader('Manage Facility Settings');
 
         $this->setSettingManager(null);
 

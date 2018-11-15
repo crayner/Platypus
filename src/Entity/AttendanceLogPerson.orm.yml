@@ -1,0 +1,60 @@
+App\Entity\AttendanceLogPerson:
+    type: entity
+    table: attendance_log_person
+    repositoryClass: App\Repository\AttendanceLogPersonRepository
+    uniqueConstraints:
+        class_date_attendee:
+            columns:
+                - course_class_id
+                - class_date
+                - attendee_id
+    id:
+        id:
+            type: integer
+            generator:
+                strategy: AUTO
+    fields:
+        classDate:
+            type: date
+            column: class_date
+        timestampTaken:
+            type: datetime
+        direction:
+            length: 8
+            nullable: true
+        type:
+            length: 30
+            nullable: true
+        reason:
+            length: 30
+            nullable: true
+        context:
+            length: 16
+            nullable: true
+        comment:
+            length: 255
+            nullable: true
+    manyToOne:
+        courseClass:
+            targetEntity: App\Entity\CourseClass
+            joinColumn:
+                name: course_class_id
+                referencedColumnName: id
+        taker:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: taker_id
+                referencedColumnName: id
+        attendee:
+            targetEntity: App\Entity\Person
+            joinColumn:
+                name: attendee_id
+                referencedColumnName: id
+        attendanceCode:
+            targetEntity: App\Entity\AttendanceCode
+            joinColumn:
+                name: attendance_code_id
+                referencedColumnName: id
+    lifecycleCallbacks:
+        prePersist:
+            - prePersist

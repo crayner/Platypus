@@ -265,9 +265,8 @@ class SchoolController extends Controller
         $form = $this->createForm(AttendanceSettingsType::class, $settings);
 
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $multipleSettingManager->saveSections($sm, $request->request->get('attendance_settings'));
+            $multipleSettingManager->saveSections($sm, $request->request->get('attendance_settings')['multipleSettings']);
             foreach($settings->getAttendanceCodes()->toArray() as $entity)
                 $sm->getEntityManager()->persist($entity);
             $sm->getEntityManager()->flush();
@@ -565,7 +564,7 @@ class SchoolController extends Controller
             $em = $departmentManager->getEntityManager();
             $em->persist($entity);
 
-            $flashBagManager->add('success', 'form.submit.success', [], 'System');
+            $flashBagManager->add('success', 'Form saved successfully.', [], 'System');
 
             if ($id == 'Add')
             {

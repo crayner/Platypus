@@ -1,15 +1,15 @@
 {% trans_default_domain "SchoolYear" %}
 
-{% include 'SchoolYear/school_year_menu.html.twig' with {'header': 'school_year.term.title', 'name': form.name.vars.value, 'panelParagraph': 'school_year.term.help'} %}
+{% include 'SchoolYear/school_year_menu.html.twig' with {'header': 'Terms of %name%', 'name': form.name.vars.value, 'panelParagraph': 'school_year.term.help'} %}
 		<div class="row row-header">
 			<div class="col-6 card">
-				{{ 'term.name.label'|trans }} - {{ 'term.name_short.label'|trans }}
+				{{ 'Name'|trans }} - {{ 'Abbrev.'|trans }}
 			</div>
 			<div class="col-3 card">
-                {{ 'term.first_day.label'|trans }}
+                {{ 'First Day'|trans }}
 			</div>
 			<div class="col-3 card">
-                {{ 'term.last_day.label'|trans }}
+                {{ 'Last Day'|trans }}
 			</div>
 		</div>
 	<div id="school_year_terms_target">{{ collection_widget(form.terms) }}</div>

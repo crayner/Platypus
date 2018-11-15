@@ -161,7 +161,7 @@ class ActivitiesSettings extends SettingCreationManager
 
         $this->addSection('Activity Settings');
 
-        $this->setSectionsHeader('manage_activities_settings');
+        $this->setSectionsHeader('Activity Settings');
 
         $this->setSettingManager(null);
 

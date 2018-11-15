@@ -8,6 +8,7 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
+use Symfony\Component\Yaml\Yaml;
 
 class Kernel extends BaseKernel
 {
@@ -56,5 +57,26 @@ class Kernel extends BaseKernel
         $routes->import($confDir.'/{routes}/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}/'.$this->environment.'/**/*'.self::CONFIG_EXTS, '/', 'glob');
         $routes->import($confDir.'/{routes}'.self::CONFIG_EXTS, '/', 'glob');
+    }
+
+    /**
+     * Kernel constructor.
+     * @param $environment
+     * @param $debug
+     */
+    public function __construct($environment, $debug) {
+        parent::__construct($environment, $debug);
+        date_default_timezone_set($this->getTimezone() ?: 'UTC');
+    }
+
+    /**
+     * getTimezone
+     *
+     * @return mixed
+     */
+    public function getTimezone()
+    {
+        $parameters = Yaml::parse(file_get_contents($this->getProjectDir() .'/config/packages/platypus.yaml'));
+        return $parameters['parameters']['timezone'];
     }
 }

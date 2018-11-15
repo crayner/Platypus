@@ -1,6 +1,5 @@
 {% trans_default_domain "SchoolYear" %}
 
-{% set flashClass = 'alert-dismissable show hide' %}
 {% set transDomain = 'SchoolYear' %}
 
 {% extends "Default/template.html.twig" %}
@@ -12,9 +11,9 @@
     '@HillrangeForm/FormTheme/bootstrap.html.twig'
 %}
 
-{% block title %}{{ parent() }}{{ 'school_year.title'|trans }}{% endblock title %}
-{% block headerTitle %}{{ 'school_year.title'|trans }}{% endblock headerTitle %}
-{% block headerLead %}{{ 'school_year.description'|trans }}{% endblock headerLead %}
+{% block title %}{{ parent() }}{{ 'Manage School Year'|trans }}{% endblock title %}
+{% block headerTitle %}{{ 'Manage School Year'|trans }}{% endblock headerTitle %}
+{% block headerLead %}{% endblock headerLead %}
 
 {% block contentContainer %}
     {{ all_form_errors(fullForm, "div", "alert alert-danger alert-dismissable show hide") }}

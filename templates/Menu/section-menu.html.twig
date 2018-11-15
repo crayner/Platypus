@@ -1,4 +1,4 @@
-{% trans_default_domain "System" %}
+{% trans_default_domain "Menu" %}
 
 {% set header = '' %}
 {% for name,link in sections %}
@@ -17,9 +17,9 @@
         {% if test %}
             {% if routeExists(data['route']) %}
                 {% set target = data['target']['name']|default('_self') %}
-                {% set options = data['target']['options']|default('') %}
-                {% set transDomain = data['transDomain']|default('System') %}
-                {% set path_parameters = {} %}
+                {% set options = data['target']['options']|default() %}
+                {% set transDomain = data['transDomain']|default('Menu') %}
+                {% set path_parameters = data['default_params']|default({}) %}
                 {% for name,value in data['parameters'] %}
                     {% if value is not same as('%') %}
                         {% set path_parameters = path_parameters|merge({(name): value}) %}

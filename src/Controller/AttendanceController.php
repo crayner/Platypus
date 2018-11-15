@@ -16,10 +16,14 @@
 namespace App\Controller;
 
 use App\Entity\CourseClass;
-use App\Manager\CourseClassManager;
+use App\Form\Type\AttendanceByClassType;
+use App\Manager\AttendanceManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class AttendanceController
@@ -30,15 +34,25 @@ class AttendanceController extends Controller
     /**
      * attendanceByClass
      *
+     * @param AttendanceManager $manager
+     * @param TranslatorInterface $translator
+     * @param ValidatorInterface $validator
+     * @param Request $request
+     * @param CourseClass|null $entity
+     * @param string $date
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/attendance/class/{entity}/", name="attendance_by_class")
+     * @Route("/attendance/class/{entity}/on/{date}/", name="attendance_by_class")
      * @Security("is_granted('ROLE_ACTION', request)")
      */
-    public function attendanceByClass(CourseClass $entity, CourseClassManager $manager)
+    public function attendanceByClass(AttendanceManager $manager, TranslatorInterface $translator, ValidatorInterface $validator, Request $request, CourseClass $entity = null, string $date = 'now')
     {
+        $manager->setTranslator($translator)->takeAttendanceByClass($entity, $date);
 
-        $manager->setEntity($entity);
-        return $this->render('blank.html.twig',
+        if ($request->getMethod() === 'POST' && $this->isCsrfTokenValid('attendanceByClass', $request->request->get('_token'))) {
+            $manager->saveAttendanceLogs($request->get('attendanceByClass'), $validator);
+            $manager->takeAttendanceByClass($entity, $date);
+        }
+        return $this->render('Attendance/take_by_class.html.twig',
             [
                 'manager' => $manager,
             ]
